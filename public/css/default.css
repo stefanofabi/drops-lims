@@ -1,0 +1,24 @@
+html,body {
+	background-color: #fff;
+	font-family: 'Nunito', sans-serif;
+}
+
+
+.default {
+	margin-top:2%;
+	margin-bottom: 2%;
+}
+
+.mensajes {
+	margin-top:2%;
+	margin-bottom: 2%;
+}
+
+.menu {
+	height: 100%;
+	background-color: #CAEBFF;
+}
+
+a {
+	color:#000000;
+}
