@@ -4,9 +4,14 @@ html,body {
 }
 
 
-.default {
-	margin-top:2%;
+.margins-boxs-tb {
+	margin-top: 2%;
 	margin-bottom: 2%;
+}
+
+.margins-boxs-lr {
+	margin-left: 2%;
+	margin-right: 2%;
 }
 
 .mensajes {
@@ -15,7 +20,8 @@ html,body {
 }
 
 .menu {
-	height: 100%;
+	//height: 100%;
+	margin-left: 2%;
 	background-color: #CAEBFF;
 }
 

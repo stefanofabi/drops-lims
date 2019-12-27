@@ -15,10 +15,10 @@ class CreateShuntsTable extends Migration
     {
         Schema::create('shunts', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('mail');
-            $table->string('address');
-            $table->string('phone');
+            $table->string('name')->nullable();
+            $table->string('mail')->nullable();
+            $table->string('address')->nullable();
+            $table->string('phone')->nullable();
 
            	$table->engine = 'InnoDB';
 	    });

@@ -28,15 +28,10 @@ class PatientsController extends Controller
         return view('patients/patients')->with('shunts', $shunts);
     }
 
-    public function new_patient_human() {
-        $shunts = Shunt::all();
-
-        return view('patients/new_patient_human')->with('shunts', $shunts);        
-    }
-
-
     /**
 	* Load patients from a shunt
+    * @param   \Illuminate\Http\Request  $request
+    * @return View $view
     */
     public function load(Request $request) {
         $shunts = Shunt::all();
@@ -94,6 +89,7 @@ class PatientsController extends Controller
     public function create()
     {
         //
+        return view('patients/create');
     }
 
     /**

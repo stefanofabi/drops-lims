@@ -15,12 +15,14 @@ class CreateHumansTable extends Migration
     {
         Schema::create('humans', function (Blueprint $table) {
             $table->integer('patient_id')->unsigned();
-            $table->integer('dni');
-            $table->string('surname');
-            $table->char('sex', 1);
-            $table->date('birth_date');
-            $table->string('city');
-            $table->string('home_address');
+            $table->integer('dni')->nullable();
+            $table->string('surname')->nullable();
+            $table->char('sex', 1)->nullable();
+            $table->date('birth_date')->nullable();
+            $table->string('city')->nullable();
+            $table->string('home_address')->nullable();
+
+            // Foreign keys
             $table->foreign('patient_id')->references('id')->on('patients')->onDelete('restrict')->onUpdate('cascade');
 
             $table->engine = 'InnoDB';

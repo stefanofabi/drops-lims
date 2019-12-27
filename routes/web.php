@@ -11,22 +11,21 @@
 |
 */
 
-
 Route::post('pacientes', 'PatientsController@load')->name('patients/load');
-Route::get('pacientes', 'PatientsController@index');
+Route::get('pacientes', 'PatientsController@index')->name('patients');
 
-Route::get('pacientes/nuevo', function() {
-	return view('patients/new_patient');
-})->name('patients/new');
+Route::get('pacientes/nuevo', 'PatientsController@create')->name('patients/create');
 
-Route::get('pacientes/nuevo/animal', 'PatientsController@new_patient_animal')->name('patients/new/animal');
-Route::get('pacientes/nuevo/humano', 'PatientsController@new_patient_human')->name('patients/new/human');
-Route::get('pacientes/nuevo/industrial', 'PatientsController@new_patient_industrial')->name('patients/new/industrial');
 
-Route::get('user/{id}', function ($id) {
-	//return view('editar_paciente');
-    return 'User '.$id;
-})->where('id', '[0-9]+');
+Route::get('pacientes/nuevo/animal', 'AnimalsController@create')->name('patients/animals/create');
+Route::get('pacientes/nuevo/humano', 'HumansController@create')->name('patients/humans/create');
+Route::get('pacientes/nuevo/industrial', 'Controller@create')->name('patients/industrials/create');
+
+Route::post('pacientes/nuevo/humano', 'HumansController@store')->name('patients/humans/store');
+
+Route::get('pacientes/{id}', function ($id) {
+		return 'User '.$id;
+})->where('id', '[1-9]+[0-9]*');
 
 
 

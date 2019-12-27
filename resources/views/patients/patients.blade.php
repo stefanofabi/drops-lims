@@ -4,7 +4,11 @@
 
 @section('main-title', 'Pacientes')
 
-@section('new', 'Nuevo paciente') 
+@section('create-href')
+{{ route('patients/create') }}
+@endsection
+
+@section('create-text', 'Crear paciente') 
 
 @section('active_patients', 'active')
 

@@ -15,10 +15,10 @@ class CreatePatientsTable extends Migration
     {
         Schema::create('patients', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            
-            // Foreign keys
+            $table->string('name')->nullable();
             $table->integer('shunt_id')->unsigned();
+
+            // Foreign keys
             $table->foreign('shunt_id')->references('id')->on('shunts')->onDelete('restrict')->onUpdate('cascade');
 
             $table->engine = 'InnoDB';

@@ -44,7 +44,4 @@ class Patient extends Model
 
 		return $count;
 	}
-
-
-
 }

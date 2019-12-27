@@ -8,4 +8,5 @@ class Human extends Model
 {
     //
     public $timestamps = false;
+
 }

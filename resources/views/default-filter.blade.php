@@ -12,11 +12,11 @@
     </head>
 
     <body> 
-        <div class="container default">
+        <div class="container margins-boxs-tb">
             <div class="card">
                 <div class="card-header">
                     <div class="btn-group float-right">
-                        <a  href="{{ route('patients/new') }}" class="btn btn-info"><span class="fas fa-user-plus" ></span> @yield('new', 'Nuevo') </a>
+                        <a  href="@yield('create-href', '#')" class="btn btn-info"><span class="fas fa-user-plus" ></span> @yield('create-text', 'Crear') </a>
                     </div>
                     <h4> <i class="fas fa-search"></i> @section('main-title') @show</h4>
                 </div>
@@ -46,5 +46,6 @@
         </div>
 
         @section('footer')
+        @show
     </body>
 </html>
