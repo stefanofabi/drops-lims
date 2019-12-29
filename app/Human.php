@@ -3,10 +3,17 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Patient;
 
 class Human extends Model
 {
     //
-    public $timestamps = false;
+	protected $primaryKey = "patient_id";
+	public $incrementing = false;
+
+
+	public function patient() {
+		return $this->belongsTo('App\Patient');
+	}
 
 }

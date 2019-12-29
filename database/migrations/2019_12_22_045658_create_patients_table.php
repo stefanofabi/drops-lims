@@ -21,6 +21,9 @@ class CreatePatientsTable extends Migration
             // Foreign keys
             $table->foreign('shunt_id')->references('id')->on('shunts')->onDelete('restrict')->onUpdate('cascade');
 
+            $table->softDeletes();
+            $table->timestamps();
+
             $table->engine = 'InnoDB';
         });
     }

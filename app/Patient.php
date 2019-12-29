@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\DB;
 class Patient extends Model
 {
     //
-    public $timestamps = false;
 
 	protected function show_patients($patient_type, $shunt, $filter, $offset, $length) {
 		$patients = DB::table('patients')
@@ -44,4 +43,12 @@ class Patient extends Model
 
 		return $count;
 	}
+
+	/**
+    * Get the shunt record associated with the patient.
+    */
+    public function shunt()
+    {
+    	return $this->belongsTo('App\Shunt');
+    }
 }

@@ -7,7 +7,7 @@
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item">
-						<a class="nav-link @yield('active_patients')" href="{{ route('patients') }}">Pacientes</a>
+						<a class="nav-link @yield('active_patients')" href="{{ route('patients') }}"> {{ trans('patients.patients') }} </a>
 					</li>
 
 					<li class="nav-item">

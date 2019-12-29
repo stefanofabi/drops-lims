@@ -16,7 +16,7 @@
             <div class="card">
                 <div class="card-header">
                     <div class="btn-group float-right">
-                        <a  href="@yield('create-href', '#')" class="btn btn-info"><span class="fas fa-user-plus" ></span> @yield('create-text', 'Crear') </a>
+                        <a  href="@yield('create-href', '#')" class="btn btn-info"><span class="fas fa-user-plus" ></span> @yield('create-text') </a>
                     </div>
                     <h4> <i class="fas fa-search"></i> @section('main-title') @show</h4>
                 </div>
@@ -26,7 +26,7 @@
                         <form method="post" id="select_page" action="{{ route('patients/load') }}">
                             @csrf
                             <div class="card-header">
-                                <h5><i class="fas fa-filter"></i> Completar filtros</h5>
+                                <h5><i class="fas fa-filter"></i> {{ trans('patients.complete_filters') }} </h5>
                             </div>
 
                             <div class="card-body">

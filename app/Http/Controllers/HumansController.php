@@ -32,9 +32,9 @@ class HumansController extends Controller
     public function create()
     {
         //
-        $shunts = Shunt::all();
+    	$shunts = Shunt::all();
 
-        return view('patients/humans/create')->with('shunts', $shunts);      
+    	return view('patients/humans/create')->with('shunts', $shunts);      
     }
 
     /**
@@ -47,41 +47,41 @@ class HumansController extends Controller
     {
         //
 
-		$id = DB::transaction(function () use ($request) {
-            $shunt = $request->shunt;
-            $name = $request['name'];
+    	$id = DB::transaction(function () use ($request) {
+    		$shunt = $request->shunt;
+    		$name = $request['name'];
 
-			$patient = Patient::insertGetId([
-                    'name' => $name, 
-                    'shunt_id' => $shunt
-            ]);
+    		$patient = Patient::insertGetId([
+    			'name' => $name, 
+    			'shunt_id' => $shunt
+    		]);
 
 
             // other data for humans
-            $dni = $request['dni'];
-            $surname = $request['surname'];
-            
-            $home_address = $request['home_address'];
-            $city = $request['city'];
+    		$dni = $request['dni'];
+    		$surname = $request['surname'];
 
-            $sex = $request['sex'];
-            $birth_date = $request['birth_date'];
+    		$home_address = $request['home_address'];
+    		$city = $request['city'];
 
-			Human::insert([
-                    'patient_id' => $patient, 
-                    'dni' => $dni,
-                    'surname' => $surname,
-                    'sex' => $sex,
-                    'birth_date' => $birth_date,
-                    'city' => $city,
-                    'home_address' => $home_address
-			]);
+    		$sex = $request['sex'];
+    		$birth_date = $request['birth_date'];
 
-            return $patient;
-		}, self::RETRIES);
+    		Human::insert([
+    			'patient_id' => $patient, 
+    			'dni' => $dni,
+    			'surname' => $surname,
+    			'sex' => $sex,
+    			'birth_date' => $birth_date,
+    			'city' => $city,
+    			'home_address' => $home_address
+    		]);
 
-        
-        return redirect('pacientes/'.$id);
+    		return $patient;
+    	}, self::RETRIES);
+
+
+    	return redirect()->action('HumansController@edit', ['id' => $id]);
     }
 
     /**
@@ -104,6 +104,24 @@ class HumansController extends Controller
     public function edit($id)
     {
         //
+    	$human = Human::find($id);
+    	$patient = $human->patient;
+    	$shunt = $patient->shunt;
+
+
+    	$data = [
+    		'id' => $patient->id,
+    		'shunt' => $shunt->name,
+    		'dni' => $human->dni,
+    		'surname' => $human->surname,
+    		'name' => $patient->name,
+    		'home_address' => $human->home_address,
+    		'city' => $human->home_address,
+    		'sex' => $human->sex,
+    		'birth_date' => $human->birth_date,
+    	];
+
+    	return view('patients/humans/edit')->with('human', $data);
     }
 
     /**
@@ -116,6 +134,30 @@ class HumansController extends Controller
     public function update(Request $request, $id)
     {
         //
+
+    	$result = DB::transaction(function () use ($request, $id) {
+
+    		$result_patient = Patient::where('id', '=', $id)
+    							->update(['name' => $request->name]);
+
+    		$result_human = Human::where('patient_id', '=', $id)
+    		->update(
+    			[
+    				'dni' => $request->dni,
+    				'surname' => $request->surname,
+    				'home_address' => $request->home_address,
+    				'city' => $request->city,
+    				'sex' => $request->sex,
+    				'birth_date' => $request->birth_date,
+    			]);
+
+    		$result =  $result_patient && $result_human;
+
+    		return $result;
+    	}, self::RETRIES);
+
+	   
+	   return redirect()->action('HumansController@edit', ['id' => $id]);
     }
 
     /**

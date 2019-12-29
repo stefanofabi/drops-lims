@@ -20,6 +20,9 @@ class CreateShuntsTable extends Migration
             $table->string('address')->nullable();
             $table->string('phone')->nullable();
 
+            $table->softDeletes();
+            $table->timestamps();
+
            	$table->engine = 'InnoDB';
 	    });
     }

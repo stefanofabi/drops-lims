@@ -8,7 +8,7 @@ trait Pagination {
 		$prevlabel = "&lsaquo; Prev";
 		$nextlabel = "Next &rsaquo;";
 		$out = '<ul class="pagination justify-content-end" style="margin:20px 0">';
-		
+	
 	// previous label
 
 		if($page==1) {
