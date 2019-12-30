@@ -52,5 +52,9 @@ return [
     'emails' => 'Correos',
     'select_phone' => 'Seleccione un teléfono',
     'select_email' => 'Seleccione un correo',
-    
+    'show_patient' => 'Ver paciente',
+    'complete_contact_information' => 'Completar datos de contacto',
+    'contact_information' => 'Datos de contacto',
+    'owner' => 'Propietario',
+   
 ];

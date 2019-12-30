@@ -14,7 +14,7 @@ class CreateShuntsTable extends Migration
     public function up()
     {
         Schema::create('shunts', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('name')->nullable();
             $table->string('mail')->nullable();
             $table->string('address')->nullable();

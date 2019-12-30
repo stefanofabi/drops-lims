@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateHumansTable extends Migration
+class CreateAnimalsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateHumansTable extends Migration
      */
     public function up()
     {
-        Schema::create('humans', function (Blueprint $table) {
-            $table->bigIncrements('patient_id')->unsigned();
-            $table->integer('dni')->nullable();
-            $table->string('surname')->nullable();
+        Schema::create('animals', function (Blueprint $table) {
+            $table->bigIncrements('patient_id');
+            $table->string('owner')->nullable();
             $table->char('sex', 1)->nullable();
             $table->date('birth_date')->nullable();
             $table->string('city')->nullable();
@@ -39,6 +38,6 @@ class CreateHumansTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('humans');
+        Schema::dropIfExists('animals');
     }
 }

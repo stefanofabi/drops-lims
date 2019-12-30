@@ -14,9 +14,9 @@ class CreatePatientsTable extends Migration
     public function up()
     {
         Schema::create('patients', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('name')->nullable();
-            $table->integer('shunt_id')->unsigned();
+            $table->bigInteger('shunt_id')->unsigned();
 
             // Foreign keys
             $table->foreign('shunt_id')->references('id')->on('shunts')->onDelete('restrict')->onUpdate('cascade');

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use App\Http\Traits\Pagination;
+
 use App\Shunt;
 use App\Patient;
 use App\Human;
@@ -12,16 +14,44 @@ use App\Human;
 class HumansController extends Controller
 {
 
-	const RETRIES = 5;
+    use Pagination;
+
+    private const PER_PAGE = 15;
+    private const ADJACENTS = 4;
+
+    private const RETRIES = 5;
 
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+        $shunts = Shunt::all();
+
+        // Request
+        $shunt = $request['shunt'];
+        $filter = $request['filter'];
+        $page = $request['page'];
+
+        $offset = ($page - 1) * self::PER_PAGE;
+        $query_patients = Human::index($shunt, $filter, $offset, self::PER_PAGE);
+
+        // Pagination
+        $count_rows = Human::count_index($shunt, $filter);
+        $total_pages = ceil($count_rows / self::PER_PAGE);
+
+        $paginate = $this->paginate($page, $total_pages, self::ADJACENTS);
+
+        $view = view('patients/humans/index')
+        ->with('shunts', $shunts)
+        ->with('request', $request->all())
+        ->with('data', $query_patients)
+        ->with('paginate', $paginate);
+
+        return $view;
     }
 
     /**
@@ -81,7 +111,7 @@ class HumansController extends Controller
     	}, self::RETRIES);
 
 
-    	return redirect()->action('HumansController@edit', ['id' => $id]);
+    	return redirect()->action('HumansController@show', ['id' => $id]);
     }
 
     /**
@@ -93,6 +123,25 @@ class HumansController extends Controller
     public function show($id)
     {
         //
+        $human = Human::find($id);
+        $patient = $human->patient;
+        $shunt = $patient->shunt;
+
+
+        $data = [
+            'id' => $patient->id,
+            'shunt' => $shunt->name,
+            'dni' => $human->dni,
+            'surname' => $human->surname,
+            'name' => $patient->name,
+            'home_address' => $human->home_address,
+            'city' => $human->city,
+            'sex' => $human->sex,
+            'birth_date' => $human->birth_date,
+        ];
+
+
+        return view('patients/humans/show')->with('human', $data);
     }
 
     /**
@@ -105,23 +154,31 @@ class HumansController extends Controller
     {
         //
     	$human = Human::find($id);
-    	$patient = $human->patient;
-    	$shunt = $patient->shunt;
+
+        if ($human) {
+            $patient = $human->patient;
+            $shunt = $patient->shunt;
+
+            $data = [
+                'id' => $patient->id,
+                'shunt' => $shunt->name,
+                'dni' => $human->dni,
+                'surname' => $human->surname,
+                'name' => $patient->name,
+                'home_address' => $human->home_address,
+                'city' => $human->city,
+                'sex' => $human->sex,
+                'birth_date' => $human->birth_date,
+            ];
+
+            $view = view('patients/humans/edit')->with('human', $data);
+        } else {
+            $view = \Redirect::back();
+        }
 
 
-    	$data = [
-    		'id' => $patient->id,
-    		'shunt' => $shunt->name,
-    		'dni' => $human->dni,
-    		'surname' => $human->surname,
-    		'name' => $patient->name,
-    		'home_address' => $human->home_address,
-    		'city' => $human->home_address,
-    		'sex' => $human->sex,
-    		'birth_date' => $human->birth_date,
-    	];
 
-    	return view('patients/humans/edit')->with('human', $data);
+    	return $view;
     }
 
     /**
@@ -138,26 +195,26 @@ class HumansController extends Controller
     	$result = DB::transaction(function () use ($request, $id) {
 
     		$result_patient = Patient::where('id', '=', $id)
-    							->update(['name' => $request->name]);
+         ->update(['name' => $request->name]);
 
-    		$result_human = Human::where('patient_id', '=', $id)
-    		->update(
-    			[
-    				'dni' => $request->dni,
-    				'surname' => $request->surname,
-    				'home_address' => $request->home_address,
-    				'city' => $request->city,
-    				'sex' => $request->sex,
-    				'birth_date' => $request->birth_date,
-    			]);
+         $result_human = Human::where('patient_id', '=', $id)
+         ->update(
+             [
+                'dni' => $request->dni,
+                'surname' => $request->surname,
+                'home_address' => $request->home_address,
+                'city' => $request->city,
+                'sex' => $request->sex,
+                'birth_date' => $request->birth_date,
+            ]);
 
-    		$result =  $result_patient && $result_human;
+         $result =  $result_patient && $result_human;
 
-    		return $result;
-    	}, self::RETRIES);
+         return $result;
+     }, self::RETRIES);
 
-	   
-	   return redirect()->action('HumansController@edit', ['id' => $id]);
+
+        return redirect()->action('HumansController@edit', ['id' => $id]);
     }
 
     /**

@@ -50,6 +50,10 @@ return [
     'personal_data' => 'Personal data',
     'phones' => 'Phones',
     'emails' => 'Emails',
-    'select_phone' => 'Seleccione un teléfono',
-    'select_email' => 'Seleccione un correo',
+    'select_phone' => 'Select a phone',
+    'select_email' => 'Select an email',
+    'show_patient' => 'Show patient',
+    'complete_contact_information' => 'Complete contact information',
+    'contact_information' => 'Contact information',
+    'owner' => 'Owner',
 ];

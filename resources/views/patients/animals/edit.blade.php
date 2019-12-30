@@ -4,7 +4,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
         // Select a sex from list
-        $("#sex option[value='{{ $human['sex'] ?? '' }}']").attr("selected",true);
+        $("#sex option[value='{{ $animal['sex'] ?? '' }}']").attr("selected",true);
     });
 </script>
 @endsection
@@ -40,7 +40,7 @@
 
 
 @section('content')
-<form method="post" action="{{ route('patients/humans/update', ['id' => $human['id']]) }}">
+<form method="post" action="{{ route('patients/animals/update', ['id' => $animal['id']]) }}">
 	@csrf
 	{{ method_field('PUT') }}
 
@@ -49,51 +49,48 @@
 			<h4><i class="fas fa-toolbox"></i> {{ trans('patients.shunt') }} </h4>
 		</div>
 		<div class="card-body">
+
 			<div class="input-group mb-6 col-md-6">
 				<div class="input-group-prepend">
 					<span class="input-group-text"> {{ trans('patients.shunt') }} </span>
 				</div>
-				<input type="text" class="form-control" name="shunt" value="{{ $human['shunt'] }}" disabled>
+				
+				<input type="text" class="form-control" name="shunt" value="{{ $animal['shunt'] }}" disabled>
 			</div>
 		</div>
 	</div>
 
 	<div class="card margins-boxs-tb">
 		<div class="card-header">
-			<h4><i class="fas fa-id-card"></i> {{ trans('patients.complete_personal_data') }} </h4>
+			<h4><i class="fas fa-id-card"></i> {{ trans('patients.personal_data') }} </h4>
 		</div>
 
 		<div class="card-body">
 
-			<div class="input-group mb-3 col-md-3">
+			<div class="input-group mb-6 col-md-6">
 				<div class="input-group-prepend">
-					<span class="input-group-text"> {{ trans('patients.dni') }} </span>
+					<span class="input-group-text"> {{ trans('patients.owner') }} </span>
 				</div>
-				<input type="number" class="form-control" name="dni" value="{{ $human['dni'] }}">
+				<input type="text" class="form-control" name="owner" value="{{ $animal['owner'] }}" required>
 			</div>
 
-			<div class="input-group mb-9 col-md-9 input-form" style="margin-top: 1%">
-				<div class="input-group-prepend">
-					<span class="input-group-text"> {{ trans('patients.surname') }} </span>
-				</div>
-				<input type="text" class="form-control" name="surname" value="{{ $human['surname'] }}" required>
-
+			<div class="input-group mb-6 col-md-9 input-form" style="margin-top: 1%">
 				<div class="input-group-prepend">
 					<span class="input-group-text"> {{ trans('patients.name') }} </span>
 				</div>
-				<input type="text" class="form-control" name="name" value="{{ $human['name'] }}" required>
+				<input type="text" class="form-control" name="name" value="{{ $animal['name'] }}" required>
 			</div>
 
-			<div class="input-group mb-9 col-md-9 input-form" style="margin-top: 1%">
+			<div class="input-group mb-6 col-md-9 input-form" style="margin-top: 1%">
 				<div class="input-group-prepend">
 					<span class="input-group-text"> {{ trans('patients.home_address') }} </span>
 				</div>
-				<input type="text" class="form-control" name="home_address" value="{{ $human['home_address'] }}">
+				<input type="text" class="form-control" name="home_address" value="{{ $animal['home_address'] }}">
 
 				<div class="input-group-prepend">
 					<span class="input-group-text"> {{ trans('patients.city') }} </span>
 				</div>
-				<input type="text" class="form-control" name="city" value="{{ $human['city'] }}">
+				<input type="text" class="form-control" name="city" value="{{ $animal['city'] }}">
 			</div>
 
 			<div class="input-group mb-6 col-md-6 input-form" style="margin-top: 1%">
@@ -114,11 +111,12 @@
 					<span class="input-group-text"> {{ trans('patients.birth_date') }} </span>
 				</div>
 
-				<input type="date" class="form-control" name="birth_date" value="{{ $human['birth_date'] }}">
+				<input type="date" class="form-control" name="birth_date" value="{{ $animal['birth_date'] }}">
 			</div>
 
 		</div>
 	</div>
+
 
 	<div class="card">
 		<div class="card-header">
@@ -172,11 +170,13 @@
 
 		</div>
 	</div>
+	
 
 	<div class="float-right" style="margin-top: 1%">
 		<button type="submit" class="btn btn-primary">
 			<span class="fas fa-save"></span> {{ trans('patients.save') }}
 		</button>
-	</div>	
+	</div>
+
 </form>
 @endsection

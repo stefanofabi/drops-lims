@@ -31,10 +31,14 @@ Route::group(['middleware' => ['web']], function () {
 			'prefix' => 'pacientes/humanos',
 			'as' => 'patients/humans/',
 		], function() {
+			
 			Route::get('crear', 'HumansController@create')->name('create');
 
 			Route::post('almacenar', 'HumansController@store')->name('store');
 			
+			Route::get('ver/{id}', 'HumansController@show')->name('show')
+			->where('id', '[1-9][0-9]*');
+
 			Route::get('editar/{id}', 'HumansController@edit')->name('edit')
 			->where('id', '[1-9][0-9]*');
 			
@@ -54,6 +58,9 @@ Route::group(['middleware' => ['web']], function () {
 			Route::get('pacientes/animales/crear', 'AnimalsController@create')->name('create');
 
 			Route::post('pacientes/animales/almacenar', 'AnimalsController@store')->name('store');
+
+			Route::get('ver/{id}', 'AnimalsController@show')->name('show')
+			->where('id', '[1-9][0-9]*');
 
 			Route::get('editar/{id}', 'AnimalsController@edit')->name('edit')
 			->where('id', '[1-9][0-9]*');
@@ -76,6 +83,9 @@ Route::group(['middleware' => ['web']], function () {
 			Route::get('crear', 'IndustrialsController@create')->name('create');
 
 			Route::post('almacenar', 'IndustrialsController@store')->name('store');
+
+			Route::get('ver/{id}', 'IndustrialsController@show')->name('show')
+			->where('id', '[1-9][0-9]*');
 
 			Route::get('editar/{id}', 'IndustrialsController@edit')->name('edit')
 			->where('id', '[1-9][0-9]*');

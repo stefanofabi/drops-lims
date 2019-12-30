@@ -1,7 +1,7 @@
 @extends('patients/create')
 
 @section('content')
-<form method="post" action="{{ route('patients/humans/store') }}">
+<form method="post" action="{{ route('patients/animals/store') }}">
 	@csrf
 	<div class="card">
 		<div class="card-header">
@@ -30,19 +30,14 @@
 
 		<div class="card-body">
 
-			<div class="input-group mb-6 col-md-3">
+			<div class="input-group mb-6 col-md-6">
 				<div class="input-group-prepend">
-					<span class="input-group-text"> {{ trans('patients.dni') }} </span>
+					<span class="input-group-text"> {{ trans('patients.owner') }} </span>
 				</div>
-				<input type="number" class="form-control" name="dni">
+				<input type="text" class="form-control" name="owner" required>
 			</div>
 
 			<div class="input-group mb-6 col-md-9 input-form" style="margin-top: 1%">
-				<div class="input-group-prepend">
-					<span class="input-group-text"> {{ trans('patients.surname') }} </span>
-				</div>
-				<input type="text" class="form-control" name="surname" required>
-
 				<div class="input-group-prepend">
 					<span class="input-group-text"> {{ trans('patients.name') }} </span>
 				</div>
