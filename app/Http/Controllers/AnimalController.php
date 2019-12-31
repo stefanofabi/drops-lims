@@ -11,7 +11,7 @@ use App\Shunt;
 use App\Patient;
 use App\Animal;
 
-class AnimalsController extends Controller
+class AnimalController extends Controller
 {
 
     use Pagination;
@@ -109,7 +109,7 @@ class AnimalsController extends Controller
         }, self::RETRIES);
 
 
-        return redirect()->action('AnimalsController@show', ['id' => $id]);
+        return redirect()->action('AnimalController@show', ['id' => $id]);
     }
 
     /**
@@ -200,7 +200,7 @@ class AnimalsController extends Controller
         }, self::RETRIES);
 
 
-        return redirect()->action('AnimalsController@show', ['id' => $id]);      
+        return redirect()->action('AnimalController@show', ['id' => $id]);      
     }
 
     /**

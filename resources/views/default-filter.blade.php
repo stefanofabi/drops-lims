@@ -7,8 +7,7 @@
 
         @section('js')
         @show
-
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+        
     </head>
 
     <body> 

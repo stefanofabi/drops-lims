@@ -56,4 +56,12 @@ return [
     'complete_contact_information' => 'Complete contact information',
     'contact_information' => 'Contact information',
     'owner' => 'Owner',
+    'complete_fiscal_data' => 'Complete fiscal data',
+    'cuit' => 'CUIT',
+    'tax_condition' => 'Tax condition',
+    'select_condition' => 'Select condition',
+    'business_name' => 'Business name',
+    'fiscal_address' => 'Fiscal address',
+    'start_activity' => 'Start activity',
+
 ];

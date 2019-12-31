@@ -13,6 +13,6 @@ class HumansTableSeeder extends Seeder
     public function run()
     {
         //
-        $humans = factory(Human::class, 100)->create();
+        factory(Human::class, 100)->create();
     }
 }

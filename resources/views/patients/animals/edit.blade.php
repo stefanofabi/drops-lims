@@ -62,7 +62,7 @@
 
 	<div class="card margins-boxs-tb">
 		<div class="card-header">
-			<h4><i class="fas fa-id-card"></i> {{ trans('patients.personal_data') }} </h4>
+			<h4><i class="fas fa-id-card"></i> {{ trans('patients.complete_personal_data') }} </h4>
 		</div>
 
 		<div class="card-body">
@@ -124,8 +124,6 @@
 		</div>
 
 		<div class="card-body">
-
-
 			<div class="input-group mb-3">
 				<div class="input-group-prepend">
 					<span class="input-group-text"> {{ trans('patients.phones') }} </span>
@@ -166,8 +164,6 @@
 					</button>
 				</div>
 			</div>
-
-
 		</div>
 	</div>
 	

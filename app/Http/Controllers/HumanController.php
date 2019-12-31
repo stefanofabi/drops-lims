@@ -11,7 +11,7 @@ use App\Shunt;
 use App\Patient;
 use App\Human;
 
-class HumansController extends Controller
+class HumanController extends Controller
 {
 
     use Pagination;
@@ -111,7 +111,7 @@ class HumansController extends Controller
     	}, self::RETRIES);
 
 
-    	return redirect()->action('HumansController@show', ['id' => $id]);
+    	return redirect()->action('HumanController@show', ['id' => $id]);
     }
 
     /**
@@ -214,7 +214,7 @@ class HumansController extends Controller
      }, self::RETRIES);
 
 
-        return redirect()->action('HumansController@edit', ['id' => $id]);
+        return redirect()->action('HumanController@show', ['id' => $id]);
     }
 
     /**

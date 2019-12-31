@@ -8,7 +8,6 @@
 			<h4><i class="fas fa-toolbox"></i> {{ trans('patients.complete_shunt') }} </h4>
 		</div>
 		<div class="card-body">
-
 			<div class="input-group mb-6 col-md-6">
 				<div class="input-group-prepend">
 					<span class="input-group-text"> {{ trans('patients.shunt') }} </span>

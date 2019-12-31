@@ -22,9 +22,9 @@ Route::group(['middleware' => ['web']], function () {
 		'lang' => 'en|es'
 	]);
 
-	Route::post('pacientes', 'PatientsController@load')->name('patients/load');
-	Route::get('pacientes', 'PatientsController@index')->name('patients');
-	Route::get('pacientes/crear', 'PatientsController@create')->name('patients/create');
+	Route::post('pacientes', 'PatientController@load')->name('patients/load');
+	Route::get('pacientes', 'PatientController@index')->name('patients');
+	Route::get('pacientes/crear', 'PatientController@create')->name('patients/create');
 
 	Route::group(
 		[
@@ -32,20 +32,20 @@ Route::group(['middleware' => ['web']], function () {
 			'as' => 'patients/humans/',
 		], function() {
 			
-			Route::get('crear', 'HumansController@create')->name('create');
+			Route::get('crear', 'HumanController@create')->name('create');
 
-			Route::post('almacenar', 'HumansController@store')->name('store');
+			Route::post('almacenar', 'HumanController@store')->name('store');
 			
-			Route::get('ver/{id}', 'HumansController@show')->name('show')
+			Route::get('ver/{id}', 'HumanController@show')->name('show')
 			->where('id', '[1-9][0-9]*');
 
-			Route::get('editar/{id}', 'HumansController@edit')->name('edit')
+			Route::get('editar/{id}', 'HumanController@edit')->name('edit')
 			->where('id', '[1-9][0-9]*');
 			
-			Route::put('actualizar/{id}', 'HumansController@update')->name('update')
+			Route::put('actualizar/{id}', 'HumanController@update')->name('update')
 			->where('id', '[1-9][0-9]*');
 
-			Route::get('destruir/{id}', 'HumansController@destroy')->name('destroy')
+			Route::get('destruir/{id}', 'HumanController@destroy')->name('destroy')
 			->where('id', '[1-9][0-9]*');
 		});
 
@@ -55,20 +55,20 @@ Route::group(['middleware' => ['web']], function () {
 			'prefix' => 'pacientes/animales',
 			'as' => 'patients/animals/',
 		], function() {
-			Route::get('pacientes/animales/crear', 'AnimalsController@create')->name('create');
+			Route::get('pacientes/animales/crear', 'AnimalController@create')->name('create');
 
-			Route::post('pacientes/animales/almacenar', 'AnimalsController@store')->name('store');
+			Route::post('pacientes/animales/almacenar', 'AnimalController@store')->name('store');
 
-			Route::get('ver/{id}', 'AnimalsController@show')->name('show')
+			Route::get('ver/{id}', 'AnimalController@show')->name('show')
 			->where('id', '[1-9][0-9]*');
 
-			Route::get('editar/{id}', 'AnimalsController@edit')->name('edit')
+			Route::get('editar/{id}', 'AnimalController@edit')->name('edit')
 			->where('id', '[1-9][0-9]*');
 
-			Route::put('actualizar/{id}', 'AnimalsController@update')->name('update')
+			Route::put('actualizar/{id}', 'AnimalController@update')->name('update')
 			->where('id', '[1-9][0-9]*');
 
-			Route::get('destruir/{id}', 'AnimalsController@destroy')->name('destroy')
+			Route::get('destruir/{id}', 'AnimalController@destroy')->name('destroy')
 			->where('id', '[1-9][0-9]*');
 
 
@@ -80,20 +80,20 @@ Route::group(['middleware' => ['web']], function () {
 			'prefix' => 'pacientes/industriales',
 			'as' => 'patients/industrials/',
 		], function() {
-			Route::get('crear', 'IndustrialsController@create')->name('create');
+			Route::get('crear', 'IndustrialController@create')->name('create');
 
-			Route::post('almacenar', 'IndustrialsController@store')->name('store');
+			Route::post('almacenar', 'IndustrialController@store')->name('store');
 
-			Route::get('ver/{id}', 'IndustrialsController@show')->name('show')
+			Route::get('ver/{id}', 'IndustrialController@show')->name('show')
 			->where('id', '[1-9][0-9]*');
 
-			Route::get('editar/{id}', 'IndustrialsController@edit')->name('edit')
+			Route::get('editar/{id}', 'IndustrialController@edit')->name('edit')
 			->where('id', '[1-9][0-9]*');
 
-			Route::put('actualizar/{id}', 'IndustrialsController@update')->name('update')
+			Route::put('actualizar/{id}', 'IndustrialController@update')->name('update')
 			->where('id', '[1-9][0-9]*');
 
-			Route::get('destruir/{id}', 'IndustrialsController@destroy')->name('destroy')
+			Route::get('destruir/{id}', 'IndustrialController@destroy')->name('destroy')
 			->where('id', '[1-9][0-9]*');
 		});
 

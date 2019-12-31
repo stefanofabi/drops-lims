@@ -47,77 +47,106 @@
 </div>
 
 
-	<div class="card">
-		<div class="card-header">
-			<h4><i class="fas fa-toolbox"></i> {{ trans('patients.shunt') }} </h4>
-		</div>
-		<div class="card-body">
+<div class="card">
+	<div class="card-header">
+		<h4><i class="fas fa-toolbox"></i> {{ trans('patients.shunt') }} </h4>
+	</div>
+	<div class="card-body">
 
-			<div class="input-group mb-6 col-md-6">
-				<div class="input-group-prepend">
-					<span class="input-group-text"> {{ trans('patients.shunt') }} </span>
-				</div>
-				
-				<input type="text" class="form-control" name="shunt" value="{{ $animal['shunt'] }}" disabled>
+		<div class="input-group mb-6 col-md-6">
+			<div class="input-group-prepend">
+				<span class="input-group-text"> {{ trans('patients.shunt') }} </span>
 			</div>
+
+			<input type="text" class="form-control" value="{{ $animal['shunt'] }}" disabled>
 		</div>
 	</div>
+</div>
 
-	<div class="card margins-boxs-tb">
-		<div class="card-header">
-			<h4><i class="fas fa-id-card"></i> {{ trans('patients.personal_data') }} </h4>
+<div class="card margins-boxs-tb">
+	<div class="card-header">
+		<h4><i class="fas fa-id-card"></i> {{ trans('patients.personal_data') }} </h4>
+	</div>
+
+	<div class="card-body">
+
+		<div class="input-group mb-6 col-md-6">
+			<div class="input-group-prepend">
+				<span class="input-group-text"> {{ trans('patients.owner') }} </span>
+			</div>
+			<input type="text" class="form-control" value="{{ $animal['owner'] }}" disabled>
 		</div>
 
-		<div class="card-body">
+		<div class="input-group mb-6 col-md-9 input-form" style="margin-top: 1%">
+			<div class="input-group-prepend">
+				<span class="input-group-text"> {{ trans('patients.name') }} </span>
+			</div>
+			<input type="text" class="form-control" value="{{ $animal['name'] }}" disabled>
+		</div>
 
-			<div class="input-group mb-6 col-md-6">
-				<div class="input-group-prepend">
-					<span class="input-group-text"> {{ trans('patients.owner') }} </span>
-				</div>
-				<input type="text" class="form-control" name="owner" value="{{ $animal['owner'] }}" disabled>
+		<div class="input-group mb-6 col-md-9 input-form" style="margin-top: 1%">
+			<div class="input-group-prepend">
+				<span class="input-group-text"> {{ trans('patients.home_address') }} </span>
+			</div>
+			<input type="text" class="form-control" value="{{ $animal['home_address'] }}" disabled>
+
+			<div class="input-group-prepend">
+				<span class="input-group-text"> {{ trans('patients.city') }} </span>
+			</div>
+			<input type="text" class="form-control" value="{{ $animal['city'] }}" disabled>
+		</div>
+
+		<div class="input-group mb-6 col-md-6 input-form" style="margin-top: 1%">
+			<div class="input-group-prepend">
+				<span class="input-group-text"> {{ trans('patients.sex') }} </span>
 			</div>
 
-			<div class="input-group mb-6 col-md-9 input-form" style="margin-top: 1%">
-				<div class="input-group-prepend">
-					<span class="input-group-text"> {{ trans('patients.name') }} </span>
-				</div>
-				<input type="text" class="form-control" name="name" value="{{ $animal['name'] }}" disabled>
+			<select class="form-control input-sm" id="sex" disabled>
+				<option value=""> {{ trans('patients.select_sex') }} </option>
+				<option value="F"> {{ trans('patients.female') }} </option>
+				<option value="M"> {{ trans('patients.male') }} </option>
+			</select>
+		</div>
+
+
+		<div class="input-group mb-6 col-md-6 input-form" style="margin-top: 1%">
+			<div class="input-group-prepend">
+				<span class="input-group-text"> {{ trans('patients.birth_date') }} </span>
 			</div>
 
-			<div class="input-group mb-6 col-md-9 input-form" style="margin-top: 1%">
-				<div class="input-group-prepend">
-					<span class="input-group-text"> {{ trans('patients.home_address') }} </span>
-				</div>
-				<input type="text" class="form-control" name="home_address" value="{{ $animal['home_address'] }}" disabled>
+			<input type="date" class="form-control" value="{{ $animal['birth_date'] }}" disabled>
+		</div>
 
-				<div class="input-group-prepend">
-					<span class="input-group-text"> {{ trans('patients.city') }} </span>
-				</div>
-				<input type="text" class="form-control" name="city" value="{{ $animal['city'] }}" disabled>
+	</div>
+</div>
+
+<div class="card">
+	<div class="card-header">
+		<h4><i class="fas fa-book"></i> {{ trans('patients.contact_information') }} </h4>
+	</div>
+
+	<div class="card-body">
+		<div class="input-group mb-3">
+			<div class="input-group-prepend">
+				<span class="input-group-text"> {{ trans('patients.phones') }} </span>
 			</div>
 
-			<div class="input-group mb-6 col-md-6 input-form" style="margin-top: 1%">
-				<div class="input-group-prepend">
-					<span class="input-group-text"> {{ trans('patients.sex') }} </span>
-				</div>
+			<select class="form-control input-sm col-md-6" style="margin-right: 1%" readonly>
+				<option value=""> {{ trans('patients.select_phone') }}</option>
+			</select>
+		</div>
 
-				<select class="form-control input-sm" id="sex" name="sex" disabled>
-					<option value=""> {{ trans('patients.select_sex') }} </option>
-					<option value="F"> {{ trans('patients.female') }} </option>
-					<option value="M"> {{ trans('patients.male') }} </option>
-				</select>
+
+		<div class="input-group mb-3">
+			<div class="input-group-prepend">
+				<span class="input-group-text"> {{ trans('patients.emails') }} </span>
 			</div>
 
-
-			<div class="input-group mb-6 col-md-6 input-form" style="margin-top: 1%">
-				<div class="input-group-prepend">
-					<span class="input-group-text"> {{ trans('patients.birth_date') }} </span>
-				</div>
-
-				<input type="date" class="form-control" name="birth_date" value="{{ $animal['birth_date'] }}" disabled>
-			</div>
-
+			<select class="form-control input-sm col-md-6" style="margin-right: 1%" readonly>
+				<option value=""> {{ trans('patients.select_email') }}</option>
+			</select>
 		</div>
 	</div>
+</div>
 
 @endsection

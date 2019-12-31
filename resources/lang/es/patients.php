@@ -56,5 +56,12 @@ return [
     'complete_contact_information' => 'Completar datos de contacto',
     'contact_information' => 'Datos de contacto',
     'owner' => 'Propietario',
-   
+    'start_activity' => 'Inicio de actividad',
+    'complete_fiscal_data' => 'Completar datos fiscales',
+    'cuit' => 'CUIT',
+    'tax_condition' => 'Condición fiscal',
+    'select_condition' => 'Seleccione una condición',
+    'business_name' => 'Razón social',
+    'fiscal_address' => 'Dirección fiscal',
+    'start_activity' => 'Inicio de actividad',
 ];

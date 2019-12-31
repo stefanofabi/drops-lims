@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Shunt;
 
-class PatientsController extends Controller
+class PatientController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -30,16 +30,18 @@ class PatientsController extends Controller
         
         switch($patient_type) {
             case 'animals': {
-            	$controller = new AnimalsController();
+            	$controller = new AnimalController();
                 $view = $controller->index($request);
                 break;
             }
             case 'humans': {
-                $controller = new HumansController();
+                $controller = new HumanController();
                 $view = $controller->index($request);
                 break;
             }
             case 'industrials': {
+                $controller = new IndustrialController();
+                $view = $controller->index($request);
                 break;
             }
             default: { 
