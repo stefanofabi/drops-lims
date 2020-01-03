@@ -20,17 +20,23 @@
 @endsection
 
 @section('menu')
-<p>
-	<ul class="nav flex-column">
-		<li class="nav-item">
-			<a class="nav-link" href=""> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> Crear protocolo </a>
-		</li>		
+<ul class="nav flex-column">
+	<li class="nav-item">
+		<a class="nav-link" href="{{ route('patients/phones/create', [$human['id']]) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('patients.add_phone') }} </a>
+	</li>		
 
-		<li class="nav-item">
-			<a class="nav-link" href=""> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> Ver protocolos</a>
-		</li>
-	</ul>
-</p>
+	<li class="nav-item">
+		<a class="nav-link" href="{{ route('patients/emails/create', [$human['id']]) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('patients.add_email') }} </a>
+	</li>
+
+	<li class="nav-item">
+		<a class="nav-link" href=""> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('patients.social_work') }} </a>
+	</li>
+
+	<li class="nav-item">
+		<a class="nav-link" href="{{ route('patients/humans/show', [$human['id']]) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('patients.go_back') }} </a>
+	</li>	
+</ul>
 @endsection
 
 
@@ -43,20 +49,6 @@
 <form method="post" action="{{ route('patients/humans/update', ['id' => $human['id']]) }}">
 	@csrf
 	{{ method_field('PUT') }}
-
-	<div class="card">
-		<div class="card-header">
-			<h4><i class="fas fa-toolbox"></i> {{ trans('patients.shunt') }} </h4>
-		</div>
-		<div class="card-body">
-			<div class="input-group mb-6 col-md-6">
-				<div class="input-group-prepend">
-					<span class="input-group-text"> {{ trans('patients.shunt') }} </span>
-				</div>
-				<input type="text" class="form-control" name="shunt" value="{{ $human['shunt'] }}" disabled>
-			</div>
-		</div>
-	</div>
 
 	<div class="card margins-boxs-tb">
 		<div class="card-header">
@@ -74,9 +66,9 @@
 
 			<div class="input-group mb-9 col-md-9 input-form" style="margin-top: 1%">
 				<div class="input-group-prepend">
-					<span class="input-group-text"> {{ trans('patients.surname') }} </span>
+					<span class="input-group-text"> {{ trans('patients.last_name') }} </span>
 				</div>
-				<input type="text" class="form-control" name="surname" value="{{ $human['surname'] }}" required>
+				<input type="text" class="form-control" name="last_name" value="{{ $human['last_name'] }}" required>
 
 				<div class="input-group-prepend">
 					<span class="input-group-text"> {{ trans('patients.name') }} </span>
@@ -135,6 +127,10 @@
 
 				<select class="form-control input-sm col-md-6" style="margin-right: 1%">
 					<option value=""> {{ trans('patients.select_phone') }}</option>
+
+					@foreach ($phones as $phone)
+					<option value="{{ $phone->id }}"> {{ $phone->phone }}</option>
+					@endforeach
 				</select>
 
 				<div>
@@ -156,6 +152,10 @@
 
 				<select class="form-control input-sm col-md-6" style="margin-right: 1%">
 					<option value=""> {{ trans('patients.select_email') }}</option>
+
+					@foreach ($emails as $email)
+					<option value="{{ $email->id }}"> {{ $email->email }}</option>
+					@endforeach
 				</select>
 
 				<div>

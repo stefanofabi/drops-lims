@@ -24,9 +24,6 @@
         // Put the filter
         $("#filter" ).val('{{ $request['filter'] ?? '' }}');
 
-        // Select a shunt from list
-        $("#shunt option[value='{{ $request['shunt'] ?? '' }}']").attr("selected",true);
-
         // Check a type
         $('input:radio[name="type"][value="{{ $request['type'] ?? '' }}"]').prop('checked', true);
     });
@@ -54,17 +51,6 @@
     <div class="custom-control custom-radio custom-control-inline">
         <input type="radio" class="custom-control-input" id="tipoIndustrial" name="type" value="industrials" required>
         <label class="custom-control-label" for="tipoIndustrial"> {{ trans('patients.industrial') }} </label>
-    </div>
-</div>
-
-<div class="form-group row">
-    <div class="col-md-3">
-        <select class="form-control input-sm" id="shunt" name="shunt" required>
-            <option value=""> {{ trans('patients.select_shunt') }}</option>
-            @foreach($shunts as $shunt)
-                <option value="{{ $shunt->id }}"> {{ $shunt->name}} </option>
-            @endforeach 
-        </select>
     </div>
 </div>
 

@@ -14,10 +14,9 @@ class Animal extends Model
 	public $incrementing = false;
 
 
-	protected function index($shunt, $filter, $offset, $length) {
+	protected function index($filter, $offset, $length) {
 		$patients = DB::table('patients')
 		->join('animals', 'id', '=', 'patient_id')
-		->where('shunt_id', $shunt)
 		->where(function ($query) use ($filter) {
 			if (!empty($filter)) {
 				$query->orWhere('name', "like", "%$filter%")
@@ -34,10 +33,9 @@ class Animal extends Model
 	}
 
 
-	protected function count_index($shunt, $filter) {
+	protected function count_index($filter) {
 		$count = DB::table('patients')
 		->join('animals', 'id', '=', 'patient_id')
-		->where('shunt_id', $shunt)
 		->where(function ($query) use ($filter) {
 			if (!empty($filter)) {
 				$query->orWhere('name', "like", "%$filter%")

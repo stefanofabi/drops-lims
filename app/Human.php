@@ -14,17 +14,16 @@ class Human extends Model
 	public $incrementing = false;
 
 
-	protected function index($shunt, $filter, $offset, $length) {
+	protected function index($filter, $offset, $length) {
 		$patients = DB::table('patients')
 		->join('humans', 'id', '=', 'patient_id')
-		->where('shunt_id', $shunt)
 		->where(function ($query) use ($filter) {
 			if (!empty($filter)) {
 				$query->orWhere(DB::raw('CONCAT(surname, " ", name)'), "like", "%$filter%")
 				->orWhere('dni', "like", "$filter%");
 			}
 		})
-		->orderBy('surname', 'asc')
+		->orderBy('last_name', 'asc')
 		->orderBy('name', 'asc')
 		->offset($offset)
 		->limit($length)
@@ -34,10 +33,9 @@ class Human extends Model
 	}
 
 
-	protected function count_index($shunt, $filter) {
+	protected function count_index($filter) {
 		$count = DB::table('patients')
 		->join('humans', 'id', '=', 'patient_id')
-		->where('shunt_id', $shunt)
 		->where(function ($query) use ($filter) {
 			if (!empty($filter)) {
 				$query->orWhere(DB::raw('CONCAT(surname, " ", name)'), "like", "%$filter%")

@@ -10,6 +10,8 @@ use App\Http\Traits\Pagination;
 use App\Shunt;
 use App\Patient;
 use App\Human;
+use App\Email;
+use App\Phone;
 
 class HumanController extends Controller
 {
@@ -29,24 +31,21 @@ class HumanController extends Controller
     public function index(Request $request)
     {
         //
-        $shunts = Shunt::all();
 
         // Request
-        $shunt = $request['shunt'];
         $filter = $request['filter'];
         $page = $request['page'];
 
         $offset = ($page - 1) * self::PER_PAGE;
-        $query_patients = Human::index($shunt, $filter, $offset, self::PER_PAGE);
+        $query_patients = Human::index($filter, $offset, self::PER_PAGE);
 
         // Pagination
-        $count_rows = Human::count_index($shunt, $filter);
+        $count_rows = Human::count_index($filter);
         $total_pages = ceil($count_rows / self::PER_PAGE);
 
         $paginate = $this->paginate($page, $total_pages, self::ADJACENTS);
 
         $view = view('patients/humans/index')
-        ->with('shunts', $shunts)
         ->with('request', $request->all())
         ->with('data', $query_patients)
         ->with('paginate', $paginate);
@@ -62,9 +61,8 @@ class HumanController extends Controller
     public function create()
     {
         //
-    	$shunts = Shunt::all();
 
-    	return view('patients/humans/create')->with('shunts', $shunts);      
+    	return view('patients/humans/create');      
     }
 
     /**
@@ -78,18 +76,16 @@ class HumanController extends Controller
         //
 
     	$id = DB::transaction(function () use ($request) {
-    		$shunt = $request->shunt;
     		$name = $request['name'];
 
     		$patient = Patient::insertGetId([
     			'name' => $name, 
-    			'shunt_id' => $shunt
     		]);
 
 
             // other data for humans
     		$dni = $request['dni'];
-    		$surname = $request['surname'];
+    		$last_name = $request['last_name'];
 
     		$home_address = $request['home_address'];
     		$city = $request['city'];
@@ -100,7 +96,7 @@ class HumanController extends Controller
     		Human::insert([
     			'patient_id' => $patient, 
     			'dni' => $dni,
-    			'surname' => $surname,
+    			'last_name' => $last_name,
     			'sex' => $sex,
     			'birth_date' => $birth_date,
     			'city' => $city,
@@ -125,14 +121,11 @@ class HumanController extends Controller
         //
         $human = Human::find($id);
         $patient = $human->patient;
-        $shunt = $patient->shunt;
-
 
         $data = [
             'id' => $patient->id,
-            'shunt' => $shunt->name,
             'dni' => $human->dni,
-            'surname' => $human->surname,
+            'last_name' => $human->last_name,
             'name' => $patient->name,
             'home_address' => $human->home_address,
             'city' => $human->city,
@@ -140,8 +133,15 @@ class HumanController extends Controller
             'birth_date' => $human->birth_date,
         ];
 
+        $emails = Email::get_emails($id);
 
-        return view('patients/humans/show')->with('human', $data);
+        $phones = Phone::get_phones($id);
+
+
+        return view('patients/humans/show')
+        ->with('human', $data)
+        ->with('emails', $emails)
+        ->with('phones', $phones);
     }
 
     /**
@@ -155,30 +155,30 @@ class HumanController extends Controller
         //
     	$human = Human::find($id);
 
-        if ($human) {
-            $patient = $human->patient;
-            $shunt = $patient->shunt;
+        $patient = $human->patient;
 
-            $data = [
-                'id' => $patient->id,
-                'shunt' => $shunt->name,
-                'dni' => $human->dni,
-                'surname' => $human->surname,
-                'name' => $patient->name,
-                'home_address' => $human->home_address,
-                'city' => $human->city,
-                'sex' => $human->sex,
-                'birth_date' => $human->birth_date,
-            ];
+        $data = [
+            'id' => $patient->id,
+            'dni' => $human->dni,
+            'last_name' => $human->last_name,
+            'name' => $patient->name,
+            'home_address' => $human->home_address,
+            'city' => $human->city,
+            'sex' => $human->sex,
+            'birth_date' => $human->birth_date,
+        ];
 
-            $view = view('patients/humans/edit')->with('human', $data);
-        } else {
-            $view = \Redirect::back();
-        }
+        $emails = Email::get_emails($id);
 
+        $phones = Phone::get_phones($id);
 
+        $view = view('patients/humans/edit')
+        ->with('human', $data)
+        ->with('emails', $emails)
+        ->with('phones', $phones);
+        
 
-    	return $view;
+        return $view;
     }
 
     /**
@@ -192,26 +192,23 @@ class HumanController extends Controller
     {
         //
 
-    	$result = DB::transaction(function () use ($request, $id) {
+    	DB::transaction(function () use ($request, $id) {
 
     		$result_patient = Patient::where('id', '=', $id)
-         ->update(['name' => $request->name]);
+           ->update(['name' => $request->name]);
 
-         $result_human = Human::where('patient_id', '=', $id)
-         ->update(
-             [
+           $result_human = Human::where('patient_id', '=', $id)
+           ->update(
+               [
                 'dni' => $request->dni,
-                'surname' => $request->surname,
+                'last_name' => $request->last_name,
                 'home_address' => $request->home_address,
                 'city' => $request->city,
                 'sex' => $request->sex,
                 'birth_date' => $request->birth_date,
             ]);
 
-         $result =  $result_patient && $result_human;
-
-         return $result;
-     }, self::RETRIES);
+       }, self::RETRIES);
 
 
         return redirect()->action('HumanController@show', ['id' => $id]);

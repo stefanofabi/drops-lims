@@ -15,7 +15,7 @@
 
 			@foreach ($data as $patient)
 			<tr>
-				<td> {{ $patient->surname }}, {{ $patient->name }} </td>
+				<td> {{ $patient->last_name }}, {{ $patient->name }} </td>
 				<td> {{ $patient->dni }} </td>
 				<td> {{ $patient->city }} </td>
 				<td> {{ $patient->home_address }} </td>

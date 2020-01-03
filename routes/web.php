@@ -24,7 +24,30 @@ Route::group(['middleware' => ['web']], function () {
 
 	Route::post('pacientes', 'PatientController@load')->name('patients/load');
 	Route::get('pacientes', 'PatientController@index')->name('patients');
-	Route::get('pacientes/crear', 'PatientController@create')->name('patients/create');
+
+
+	Route::group(
+		[
+			'prefix' => 'pacientes',
+			'as' => 'patients/',
+		], function() {
+
+			Route::get('emails/crear/{id}', 'EmailController@create')->name('emails/create')
+			->where('id', '[1-9][0-9]*');
+			Route::post('emails/almacenar', 'EmailController@store')->name('emails/store');
+
+
+			Route::get('phones/crear/{id}', 'PhoneController@create')->name('phones/create')
+			->where('id', '[1-9][0-9]*');
+			Route::post('phones/almacenar', 'PhoneController@store')->name('phones/store');
+
+			Route::get('ver/{id}', 'PatientController@show')->name('show')
+			->where('id', '[1-9][0-9]*');
+
+			Route::get('crear', 'PatientController@create')->name('create');
+		});
+
+
 
 	Route::group(
 		[

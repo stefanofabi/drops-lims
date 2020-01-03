@@ -10,7 +10,7 @@ $factory->define(Human::class, function (Faker $faker) {
         //
         'patient_id' => $faker->unique()->numberBetween($min=1, $max=100),
         'dni' => $faker->randomNumber(8),
-        'surname' => $faker->lastName(),
+        'last_name' => $faker->lastName(),
         'sex' => $faker->randomElement($array = array('F', 'M')),
         'birth_date' => $faker->date($format = 'Y-m-d', $max = 'now'),
         'city' => $faker->city,

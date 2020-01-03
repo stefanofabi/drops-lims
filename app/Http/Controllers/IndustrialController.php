@@ -11,6 +11,8 @@ use App\Industrial;
 use App\Shunt;
 use App\TaxCondition;
 use App\Patient;
+use App\Email;
+use App\Phone;
 
 class IndustrialController extends Controller
 {
@@ -33,21 +35,19 @@ class IndustrialController extends Controller
         $shunts = Shunt::all();
 
         // Request
-        $shunt = $request['shunt'];
         $filter = $request['filter'];
         $page = $request['page'];
 
         $offset = ($page - 1) * self::PER_PAGE;
-        $query_patients = Industrial::index($shunt, $filter, $offset, self::PER_PAGE);
+        $query_patients = Industrial::index($filter, $offset, self::PER_PAGE);
 
         // Pagination
-        $count_rows = Industrial::count_index($shunt, $filter);
+        $count_rows = Industrial::count_index($filter);
         $total_pages = ceil($count_rows / self::PER_PAGE);
 
         $paginate = $this->paginate($page, $total_pages, self::ADJACENTS);
 
         $view = view('patients/industrials/index')
-        ->with('shunts', $shunts)
         ->with('request', $request->all())
         ->with('data', $query_patients)
         ->with('paginate', $paginate);
@@ -63,11 +63,9 @@ class IndustrialController extends Controller
     public function create()
     {
         //
-        $shunts = Shunt::all();
         $conditions = TaxCondition::all();
 
         return view('patients/industrials/create')
-        ->with('shunts', $shunts)
         ->with('conditions', $conditions);
     }
 
@@ -81,12 +79,10 @@ class IndustrialController extends Controller
     {
         //
         $id = DB::transaction(function () use ($request) {
-            $shunt = $request->shunt;
             $name = $request['name'];
 
             $patient = Patient::insertGetId([
                 'name' => $name, 
-                'shunt_id' => $shunt
             ]);
 
 
@@ -128,14 +124,12 @@ class IndustrialController extends Controller
         //
         $industrial = Industrial::find($id);
         $patient = $industrial->patient;
-        $shunt = $patient->shunt;
 
         $tax_conditions = TaxCondition::all();
 
 
         $data = [
             'id' => $patient->id,
-            'shunt' => $shunt->name,
             'name' => $patient->name,
             'business_name' => $industrial->business_name,
             'cuit' => $industrial->cuit,
@@ -145,10 +139,15 @@ class IndustrialController extends Controller
             'city' => $industrial->city
         ];
 
+        $emails = Email::get_emails($id);
+
+        $phones = Phone::get_phones($id);
 
         return view('patients/industrials/show')
         ->with('industrial', $data)
-        ->with('tax_conditions', $tax_conditions);
+        ->with('tax_conditions', $tax_conditions)
+        ->with('emails', $emails)
+        ->with('phones', $phones);
     }
 
     /**
@@ -162,14 +161,11 @@ class IndustrialController extends Controller
         //
         $industrial = Industrial::find($id);
         $patient = $industrial->patient;
-        $shunt = $patient->shunt;
-
         $tax_conditions = TaxCondition::all();
 
 
         $data = [
             'id' => $patient->id,
-            'shunt' => $shunt->name,
             'name' => $patient->name,
             'business_name' => $industrial->business_name,
             'cuit' => $industrial->cuit,
@@ -179,10 +175,16 @@ class IndustrialController extends Controller
             'city' => $industrial->city
         ];
 
+        $emails = Email::get_emails($id);
+
+        $phones = Phone::get_phones($id);
+
 
         return view('patients/industrials/edit')
         ->with('industrial', $data)
-        ->with('tax_conditions', $tax_conditions);
+        ->with('tax_conditions', $tax_conditions)
+        ->with('emails', $emails)
+        ->with('phones', $phones);
     }
 
     /**
@@ -203,7 +205,7 @@ class IndustrialController extends Controller
 
             $result_industrial = Industrial::where('patient_id', '=', $id)
             ->update(
-               [
+             [
                 'business_name' => $request->business_name,
                 'cuit' => $request->cuit,
                 'tax_condition' => $request->tax_condition,

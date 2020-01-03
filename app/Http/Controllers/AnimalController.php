@@ -10,6 +10,8 @@ use App\Http\Traits\Pagination;
 use App\Shunt;
 use App\Patient;
 use App\Animal;
+use App\Email;
+use App\Phone;
 
 class AnimalController extends Controller
 {
@@ -29,24 +31,20 @@ class AnimalController extends Controller
     public function index(Request $request)
     {
         //
-        $shunts = Shunt::all();
-
         // Request
-        $shunt = $request['shunt'];
         $filter = $request['filter'];
         $page = $request['page'];
 
         $offset = ($page - 1) * self::PER_PAGE;
-        $query_patients = Animal::index($shunt, $filter, $offset, self::PER_PAGE);
+        $query_patients = Animal::index($filter, $offset, self::PER_PAGE);
 
         // Pagination
-        $count_rows = Animal::count_index($shunt, $filter);
+        $count_rows = Animal::count_index($filter);
         $total_pages = ceil($count_rows / self::PER_PAGE);
 
         $paginate = $this->paginate($page, $total_pages, self::ADJACENTS);
 
         $view = view('patients/animals/index')
-        ->with('shunts', $shunts)
         ->with('request', $request->all())
         ->with('data', $query_patients)
         ->with('paginate', $paginate);
@@ -62,9 +60,8 @@ class AnimalController extends Controller
     public function create()
     {
         //
-        $shunts = Shunt::all();
 
-        return view('patients/animals/create', ['shunts' => $shunts]);
+        return view('patients/animals/create');
     }
 
     /**
@@ -78,12 +75,10 @@ class AnimalController extends Controller
         //
 
         $id = DB::transaction(function () use ($request) {
-            $shunt = $request['shunt'];
             $name = $request['name'];
 
             $patient = Patient::insertGetId([
                 'name' => $name, 
-                'shunt_id' => $shunt
             ]);
 
 
@@ -124,11 +119,9 @@ class AnimalController extends Controller
 
         $animal = Animal::find($id);
         $patient = $animal->patient;
-        $shunt = $patient->shunt;
 
         $data = [
             'id' => $patient->id,
-            'shunt' => $shunt->name,
             'owner' => $animal->owner,
             'name' => $patient->name,
             'home_address' => $animal->home_address,
@@ -137,7 +130,14 @@ class AnimalController extends Controller
             'birth_date' => $animal->birth_date,
         ];
 
-        return view('patients/animals/show')->with('animal', $data);
+        $emails = Email::get_emails($id);
+
+        $phones = Phone::get_phones($id);
+
+        return view('patients/animals/show')
+        ->with('animal', $data)
+        ->with('emails', $emails)
+        ->with('phones', $phones);
     }
 
     /**
@@ -151,12 +151,9 @@ class AnimalController extends Controller
         //
         $animal = Animal::find($id);
         $patient = $animal->patient;
-        $shunt = $patient->shunt;
-
 
         $data = [
             'id' => $patient->id,
-            'shunt' => $shunt->name,
             'owner' => $animal->owner,
             'name' => $patient->name,
             'home_address' => $animal->home_address,
@@ -165,7 +162,14 @@ class AnimalController extends Controller
             'birth_date' => $animal->birth_date,
         ];
 
-        return view('patients/animals/edit')->with('animal', $data);
+        $emails = Email::get_emails($id);
+
+        $phones = Phone::get_phones($id);
+
+        return view('patients/animals/edit')
+        ->with('animal', $data)
+        ->with('emails', $emails)
+        ->with('phones', $phones);
     }
 
     /**

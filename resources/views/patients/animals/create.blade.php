@@ -3,25 +3,6 @@
 @section('content')
 <form method="post" action="{{ route('patients/animals/store') }}">
 	@csrf
-	<div class="card">
-		<div class="card-header">
-			<h4><i class="fas fa-toolbox"></i> {{ trans('patients.complete_shunt') }} </h4>
-		</div>
-		<div class="card-body">
-
-			<div class="input-group mb-6 col-md-6">
-				<div class="input-group-prepend">
-					<span class="input-group-text"> {{ trans('patients.shunt') }} </span>
-				</div>
-					<select class="form-control" name="shunt" required>
-						<option value=""> {{ trans('patients.select_shunt') }} </option>
-						@foreach ($shunts as $shunt)
-						<option value="{{ $shunt->id }}"> {{ $shunt->name }}</option>
-						@endforeach
-					</select>
-			</div>
-		</div>
-	</div>
 
 	<div class="card margins-boxs-tb">
 		<div class="card-header">

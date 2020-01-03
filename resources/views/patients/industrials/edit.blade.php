@@ -20,17 +20,23 @@
 @endsection
 
 @section('menu')
-<p>
-	<ul class="nav flex-column">
-		<li class="nav-item">
-			<a class="nav-link" href=""> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> Crear protocolo </a>
-		</li>		
+<ul class="nav flex-column">
+	<li class="nav-item">
+		<a class="nav-link" href="{{ route('patients/phones/create', [$industrial['id']]) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('patients.add_phone') }} </a>
+	</li>		
 
-		<li class="nav-item">
-			<a class="nav-link" href=""> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> Ver protocolos</a>
-		</li>
-	</ul>
-</p>
+	<li class="nav-item">
+		<a class="nav-link" href="{{ route('patients/emails/create', [$industrial['id']]) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('patients.add_email') }} </a>
+	</li>
+
+	<li class="nav-item">
+		<a class="nav-link" href=""> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('patients.social_work') }} </a>
+	</li>
+
+	<li class="nav-item">
+		<a class="nav-link" href="{{ route('patients/industrials/show', [$industrial['id']]) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('patients.go_back') }} </a>
+	</li>	
+</ul>
 @endsection
 
 @section('content-title')
@@ -41,20 +47,6 @@
 <form method="post" action="{{ route('patients/industrials/update', ['id' => $industrial['id']]) }}">
 	@csrf
 	{{ method_field('PUT') }}
-
-	<div class="card">
-		<div class="card-header">
-			<h4><i class="fas fa-toolbox"></i> {{ trans('patients.shunt') }} </h4>
-		</div>
-		<div class="card-body">
-			<div class="input-group mb-6 col-md-6">
-				<div class="input-group-prepend">
-					<span class="input-group-text"> {{ trans('patients.shunt') }} </span>
-				</div>
-				<input type="text" class="form-control" value="{{ $industrial['shunt'] }}" disabled>
-			</div>
-		</div>
-	</div>
 
 	<div class="card margins-boxs-tb">
 		<div class="card-header">
@@ -122,6 +114,44 @@
 				<input type="date" class="form-control" name="start_activity" value="{{ $industrial['start_activity'] }}">
 			</div>
 
+		</div>
+	</div>
+
+
+	<div class="card">
+		<div class="card-header">
+			<h4><i class="fas fa-book"></i> {{ trans('patients.complete_contact_information') }} </h4>
+		</div>
+
+		<div class="card-body">
+			<div class="input-group mb-3">
+				<div class="input-group-prepend">
+					<span class="input-group-text"> {{ trans('patients.phones') }} </span>
+				</div>
+
+				<select class="form-control input-sm col-md-6" style="margin-right: 1%" readonly>
+					<option value=""> {{ trans('patients.select_phone') }}</option>
+
+					@foreach ($phones as $phone)
+					<option value="{{ $phone->id }}"> {{ $phone->phone }}</option>
+					@endforeach
+				</select>
+			</div>
+
+
+			<div class="input-group mb-3">
+				<div class="input-group-prepend">
+					<span class="input-group-text"> {{ trans('patients.emails') }} </span>
+				</div>
+
+				<select class="form-control input-sm col-md-6" style="margin-right: 1%" readonly>
+					<option value=""> {{ trans('patients.select_email') }}</option>
+
+					@foreach ($emails as $email)
+					<option value="{{ $email->id }}"> {{ $email->email }}</option>
+					@endforeach
+				</select>
+			</div>
 		</div>
 	</div>
 

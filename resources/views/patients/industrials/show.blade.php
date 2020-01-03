@@ -43,20 +43,6 @@
 	{{ trans('patients.patient_blocked') }}
 </div>
 
-<div class="card">
-	<div class="card-header">
-		<h4><i class="fas fa-toolbox"></i> {{ trans('patients.shunt') }} </h4>
-	</div>
-	<div class="card-body">
-		<div class="input-group mb-6 col-md-6">
-			<div class="input-group-prepend">
-				<span class="input-group-text"> {{ trans('patients.shunt') }} </span>
-			</div>
-			<input type="text" class="form-control" value="{{ $industrial['shunt'] }}" disabled>
-		</div>
-	</div>
-</div>
-
 <div class="card margins-boxs-tb">
 	<div class="card-header">
 		<h4><i class="fas fa-toolbox"></i> {{ trans('patients.personal_data') }} </h4>
@@ -139,6 +125,10 @@
 
 			<select class="form-control input-sm col-md-6" style="margin-right: 1%" readonly>
 				<option value=""> {{ trans('patients.select_phone') }}</option>
+
+				@foreach ($phones as $phone)
+				<option value="{{ $phone->id }}"> {{ $phone->phone }}</option>
+				@endforeach
 			</select>
 		</div>
 
@@ -150,6 +140,10 @@
 
 			<select class="form-control input-sm col-md-6" style="margin-right: 1%" readonly>
 				<option value=""> {{ trans('patients.select_email') }}</option>
+
+				@foreach ($emails as $email)
+				<option value="{{ $email->id }}"> {{ $email->email }}</option>
+				@endforeach
 			</select>
 		</div>
 	</div>

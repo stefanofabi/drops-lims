@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Shunt;
+
+use App\Animal;
+use App\Human;
+use App\Industrial;
 
 class PatientController extends Controller
 {
@@ -15,9 +18,7 @@ class PatientController extends Controller
     public function index()
     {
         //
-        $shunts = Shunt::all();
-        
-        return view('patients/patients')->with('shunts', $shunts);
+        return view('patients/patients');
     }
 
     /**
@@ -46,7 +47,7 @@ class PatientController extends Controller
             }
             default: { 
             	$shunts = Shunt::all();
-                $view = view('patients/patients')->with('shunts', $shunts);
+                $view = view('patients/patients');
                 break;
             }
         }
@@ -64,5 +65,25 @@ class PatientController extends Controller
     {
         //
         return view('patients/create');
+    }
+
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id) {
+        if (Animal::find($id)) {
+            $redirect = redirect()->action('AnimalController@show', ['id' => $id]);
+        } else if (Human::find($id)) {
+            $redirect = redirect()->action('HumanController@show', ['id' => $id]);
+        } else if (Industrial::find($id)) {
+            $redirect = redirect()->action('IndustrialController@show', ['id' => $id]);
+        } else {
+            $redirect = redirect()->action('PatientController@index');
+        }
+
+        return $redirect;
     }
 }

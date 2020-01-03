@@ -9,6 +9,5 @@ $factory->define(Patient::class, function (Faker $faker) {
     return [
         //
         'name' => $faker->name(),
-        'shunt_id' => App\Shunt::all()->random()->id,
     ];
 });
