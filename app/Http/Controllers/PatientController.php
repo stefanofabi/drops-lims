@@ -22,7 +22,7 @@ class PatientController extends Controller
     }
 
     /**
-	* Load patients from a shunt
+	* Load patients
     * @param   \Illuminate\Http\Request  $request
     * @return View $view
     */
@@ -46,7 +46,6 @@ class PatientController extends Controller
                 break;
             }
             default: { 
-            	$shunts = Shunt::all();
                 $view = view('patients/patients');
                 break;
             }

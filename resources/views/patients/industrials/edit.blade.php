@@ -30,7 +30,7 @@
 	</li>
 
 	<li class="nav-item">
-		<a class="nav-link" href=""> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('patients.social_work') }} </a>
+		<a class="nav-link" href=""> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('patients.add_social_work') }} </a>
 	</li>
 
 	<li class="nav-item">

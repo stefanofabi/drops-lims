@@ -11,7 +11,7 @@
 					</li>
 
 					<li class="nav-item">
-						<a class="nav-link @yield('active_medics')" href="medicos.php"> Médicos</a>
+						<a class="nav-link @yield('active_prescribers')" href="{{ route('prescribers') }}"> {{ trans('prescribers.prescribers') }}</a>
 					</li>
 
 					<li class="nav-item">

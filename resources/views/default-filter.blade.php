@@ -22,7 +22,7 @@
 
                 <div class="card-body">
                     <div class="card">
-                        <form method="post" id="select_page" action="{{ route('patients/load') }}">
+                        <form method="post" id="select_page" action="@yield('action_page')">
                             @csrf
                             <div class="card-header">
                                 <h5><i class="fas fa-filter"></i> {{ trans('patients.complete_filters') }} </h5>

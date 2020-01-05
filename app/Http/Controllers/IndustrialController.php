@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Traits\Pagination;
 
 use App\Industrial;
-use App\Shunt;
 use App\TaxCondition;
 use App\Patient;
 use App\Email;

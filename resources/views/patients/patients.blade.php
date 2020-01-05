@@ -36,7 +36,7 @@
 @endsection
 
 @section('filters') 
-<!-- Tipo de paciente -->
+<!-- Patient type -->
 <div class="col form-group row">
     <div class="custom-control custom-radio custom-control-inline">
         <input type="radio" class="custom-control-input" id="tipoAnimal" name="type" value="animals" required>
@@ -54,7 +54,7 @@
     </div>
 </div>
 
-<!-- Filtro por claves -->
+<!-- Filter by keys -->
 <div class="form-group row">
     <div class="col-md-4">
         <input type="text" class="form-control form-control" id="filter" name="filter" placeholder="{{ trans('patients.enter_filter') }}">
@@ -66,3 +66,7 @@
         </div>
 </div>
 @endsection 
+
+@section('action_page')
+{{ route('patients/load') }}
+@endsection

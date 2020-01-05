@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePhonesTable extends Migration
+class CreatePrescribersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreatePhonesTable extends Migration
      */
     public function up()
     {
-        Schema::create('phones', function (Blueprint $table) {
+        Schema::create('prescribers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('patient_id')->unsigned();
+            $table->string('name')->nullable();
+            $table->string('last_name')->nullable();
             $table->string('phone')->nullable();
-            $table->string('type')->nullable();
-
-            // Foreign keys
-            $table->foreign('patient_id')->references('id')->on('patients')->onDelete('restrict')->onUpdate('cascade');
+            $table->string('email')->nullable();
+            $table->integer('provincial_enrollment')->unsigned()->nullable();
+            $table->integer('national_enrollment')->unsigned()->nullable();
 
             $table->softDeletes();
             $table->timestamps();
@@ -36,6 +36,6 @@ class CreatePhonesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('phones');
+        Schema::dropIfExists('prescribers');
     }
 }

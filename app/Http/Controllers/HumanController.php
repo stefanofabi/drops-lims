@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\DB;
 
 use App\Http\Traits\Pagination;
 
-use App\Shunt;
 use App\Patient;
 use App\Human;
 use App\Email;
