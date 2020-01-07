@@ -15,7 +15,7 @@
 					</li>
 
 					<li class="nav-item">
-						<a class="nav-link @yield('active_determinations')" href="determinations.php">Determinaciones</a>
+						<a class="nav-link @yield('active_determinations')" href="{{ route('determinations') }}"> {{ trans('determinations.determinations') }} </a>
 					</li>
 
 					<li class="nav-item">

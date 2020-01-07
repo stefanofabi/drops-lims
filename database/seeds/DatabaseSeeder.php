@@ -21,5 +21,7 @@ class DatabaseSeeder extends Seeder
         $this->call(IndustrialsTableSeeder::class);
 
         $this->call(PrescribersTableSeeder::class);
+
+        $this->call(NomenclatorsSeeder::class);
     }
 }

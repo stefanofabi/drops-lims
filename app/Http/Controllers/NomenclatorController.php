@@ -3,17 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
-use App\Http\Controllers\PatientController;
-
-
-use App\Phone;
-
-class PhoneController extends Controller
+class UniqueBiochemicalNomenclator extends Controller
 {
-    private const RETRIES = 5;
-
     /**
      * Display a listing of the resource.
      *
@@ -29,12 +21,9 @@ class PhoneController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
+    public function create()
     {
         //
-
-        return view('patients/phones/create')
-        ->with('id', $id);
     }
 
     /**
@@ -46,19 +35,6 @@ class PhoneController extends Controller
     public function store(Request $request)
     {
         //
-        $id = DB::transaction(function () use ($request) {
-
-            $phone_id = Phone::insertGetId([
-                'patient_id' => $request->id,
-                'phone' => $request->phone,
-                'type' => $request->type,
-            ]);
-
-            return $phone_id;
-        }, self::RETRIES);
-
-
-        return redirect()->action('PatientController@show', ['id' => $request->id]);
     }
 
     /**

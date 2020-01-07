@@ -57,9 +57,9 @@
 
 		<select class="form-control input-sm" name="type">
 			<option value=""> {{ trans('patients.select_type') }} </option>
-			<option value=""> {{ trans('patients.landline') }} </option>
-			<option value=""> {{ trans('patients.mobile') }} </option>
-			<option value=""> {{ trans('patients.whatsapp') }} </option>
+			<option value="{{ trans('patients.landline') }}"> {{ trans('patients.landline') }} </option>
+			<option value="{{ trans('patients.mobile') }}"> {{ trans('patients.mobile') }} </option>
+			<option value="{{ trans('patients.whatsapp') }}"> {{ trans('patients.whatsapp') }} </option>
 		</select>
 	</div>
 
