@@ -15,7 +15,7 @@ class CreateDeterminationsTable extends Migration
     {
         Schema::create('determinations', function (Blueprint $table) {
         	$table->bigIncrements('id');
-        	$table->bigInteger('nomenclator_id')->unsigned();
+        	$table->unsignedBigInteger('nomenclator_id');
             $table->bigInteger('code')->unsigned();
             $table->string('name')->nullable();
             $table->integer('position')->unsigned();

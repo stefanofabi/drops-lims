@@ -76,5 +76,12 @@ return [
     'social_work' => 'Obra social',
     'add_social_work' => 'Agregar obra social',
     'go_back' => 'Volver atras',
-
+    'social_works' => 'Obras sociales',
+    'expired_card' => 'Carnet vencido',
+    'select_social_work' => 'Seleccione una obra social',
+    'plan' => 'Plan',
+    'select_plan' => 'Seleccione un plan',
+    'affiliate_number' => 'Número de afiliado',
+    'expiration_date' => 'Fecha de vencimiento',
+    'security_code' => 'Código de seguridad',
 ];

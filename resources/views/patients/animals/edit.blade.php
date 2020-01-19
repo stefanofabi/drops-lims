@@ -114,61 +114,19 @@
 		</div>
 
 		<div class="card-body">
-			<div class="input-group mb-3">
-				<div class="input-group-prepend">
-					<span class="input-group-text"> {{ trans('patients.phones') }} </span>
-				</div>
+			
+			@include('patients/phones/index')
+			@include('patients/emails/index')
 
-				<select class="form-control input-sm col-md-6" style="margin-right: 1%">
-					<option value=""> {{ trans('patients.select_phone') }}</option>
-
-					@foreach ($phones as $phone)
-					<option value="{{ $phone->id }}"> {{ $phone->phone }}</option>
-					@endforeach
-				</select>
-
-				<div>
-					<button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#nuevoTelefonoBaul">
-						<span class="fas fa-plus"></span> 
-					</button>
-
-					<button type="button" class="btn btn-info btn-md" onclick="return eliminarTelefonoBaul()">
-						<span class="fas fa-trash"></span> 
-					</button>
-				</div>
-			</div>
-
-
-			<div class="input-group mb-3">
-				<div class="input-group-prepend">
-					<span class="input-group-text"> {{ trans('patients.emails') }} </span>
-				</div>
-
-				<select class="form-control input-sm col-md-6" style="margin-right: 1%">
-					<option value=""> {{ trans('patients.select_email') }}</option>
-
-					@foreach ($emails as $email)
-					<option value="{{ $email->id }}"> {{ $email->email }}</option>
-					@endforeach
-				</select>
-
-				<div>
-					<button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#nuevoTelefonoBaul">
-						<span class="fas fa-plus"></span> 
-					</button>
-
-					<button type="button" class="btn btn-info btn-md" onclick="return eliminarTelefonoBaul()">
-						<span class="fas fa-trash"></span> 
-					</button>
-				</div>
-			</div>
 		</div>
 	</div>
+
+	@include('patients/social_works/affiliates/index')
 	
 
 	<div class="float-right" style="margin-top: 1%">
 		<button type="submit" class="btn btn-primary">
-			<span class="fas fa-save"></span> {{ trans('patients.save') }}
+			<span class="fas fa-save"></span> {{ trans('forms.save') }}
 		</button>
 	</div>
 

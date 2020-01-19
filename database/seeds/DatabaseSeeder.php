@@ -22,6 +22,9 @@ class DatabaseSeeder extends Seeder
 
         $this->call(PrescribersTableSeeder::class);
 
-        $this->call(NomenclatorsSeeder::class);
+        $this->call(NomenclatorsTableSeeder::class);
+
+        $this->call(SocialWorksTableSeeder::class);
+        $this->call(PlansTableSeeder::class);
     }
 }

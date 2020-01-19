@@ -12,6 +12,7 @@ use App\TaxCondition;
 use App\Patient;
 use App\Email;
 use App\Phone;
+use App\Affiliate;
 
 class IndustrialController extends Controller
 {
@@ -31,7 +32,6 @@ class IndustrialController extends Controller
     public function index(Request $request)
     {
         //
-        $shunts = Shunt::all();
 
         // Request
         $filter = $request['filter'];
@@ -142,11 +142,14 @@ class IndustrialController extends Controller
 
         $phones = Phone::get_phones($id);
 
+        $affiliates = Affiliate::get_social_works($id);
+
         return view('patients/industrials/show')
         ->with('industrial', $data)
         ->with('tax_conditions', $tax_conditions)
         ->with('emails', $emails)
-        ->with('phones', $phones);
+        ->with('phones', $phones)
+        ->with('affiliates', $affiliates);
     }
 
     /**
@@ -178,12 +181,14 @@ class IndustrialController extends Controller
 
         $phones = Phone::get_phones($id);
 
+        $affiliates = Affiliate::get_social_works($id);
 
         return view('patients/industrials/edit')
         ->with('industrial', $data)
         ->with('tax_conditions', $tax_conditions)
         ->with('emails', $emails)
-        ->with('phones', $phones);
+        ->with('phones', $phones)
+        ->with('affiliates', $affiliates);
     }
 
     /**

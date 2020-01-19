@@ -14,7 +14,11 @@
 <ul class="nav flex-column">
 	<li class="nav-item">
 		<a class="nav-link" href=""> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('prescribers.no_options') }} </a>
-	</li>	
+	</li>
+
+	<li class="nav-item">
+		<a class="nav-link" href="{{ route('prescribers/show', [$prescriber['id']]) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('patients.go_back') }} </a>
+	</li>
 </ul>
 @endsection
 

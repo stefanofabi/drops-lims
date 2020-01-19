@@ -34,7 +34,6 @@ return [
     'create_industrial' => 'Create industrial patient',
     'notice' => '¡Notice!',
     'select_option' => 'Select an option from the menu to continue',
-    'save' => 'Save',
     'complete_shunt' => 'Complete shunt',
     'shunt' => 'Shunt',
     'complete_personal_data' => 'Complete personal data',
@@ -72,7 +71,7 @@ return [
     'landline' => 'Landline',
     'mobile' => 'Mobile',
     'whatsapp' => 'Whatsapp',
-    'social_work' => 'Social work',
     'add_social_work' => 'Add social work',
     'go_back' => 'Go back',
+    'edit_email' => 'Edit email',
 ];

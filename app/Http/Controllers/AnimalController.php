@@ -11,6 +11,7 @@ use App\Patient;
 use App\Animal;
 use App\Email;
 use App\Phone;
+use App\Affiliate;
 
 class AnimalController extends Controller
 {
@@ -133,10 +134,13 @@ class AnimalController extends Controller
 
         $phones = Phone::get_phones($id);
 
+        $affiliates = Affiliate::get_social_works($id);
+
         return view('patients/animals/show')
         ->with('animal', $data)
         ->with('emails', $emails)
-        ->with('phones', $phones);
+        ->with('phones', $phones)
+        ->with('affiliates', $affiliates);
     }
 
     /**

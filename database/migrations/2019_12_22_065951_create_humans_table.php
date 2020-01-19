@@ -14,7 +14,7 @@ class CreateHumansTable extends Migration
     public function up()
     {
         Schema::create('humans', function (Blueprint $table) {
-            $table->bigIncrements('patient_id')->unsigned();
+            $table->unsignedBigInteger('patient_id');
             $table->integer('dni')->nullable();
             $table->string('last_name')->nullable();
             $table->char('sex', 1)->nullable();

@@ -19,7 +19,7 @@
 					</li>
 
 					<li class="nav-item">
-						<a class="nav-link @yield('active_protocols')" href="protocols.php">Protocolos</a>
+						<a class="nav-link @yield('active_protocols')" href="{{ route('protocols') }}"> {{ trans('protocols.protocols') }} </a>
 					</li>
 
 				<!--

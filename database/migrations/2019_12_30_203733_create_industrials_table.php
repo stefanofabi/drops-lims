@@ -14,7 +14,7 @@ class CreateIndustrialsTable extends Migration
     public function up()
     {
         Schema::create('industrials', function (Blueprint $table) {
-            $table->bigIncrements('patient_id');
+            $table->unsignedBigInteger('patient_id');
             $table->string('business_name')->nullable();
             $table->string('cuit')->nullable();
             $table->string('tax_condition')->nullable();

@@ -124,36 +124,14 @@
 		</div>
 
 		<div class="card-body">
-			<div class="input-group mb-3">
-				<div class="input-group-prepend">
-					<span class="input-group-text"> {{ trans('patients.phones') }} </span>
-				</div>
+			@include('patients/phones/index')
 
-				<select class="form-control input-sm col-md-6" style="margin-right: 1%" readonly>
-					<option value=""> {{ trans('patients.select_phone') }}</option>
+			@include('patients/emails/index')
 
-					@foreach ($phones as $phone)
-					<option value="{{ $phone->id }}"> {{ $phone->phone }}</option>
-					@endforeach
-				</select>
-			</div>
-
-
-			<div class="input-group mb-3">
-				<div class="input-group-prepend">
-					<span class="input-group-text"> {{ trans('patients.emails') }} </span>
-				</div>
-
-				<select class="form-control input-sm col-md-6" style="margin-right: 1%" readonly>
-					<option value=""> {{ trans('patients.select_email') }}</option>
-
-					@foreach ($emails as $email)
-					<option value="{{ $email->id }}"> {{ $email->email }}</option>
-					@endforeach
-				</select>
-			</div>
 		</div>
 	</div>
+
+	@include('patients/social_works/affiliates/index')
 
 	<div class="float-right" style="margin-top: 1%">
 		<button type="submit" class="btn btn-primary">

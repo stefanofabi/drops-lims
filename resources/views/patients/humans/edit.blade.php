@@ -1,12 +1,19 @@
 @extends('default-template')
 
 @section('js')
+
+
 <script type="text/javascript">
 	$(document).ready(function() {
         // Select a sex from list
         $("#sex option[value='{{ $human['sex'] ?? '' }}']").attr("selected",true);
     });
 </script>
+
+@include('patients/phones/js')
+@include('patients/emails/js')
+@include('patients/social_works/affiliates/js')
+
 @endsection
 
 @section('title')
@@ -30,7 +37,7 @@
 	</li>
 
 	<li class="nav-item">
-		<a class="nav-link" href=""> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('patients.add_social_work') }} </a>
+		<a class="nav-link" href="{{ route('patients/social_works/affiliates/create', [$human['id']]) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('patients.add_social_work') }} </a>
 	</li>
 
 	<li class="nav-item">
@@ -46,6 +53,11 @@
 
 
 @section('content')
+
+@include('patients/phones/edit')
+@include('patients/emails/edit')
+@include('patients/social_works/affiliates/edit')
+
 <form method="post" action="{{ route('patients/humans/update', ['id' => $human['id']]) }}">
 	@csrf
 	{{ method_field('PUT') }}
@@ -119,63 +131,17 @@
 
 		<div class="card-body">
 
-
-			<div class="input-group mb-3">
-				<div class="input-group-prepend">
-					<span class="input-group-text"> {{ trans('patients.phones') }} </span>
-				</div>
-
-				<select class="form-control input-sm col-md-6" style="margin-right: 1%">
-					<option value=""> {{ trans('patients.select_phone') }}</option>
-
-					@foreach ($phones as $phone)
-					<option value="{{ $phone->id }}"> {{ $phone->phone }}</option>
-					@endforeach
-				</select>
-
-				<div>
-					<button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#nuevoTelefonoBaul">
-						<span class="fas fa-plus"></span> 
-					</button>
-
-					<button type="button" class="btn btn-info btn-md" onclick="return eliminarTelefonoBaul()">
-						<span class="fas fa-trash"></span> 
-					</button>
-				</div>
-			</div>
-
-
-			<div class="input-group mb-3">
-				<div class="input-group-prepend">
-					<span class="input-group-text"> {{ trans('patients.emails') }} </span>
-				</div>
-
-				<select class="form-control input-sm col-md-6" style="margin-right: 1%">
-					<option value=""> {{ trans('patients.select_email') }}</option>
-
-					@foreach ($emails as $email)
-					<option value="{{ $email->id }}"> {{ $email->email }}</option>
-					@endforeach
-				</select>
-
-				<div>
-					<button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#nuevoTelefonoBaul">
-						<span class="fas fa-plus"></span> 
-					</button>
-
-					<button type="button" class="btn btn-info btn-md" onclick="return eliminarTelefonoBaul()">
-						<span class="fas fa-trash"></span> 
-					</button>
-				</div>
-			</div>
-
+			@include('patients/phones/index')
+			@include('patients/emails/index')
 
 		</div>
 	</div>
 
+	@include('patients/social_works/affiliates/index')
+
 	<div class="float-right" style="margin-top: 1%">
 		<button type="submit" class="btn btn-primary">
-			<span class="fas fa-save"></span> {{ trans('patients.save') }}
+			<span class="fas fa-save"></span> {{ trans('forms.save') }}
 		</button>
 	</div>	
 </form>

@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\Nomenclator;
 
-class NomenclatorsSeeder extends Seeder
+class NomenclatorsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.

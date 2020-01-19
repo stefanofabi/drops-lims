@@ -11,6 +11,8 @@ use App\Patient;
 use App\Human;
 use App\Email;
 use App\Phone;
+use App\SocialWork;
+use App\Affiliate;
 
 class HumanController extends Controller
 {
@@ -136,11 +138,14 @@ class HumanController extends Controller
 
         $phones = Phone::get_phones($id);
 
+        $affiliates = Affiliate::get_social_works($id);
+
 
         return view('patients/humans/show')
         ->with('human', $data)
         ->with('emails', $emails)
-        ->with('phones', $phones);
+        ->with('phones', $phones)
+        ->with('affiliates', $affiliates);
     }
 
     /**
@@ -171,10 +176,16 @@ class HumanController extends Controller
 
         $phones = Phone::get_phones($id);
 
+        $social_works = SocialWork::all();
+
+        $affiliates = Affiliate::get_social_works($id);
+
         $view = view('patients/humans/edit')
         ->with('human', $data)
         ->with('emails', $emails)
-        ->with('phones', $phones);
+        ->with('phones', $phones)
+        ->with('social_works', $social_works)
+        ->with('affiliates', $affiliates);
         
 
         return $view;
