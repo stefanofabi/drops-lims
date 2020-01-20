@@ -48,7 +48,7 @@
 
 <div class="card margins-boxs-tb">
 	<div class="card-header">
-		<h4><i class="fas fa-id-card"></i> {{ trans('patients.personal_data') }} </h4>
+		<h4><i class="fas fa-id-card"></i> {{ trans('forms.personal_data') }} </h4>
 	</div>
 
 	<div class="card-body">
@@ -105,13 +105,12 @@
 
 <div class="card">
 	<div class="card-header">
-		<h4><i class="fas fa-book"></i> {{ trans('patients.contact_information') }} </h4>
+		<h4><i class="fas fa-book"></i> {{ trans('forms.contact_information') }} </h4>
 	</div>
 
 	<div class="card-body">
+		
 		@include('patients/phones/show')
-
-
 		@include('patients/emails/show')
 
 	</div>

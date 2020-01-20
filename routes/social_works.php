@@ -18,5 +18,5 @@ Route::post('obras_sociales/afiliados/editar', 'AffiliateController@edit')->name
 
 Route::post('obras_sociales/afiliados/actualizar', 'AffiliateController@update')->name('social_works/affiliates/update');
 
-Route::post('obras_sociales/planes/load_ajax', 'PlanController@load_ajax')->name('social_works/plans/load_ajax')
+Route::post('obras_sociales/planes/load_plans', 'PlanController@load_plans')->name('social_works/plans/load_plans')
 ->where('id', '[1-9][0-9]*');

@@ -70,10 +70,10 @@ function updateAffiliate() {
 
 		$.ajax({
 			data:  parameters,
-			url:   "{{ route('patients/social_works/plans/load_ajax') }}",
+			url:   "{{ route('patients/social_works/plans/load_plans') }}",
 			type:  'post',
 			beforeSend: function () {
-				$("#plans").html('<div class="spinner-border text-info"> </div> Procesando, espere por favor...');
+				$("#plans").html('<div class="spinner-border text-info"> </div> {{ trans("forms.please_wait") }}');
 			},
 			success:  function (response) {
 						// Load data

@@ -11,21 +11,19 @@
 @endsection
 
 @section('menu')
-<p>
-	<ul class="nav flex-column">
-		<li class="nav-item">
-			<a class="nav-link" href="{{ route('patients/animals/create') }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('patients.create_animal') }} </a>
-		</li>		
+<ul class="nav flex-column">
+	<li class="nav-item">
+		<a class="nav-link" href="{{ route('patients/animals/create') }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('patients.create_animal') }} </a>
+	</li>		
 
-		<li class="nav-item">
-			<a class="nav-link" href="{{ route('patients/humans/create') }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('patients.create_human') }}</a>
-		</li>
+	<li class="nav-item">
+		<a class="nav-link" href="{{ route('patients/humans/create') }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('patients.create_human') }}</a>
+	</li>
 
-		<li class="nav-item">
-			<a class="nav-link" href="{{ route('patients/industrials/create') }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('patients.create_industrial') }}</a>
-		</li>
-	</ul>
-</p>
+	<li class="nav-item">
+		<a class="nav-link" href="{{ route('patients/industrials/create') }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('patients.create_industrial') }}</a>
+	</li>
+</ul>
 @endsection
 
 
@@ -34,8 +32,8 @@
 @endsection
 
 @section('content')
-	<div class="alert alert-info">
-	  <strong> {{ trans('patients.notice') }} </strong> {{ trans('patients.select_option') }}
-	</div>
+<div class="alert alert-info">
+	<strong> {{ trans('patients.notice') }} </strong> {{ trans('patients.select_option') }}
+</div>
 @endsection
 

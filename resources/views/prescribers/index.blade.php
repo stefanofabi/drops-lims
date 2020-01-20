@@ -8,7 +8,7 @@
 				<th> {{ trans('prescribers.prescriber') }} </th>
 				<th> {{ trans('prescribers.provincial_enrollment') }} </th>
 				<th> {{ trans('prescribers.national_enrollment') }} </th>  
-				<th class="text-right"> {{ trans('prescribers.actions') }} </th>
+				<th class="text-right"> {{ trans('forms.actions') }} </th>
 			</tr>
 
 			@foreach ($prescribers as $prescriber)

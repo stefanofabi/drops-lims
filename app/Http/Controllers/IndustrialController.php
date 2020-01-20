@@ -12,6 +12,7 @@ use App\TaxCondition;
 use App\Patient;
 use App\Email;
 use App\Phone;
+use App\SocialWork;
 use App\Affiliate;
 
 class IndustrialController extends Controller
@@ -181,13 +182,17 @@ class IndustrialController extends Controller
 
         $phones = Phone::get_phones($id);
 
+        $social_works = SocialWork::all();
+
         $affiliates = Affiliate::get_social_works($id);
 
         return view('patients/industrials/edit')
+        ->with('id', $id)
         ->with('industrial', $data)
         ->with('tax_conditions', $tax_conditions)
         ->with('emails', $emails)
         ->with('phones', $phones)
+        ->with('social_works', $social_works)
         ->with('affiliates', $affiliates);
     }
 

@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="{{ asset('lib/jquery-ui/jquery-ui.css') }}">
 <script src="{{ asset('lib/jquery-ui/jquery-ui.js') }}"></script>
 
-<!-- Estilos -->
+<!-- Styles -->
 <link rel="stylesheet" href="{{ asset('css/default.css') }}">
 
 

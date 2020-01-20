@@ -10,7 +10,7 @@
 				<th> {{ trans('patients.cuit') }} </th>
 				<th> {{ trans('patients.city') }} </th>
 				<th> {{ trans('patients.fiscal_address') }} </th>  
-				<th class="text-right"> {{ trans('patients.actions') }} </th>
+				<th class="text-right"> {{ trans('forms.actions') }} </th>
 			</tr>
 
 			@foreach ($data as $patient)

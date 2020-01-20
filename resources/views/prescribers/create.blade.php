@@ -13,7 +13,7 @@
 @section('menu')
 <ul class="nav flex-column">
 	<li class="nav-item">
-		<a class="nav-link" href=""> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('prescribers.no_options') }} </a>
+		<a class="nav-link" href=""> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('forms.no_options') }} </a>
 	</li>	
 </ul>
 @endsection
@@ -71,7 +71,7 @@
 
 	<div class="float-right" style="margin-top: 1%">
 		<button type="submit" class="btn btn-primary">
-			<span class="fas fa-save"></span> {{ trans('prescribers.save') }}
+			<span class="fas fa-save"></span> {{ trans('forms.save') }}
 		</button>
 	</div>	
 </form>

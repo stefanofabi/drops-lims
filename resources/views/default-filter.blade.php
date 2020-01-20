@@ -25,7 +25,7 @@
                         <form method="post" id="select_page" action="@yield('action_page')">
                             @csrf
                             <div class="card-header">
-                                <h5><i class="fas fa-filter"></i> {{ trans('patients.complete_filters') }} </h5>
+                                <h5><i class="fas fa-filter"></i> {{ trans('forms.complete_filters') }} </h5>
                             </div>
 
                             <div class="card-body">

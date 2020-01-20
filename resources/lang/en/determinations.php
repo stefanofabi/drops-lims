@@ -14,8 +14,6 @@ return [
 
     'determinations' => 'Determinations',
     'create_determination' => 'Create determination',
-    'enter_filter' => 'Enter a filter',
-    'search' => 'Search',
     'code' => 'Code',
     'determination' => 'Determination',
     'select_nbu' => 'Select a nomenclator',

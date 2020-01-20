@@ -181,6 +181,7 @@ class HumanController extends Controller
         $affiliates = Affiliate::get_social_works($id);
 
         $view = view('patients/humans/edit')
+        ->with('id', $id)
         ->with('human', $data)
         ->with('emails', $emails)
         ->with('phones', $phones)

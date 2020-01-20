@@ -20,7 +20,7 @@ class Animal extends Model
 		->where(function ($query) use ($filter) {
 			if (!empty($filter)) {
 				$query->orWhere('name', "like", "%$filter%")
-				->orWhere('dni', "like", "$filter%")
+				//->orWhere('dni', "like", "$filter%")
 				->orWhere('owner', "like", "%$filter%");
 			}
 		})
@@ -39,7 +39,7 @@ class Animal extends Model
 		->where(function ($query) use ($filter) {
 			if (!empty($filter)) {
 				$query->orWhere('name', "like", "%$filter%")
-				->orWhere('dni', "like", "$filter%")
+				//->orWhere('dni', "like", "$filter%")
 				->orWhere('owner', "like", "%$filter%");
 			}
 		})

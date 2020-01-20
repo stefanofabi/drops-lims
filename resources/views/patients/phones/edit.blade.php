@@ -21,7 +21,7 @@
 					<div class="form-group">
 						<div class="input-group mb-4 col-md-9 input-form">
 							<div class="input-group-prepend">
-								<span class="input-group-text"> {{ trans('patients.phone') }} </span>
+								<span class="input-group-text"> {{ trans('phones.phone') }} </span>
 							</div>
 
 							<input type="text" class="form-control" id="modal_phone_phone" name="phone" required>
@@ -31,14 +31,14 @@
 
 					<div class="input-group mb-4 col-md-9 input-form">
 						<div class="input-group-prepend">
-							<span class="input-group-text"> {{ trans('patients.type') }} </span>
+							<span class="input-group-text"> {{ trans('phones.type') }} </span>
 						</div>
 
 						<select class="form-control input-sm" id="modal_phone_type" name="type">
-							<option value=""> {{ trans('patients.select_type') }} </option>
-							<option value="{{ trans('patients.landline') }}"> {{ trans('patients.landline') }} </option>
-							<option value="{{ trans('patients.mobile') }}"> {{ trans('patients.mobile') }} </option>
-							<option value="{{ trans('patients.whatsapp') }}"> {{ trans('patients.whatsapp') }} </option>
+							<option value=""> {{ trans('phones.select_type') }} </option>
+							<option value="{{ trans('phones.landline') }}"> {{ trans('phones.landline') }} </option>
+							<option value="{{ trans('phones.mobile') }}"> {{ trans('phones.mobile') }} </option>
+							<option value="{{ trans('phones.whatsapp') }}"> {{ trans('phones.whatsapp') }} </option>
 						</select>
 					</div>
 

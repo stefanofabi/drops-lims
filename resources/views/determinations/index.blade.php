@@ -7,7 +7,7 @@
 			<tr>
 				<th> {{ trans('determinations.code') }} </th>
 				<th> {{ trans('determinations.determination') }} </th>
-				<th class="text-right"> {{ trans('prescribers.actions') }} </th>
+				<th class="text-right"> {{ trans('forms.actions') }} </th>
 			</tr>
 
 			@foreach ($determinations as $determination)

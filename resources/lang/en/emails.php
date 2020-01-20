@@ -15,4 +15,9 @@ return [
     'success_edited_email' => 'Successfully edited email',
     'email' => 'Email',
     'edit_email' => 'Edit email',
+    'emails' => 'Emails',
+    'select_email' => 'Select an email',
+    'edit_email' => 'Edit email',
+    'add_email' => 'Add email',
+    'email' => 'Email',
 ];

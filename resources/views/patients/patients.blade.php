@@ -57,12 +57,12 @@
 <!-- Filter by keys -->
 <div class="form-group row">
     <div class="col-md-4">
-        <input type="text" class="form-control form-control" id="filter" name="filter" placeholder="{{ trans('patients.enter_filter') }}">
+        <input type="text" class="form-control form-control" id="filter" name="filter" placeholder="{{ trans('forms.enter_filter') }}">
     </div>
 
     <div class="col-md-6">
         <button type="submit" class="btn btn-info">
-            <span class="fas fa-search" ></span> {{ trans('patients.search') }} </button>
+            <span class="fas fa-search" ></span> {{ trans('forms.search') }} </button>
         </div>
 </div>
 @endsection 

@@ -23,4 +23,5 @@ return [
     'social_works' => 'Social works',
     'expired_card' => 'Expired card',
     'success_edited_affiliate' => 'Affiliate successfully edited',
+    'add_social_work' => 'Add social work',
 ];

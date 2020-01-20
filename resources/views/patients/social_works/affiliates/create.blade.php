@@ -1,7 +1,7 @@
 @extends('default-template')
 
 @section('title')
-{{ trans('patients.add_social_work') }}
+{{ trans('social_works.add_social_work') }}
 @endsection 
 
 @section('active_patients', 'active')
@@ -20,7 +20,7 @@
 
 		$.ajax({
 			data:  parameters,
-			url:   "{{ route('patients/social_works/plans/load_ajax') }}",
+			url:   "{{ route('patients/social_works/plans/load_plans') }}",
 			type:  'post',
 			beforeSend: function () {
 				$("#plans").html('<div class="spinner-border text-info"> </div> Procesando, espere por favor...');
@@ -37,27 +37,11 @@
 @endsection
 
 @section('menu')
-<ul class="nav flex-column">
-	<li class="nav-item">
-		<a class="nav-link" href="{{ route('patients/phones/create', [$id]) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('patients.add_phone') }} </a>
-	</li>		
-
-	<li class="nav-item">
-		<a class="nav-link" href="{{ route('patients/emails/create', [$id]) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('patients.add_email') }} </a>
-	</li>
-
-	<li class="nav-item">
-		<a class="nav-link" href=""> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('patients.add_social_work') }} </a>
-	</li>
-
-	<li class="nav-item">
-		<a class="nav-link" href="{{ route('patients/show', [$id]) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('patients.go_back') }} </a>
-	</li>
-</ul>
+@include('patients/edit_menu')
 @endsection
 
 @section('content-title')
-{{ trans('patients.add_social_work') }}
+{{ trans('social_works.add_social_work') }}
 @endsection
 
 
@@ -73,7 +57,7 @@
 		</div>
 
 		<select class="form-control" id="social_work" name="social_work" onchange="load_plans()" required>
-			<option value=""> {{ trans('social_works.select_social_work') }} </option>
+			<option value=""> {{ trans('forms.select_option') }} </option>
 
 			@foreach ($social_works as $social_work)
 			<option value="{{ $social_work->id }}"> {{ $social_work->name }}</option>
@@ -88,7 +72,7 @@
 
 		<div id="plans">
 			<select class="form-control" name="plan" required>
-				<option value=""> {{ trans('social_works.select_plan') }} </option>
+				<option value=""> {{ trans('forms.select_option') }} </option>
 			</select>
 		</div>
 	</div>			

@@ -27,23 +27,7 @@
 @endsection
 
 @section('menu')
-<ul class="nav flex-column">
-	<li class="nav-item">
-		<a class="nav-link" href="{{ route('patients/phones/create', [$human['id']]) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('patients.add_phone') }} </a>
-	</li>		
-
-	<li class="nav-item">
-		<a class="nav-link" href="{{ route('patients/emails/create', [$human['id']]) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('patients.add_email') }} </a>
-	</li>
-
-	<li class="nav-item">
-		<a class="nav-link" href="{{ route('patients/social_works/affiliates/create', [$human['id']]) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('patients.add_social_work') }} </a>
-	</li>
-
-	<li class="nav-item">
-		<a class="nav-link" href="{{ route('patients/humans/show', [$human['id']]) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('patients.go_back') }} </a>
-	</li>	
-</ul>
+@include('patients/edit_menu')
 @endsection
 
 
@@ -64,7 +48,7 @@
 
 	<div class="card margins-boxs-tb">
 		<div class="card-header">
-			<h4><i class="fas fa-id-card"></i> {{ trans('patients.complete_personal_data') }} </h4>
+			<h4><i class="fas fa-id-card"></i> {{ trans('forms.complete_personal_data') }} </h4>
 		</div>
 
 		<div class="card-body">
@@ -126,7 +110,7 @@
 
 	<div class="card">
 		<div class="card-header">
-			<h4><i class="fas fa-book"></i> {{ trans('patients.complete_contact_information') }} </h4>
+			<h4><i class="fas fa-book"></i> {{ trans('forms.complete_contact_information') }} </h4>
 		</div>
 
 		<div class="card-body">

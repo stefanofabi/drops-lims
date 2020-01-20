@@ -24,7 +24,7 @@ class PlanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function load_ajax(Request $request)
+    public function load_plans(Request $request)
     {
         //
         $plans = Plan::where('social_work_id', $request->social_work)->get();

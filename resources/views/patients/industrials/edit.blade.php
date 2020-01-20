@@ -7,6 +7,11 @@
         $("#tax_condition option[value='{{ $industrial['tax_condition'] ?? '' }}']").attr("selected",true);
     });
 </script>
+
+@include('patients/phones/js')
+@include('patients/emails/js')
+@include('patients/social_works/affiliates/js')
+
 @endsection
 
 @section('title')
@@ -20,23 +25,7 @@
 @endsection
 
 @section('menu')
-<ul class="nav flex-column">
-	<li class="nav-item">
-		<a class="nav-link" href="{{ route('patients/phones/create', [$industrial['id']]) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('patients.add_phone') }} </a>
-	</li>		
-
-	<li class="nav-item">
-		<a class="nav-link" href="{{ route('patients/emails/create', [$industrial['id']]) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('patients.add_email') }} </a>
-	</li>
-
-	<li class="nav-item">
-		<a class="nav-link" href=""> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('patients.add_social_work') }} </a>
-	</li>
-
-	<li class="nav-item">
-		<a class="nav-link" href="{{ route('patients/industrials/show', [$industrial['id']]) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('patients.go_back') }} </a>
-	</li>	
-</ul>
+@include('patients/edit_menu')
 @endsection
 
 @section('content-title')
@@ -44,13 +33,18 @@
 @endsection
 
 @section('content')
+
+@include('patients/phones/edit')
+@include('patients/emails/edit')
+@include('patients/social_works/affiliates/edit')
+
 <form method="post" action="{{ route('patients/industrials/update', ['id' => $industrial['id']]) }}">
 	@csrf
 	{{ method_field('PUT') }}
 
 	<div class="card margins-boxs-tb">
 		<div class="card-header">
-			<h4><i class="fas fa-toolbox"></i> {{ trans('patients.complete_personal_data') }} </h4>
+			<h4><i class="fas fa-toolbox"></i> {{ trans('forms.complete_personal_data') }} </h4>
 		</div>
 		<div class="card-body">
 			<div class="input-group mb-6 col-md-6">
@@ -65,7 +59,7 @@
 
 	<div class="card margins-boxs-tb">
 		<div class="card-header">
-			<h4><i class="fas fa-id-card"></i> {{ trans('patients.complete_fiscal_data') }} </h4>
+			<h4><i class="fas fa-id-card"></i> {{ trans('forms.complete_fiscal_data') }} </h4>
 		</div>
 
 		<div class="card-body">
@@ -120,7 +114,7 @@
 
 	<div class="card">
 		<div class="card-header">
-			<h4><i class="fas fa-book"></i> {{ trans('patients.complete_contact_information') }} </h4>
+			<h4><i class="fas fa-book"></i> {{ trans('forms.complete_contact_information') }} </h4>
 		</div>
 
 		<div class="card-body">
@@ -135,7 +129,7 @@
 
 	<div class="float-right" style="margin-top: 1%">
 		<button type="submit" class="btn btn-primary">
-			<span class="fas fa-save"></span> {{ trans('patients.save') }}
+			<span class="fas fa-save"></span> {{ trans('forms.save') }}
 		</button>
 	</div>	
 

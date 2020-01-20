@@ -93,10 +93,11 @@ class AffiliateController extends Controller
     public function edit(Request $request)
     {
         //
-
-        return Affiliate::where('affiliates.id', $request->id)
+        
+        return Affiliate::select('affiliates.id as id', 'plans.id as plan_id', 'social_works.id as social_work_id', 'affiliates.affiliate_number as affiliate_number', 'affiliates.security_code as security_code', 'affiliates.expiration_date as expiration_date')
         ->join('plans', 'affiliates.plan_id', '=', 'plans.id')
         ->join('social_works', 'plans.social_work_id', '=', 'social_works.id')
+        ->where('affiliates.id', $request->id)
         ->get()
         ->first();
     }
@@ -113,7 +114,8 @@ class AffiliateController extends Controller
         //
 
         DB::transaction(function () use ($request) {
-            Affiliate::where('affiliates.id', '=', $request->id)->update(
+           Affiliate::where('id', '=', $request->id)
+            ->update(
                 [
                     'social_work_id' => $request->social_work_id,
                     'plan_id' => $request->plan_id,

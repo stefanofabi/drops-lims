@@ -6,7 +6,7 @@
 
 	<div class="card margins-boxs-tb">
 		<div class="card-header">
-			<h4><i class="fas fa-toolbox"></i> {{ trans('patients.complete_personal_data') }} </h4>
+			<h4><i class="fas fa-toolbox"></i> {{ trans('forms.complete_personal_data') }} </h4>
 		</div>
 		<div class="card-body">
 			<div class="input-group mb-6 col-md-6">
@@ -21,7 +21,7 @@
 
 	<div class="card margins-boxs-tb">
 		<div class="card-header">
-			<h4><i class="fas fa-id-card"></i> {{ trans('patients.complete_fiscal_data') }} </h4>
+			<h4><i class="fas fa-id-card"></i> {{ trans('forms.complete_fiscal_data') }} </h4>
 		</div>
 
 		<div class="card-body">
@@ -75,7 +75,7 @@
 
 	<div class="float-right">
 		<button type="submit" class="btn btn-primary">
-			<span class="fas fa-save"></span> {{ trans('patients.save') }}
+			<span class="fas fa-save"></span> {{ trans('forms.save') }}
 		</button>
 	</div>	
 </form>
