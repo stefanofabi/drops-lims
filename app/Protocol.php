@@ -16,6 +16,13 @@ class Protocol extends Model
 	 	$derived_protocols = DB::table('protocols')
 		->join('derived_protocols', 'protocols.id', '=', 'derived_protocols.protocol_id')
 		->join('derived_patients', 'derived_protocols.patient_id', '=', 'derived_patients.id')
+		->where(function ($query) use ($filter) {
+			if (!empty($filter)) {
+				$query->orWhere("protocols.id", "like", "$filter%")
+				->orWhere("derived_patients.full_name", "like", "%$filter%")
+				->orWhere("derived_patients.key", "like", "$filter%");
+			}
+		})
 		->select('protocols.id', 'protocols.date', 'derived_patients.id as patient_id', 'derived_patients.full_name as patient', DB::raw('"derived" as type'));
 
 
@@ -23,25 +30,43 @@ class Protocol extends Model
 		->join('patients', 'patients.id', '=', 'our_protocols.patient_id')
 		->join('protocols', 'protocols.id', '=', 'our_protocols.protocol_id')
 		->select('protocols.id', 'protocols.date as date', 'patients.id as patient_id', 'patients.full_name as patient', DB::raw('"our" as type'))
-		->union($derived_protocols);
+		->where(function ($query) use ($filter) {
+			if (!empty($filter)) {
+				$query->orWhere("protocols.id", "like", "$filter%")
+				->orWhere("patients.full_name", "like", "%$filter%")
+				->orWhere("patients.key", "like", "$filter%")
+				->orWhere("patients.owner", "like", "%$filter%");
+			}
+		})
+		->union($derived_protocols)
+		->get();
 
 
-		return $protocols->get();
+		return $protocols;
 	}
 
 
 	protected function count_index($filter) {
-		/*$count = DB::table('patients')
-		->join('humans', 'id', '=', 'patient_id')
+	 	$derived_protocols_count = DB::table('protocols')
+		->join('derived_protocols', 'protocols.id', '=', 'derived_protocols.protocol_id')
+		->join('derived_patients', 'derived_protocols.patient_id', '=', 'derived_patients.id')
 		->where(function ($query) use ($filter) {
 			if (!empty($filter)) {
-				$query->orWhere(DB::raw('CONCAT(last_name, " ", name)'), "like", "%$filter%")
-				->orWhere('dni', "like", "$filter%");
+				$query->orWhere("derived_patients.full_name", "like", "%$filter%")
+				->orWhere("derived_patients.key", "like", "$filter%");
 			}
 		})
 		->count();
-		*/
-		return 50;
+
+
+		$our_protocols_count = DB::table('our_protocols')
+		->join('patients', 'patients.id', '=', 'our_protocols.patient_id')
+		->join('protocols', 'protocols.id', '=', 'our_protocols.protocol_id')
+		->count();
+
+		$total_count = $our_protocols_count + $derived_protocols_count;
+
+		return $total_count;
 	}
 
 }

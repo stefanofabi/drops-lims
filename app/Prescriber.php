@@ -10,21 +10,20 @@ class Prescriber extends Model
     //
 
     protected function index($filter, $offset, $length) {
-		$patients = DB::table('prescribers')
+		$prescribers = DB::table('prescribers')
 		->where(function ($query) use ($filter) {
 			if (!empty($filter)) {
-				$query->orWhere(DB::raw('CONCAT(last_name, " ", name)'), "like", "%$filter%")
-				->orWhere('provincial_enrollment', "like", "$filter%")
-				->orWhere('national_enrollment', "like", "$filter%");
+				$query->orWhere("full_name", "like", "%$filter%")
+				->orWhere("provincial_enrollment", "like", "$filter%")
+				->orWhere("national_enrollment", "like", "$filter%");
 			}
 		})
-		->orderBy('last_name', 'asc')
-		->orderBy('name', 'asc')
+		->orderBy('full_name', 'asc')
 		->offset($offset)
 		->limit($length)
 		->get();
 
-		return $patients;
+		return $prescribers;
 	}
 
 
@@ -32,9 +31,9 @@ class Prescriber extends Model
 		$count = DB::table('prescribers')
 		->where(function ($query) use ($filter) {
 			if (!empty($filter)) {
-				$query->orWhere(DB::raw('CONCAT(last_name, " ", name)'), "like", "%$filter%")
-				->orWhere('provincial_enrollment', "like", "$filter%")
-				->orWhere('national_enrollment', "like", "$filter%");
+				$query->orWhere("full_name", "like", "%$filter%")
+				->orWhere("provincial_enrollment", "like", "$filter%")
+				->orWhere("national_enrollment", "like", "$filter%");
 			}
 		})
 		->count();

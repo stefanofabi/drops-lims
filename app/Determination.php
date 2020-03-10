@@ -13,8 +13,8 @@ class Determination extends Model
 		->where('nomenclator_id', '=', $nbu_id)
 		->where(function ($query) use ($filter) {
 			if (!empty($filter)) {
-				$query->orWhere('name', "like", "%$filter%")
-				->orWhere('code', "like", "$filter%");
+				$query->orWhere("name", "like", "%$filter%")
+				->orWhere("code", "like", "$filter%");
 			}
 		})
 		->orderBy('code', 'asc')
@@ -32,8 +32,8 @@ class Determination extends Model
 		->where('nomenclator_id', '=', $nbu_id)
 		->where(function ($query) use ($filter) {
 			if (!empty($filter)) {
-				$query->orWhere('name', "like", "%$filter%")
-				->orWhere('code', "like", "$filter%");
+				$query->orWhere("name", "like", "%$filter%")
+				->orWhere("code", "like", "$filter%");
 			}
 		})
 		->count();

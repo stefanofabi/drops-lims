@@ -8,8 +8,7 @@ use Faker\Generator as Faker;
 $factory->define(Prescriber::class, function (Faker $faker) {
     return [
         //
-        'name' => $faker->name(),
-        'last_name' => $faker->lastName(),
+        'full_name' => $faker->lastName().' '.$faker->name(),
         'phone' => $faker->randomNumber(8),
         'email' => $faker->safeEmail,
         'provincial_enrollment' => $faker->randomNumber(4),

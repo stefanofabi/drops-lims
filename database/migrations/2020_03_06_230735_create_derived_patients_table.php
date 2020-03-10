@@ -15,7 +15,7 @@ class CreateDerivedPatientsTable extends Migration
     {
         Schema::create('derived_patients', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('dni')->nullable();
+            $table->string('key')->nullable();
             $table->string('full_name')->nullable();
             $table->char('sex', 1)->nullable();
             $table->date('birth_date')->nullable();

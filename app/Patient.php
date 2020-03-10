@@ -14,9 +14,9 @@ class Patient extends Model
 		->where('type', $type)
 		->where(function ($query) use ($filter) {
 			if (!empty($filter)) {
-				$query->orWhere('full_name', 'like', '%$filter%')
-				->orWhere('key', 'like', '$filter%')
-				->orWhere('owner', 'like', '%$filter%');
+				$query->orWhere("full_name", "like", "%$filter%")
+				->orWhere("key", "like", "$filter%")
+				->orWhere("owner", "like", "%$filter%");
 			}
 		})
 		->orderBy('full_name', 'asc')
@@ -33,13 +33,13 @@ class Patient extends Model
 		->where('type', $type)
 		->where(function ($query) use ($filter) {
 			if (!empty($filter)) {
-				$query->orWhere('full_name', 'like', '%$filter%')
-				->orWhere('dni', 'like', '$filter%')
-				->orWhere('owner', 'like', '%$filter%');
+				$query->orWhere("full_name", "like", "%$filter%")
+				->orWhere("key", "like", "$filter%")
+				->orWhere("owner", "like", "%$filter%");
 			}
 		})
 		->count();
-
+		
 		return $count;
 	}    
     

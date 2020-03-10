@@ -31,15 +31,9 @@
 
 <div class="input-group mb-6 col-md-9 input-form" style="margin-top: 1%">
 	<div class="input-group-prepend">
-		<span class="input-group-text"> {{ trans('prescribers.last_name') }} </span>
+		<span class="input-group-text"> {{ trans('prescribers.full_name') }} </span>
 	</div>
-	<input type="text" class="form-control" name="last_name" value="{{ $prescriber['last_name'] }}" disabled>
-
-	<div class="input-group-prepend">
-		<span class="input-group-text"> {{ trans('prescribers.name') }} </span>
-	</div>
-
-	<input type="text" class="form-control" name="name" value="{{ $prescriber['name'] }}" disabled>
+	<input type="text" class="form-control" value="{{ $prescriber['full_name'] }}" disabled>
 </div>
 
 <div class="input-group mb-6 col-md-6 input-form" style="margin-top: 1%">
@@ -47,7 +41,7 @@
 		<span class="input-group-text"> {{ trans('prescribers.phone') }} </span>
 	</div>
 
-	<input type="text" class="form-control" name="phone" value="{{ $prescriber['phone'] }}" disabled>
+	<input type="text" class="form-control" value="{{ $prescriber['phone'] }}" disabled>
 </div>
 
 <div class="input-group mb-6 col-md-6 input-form" style="margin-top: 1%">
@@ -55,7 +49,7 @@
 		<span class="input-group-text"> {{ trans('prescribers.email') }} </span>
 	</div>
 
-	<input type="email" class="form-control" name="email" value="{{ $prescriber['email'] }}" disabled>
+	<input type="email" class="form-control" value="{{ $prescriber['email'] }}" disabled>
 </div>
 
 
@@ -63,12 +57,12 @@
 	<div class="input-group-prepend">
 		<span class="input-group-text"> {{ trans('prescribers.provincial_enrollment') }} </span>
 	</div>
-	<input type="number" class="form-control" name="provincial_enrollment" min="0" value="{{ $prescriber['provincial_enrollment'] }}" disabled>
+	<input type="number" class="form-control" min="0" value="{{ $prescriber['provincial_enrollment'] }}" disabled>
 
 	<div class="input-group-prepend">
 		<span class="input-group-text"> {{ trans('prescribers.national_enrollment') }} </span>
 	</div>
-	<input type="number" class="form-control" name="national_enrollment" min="0" value="{{ $prescriber['national_enrollment'] }}" disabled>
+	<input type="number" class="form-control" min="0" value="{{ $prescriber['national_enrollment'] }}" disabled>
 </div>
 
 @endsection	

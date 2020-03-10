@@ -18,7 +18,7 @@ class CreateOurProtocolsTable extends Migration
             $table->unsignedBigInteger('patient_id');
             $table->unsignedBigInteger('plan_id');
             $table->date('withdrawal_date')->nullable();
-            $table->unsignedInteger('quantity_orders');
+            $table->unsignedInteger('quantity_orders')->default(0);
             $table->string('diagnostic')->nullable();
             
             // Primary key

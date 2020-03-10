@@ -25,4 +25,5 @@ return [
     'prescriber_blocked' => 'Prescriber blocked for security reasons. To make changes click on the lock',
     'edit_prescriber' => 'Edit prescriber',
     'destroy_prescriber' => 'Destroy prescriber',
+    'full_name' => 'Full name',
 ];

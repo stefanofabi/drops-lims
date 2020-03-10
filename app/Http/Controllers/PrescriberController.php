@@ -81,18 +81,14 @@ class PrescriberController extends Controller
     	$id = DB::transaction(function () use ($request) {
 
             // data for prescribers
-    		$name = $request['name'];
-    		$last_name = $request['last_name'];
-
+    		$full_name = $request['full_name'];
     		$phone = $request['phone'];
     		$email = $request['email'];
-
     		$provincial_enrollment = $request['provincial_enrollment'];
     		$national_enrollment = $request['national_enrollment'];
 
     		$prescriber = Prescriber::insertGetId([
-    			'name' => $name,
-    			'last_name' => $last_name,
+    			'full_name' => $full_name,
     			'phone' => $phone,
     			'email' => $email,
     			'provincial_enrollment' => $provincial_enrollment,
@@ -119,8 +115,7 @@ class PrescriberController extends Controller
 
     	$data = [
     		'id' => $prescriber->id,
-    		'name' => $prescriber->name,
-    		'last_name' => $prescriber->last_name,
+    		'full_name' => $prescriber->full_name,
     		'phone' => $prescriber->phone,
     		'email' => $prescriber->email,
     		'provincial_enrollment' => $prescriber->provincial_enrollment,
@@ -144,8 +139,7 @@ class PrescriberController extends Controller
 
         $data = [
             'id' => $prescriber->id,
-            'name' => $prescriber->name,
-            'last_name' => $prescriber->last_name,
+            'full_name' => $prescriber->full_name,
             'phone' => $prescriber->home_address,
             'email' => $prescriber->city,
             'provincial_enrollment' => $prescriber->provincial_enrollment,
@@ -173,8 +167,7 @@ class PrescriberController extends Controller
          Prescriber::where('id', '=', $id)
          ->update(
              [
-                'name' => $request->name,
-                'last_name' => $request->last_name,
+                'full_name' => $request->full_name,
                 'phone' => $request->phone,
                 'email' => $request->email,
                 'provincial_enrollment' => $request->provincial_enrollment,

@@ -29,15 +29,9 @@
 
 	<div class="input-group mb-6 col-md-9 input-form" style="margin-top: 1%">
 		<div class="input-group-prepend">
-			<span class="input-group-text"> {{ trans('prescribers.last_name') }} </span>
+			<span class="input-group-text"> {{ trans('prescribers.full_name') }} </span>
 		</div>
-		<input type="text" class="form-control" name="last_name" required>
-
-		<div class="input-group-prepend">
-			<span class="input-group-text"> {{ trans('prescribers.name') }} </span>
-		</div>
-
-		<input type="text" class="form-control" name="name" required>
+		<input type="text" class="form-control" name="full_name" required>
 	</div>
 
 	<div class="input-group mb-6 col-md-6 input-form" style="margin-top: 1%">

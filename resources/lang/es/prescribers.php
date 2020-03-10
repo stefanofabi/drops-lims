@@ -32,4 +32,5 @@ return [
     'edit_prescriber' => 'Editar prescriptor',
     'destroy_prescriber' => 'Borrar prescriptor',
     'no_options' => 'No existen opciones disponibles',
+    'full_name' => 'Nombre completo',
 ];

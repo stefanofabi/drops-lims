@@ -13,7 +13,7 @@
 
 			@foreach ($prescribers as $prescriber)
 			<tr>
-				<td> {{ $prescriber->last_name }}, {{ $prescriber->name }} </td>
+				<td> {{ $prescriber->full_name }} </td>
 				<td> {{ $prescriber->provincial_enrollment }} </td>
 				<td> {{ $prescriber->national_enrollment }} </td>
 
