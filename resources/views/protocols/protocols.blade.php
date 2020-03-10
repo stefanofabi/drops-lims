@@ -13,7 +13,7 @@
 @endsection
 
 @section('create-text')
-{{ trans('protocols.create_protocols') }}
+<span class="fas fa-plus" ></span> {{ trans('protocols.create_protocol') }}
 @endsection 
 
 @section('active_protocols', 'active')
@@ -36,12 +36,16 @@
 <!-- Filter by keys -->
 <div class="form-group row">
     <div class="col-md-4">
-        <input type="text" class="form-control form-control" id="filter" name="filter" placeholder="{{ trans('prescribers.enter_filter') }}">
+        <input type="text" class="form-control form-control" id="filter" name="filter" placeholder="{{ trans('forms.enter_filter') }}">
     </div>
 
     <div class="col-md-6">
         <button type="submit" class="btn btn-info">
-            <span class="fas fa-search" ></span> {{ trans('prescribers.search') }} </button>
+            <span class="fas fa-search" ></span> {{ trans('forms.search') }} </button>
         </div>
 </div>
 @endsection 
+
+@section('action_page')
+{{ route('protocols/load') }}
+@endsection

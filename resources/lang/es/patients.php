@@ -38,8 +38,6 @@ return [
     'complete_shunt' => 'Completar derivador',
     'shunt' => 'Derivador',
     'complete_personal_data' => 'Completar datos personales',
-    'last_name' => 'Apellido',
-    'name' => 'Nombre',
     'sex' => 'Sexo',
     'select_sex' => 'Seleccione un sexo',
     'female' => 'Femenino',
@@ -84,4 +82,9 @@ return [
     'affiliate_number' => 'Número de afiliado',
     'expiration_date' => 'Fecha de vencimiento',
     'security_code' => 'Código de seguridad',
+    'full_name' => 'Nombre completo',
+    'exempt' => 'Exento',
+    'monotax' => 'Monotributo',
+    'not_responsible' => 'No responsable',
+    'registered_responsible' => 'Responsable inscripto',
 ];

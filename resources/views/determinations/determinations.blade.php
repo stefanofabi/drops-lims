@@ -13,7 +13,7 @@
 @endsection
 
 @section('create-text')
-{{ trans('determinations.create_determination') }}
+<span class="fas fa-plus" ></span> {{ trans('determinations.create_determination') }}
 @endsection 
 
 @section('active_determinations', 'active')

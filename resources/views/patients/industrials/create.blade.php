@@ -1,8 +1,10 @@
 @extends('patients/create')
 
 @section('content')
-<form method="post" action="{{ route('patients/industrials/store') }}">
+<form method="post" action="{{ route('patients/store') }}">
 	@csrf
+
+	<input type="hidden" name="type" value="industrial">
 
 	<div class="card margins-boxs-tb">
 		<div class="card-header">
@@ -11,10 +13,10 @@
 		<div class="card-body">
 			<div class="input-group mb-6 col-md-6">
 				<div class="input-group-prepend">
-					<span class="input-group-text"> {{ trans('patients.name') }} </span>
+					<span class="input-group-text"> {{ trans('patients.full_name') }} </span>
 				</div>
 
-				<input type="text" class="form-control" name="name" required>
+				<input type="text" class="form-control" name="full_name" required>
 			</div>
 		</div>
 	</div>
@@ -36,16 +38,17 @@
 				<div class="input-group-prepend">
 					<span class="input-group-text"> {{ trans('patients.cuit') }} </span>
 				</div>
-				<input type="number" class="form-control" name="cuit">
+				<input type="number" class="form-control" name="key">
 
 				<div class="input-group-prepend">
 					<span class="input-group-text"> {{ trans('patients.tax_condition') }} </span>
 				</div>
 				<select class="form-control input-sm" name="tax_condition">
 					<option value=""> {{ trans('patients.select_condition') }}</option>
-					@foreach ($conditions as $condition)
-					<option value="{{ $condition->name}}"> {{ $condition->name }} </option>
-					@endforeach
+					<option value="Exempt"> {{ trans('patients.exempt') }} </option>
+					<option value="Monotax"> {{ trans('patients.monotax') }} </option>
+					<option value="Not responsible"> {{ trans('patients.not_responsible') }} </option>
+					<option value="Registered Responsible"> {{ trans('patients.registered_responsible') }} </option>
 				</select>
 			</div>
 

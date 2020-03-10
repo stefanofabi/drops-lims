@@ -1,8 +1,10 @@
 @extends('patients/create')
 
 @section('content')
-<form method="post" action="{{ route('patients/humans/store') }}">
+<form method="post" action="{{ route('patients/store') }}">
 	@csrf
+
+	<input type="hidden" name="type" value="human">
 
 	<div class="card margins-boxs-tb">
 		<div class="card-header">
@@ -15,26 +17,21 @@
 				<div class="input-group-prepend">
 					<span class="input-group-text"> {{ trans('patients.dni') }} </span>
 				</div>
-				<input type="number" class="form-control" name="dni">
+				<input type="number" class="form-control" name="key">
 			</div>
 
 			<div class="input-group mb-6 col-md-9 input-form" style="margin-top: 1%">
 				<div class="input-group-prepend">
-					<span class="input-group-text"> {{ trans('patients.last_name') }} </span>
+					<span class="input-group-text"> {{ trans('patients.full_name') }} </span>
 				</div>
-				<input type="text" class="form-control" name="last_name" required>
-
-				<div class="input-group-prepend">
-					<span class="input-group-text"> {{ trans('patients.name') }} </span>
-				</div>
-				<input type="text" class="form-control" name="name" required>
+				<input type="text" class="form-control" name="full_name" required>
 			</div>
 
 			<div class="input-group mb-6 col-md-9 input-form" style="margin-top: 1%">
 				<div class="input-group-prepend">
 					<span class="input-group-text"> {{ trans('patients.home_address') }} </span>
 				</div>
-				<input type="text" class="form-control" name="home_address">
+				<input type="text" class="form-control" name="address">
 
 				<div class="input-group-prepend">
 					<span class="input-group-text"> {{ trans('patients.city') }} </span>

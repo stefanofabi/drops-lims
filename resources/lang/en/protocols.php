@@ -13,4 +13,10 @@ return [
     */
 
     'protocols' => 'Protocols',
+    'create_protocol' => 'Create protocol',
+    'protocol_number' => 'Protocol number',
+    'patient' => 'Patient',
+    'date' => 'Date',
+    'type' => 'Type',
+    
 ];

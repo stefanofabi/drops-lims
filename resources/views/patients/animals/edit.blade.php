@@ -40,7 +40,7 @@
 @include('patients/emails/edit')
 @include('patients/social_works/affiliates/edit')
 
-<form method="post" action="{{ route('patients/animals/update', ['id' => $animal['id']]) }}">
+<form method="post" action="{{ route('patients/update', ['id' => $animal['id']]) }}">
 	@csrf
 	{{ method_field('PUT') }}
 
@@ -60,16 +60,16 @@
 
 			<div class="input-group mb-6 col-md-9 input-form" style="margin-top: 1%">
 				<div class="input-group-prepend">
-					<span class="input-group-text"> {{ trans('patients.name') }} </span>
+					<span class="input-group-text"> {{ trans('patients.full_name') }} </span>
 				</div>
-				<input type="text" class="form-control" name="name" value="{{ $animal['name'] }}" required>
+				<input type="text" class="form-control" name="full_name" value="{{ $animal['full_name'] }}" required>
 			</div>
 
 			<div class="input-group mb-6 col-md-9 input-form" style="margin-top: 1%">
 				<div class="input-group-prepend">
 					<span class="input-group-text"> {{ trans('patients.home_address') }} </span>
 				</div>
-				<input type="text" class="form-control" name="home_address" value="{{ $animal['home_address'] }}">
+				<input type="text" class="form-control" name="address" value="{{ $animal['address'] }}">
 
 				<div class="input-group-prepend">
 					<span class="input-group-text"> {{ trans('patients.city') }} </span>

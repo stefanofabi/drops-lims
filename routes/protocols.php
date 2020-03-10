@@ -9,13 +9,12 @@
 |
 */
 
-
+	Route::get('protocolos', 'ProtocolController@index')->name('protocols');
 	Route::post('protocolos', 'ProtocolController@load')->name('protocols/load');
-	Route::get('protocols', 'ProtocolController@index')->name('protocols');
-
+	
 	Route::group(
 		[
-			'prefix' => 'Protocols',
+			'prefix' => 'protocolos',
 			'as' => 'protocols/',
 		], function() {
 

@@ -9,8 +9,8 @@
 |
 */
 
-Route::post('prescriptores', 'PrescriberController@load')->name('prescribers/load');
 Route::get('prescriptores', 'PrescriberController@index')->name('prescribers');
+Route::post('prescriptores', 'PrescriberController@load')->name('prescribers/load');
 
 Route::group(
 	[

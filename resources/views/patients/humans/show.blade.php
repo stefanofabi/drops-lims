@@ -42,7 +42,7 @@
 @section('content')
 
 <div class="alert alert-info fade show">
-	<a href="{{ route('patients/humans/edit', [$human['id']]) }}" class="btn btn-info btn-sm"> <i class="fas fa-lock-open"></i> </a>
+	<a href="{{ route('patients/edit', [$human['id']]) }}" class="btn btn-info btn-sm"> <i class="fas fa-lock-open"></i> </a>
 	{{ trans('patients.patient_blocked') }}
 </div>
 
@@ -57,26 +57,21 @@
 			<div class="input-group-prepend">
 				<span class="input-group-text"> {{ trans('patients.dni') }} </span>
 			</div>
-			<input type="number" class="form-control" value="{{ $human['dni'] }}" disabled>
+			<input type="number" class="form-control" value="{{ $human['key'] }}" disabled>
 		</div>
 
 		<div class="input-group mb-9 col-md-9 input-form" style="margin-top: 1%">
 			<div class="input-group-prepend">
-				<span class="input-group-text"> {{ trans('patients.last_name') }} </span>
+				<span class="input-group-text"> {{ trans('patients.full_name') }} </span>
 			</div>
-			<input type="text" class="form-control" value="{{ $human['last_name'] }}" disabled>
-
-			<div class="input-group-prepend">
-				<span class="input-group-text"> {{ trans('patients.name') }} </span>
-			</div>
-			<input type="text" class="form-control" value="{{ $human['name'] }}" disabled>
+			<input type="text" class="form-control" value="{{ $human['full_name'] }}" disabled>
 		</div>
 
 		<div class="input-group mb-9 col-md-9 input-form" style="margin-top: 1%">
 			<div class="input-group-prepend">
 				<span class="input-group-text"> {{ trans('patients.home_address') }} </span>
 			</div>
-			<input type="text" class="form-control" value="{{ $human['home_address'] }}" disabled>
+			<input type="text" class="form-control" value="{{ $human['address'] }}" disabled>
 
 			<div class="input-group-prepend">
 				<span class="input-group-text"> {{ trans('patients.city') }} </span>

@@ -29,7 +29,7 @@
 	{{ trans('determinations.determination_blocked') }}
 </div>
 
-<div class="input-group mb-6 col-md-6 input-form" style="margin-top: 1%">
+<div class="input-group mb-6 col-md-9 input-form" style="margin-top: 1%">
 	<div class="input-group-prepend">
 		<span class="input-group-text"> {{ trans('determinations.nbu') }} </span>
 	</div>
@@ -37,7 +37,7 @@
 	<input type="text" class="form-control" value="{{ $determination['nomenclator'] }}" disabled>
 </div>
 
-<div class="input-group mb-6 col-md-6 input-form" style="margin-top: 1%">
+<div class="input-group mb-6 col-md-9 input-form" style="margin-top: 1%">
 	<div class="input-group-prepend">
 		<span class="input-group-text"> {{ trans('determinations.code') }} </span>
 	</div>
@@ -53,7 +53,7 @@
 	<input type="text" class="form-control" value="{{ $determination['name'] }}" disabled>
 </div>
 
-<div class="input-group mb-6 col-md-6 input-form" style="margin-top: 1%">
+<div class="input-group mb-6 col-md-9 input-form" style="margin-top: 1%">
 	<div class="input-group-prepend">
 		<span class="input-group-text"> {{ trans('determinations.position') }} </span>
 	</div>
@@ -61,7 +61,7 @@
 	<input type="number" class="form-control" value="{{ $determination['position'] }}" disabled>
 </div>
 
-<div class="input-group mb-6 col-md-6 input-form" style="margin-top: 1%">
+<div class="input-group mb-6 col-md-9 input-form" style="margin-top: 1%">
 	<div class="input-group-prepend">
 		<span class="input-group-text"> {{ trans('determinations.biochemical_unit') }} </span>
 	</div>

@@ -13,7 +13,7 @@
 @endsection
 
 @section('create-text')
-{{ trans('prescribers.create_prescriber') }}
+<span class="fas fa-user-plus" ></span> {{ trans('prescribers.create_prescriber') }}
 @endsection 
 
 @section('active_prescribers', 'active')

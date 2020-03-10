@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOurProtocolsTable extends Migration
+class CreateDerivedProtocolsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,22 +13,17 @@ class CreateOurProtocolsTable extends Migration
      */
     public function up()
     {
-        Schema::create('our_protocols', function (Blueprint $table) {
+        Schema::create('derived_protocols', function (Blueprint $table) {
             $table->unsignedBigInteger('protocol_id');
             $table->unsignedBigInteger('patient_id');
-            $table->unsignedBigInteger('plan_id');
-            $table->date('withdrawal_date')->nullable();
-            $table->unsignedInteger('quantity_orders');
-            $table->string('diagnostic')->nullable();
-            
+            $table->string('reference');
+
             // Primary key
             $table->primary('protocol_id');
 
             // Foreign keys
             $table->foreign('protocol_id')->references('id')->on('protocols')->onDelete('restrict')->onUpdate('cascade');
-            $table->foreign('patient_id')->references('id')->on('patients')->onDelete('restrict')->onUpdate('cascade');
-            $table->foreign('plan_id')->references('id')->on('plans')->onDelete('restrict')->onUpdate('cascade');
-
+            $table->foreign('patient_id')->references('id')->on('derived_patients')->onDelete('restrict')->onUpdate('cascade');
 
             $table->softDeletes();
             $table->timestamps();
@@ -44,6 +39,6 @@ class CreateOurProtocolsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('our_protocols');
+        Schema::dropIfExists('derived_protocols');
     }
 }

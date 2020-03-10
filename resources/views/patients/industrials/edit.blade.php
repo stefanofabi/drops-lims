@@ -38,7 +38,7 @@
 @include('patients/emails/edit')
 @include('patients/social_works/affiliates/edit')
 
-<form method="post" action="{{ route('patients/industrials/update', ['id' => $industrial['id']]) }}">
+<form method="post" action="{{ route('patients/update', ['id' => $industrial['id']]) }}">
 	@csrf
 	{{ method_field('PUT') }}
 
@@ -49,10 +49,10 @@
 		<div class="card-body">
 			<div class="input-group mb-6 col-md-6">
 				<div class="input-group-prepend">
-					<span class="input-group-text"> {{ trans('patients.name') }} </span>
+					<span class="input-group-text"> {{ trans('patients.full_name') }} </span>
 				</div>
 
-				<input type="text" class="form-control" name="name" value="{{ $industrial['name'] }}" required>
+				<input type="text" class="form-control" name="full_name" value="{{ $industrial['full_name'] }}" required>
 			</div>
 		</div>
 	</div>
@@ -74,17 +74,18 @@
 				<div class="input-group-prepend">
 					<span class="input-group-text"> {{ trans('patients.cuit') }} </span>
 				</div>
-				<input type="number" class="form-control" name="cuit" value="{{ $industrial['cuit'] }}">
+				<input type="number" class="form-control" name="key" value="{{ $industrial['key'] }}">
 
 				<div class="input-group-prepend">
 					<span class="input-group-text"> {{ trans('patients.tax_condition') }} </span>
 				</div>
 
 				<select class="form-control input-sm" name="tax_condition" id="tax_condition">
-					<option value=""> {{ trans('patients.select_condition') }}</option>
-					@foreach ($tax_conditions as $condition)
-					<option value="{{ $condition->name}}"> {{ $condition->name }} </option>
-					@endforeach
+					<option value=""> {{ trans('patients.select_condition') }} </option>
+					<option value="Exempt"> {{ trans('patients.exempt') }} </option>
+					<option value="Monotax"> {{ trans('patients.monotax') }} </option>
+					<option value="Not responsible"> {{ trans('patients.not_responsible') }} </option>
+					<option value="Registered Responsible"> {{ trans('patients.registered_responsible') }} </option>
 				</select>
 			</div>
 

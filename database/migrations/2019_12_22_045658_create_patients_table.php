@@ -15,8 +15,24 @@ class CreatePatientsTable extends Migration
     {
         Schema::create('patients', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name')->nullable();
-           
+            $table->string('full_name')->nullable();
+            $table->string('key')->nullable();
+            $table->char('sex', 1)->nullable();
+            $table->date('birth_date')->nullable();
+            $table->string('city')->nullable();
+            $table->string('address')->nullable();
+
+            // for animals
+            $table->string('owner')->nullable();
+
+            // for industrials
+            $table->string('business_name')->nullable();
+            $table->string('tax_condition')->nullable();
+            $table->date('start_activity')->nullable();
+            
+            // to differentiate the type of patient
+           	$table->string('type')->nullable();
+
             $table->softDeletes();
             $table->timestamps();
 

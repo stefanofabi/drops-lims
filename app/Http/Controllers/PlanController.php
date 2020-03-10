@@ -22,6 +22,7 @@ class PlanController extends Controller
     /**
      * Load plans from ajax
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function load_plans(Request $request)

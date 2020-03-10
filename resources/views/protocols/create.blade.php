@@ -4,7 +4,7 @@
 {{ trans('prescribers.create_prescriber') }}
 @endsection 
 
-@section('active_prescribers', 'active')
+@section('active_patients', 'active')
 
 @section('menu-title')
 {{ trans('patients.menu') }}

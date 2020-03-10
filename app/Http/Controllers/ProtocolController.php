@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 
 use App\Http\Traits\Pagination;
 
+use App\Protocol;
+
 class ProtocolController extends Controller
 {
 
@@ -50,7 +52,7 @@ class ProtocolController extends Controller
 
         $view = view('protocols/index')
         ->with('request', $request->all())
-        ->with('prescribers', $query)
+        ->with('protocols', $query)
         ->with('paginate', $paginate);
 
         return $view;

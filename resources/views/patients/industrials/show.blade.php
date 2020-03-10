@@ -39,7 +39,7 @@
 
 @section('content')
 <div class="alert alert-info fade show">
-	<a href="{{ route('patients/industrials/edit', [$industrial['id']]) }}" class="btn btn-info btn-sm"> <i class="fas fa-lock-open"></i> </a>
+	<a href="{{ route('patients/edit', [$industrial['id']]) }}" class="btn btn-info btn-sm"> <i class="fas fa-lock-open"></i> </a>
 	{{ trans('patients.patient_blocked') }}
 </div>
 
@@ -50,10 +50,10 @@
 	<div class="card-body">
 		<div class="input-group mb-6 col-md-6">
 			<div class="input-group-prepend">
-				<span class="input-group-text"> {{ trans('patients.name') }} </span>
+				<span class="input-group-text"> {{ trans('patients.full_name') }} </span>
 			</div>
 
-			<input type="text" class="form-control" value="{{ $industrial['name'] }}" disabled>
+			<input type="text" class="form-control" value="{{ $industrial['full_name'] }}" disabled>
 		</div>
 	</div>
 </div>
@@ -75,17 +75,18 @@
 			<div class="input-group-prepend">
 				<span class="input-group-text"> {{ trans('patients.cuit') }} </span>
 			</div>
-			<input type="number" class="form-control" value="{{ $industrial['cuit'] }}" disabled>
+			<input type="number" class="form-control" value="{{ $industrial['key'] }}" disabled>
 
 			<div class="input-group-prepend">
 				<span class="input-group-text"> {{ trans('patients.tax_condition') }} </span>
 			</div>
 
 			<select class="form-control input-sm" id="tax_condition" disabled>
-				<option value=""> {{ trans('patients.select_condition') }}</option>
-				@foreach ($tax_conditions as $condition)
-				<option value="{{ $condition->name}}"> {{ $condition->name }} </option>
-				@endforeach
+				<option value=""> {{ trans('patients.select_condition') }} </option>
+				<option value="Exempt"> {{ trans('patients.exempt') }} </option>
+				<option value="Monotax"> {{ trans('patients.monotax') }} </option>
+				<option value="Not responsible"> {{ trans('patients.not_responsible') }} </option>
+				<option value="Registered Responsible"> {{ trans('patients.registered_responsible') }} </option>
 			</select>
 		</div>
 
@@ -93,7 +94,7 @@
 			<div class="input-group-prepend">
 				<span class="input-group-text"> {{ trans('patients.fiscal_address') }} </span>
 			</div>
-			<input type="text" class="form-control" value="{{ $industrial['fiscal_address'] }}" disabled>
+			<input type="text" class="form-control" value="{{ $industrial['address'] }}" disabled>
 
 			<div class="input-group-prepend">
 				<span class="input-group-text"> {{ trans('patients.city') }} </span>

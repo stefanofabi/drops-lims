@@ -13,7 +13,7 @@
 @endsection
 
 @section('create-text')
-{{ trans('patients.create_patient') }}
+<span class="fas fa-user-plus" ></span> {{ trans('patients.create_patient') }}
 @endsection 
 
 @section('active_patients', 'active')
@@ -39,17 +39,17 @@
 <!-- Patient type -->
 <div class="col form-group row">
     <div class="custom-control custom-radio custom-control-inline">
-        <input type="radio" class="custom-control-input" id="tipoAnimal" name="type" value="animals" required>
+        <input type="radio" class="custom-control-input" id="tipoAnimal" name="type" value="animal" required>
         <label class="custom-control-label" for="tipoAnimal"> {{ trans('patients.animal') }}</label>
     </div>
 
     <div class="custom-control custom-radio custom-control-inline">
-        <input type="radio" class="custom-control-input" id="tipoHumano" name="type" value="humans" required>
+        <input type="radio" class="custom-control-input" id="tipoHumano" name="type" value="human" required>
         <label class="custom-control-label" for="tipoHumano"> {{ trans('patients.human') }} </label>
     </div>
 
     <div class="custom-control custom-radio custom-control-inline">
-        <input type="radio" class="custom-control-input" id="tipoIndustrial" name="type" value="industrials" required>
+        <input type="radio" class="custom-control-input" id="tipoIndustrial" name="type" value="industrial" required>
         <label class="custom-control-label" for="tipoIndustrial"> {{ trans('patients.industrial') }} </label>
     </div>
 </div>
