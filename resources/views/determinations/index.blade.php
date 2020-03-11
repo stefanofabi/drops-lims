@@ -16,7 +16,7 @@
 				<td> {{ $determination->name }} </td>
 
 				<td class="text-right">
-					<a href="{{ route('determinations/show', [$determination->id]) }}" class="btn btn-info btn-sm" title="{{ trans('determinations.show_determination') }}" > <i class="fas fa-edit fa-sm"></i> </a> 
+					<a href="{{ route('determinations/show', [$determination->id]) }}" class="btn btn-info btn-sm" title="{{ trans('determinations.show_determination') }}" > <i class="fas fa-eye fa-sm"></i> </a> 
 					<a href="{{ route('determinations/destroy', [$determination->id]) }}" class="btn btn-info btn-sm" title="{{ trans('determinations.destroy_determination') }}"> <i class="fas fa-trash fa-sm"></i> </a>
 				</td>
 			</tr>

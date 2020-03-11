@@ -28,7 +28,7 @@
             <!-- Column from content -->
             <div class="card margins-boxs-tb">
                 <div class="card-header">
-                    <h4> <i class="fas fa-user"></i> @section('content-title') @show</h4>
+                    <h4> @section('content-title') @show </h4>
                 </div>
 
                 <div class="card-body">

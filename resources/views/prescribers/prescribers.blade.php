@@ -5,7 +5,7 @@
 @endsection 
 
 @section('main-title')
-{{ trans('prescribers.prescribers') }}
+<i class="fas fa-user-md"></i> {{ trans('prescribers.prescribers') }}
 @endsection
 
 @section('create-href')
@@ -13,7 +13,7 @@
 @endsection
 
 @section('create-text')
-<span class="fas fa-user-plus" ></span> {{ trans('prescribers.create_prescriber') }}
+<span class="fas fa-briefcase-medical" ></span> {{ trans('prescribers.create_prescriber') }}
 @endsection 
 
 @section('active_prescribers', 'active')

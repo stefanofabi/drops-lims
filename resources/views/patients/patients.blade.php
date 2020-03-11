@@ -5,7 +5,7 @@
 @endsection 
 
 @section('main-title')
-{{ trans('patients.patients') }}
+<i class="fas fa-user-injured"></i> {{ trans('patients.patients') }}
 @endsection
 
 @section('create-href')

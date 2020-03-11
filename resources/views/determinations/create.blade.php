@@ -19,7 +19,7 @@
 @endsection
 
 @section('content-title')
-{{ trans('determinations.create_determination') }}
+<i class="fas fa-syringe"></i> {{ trans('determinations.create_determination') }}
 @endsection
 
 
@@ -28,7 +28,7 @@
 	@csrf
 
 
-	<div class="input-group mb-6 col-md-6 input-form" style="margin-top: 1%">
+	<div class="input-group mb-1 col-md-9 input-form" style="margin-top: 1%">
 		<div class="input-group-prepend">
 			<span class="input-group-text"> {{ trans('determinations.nbu') }} </span>
 		</div>
@@ -41,7 +41,7 @@
 		</select>
 	</div>
 	
-	<div class="input-group mb-6 col-md-9 input-form" style="margin-top: 1%">
+	<div class="input-group mb-1 col-md-9 input-form" style="margin-top: 1%">
 		<div class="input-group-prepend">
 			<span class="input-group-text"> {{ trans('determinations.code') }} </span>
 		</div>
@@ -49,7 +49,7 @@
 		<input type="number" class="form-control" name="code" required>
 	</div>
 
-	<div class="input-group mb-6 col-md-9 input-form" style="margin-top: 1%">
+	<div class="input-group mb-1 col-md-9 input-form" style="margin-top: 1%">
 		<div class="input-group-prepend">
 			<span class="input-group-text"> {{ trans('determinations.name') }} </span>
 		</div>
@@ -57,7 +57,7 @@
 		<input type="text" class="form-control" name="name" required>
 	</div>
 
-	<div class="input-group mb-6 col-md-6 input-form" style="margin-top: 1%">
+	<div class="input-group mb-1 col-md-9 input-form" style="margin-top: 1%">
 		<div class="input-group-prepend">
 			<span class="input-group-text"> {{ trans('determinations.position') }} </span>
 		</div>
@@ -65,7 +65,7 @@
 		<input type="number" class="form-control" name="position" min="0" value="1">
 	</div>
 
-	<div class="input-group mb-6 col-md-6 input-form" style="margin-top: 1%">
+	<div class="input-group mb-1 col-md-9 input-form" style="margin-top: 1%">
 		<div class="input-group-prepend">
 			<span class="input-group-text"> {{ trans('determinations.biochemical_unit') }} </span>
 		</div>

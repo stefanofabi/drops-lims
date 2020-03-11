@@ -17,7 +17,7 @@
                     <div class="btn-group float-right">
                         <a  href="@yield('create-href', '#')" class="btn btn-info"> @yield('create-text') </a>
                     </div>
-                    <h4> <i class="fas fa-search"></i> @section('main-title') @show</h4>
+                    <h4> @section('main-title') @show </h4>
                 </div>
 
                 <div class="card-body">

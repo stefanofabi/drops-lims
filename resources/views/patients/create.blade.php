@@ -28,7 +28,7 @@
 
 
 @section('content-title')
-{{ trans('patients.create_patient') }}
+<i class="fas fa-user-injured"></i> {{ trans('patients.create_patient') }}
 @endsection
 
 @section('content')

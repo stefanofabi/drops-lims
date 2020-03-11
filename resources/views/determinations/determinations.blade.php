@@ -5,7 +5,7 @@
 @endsection 
 
 @section('main-title')
-{{ trans('determinations.determinations') }}
+<i class="fas fa-microscope"></i> {{ trans('determinations.determinations') }}
 @endsection
 
 @section('create-href')
@@ -13,7 +13,7 @@
 @endsection
 
 @section('create-text')
-<span class="fas fa-plus" ></span> {{ trans('determinations.create_determination') }}
+<span class="fas fa-syringe" ></span> {{ trans('determinations.create_determination') }}
 @endsection 
 
 @section('active_determinations', 'active')

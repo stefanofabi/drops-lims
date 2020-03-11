@@ -19,7 +19,7 @@
 @endsection
 
 @section('content-title')
-{{ trans('prescribers.create_prescriber') }}
+<i class="fas fa-user-md"></i> {{ trans('prescribers.create_prescriber') }}
 @endsection
 
 

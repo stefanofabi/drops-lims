@@ -18,7 +18,7 @@
 				<td> {{ $prescriber->national_enrollment }} </td>
 
 				<td class="text-right">
-					<a href="{{ route('prescribers/show', [$prescriber->id]) }}" class="btn btn-info btn-sm" title="{{ trans('prescribers.show_prescriber') }}" > <i class="fas fa-user-edit fa-sm"></i> </a> 
+					<a href="{{ route('prescribers/show', [$prescriber->id]) }}" class="btn btn-info btn-sm" title="{{ trans('prescribers.show_prescriber') }}" > <i class="fas fa-eye fa-sm"></i> </a> 
 					<a href="{{ route('prescribers/destroy', [$prescriber->id]) }}" class="btn btn-info btn-sm" title="{{ trans('prescribers.destroy_prescriber') }}"> <i class="fas fa-user-slash fa-sm"></i> </a>
 				</td>
 			</tr>
