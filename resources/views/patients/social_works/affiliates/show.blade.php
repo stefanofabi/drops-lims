@@ -22,10 +22,6 @@
 					@if (!empty($affiliate->affiliate_number))
 					[{{ $affiliate->affiliate_number }}]
 					@endif
-
-					@if (!empty($affiliate->security_code))
-					({{ $affiliate->security_code }})
-					@endif
 				</option>
 				@endforeach
 			</select>

@@ -19,7 +19,7 @@
 @endsection
 
 @section('content-title')
-{{ trans('determinations.show_determination') }}
+<i class="fas fa-eye"></i> {{ trans('determinations.show_determination') }}
 @endsection
 
 

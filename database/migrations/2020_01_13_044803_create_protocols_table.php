@@ -15,7 +15,7 @@ class CreateProtocolsTable extends Migration
     {
         Schema::create('protocols', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->date('date')->nullable();
+            $table->date('completion_date')->nullable();
             $table->string('observations')->nullable();
 
 

@@ -34,7 +34,7 @@
 @endsection
 
 @section('content-title')
-{{ trans('patients.show_patient') }}
+<i class="fas fa-user-shield"></i> {{ trans('patients.show_patient') }}
 @endsection
 
 @section('content')

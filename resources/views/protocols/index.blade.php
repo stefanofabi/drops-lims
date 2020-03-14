@@ -6,15 +6,15 @@
 		<table class="table table-striped">
 			<tr>
 				<th> {{ trans('protocols.protocol_number') }} </th>
-				<th> {{ trans('protocols.patient') }} </th>
-				<th> {{ trans('protocols.date') }} </th>
+				<th> {{ trans('patients.patient') }} </th>
+				<th> {{ trans('protocols.completion_date') }} </th>
 				<th> {{ trans('protocols.type') }} </th>
 				<th class="text-right"> {{ trans('forms.actions') }} </th>
 			</tr>
 
 			@foreach ($protocols as $protocol)
 			<tr>
-				<td> @if (date('Y-m-d') == $protocol->date) 
+				<td> @if (date('Y-m-d') == $protocol->completion_date) 
 						<span class="badge badge-success">New</span>
 					@endif 
 
@@ -22,7 +22,7 @@
 				</td>
 
 				<td> {{ $protocol->patient }} </td>
-				<td> {{ $protocol->date }} </td>
+				<td> {{ $protocol->completion_date }} </td>
 				<td> 
 					@if ($protocol->type == 'our') 
 						<span class="badge badge-primary">Our</span>
@@ -33,8 +33,8 @@
 				</td>
 
 				<td class="text-right">
-					<a href="" class="btn btn-info btn-sm" title="{{ trans('patients.show_patient') }}" > <i class="fas fa-user-edit fa-sm"></i> </a> 
-					<a href="" class="btn btn-info btn-sm" title="{{ trans('patients.destroy_patient') }}"> <i class="fas fa-user-slash fa-sm"></i> </a>
+					<a href="" class="btn btn-info btn-sm" title="{{ trans('patients.show_patient') }}" > <i class="fas fa-eye fa-sm"></i> </a> 
+					<a href="" class="btn btn-info btn-sm" title="{{ trans('patients.destroy_patient') }}"> <i class="fas fa-trash fa-sm"></i> </a>
 				</td>
 			</tr>
 			@endforeach

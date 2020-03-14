@@ -30,7 +30,7 @@
 
 
 @section('content-title')
-{{ trans('patients.edit_patient') }}
+<i class="fas fa-user-edit"></i> {{ trans('patients.edit_patient') }}
 @endsection
 
 

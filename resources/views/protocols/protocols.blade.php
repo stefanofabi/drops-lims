@@ -5,11 +5,11 @@
 @endsection 
 
 @section('main-title')
-{{ trans('protocols.protocols') }}
+<span class="fas fa-file-medical" ></span> {{ trans('protocols.protocols') }}
 @endsection
 
 @section('create-href')
-{{ route('protocols/create') }}
+{{ route('protocols/our/create') }}
 @endsection
 
 @section('create-text')

@@ -15,8 +15,11 @@ return [
     'protocols' => 'Protocols',
     'create_protocol' => 'Create protocol',
     'protocol_number' => 'Protocol number',
-    'patient' => 'Patient',
     'date' => 'Date',
     'type' => 'Type',
+    'observations' => 'Observations', 
+    'diagnostic' => 'Diagnostic',
+    'quantity_orders' => 'Quantity orders',
+    'completion_date' => 'Completion date',
     
 ];

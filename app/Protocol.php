@@ -12,7 +12,7 @@ class Protocol extends Model
 
     protected function index($filter, $offset, $length) {
 
-    	/* ID - DATE - PATIENT_ID - PATIENT - TYPE */
+    	/* ID - COMPLETION_DATE - PATIENT_ID - PATIENT - TYPE */
 	 	$derived_protocols = DB::table('protocols')
 		->join('derived_protocols', 'protocols.id', '=', 'derived_protocols.protocol_id')
 		->join('derived_patients', 'derived_protocols.patient_id', '=', 'derived_patients.id')
@@ -23,13 +23,13 @@ class Protocol extends Model
 				->orWhere("derived_patients.key", "like", "$filter%");
 			}
 		})
-		->select('protocols.id', 'protocols.date', 'derived_patients.id as patient_id', 'derived_patients.full_name as patient', DB::raw('"derived" as type'));
+		->select('protocols.id', 'protocols.completion_date', 'derived_patients.id as patient_id', 'derived_patients.full_name as patient', DB::raw('"derived" as type'));
 
 
 		$protocols = DB::table('our_protocols')
 		->join('patients', 'patients.id', '=', 'our_protocols.patient_id')
 		->join('protocols', 'protocols.id', '=', 'our_protocols.protocol_id')
-		->select('protocols.id', 'protocols.date as date', 'patients.id as patient_id', 'patients.full_name as patient', DB::raw('"our" as type'))
+		->select('protocols.id', 'protocols.completion_date as completion_date', 'patients.id as patient_id', 'patients.full_name as patient', DB::raw('"our" as type'))
 		->where(function ($query) use ($filter) {
 			if (!empty($filter)) {
 				$query->orWhere("protocols.id", "like", "$filter%")

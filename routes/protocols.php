@@ -18,19 +18,32 @@
 			'as' => 'protocols/',
 		], function() {
 
-			Route::get('crear', 'ProtocolController@create')->name('create');
+			Route::post('cargar_pacientes', 'ProtocolController@load_patients')->name('load_patients');
 
-			Route::post('almacenar', 'ProtocolController@store')->name('store');
 
-			Route::get('ver/{id}', 'ProtocolController@show')->name('show')
-			->where('id', '[1-9][0-9]*');
+			Route::group(
+			[
+				'prefix' => 'laboratorio',
+				'as' => 'our/',
+			], function() {
 
-			Route::put('actualizar/{id}', 'ProtocolController@update')->name('update')
-			->where('id', '[1-9][0-9]*');
+				Route::get('crear', 'OurProtocolController@create')->name('create');
+				Route::post('crear', 'OurProtocolController@create')->name('create');
 
-			Route::get('editar/{id}', 'ProtocolController@edit')->name('edit')
-			->where('id', '[1-9][0-9]*');
+				Route::post('almacenar', 'OurProtocolController@store')->name('store');
 
-			Route::get('destruir/{id}', 'ProtocolController@destroy')->name('destroy')
-			->where('id', '[1-9][0-9]*');
+				Route::get('ver/{id}', 'OurProtocolController@show')->name('show')
+				->where('id', '[1-9][0-9]*');
+
+				Route::put('actualizar/{id}', 'OurProtocolController@update')->name('update')
+				->where('id', '[1-9][0-9]*');
+
+				Route::get('editar/{id}', 'OurProtocolController@edit')->name('edit')
+				->where('id', '[1-9][0-9]*');
+
+				Route::get('destruir/{id}', 'OurProtocolController@destroy')->name('destroy')
+				->where('id', '[1-9][0-9]*');
+
+			});
+
 		});

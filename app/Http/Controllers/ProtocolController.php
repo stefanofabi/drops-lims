@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Traits\Pagination;
 
 use App\Protocol;
+use App\Patient;
 
 class ProtocolController extends Controller
 {
@@ -66,7 +67,6 @@ class ProtocolController extends Controller
     public function create()
     {
         //
-        return view('protocols/create');
     }
 
     /**
@@ -123,5 +123,36 @@ class ProtocolController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Returns a list of filtered patients
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function load_patients(Request $request)
+    {
+        // label column is required
+        $filter = $request->filter;
+
+        $social_works = Patient::select('full_name as label', 'id')->where("full_name", "like", "%$filter%")->get()->toJson();
+
+        return $social_works;
+    }
+
+
+    /**
+     * Returns a list of a patient's social works
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function load_social_works(Request $request)
+    {
+        // label column is required
+        $filter = $request->filter;
+
+        $social_works = Patient::select('full_name as label', 'id')->where("full_name", "like", "%$filter%")->get()->toJson();
+
+        return $social_works;
     }
 }
