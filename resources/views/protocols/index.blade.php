@@ -33,8 +33,13 @@
 				</td>
 
 				<td class="text-right">
-					<a href="" class="btn btn-info btn-sm" title="{{ trans('patients.show_patient') }}" > <i class="fas fa-eye fa-sm"></i> </a> 
-					<a href="" class="btn btn-info btn-sm" title="{{ trans('patients.destroy_patient') }}"> <i class="fas fa-trash fa-sm"></i> </a>
+					@if ($protocol->type == 'our')
+						<a href="{{ route('protocols/our/show', [$protocol->id]) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.show_protocol') }}" > <i class="fas fa-eye fa-sm"></i> </a> 
+					@else 
+						<a href="" class="btn btn-info btn-sm" title="{{ trans('protocols.show_protocol') }}" > <i class="fas fa-eye fa-sm"></i> </a> 
+					@endif
+
+					<a href="" class="btn btn-info btn-sm" title="{{ trans('protocols.destroy_protocol') }}"> <i class="fas fa-trash fa-sm"></i> </a>
 				</td>
 			</tr>
 			@endforeach

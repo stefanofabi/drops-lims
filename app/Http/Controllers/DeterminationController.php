@@ -122,20 +122,15 @@ class DeterminationController extends Controller
     {
         //
 
-        $determination = Determination::find($id);
+        $determination = Determination::findOrFail($id);
         $nomenclator = $determination->nomenclator;
 
-        $data = [
-            'id' => $determination->id,
-            'nomenclator' => $nomenclator->name,
-            'code' => $determination->code,
-            'name' => $determination->name,
-            'position' => $determination->position,
-            'biochemical_unit' => $determination->biochemical_unit,
-        ];
+        $reports = Determination::get_reports($id);
 
-
-        return view('determinations/show')->with('determination', $data);
+        return view('determinations/show')
+        ->with('determination', $determination)
+        ->with('nomenclator', $nomenclator)
+        ->with('reports', $reports);
     }
 
     /**
@@ -147,23 +142,15 @@ class DeterminationController extends Controller
     public function edit($id)
     {
         //
-        $determination = Determination::find($id);
+        $determination = Determination::findOrFail($id);
         $nomenclator = $determination->nomenclator;
 
-        $data = [
-            'nomenclator' => $nomenclator->name,
-            'id' => $determination->id,
-            'code' => $determination->code,
-            'name' => $determination->name,
-            'position' => $determination->position,
-            'biochemical_unit' => $determination->biochemical_unit,
-        ];
-
-        $nomenclators = Nomenclator::all();
+        $reports = Determination::get_reports($id);
 
         return view('determinations/edit')
-        ->with('determination', $data)
-        ->with('nomenclators', $nomenclators);
+        ->with('determination', $determination)
+        ->with('nomenclator', $nomenclator)
+        ->with('reports', $reports);
     }
 
     /**

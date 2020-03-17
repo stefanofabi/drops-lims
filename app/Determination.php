@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
+use App\Report;
+
 class Determination extends Model
 {
     //
@@ -39,6 +41,10 @@ class Determination extends Model
 		->count();
 
 		return $count;
+	}
+
+	protected function get_reports($id) {
+		return Report::where('determination_id', $id)->get();
 	}
 
 	public function nomenclator() {

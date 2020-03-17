@@ -26,5 +26,7 @@ return [
     'destroy_determination' => 'Delete determination',
     'determination_blocked' => 'Determination blocked for security reasons. To make changes click on the lock',
     'edit_determination' => 'Edit determination',
-    'add_report' => 'Add report',
+    'informed' => 'Informed',
+
+    
 ];

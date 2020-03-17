@@ -5,21 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-use App\Http\Traits\Pagination;
+use App\Determination;
+use App\Report;
 
-use App\Protocol;
-use App\Patient;
-
-class ProtocolController extends Controller
+class ReportController extends Controller
 {
 
-    use Pagination;
-
-    private const PER_PAGE = 15;
-    private const ADJACENTS = 4;
-
     private const RETRIES = 5;
-
+    
     /**
      * Display a listing of the resource.
      *
@@ -28,35 +21,7 @@ class ProtocolController extends Controller
     public function index()
     {
         //
-        return view('protocols/protocols');
-    }
-
-    /**
-    * Load protocols
-    * @param   \Illuminate\Http\Request  $request
-    * @return View $view
-    */
-    public function load(Request $request) {
-
-        // Request
-        $filter = $request['filter'];
-        $page = $request['page'];
-
-        $offset = ($page - 1) * self::PER_PAGE;
-        $query = Protocol::index($filter, $offset, self::PER_PAGE);
-
-        // Pagination
-        $count_rows = Protocol::count_index($filter);
-        $total_pages = ceil($count_rows / self::PER_PAGE);
-
-        $paginate = $this->paginate($page, $total_pages, self::ADJACENTS);
-
-        $view = view('protocols/index')
-        ->with('request', $request->all())
-        ->with('protocols', $query)
-        ->with('paginate', $paginate);
-
-        return $view;
+        
     }
 
     /**
@@ -64,9 +29,14 @@ class ProtocolController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
         //
+
+        $determination = Determination::findOrFail($id);
+
+        return view('determinations/reports/create')
+        ->with('determination', $determination);
     }
 
     /**
@@ -78,6 +48,13 @@ class ProtocolController extends Controller
     public function store(Request $request)
     {
         //
+        $report = Report::insertGetId([
+            'name' => $request->name,
+            'report' => $request->report,
+            'determination_id' => $request->determination_id,
+        ]);
+
+        return redirect()->action('ReportController@show', [$report]);
     }
 
     /**
@@ -89,6 +66,13 @@ class ProtocolController extends Controller
     public function show($id)
     {
         //
+
+        $report = Report::findOrFail($id);
+        $determination = $report->determination;
+
+        return view('determinations/reports/show')
+        ->with('report', $report)
+        ->with('determination', $determination);
     }
 
     /**
@@ -100,6 +84,13 @@ class ProtocolController extends Controller
     public function edit($id)
     {
         //
+
+        $report = Report::findOrFail($id);
+        $determination = $report->determination;
+
+        return view('determinations/reports/edit')
+        ->with('report', $report)
+        ->with('determination', $determination);
     }
 
     /**
@@ -112,6 +103,20 @@ class ProtocolController extends Controller
     public function update(Request $request, $id)
     {
         //
+
+        DB::transaction(function () use ($request, $id) {
+
+           $report = Report::where('id', '=', $id)
+           ->update(
+               [
+                'name' => $request->name,
+                'report' => $request->report, 
+            ]);
+
+       }, self::RETRIES);
+
+
+        return redirect()->action('ReportController@show', [$id]);
     }
 
     /**
@@ -124,19 +129,4 @@ class ProtocolController extends Controller
     {
         //
     }
-
-    /**
-     * Returns a list of a patient's social works
-     *
-     * @return \Illuminate\Http\Response
-     */
-   /* public function load_social_works(Request $request)
-    {
-        // label column is required
-        $filter = $request->filter;
-
-        $social_works = Patient::select('full_name as label', 'id')->where("full_name", "like", "%$filter%")->get()->toJson();
-
-        return $social_works;
-    }*/
 }

@@ -25,49 +25,76 @@
 
 @section('content')
 <div class="alert alert-info fade show">
-	<a href="{{ route('determinations/edit', [$determination['id']]) }}" class="btn btn-info btn-sm"> <i class="fas fa-lock-open"></i> </a>
+	<a href="{{ route('determinations/edit', [$determination->id]) }}" class="btn btn-info btn-sm"> <i class="fas fa-lock-open"></i> </a>
 	{{ trans('determinations.determination_blocked') }}
 </div>
 
-<div class="input-group mb-1 col-md-9 input-form" style="margin-top: 1%">
+<div class="input-group mt-2 mb-1 col-md-9 input-form">
 	<div class="input-group-prepend">
 		<span class="input-group-text"> {{ trans('determinations.nbu') }} </span>
 	</div>
 
-	<input type="text" class="form-control" value="{{ $determination['nomenclator'] }}" disabled>
+	<input type="text" class="form-control" value="{{ $nomenclator->name }}" disabled>
 </div>
 
-<div class="input-group mb-1 col-md-9 input-form" style="margin-top: 1%">
+<div class="input-group mt-2 mb-1 col-md-9 input-form">
 	<div class="input-group-prepend">
 		<span class="input-group-text"> {{ trans('determinations.code') }} </span>
 	</div>
 
-	<input type="number" class="form-control" value="{{ $determination['code'] }}" disabled>
+	<input type="number" class="form-control" value="{{ $determination->code }}" disabled>
 </div>
 
-<div class="input-group mb-1 col-md-9 input-form" style="margin-top: 1%">
+<div class="input-group mt-2 mb-1 col-md-9 input-form">
 	<div class="input-group-prepend">
 		<span class="input-group-text"> {{ trans('determinations.name') }} </span>
 	</div>
 
-	<input type="text" class="form-control" value="{{ $determination['name'] }}" disabled>
+	<input type="text" class="form-control" value="{{ $determination->name }}" disabled>
 </div>
 
-<div class="input-group mb-1 col-md-9 input-form" style="margin-top: 1%">
+<div class="input-group mt-2 mb-1 col-md-9 input-form">
 	<div class="input-group-prepend">
 		<span class="input-group-text"> {{ trans('determinations.position') }} </span>
 	</div>
 
-	<input type="number" class="form-control" value="{{ $determination['position'] }}" disabled>
+	<input type="number" class="form-control" value="{{ $determination->position }}" disabled>
 </div>
 
-<div class="input-group mb-1 col-md-9 input-form" style="margin-top: 1%">
+<div class="input-group mt-2 mb-1 col-md-9 input-form">
 	<div class="input-group-prepend">
 		<span class="input-group-text"> {{ trans('determinations.biochemical_unit') }} </span>
 	</div>
-	<input type="number" class="form-control" value="{{ $determination['biochemical_unit'] }}" disabled>
+	<input type="number" class="form-control" value="{{ $determination->biochemical_unit }}" disabled>
 </div>
 
 @endsection	
 
+
+@section('extra-content')
+<div class="card margins-boxs-tb">
+	<div class="card-header">
+		<h4> <span class="fas fa-file-alt" ></span> {{ trans('reports.index_reports')}} </h4>
+    </div>
+
+
+    <div class="table-responsive">
+		<table class="table table-striped">
+				<tr  class="info">
+					<th> {{ trans('reports.name') }} </th>
+					<th class="text-right"> {{ trans('forms.actions') }}</th>	
+				</tr>
+
+				@foreach ($reports as $report)
+					<tr>
+						<td> {{ $report->name }} </td>
+						<td class="text-right">
+							<a href="" class="btn btn-info btn-sm" title="{{ trans('reports.show_report') }}"> <i class="fas fa-eye fa-sm"></i> </a>			
+						</td>
+					</tr>
+				@endforeach
+		</table>
+	</div>
+</div>
+@endsection
 

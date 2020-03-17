@@ -37,6 +37,9 @@
                 </div>
             </div>
 
+            @section('extra-content')
+            @show
+
         </div>
     </body>
 </html>

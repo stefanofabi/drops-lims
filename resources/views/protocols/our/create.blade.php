@@ -19,7 +19,7 @@
 
 						$.ajax({
 							data:  parameters,
-							url:   '{{ route("protocols/load_patients") }}',
+							url:   '{{ route("protocols/our/load_patients") }}',
 							type:  'post',
 							dataType: 'json',
 							beforeSend: function () {
@@ -40,6 +40,37 @@
 					}
 		});
 	});
+
+
+	$(function() {
+		$("#prescriber").autocomplete({
+			minLength: 2,
+			source: function(event, ui) {
+						var parameters = {
+							"filter" : $("#prescriber").val()
+						};
+
+						$.ajax({
+							data:  parameters,
+							url:   '{{ route("protocols/our/load_prescribers") }}',
+							type:  'post',
+							dataType: 'json',
+							beforeSend: function () {
+										//$("#resultados").html('<div class="spinner-border text-info"> </div> Procesando, espere por favor...');
+									},
+							success:  ui
+						});
+						
+						return ui;
+					},
+			select: function(event, ui) {
+						event.preventDefault();
+						$('#prescriber').val(ui.item.label);
+						$('#prescriber_id').val(ui.item.id);
+					}
+		});
+	});
+
 
 	/* function to redirect a webpage to another using post method */
 	function redirect_by_post(purl, pparameters, in_new_tab) {
@@ -113,6 +144,15 @@
 					@endforeach
 				@endif
 		</select>
+	</div>
+
+	<div class="input-group mt-2 mb-1 col-md-9 input-form">
+		<div class="input-group-prepend">
+			<span class="input-group-text"> {{ trans('prescribers.prescriber') }} </span>
+		</div>
+		
+		<input type="hidden" id="prescriber_id" name="prescriber_id">
+		<input type="text" class="form-control" id="prescriber" required>
 	</div>
 
 	<div class="input-group mt-2 mb-1 col-md-9 input-form">

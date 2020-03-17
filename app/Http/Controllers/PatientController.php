@@ -109,7 +109,7 @@ class PatientController extends Controller
      */
     public function show($id) {
 
-        $patient = Patient::find($id);
+        $patient = Patient::findOrFail($id);
 
         $emails = Email::get_emails($id);
 
@@ -166,7 +166,7 @@ class PatientController extends Controller
     public function edit($id)
     {
         //
-        $patient = Patient::find($id);
+        $patient = Patient::findOrFail($id);
 
         $emails = Email::get_emails($id);
 

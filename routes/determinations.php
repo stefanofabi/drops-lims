@@ -9,7 +9,6 @@
 |
 */
 
-
 Route::post('determinaciones', 'DeterminationController@load')->name('determinations/load');
 Route::get('determinaciones', 'DeterminationController@index')->name('determinations');
 
@@ -19,6 +18,8 @@ Route::group(
 		'as' => 'determinations/',
 	], function() {
 
+		require('reports.php');
+		
 		Route::get('crear', 'DeterminationController@create')->name('create');
 
 		Route::post('almacenar', 'DeterminationController@store')->name('store');

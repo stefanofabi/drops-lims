@@ -17,6 +17,7 @@ class CreateOurProtocolsTable extends Migration
             $table->unsignedBigInteger('protocol_id');
             $table->unsignedBigInteger('patient_id');
             $table->unsignedBigInteger('social_work_id');
+            $table->unsignedBigInteger('prescriber_id');
             $table->date('withdrawal_date')->nullable();
             $table->unsignedInteger('quantity_orders')->default(0);
             $table->string('diagnostic')->nullable();
@@ -27,6 +28,7 @@ class CreateOurProtocolsTable extends Migration
             // Foreign keys
             $table->foreign('protocol_id')->references('id')->on('protocols')->onDelete('restrict')->onUpdate('cascade');
             $table->foreign('patient_id')->references('id')->on('patients')->onDelete('restrict')->onUpdate('cascade');
+            $table->foreign('prescriber_id')->references('id')->on('prescribers')->onDelete('restrict')->onUpdate('cascade');
             $table->foreign('social_work_id')->references('id')->on('social_works')->onDelete('restrict')->onUpdate('cascade');
 
 

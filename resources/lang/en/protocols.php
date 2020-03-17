@@ -21,5 +21,9 @@ return [
     'diagnostic' => 'Diagnostic',
     'quantity_orders' => 'Quantity orders',
     'completion_date' => 'Completion date',
-    
+    'show_protocol' => 'Show protocol',
+    'destroy_protocol' => 'Destroy protocol',
+    'protocol_blocked' => 'Protocol blocked for security reasons. To make changes click on the lock',
+    'edit_protocol' => 'Edit protocol',
+
 ];

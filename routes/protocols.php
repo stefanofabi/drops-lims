@@ -18,14 +18,16 @@
 			'as' => 'protocols/',
 		], function() {
 
-			Route::post('cargar_pacientes', 'ProtocolController@load_patients')->name('load_patients');
-
+			require('practices.php');
 
 			Route::group(
 			[
 				'prefix' => 'laboratorio',
 				'as' => 'our/',
 			], function() {
+
+				Route::post('cargar_pacientes', 'OurProtocolController@load_patients')->name('load_patients');
+				Route::post('cargar_prescriptores', 'OurProtocolController@load_prescribers')->name('load_prescribers');
 
 				Route::get('crear', 'OurProtocolController@create')->name('create');
 				Route::post('crear', 'OurProtocolController@create')->name('create');

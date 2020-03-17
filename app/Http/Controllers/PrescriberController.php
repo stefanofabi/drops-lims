@@ -111,19 +111,9 @@ class PrescriberController extends Controller
     public function show($id)
     {
         //
-    	$prescriber = Prescriber::find($id);
+    	$prescriber = Prescriber::findOrFail($id);
 
-    	$data = [
-    		'id' => $prescriber->id,
-    		'full_name' => $prescriber->full_name,
-    		'phone' => $prescriber->phone,
-    		'email' => $prescriber->email,
-    		'provincial_enrollment' => $prescriber->provincial_enrollment,
-    		'national_enrollment' => $prescriber->national_enrollment,
-    	];
-
-
-    	return view('prescribers/show')->with('prescriber', $data);
+    	return view('prescribers/show')->with('prescriber', $prescriber);
     }
 
     /**
@@ -135,19 +125,9 @@ class PrescriberController extends Controller
     public function edit($id)
     {
         //
-        $prescriber = Prescriber::find($id);
+        $prescriber = Prescriber::findOrFail($id);
 
-        $data = [
-            'id' => $prescriber->id,
-            'full_name' => $prescriber->full_name,
-            'phone' => $prescriber->home_address,
-            'email' => $prescriber->city,
-            'provincial_enrollment' => $prescriber->provincial_enrollment,
-            'national_enrollment' => $prescriber->national_enrollment,
-        ];
-        
-
-        return view('prescribers/edit')->with('prescriber', $data);
+        return view('prescribers/edit')->with('prescriber', $prescriber);
     }
 
     /**

@@ -3,8 +3,9 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
 use Illuminate\Support\Facades\DB;
+
+use App\Practice;
 
 class Protocol extends Model
 {
@@ -39,6 +40,7 @@ class Protocol extends Model
 			}
 		})
 		->union($derived_protocols)
+		->orderBy('id', 'desc')
 		->get();
 
 
@@ -67,6 +69,15 @@ class Protocol extends Model
 		$total_count = $our_protocols_count + $derived_protocols_count;
 
 		return $total_count;
+	}
+
+
+	protected function get_practices($id) {
+		return Practice::select('practices.id', 'determinations.code', 'determinations.name')
+        ->where('protocol_id', $id)
+        ->join('reports', 'reports.id', '=', 'practices.report_id')
+        ->join('determinations', 'determinations.id', '=', 'reports.determination_id')
+        ->get();
 	}
 
 }
