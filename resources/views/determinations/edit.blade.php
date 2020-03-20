@@ -98,8 +98,8 @@
 					<tr>
 						<td> {{ $report->name }} </td>
 						<td class="text-right">
-							<a href="" class="btn btn-info btn-sm" title="{{ trans('reports.show_report') }}"> <i class="fas fa-eye fa-sm"></i> </a>
-							<a href="" class="btn btn-info btn-sm" title="{{ trans('reports.show_report') }}"> <i class="fas fa-trash fa-sm"></i> </a>			
+							<a href="{{ route('determinations/reports/edit', [$report->id])}}" class="btn btn-info btn-sm" title="{{ trans('reports.edit_report') }}"> <i class="fas fa-edit fa-sm"></i> </a>
+							<a href="" class="btn btn-info btn-sm" title="{{ trans('reports.destroy_report') }}"> <i class="fas fa-trash fa-sm"></i> </a>			
 						</td>
 					</tr>
 				@endforeach

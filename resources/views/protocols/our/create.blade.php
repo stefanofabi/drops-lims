@@ -9,6 +9,13 @@
 @section('js')
 <script type="text/javascript">
 
+	var token = $('meta[name="csrf-token"]').attr('content');
+
+	$(document).ready(function() {
+        // Select a sex from list
+        $("#social_work option[value='{{ $social_work->id ?? '' }}']").attr("selected",true);
+    });
+
 	$(function() {
 		$("#patient").autocomplete({
 			minLength: 2,
@@ -35,7 +42,6 @@
 						$('#patient').val(ui.item.label);
 						$('#patient_id').val(ui.item.id);
 
-						var token = $('meta[name="csrf-token"]').attr('content');
 						redirect_by_post('{{ route("protocols/our/create") }}', { patient_id: ui.item.id, '_token': token }, false);
 					}
 		});
@@ -70,6 +76,13 @@
 					}
 		});
 	});
+
+	function load_plans() {
+		var social_work = $("#social_work").val();
+		var patient = $("#patient_id").val();
+
+		redirect_by_post('{{ route("protocols/our/create") }}', { patient_id: patient, '_token': token, 'social_work': social_work }, false);
+	}
 
 
 	/* function to redirect a webpage to another using post method */
@@ -129,18 +142,37 @@
 			<span class="input-group-text"> {{ trans('social_works.social_work') }} </span>
 		</div>
 
-		<select class="form-control input-sm" name="social_work_id" required>
+		<select class="form-control input-sm" id="social_work" onchange="load_plans();" required>
 				<option value=""> {{ trans('social_works.select_social_work') }}</option>
 				@if (isset($social_works))
 					@foreach ($social_works as $social_work)
 						<option value="{{ $social_work['id'] }}"> 
-							@if (date('Y-m-d') > $social_work['expiration_date'])
+							@if (!empty($social_work['expiration_date']) && $social_work['expiration_date'] < date('Y-m-d'))
 								** {{ trans('social_works.expired_card')}} **
 							@endif
 
-							{{ $social_work['name'] }} [{{ $social_work['affiliate_number'] }}]
+							{{ $social_work['name'] }} 
+
+							@if (!empty($social_work['affiliate_number'])) 
+								[{{ $social_work['affiliate_number'] }}]
+							@endif
 
 						</option>
+					@endforeach
+				@endif
+		</select>
+	</div>
+
+	<div class="input-group mt-2 mb-1 col-md-9 input-form">
+		<div class="input-group-prepend">
+			<span class="input-group-text"> {{ trans('social_works.plan') }} </span>
+		</div>
+
+		<select class="form-control input-sm" name="plan_id" required>
+				<option value=""> {{ trans('social_works.select_plan') }}</option>
+				@if (isset($plans))
+					@foreach ($plans as $plan)
+						<option value="{{ $plan['id'] }}"> {{ $plan['name'] }} </option>
 					@endforeach
 				@endif
 		</select>
@@ -168,7 +200,7 @@
 			<span class="input-group-text"> {{ trans('protocols.quantity_orders') }} </span>
 		</div>
 
-		<input type="number" class="form-control" name="quantity_orders" value="0" required>
+		<input type="number" class="form-control" name="quantity_orders" min="0" value="0" required>
 	</div>
 
 	<div class="input-group mt-2 mb-1 col-md-9 input-form">

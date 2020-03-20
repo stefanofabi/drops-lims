@@ -72,12 +72,16 @@ class Protocol extends Model
 	}
 
 
-	protected function get_practices($id) {
+	/*protected function get_practices($id) {
 		return Practice::select('practices.id', 'determinations.code', 'determinations.name')
         ->where('protocol_id', $id)
         ->join('reports', 'reports.id', '=', 'practices.report_id')
         ->join('determinations', 'determinations.id', '=', 'reports.determination_id')
         ->get();
-	}
+	}*/
 
+	public function practices()
+    {
+        return $this->hasMany('App\Practice');
+    }
 }

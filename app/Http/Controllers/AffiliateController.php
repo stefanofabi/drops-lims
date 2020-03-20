@@ -28,13 +28,13 @@ class AffiliateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
+    public function create(Request $request)
     {
         //
     	$social_works = SocialWork::all();
 
     	return view('patients/social_works/affiliates/create')
-    	->with('id', $id)
+    	->with('id', $request->id)
     	->with('social_works', $social_works);
     }
 
@@ -49,28 +49,19 @@ class AffiliateController extends Controller
         //
     	DB::transaction(function () use ($request) {
 
-            // data for affiliates
-    		$patient_id = $request['patient_id'];
-    		$plan_id = $request['plan'];
-    		$social_work_id = $request['social_work'];
-    		$affiliate_number = $request['affiliate_number'];
-    		$expiration_date = $request['expiration_date'];
-    		$security_code = $request['security_code'];
-
     		$prescriber = Affiliate::insert([
-    			'patient_id' => $patient_id,
-    			'plan_id' => $plan_id,
-    			'social_work_id' => $social_work_id,
-    			'affiliate_number' => $affiliate_number,
-    			'expiration_date' => $expiration_date,
-    			'security_code' => $security_code,
+    			'patient_id' => $request->patient_id,
+    			'plan_id' => $request->plan_id,
+    			'affiliate_number' => $request->affiliate_number,
+    			'expiration_date' => $request->expiration_date,
+    			'security_code' => $request->security_code,
     		]);
 
     	}, self::RETRIES);
 
 
-    	return redirect()->action('PatientController@show', ['id' => $request['patient_id']]);
-
+    	return redirect()->action('PatientController@edit', [$request->patient_id]);
+        
     }
 
     /**
@@ -94,11 +85,10 @@ class AffiliateController extends Controller
     {
         //
         
-        return Affiliate::select('affiliates.id as id', 'plans.id as plan_id', 'social_works.id as social_work_id', 'affiliates.affiliate_number as affiliate_number', 'affiliates.security_code as security_code', 'affiliates.expiration_date as expiration_date')
-        ->join('plans', 'affiliates.plan_id', '=', 'plans.id')
-        ->join('social_works', 'plans.social_work_id', '=', 'social_works.id')
+        return Affiliate::select('affiliates.id', 'plans.id as plan_id', 'social_works.id as social_work_id', 'affiliates.affiliate_number', 'affiliates.security_code', 'affiliates.expiration_date')
+        ->plan()
+        ->socialWork()
         ->where('affiliates.id', $request->id)
-        ->get()
         ->first();
     }
 
@@ -117,7 +107,6 @@ class AffiliateController extends Controller
            Affiliate::where('id', '=', $request->id)
             ->update(
                 [
-                    'social_work_id' => $request->social_work_id,
                     'plan_id' => $request->plan_id,
                     'affiliate_number' => $request->affiliate_number,
                     'security_code' => $request->security_code,

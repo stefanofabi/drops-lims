@@ -19,29 +19,6 @@ class PlanController extends Controller
         //
     }
 
-    /**
-     * Load plans from ajax
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function load_plans(Request $request)
-    {
-        //
-        $plans = Plan::where('social_work_id', $request->social_work)->get();
-
-        $plans_data = '<select class="form-control" id="plan" name="plan" required>
-        <option value="">'. Lang::get('social_works.select_plan')  .'</option>';
-        foreach($plans as $plan) {
-            $plans_data .= '
-            <option value="'.$plan['id'].'"> '.$plan['name'] .'</option>';
-        }
-
-        $plans_data .= "
-        </select>";
-
-        return $plans_data;
-    }
 
     /**
      * Show the form for creating a new resource.

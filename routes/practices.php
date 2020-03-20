@@ -15,6 +15,10 @@
 			'as' => 'practices/',
 		], function() {
 
+			// do not confuse, it is the protocol id
+			Route::get('practicas{id}', 'PracticeController@add')->name('add')
+			->where('id', '[1-9][0-9]*');
+
 			Route::get('crear', 'PracticeController@create')->name('create');
 
 			Route::post('almacenar', 'PracticeController@store')->name('store');

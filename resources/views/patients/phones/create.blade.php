@@ -15,7 +15,7 @@
 @endsection
 
 @section('content-title')
-{{ trans('phones.add_phone') }}
+<i class="fas fa-phone"></i> {{ trans('phones.add_phone') }}
 @endsection
 
 

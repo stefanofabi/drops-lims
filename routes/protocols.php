@@ -29,6 +29,8 @@
 				Route::post('cargar_pacientes', 'OurProtocolController@load_patients')->name('load_patients');
 				Route::post('cargar_prescriptores', 'OurProtocolController@load_prescribers')->name('load_prescribers');
 
+				Route::get('agregar_practica', 'OurProtocolController@add_practice')->name('add_practice');
+
 				Route::get('crear', 'OurProtocolController@create')->name('create');
 				Route::post('crear', 'OurProtocolController@create')->name('create');
 

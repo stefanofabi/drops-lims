@@ -1,7 +1,7 @@
 @extends('default-template')
 
 @section('title')
-{{ trans('determinations.create_report') }}
+{{ trans('reports.create_report') }}
 @endsection 
 
 @section('active_determinations', 'active')
@@ -19,7 +19,7 @@
 @endsection
 
 @section('content-title')
-<i class="fas fa-file-pdf"></i> {{ trans('determinations.create_report') }}
+<i class="fas fa-file-pdf"></i> {{ trans('reports.create_report') }}
 @endsection
 
 
@@ -46,7 +46,7 @@
 
 	<div class="input-group mt-2 mb-1 col-md-9 input-form">
 		<div class="input-group-prepend">
-			<span class="input-group-text"> {{ trans('determinations.report') }} </span>
+			<span class="input-group-text"> {{ trans('reports.report') }} </span>
 		</div>
 
 		<textarea class="form-control" rows="10" name="report"></textarea>

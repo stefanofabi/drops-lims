@@ -19,5 +19,6 @@ return [
     'edit_report' => 'Edit report',
     'index_reports' => 'Index of reports',
     'name' => 'Name',
+    'destroy_report' => 'Destroy report',
 
 ];

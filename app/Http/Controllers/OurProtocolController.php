@@ -39,13 +39,22 @@ class OurProtocolController extends Controller
         $patient_id = $request->patient_id;
         $patient = Patient::find($patient_id);
 
+        $social_work = SocialWork::find($request->social_work);
+
         $social_works = Affiliate::select('social_works.id as id', 'social_works.name as name', 'affiliate_number', 'expiration_date')
-        ->join('social_works', 'affiliates.social_work_id', '=', 'social_works.id')
-        ->where('patient_id', $patient_id)->get();
+        ->plan()
+        ->socialWork()
+        ->where('patient_id', $patient_id)
+        ->get();
+
+        $plans = SocialWork::get_plans($request->social_work);
 
         return view('protocols/our/create')
+        ->with('patient', $patient)
+        ->with('social_work', $social_work)
         ->with('social_works', $social_works)
-        ->with('patient', $patient);
+        ->with('plans', $plans);
+        
     }
 
     /**
@@ -67,7 +76,7 @@ class OurProtocolController extends Controller
             OurProtocol::insert([
             	'protocol_id' => $protocol,
                 'patient_id' => $request->patient_id, 
-                'social_work_id' => $request->social_work_id,
+                'plan_id' => $request->plan_id,
                 'prescriber_id' => $request->prescriber_id,
                 'quantity_orders' => $request->quantity_orders,
                 'diagnostic' => $request->diagnostic,
@@ -89,20 +98,20 @@ class OurProtocolController extends Controller
     public function show($id)
     {
         //
-        $protocol = Protocol::select('protocols.id', 'patients.full_name', 'our_protocols.social_work_id', 'protocols.completion_date', 'our_protocols.quantity_orders', 'our_protocols.diagnostic', 'protocols.observations', 'prescribers.id as prescriber_id', 'prescribers.full_name as prescriber')
-        ->join('our_protocols', 'our_protocols.protocol_id', '=', 'protocols.id')
-        ->join('prescribers', 'prescribers.id', '=', 'our_protocols.prescriber_id')
-        ->join('patients', 'patients.id', '=', 'our_protocols.patient_id')
-        ->where('protocols.id', $id)
-        ->first();
 
-        $practices = Protocol::get_practices($id);
-        
-        $social_works = SocialWork::all();
+        $protocol = OurProtocol::protocol()->findOrFail($id);
+        $prescriber = $protocol->prescriber()->first();
+        $patient = $protocol->patient()->first();
+        $plan = $protocol->plan()->first();
+        $social_work = $plan->social_work()->first();
+
+        $practices = $protocol->practices();
 
         return view('protocols/our/show')
         ->with('protocol', $protocol)
-        ->with('social_works', $social_works)
+        ->with('patient', $patient)
+        ->with('social_work', $social_work)
+        ->with('prescriber', $prescriber)
         ->with('practices', $practices);
     }
 
@@ -115,21 +124,24 @@ class OurProtocolController extends Controller
     public function edit($id)
     {
         //
-        $protocol = Protocol::select('protocols.id', 'patients.full_name', 'our_protocols.social_work_id', 'protocols.completion_date', 'our_protocols.quantity_orders', 'our_protocols.diagnostic', 'protocols.observations', 'prescribers.id as prescriber_id', 'prescribers.full_name as prescriber')
-        ->join('our_protocols', 'our_protocols.protocol_id', '=', 'protocols.id')
-        ->join('prescribers', 'prescribers.id', '=', 'our_protocols.prescriber_id')
-        ->join('patients', 'patients.id', '=', 'our_protocols.patient_id')
-        ->where('protocols.id', $id)
-        ->first();
 
-        $practices = Protocol::get_practices($id);
+        $protocol = OurProtocol::protocol()->findOrFail($id);
+        $prescriber = $protocol->prescriber()->first();
+        $patient = $protocol->patient()->first();
+        $plan = $protocol->plan()->first();
+        $social_work = $plan->social_work()->first();
+
+        $practices = $protocol->practices();
 
         $social_works = SocialWork::all();
 
         return view('protocols/our/edit')
         ->with('protocol', $protocol)
+        ->with('patient', $patient)
+        ->with('social_work', $social_work)
         ->with('social_works', $social_works)
-        ->with('practices', $practices); 
+        ->with('prescriber', $prescriber)
+        ->with('practices', $practices);
     }
 
     /**
@@ -201,6 +213,22 @@ class OurProtocolController extends Controller
         ->toJson();
 
         return $prescribers;
+    }
+
+    /**
+     * Returns a view for add practices
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function add_practices($protocol_id)
+    {
+            
+        $protocol = OurProtocol::findOrFail($protocol_id);
+        $social_work = $protocol->plan;
+
+        return view('protocols/our/add_practice')
+        ->with('protocol', $protocol)
+        ->with('nomenclator', $nomenclator);
     }
 
 }

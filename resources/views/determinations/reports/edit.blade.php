@@ -1,7 +1,7 @@
 @extends('default-template')
 
 @section('title')
-{{ trans('determinations.edit_report') }}
+{{ trans('reports.edit_report') }}
 @endsection 
 
 @section('active_determinations', 'active')
@@ -15,11 +15,15 @@
 	<li class="nav-item">
 		<a class="nav-link" href=""> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('forms.no_options') }} </a>
 	</li>	
+
+	<li class="nav-item">
+		<a class="nav-link" href="{{ route('determinations/reports/show', [$report->id]) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('forms.go_back') }} </a>
+	</li>
 </ul>
 @endsection
 
 @section('content-title')
-<i class="fas fa-file-code"></i> {{ trans('determinations.edit_report') }}
+<i class="fas fa-file-code"></i> {{ trans('reports.edit_report') }}
 @endsection
 
 
@@ -46,10 +50,10 @@
 
 	<div class="input-group mt-2 mb-1 col-md-9 input-form">
 		<div class="input-group-prepend">
-			<span class="input-group-text"> {{ trans('determinations.report') }} </span>
+			<span class="input-group-text"> {{ trans('reports.report') }} </span>
 		</div>
 
-		<textarea class="form-control" rows="10" name="report"> {{ $report->report }} </textarea>
+		<textarea class="form-control" rows="10" name="report">{{ $report->report }}</textarea>
 	</div>
 
 	<div class="mt-2 float-right">

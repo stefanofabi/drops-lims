@@ -25,5 +25,8 @@ return [
     'destroy_protocol' => 'Destroy protocol',
     'protocol_blocked' => 'Protocol blocked for security reasons. To make changes click on the lock',
     'edit_protocol' => 'Edit protocol',
+    'add_determination' => 'Add determination',
+    'enter_determination' => 'Enter a determination',
+    'add_practice' => 'Add practice',
 
 ];

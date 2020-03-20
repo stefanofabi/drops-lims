@@ -43,7 +43,7 @@
 			<span class="input-group-text"> {{ trans('patients.patient') }} </span>
 		</div>
 
-		<input type="text" class="form-control" value="{{ $protocol['full_name'] ?? '' }}" disabled>
+		<input type="text" class="form-control" value="{{ $patient->full_name }}" disabled>
 	</div>
 
 	<div class="input-group mt-2 mb-1 col-md-9 input-form">
@@ -51,12 +51,7 @@
 			<span class="input-group-text"> {{ trans('social_works.social_work') }} </span>
 		</div>
 
-		<select class="form-control input-sm" id="social_work" disabled>
-				<option value=""> {{ trans('social_works.select_social_work') }}</option>
-					@foreach ($social_works as $social_work)
-						<option value="{{ $social_work->id }}"> {{ $social_work->name }} </option>
-					@endforeach
-		</select>
+		<input type="text" class="form-control" value="{{ $social_work['name'] }}" disabled>
 	</div>
 
 	<div class="input-group mt-2 mb-1 col-md-9 input-form">
@@ -64,7 +59,7 @@
 			<span class="input-group-text"> {{ trans('prescribers.prescriber') }} </span>
 		</div>
 		
-		<input type="text" class="form-control" id="prescriber" value="{{ $protocol->prescriber }}" disabled>
+		<input type="text" class="form-control" value="{{ $prescriber->full_name }}" disabled>
 	</div>
 
 	<div class="input-group mt-2 mb-1 col-md-9 input-form">
@@ -96,7 +91,7 @@
 			<span class="input-group-text"> {{ trans('protocols.observations') }} </span>
 		</div>
 
-		<textarea class="form-control" rows="3" disabled> {{ $protocol->observations }} </textarea>
+		<textarea class="form-control" rows="3" disabled>{{ $protocol->observations }}</textarea>
 	</div>
 
 @endsection	

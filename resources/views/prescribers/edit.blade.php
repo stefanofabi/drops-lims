@@ -23,7 +23,7 @@
 @endsection
 
 @section('content-title')
-{{ trans('prescribers.edit_prescriber') }}
+<i class="fas fa-user-edit"></i> {{ trans('prescribers.edit_prescriber') }}
 @endsection
 
 

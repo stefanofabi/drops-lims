@@ -2,11 +2,10 @@
 
 @section('js')
 
-
 <script type="text/javascript">
 	$(document).ready(function() {
         // Select a sex from list
-        $("#sex option[value='{{ $human['sex'] ?? '' }}']").attr("selected",true);
+       $("#sex").val("{{ $human['sex'] }}");
     });
 </script>
 
@@ -118,7 +117,7 @@
 
 	@include('patients/social_works/affiliates/index')
 
-	<div class="float-right" style="margin-top: 1%">
+	<div class="mt-2 float-right">
 		<button type="submit" class="btn btn-primary">
 			<span class="fas fa-save"></span> {{ trans('forms.save') }}
 		</button>

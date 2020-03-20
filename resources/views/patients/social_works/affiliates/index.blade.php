@@ -12,17 +12,17 @@
 			<select class="form-control input-sm col-md-6" id="affiliate" style="margin-right: 1%">
 				<option value=""> {{ trans('social_works.select_social_work') }}</option>
 				@foreach ($affiliates as $affiliate)
-				<option value="{{ $affiliate->id }}"> 
-					@if ($affiliate->expiration_date < date("Y-m-d"))
-					** {{ trans('social_works.expired_card') }} **
-					@endif
+					<option value="{{ $affiliate->id }}"> 
+						@if (!empty($affiliate->expiration_date) && $affiliate->expiration_date < date("Y-m-d"))
+							** {{ trans('social_works.expired_card') }} **
+						@endif
 
-					{{ $affiliate->social_work }} {{ $affiliate->plan }} 
+						{{ $affiliate->social_work }} {{ $affiliate->plan }} 
 
-					@if (!empty($affiliate->affiliate_number))
-					[{{ $affiliate->affiliate_number }}]
-					@endif
-				</option>
+						@if (!empty($affiliate->affiliate_number))
+							[{{ $affiliate->affiliate_number }}]
+						@endif
+					</option>
 				@endforeach
 			</select>
 

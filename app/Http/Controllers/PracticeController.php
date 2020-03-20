@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Practice;
+use App\Protocol;
+
 class PracticeController extends Controller
 {
     /**
@@ -57,6 +60,15 @@ class PracticeController extends Controller
     public function edit($id)
     {
         //
+
+        $practice = Practice::findOrFail($id);
+        $report = $practice->report();
+        $determination = $report->determination();
+
+        return view('protocols/practices/edit')
+        ->with('practice', $practice)
+        ->with('report', $report)
+        ->with('determination', $determination);
     }
 
     /**
@@ -80,5 +92,21 @@ class PracticeController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * returns a list of practices available according to the nomenclator of social work
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function add($id)
+    {
+        //
+
+        $protocol = Protocol::findOrFail($id);
+
+        return view('protocols/practices/add')
+        ->with('protocol', $protocol);
     }
 }

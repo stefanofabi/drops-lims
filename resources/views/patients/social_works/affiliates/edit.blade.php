@@ -23,7 +23,7 @@
 						<label for="obra-social" class="col-sm-6 control-label"><b> {{ trans('social_works.social_work') }}: </b> </label>
 						<div class="col-sm-8">
 							<select class="form-control input-sm" id="modal_affiliates_social_work" onchange="load_plans()" required>
-								<option value=""> {{ trans('social_works.select_social_work') }} </option>
+								<option value=""> {{ trans('forms.select_option') }} </option>
 								@foreach ($social_works as $social_work)
 								<option value="{{ $social_work->id }}"> {{ $social_work->name }}</option>
 								@endforeach
@@ -34,9 +34,9 @@
 					<!-- Load ajax for plans -->
 					<div class="form-group">
 						<label for="obra-social" class="col-sm-6 control-label"><b> {{ trans('social_works.plan') }}: </b> </label>
-						<div id="plans" class="col-sm-8">
-								<select class="form-control input-sm" id="plan" required>
-									<option value=""> {{ trans('social_works.select_plan') }} </option>
+						<div class="col-sm-8">
+								<select class="form-control input-sm" id="modal_affiliates_plan" required>
+									<option value=""> {{ trans('forms.select_option') }} </option>
 								</select>
 						</div>
 					</div>	

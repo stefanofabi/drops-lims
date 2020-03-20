@@ -12,27 +12,41 @@
 
 @section('js')
 <script type="text/javascript">
+
+
 	function load_plans() {
+
 		var parameters = {
 			"_token": "{{ csrf_token() }}",
-			"social_work" : $("#social_work").val(),
+			"social_work_id" : $("#social_work").val(),
 		};
 
 		$.ajax({
 			data:  parameters,
-			url:   "{{ route('patients/social_works/plans/load_plans') }}",
+			url:   "{{ route('patients/social_works/plans/load') }}",
 			type:  'post',
 			beforeSend: function () {
-				$("#plans").html('<div class="spinner-border text-info"> </div> Procesando, espere por favor...');
+				//
 			},
 			success:  function (response) {
-						// Load data
-						$("#plans").html(response);
+
+						$("#plan").empty();
+						var select_plan = new Option('{{ trans('forms.select_option') }}', '');
+						$("#plan").append(select_plan);
+
+						$(jQuery.parseJSON(JSON.stringify(response))).each(function() {  
+						         var option = new Option(this.name, this.id);
+
+								/// jquerify the DOM object 'o' so we can use the html method
+								$(option).html(this.name);
+								$("#plan").append(option);
+						});
 					}
-				});
+		});
 
 		return false;
 	}
+
 </script>
 @endsection
 
@@ -41,7 +55,7 @@
 @endsection
 
 @section('content-title')
-{{ trans('social_works.add_social_work') }}
+<i class="fas fa-address-card"></i> {{ trans('social_works.add_social_work') }}
 @endsection
 
 
@@ -56,7 +70,7 @@
 			<span class="input-group-text"> {{ trans('social_works.social_work') }} </span>
 		</div>
 
-		<select class="form-control" id="social_work" name="social_work" onchange="load_plans()" required>
+		<select class="form-control" id="social_work" onchange="load_plans()" required>
 			<option value=""> {{ trans('forms.select_option') }} </option>
 
 			@foreach ($social_works as $social_work)
@@ -65,19 +79,23 @@
 		</select>
 	</div>
 
-	<div class="input-group mb-6 col-md-6" style="margin-top: 1%">
+	<div class="input-group mt-2 mb-6 col-md-6">
 		<div class="input-group-prepend">
 			<span class="input-group-text"> {{ trans('social_works.plan') }} </span>
 		</div>
 
-		<div id="plans">
-			<select class="form-control" name="plan" required>
-				<option value=""> {{ trans('forms.select_option') }} </option>
-			</select>
-		</div>
-	</div>			
+		<select class="form-control" id="plan" name="plan_id" required>
+			<option value=""> {{ trans('forms.select_option') }} </option>
 
-	<div class="input-group mb-6 col-md-6 input-form" style="margin-top: 1%">
+			@if (isset($plans))
+				@foreach ($plans as $plan)
+				<option value="{{ $plan->id }}"> {{ $plan->name }}</option>
+				@endforeach
+			@endif
+		</select>
+	</div>		
+
+	<div class="input-group mt-2 mb-6 col-md-6 input-form">
 		<div class="input-group-prepend">
 			<span class="input-group-text"> {{ trans('social_works.affiliate_number') }} </span>
 		</div>
@@ -85,7 +103,7 @@
 		<input type="text" class="form-control" name="affiliate_number">
 	</div>
 
-	<div class="input-group mb-6 col-md-6 input-form" style="margin-top: 1%">
+	<div class="input-group mt-2 mb-6 col-md-6 input-form">
 		<div class="input-group-prepend">
 			<span class="input-group-text"> {{ trans('social_works.security_code') }} </span>
 		</div>
@@ -93,7 +111,7 @@
 		<input type="number" class="form-control" name="security_code">
 	</div>
 	
-	<div class="input-group mb-6 col-md-6 input-form" style="margin-top: 1%">
+	<div class="input-group mt-2 mb-6 col-md-6 input-form">
 		<div class="input-group-prepend">
 			<span class="input-group-text"> {{ trans('social_works.expiration_date') }} </span>
 		</div>
@@ -101,7 +119,7 @@
 		<input type="date" class="form-control" name="expiration_date">
 	</div>
 
-	<div class="float-right" style="margin-top: 1%">
+	<div class="mt-2 float-right">
 		<button type="submit" class="btn btn-primary">
 			<span class="fas fa-save"></span> {{ trans('forms.save') }}
 		</button>
