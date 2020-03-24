@@ -6,15 +6,6 @@
 
 @section('active_protocols', 'active')
 
-@section('js')
-<script type="text/javascript">
-	$(document).ready(function() {
-        // Select a sex from list
-        $("#social_work option[value='{{ $protocol->social_work_id }}']").attr("selected",true);
-    });
-</script>
-@endsection
-
 @section('menu-title')
 {{ trans('patients.menu') }}
 @endsection
@@ -22,8 +13,12 @@
 @section('menu')
 <ul class="nav flex-column">
 	<li class="nav-item">
-		<a class="nav-link" href=""> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('forms.no_options') }} </a>
-	</li>	
+		<a class="nav-link" href="{{ route('protocols/our/add_practices', [$protocol->id]) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('protocols.print_worksheet') }} </a>
+	</li>
+
+	<li class="nav-item">
+		<a class="nav-link" href="{{ route('protocols/our/add_practices', [$protocol->id]) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('protocols.print_report') }} </a>
+	</li>
 </ul>
 @endsection
 
@@ -51,7 +46,7 @@
 			<span class="input-group-text"> {{ trans('social_works.social_work') }} </span>
 		</div>
 
-		<input type="text" class="form-control" value="{{ $social_work['name'] }}" disabled>
+		<input type="text" class="form-control" value="{{ $social_work->name }} {{ $plan->name }}" disabled>
 	</div>
 
 	<div class="input-group mt-2 mb-1 col-md-9 input-form">
@@ -102,8 +97,6 @@
 		<h4> <span class="fas fa-syringe" ></span> {{ trans('determinations.determinations')}} </h4>
     </div>
 
-
-
     <div class="table-responsive">
 		<table class="table table-striped">
 				<tr  class="info">
@@ -115,8 +108,8 @@
 
 				@foreach ($practices as $practice)
 					<tr>
-						<td> {{ $practice->code }} </td>
-						<td> {{ $practice->name }} </td>
+						<td> {{ $practice->report->determination->code }} </td>
+						<td> {{ $practice->report->determination->name }} </td>
 						<td> N/A </td>
 						<td class="text-right">
 							<a href="" class="btn btn-info btn-sm" title=""> <i class="fas fa-eye fa-sm"></i> </a>			

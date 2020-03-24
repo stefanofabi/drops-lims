@@ -16,8 +16,7 @@
 		], function() {
 
 			// do not confuse, it is the protocol id
-			Route::get('practicas{id}', 'PracticeController@add')->name('add')
-			->where('id', '[1-9][0-9]*');
+			Route::post('buscar', 'PracticeController@load')->name('load');
 
 			Route::get('crear', 'PracticeController@create')->name('create');
 

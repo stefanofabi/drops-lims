@@ -11,35 +11,44 @@
     </head>
 
     <body>
-        <div class="container-fluid">
+        <div class="clearfix">
             <!-- Column from menu-->
-            <div class="card float-left margins-boxs-lr">
-                <div class="card-header">
-                    <h4> <i class="fas fa-home"></i> @section('menu-title') @show</h4>
-                </div>
+            <div class="col-md-3 mt-3 mb-3 float-left">
+                <div class="card">
+                    <div class="card-header">
+                        <h4> <i class="fas fa-home"></i> @section('menu-title') @show</h4>
+                    </div>
 
-                <div class="card-body">
-                        @section('menu')
-                        @show
- 
+                    <div class="card-body">
+                            @section('menu')
+                            @show
+     
+                    </div>
                 </div>
             </div>
 
             <!-- Column from content -->
-            <div class="card margins-boxs-tb">
-                <div class="card-header">
-                    <h4> @section('content-title') @show </h4>
-                </div>
+            <div class="col-md-9 mt-3 mb-3 float-left">
+                <div class="card">
+                    <div class="card-header">
+                        <h4> @section('content-title') @show </h4>
+                    </div>
 
-                <div class="card-body">
-                    @section('content')
+                    <div class="card-body">
+                        @section('content')
+                        @show
+                    </div>
+
+                    @section('more-content')
                     @show
                 </div>
             </div>
-
-            @section('extra-content')
-            @show
-
         </div>
+        
+        <div class="mr-3 ml-3">
+        @section('extra-content')
+        @show
+        </div>
+
     </body>
 </html>

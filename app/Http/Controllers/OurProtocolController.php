@@ -39,21 +39,11 @@ class OurProtocolController extends Controller
         $patient_id = $request->patient_id;
         $patient = Patient::find($patient_id);
 
-        $social_work = SocialWork::find($request->social_work);
-
-        $social_works = Affiliate::select('social_works.id as id', 'social_works.name as name', 'affiliate_number', 'expiration_date')
-        ->plan()
-        ->socialWork()
-        ->where('patient_id', $patient_id)
-        ->get();
-
-        $plans = SocialWork::get_plans($request->social_work);
+        $social_works = Affiliate::get_social_works($patient_id);
 
         return view('protocols/our/create')
         ->with('patient', $patient)
-        ->with('social_work', $social_work)
-        ->with('social_works', $social_works)
-        ->with('plans', $plans);
+        ->with('social_works', $social_works);
         
     }
 
@@ -105,12 +95,13 @@ class OurProtocolController extends Controller
         $plan = $protocol->plan()->first();
         $social_work = $plan->social_work()->first();
 
-        $practices = $protocol->practices();
+        $practices = $protocol->practices;
 
         return view('protocols/our/show')
         ->with('protocol', $protocol)
         ->with('patient', $patient)
         ->with('social_work', $social_work)
+        ->with('plan', $plan)
         ->with('prescriber', $prescriber)
         ->with('practices', $practices);
     }
@@ -129,16 +120,15 @@ class OurProtocolController extends Controller
         $prescriber = $protocol->prescriber()->first();
         $patient = $protocol->patient()->first();
         $plan = $protocol->plan()->first();
-        $social_work = $plan->social_work()->first();
 
-        $practices = $protocol->practices();
+        $practices = $protocol->practices;
 
-        $social_works = SocialWork::all();
+        $social_works = Affiliate::get_social_works($patient->id);
 
         return view('protocols/our/edit')
         ->with('protocol', $protocol)
         ->with('patient', $patient)
-        ->with('social_work', $social_work)
+        ->with('plan', $plan)
         ->with('social_works', $social_works)
         ->with('prescriber', $prescriber)
         ->with('practices', $practices);
@@ -154,6 +144,29 @@ class OurProtocolController extends Controller
     public function update(Request $request, $id)
     {
         //
+        DB::transaction(function () use ($request, $id) {
+            Protocol::where('id', $id)
+            ->update(
+                [
+                    'completion_date' => $request->completion_date,
+                    'observations' => $request->observations,
+                ]
+            );
+
+            OurProtocol::where('protocol_id', $id)
+            ->update(
+                [
+                    'plan_id' => $request->plan_id,
+                    'prescriber_id' => $request->prescriber_id,
+                    'quantity_orders' => $request->quantity_orders,
+                    'diagnostic' => $request->diagnostic,
+                ]
+            );
+
+        }, self::RETRIES);
+
+
+        return redirect()->action('OurProtocolController@show', [$id]);
     }
 
     /**
@@ -223,12 +236,24 @@ class OurProtocolController extends Controller
     public function add_practices($protocol_id)
     {
             
-        $protocol = OurProtocol::findOrFail($protocol_id);
-        $social_work = $protocol->plan;
+        $protocol = OurProtocol::protocol()->findOrFail($protocol_id);
+        $plan = $protocol->plan->first();
+        $nomenclator = $plan->nomenclator; 
 
-        return view('protocols/our/add_practice')
+        return view('protocols/our/add_practices')
         ->with('protocol', $protocol)
         ->with('nomenclator', $nomenclator);
+    }
+
+    /**
+     * Returns a list of practices for a protocol
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public static function get_practices($protocol_id) {
+        $protocol = OurProtocol::protocol()->findOrFail($protocol_id);
+
+        return $protocol->practices;
     }
 
 }

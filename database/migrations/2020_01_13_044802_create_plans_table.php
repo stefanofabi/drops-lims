@@ -18,11 +18,11 @@ class CreatePlansTable extends Migration
             $table->string('name')->nullable();
             $table->double('nbu_price', 8, 2)->unsigned();
             $table->unsignedBigInteger('social_work_id');
-            $table->unsignedBigInteger('nbu_id');
+            $table->unsignedBigInteger('nomenclator_id');
 
             // Foreign keys
             $table->foreign('social_work_id')->references('id')->on('social_works')->onDelete('restrict')->onUpdate('cascade');
-            $table->foreign('nbu_id')->references('id')->on('nomenclators')->onDelete('restrict')->onUpdate('cascade');
+            $table->foreign('nomenclator_id')->references('id')->on('nomenclators')->onDelete('restrict')->onUpdate('cascade');
 
             $table->softDeletes();
             $table->timestamps();
