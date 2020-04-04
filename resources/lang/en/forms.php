@@ -27,4 +27,5 @@ return [
     'search' => 'Search',
     'personal_data' => 'Personal data',
     'select_option' => 'Select an option',
+    'menu' => 'Menu',
 ];

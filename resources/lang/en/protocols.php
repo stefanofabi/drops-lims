@@ -31,5 +31,8 @@ return [
     'print_worksheet' => 'Print worksheet',
     'print_report' => 'Print report',
     'add_practices_for_protocol' => 'Add practices for protocol',
-
+    'show_practice' => 'Show practice',
+    'edit_practice' => 'Edit practice',
+    'destroy_practice' => 'Destroy practice',
+ 
 ];

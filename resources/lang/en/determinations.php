@@ -27,6 +27,7 @@ return [
     'determination_blocked' => 'Determination blocked for security reasons. To make changes click on the lock',
     'edit_determination' => 'Edit determination',
     'informed' => 'Informed',
+    'amount' => 'Amount',
 
     
 ];

@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 use App\Practice;
-use App\Protocol;
 use App\Report;
 use App\OurProtocol;
+use App\Result;
 
 class PracticeController extends Controller
 {
@@ -49,7 +49,7 @@ class PracticeController extends Controller
 
             $report_id = $request->report_id;
             $report = Report::findOrFail($report_id);
-            $determination = $report->determination->first();
+            $determination = $report->determination;
             $biochemical_unit = $determination->biochemical_unit;
             $protocol_id = $request->protocol_id;
             $type = $request->type;
@@ -61,6 +61,7 @@ class PracticeController extends Controller
                     $nbu_price = $plan->nbu_price;
                     $amount = $nbu_price * $biochemical_unit;
                 }
+                
                 case 'derived': {
 
                 }
@@ -98,13 +99,15 @@ class PracticeController extends Controller
         //
 
         $practice = Practice::findOrFail($id);
-        $report = $practice->report();
-        $determination = $report->determination();
+        $report = $practice->report()->first();
+        $determination = $report->determination()->first();
+        $results = $practice->results()->get();
 
         return view('protocols/practices/edit')
         ->with('practice', $practice)
         ->with('report', $report)
-        ->with('determination', $determination);
+        ->with('determination', $determination)
+        ->with('results', $results);
     }
 
     /**
@@ -117,6 +120,20 @@ class PracticeController extends Controller
     public function update(Request $request, $id)
     {
         //
+        DB::transaction(function () use ($request, $id) {
+
+            Result::where('practice_id', $id)->delete();
+
+            $array = $request->array;
+
+            foreach ($array as $data) {
+                Result::insert([
+                    'practice_id' => $id,
+                    'result' => $data,
+                ]);
+            }
+
+        }, self::RETRIES);
     }
 
     /**
@@ -148,6 +165,7 @@ class PracticeController extends Controller
         ->where(function ($query) use ($filter) {
             if (!empty($filter)) {
                 $query->orWhere("determinations.name", "like", "%$filter%")
+                ->orWhere("determinations.code", "like", "$filter%")
                 ->orWhere("reports.name", "like", "%$filter%");
             }
         })

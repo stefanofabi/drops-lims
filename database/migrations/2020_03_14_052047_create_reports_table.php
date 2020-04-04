@@ -16,7 +16,7 @@ class CreateReportsTable extends Migration
         Schema::create('reports', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->nullable();
-            $table->string('report')->nullable();
+            $table->string('report', 1000)->nullable();
             $table->unsignedBigInteger('determination_id');
 
             // Foreign keys

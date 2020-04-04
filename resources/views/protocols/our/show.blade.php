@@ -112,7 +112,7 @@
 						<td> {{ $practice->report->determination->name }} </td>
 						<td> N/A </td>
 						<td class="text-right">
-							<a href="" class="btn btn-info btn-sm" title=""> <i class="fas fa-eye fa-sm"></i> </a>			
+							<a href="" class="btn btn-info btn-sm" title="{{ trans('protocols.show_practice') }}"> <i class="fas fa-eye fa-sm"></i> </a>			
 						</td>
 					</tr>
 				@endforeach

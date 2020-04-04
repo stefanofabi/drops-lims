@@ -1,22 +1,48 @@
 @extends('default-template')
 
 @section('title')
-{{ trans('protocols.edit_protocol') }}
+{{ trans('protocols.edit_practice') }}
 @endsection 
 
 @section('active_protocols', 'active')
 
 @section('js')
 <script type="text/javascript">
-	$(document).ready(function() {
+		
+	function edit_practice() {
 
-    });
+		var array = [];
 
+		$('#report').find('input, select').each(function() {
+			console.log($(this).val());
+    		array.push($(this).val());
+    		
+ 		 })
+
+		var parameters = {
+			"_token": '{{ csrf_token() }}',
+			"array" : array,
+		};
+
+		$.ajax({
+			data:  parameters,
+			url:   '{{ route("protocols/practices/update", [$practice->id]) }}',
+			type:  'put',
+			beforeSend: function () {
+						//$("#resultados").html('<div class="spinner-border text-info"> </div> Procesando, espere por favor...');
+					},
+			success:  function (response) {
+						window.locationf= "{{ route('protocols/our/edit', []) }}";
+					}
+		});
+
+		return false;
+	}
 </script>
 @endsection
 
 @section('menu-title')
-{{ trans('patients.menu') }}
+{{ trans('forms.menu') }}
 @endsection
 
 @section('menu')
@@ -32,7 +58,7 @@
 @endsection
 
 @section('content-title')
-<i class="fas fa-file-medical"></i> {{ trans('protocols.edit_protocol') }} #{{ $protocol->id }}
+<i class="fas fa-file-medical"></i> {{ trans('protocols.edit_protocol') }} #{{ $practice->id }}
 @endsection
 
 
@@ -51,55 +77,29 @@
 			<span class="input-group-text"> {{ trans('reports.report') }} </span>
 		</div>
 		
-		<input type="text" class="form-control" value="{{ $report->name }}">
+		<input type="text" class="form-control" value="{{ $report->name }}" disabled>
 	</div>
 
-	<div class="input-group mt-2 mb-1 col-md-9 input-form">
-		<div class="input-group-prepend">
-			<span class="input-group-text"> {{ trans('protocols.diagnostic') }} </span>
-		</div>
+		<form method="post" action="{{ route('protocols/practices/update', [$practice->id]) }}" onsubmit="return edit_practice()">
+			@csrf
+			{{ method_field('PUT') }}
 
-		<input type="text" class="form-control" value="{{ $protocol->diagnostic }}">
-	</div>
+			<div class="card mt-3">	
+				<div class="card-header">
+					<h6> Result </h6>
+				</div>
 
-	<div class="input-group mt-2 mb-1 col-md-9 input-form">
-		<div class="input-group-prepend">
-			<span class="input-group-text"> {{ trans('protocols.observations') }} </span>
-		</div>
+				<div id="report" class="card-body">
+					{!! $report->report !!}
+				</div>
 
-		<textarea class="form-control" rows="3"> {{ $protocol->observations }} </textarea>
-	</div>
-
-@endsection	
-
-@section('extra-content')
-<div class="card margins-boxs-tb">
-	<div class="card-header">
-		<h4> <span class="fas fa-syringe" ></span> {{ trans('determinations.determinations')}} </h4>
-    </div>
-
-    <div class="table-responsive">
-		<table class="table table-striped">
-				<tr  class="info">
-					<th> {{ trans('determinations.code') }} </th>
-					<th> {{ trans('determinations.determination') }} </th>	
-					<th> {{ trans('determinations.informed') }} </th>	
-					<th class="text-right"> {{ trans('forms.actions') }}</th>	
-				</tr>
-
-				@foreach ($practices as $practice)
-					<tr>
-						<td> {{ $practice->code }} </td>
-						<td> {{ $practice->name }} </td>
-						<td> N/A </td>
-						<td class="text-right">
-							<a href="{{ route('protocols/practices/edit', [$practice->id]) }}" class="btn btn-info btn-sm" title=""> <i class="fas fa-edit fa-sm"></i> </a>			
-							<a href="#" class="btn btn-info btn-sm" title="" onclick=""> <i class="fas fa-trash fa-sm"></i> </a>
-						</td>
-					</tr>
-				@endforeach
-		</table>
-	</div>
-</div>
+				<div class="card-header">
+					<div class="mt-2 float-right">
+						<button type="submit" class="btn btn-primary">
+							<span class="fas fa-save"></span> {{ trans('forms.save') }}
+						</button>
+					</div>
+				</div>
+			</div>
+		</form>
 @endsection
-

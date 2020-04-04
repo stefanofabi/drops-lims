@@ -14,7 +14,7 @@
 			minLength: 2,
 			source: function(event, ui) {
 						var parameters = {
-							"nomenclator_id" : $("#nomenclator_id").val(),
+							"nomenclator_id" : '{{ $nomenclator->id }}',
 							"filter" : $("#practice").val()
 						};
 
@@ -57,8 +57,14 @@
 			success:  function (response) {
 
 						$("#practices").load(" #practices");
+
+						// delete data
+						$('#practice').val('');
+						$('#report_id').val('');
 					}
 		});
+
+		return false;
 	}
 	
 </script>
@@ -87,20 +93,19 @@
 
 @section('content')
 
-	<div class="row">
-	    <div class="col">
-	        <span class="float-left col-md-6">
-	        	<input type="hidden" id="report_id" value="0">
-	        	<input type="hidden" id="nomenclator_id" value="{{ $nomenclator->id }}">
-				<input type="text" class="form-control input-sm" id="practice" placeholder="{{ trans('protocols.enter_practice') }}">
-	        </span>
+	<div class="col-md-12">
+			<form onsubmit="return add_practice()">
+		        <span class="float-left mb-2 col-md-6">
+		        	<input type="hidden" id="report_id" value="0">
+					<input type="text" class="form-control input-sm" id="practice" placeholder="{{ trans('protocols.enter_practice') }}">
+		        </span>
 
-	        <span class="float-left">	
-	        	<button onclick="add_practice()" class="btn btn-primary float-left">
-					<span class="fas fa-plus"></span> {{ trans('protocols.add_practice') }}
-				</button>
-			</span>
-	    </div>
+		        <span class="col-md-3 float-left">	
+			    	<button type="submit" class="btn btn-primary">
+						<span class="fas fa-plus"></span> {{ trans('protocols.add_practice') }}
+					</button>
+				</span>
+			</form>
 	</div>
 
 @endsection	
