@@ -1,4 +1,4 @@
-window.$ = require('jquery');
+window.$ = window.jQuery = require('jquery');
 import 'popper.js/dist/popper.min.js';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import 'jquery-ui/ui/widgets/autocomplete.js';
