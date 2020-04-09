@@ -17,7 +17,7 @@
 	</li>
 
 	<li class="nav-item">
-		<a class="nav-link" href="{{ route('prescribers/show', [$prescriber['id']]) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('forms.go_back') }} </a>
+		<a class="nav-link" href="{{ route('prescribers/show', $prescriber->id) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('forms.go_back') }} </a>
 	</li>
 </ul>
 @endsection
@@ -28,35 +28,35 @@
 
 
 @section('content')
-<form method="post" action="{{ route('prescribers/update', [$prescriber['id']]) }}">
+<form method="post" action="{{ route('prescribers/update', $prescriber->id) }}">
 	@csrf
 	{{ method_field('PUT') }}
 
-	<div class="input-group mb-6 col-md-9 input-form" style="margin-top: 1%">
+	<div class="input-group mt-2 col-md-9 input-form">
 		<div class="input-group-prepend">
 			<span class="input-group-text"> {{ trans('prescribers.full_name') }} </span>
 		</div>
-		<input type="text" class="form-control" name="full_name" value="{{ $prescriber['full_name'] }}" required>
+		<input type="text" class="form-control" name="full_name" value="{{ $prescriber->full_name }}" required>
 	</div>
 
-	<div class="input-group mb-6 col-md-6 input-form" style="margin-top: 1%">
+	<div class="input-group mt-2 col-md-9 input-form">
 		<div class="input-group-prepend">
 			<span class="input-group-text"> {{ trans('prescribers.phone') }} </span>
 		</div>
 
-		<input type="text" class="form-control" name="phone" value="{{ $prescriber['phone'] }}">
+		<input type="text" class="form-control" name="phone" value="{{ $prescriber->phone }}">
 	</div>
 
-	<div class="input-group mb-6 col-md-6 input-form" style="margin-top: 1%">
+	<div class="input-group mt-2 col-md-9 input-form">
 		<div class="input-group-prepend">
 			<span class="input-group-text"> {{ trans('prescribers.email') }} </span>
 		</div>
 
-		<input type="email" class="form-control" name="email" value="{{ $prescriber['email'] }}">
+		<input type="email" class="form-control" name="email" value="{{ $prescriber->email }}">
 	</div>
 
 
-	<div class="input-group mb-6 col-md-9 input-form" style="margin-top: 1%">
+	<div class="input-group mt-2 col-md-9 input-form">
 		<div class="input-group-prepend">
 			<span class="input-group-text"> {{ trans('prescribers.provincial_enrollment') }} </span>
 		</div>
@@ -68,7 +68,7 @@
 		<input type="number" class="form-control" name="national_enrollment" min="0" value="{{ $prescriber['national_enrollment'] }}">
 	</div>
 
-	<div class="float-right" style="margin-top: 1%">
+	<div class="float-right mt-3">
 		<button type="submit" class="btn btn-primary">
 			<span class="fas fa-save"></span> {{ trans('forms.save') }}
 		</button>

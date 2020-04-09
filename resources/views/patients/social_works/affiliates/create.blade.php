@@ -65,7 +65,7 @@
 
 	<input type="hidden" class="form-control" name="patient_id" value="{{ $id }}">
 
-	<div class="input-group mb-6 col-md-6">
+	<div class="input-group mt-2 col-md-9">
 		<div class="input-group-prepend">
 			<span class="input-group-text"> {{ trans('social_works.social_work') }} </span>
 		</div>
@@ -79,7 +79,7 @@
 		</select>
 	</div>
 
-	<div class="input-group mt-2 mb-6 col-md-6">
+	<div class="input-group mt-2 col-md-9">
 		<div class="input-group-prepend">
 			<span class="input-group-text"> {{ trans('social_works.plan') }} </span>
 		</div>
@@ -95,7 +95,7 @@
 		</select>
 	</div>		
 
-	<div class="input-group mt-2 mb-6 col-md-6 input-form">
+	<div class="input-group mt-2 col-md-9 input-form">
 		<div class="input-group-prepend">
 			<span class="input-group-text"> {{ trans('social_works.affiliate_number') }} </span>
 		</div>
@@ -103,7 +103,7 @@
 		<input type="text" class="form-control" name="affiliate_number">
 	</div>
 
-	<div class="input-group mt-2 mb-6 col-md-6 input-form">
+	<div class="input-group mt-2 col-md-9 input-form">
 		<div class="input-group-prepend">
 			<span class="input-group-text"> {{ trans('social_works.security_code') }} </span>
 		</div>
@@ -111,7 +111,7 @@
 		<input type="number" class="form-control" name="security_code">
 	</div>
 	
-	<div class="input-group mt-2 mb-6 col-md-6 input-form">
+	<div class="input-group mt-2 col-md-9 input-form">
 		<div class="input-group-prepend">
 			<span class="input-group-text"> {{ trans('social_works.expiration_date') }} </span>
 		</div>
@@ -119,7 +119,7 @@
 		<input type="date" class="form-control" name="expiration_date">
 	</div>
 
-	<div class="mt-2 float-right">
+	<div class="float-right mt-3">
 		<button type="submit" class="btn btn-primary">
 			<span class="fas fa-save"></span> {{ trans('forms.save') }}
 		</button>

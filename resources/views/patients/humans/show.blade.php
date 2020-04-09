@@ -4,7 +4,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
         // Select a sex from list
-        $("#sex option[value='{{ $human['sex'] ?? '' }}']").attr("selected",true);
+        $('#sex').val('{{ $human->sex }}');
     });
 </script>
 @endsection
@@ -42,44 +42,44 @@
 @section('content')
 
 <div class="alert alert-info fade show">
-	<a href="{{ route('patients/edit', [$human['id']]) }}" class="btn btn-info btn-sm"> <i class="fas fa-lock-open"></i> </a>
+	<a href="{{ route('patients/edit', $human->id) }}" class="btn btn-info btn-sm"> <i class="fas fa-lock-open"></i> </a>
 	{{ trans('patients.patient_blocked') }}
 </div>
 
-<div class="card margins-boxs-tb">
+<div class="card mt-3">
 	<div class="card-header">
 		<h4><i class="fas fa-id-card"></i> {{ trans('forms.personal_data') }} </h4>
 	</div>
 
 	<div class="card-body">
 
-		<div class="input-group mb-3 col-md-3">
+		<div class="input-group mt-2 col-md-9">
 			<div class="input-group-prepend">
 				<span class="input-group-text"> {{ trans('patients.dni') }} </span>
 			</div>
-			<input type="number" class="form-control" value="{{ $human['key'] }}" disabled>
+			<input type="number" class="form-control" value="{{ $human->key }}" disabled>
 		</div>
 
-		<div class="input-group mb-9 col-md-9 input-form" style="margin-top: 1%">
+		<div class="input-group mt-2 col-md-9 input-form">
 			<div class="input-group-prepend">
 				<span class="input-group-text"> {{ trans('patients.full_name') }} </span>
 			</div>
-			<input type="text" class="form-control" value="{{ $human['full_name'] }}" disabled>
+			<input type="text" class="form-control" value="{{ $human->full_name }}" disabled>
 		</div>
 
-		<div class="input-group mb-9 col-md-9 input-form" style="margin-top: 1%">
+		<div class="input-group mt-2 col-md-9 input-form">
 			<div class="input-group-prepend">
 				<span class="input-group-text"> {{ trans('patients.home_address') }} </span>
 			</div>
-			<input type="text" class="form-control" value="{{ $human['address'] }}" disabled>
+			<input type="text" class="form-control" value="{{ $human->address }}" disabled>
 
 			<div class="input-group-prepend">
 				<span class="input-group-text"> {{ trans('patients.city') }} </span>
 			</div>
-			<input type="text" class="form-control" value="{{ $human['city'] }}" disabled>
+			<input type="text" class="form-control" value="{{ $human->city }}" disabled>
 		</div>
 
-		<div class="input-group mb-6 col-md-6 input-form" style="margin-top: 1%">
+		<div class="input-group mt-2 col-md-9 input-form">
 			<div class="input-group-prepend">
 				<span class="input-group-text"> {{ trans('patients.sex') }} </span>
 			</div>
@@ -92,18 +92,18 @@
 		</div>
 
 
-		<div class="input-group mb-6 col-md-6 input-form" style="margin-top: 1%">
+		<div class="input-group mt-2 col-md-9 input-form">
 			<div class="input-group-prepend">
 				<span class="input-group-text"> {{ trans('patients.birth_date') }} </span>
 			</div>
 
-			<input type="date" class="form-control" value="{{ $human['birth_date'] }}" disabled>
+			<input type="date" class="form-control" value="{{ $human->birth_date }}" disabled>
 		</div>
 
 	</div>
 </div>
 
-<div class="card margins-boxs-tb">
+<div class="card mt-3">
 	<div class="card-header">
 		<h4><i class="fas fa-book"></i> {{ trans('forms.contact_information') }} </h4>
 	</div>

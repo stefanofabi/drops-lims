@@ -27,14 +27,14 @@
 <form method="post" action="{{ route('prescribers/store') }}">
 	@csrf
 
-	<div class="input-group mb-6 col-md-9 input-form" style="margin-top: 1%">
+	<div class="input-group mt-2 col-md-9 input-form">
 		<div class="input-group-prepend">
 			<span class="input-group-text"> {{ trans('prescribers.full_name') }} </span>
 		</div>
 		<input type="text" class="form-control" name="full_name" required>
 	</div>
 
-	<div class="input-group mb-6 col-md-6 input-form" style="margin-top: 1%">
+	<div class="input-group mt-2 col-md-9 input-form">
 		<div class="input-group-prepend">
 			<span class="input-group-text"> {{ trans('prescribers.phone') }} </span>
 		</div>
@@ -42,7 +42,7 @@
 		<input type="text" class="form-control" name="phone">
 	</div>
 
-	<div class="input-group mb-6 col-md-6 input-form" style="margin-top: 1%">
+	<div class="input-group mt-2 col-md-9 input-form">
 		<div class="input-group-prepend">
 			<span class="input-group-text"> {{ trans('prescribers.email') }} </span>
 		</div>
@@ -51,7 +51,7 @@
 	</div>
 
 
-	<div class="input-group mb-6 col-md-9 input-form" style="margin-top: 1%">
+	<div class="input-group mt-2 col-md-9 input-form">
 		<div class="input-group-prepend">
 			<span class="input-group-text"> {{ trans('prescribers.provincial_enrollment') }} </span>
 		</div>
@@ -63,7 +63,7 @@
 		<input type="number" class="form-control" name="national_enrollment" min="0">
 	</div>
 
-	<div class="float-right" style="margin-top: 1%">
+	<div class="float-right mt-3">
 		<button type="submit" class="btn btn-primary">
 			<span class="fas fa-save"></span> {{ trans('forms.save') }}
 		</button>

@@ -4,7 +4,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
         // Select a sex from list
-        $("#tax_condition option[value='{{ $industrial['tax_condition'] ?? '' }}']").attr("selected",true);
+        $('#tax_condition').val("{{ $industrial['tax_condition'] ?? '' }}");
     });
 </script>
 @endsection
@@ -43,39 +43,39 @@
 	{{ trans('patients.patient_blocked') }}
 </div>
 
-<div class="card margins-boxs-tb">
+<div class="card mt-3">
 	<div class="card-header">
 		<h4><i class="fas fa-toolbox"></i> {{ trans('forms.personal_data') }} </h4>
 	</div>
 	<div class="card-body">
-		<div class="input-group mb-6 col-md-6">
+		<div class="input-group mt-2 col-md-9">
 			<div class="input-group-prepend">
 				<span class="input-group-text"> {{ trans('patients.full_name') }} </span>
 			</div>
 
-			<input type="text" class="form-control" value="{{ $industrial['full_name'] }}" disabled>
+			<input type="text" class="form-control" value="{{ $industrial->full_name }}" disabled>
 		</div>
 	</div>
 </div>
 
-<div class="card margins-boxs-tb">
+<div class="card mt-3">
 	<div class="card-header">
 		<h4><i class="fas fa-id-card"></i> {{ trans('forms.complete_fiscal_data') }} </h4>
 	</div>
 
 	<div class="card-body">
-		<div class="input-group mb-6 col-md-9 input-form" style="margin-top: 1%">
+		<div class="input-group mt-2 col-md-9 input-form">
 			<div class="input-group-prepend">
 				<span class="input-group-text"> {{ trans('patients.business_name') }}</span>
 			</div>
-			<input type="text" class="form-control" value="{{ $industrial['business_name'] }}" disabled>
+			<input type="text" class="form-control" value="{{ $industrial->business_name }}" disabled>
 		</div>
 
-		<div class="input-group mb-10 col-md-10" style="margin-top: 1%">
+		<div class="input-group mt-2 col-md-9">
 			<div class="input-group-prepend">
 				<span class="input-group-text"> {{ trans('patients.cuit') }} </span>
 			</div>
-			<input type="number" class="form-control" value="{{ $industrial['key'] }}" disabled>
+			<input type="number" class="form-control" value="{{ $industrial->key }}" disabled>
 
 			<div class="input-group-prepend">
 				<span class="input-group-text"> {{ trans('patients.tax_condition') }} </span>
@@ -90,30 +90,30 @@
 			</select>
 		</div>
 
-		<div class="input-group mb-6 col-md-9 input-form" style="margin-top: 1%">
+		<div class="input-group mt-2 col-md-9 input-form">
 			<div class="input-group-prepend">
 				<span class="input-group-text"> {{ trans('patients.fiscal_address') }} </span>
 			</div>
-			<input type="text" class="form-control" value="{{ $industrial['address'] }}" disabled>
+			<input type="text" class="form-control" value="{{ $industrial->address }}" disabled>
 
 			<div class="input-group-prepend">
 				<span class="input-group-text"> {{ trans('patients.city') }} </span>
 			</div>
-			<input type="text" class="form-control" value="{{ $industrial['city'] }}" disabled>
+			<input type="text" class="form-control" value="{{ $industrial->city }}" disabled>
 		</div>
 
-		<div class="input-group mb-6 col-md-6 input-form" style="margin-top: 1%">
+		<div class="input-group mt-2 col-md-9 input-form">
 			<div class="input-group-prepend">
 				<span class="input-group-text"> {{ trans('patients.start_activity') }} </span>
 			</div>
 
-			<input type="date" class="form-control" value="{{ $industrial['start_activity'] }}" disabled>
+			<input type="date" class="form-control" value="{{ $industrial->start_activity }}" disabled>
 		</div>
 
 	</div>
 </div>
 
-<div class="card">
+<div class="card mt-3">
 	<div class="card-header">
 		<h4><i class="fas fa-book"></i> {{ trans('forms.contact_information') }} </h4>
 	</div>

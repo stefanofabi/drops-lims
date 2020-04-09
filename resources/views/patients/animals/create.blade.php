@@ -5,28 +5,28 @@
 	@csrf
 	<input type="hidden" name="type" value="animal">
 
-	<div class="card margins-boxs-tb">
+	<div class="card mt-3">
 		<div class="card-header">
 			<h4><i class="fas fa-id-card"></i> {{ trans('forms.complete_personal_data') }} </h4>
 		</div>
 
 		<div class="card-body">
 
-			<div class="input-group mb-6 col-md-6">
+			<div class="input-group mt-2 col-md-9">
 				<div class="input-group-prepend">
 					<span class="input-group-text"> {{ trans('patients.owner') }} </span>
 				</div>
 				<input type="text" class="form-control" name="owner" required>
 			</div>
 
-			<div class="input-group mb-6 col-md-9 input-form" style="margin-top: 1%">
+			<div class="input-group mt-2 col-md-9 input-form">
 				<div class="input-group-prepend">
 					<span class="input-group-text"> {{ trans('patients.full_name') }} </span>
 				</div>
 				<input type="text" class="form-control" name="full_name" required>
 			</div>
 
-			<div class="input-group mb-6 col-md-9 input-form" style="margin-top: 1%">
+			<div class="input-group mt-2 col-md-9 input-form">
 				<div class="input-group-prepend">
 					<span class="input-group-text"> {{ trans('patients.home_address') }} </span>
 				</div>
@@ -38,7 +38,7 @@
 				<input type="text" class="form-control" name="city">
 			</div>
 
-			<div class="input-group mb-6 col-md-6 input-form" style="margin-top: 1%">
+			<div class="input-group mt-2 col-md-9 input-form">
 				<div class="input-group-prepend">
 					<span class="input-group-text"> {{ trans('patients.sex') }} </span>
 				</div>
@@ -51,7 +51,7 @@
 			</div>
 
 
-			<div class="input-group mb-6 col-md-6 input-form" style="margin-top: 1%">
+			<div class="input-group mt-2 col-md-9 input-form">
 				<div class="input-group-prepend">
 					<span class="input-group-text"> {{ trans('patients.birth_date') }} </span>
 				</div>
@@ -62,7 +62,7 @@
 		</div>
 	</div>
 
-		<div class="float-right">
+		<div class="float-right mt-2">
 			<button type="submit" class="btn btn-primary">
 				<span class="fas fa-save"></span> {{ trans('forms.save') }}
 			</button>

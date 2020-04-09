@@ -1,4 +1,4 @@
-<div class="card margins-boxs-tb">
+<div class="card mt-3">
 	<div class="card-header">
 		<h4><i class="fas fa-heartbeat"></i> {{ trans('social_works.social_works') }} </h4>
 	</div>

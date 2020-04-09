@@ -27,7 +27,7 @@
 <form method="post" action="{{ route('determinations/reports/store') }}">
 	@csrf
 	
-	<div class="input-group mt-2 mb-1 col-md-9 input-form">
+	<div class="input-group mt-2 col-md-9 input-form">
 		<div class="input-group-prepend">
 			<span class="input-group-text"> {{ trans('determinations.determination') }} </span>
 		</div>
@@ -36,7 +36,7 @@
 		<input type="text" class="form-control" value="{{ $determination->name }}" disabled>
 	</div>
 
-	<div class="input-group mt-2 mb-1 col-md-9 input-form">
+	<div class="input-group mt-2 col-md-9 input-form">
 		<div class="input-group-prepend">
 			<span class="input-group-text"> {{ trans('determinations.name') }} </span>
 		</div>
@@ -44,7 +44,7 @@
 		<input type="text" class="form-control" name="name" required>
 	</div>
 
-	<div class="input-group mt-2 mb-1 col-md-9 input-form">
+	<div class="input-group mt-2 col-md-9 input-form">
 		<div class="input-group-prepend">
 			<span class="input-group-text"> {{ trans('reports.report') }} </span>
 		</div>
@@ -52,7 +52,7 @@
 		<textarea class="form-control" rows="10" name="report"></textarea>
 	</div>
 
-	<div class="mt-2 float-right">
+	<div class="float-right mt-3">
 		<button type="submit" class="btn btn-primary">
 			<span class="fas fa-save"></span> {{ trans('forms.save') }}
 		</button>

@@ -56,7 +56,7 @@
 
 <!-- Filter by keys -->
 <div class="form-group row">
-    <div class="col-md-4">
+    <div class="col-md-6">
         <input type="text" class="form-control form-control" id="filter" name="filter" placeholder="{{ trans('forms.enter_filter') }}">
     </div>
 

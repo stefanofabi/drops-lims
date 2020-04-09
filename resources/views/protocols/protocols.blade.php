@@ -20,22 +20,22 @@
 
 @section('js')
     <script type="text/javascript">
-     $(document).ready(function() {
-        // Put the filter
-        $("#filter" ).val('{{ $request['filter'] ?? '' }}');
-    });
+	    $(document).ready(function() {
+	        // Put the filter
+	        $("#filter" ).val('{{ $request['filter'] ?? '' }}');
+	    });
 
-     function load(page) {
-        $("#page" ).val(page);
-        document.all["select_page"].submit();
-     }
+	    function load(page) {
+	        $("#page" ).val(page);
+	    	document.all["select_page"].submit();
+	    }
     </script>
 @endsection
 
 @section('filters') 
 <!-- Filter by keys -->
 <div class="form-group row">
-    <div class="col-md-4">
+    <div class="col-md-6">
         <input type="text" class="form-control form-control" id="filter" name="filter" placeholder="{{ trans('forms.enter_filter') }}">
     </div>
 

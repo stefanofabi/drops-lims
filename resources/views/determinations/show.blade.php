@@ -25,11 +25,11 @@
 
 @section('content')
 <div class="alert alert-info fade show">
-	<a href="{{ route('determinations/edit', [$determination->id]) }}" class="btn btn-info btn-sm"> <i class="fas fa-lock-open"></i> </a>
+	<a href="{{ route('determinations/edit', $determination->id) }}" class="btn btn-info btn-sm"> <i class="fas fa-lock-open"></i> </a>
 	{{ trans('determinations.determination_blocked') }}
 </div>
 
-<div class="input-group mt-2 mb-1 col-md-9 input-form">
+<div class="input-group mt-2 col-md-9 input-form">
 	<div class="input-group-prepend">
 		<span class="input-group-text"> {{ trans('determinations.nbu') }} </span>
 	</div>
@@ -37,7 +37,7 @@
 	<input type="text" class="form-control" value="{{ $nomenclator->name }}" disabled>
 </div>
 
-<div class="input-group mt-2 mb-1 col-md-9 input-form">
+<div class="input-group mt-2 col-md-9 input-form">
 	<div class="input-group-prepend">
 		<span class="input-group-text"> {{ trans('determinations.code') }} </span>
 	</div>
@@ -45,7 +45,7 @@
 	<input type="number" class="form-control" value="{{ $determination->code }}" disabled>
 </div>
 
-<div class="input-group mt-2 mb-1 col-md-9 input-form">
+<div class="input-group mt-2 col-md-9 input-form">
 	<div class="input-group-prepend">
 		<span class="input-group-text"> {{ trans('determinations.name') }} </span>
 	</div>
@@ -53,7 +53,7 @@
 	<input type="text" class="form-control" value="{{ $determination->name }}" disabled>
 </div>
 
-<div class="input-group mt-2 mb-1 col-md-9 input-form">
+<div class="input-group mt-2 col-md-9 input-form">
 	<div class="input-group-prepend">
 		<span class="input-group-text"> {{ trans('determinations.position') }} </span>
 	</div>
@@ -61,7 +61,7 @@
 	<input type="number" class="form-control" value="{{ $determination->position }}" disabled>
 </div>
 
-<div class="input-group mt-2 mb-1 col-md-9 input-form">
+<div class="input-group mt-2 col-md-9 input-form">
 	<div class="input-group-prepend">
 		<span class="input-group-text"> {{ trans('determinations.biochemical_unit') }} </span>
 	</div>
@@ -72,7 +72,7 @@
 
 
 @section('extra-content')
-<div class="card margins-boxs-tb">
+<div class="card mt-3">
 	<div class="card-header">
 		<h4> <span class="fas fa-file-alt" ></span> {{ trans('reports.index_reports')}} </h4>
     </div>
