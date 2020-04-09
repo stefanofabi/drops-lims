@@ -13,3 +13,6 @@ const mix = require('laravel-mix');
 
 mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css');
+	
+mix.copy('node_modules/popper.js/dist/popper.min.js.map', 'public/js');
+mix.copy('node_modules/bootstrap/dist/css/bootstrap.min.css.map', 'public/css');

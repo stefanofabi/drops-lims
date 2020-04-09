@@ -1,24 +1,12 @@
 <title> @yield('title') - SrLab</title>
 
-<!-- JQuery -->
-<script src="{{ asset('lib/jquery/jquery.min.js') }}"></script>
-
-<!-- Bootstrap - need JQuery -->
-<link rel="stylesheet" href="{{ asset('lib/bootstrap/css/bootstrap.min.css') }}">
-<script src="{{ asset('lib/bootstrap/js/bootstrap.min.js') }}"></script>
+<!-- Laravel mix -->
+<script src="{{ asset('js/app.js') }}"></script>
+<link type="text/css" rel="stylesheet" href="{{ asset('css/app.css') }}">
 
 <!-- Icons -->
-<link href="{{ asset('lib/fontawesome/css/fontawesome.css') }}" rel="stylesheet">
-<link href="{{ asset('lib/fontawesome/css/brands.css') }}" rel="stylesheet">
-<link href="{{ asset('lib/fontawesome/css/solid.css') }}" rel="stylesheet">
-
-<!-- JQuery UI & AutoComplete -->
-<link rel="stylesheet" href="{{ asset('lib/jquery-ui/jquery-ui.css') }}">
-<script src="{{ asset('lib/jquery-ui/jquery-ui.js') }}"></script>
-
-<!-- Styles -->
-<link rel="stylesheet" href="{{ asset('css/default.css') }}">
-
+<link href="{{ asset('fontawesome/css/fontawesome.css') }}" rel="stylesheet">
+<link href="{{ asset('fontawesome/css/solid.css') }}" rel="stylesheet">
 
 <!-- Description that will be taken into account by web search engines  -->
 <meta name="description" content="Sistema de resultados online pensado para nuestros derivadores y médicos que nos confian a sus pacientes"/>

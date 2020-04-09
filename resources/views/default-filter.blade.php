@@ -11,7 +11,7 @@
     </head>
 
     <body> 
-        <div class="container margins-boxs-tb">
+        <div class="container mt-3">
             <div class="card">
                 <div class="card-header">
                     <div class="btn-group float-right">
