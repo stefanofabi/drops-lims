@@ -7,6 +7,7 @@
 @section('active_protocols', 'active')
 
 @section('js')
+
 <script type="text/javascript">
 
 	var token = $('meta[name="csrf-token"]').attr('content');
