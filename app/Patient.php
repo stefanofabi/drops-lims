@@ -42,5 +42,9 @@ class Patient extends Model
 		
 		return $count;
 	}    
+
+	public function phone() {
+		return $this->hasMany('App\Phone');
+	}
     
 }

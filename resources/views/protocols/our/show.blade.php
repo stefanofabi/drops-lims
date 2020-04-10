@@ -13,11 +13,11 @@
 @section('menu')
 <ul class="nav flex-column">
 	<li class="nav-item">
-		<a class="nav-link" href="{{ route('protocols/our/add_practices', [$protocol->id]) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('protocols.print_worksheet') }} </a>
+		<a class="nav-link" target="_blank" href="{{ route('protocols/our/print_worksheet', $protocol->id) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('protocols.print_worksheet') }} </a>
 	</li>
 
 	<li class="nav-item">
-		<a class="nav-link" href="{{ route('protocols/our/add_practices', [$protocol->id]) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('protocols.print_report') }} </a>
+		<a class="nav-link" target="_blank" href="{{ route('protocols/our/print', $protocol->id) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('protocols.print_report') }} </a>
 	</li>
 </ul>
 @endsection
@@ -29,7 +29,7 @@
 
 @section('content')
 	<div class="alert alert-info fade show">
-		<a href="{{ route('protocols/our/edit', [$protocol->id]) }}" class="btn btn-info btn-sm"> <i class="fas fa-lock-open"></i> </a>
+		<a href="{{ route('protocols/our/edit', $protocol->id) }}" class="btn btn-info btn-sm"> <i class="fas fa-lock-open"></i> </a>
 		{{ trans('protocols.protocol_blocked') }}
 	</div>
 
@@ -92,7 +92,7 @@
 @endsection	
 
 @section('extra-content')
-<div class="card margins-boxs-tb">
+<div class="card mt-3">
 	<div class="card-header">
 		<h4> <span class="fas fa-syringe" ></span> {{ trans('determinations.determinations')}} </h4>
     </div>

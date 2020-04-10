@@ -49,6 +49,12 @@
 				Route::get('destruir/{id}', 'OurProtocolController@destroy')->name('destroy')
 				->where('id', '[1-9][0-9]*');
 
+				Route::get('imprimir_hoja_de_trabajo/{id}', 'OurProtocolController@print_worksheet')->name('print_worksheet')
+				->where('id', '[1-9][0-9]*');
+
+				Route::get('imprimir/{id}', 'OurProtocolController@print')->name('print')
+				->where('id', '[1-9][0-9]*');
+
 			});
 
 		});

@@ -72,7 +72,7 @@
 	@csrf
 	{{ method_field('PUT') }}
 
-	<div class="input-group mt-2 mb-1 col-md-9 input-form">
+	<div class="input-group mt-2 col-md-9 input-form">
 		<div class="input-group-prepend">
 			<span class="input-group-text"> {{ trans('patients.patient') }} </span>
 		</div>
@@ -80,7 +80,7 @@
 		<input type="text" class="form-control" value="{{ $patient->full_name }}" disabled>
 	</div>
 
-	<div class="input-group mt-2 mb-1 col-md-9 input-form">
+	<div class="input-group mt-2 col-md-9 input-form">
 		<div class="input-group-prepend">
 			<span class="input-group-text"> {{ trans('social_works.social_work') }} </span>
 		</div>
@@ -105,7 +105,7 @@
 		</select>
 	</div>
 
-	<div class="input-group mt-2 mb-1 col-md-9 input-form">
+	<div class="input-group mt-2 col-md-9 input-form">
 		<div class="input-group-prepend">
 			<span class="input-group-text"> {{ trans('prescribers.prescriber') }} </span>
 		</div>
@@ -114,7 +114,7 @@
 		<input type="text" class="form-control" id="prescriber" value="{{ $prescriber->full_name }}">
 	</div>
 
-	<div class="input-group mt-2 mb-1 col-md-9 input-form">
+	<div class="input-group mt-2 col-md-9 input-form">
 		<div class="input-group-prepend">
 			<span class="input-group-text"> {{ trans('protocols.completion_date') }} </span>
 		</div>
@@ -122,7 +122,7 @@
 		<input type="date" class="form-control" name="completion_date" value="{{ $protocol->completion_date }}">
 	</div>
 
-	<div class="input-group mt-2 mb-1 col-md-9 input-form">
+	<div class="input-group mt-2 col-md-9 input-form">
 		<div class="input-group-prepend">
 			<span class="input-group-text"> {{ trans('protocols.quantity_orders') }} </span>
 		</div>
@@ -130,7 +130,7 @@
 		<input type="number" class="form-control" name="quantity_orders" value="{{ $protocol->quantity_orders }}">
 	</div>
 
-	<div class="input-group mt-2 mb-1 col-md-9 input-form">
+	<div class="input-group mt-2 col-md-9 input-form">
 		<div class="input-group-prepend">
 			<span class="input-group-text"> {{ trans('protocols.diagnostic') }} </span>
 		</div>
@@ -138,7 +138,7 @@
 		<input type="text" class="form-control" name="diagnostic" value="{{ $protocol->diagnostic }}">
 	</div>
 
-	<div class="input-group mt-2 mb-1 col-md-9 input-form">
+	<div class="input-group mt-2 col-md-9 input-form">
 		<div class="input-group-prepend">
 			<span class="input-group-text"> {{ trans('protocols.observations') }} </span>
 		</div>
@@ -146,7 +146,7 @@
 		<textarea class="form-control" rows="3" name="observations"> {{ $protocol->observations }} </textarea>
 	</div>
 
-	<div class="mt-4 float-right">
+	<div class="mt-3 float-right">
 		<button type="submit" class="btn btn-primary">
 			<span class="fas fa-save"></span> {{ trans('forms.save') }}
 		</button>
@@ -157,7 +157,7 @@
 
 
 @section('extra-content')
-<div class="card margins-boxs-tb">
+<div class="card mt-3">
 	<div class="card-header">
 		<h4> <span class="fas fa-syringe" ></span> {{ trans('determinations.determinations')}} </h4>
     </div>
