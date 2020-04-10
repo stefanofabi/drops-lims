@@ -36,5 +36,6 @@ return [
     'destroy_practice' => 'Destroy practice',
     'protocol_number' => 'Protocol Number',
     'worksheet_for_protocol' => 'Worksheet for protocol',
+    'worksheet' => 'Worksheet'
  
 ];

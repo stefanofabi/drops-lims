@@ -31,7 +31,7 @@
 	}
 </style>
 
-<page backtop="40mm" backbottom="40mm"> 
+<page backtop="40mm" backbottom="50mm"> 
 	<page_header>
 		<table>
 			<tr>
@@ -89,7 +89,14 @@
 		
 	</page_header>
 
-
+    <page_footer>
+        <table style="width: 100%; border: solid 1px black;">
+            <tr>
+                <td style="text-align: left; width: 50%"> <?php echo Lang::get('protocols.worksheet') ?> </td>
+                <td style="text-align: right; width: 50%"> <?php echo Lang::get('forms.page') ?> [[page_cu]]/[[page_nb]]</td>
+            </tr>
+        </table>
+    </page_footer>
 
 
 	<?php
@@ -97,5 +104,8 @@
 			echo "<p> ".$practice->report->determination->name."</p> ============================================ <br />";
 		}
 	?>
+
+
+
 
 </page>
