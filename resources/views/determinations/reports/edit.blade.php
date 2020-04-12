@@ -53,7 +53,7 @@
 			<span class="input-group-text"> {{ trans('reports.report') }} </span>
 		</div>
 
-		<textarea class="form-control" rows="10" name="report">{{ $report->report }}</textarea>
+		<textarea class="form-control" rows="10" name="report" style="font-size: 12px">{{ $report->report }}</textarea>
 	</div>
 
 	<div class="float-right mt-3">

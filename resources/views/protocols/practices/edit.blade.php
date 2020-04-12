@@ -17,27 +17,28 @@
 			console.log($(this).val());
     		array.push($(this).val());
     		
- 		 })
+ 		 });
 
 		var parameters = {
 			"_token": '{{ csrf_token() }}',
-			"array" : array,
+			"data" : array,
 		};
 
 		$.ajax({
 			data:  parameters,
-			url:   '{{ route("protocols/practices/update", [$practice->id]) }}',
+			url:   '{{ route("protocols/practices/update", $practice->id) }}',
 			type:  'put',
 			beforeSend: function () {
-						//$("#resultados").html('<div class="spinner-border text-info"> </div> Procesando, espere por favor...');
+						$("#messages").html('<div class="spinner-border text-info"> </div> Procesando, espere por favor...');
 					},
 			success:  function (response) {
-						window.locationf= "{{ route('protocols/our/edit', []) }}";
+						$("#messages").html('<div class="spinner-border text-info"> </div> OK!');
 					}
-		});
+		});			
 
 		return false;
 	}
+
 </script>
 @endsection
 
@@ -64,7 +65,11 @@
 
 @section('content')
 
-	<div class="input-group mt-2 mb-1 col-md-9 input-form">
+	<div id="messages">
+	</div>
+
+
+	<div class="input-group mt-2 col-md-9 input-form">
 		<div class="input-group-prepend">
 			<span class="input-group-text"> {{ trans('determinations.determination') }} </span>
 		</div>
@@ -72,7 +77,7 @@
 		<input type="text" class="form-control" value="{{ $determination['name'] }}" disabled>
 	</div>
 
-	<div class="input-group mt-2 mb-1 col-md-9 input-form">
+	<div class="input-group mt-2 col-md-9 input-form">
 		<div class="input-group-prepend">
 			<span class="input-group-text"> {{ trans('reports.report') }} </span>
 		</div>
@@ -94,7 +99,7 @@
 				</div>
 
 				<div class="card-header">
-					<div class="mt-2 float-right">
+					<div class="mt-3 float-right">
 						<button type="submit" class="btn btn-primary">
 							<span class="fas fa-save"></span> {{ trans('forms.save') }}
 						</button>

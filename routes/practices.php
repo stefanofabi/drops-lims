@@ -15,7 +15,6 @@
 			'as' => 'practices/',
 		], function() {
 
-			// do not confuse, it is the protocol id
 			Route::post('buscar', 'PracticeController@load')->name('load');
 
 			Route::get('crear', 'PracticeController@create')->name('create');

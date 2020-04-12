@@ -179,8 +179,8 @@
 						<td> $ {{ $practice->amount }} </td>
 						<td> N/A </td>
 						<td class="text-right">
-							<a href="{{ route('protocols/practices/edit', [$practice->id]) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.edit_practice') }}"> <i class="fas fa-edit fa-sm"></i> </a>		
-							<a href="{{ route('protocols/practices/destroy', [$practice->id]) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.destroy_practice') }}"> <i class="fas fa-trash fa-sm"></i> </a>		
+							<a href="{{ route('protocols/practices/edit', $practice->id) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.edit_practice') }}"> <i class="fas fa-edit fa-sm"></i> </a>		
+							<a href="{{ route('protocols/practices/destroy', $practice->id) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.destroy_practice') }}"> <i class="fas fa-trash fa-sm"></i> </a>		
 						</td>
 					</tr>
 				@endforeach

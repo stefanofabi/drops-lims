@@ -120,20 +120,27 @@ class PracticeController extends Controller
     public function update(Request $request, $id)
     {
         //
-        DB::transaction(function () use ($request, $id) {
+
+        
+         DB::transaction(function () use ($request, $id) {
 
             Result::where('practice_id', $id)->delete();
+            
+            if (isset($request->data)) {
+            	// ajax does not send empty arrays
+            	
+	            $array = $request->data;
 
-            $array = $request->array;
-
-            foreach ($array as $data) {
-                Result::insert([
-                    'practice_id' => $id,
-                    'result' => $data,
-                ]);
+	            foreach ($array as $data) {
+	                Result::insert([
+	                    'practice_id' => $id,
+	                    'result' => $data,
+	                ]);
+	            }
             }
+        }, self::RETRIES);       	
+        
 
-        }, self::RETRIES);
     }
 
     /**
