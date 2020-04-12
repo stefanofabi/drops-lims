@@ -277,7 +277,7 @@ class OurProtocolController extends Controller
             $phone = $patient->phone()->first();
 
             ob_start();
-            include(storage_path().'/app/pdf/worksheet_001.php');
+            include('pdf/worksheet_001.php');
             $content = ob_get_clean();
 
             $html2pdf = new Html2Pdf('P', 'A4', str_replace('_', '-', app()->getLocale()));
@@ -313,7 +313,7 @@ class OurProtocolController extends Controller
             $phone = $patient->phone()->first();
 
             ob_start();
-            include(storage_path().'/app/pdf/report_001.php');
+            include('pdf/report_001.php');
             $content = ob_get_clean();
 
             $html2pdf = new Html2Pdf('P', 'A4', str_replace('_', '-', app()->getLocale()));
