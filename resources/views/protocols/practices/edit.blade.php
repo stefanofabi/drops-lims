@@ -8,13 +8,38 @@
 
 @section('js')
 <script type="text/javascript">
+
+	$(document).ready(function() {
+
+		var parameters = {
+			"practice_id" : '{{ $practice->id }}' 
+		};
+
+		$.ajax({
+			data:  parameters,
+			url:   '{{ route("protocols/practices/results") }}',
+			type:  'post',
+			beforeSend: function () {
+						$("#messages").html('<div class="spinner-border text-info"> </div> {{ trans("forms.load_wait") }}');
+					},
+			success:  function (response) {
+						$("#messages").html('<div class="alert alert-warning alert-dismissible fade show"> <button type="button" class="close" data-dismiss="alert">&times;</button> <strong> {{ trans("forms.warning") }}!</strong> {{ trans("protocols.modified_practice")}} </div>');
+						var i = 0;
+
+						$('#report').find('input, select').each(function() {
+							$(this).val(response[i]['result'])
+							i++;
+ 						 });
+					}
+		});	
+    });
 		
 	function edit_practice() {
 
 		var array = [];
 
 		$('#report').find('input, select').each(function() {
-			console.log($(this).val());
+			//console.log($(this).val());
     		array.push($(this).val());
     		
  		 });
@@ -29,10 +54,10 @@
 			url:   '{{ route("protocols/practices/update", $practice->id) }}',
 			type:  'put',
 			beforeSend: function () {
-						$("#messages").html('<div class="spinner-border text-info"> </div> Procesando, espere por favor...');
+						$("#messages").html('<div class="spinner-border text-info"> </div> {{ trans("forms.load_wait") }}');
 					},
 			success:  function (response) {
-						$("#messages").html('<div class="spinner-border text-info"> </div> OK!');
+						$("#messages").html('<div class="alert alert-success alert-dismissible fade show"> <button type="button" class="close" data-dismiss="alert">&times;</button> <strong> {{ trans("forms.well_done") }}! </strong> {{ trans("protocols.result_loaded") }} </div> ');
 					}
 		});			
 
@@ -65,9 +90,7 @@
 
 @section('content')
 
-	<div id="messages">
-	</div>
-
+	<div id="messages">	</div>
 
 	<div class="input-group mt-2 col-md-9 input-form">
 		<div class="input-group-prepend">
@@ -91,7 +114,7 @@
 
 			<div class="card mt-3">	
 				<div class="card-header">
-					<h6> Result </h6>
+					<i class="fas fa-poll-h"></i> {{ trans('protocols.result') }}
 				</div>
 
 				<div id="report" class="card-body">

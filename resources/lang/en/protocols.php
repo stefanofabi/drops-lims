@@ -38,5 +38,9 @@ return [
     'worksheet_for_protocol' => 'Worksheet for protocol',
     'worksheet' => 'Worksheet',
     'report_for_protocol' => 'Report for protocol',
+    'modified_practice' => 'You are about to make effective changes to a practice',
+    'practice_loaded' => 'Practice loaded successfully',
+    'result_loaded' => 'Result loaded successfully',
+    'result' => 'Result',
  
 ];

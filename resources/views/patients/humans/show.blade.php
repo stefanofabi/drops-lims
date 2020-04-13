@@ -6,6 +6,33 @@
         // Select a sex from list
         $('#sex').val('{{ $human->sex }}');
     });
+
+    function create_protocol() {
+    	var token = '{{ csrf_token() }}';
+    	var patient = '{{ $human->id }}';
+
+    	redirect_by_post('{{ route("protocols/our/create") }}', { patient_id: patient, '_token': token }, false)
+    }
+
+    /* function to redirect a webpage to another using post method */
+	function redirect_by_post(purl, pparameters, in_new_tab) {
+	    pparameters = (typeof pparameters == 'undefined') ? {} : pparameters;
+	    in_new_tab = (typeof in_new_tab == 'undefined') ? true : in_new_tab;
+
+	    var form = document.createElement("form");
+	    $(form).attr("id", "reg-form").attr("name", "reg-form").attr("action", purl).attr("method", "post").attr("enctype", "multipart/form-data");
+	    if (in_new_tab) {
+	        $(form).attr("target", "_blank");
+	    }
+	    $.each(pparameters, function(key) {
+	        $(form).append('<input type="text" name="' + key + '" value="' + this + '" />');
+	    });
+	    document.body.appendChild(form);
+	    form.submit();
+	    document.body.removeChild(form);
+
+	    return false;
+	}
 </script>
 @endsection
 
@@ -23,7 +50,7 @@
 <p>
 	<ul class="nav flex-column">
 		<li class="nav-item">
-			<a class="nav-link" href=""> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> Crear protocolo </a>
+			<a class="nav-link" href="#" onclick="create_protocol()"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> Crear protocolo </a>
 		</li>		
 
 		<li class="nav-item">

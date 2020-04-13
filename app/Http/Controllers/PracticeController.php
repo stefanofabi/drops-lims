@@ -101,13 +101,11 @@ class PracticeController extends Controller
         $practice = Practice::findOrFail($id);
         $report = $practice->report()->first();
         $determination = $report->determination()->first();
-        $results = $practice->results()->get();
 
         return view('protocols/practices/edit')
         ->with('practice', $practice)
         ->with('report', $report)
-        ->with('determination', $determination)
-        ->with('results', $results);
+        ->with('determination', $determination);
     }
 
     /**
@@ -155,7 +153,7 @@ class PracticeController extends Controller
     }
 
     /**
-     * returns a list of practices available according to the nomenclator of social work
+     * Returns a list of practices available according to the nomenclator of social work
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -180,5 +178,20 @@ class PracticeController extends Controller
         ->toJson();
 
         return $practices;
+    }
+
+    /**
+     * Returns the results for a practice
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function get_results(Request $request)
+    {
+        //
+        $practice_id = $request->practice_id;
+        $practice = Practice::findOrFail($practice_id);
+
+        return $practice->results->toArray();
     }
 }

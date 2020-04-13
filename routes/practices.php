@@ -33,4 +33,6 @@
 			Route::get('destruir/{id}', 'PracticeController@destroy')->name('destroy')
 			->where('id', '[1-9][0-9]*');
 
+			Route::post('resultados', 'PracticeController@get_results')->name('results');
+
 		});

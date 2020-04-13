@@ -194,7 +194,7 @@
 		$results = $practice->results;
 
 		if (!empty($report)) {
-			echo "<nobreak>". convert_to_pdf($report, $results)." <br /> <hr> <br /> </nobreak>";
+			echo "<nobreak>". convert_to_pdf($report, $results)." <hr style='margin-top: 5px; margin-bottom: 5px'> </nobreak>";
 		}
 	}
 ?>

@@ -157,14 +157,14 @@
 
 
 @section('extra-content')
-<div class="card mt-3">
+<div class="card mt-3 mb-4">
 	<div class="card-header">
 		<h4> <span class="fas fa-syringe" ></span> {{ trans('determinations.determinations')}} </h4>
     </div>
 
     <div class="table-responsive">
 		<table class="table table-striped">
-				<tr  class="info">
+				<tr class="info">
 					<th> {{ trans('determinations.code') }} </th>
 					<th> {{ trans('determinations.determination') }} </th>	
 					<th> {{ trans('determinations.amount') }} </th>
@@ -172,18 +172,38 @@
 					<th class="text-right"> {{ trans('forms.actions') }}</th>	
 				</tr>
 
+				@php 
+					$total_amount = 0;
+				@endphp
+
 				@foreach ($practices as $practice)
+
+					@php
+						$total_amount += $practice->amount;
+					@endphp
 					<tr>
 						<td> {{ $practice->report->determination->code }} </td>
 						<td> {{ $practice->report->determination->name }} </td>
-						<td> $ {{ $practice->amount }} </td>
-						<td> N/A </td>
+						<td> $ {{ number_format($practice->amount, 2, ",", ".") }} </td>
+						<td> 
+							@if (empty($practice->results->first()))
+								<span class="badge badge-primary"> {{ trans('forms.no') }} </span>
+							@else 
+								<span class="badge badge-success"> {{ trans('forms.yes') }} </span>
+							@endif
+						</td>
 						<td class="text-right">
 							<a href="{{ route('protocols/practices/edit', $practice->id) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.edit_practice') }}"> <i class="fas fa-edit fa-sm"></i> </a>		
 							<a href="{{ route('protocols/practices/destroy', $practice->id) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.destroy_practice') }}"> <i class="fas fa-trash fa-sm"></i> </a>		
 						</td>
 					</tr>
 				@endforeach
+
+				<tr>
+					<td colspan="5" class="text-right">
+						<h4> Total: $ {{ number_format($total_amount, 2, ",", ".") }} </h4>
+					</td>
+				</tr>
 		</table>
 	</div>
 </div>

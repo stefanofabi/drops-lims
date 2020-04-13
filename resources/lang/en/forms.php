@@ -29,4 +29,10 @@ return [
     'select_option' => 'Select an option',
     'menu' => 'Menu',
     'page' => 'Page',
+    'yes' => 'Yes',
+    'no' => 'No',
+    'warning' => 'Warning',
+    'load_wait' => 'Loading, please wait...',
+    'well_done' => 'Well done',
+    
 ];
