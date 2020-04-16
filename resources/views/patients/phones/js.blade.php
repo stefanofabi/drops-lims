@@ -40,7 +40,7 @@
 				$("#modal_phones_messages").html('<div class="spinner-border text-info"> </div> {{ trans("forms.please_wait") }}');
 			},
 			success:  function (response) {
-				$("#modal_phones_messages").html('<div class="alert alert-success fade show"> {{ trans("phones.success_edited_phone") }} </div>');
+				$("#modal_phones_messages").html('<div class="alert alert-success fade show"> <strong> {{ trans("forms.well_done") }}! </strong> {{ trans("phones.success_edited_phone") }} </div>');
 			}
 		});
 

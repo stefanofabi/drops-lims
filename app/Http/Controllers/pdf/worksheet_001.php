@@ -50,13 +50,45 @@
 		    			$result = 1;
 		    		}
 		    	?>
-		        <td> <?php echo Lang::get('patients.age').": ".trans_choice('patients.calculate_age', $result, $array); ?> </td>
+		        <td> <?php echo Lang::get('protocols.completion_date').": ".date_format(new DateTime($protocol->completion_date), 'd/m/Y'); ?> </td>
 		    </tr>
 
 		    <tr>
 		    	<td> <?php echo Lang::get('patients.home_address').": $patient->address"; ?> </td>
 			    
-				<td> <?php 
+				<td> <?php echo Lang::get('patients.age').": ".trans_choice('patients.calculate_age', $result, $array); ?> </td>
+		    </tr>
+
+		    <tr>
+		    	<td> <?php echo Lang::get('prescribers.prescriber').": $prescriber->full_name"; ?> </td>
+		        <td> 
+		        	<?php 
+		        		echo Lang::get('patients.sex').": "; 
+		        		switch ($patient->sex) {
+		        			case 'M': {
+		        				echo Lang::get('patients.male');
+		        				break;
+		        			}
+		        			case 'F': {
+		        				echo Lang::get('patients.female');
+		        				break;
+		        			}
+
+		        			default: {
+		        				echo Lang::get('patients.undefined');
+		        				break;
+		        			}
+		        		}
+
+		        	?> 
+
+					</td>
+		    </tr>
+
+		    <tr>
+		    	<td> <?php echo Lang::get('social_works.social_work').": $social_work->name"; ?> </td>
+		        <td> 
+		        	<?php 
 
 						echo Lang::get('phones.phone').": ";
 				
@@ -66,17 +98,7 @@
 			    			echo "N/A";
 			    		}
 			    	?> 
-			    </td>
-		    </tr>
-
-		    <tr>
-		    	<td> <?php echo Lang::get('prescribers.prescriber').": $prescriber->full_name"; ?> </td>
-		        <td> <?php echo Lang::get('protocols.completion_date').": ".date_format(new DateTime($protocol->completion_date), 'd/m/Y'); ?> </td>
-		    </tr>
-
-		    <tr>
-		    	<td> <?php echo Lang::get('social_works.social_work').": $social_work->name"; ?> </td>
-		        <td> <?php echo Lang::get('protocols.quantity_orders').": $protocol->quantity_orders"; ?> </td>
+		    	</td>
 		    </tr>
 		</table>
 

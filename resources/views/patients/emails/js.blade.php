@@ -38,7 +38,7 @@
 				$("#modal_email_messages").html('<div class="spinner-border text-info"> </div> {{ trans("forms.please_wait") }}');
 			},
 			success:  function (response) {
-				$("#modal_email_messages").html('<div class="alert alert-success fade show"> {{ trans("emails.success_edited_email") }} </div>');
+				$("#modal_email_messages").html('<div class="alert alert-success fade show"> <strong> {{ trans("forms.well_done") }}! </strong> {{ trans("emails.success_edited_email") }} </div>');
 			}
 		});
 

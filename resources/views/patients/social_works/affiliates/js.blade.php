@@ -26,9 +26,9 @@
 				$("#modal_affiliates_expiration_date").val(data['expiration_date']);
 				plan = data['plan_id'];
 
+				load_plans();
+
 			}
-		}).done (function() {
-			load_plans();
 		});
 
     	return false;   	
@@ -51,7 +51,7 @@
 				$("#modal_affiliates_messages").html('<div class="spinner-border text-info"> </div> {{ trans("forms.please_wait") }}');
 			},
 			success:  function (response) {
-				$("#modal_affiliates_messages").html('<div class="alert alert-success fade show"> {{ trans("social_works.success_edited_affiliate") }} </div>');
+				$("#modal_affiliates_messages").html('<div class="alert alert-success fade show"> <strong> {{ trans("forms.well_done") }}! </strong> {{ trans("social_works.success_edited_affiliate") }} </div>');
 			}
 		});
 
@@ -69,7 +69,7 @@
 			url:   "{{ route('patients/social_works/plans/load') }}",
 			type:  'post',
 			beforeSend: function () {
-				//$("#plans").html('<div class="spinner-border text-info"> </div> {{ trans("forms.please_wait") }}');
+				$("#modal_affiliates_messages").html('<div class="spinner-border text-info"> </div> {{ trans("forms.please_wait") }}');
 			},
 			success:  function (response) {
 						

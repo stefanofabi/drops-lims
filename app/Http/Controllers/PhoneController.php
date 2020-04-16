@@ -58,7 +58,7 @@ class PhoneController extends Controller
         }, self::RETRIES);
 
 
-        return redirect()->action('PatientController@show', ['id' => $request->id]);
+        return redirect()->action('PatientController@edit', ['id' => $request->id]);
     }
 
     /**
