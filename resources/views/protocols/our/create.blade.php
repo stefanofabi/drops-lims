@@ -113,6 +113,17 @@
 
 
 @section('content')
+
+@if (sizeof($social_works) == 0 && !empty($patient))
+<div class="alert alert-warning">
+	<strong>{{ trans('forms.warning') }}!</strong> {{ trans('protocols.unloaded_social_work') }}
+</div>
+@else 
+<div class="alert alert-info">
+	<strong>{{ trans('forms.info') }}!</strong> {{ trans('protocols.create_notice') }}
+</div>
+@endif
+
 <form method="post" action="{{ route('protocols/our/store') }}">
 	@csrf
 
@@ -121,8 +132,8 @@
 			<span class="input-group-text"> {{ trans('patients.patient') }} </span>
 		</div>
 		
-		<input type="hidden" id="patient_id" name="patient_id" value="{{ $patient['id'] ?? '' }}">
-		<input type="text" class="form-control" id="patient" value="{{ $patient['full_name'] ?? '' }}" required>
+		<input type="hidden" id="patient_id" name="patient_id" value="{{ $patient['id'] }}">
+		<input type="text" class="form-control" id="patient" value="{{ $patient['full_name'] }}" required>
 	</div>
 
 	<div class="input-group mt-2 mb-1 col-md-9 input-form">
@@ -135,14 +146,14 @@
 				@if (isset($social_works))
 					@foreach ($social_works as $social_work)
 						<option value="{{ $social_work->plan_id }}"> 
-							@if (!empty($social_work['expiration_date']) && $social_work['expiration_date'] < date('Y-m-d'))
+							@if (!empty($social_work->expiration_date) && $social_work->expiration_date < date('Y-m-d'))
 								** {{ trans('social_works.expired_card')}} **
 							@endif
 
 							{{ $social_work->name }}  {{ $social_work->plan }}
 
-							@if (!empty($social_work['affiliate_number'])) 
-								[{{ $social_work['affiliate_number'] }}]
+							@if (!empty($social_work->affiliate_number)) 
+								[{{ $social_work->affiliate_number }}]
 							@endif
 
 						</option>
@@ -173,7 +184,7 @@
 			<span class="input-group-text"> {{ trans('protocols.quantity_orders') }} </span>
 		</div>
 
-		<input type="number" class="form-control" name="quantity_orders" min="0" value="0" required>
+		<input type="number" class="form-control" name="quantity_orders" min="0" required>
 	</div>
 
 	<div class="input-group mt-2 mb-1 col-md-9 input-form">
@@ -192,7 +203,7 @@
 		<textarea class="form-control" rows="3" name="observations"></textarea>
 	</div>
 
-	<div class="mt-2 float-right">
+	<div class="mt-3 float-right">
 		<button type="submit" class="btn btn-primary">
 			<span class="fas fa-save"></span> {{ trans('forms.save') }}
 		</button>

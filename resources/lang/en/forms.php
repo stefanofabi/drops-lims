@@ -34,5 +34,8 @@ return [
     'warning' => 'Warning',
     'load_wait' => 'Loading, please wait...',
     'well_done' => 'Well done',
-    
+    'danger' => 'Danger',
+    'notice' => 'Notice',
+    'info' => 'Informartion',
+
 ];

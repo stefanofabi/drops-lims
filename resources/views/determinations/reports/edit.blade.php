@@ -17,7 +17,7 @@
 	</li>	
 
 	<li class="nav-item">
-		<a class="nav-link" href="{{ route('determinations/reports/show', [$report->id]) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('forms.go_back') }} </a>
+		<a class="nav-link" href="{{ route('determinations/edit', $determination->id) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('forms.go_back') }} </a>
 	</li>
 </ul>
 @endsection
@@ -28,6 +28,10 @@
 
 
 @section('content')
+<div class="alert alert-danger">
+	<strong>{{ trans('forms.danger') }}!</strong> {{ trans('reports.edit_notice') }}
+</div>
+
 <form method="post" action="{{ route('determinations/reports/update', $report->id) }}">
 	@csrf
 	{{ method_field('PUT') }}

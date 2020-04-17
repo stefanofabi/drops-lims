@@ -42,5 +42,7 @@ return [
     'practice_loaded' => 'Practice loaded successfully',
     'result_loaded' => 'Result loaded successfully',
     'result' => 'Result',
+    'unloaded_social_work' => 'The patient is not charged with any social work',
+    'create_notice' => 'Once you have assigned the protocol to the patient, you can add the practices you need',
  
 ];

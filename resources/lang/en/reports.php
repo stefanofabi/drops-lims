@@ -20,5 +20,7 @@ return [
     'index_reports' => 'Index of reports',
     'name' => 'Name',
     'destroy_report' => 'Destroy report',
-
+    'creation_notice' => 'When creating a new report it will be automatically available to be selected in a protocol',
+    'edit_notice' => 'By editing the mask of a report you are making the same changes in all the protocols that use this mask. If you are removing or adding new fields we recommend generating a new report.',
+    
 ];
