@@ -5,7 +5,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
         // Select a sex from list
-       $("#sex").val("{{ $human->sex }}");
+       $("#sex").val("{{ $patient->sex }}");
     });
 </script>
 
@@ -28,19 +28,19 @@
 @section('menu')
 <ul class="nav flex-column">
 	<li class="nav-item">
-		<a class="nav-link" href="{{ route('patients/phones/create', [$id]) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('phones.add_phone') }} </a>
+		<a class="nav-link" href="{{ route('patients/phones/create', $patient->id) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('phones.add_phone') }} </a>
 	</li>		
 
 	<li class="nav-item">
-		<a class="nav-link" href="{{ route('patients/emails/create', [$id]) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('emails.add_email') }} </a>
+		<a class="nav-link" href="{{ route('patients/emails/create', $patient->id) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('emails.add_email') }} </a>
 	</li>
 
 	<li class="nav-item">
-		<a class="nav-link" href="{{ route('patients/social_works/affiliates/create', [$id]) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('social_works.add_social_work') }} </a>
+		<a class="nav-link" href="{{ route('patients/social_works/affiliates/create', $patient->id) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('social_works.add_social_work') }} </a>
 	</li>
 
 	<li class="nav-item">
-		<a class="nav-link" href="{{ route('patients/show', [$id]) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('forms.go_back') }} </a>
+		<a class="nav-link" href="{{ route('patients/show', $patient->id) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('forms.go_back') }} </a>
 	</li>	
 </ul>
 @endsection
@@ -57,7 +57,7 @@
 @include('patients/emails/edit')
 @include('patients/social_works/affiliates/edit')
 
-<form method="post" action="{{ route('patients/update', $human->id) }}">
+<form method="post" action="{{ route('patients/update', $patient->id) }}">
 	@csrf
 	{{ method_field('PUT') }}
 
@@ -72,26 +72,26 @@
 				<div class="input-group-prepend">
 					<span class="input-group-text"> {{ trans('patients.dni') }} </span>
 				</div>
-				<input type="number" class="form-control" name="key" value="{{ $human->key }}">
+				<input type="number" class="form-control" name="key" value="{{ $patient->key }}">
 			</div>
 
 			<div class="input-group mt-2 col-md-9 input-form">
 				<div class="input-group-prepend">
 					<span class="input-group-text"> {{ trans('patients.full_name') }} </span>
 				</div>
-				<input type="text" class="form-control" name="full_name" value="{{ $human->full_name }}" required>
+				<input type="text" class="form-control" name="full_name" value="{{ $patient->full_name }}" required>
 			</div>
 
 			<div class="input-group mt-2 col-md-9 input-form">
 				<div class="input-group-prepend">
 					<span class="input-group-text"> {{ trans('patients.home_address') }} </span>
 				</div>
-				<input type="text" class="form-control" name="address" value="{{ $human->address }}">
+				<input type="text" class="form-control" name="address" value="{{ $patient->address }}">
 
 				<div class="input-group-prepend">
 					<span class="input-group-text"> {{ trans('patients.city') }} </span>
 				</div>
-				<input type="text" class="form-control" name="city" value="{{ $human->city }}">
+				<input type="text" class="form-control" name="city" value="{{ $patient->city }}">
 			</div>
 
 			<div class="input-group mt-2 col-md-9 input-form">
@@ -112,7 +112,7 @@
 					<span class="input-group-text"> {{ trans('patients.birth_date') }} </span>
 				</div>
 
-				<input type="date" class="form-control" name="birth_date" value="{{ $human->birth_date }}">
+				<input type="date" class="form-control" name="birth_date" value="{{ $patient->birth_date }}">
 			</div>
 
 		</div>

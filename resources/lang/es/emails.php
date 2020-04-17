@@ -12,10 +12,10 @@ return [
     |
     */
 
-    'success_edited_email' => 'Successfully edited email',
-    'email' => 'Email',
-    'emails' => 'Emails',
-    'add_email' => 'Add email',
-    'edit_email' => 'Edit email',
+    'success_edited_email' => 'Correo editado exitosamente',
+    'email' => 'Correo',
+    'emails' => 'Correos',
+    'add_email' => 'Agregar correo',
+    'edit_email' => 'Editar correo',
 
 ];

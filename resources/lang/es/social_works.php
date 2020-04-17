@@ -12,15 +12,15 @@ return [
     |
     */
 
-    'social_work' => 'Social work',
+    'social_work' => 'Obra social',
     'plan' => 'Plan',
-    'affiliate_number' => 'Afilliate number',
-    'expiration_date' => 'Expiration date',
-    'security_code' => 'Security code',
-    'edit_affiliate' => 'Edit affiliate',
-    'social_works' => 'Social works',
-    'expired_card' => 'Expired card',
-    'success_edited_affiliate' => 'Affiliate successfully edited',
-    'add_social_work' => 'Add social work',
-
+    'affiliate_number' => 'Número de afiliado',
+    'expiration_date' => 'Fecha de expiración',
+    'security_code' => 'Código de seguridad',
+    'edit_affiliate' => 'Editar afiliado',
+    'social_works' => 'Obras sociales',
+    'expired_card' => 'Carnet expirado',
+    'success_edited_affiliate' => '{F} Afiliada editada correctamente |{M} Afiliado editado correctamente',
+    'add_social_work' => 'Agregar obra social',
+    
 ];

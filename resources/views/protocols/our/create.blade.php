@@ -120,7 +120,7 @@
 </div>
 @else 
 <div class="alert alert-info">
-	<strong>{{ trans('forms.info') }}!</strong> {{ trans('protocols.create_notice') }}
+	<strong>{{ trans('forms.information') }}!</strong> {{ trans('protocols.create_notice') }}
 </div>
 @endif
 
@@ -142,7 +142,7 @@
 		</div>
 
 		<select class="form-control input-sm" name="plan_id" required>
-				<option value=""> {{ trans('social_works.select_social_work') }}</option>
+				<option value=""> {{ trans('forms.select_option') }}</option>
 				@if (isset($social_works))
 					@foreach ($social_works as $social_work)
 						<option value="{{ $social_work->plan_id }}"> 

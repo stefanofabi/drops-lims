@@ -17,7 +17,7 @@
 				<td> {{ $patient->full_name }} </td>
 				<td> {{ $patient->key }} </td>
 				<td> {{ $patient->city }} </td>
-				<td> {{ $patient->birth_date }} </td>
+				<td> {{ date('d/m/Y', strtotime($patient->birth_date)) }} </td>
 
 				<td class="text-right">
 					<a href="{{ route('patients/show', [$patient->id]) }}" class="btn btn-info btn-sm" title="{{ trans('patients.show_patient') }}" > <i class="fas fa-eye fa-sm"></i> </a> 

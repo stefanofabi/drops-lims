@@ -9,8 +9,8 @@
 				<span class="input-group-text"> {{ trans('social_works.social_work') }} </span>
 			</div>
 
-			<select class="form-control input-sm col-md-6" id="affiliate" style="margin-right: 1%">
-				<option value=""> {{ trans('social_works.select_social_work') }}</option>
+			<select class="form-control input-sm col-md-6" id="affiliate">
+				<option value=""> {{ trans('forms.select_option') }}</option>
 				@foreach ($affiliates as $affiliate)
 					<option value="{{ $affiliate->id }}"> 
 						@if (!empty($affiliate->expiration_date) && $affiliate->expiration_date < date("Y-m-d"))
@@ -26,7 +26,7 @@
 				@endforeach
 			</select>
 
-			<div>
+			<div class="ml-2">
 				<button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#editAffiliate" onclick="return editAffiliate()">
 					<span class="fas fa-edit"></span> 
 				</button>

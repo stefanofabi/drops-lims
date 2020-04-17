@@ -34,7 +34,6 @@ return [
     'show_practice' => 'Show practice',
     'edit_practice' => 'Edit practice',
     'destroy_practice' => 'Destroy practice',
-    'protocol_number' => 'Protocol Number',
     'worksheet_for_protocol' => 'Worksheet for protocol',
     'worksheet' => 'Worksheet',
     'report_for_protocol' => 'Report for protocol',

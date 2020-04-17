@@ -24,6 +24,8 @@ $factory->define(Patient::class, function (Faker $faker) {
 		        
 		        'type' => $type,
 		    ];
+
+		    break;
 		}
 
 		case 'human': {
@@ -38,6 +40,8 @@ $factory->define(Patient::class, function (Faker $faker) {
 		        
 		        'type' => $type,
 		    ];
+
+		    break;
 		} 
 
 		case 'industrial': {
@@ -57,6 +61,8 @@ $factory->define(Patient::class, function (Faker $faker) {
 
 		        'type' => $type,
 		    ];
+
+		    break;
 		}
 	}
 

@@ -14,8 +14,6 @@ return [
 
     'determinations' => 'Determinaciones',
     'create_determination' => 'Crear determinación',
-    'enter_filter' => 'Ingrese un filtro',
-    'search' => 'Buscar',
     'code' => 'Código',
     'determination' => 'Determinación',
     'select_nbu' => 'Seleccione un nomenclador',
@@ -28,5 +26,7 @@ return [
     'destroy_determination' => 'Borrar determinación',
     'determination_blocked' => 'Determinación bloqueada por razones de seguridad. Para realizar cambios haga click en el candado',
     'edit_determination' => 'Editar determinación',
-    'add_report' => 'Agregar reporte',
+    'informed' => 'Informado',
+    'amount' => 'Monto',
+
 ];

@@ -7,7 +7,7 @@
 @section('active_patients', 'active')
 
 @section('menu-title')
-{{ trans('patients.menu') }}
+{{ trans('forms.menu') }}
 @endsection
 
 @section('js')

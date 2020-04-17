@@ -3,15 +3,15 @@
 		<span class="input-group-text"> {{ trans('emails.emails') }} </span>
 	</div>
 
-	<select class="form-control input-sm col-md-6" id="email" style="margin-right: 1%">
-		<option value=""> {{ trans('emails.select_email') }}</option>
+	<select class="form-control input-sm col-md-6" id="email">
+		<option value=""> {{ trans('forms.select_option') }}</option>
 
 		@foreach ($emails as $email)
 		<option value="{{ $email->id }}"> {{ $email->email }}</option>
 		@endforeach
 	</select>
 
-	<div>
+	<div class="ml-2">
 		<button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#editEmail" onclick="return editEmail()">
 			<span class="fas fa-edit"></span> 
 		</button>

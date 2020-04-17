@@ -4,7 +4,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Email language lines
+    | Phone language lines
     |--------------------------------------------------------------------------
     |
     | The following language lines are used during emails views for various messages that we must show the user.
@@ -12,10 +12,13 @@ return [
     |
     */
 
-    'success_edited_email' => 'Successfully edited email',
-    'email' => 'Email',
-    'emails' => 'Emails',
-    'add_email' => 'Add email',
-    'edit_email' => 'Edit email',
-
+    'edit_phone' => 'Editar teléfono',
+    'phones' => 'Teléfonos',
+    'add_phone' => 'Agregar teléfono',
+    'phone' => 'Teléfono',
+    'landline' => 'Teléfono fijo',
+    'mobile' => 'Celular',
+    'whatsapp' => 'Whatsapp',
+    'type' => 'Tipo',
+    'success_edited_phone' => 'Teléfono editado exitosamente',
 ];

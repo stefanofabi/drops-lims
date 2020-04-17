@@ -121,29 +121,17 @@ class PatientController extends Controller
 
         switch($patient_type) {
             case 'animal': {
-                $view = view('patients/animals/show')
-                ->with('animal', $patient)
-                ->with('emails', $emails)
-                ->with('phones', $phones)
-                ->with('affiliates', $affiliates);
+                $view = view('patients/animals/show');
                 break;
             }
 
             case 'human': {
-                $view = view('patients/humans/show')
-                ->with('human', $patient)
-                ->with('emails', $emails)
-                ->with('phones', $phones)
-                ->with('affiliates', $affiliates);
+                $view = view('patients/humans/show');
                 break;
             }
             
             case 'industrial': {
-                $view = view('patients/industrials/show')
-                ->with('industrial', $patient)
-                ->with('emails', $emails)
-                ->with('phones', $phones)
-                ->with('affiliates', $affiliates);
+                $view = view('patients/industrials/show');
                 break;
             }
 
@@ -153,7 +141,11 @@ class PatientController extends Controller
             }
         }
 
-        return $view;
+        return $view
+        ->with('patient', $patient)
+        ->with('emails', $emails)
+        ->with('phones', $phones)
+        ->with('affiliates', $affiliates);
     }
 
 
@@ -181,45 +173,27 @@ class PatientController extends Controller
 
         switch($patient_type) {
             case 'animal': {
-            	$view = view('patients/animals/edit')
-	        	->with('id', $id)
-		        ->with('animal', $patient)
-		        ->with('emails', $emails)
-		        ->with('phones', $phones)
-		        ->with('social_works', $social_works)
-		        ->with('affiliates', $affiliates);
+            	$view = view('patients/animals/edit');
                 break;
             }
 
             case 'human': {
-                $view = view('patients/humans/edit')
-		        ->with('id', $id)
-		        ->with('human', $patient)
-		        ->with('emails', $emails)
-		        ->with('phones', $phones)
-		        ->with('social_works', $social_works)
-		        ->with('affiliates', $affiliates);
+                $view = view('patients/humans/edit');
                 break;
             }
             
             case 'industrial': {
-                $view = view('patients/industrials/edit')
-		        ->with('id', $id)
-		        ->with('industrial', $patient)
-		        ->with('emails', $emails)
-		        ->with('phones', $phones)
-		        ->with('social_works', $social_works)
-		        ->with('affiliates', $affiliates);
-                break;
-            }
-
-            default: { 
-                $view = view('patients/patients');
+                $view = view('patients/industrials/edit');
                 break;
             }
         }
 
-        return $view;
+        return $view		       
+		 ->with('patient', $patient)
+		 ->with('emails', $emails)
+		 ->with('phones', $phones)
+		 ->with('social_works', $social_works)
+		 ->with('affiliates', $affiliates);
     }
 
 

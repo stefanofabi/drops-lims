@@ -4,7 +4,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
         // Select a sex from list
-        $('#sex').val('{{ $animal->sex }}');
+        $('#sex').val('{{ $patient->sex }}');
     });
 </script>
 @endsection
@@ -16,7 +16,7 @@
 @section('active_patients', 'active')
 
 @section('menu-title')
-{{ trans('patients.menu') }}
+{{ trans('forms.menu') }}
 @endsection
 
 @section('menu')
@@ -42,7 +42,7 @@
 @section('content')
 
 <div class="alert alert-info fade show">
-	<a href="{{ route('patients/edit', $animal->id) }}" class="btn btn-info btn-sm"> <i class="fas fa-lock-open"></i> </a>
+	<a href="{{ route('patients/edit', $patient->id) }}" class="btn btn-info btn-sm"> <i class="fas fa-lock-open"></i> </a>
 	{{ trans('patients.patient_blocked') }}
 </div>
 
@@ -57,26 +57,26 @@
 			<div class="input-group-prepend">
 				<span class="input-group-text"> {{ trans('patients.owner') }} </span>
 			</div>
-			<input type="text" class="form-control" value="{{ $animal->owner }}" disabled>
+			<input type="text" class="form-control" value="{{ $patient->owner }}" disabled>
 		</div>
 
 		<div class="input-group mt-2 col-md-9 input-form">
 			<div class="input-group-prepend">
 				<span class="input-group-text"> {{ trans('patients.full_name') }} </span>
 			</div>
-			<input type="text" class="form-control" value="{{ $animal->full_name }}" disabled>
+			<input type="text" class="form-control" value="{{ $patient->full_name }}" disabled>
 		</div>
 
 		<div class="input-group mt-2 col-md-9 input-form">
 			<div class="input-group-prepend">
 				<span class="input-group-text"> {{ trans('patients.home_address') }} </span>
 			</div>
-			<input type="text" class="form-control" value="{{ $animal->address }}" disabled>
+			<input type="text" class="form-control" value="{{ $patient->address }}" disabled>
 
 			<div class="input-group-prepend">
 				<span class="input-group-text"> {{ trans('patients.city') }} </span>
 			</div>
-			<input type="text" class="form-control" value="{{ $animal->city }}" disabled>
+			<input type="text" class="form-control" value="{{ $patient->city }}" disabled>
 		</div>
 
 		<div class="input-group mt-2 col-md-9 input-form">
@@ -97,7 +97,7 @@
 				<span class="input-group-text"> {{ trans('patients.birth_date') }} </span>
 			</div>
 
-			<input type="date" class="form-control" value="{{ $animal->birth_date }}" disabled>
+			<input type="date" class="form-control" value="{{ $patient->birth_date }}" disabled>
 		</div>
 
 	</div>

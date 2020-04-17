@@ -10,7 +10,7 @@
 			</div>
 
 			<select class="form-control input-sm col-md-6" readonly>
-				<option value=""> {{ trans('social_works.select_social_work') }}</option>
+				<option value=""> {{ trans('forms.select_option') }}</option>
 				@foreach ($affiliates as $affiliate)
 				<option value=""> 
 					@if (!empty($affiliate->expiration_date) && $affiliate->expiration_date < date("Y-m-d"))

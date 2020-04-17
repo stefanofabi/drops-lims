@@ -51,7 +51,7 @@
 				$("#modal_affiliates_messages").html('<div class="spinner-border text-info"> </div> {{ trans("forms.please_wait") }}');
 			},
 			success:  function (response) {
-				$("#modal_affiliates_messages").html('<div class="alert alert-success fade show"> <strong> {{ trans("forms.well_done") }}! </strong> {{ trans("social_works.success_edited_affiliate") }} </div>');
+				$("#modal_affiliates_messages").html('<div class="alert alert-success fade show"> <strong> {{ trans("forms.well_done") }}! </strong> {{ trans_choice("social_works.success_edited_affiliate", $patient->sex) }} </div>');
 			}
 		});
 

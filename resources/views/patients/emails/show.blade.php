@@ -3,8 +3,8 @@
 				<span class="input-group-text"> {{ trans('emails.emails') }} </span>
 			</div>
 
-			<select class="form-control input-sm col-md-6" style="margin-right: 1%" readonly>
-				<option value=""> {{ trans('emails.select_email') }}</option>
+			<select class="form-control input-sm col-md-6" readonly>
+				<option value=""> {{ trans('forms.select_option') }}</option>
 
 				@foreach ($emails as $email)
 				<option value=""> {{ $email->email }}</option>

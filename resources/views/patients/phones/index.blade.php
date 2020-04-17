@@ -3,15 +3,15 @@
 		<span class="input-group-text"> {{ trans('phones.phones') }} </span>
 	</div>
 
-	<select class="form-control input-sm col-md-6" id="phone" style="margin-right: 1%">
-		<option value=""> {{ trans('phones.select_phone') }}</option>
+	<select class="form-control input-sm col-md-6" id="phone">
+		<option value=""> {{ trans('forms.select_option') }}</option>
 
 		@foreach ($phones as $phone)
 		<option value="{{ $phone->id }}"> {{ $phone->phone }}</option>
 		@endforeach
 	</select>
 
-	<div>
+	<div class="ml-2">
 		<button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#editPhone" onclick="return editPhone()">
 			<span class="fas fa-edit"></span> 
 		</button>

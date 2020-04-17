@@ -4,12 +4,12 @@
 <script type="text/javascript">
 	$(document).ready(function() {
         // Select a sex from list
-        $('#sex').val('{{ $human->sex }}');
+        $('#sex').val('{{ $patient->sex }}');
     });
 
     function create_protocol() {
     	var token = '{{ csrf_token() }}';
-    	var patient = '{{ $human->id }}';
+    	var patient = '{{ $patient->id }}';
 
     	redirect_by_post('{{ route("protocols/our/create") }}', { patient_id: patient, '_token': token }, false)
     }
@@ -43,7 +43,7 @@
 @section('active_patients', 'active')
 
 @section('menu-title')
-{{ trans('patients.menu') }}
+{{ trans('forms.menu') }}
 @endsection
 
 @section('menu')
@@ -69,7 +69,7 @@
 @section('content')
 
 <div class="alert alert-info fade show">
-	<a href="{{ route('patients/edit', $human->id) }}" class="btn btn-info btn-sm"> <i class="fas fa-lock-open"></i> </a>
+	<a href="{{ route('patients/edit', $patient->id) }}" class="btn btn-info btn-sm"> <i class="fas fa-lock-open"></i> </a>
 	{{ trans('patients.patient_blocked') }}
 </div>
 
@@ -84,26 +84,26 @@
 			<div class="input-group-prepend">
 				<span class="input-group-text"> {{ trans('patients.dni') }} </span>
 			</div>
-			<input type="number" class="form-control" value="{{ $human->key }}" disabled>
+			<input type="number" class="form-control" value="{{ $patient->key }}" disabled>
 		</div>
 
 		<div class="input-group mt-2 col-md-9 input-form">
 			<div class="input-group-prepend">
 				<span class="input-group-text"> {{ trans('patients.full_name') }} </span>
 			</div>
-			<input type="text" class="form-control" value="{{ $human->full_name }}" disabled>
+			<input type="text" class="form-control" value="{{ $patient->full_name }}" disabled>
 		</div>
 
 		<div class="input-group mt-2 col-md-9 input-form">
 			<div class="input-group-prepend">
 				<span class="input-group-text"> {{ trans('patients.home_address') }} </span>
 			</div>
-			<input type="text" class="form-control" value="{{ $human->address }}" disabled>
+			<input type="text" class="form-control" value="{{ $patient->address }}" disabled>
 
 			<div class="input-group-prepend">
 				<span class="input-group-text"> {{ trans('patients.city') }} </span>
 			</div>
-			<input type="text" class="form-control" value="{{ $human->city }}" disabled>
+			<input type="text" class="form-control" value="{{ $patient->city }}" disabled>
 		</div>
 
 		<div class="input-group mt-2 col-md-9 input-form">
@@ -124,7 +124,7 @@
 				<span class="input-group-text"> {{ trans('patients.birth_date') }} </span>
 			</div>
 
-			<input type="date" class="form-control" value="{{ $human->birth_date }}" disabled>
+			<input type="date" class="form-control" value="{{ $patient->birth_date }}" disabled>
 		</div>
 
 	</div>
