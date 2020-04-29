@@ -44,7 +44,7 @@
 					<span class="input-group-text"> {{ trans('patients.tax_condition') }} </span>
 				</div>
 				<select class="form-control input-sm" name="tax_condition">
-					<option value=""> {{ trans('patients.select_condition') }}</option>
+					<option value=""> {{ trans('forms.select_option') }}</option>
 					<option value="Exempt"> {{ trans('patients.exempt') }} </option>
 					<option value="Monotax"> {{ trans('patients.monotax') }} </option>
 					<option value="Not responsible"> {{ trans('patients.not_responsible') }} </option>

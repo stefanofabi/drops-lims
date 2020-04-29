@@ -34,7 +34,7 @@
 		</div>
 
 		<select class="form-control input-sm" name="nomenclator" required>
-			<option value=""> {{ trans('determinations.select_nbu') }} </option>
+			<option value=""> {{ trans('forms.select_option') }} </option>
 			@foreach ($nomenclators as $nomenclator)
 			<option value="{{ $nomenclator['id'] }}"> {{ $nomenclator['name'] }} </option>
 			@endforeach

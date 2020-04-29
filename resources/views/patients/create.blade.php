@@ -33,7 +33,7 @@
 
 @section('content')
 <div class="alert alert-info">
-	<strong> {{ trans('patients.notice') }} </strong> {{ trans('patients.select_option') }}
+	<strong> {{ trans('forms.notice') }}! </strong> {{ trans('forms.select_for_continue') }}
 </div>
 @endsection
 

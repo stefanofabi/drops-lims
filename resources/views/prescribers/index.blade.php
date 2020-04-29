@@ -1,7 +1,11 @@
 @extends('prescribers/prescribers')
 
 @section('results')
-<div class="default">
+
+@if (!sizeof($prescribers))
+	<div class="col-md-12"> {{ trans('forms.no_results') }}</div>
+@else 
+
 	<div class="table-responsive">
 		<table class="table table-striped">
 			<tr>
@@ -35,5 +39,5 @@
 
 		</table>
 	</div>
-</div>
+@endif
 @endsection

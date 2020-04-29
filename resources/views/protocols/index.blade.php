@@ -1,7 +1,11 @@
 @extends('protocols/protocols')
 
 @section('results')
-<div class="default">
+
+@if (!sizeof($protocols))
+	<div class="col-md-12"> {{ trans('forms.no_results') }}</div>
+@else 
+
 	<div class="table-responsive">
 		<table class="table table-striped">
 			<tr>
@@ -55,5 +59,5 @@
 
 		</table>
 	</div>
-</div>
+@endif
 @endsection

@@ -1,7 +1,10 @@
 @extends('determinations/determinations')
 
 @section('results')
-<div class="default">
+@if (!sizeof($determinations))
+	<div class="col-md-12"> {{ trans('forms.no_results') }}</div>
+@else 
+
 	<div class="table-responsive">
 		<table class="table table-striped">
 			<tr>
@@ -24,7 +27,7 @@
 
 
 			<tr>
-				<td colspan=7>
+				<td colspan="7">
 					<span class="float-right">
 						{!! $paginate !!}
 					</span>
@@ -33,5 +36,6 @@
 
 		</table>
 	</div>
-</div>
+@endif
+
 @endsection

@@ -45,7 +45,7 @@
 				</div>
 
 				<select class="form-control input-sm" name="sex" required>
-					<option value=""> {{ trans('patients.select_sex') }} </option>
+					<option value=""> {{ trans('forms.select_option') }} </option>
 					<option value="F"> {{ trans('patients.female') }} </option>
 					<option value="M"> {{ trans('patients.male') }} </option>
 				</select>
