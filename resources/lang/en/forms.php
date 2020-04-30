@@ -38,5 +38,6 @@ return [
     'information' => 'Information',
     'select_for_continue' => 'Select an option from the menu to continue',
     'no_results' => 'No results',
+    'please_later' => 'Please try again later'
     
 ];

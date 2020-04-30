@@ -26,7 +26,7 @@
 			url:   "{{ route('patients/social_works/plans/load') }}",
 			type:  'post',
 			beforeSend: function () {
-				//
+				$("#messages").html('<div class="spinner-border text-info"> </div> {{ trans("forms.please_wait") }} ');
 			},
 			success:  function (response) {
 
@@ -41,6 +41,8 @@
 								$(option).html(this.name);
 								$("#plan").append(option);
 						});
+
+						$("#messages").html('');
 					}
 		});
 
@@ -60,6 +62,9 @@
 
 
 @section('content')
+
+<div id="messages"> </div>
+
 <form method="post" action="{{ route('patients/social_works/affiliates/store') }}">
 	@csrf
 

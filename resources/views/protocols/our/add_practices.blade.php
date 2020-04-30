@@ -49,8 +49,11 @@
 			url:   "{{ route('protocols/practices/store') }}",
 			type:  'post',
 			beforeSend: function () {
-						$("#messages").html('<div class="spinner-border text-info"> </div> {{ trans("forms.load_wait") }}');
+						$("#messages").html('<div class="spinner-border text-info"> </div> {{ trans("forms.please_wait") }}');
 			},
+			error: function(xhr, status) {
+        		$("#messages").html('<div class="alert alert-danger"> <strong> {{ trans("forms.danger") }}! </strong> {{ trans("forms.please_later")}}  </div> ');
+    		},
 			success:  function (response) {
 						$("#messages").html('<div class="alert alert-success alert-dismissible fade show"> <button type="button" class="close" data-dismiss="alert">&times;</button> <strong> {{ trans("forms.well_done") }}! </strong> {{ trans("protocols.practice_loaded") }} </div>');
 						$("#practices").load(" #practices");
@@ -68,7 +71,7 @@
 @endsection
 
 @section('menu-title')
-{{ trans('patients.menu') }}
+{{ trans('forms.menu') }}
 @endsection
 
 @section('menu')
