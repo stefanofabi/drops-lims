@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class UniqueBiochemicalNomenclator extends Controller
+class NomenclatorController extends Controller
 {
     /**
      * Display a listing of the resource.

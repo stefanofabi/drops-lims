@@ -4,7 +4,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
         // Select a sex from list
-        $('#tax_condition').val("{{ $industrial['tax_condition'] }}");
+        $('#tax_condition').val("{{ $patient->tax_condition }}");
     });
 </script>
 
@@ -27,19 +27,19 @@
 @section('menu')
 <ul class="nav flex-column">
 	<li class="nav-item">
-		<a class="nav-link" href="{{ route('patients/phones/create', [$id]) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('phones.add_phone') }} </a>
+		<a class="nav-link" href="{{ route('patients/phones/create', $patient->id) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('phones.add_phone') }} </a>
 	</li>		
 
 	<li class="nav-item">
-		<a class="nav-link" href="{{ route('patients/emails/create', [$id]) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('emails.add_email') }} </a>
+		<a class="nav-link" href="{{ route('patients/emails/create', $patient->id) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('emails.add_email') }} </a>
 	</li>
 
 	<li class="nav-item">
-		<a class="nav-link" href="{{ route('patients/social_works/affiliates/create', [$id]) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('social_works.add_social_work') }} </a>
+		<a class="nav-link" href="{{ route('patients/social_works/affiliates/create', $patient->id) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('social_works.add_social_work') }} </a>
 	</li>
 
 	<li class="nav-item">
-		<a class="nav-link" href="{{ route('patients/show', [$id]) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('forms.go_back') }} </a>
+		<a class="nav-link" href="{{ route('patients/show', $patient->id) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('forms.go_back') }} </a>
 	</li>	
 </ul>
 @endsection
@@ -54,7 +54,7 @@
 @include('patients/emails/edit')
 @include('patients/social_works/affiliates/edit')
 
-<form method="post" action="{{ route('patients/update', $industrial->id) }}">
+<form method="post" action="{{ route('patients/update', $patient->id) }}">
 	@csrf
 	{{ method_field('PUT') }}
 
@@ -68,7 +68,7 @@
 					<span class="input-group-text"> {{ trans('patients.full_name') }} </span>
 				</div>
 
-				<input type="text" class="form-control" name="full_name" value="{{ $industrial->full_name }}" required>
+				<input type="text" class="form-control" name="full_name" value="{{ $patient->full_name }}" required>
 			</div>
 		</div>
 	</div>
@@ -83,14 +83,14 @@
 				<div class="input-group-prepend">
 					<span class="input-group-text"> {{ trans('patients.business_name') }}</span>
 				</div>
-				<input type="text" class="form-control" name="business_name" value="{{ $industrial->business_name }}">
+				<input type="text" class="form-control" name="business_name" value="{{ $patient->business_name }}">
 			</div>
 
 			<div class="input-group mt-2 col-md-9">
 				<div class="input-group-prepend">
 					<span class="input-group-text"> {{ trans('patients.cuit') }} </span>
 				</div>
-				<input type="number" class="form-control" name="key" value="{{ $industrial->key }}">
+				<input type="number" class="form-control" name="key" value="{{ $patient->key }}">
 
 				<div class="input-group-prepend">
 					<span class="input-group-text"> {{ trans('patients.tax_condition') }} </span>
@@ -109,12 +109,12 @@
 				<div class="input-group-prepend">
 					<span class="input-group-text"> {{ trans('patients.fiscal_address') }} </span>
 				</div>
-				<input type="text" class="form-control" name="fiscal_address" value="{{ $industrial->fiscal_address }}">
+				<input type="text" class="form-control" name="fiscal_address" value="{{ $patient->fiscal_address }}">
 
 				<div class="input-group-prepend">
 					<span class="input-group-text"> {{ trans('patients.city') }} </span>
 				</div>
-				<input type="text" class="form-control" name="city" value="{{ $industrial->city }}">
+				<input type="text" class="form-control" name="city" value="{{ $patient->city }}">
 			</div>
 
 			<div class="input-group mt-2 col-md-9 input-form">
@@ -122,7 +122,7 @@
 					<span class="input-group-text"> {{ trans('patients.start_activity') }} </span>
 				</div>
 
-				<input type="date" class="form-control" name="start_activity" value="{{ $industrial->start_activity }}">
+				<input type="date" class="form-control" name="start_activity" value="{{ $patient->start_activity }}">
 			</div>
 
 		</div>

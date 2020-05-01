@@ -4,7 +4,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
         // Select a sex from list
-        $('#tax_condition').val("{{ $industrial['tax_condition'] ?? '' }}");
+        $('#tax_condition').val("{{ $patient->tax_condition }}");
     });
 </script>
 @endsection
@@ -39,7 +39,7 @@
 
 @section('content')
 <div class="alert alert-info fade show">
-	<a href="{{ route('patients/edit', [$industrial['id']]) }}" class="btn btn-info btn-sm"> <i class="fas fa-lock-open"></i> </a>
+	<a href="{{ route('patients/edit', $patient->id) }}" class="btn btn-info btn-sm"> <i class="fas fa-lock-open"></i> </a>
 	{{ trans('patients.patient_blocked') }}
 </div>
 
@@ -53,7 +53,7 @@
 				<span class="input-group-text"> {{ trans('patients.full_name') }} </span>
 			</div>
 
-			<input type="text" class="form-control" value="{{ $industrial->full_name }}" disabled>
+			<input type="text" class="form-control" value="{{ $patient->full_name }}" disabled>
 		</div>
 	</div>
 </div>
@@ -68,14 +68,14 @@
 			<div class="input-group-prepend">
 				<span class="input-group-text"> {{ trans('patients.business_name') }}</span>
 			</div>
-			<input type="text" class="form-control" value="{{ $industrial->business_name }}" disabled>
+			<input type="text" class="form-control" value="{{ $patient->business_name }}" disabled>
 		</div>
 
 		<div class="input-group mt-2 col-md-9">
 			<div class="input-group-prepend">
 				<span class="input-group-text"> {{ trans('patients.cuit') }} </span>
 			</div>
-			<input type="number" class="form-control" value="{{ $industrial->key }}" disabled>
+			<input type="number" class="form-control" value="{{ $patient->key }}" disabled>
 
 			<div class="input-group-prepend">
 				<span class="input-group-text"> {{ trans('patients.tax_condition') }} </span>
@@ -94,12 +94,12 @@
 			<div class="input-group-prepend">
 				<span class="input-group-text"> {{ trans('patients.fiscal_address') }} </span>
 			</div>
-			<input type="text" class="form-control" value="{{ $industrial->address }}" disabled>
+			<input type="text" class="form-control" value="{{ $patient->address }}" disabled>
 
 			<div class="input-group-prepend">
 				<span class="input-group-text"> {{ trans('patients.city') }} </span>
 			</div>
-			<input type="text" class="form-control" value="{{ $industrial->city }}" disabled>
+			<input type="text" class="form-control" value="{{ $patient->city }}" disabled>
 		</div>
 
 		<div class="input-group mt-2 col-md-9 input-form">
@@ -107,7 +107,7 @@
 				<span class="input-group-text"> {{ trans('patients.start_activity') }} </span>
 			</div>
 
-			<input type="date" class="form-control" value="{{ $industrial->start_activity }}" disabled>
+			<input type="date" class="form-control" value="{{ $patient->start_activity }}" disabled>
 		</div>
 
 	</div>
