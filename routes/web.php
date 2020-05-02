@@ -12,19 +12,27 @@
 */
 
 
-Route::group(['middleware' => ['web']], function () {
+Route::group(['middleware' => ['auth']], function () {
 
-	Route::get('lang/{lang}', function ($lang) {
-		session(['lang' => $lang]);
+	Route::group(['middleware' => ['web']], function () {
 
-		return \Redirect::back();
-	})->where([
-		'lang' => 'en|es'
-	]);
+		Route::get('lang/{lang}', function ($lang) {
+			session(['lang' => $lang]);
 
-	require('patients.php');
-	require('prescribers.php');
-	require('determinations.php');
-	require('protocols.php');
+			return \Redirect::back();
+		})->where([
+			'lang' => 'en|es'
+		]);
+
+	});
+
+		require('patients.php');
+		require('prescribers.php');
+		require('determinations.php');
+		require('protocols.php');
 
 });
+
+Auth::routes();
+Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index');
