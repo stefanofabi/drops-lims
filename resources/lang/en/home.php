@@ -13,5 +13,7 @@ return [
     */
 
     'dashboard' => 'Dashboard',
+    'settings' => 'Settings',
+    'statistics' => 'Statistics',
     
 ];
