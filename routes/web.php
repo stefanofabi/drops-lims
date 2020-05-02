@@ -13,25 +13,25 @@
 
 
 Route::group(['middleware' => ['auth']], function () {
-
-	Route::group(['middleware' => ['web']], function () {
-
-		Route::get('lang/{lang}', function ($lang) {
-			session(['lang' => $lang]);
-
-			return \Redirect::back();
-		})->where([
-			'lang' => 'en|es'
-		]);
-
-	});
-
 		require('patients.php');
 		require('prescribers.php');
 		require('determinations.php');
 		require('protocols.php');
 
 });
+
+Route::group(['middleware' => ['web']], function () {
+
+	Route::get('lang/{lang}', function ($lang) {
+		session(['lang' => $lang]);
+
+		return \Redirect::back();
+	})->where([
+		'lang' => 'en|es'
+	]);
+
+});
+
 
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
