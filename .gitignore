@@ -178,6 +178,7 @@ $RECYCLE.BIN/
 public/images/vendor
 public/js/app.js
 public/js/popper.min.js.map
+public/js/app.js.LICENSE.txt
 public/css/app.css
 public/css/bootstrap.min.css.map
 public/mix-manifest.json
