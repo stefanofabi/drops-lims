@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\SocialWork;
 
-class SocialWorksTableSeeder extends Seeder
+class SocialWorkSeeder extends Seeder
 {
     /**
      * Run the database seeds.

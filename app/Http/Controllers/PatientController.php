@@ -31,7 +31,7 @@ class PatientController extends Controller
     public function index()
     {
         //
-        return view('patients/patients');
+        return view('administrators/patients/patients');
     }
 
     /**
@@ -57,7 +57,7 @@ class PatientController extends Controller
         
         switch($patient_type) {
             case 'animal': {
-            	$view = view('patients/animals/index')
+            	$view = view('administrators/patients/animals/index')
                 ->with('request', $request->all())
                 ->with('data', $query_patients)
                 ->with('paginate', $paginate);
@@ -65,7 +65,7 @@ class PatientController extends Controller
             }
 
             case 'human': {
-                $view = view('patients/humans/index')
+                $view = view('administrators/patients/humans/index')
                 ->with('request', $request->all())
                 ->with('data', $query_patients)
                 ->with('paginate', $paginate);
@@ -73,7 +73,7 @@ class PatientController extends Controller
             }
             
             case 'industrial': {
-                $view = view('patients/industrials/index')
+                $view = view('administrators/patients/industrials/index')
                 ->with('request', $request->all())
                 ->with('data', $query_patients)
                 ->with('paginate', $paginate);
@@ -81,7 +81,7 @@ class PatientController extends Controller
             }
 
             default: { 
-                $view = view('patients/patients');
+                $view = view('administrators/patients/patients');
                 break;
             }
         }
@@ -98,7 +98,7 @@ class PatientController extends Controller
     public function create()
     {
         //
-        return view('patients/create');
+        return view('administrators/patients/create');
     }
 
 
@@ -121,22 +121,22 @@ class PatientController extends Controller
 
         switch($patient_type) {
             case 'animal': {
-                $view = view('patients/animals/show');
+                $view = view('administrators/patients/animals/show');
                 break;
             }
 
             case 'human': {
-                $view = view('patients/humans/show');
+                $view = view('administrators/patients/humans/show');
                 break;
             }
             
             case 'industrial': {
-                $view = view('patients/industrials/show');
+                $view = view('administrators/patients/industrials/show');
                 break;
             }
 
             default: { 
-                $view = view('patients/patients');
+                $view = view('administrators/patients/patients');
                 break;
             }
         }
@@ -173,17 +173,17 @@ class PatientController extends Controller
 
         switch($patient_type) {
             case 'animal': {
-            	$view = view('patients/animals/edit');
+            	$view = view('administrators/patients/animals/edit');
                 break;
             }
 
             case 'human': {
-                $view = view('patients/humans/edit');
+                $view = view('administrators/patients/humans/edit');
                 break;
             }
             
             case 'industrial': {
-                $view = view('patients/industrials/edit');
+                $view = view('administrators/patients/industrials/edit');
                 break;
             }
         }
@@ -245,7 +245,7 @@ class PatientController extends Controller
     {
         //
 
-        return view('patients/animals/create');
+        return view('administrators/patients/animals/create');
     }   
 
     /**
@@ -257,7 +257,7 @@ class PatientController extends Controller
     {
         //
 
-        return view('patients/humans/create');      
+        return view('administrators/patients/humans/create');      
     }
 
     /**
@@ -269,7 +269,7 @@ class PatientController extends Controller
     {
         //
 
-        return view('patients/industrials/create');
+        return view('administrators/patients/industrials/create');
     }
 
 

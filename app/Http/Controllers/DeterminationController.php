@@ -30,7 +30,7 @@ class DeterminationController extends Controller
         //
     	$nomenclators = Nomenclator::all();
     	
-    	return view('determinations/determinations')->with('nomenclators', $nomenclators);
+    	return view('administrators/determinations/determinations')->with('nomenclators', $nomenclators);
     }
 
 
@@ -57,7 +57,7 @@ class DeterminationController extends Controller
 
     	$nomenclators = Nomenclator::all();
 
-    	$view = view('determinations/index')
+    	$view = view('administrators/determinations/index')
     	->with('request', $request->all())
     	->with('determinations', $query)
     	->with('paginate', $paginate)
@@ -76,7 +76,7 @@ class DeterminationController extends Controller
         //
     	$nomenclators = Nomenclator::all();
 
-    	return view('determinations/create')->with('nomenclators', $nomenclators);
+    	return view('administrators/determinations/create')->with('nomenclators', $nomenclators);
     }
 
     /**
@@ -127,7 +127,7 @@ class DeterminationController extends Controller
 
         $reports = Determination::get_reports($id);
 
-        return view('determinations/show')
+        return view('administrators/determinations/show')
         ->with('determination', $determination)
         ->with('nomenclator', $nomenclator)
         ->with('reports', $reports);
@@ -147,7 +147,7 @@ class DeterminationController extends Controller
 
         $reports = Determination::get_reports($id);
 
-        return view('determinations/edit')
+        return view('administrators/determinations/edit')
         ->with('determination', $determination)
         ->with('nomenclator', $nomenclator)
         ->with('reports', $reports);

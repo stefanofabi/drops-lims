@@ -44,7 +44,7 @@ class OurProtocolController extends Controller
 
         $social_works = Affiliate::get_social_works($patient_id);
 
-        return view('protocols/our/create')
+        return view('administrators/protocols/our/create')
         ->with('patient', $patient)
         ->with('social_works', $social_works);
         
@@ -100,7 +100,7 @@ class OurProtocolController extends Controller
 
         $practices = $protocol->practices;
 
-        return view('protocols/our/show')
+        return view('administrators/protocols/our/show')
         ->with('protocol', $protocol)
         ->with('patient', $patient)
         ->with('social_work', $social_work)
@@ -128,7 +128,7 @@ class OurProtocolController extends Controller
 
         $social_works = Affiliate::get_social_works($patient->id);
 
-        return view('protocols/our/edit')
+        return view('administrators/protocols/our/edit')
         ->with('protocol', $protocol)
         ->with('patient', $patient)
         ->with('plan', $plan)

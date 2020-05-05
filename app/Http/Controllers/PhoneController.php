@@ -33,7 +33,7 @@ class PhoneController extends Controller
     {
         //
 
-        return view('patients/phones/create')
+        return view('administrators/patients/phones/create')
         ->with('id', $id);
     }
 

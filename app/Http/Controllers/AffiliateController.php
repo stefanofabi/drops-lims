@@ -33,7 +33,7 @@ class AffiliateController extends Controller
         //
     	$social_works = SocialWork::all();
 
-    	return view('patients/social_works/affiliates/create')
+    	return view('administrators/patients/social_works/affiliates/create')
     	->with('id', $request->id)
     	->with('social_works', $social_works);
     }

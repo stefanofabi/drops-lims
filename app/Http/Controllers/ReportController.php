@@ -35,7 +35,7 @@ class ReportController extends Controller
 
         $determination = Determination::findOrFail($id);
 
-        return view('determinations/reports/create')
+        return view('administrators/determinations/reports/create')
         ->with('determination', $determination);
     }
 
@@ -70,7 +70,7 @@ class ReportController extends Controller
         $report = Report::findOrFail($id);
         $determination = $report->determination;
 
-        return view('determinations/reports/show')
+        return view('administrators/determinations/reports/show')
         ->with('report', $report)
         ->with('determination', $determination);
     }
@@ -88,7 +88,7 @@ class ReportController extends Controller
         $report = Report::findOrFail($id);
         $determination = $report->determination;
 
-        return view('determinations/reports/edit')
+        return view('administrators/determinations/reports/edit')
         ->with('report', $report)
         ->with('determination', $determination);
     }

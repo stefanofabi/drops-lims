@@ -28,7 +28,7 @@ class ProtocolController extends Controller
     public function index()
     {
         //
-        return view('protocols/protocols');
+        return view('administrators/protocols/protocols');
     }
 
     /**
@@ -51,7 +51,7 @@ class ProtocolController extends Controller
 
         $paginate = $this->paginate($page, $total_pages, self::ADJACENTS);
 
-        $view = view('protocols/index')
+        $view = view('administrators/protocols/index')
         ->with('request', $request->all())
         ->with('protocols', $query)
         ->with('paginate', $paginate);
@@ -124,19 +124,4 @@ class ProtocolController extends Controller
     {
         //
     }
-
-    /**
-     * Returns a list of a patient's social works
-     *
-     * @return \Illuminate\Http\Response
-     */
-   /* public function load_social_works(Request $request)
-    {
-        // label column is required
-        $filter = $request->filter;
-
-        $social_works = Patient::select('full_name as label', 'id')->where("full_name", "like", "%$filter%")->get()->toJson();
-
-        return $social_works;
-    }*/
 }

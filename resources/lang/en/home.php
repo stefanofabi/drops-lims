@@ -15,5 +15,6 @@ return [
     'dashboard' => 'Dashboard',
     'settings' => 'Settings',
     'statistics' => 'Statistics',
+    'dashboard_admins' => 'Dashboard for admins',
     
 ];

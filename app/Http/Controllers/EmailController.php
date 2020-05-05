@@ -32,7 +32,7 @@ class EmailController extends Controller
     public function create($id)
     {
         //
-        return view('patients/emails/create')->with('id', $id);
+        return view('administrators/patients/emails/create')->with('id', $id);
     }   
 
     /**
@@ -97,8 +97,7 @@ class EmailController extends Controller
         DB::transaction(function () use ($request) {
             Email::where('id', '=', $request->id)->update(['email' => $request->email]);
         }, self::RETRIES);
-
-        return "ok";
+        
     }
 
     /**

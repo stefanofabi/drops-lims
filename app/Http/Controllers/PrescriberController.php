@@ -27,7 +27,7 @@ class PrescriberController extends Controller
     public function index()
     {
         //
-    	return view('prescribers/prescribers');
+    	return view('administrators/prescribers/prescribers');
     }
 
     /**
@@ -50,7 +50,7 @@ class PrescriberController extends Controller
 
     	$paginate = $this->paginate($page, $total_pages, self::ADJACENTS);
 
-    	$view = view('prescribers/index')
+    	$view = view('administrators/prescribers/index')
     	->with('request', $request->all())
     	->with('prescribers', $query)
     	->with('paginate', $paginate);
@@ -66,7 +66,7 @@ class PrescriberController extends Controller
     public function create()
     {
         //
-    	return view('prescribers/create');
+    	return view('administrators/prescribers/create');
     }
 
     /**
@@ -113,7 +113,7 @@ class PrescriberController extends Controller
         //
     	$prescriber = Prescriber::findOrFail($id);
 
-    	return view('prescribers/show')->with('prescriber', $prescriber);
+    	return view('administrators/prescribers/show')->with('prescriber', $prescriber);
     }
 
     /**
@@ -127,7 +127,7 @@ class PrescriberController extends Controller
         //
         $prescriber = Prescriber::findOrFail($id);
 
-        return view('prescribers/edit')->with('prescriber', $prescriber);
+        return view('administrators/prescribers/edit')->with('prescriber', $prescriber);
     }
 
     /**
