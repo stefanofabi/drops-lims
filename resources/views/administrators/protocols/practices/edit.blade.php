@@ -1,4 +1,4 @@
-@extends('default-template')
+@extends('administrators/default-template')
 
 @section('title')
 {{ trans('protocols.edit_practice') }}
@@ -17,7 +17,7 @@
 
 		$.ajax({
 			data:  parameters,
-			url:   '{{ route("protocols/practices/results") }}',
+			url:   '{{ route("administrators/protocols/practices/results") }}',
 			type:  'post',
 			beforeSend: function () {
 						$("#messages").html('<div class="spinner-border text-info"> </div> {{ trans("forms.load_wait") }}');
@@ -51,7 +51,7 @@
 
 		$.ajax({
 			data:  parameters,
-			url:   '{{ route("protocols/practices/update", $practice->id) }}',
+			url:   '{{ route("administrators/protocols/practices/update", $practice->id) }}',
 			type:  'put',
 			beforeSend: function () {
 						$("#messages").html('<div class="spinner-border text-info"> </div> {{ trans("forms.load_wait") }}');
@@ -78,7 +78,7 @@
 	</li>
 
 	<li class="nav-item">
-		<a class="nav-link" href="{{ route('protocols/our/edit', [$practice->protocol_id]) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('forms.go_back') }} </a>
+		<a class="nav-link" href="{{ route('administrators/protocols/our/edit', [$practice->protocol_id]) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('forms.go_back') }} </a>
 	</li>
 </ul>
 @endsection
@@ -108,7 +108,7 @@
 		<input type="text" class="form-control" value="{{ $report->name }}" disabled>
 	</div>
 
-		<form method="post" action="{{ route('protocols/practices/update', [$practice->id]) }}" onsubmit="return edit_practice()">
+		<form method="post" action="{{ route('administrators/protocols/practices/update', [$practice->id]) }}" onsubmit="return edit_practice()">
 			@csrf
 			{{ method_field('PUT') }}
 

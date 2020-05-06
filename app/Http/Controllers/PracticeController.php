@@ -102,7 +102,7 @@ class PracticeController extends Controller
         $report = $practice->report()->first();
         $determination = $report->determination()->first();
 
-        return view('protocols/practices/edit')
+        return view('administrators/protocols/practices/edit')
         ->with('practice', $practice)
         ->with('report', $report)
         ->with('determination', $determination);

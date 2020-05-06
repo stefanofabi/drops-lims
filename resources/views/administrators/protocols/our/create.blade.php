@@ -133,7 +133,7 @@
 		</div>
 		
 		<input type="hidden" id="patient_id" name="patient_id" value="{{ $patient['id'] }}">
-		<input type="text" class="form-control" id="patient" value="{{ $patient['full_name'] }}" required>
+		<input type="text" class="form-control" id="patient" value="{{ $patient['full_name'] }}" placeholder="{{ trans('forms.start_typing') }}" required>
 	</div>
 
 	<div class="input-group mt-2 mb-1 col-md-9 input-form">
@@ -168,7 +168,7 @@
 		</div>
 		
 		<input type="hidden" id="prescriber_id" name="prescriber_id">
-		<input type="text" class="form-control" id="prescriber" required>
+		<input type="text" class="form-control" id="prescriber" placeholder="{{ trans('forms.start_typing') }}" required>
 	</div>
 
 	<div class="input-group mt-2 mb-1 col-md-9 input-form">
@@ -184,7 +184,7 @@
 			<span class="input-group-text"> {{ trans('protocols.quantity_orders') }} </span>
 		</div>
 
-		<input type="number" class="form-control" name="quantity_orders" min="0" required>
+		<input type="number" class="form-control" name="quantity_orders" min="0" value="0" required>
 	</div>
 
 	<div class="input-group mt-2 mb-1 col-md-9 input-form">

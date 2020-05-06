@@ -243,7 +243,7 @@ class OurProtocolController extends Controller
         $plan = $protocol->plan->first();
         $nomenclator = $plan->nomenclator; 
 
-        return view('protocols/our/add_practices')
+        return view('administrators/protocols/our/add_practices')
         ->with('protocol', $protocol)
         ->with('nomenclator', $nomenclator);
     }
