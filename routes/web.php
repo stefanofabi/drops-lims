@@ -51,5 +51,7 @@ Route::group(['middleware' => ['web']], function () {
 Auth::routes();
 
 // For guests
-Route::get('/', 'Auth\LoginController@login');
-
+Route::get('/', function () {
+    //
+    return redirect()->route('login');
+});

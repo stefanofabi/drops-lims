@@ -9,14 +9,14 @@
 |
 */
 
-Route::get('obras_sociales/afiliados/crear/{id}', 'AffiliateController@create')->name('social_works/affiliates/create')
+Route::get('social_works/affiliates/create/{id}', 'AffiliateController@create')->name('social_works/affiliates/create')
 ->where('id', '[1-9][0-9]*');
 
-Route::post('obras_sociales/afiliados/almacenar', 'AffiliateController@store')->name('social_works/affiliates/store');
+Route::post('social_works/affiliates/store', 'AffiliateController@store')->name('social_works/affiliates/store');
 
-Route::post('obras_sociales/afiliados/editar', 'AffiliateController@edit')->name('social_works/affiliates/edit');
+Route::post('social_works/affiliates/edit', 'AffiliateController@edit')->name('social_works/affiliates/edit');
 
-Route::post('obras_sociales/afiliados/actualizar', 'AffiliateController@update')->name('social_works/affiliates/update');
+Route::post('social_works/affiliates/update', 'AffiliateController@update')->name('social_works/affiliates/update');
 
-Route::post('obras_sociales/planes/cargar', 'SocialWorkController@load_plans')->name('social_works/plans/load')
+Route::post('social_works/plans/load', 'SocialWorkController@load_plans')->name('social_works/plans/load')
 ->where('id', '[1-9][0-9]*');

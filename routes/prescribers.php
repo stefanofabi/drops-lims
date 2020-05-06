@@ -9,27 +9,27 @@
 |
 */
 
-Route::get('prescriptores', 'PrescriberController@index')->name('prescribers');
-Route::post('prescriptores', 'PrescriberController@load')->name('prescribers/load');
+Route::get('prescribers', 'PrescriberController@index')->name('prescribers');
+Route::post('prescribers', 'PrescriberController@load')->name('prescribers/load');
 
 Route::group(
 	[
-		'prefix' => 'prescriptores',
+		'prefix' => 'prescribers',
 		'as' => 'prescribers/',
 	], function() {
-		Route::get('ver/{id}', 'PrescriberController@show')->name('show')
+		Route::get('show/{id}', 'PrescriberController@show')->name('show')
 		->where('id', '[1-9][0-9]*');
 
-		Route::get('crear', 'PrescriberController@create')->name('create');
+		Route::get('create', 'PrescriberController@create')->name('create');
 
-		Route::post('almacenar', 'PrescriberController@store')->name('store');
+		Route::post('store', 'PrescriberController@store')->name('store');
 
-		Route::put('actualizar/{id}', 'PrescriberController@update')->name('update')
+		Route::put('update/{id}', 'PrescriberController@update')->name('update')
 		->where('id', '[1-9][0-9]*');
 
-		Route::get('editar/{id}', 'PrescriberController@edit')->name('edit')
+		Route::get('edit/{id}', 'PrescriberController@edit')->name('edit')
 		->where('id', '[1-9][0-9]*');
 
-		Route::get('destruir/{id}', 'PrescriberController@destroy')->name('destroy')
+		Route::get('destroy/{id}', 'PrescriberController@destroy')->name('destroy')
 		->where('id', '[1-9][0-9]*');
 	});

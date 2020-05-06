@@ -11,28 +11,28 @@
 	
 	Route::group(
 		[
-			'prefix' => 'practicas',
+			'prefix' => 'practices',
 			'as' => 'practices/',
 		], function() {
 
-			Route::post('buscar', 'PracticeController@load')->name('load');
+			Route::post('find', 'PracticeController@load')->name('load');
 
-			Route::get('crear', 'PracticeController@create')->name('create');
+			Route::get('create', 'PracticeController@create')->name('create');
 
-			Route::post('almacenar', 'PracticeController@store')->name('store');
+			Route::post('store', 'PracticeController@store')->name('store');
 
-			Route::get('ver/{id}', 'PracticeController@show')->name('show')
+			Route::get('show/{id}', 'PracticeController@show')->name('show')
 			->where('id', '[1-9][0-9]*');
 
-			Route::put('actualizar/{id}', 'PracticeController@update')->name('update')
+			Route::put('update/{id}', 'PracticeController@update')->name('update')
 			->where('id', '[1-9][0-9]*');
 
-			Route::get('editar/{id}', 'PracticeController@edit')->name('edit')
+			Route::get('edit/{id}', 'PracticeController@edit')->name('edit')
 			->where('id', '[1-9][0-9]*');
 
-			Route::get('destruir/{id}', 'PracticeController@destroy')->name('destroy')
+			Route::get('destroy/{id}', 'PracticeController@destroy')->name('destroy')
 			->where('id', '[1-9][0-9]*');
 
-			Route::post('resultados', 'PracticeController@get_results')->name('results');
+			Route::post('results', 'PracticeController@get_results')->name('results');
 
 		});

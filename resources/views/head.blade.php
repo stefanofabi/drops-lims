@@ -12,11 +12,11 @@
 <meta name="description" content="Sistema de resultados online pensado para nuestros derivadores y médicos que nos confian a sus pacientes"/>
 
 <!-- Keywords for better web positioning -->
-<meta name="keywords" content="laboratorio, resultados, derivadores, medicos, online, pacientes, salud"/>
+<meta name="keywords" content="laboratory, results, shunts, prescribers, online, patients, health"/>
 
 
 <!-- Page authors -->
-<meta name="author" content="Stefano Fabi, CEO & Founder SrDev" />
+<meta name="author" content="Stefano Fabi" />
 
 <!-- Copyright -->
 <meta name="copyright" content="SrDev" />

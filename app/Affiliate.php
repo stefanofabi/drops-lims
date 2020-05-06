@@ -9,7 +9,7 @@ class Affiliate extends Model
     //
 
     protected function get_social_works($patient_id) {
-    	$my_social_works = Affiliate::select('affiliates.id', 'plans.id as plan_id', 'social_works.name', 'plans.name as plan', 'affiliate_number', 'expiration_date')
+    	$my_social_works = Affiliate::select('affiliates.id', 'plans.id as plan_id', 'social_works.name as social_work', 'plans.name as plan', 'affiliate_number', 'expiration_date')
         ->plan()
         ->socialWork()
         ->where('patient_id', $patient_id)

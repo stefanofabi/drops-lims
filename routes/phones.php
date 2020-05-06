@@ -8,11 +8,11 @@
 |
 */
 
-Route::get('telefonos/crear/{id}', 'PhoneController@create')->name('phones/create')
+Route::get('phones/create/{id}', 'PhoneController@create')->name('phones/create')
 ->where('id', '[1-9][0-9]*');
 
-Route::post('telefonos/editar', 'PhoneController@edit')->name('phones/edit');
+Route::post('phones/edit', 'PhoneController@edit')->name('phones/edit');
 
-Route::post('telefonos/almacenar', 'PhoneController@store')->name('phones/store');
+Route::post('phones/store', 'PhoneController@store')->name('phones/store');
 
-Route::post('telefonos/actualizar', 'PhoneController@update')->name('phones/update');
+Route::post('phones/update', 'PhoneController@update')->name('phones/update');

@@ -9,12 +9,12 @@
 |
 */
 
-	Route::get('protocolos', 'ProtocolController@index')->name('protocols');
-	Route::post('protocolos', 'ProtocolController@load')->name('protocols/load');
+	Route::get('protocols', 'ProtocolController@index')->name('protocols');
+	Route::post('protocols', 'ProtocolController@load')->name('protocols/load');
 	
 	Route::group(
 		[
-			'prefix' => 'protocolos',
+			'prefix' => 'protocols',
 			'as' => 'protocols/',
 		], function() {
 
@@ -22,37 +22,37 @@
 
 			Route::group(
 			[
-				'prefix' => 'laboratorio',
+				'prefix' => 'laboratory',
 				'as' => 'our/',
 			], function() {
 
-				Route::post('cargar_pacientes', 'OurProtocolController@load_patients')->name('load_patients');
-				Route::post('cargar_prescriptores', 'OurProtocolController@load_prescribers')->name('load_prescribers');
+				Route::post('load_patients', 'OurProtocolController@load_patients')->name('load_patients');
+				Route::post('load_prescribers', 'OurProtocolController@load_prescribers')->name('load_prescribers');
 
-				Route::get('agregar_practicas/{id}', 'OurProtocolController@add_practices')->name('add_practices')
+				Route::get('add_practices/{id}', 'OurProtocolController@add_practices')->name('add_practices')
 				->where('id', '[1-9][0-9]*');
 
-				Route::get('crear', 'OurProtocolController@create')->name('create');
-				Route::post('crear', 'OurProtocolController@create')->name('create');
+				Route::get('create', 'OurProtocolController@create')->name('create');
+				Route::post('create', 'OurProtocolController@create')->name('create');
 
-				Route::post('almacenar', 'OurProtocolController@store')->name('store');
+				Route::post('store', 'OurProtocolController@store')->name('store');
 
-				Route::get('ver/{id}', 'OurProtocolController@show')->name('show')
+				Route::get('show/{id}', 'OurProtocolController@show')->name('show')
 				->where('id', '[1-9][0-9]*');
 
-				Route::put('actualizar/{id}', 'OurProtocolController@update')->name('update')
+				Route::put('update/{id}', 'OurProtocolController@update')->name('update')
 				->where('id', '[1-9][0-9]*');
 
-				Route::get('editar/{id}', 'OurProtocolController@edit')->name('edit')
+				Route::get('edit/{id}', 'OurProtocolController@edit')->name('edit')
 				->where('id', '[1-9][0-9]*');
 
-				Route::get('destruir/{id}', 'OurProtocolController@destroy')->name('destroy')
+				Route::get('destroy/{id}', 'OurProtocolController@destroy')->name('destroy')
 				->where('id', '[1-9][0-9]*');
 
-				Route::get('imprimir_hoja_de_trabajo/{id}', 'OurProtocolController@print_worksheet')->name('print_worksheet')
+				Route::get('print_worksheet/{id}', 'OurProtocolController@print_worksheet')->name('print_worksheet')
 				->where('id', '[1-9][0-9]*');
 
-				Route::get('imprimir/{id}', 'OurProtocolController@print')->name('print')
+				Route::get('print/{id}', 'OurProtocolController@print')->name('print')
 				->where('id', '[1-9][0-9]*');
 
 			});

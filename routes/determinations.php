@@ -9,8 +9,8 @@
 |
 */
 
-Route::post('determinaciones', 'DeterminationController@load')->name('determinations/load');
-Route::get('determinaciones', 'DeterminationController@index')->name('determinations');
+Route::post('determinations', 'DeterminationController@load')->name('determinations/load');
+Route::get('determinations', 'DeterminationController@index')->name('determinations');
 
 Route::group(
 	[
@@ -20,19 +20,19 @@ Route::group(
 
 		require('reports.php');
 		
-		Route::get('crear', 'DeterminationController@create')->name('create');
+		Route::get('create', 'DeterminationController@create')->name('create');
 
-		Route::post('almacenar', 'DeterminationController@store')->name('store');
+		Route::post('store', 'DeterminationController@store')->name('store');
 
-		Route::get('ver/{id}', 'DeterminationController@show')->name('show')
+		Route::get('show/{id}', 'DeterminationController@show')->name('show')
 		->where('id', '[1-9][0-9]*');
 
-		Route::put('actualizar/{id}', 'DeterminationController@update')->name('update')
+		Route::put('update/{id}', 'DeterminationController@update')->name('update')
 		->where('id', '[1-9][0-9]*');
 
-		Route::get('editar/{id}', 'DeterminationController@edit')->name('edit')
+		Route::get('edit/{id}', 'DeterminationController@edit')->name('edit')
 		->where('id', '[1-9][0-9]*');
 
-		Route::get('destruir/{id}', 'DeterminationController@destroy')->name('destroy')
+		Route::get('destroy/{id}', 'DeterminationController@destroy')->name('destroy')
 		->where('id', '[1-9][0-9]*');
 	});
