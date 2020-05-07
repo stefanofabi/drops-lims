@@ -12,9 +12,8 @@ return [
     |
     */
 
-    'dashboard' => 'Dashboard',
-    'settings' => 'Settings',
-    'statistics' => 'Statistics',
-    'dashboard_admins' => 'Dashboard',
+    'dashboard' => 'Tablero',
+    'settings' => 'Ajustes',
+    'statistics' => 'Estadísticas',
     
 ];

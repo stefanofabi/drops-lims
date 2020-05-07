@@ -19,8 +19,12 @@ return [
     'email_address' => 'Dirección de correo',
     'password' => 'Contraseña',
     'remember_me' => 'Recuérdame',
-    'forgot_password' => 'Olvidaste tu contraseña?',
+    'forgot_password' => '¿Olvidaste tu contraseña?',
     'reset_password' => 'Reestablecer contraseña',
     'confirm_password' => 'Confirmar contraseña',
     'send_password' => 'Enviar enlace de restablecimiento de contraseña',
+    'logout' => 'Cerrar sesión',
+    'login' => 'Iniciar sesión',
+    'register' => 'Registrarse',
+    'name' => 'Nombre',
 ];

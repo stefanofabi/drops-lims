@@ -23,5 +23,8 @@ return [
     'reset_password' => 'Reset password',
     'confirm_password' => 'Confirm password',
     'send_password' => 'Send Password Reset Link',
+    'logout' => 'Logout',
+    'register' => 'Register',
+    'name' => 'Name',
 
 ];

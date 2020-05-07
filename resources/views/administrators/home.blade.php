@@ -6,7 +6,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header"> {{ trans('home.dashboard_admins') }} </div>
+                <div class="card-header"> {{ trans('home.dashboard') }} </div>
 
                 <div class="card-body">
                     @if (session('status'))
