@@ -4,10 +4,6 @@
 <script src="{{ asset('js/app.js') }}"></script>
 <link type="text/css" rel="stylesheet" href="{{ asset('css/app.css') }}">
 
-<!-- Icons -->
-<link href="{{ asset('fontawesome/css/fontawesome.css') }}" rel="stylesheet">
-<link href="{{ asset('fontawesome/css/solid.css') }}" rel="stylesheet">
-
 <!-- Description that will be taken into account by web search engines  -->
 <meta name="description" content="Sistema de resultados online pensado para nuestros derivadores y médicos que nos confian a sus pacientes"/>
 

@@ -7,4 +7,6 @@
 require('./bootstrap');
 
 // JQuery-UI
-import 'jquery-ui/ui/widgets/autocomplete.js';
+require('jquery-ui/ui/widgets/autocomplete.js');
+
+require('@fortawesome/fontawesome-free/js/all.js');
