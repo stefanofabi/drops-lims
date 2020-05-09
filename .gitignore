@@ -175,12 +175,15 @@ $RECYCLE.BIN/
 *.lnk
 
 # npm install
+public/fonts
 public/images/vendor
 public/js/app.js
 public/js/popper.min.js.map
 public/js/app.js.LICENSE.txt
+public/js/popper.js.map
 public/css/app.css
 public/css/bootstrap.min.css.map
 public/mix-manifest.json
+
 
 # End of https://www.gitignore.io/api/node,linux,laravel,windows,composer
