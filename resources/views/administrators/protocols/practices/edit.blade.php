@@ -20,7 +20,7 @@
 			url:   '{{ route("administrators/protocols/practices/results") }}',
 			type:  'post',
 			beforeSend: function () {
-						$("#messages").html('<div class="spinner-border text-info"> </div> {{ trans("forms.load_wait") }}');
+						$("#messages").html('<div class="spinner-border text-info"> </div> {{ trans("forms.please_wait") }}');
 					},
 			success:  function (response) {
 						$("#messages").html('<div class="alert alert-warning alert-dismissible fade show"> <button type="button" class="close" data-dismiss="alert">&times;</button> <strong> {{ trans("forms.warning") }}!</strong> {{ trans("protocols.modified_practice")}} </div>');
@@ -54,7 +54,7 @@
 			url:   '{{ route("administrators/protocols/practices/update", $practice->id) }}',
 			type:  'put',
 			beforeSend: function () {
-						$("#messages").html('<div class="spinner-border text-info"> </div> {{ trans("forms.load_wait") }}');
+						$("#messages").html('<div class="spinner-border text-info"> </div> {{ trans("forms.please_wait") }}');
 					},
 			success:  function (response) {
 						$("#messages").html('<div class="alert alert-success alert-dismissible fade show"> <button type="button" class="close" data-dismiss="alert">&times;</button> <strong> {{ trans("forms.well_done") }}! </strong> {{ trans("protocols.result_loaded") }} </div> ');
@@ -62,6 +62,15 @@
 		});			
 
 		return false;
+	}
+
+
+	function confirm_result()  {
+		if (confirm('{{ trans("forms.confirm") }}')){
+			edit_practice();
+    	}
+
+    	return false;
 	}
 
 </script>
@@ -108,7 +117,7 @@
 		<input type="text" class="form-control" value="{{ $report->name }}" disabled>
 	</div>
 
-		<form method="post" action="{{ route('administrators/protocols/practices/update', [$practice->id]) }}" onsubmit="return edit_practice()">
+		<form method="post" action="{{ route('administrators/protocols/practices/update', [$practice->id]) }}" onsubmit="return confirm_result()">
 			@csrf
 			{{ method_field('PUT') }}
 

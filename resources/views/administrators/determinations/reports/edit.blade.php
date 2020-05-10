@@ -6,6 +6,19 @@
 
 @section('active_determinations', 'active')
 
+@section('js')
+<script type="text/javascript">
+	function confirm_changes()  {
+		var change = false;
+		if (confirm('{{ trans("forms.confirm") }}')){
+			change = true;
+    	}
+
+    	return change;
+	}
+</script>
+@endsection
+
 @section('menu-title')
 {{ trans('forms.menu') }}
 @endsection
@@ -32,7 +45,7 @@
 	<strong>{{ trans('forms.danger') }}!</strong> {{ trans('reports.edit_notice') }}
 </div>
 
-<form method="post" action="{{ route('administrators/determinations/reports/update', $report->id) }}">
+<form method="post" action="{{ route('administrators/determinations/reports/update', $report->id) }}" onsubmit="return confirm_changes()">
 	@csrf
 	{{ method_field('PUT') }}
 

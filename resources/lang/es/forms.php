@@ -36,5 +36,6 @@ return [
     'danger' => 'Peligro',
     'notice' => 'Aviso',
     'information' => 'Información',
+    'confirm' => 'Realmente desea seguir?',
 
 ];

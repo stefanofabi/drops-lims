@@ -40,5 +40,6 @@ return [
     'no_results' => 'No results',
     'please_later' => 'Please try again later',
     'start_typing' => 'Start typing and select an option',
+    'confirm' => 'Do you really want to continue?',
     
 ];
