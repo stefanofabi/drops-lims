@@ -57,4 +57,4 @@
             </li>
         </ul>
     </div>
-@show
+@endsection
