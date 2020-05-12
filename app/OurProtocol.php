@@ -27,4 +27,12 @@ class OurProtocol extends Protocol
 		return $query->join('protocols', 'our_protocols.protocol_id', '=', 'protocols.id');
 	}
 
+	public function scopePlan($query) {
+		return $query->join('plans', 'our_protocols.plan_id', '=', 'plans.id');
+	}
+
+	public function scopeSocial_Work($query) {
+		return $query->join('social_works', 'plans.social_work_id', '=', 'social_works.id');
+	}
+
 }

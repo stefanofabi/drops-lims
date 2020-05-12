@@ -75,4 +75,8 @@ class Protocol extends Model
     {
         return $this->hasMany('App\Practice', 'protocol_id');
     }
+
+    public function scopePractices($query) {
+		return $query->join('practices', 'protocols.id', '=', 'practices.protocol_id');
+	}
 }

@@ -23,6 +23,7 @@ Route::group(['middleware' => ['is_admin']], function () {
 				require('prescribers.php');
 				require('determinations.php');
 				require('protocols.php');
+				require('statistics.php');
 
 				Route::get('home', 'HomeController@adminHome')->name('home');
 			}

@@ -77,7 +77,7 @@
                    		<div class="col">
                             <div class="col">
 	                            <center> 
-	                                <a class="nav-link" style="color: black" href="">
+	                                <a class="nav-link" style="color: black" href="{{ route('administrators/statistics') }}">
 	                                    <h1> 
 	                                        <i style="font-size: 8vw" class="fas fa-chart-bar"></i> 
 	                                    </h1> 
