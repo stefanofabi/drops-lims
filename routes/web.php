@@ -12,7 +12,7 @@
 */
 
 
-Route::group(['middleware' => ['is_admin']], function () {
+Route::group(['middleware' => ['is_admin', 'auth']], function () {
 
 		Route::group(
 			[
@@ -31,7 +31,7 @@ Route::group(['middleware' => ['is_admin']], function () {
 });
 
 
-Route::group(['middleware' => ['is_user']], function () {
+Route::group(['middleware' => ['is_user', 'auth']], function () {
 
 		Route::get('/home', 'HomeController@index')->name('home');
 
