@@ -26,14 +26,15 @@ class StatisticsController extends Controller
         $initial_date = $request->initial_date;
         $ended_date = $request->ended_date;
 
-    	$anual_report = OurProtocol::select('social_works.id', 'social_works.name', DB::raw('SUM(practices.amount) as total_amount'), DB::raw("DATE_FORMAT(protocols.completion_date,'%M %Y') as month"))
+    	$anual_report = OurProtocol::select(DB::raw('SUM(practices.amount) as total_amount'), DB::raw("DATE_FORMAT(protocols.completion_date,'%M %Y') as month"))
     	->protocol()
     	->plan()
     	->social_work()
     	->practices()
         ->where('social_works.id', $social_work)
         ->whereBetween('protocols.completion_date', [$initial_date, $ended_date])
-    	->groupBy('social_works.id', 'social_works.name', 'protocols.completion_date')
+    	->groupBy('social_works.id', 'social_works.name', DB::raw("DATE_FORMAT(protocols.completion_date,'%M %Y')"))
+        ->orderBy('protocols.completion_date', 'asc')
     	->get();
 
     	return view('administrators/statistics/annual_collection_social_work')
@@ -43,5 +44,26 @@ class StatisticsController extends Controller
         ->with('ended_date', $ended_date)
         ->with('data', $anual_report);
 
+    }
+
+    public function patient_flow_per_month(Request $request) {
+
+        $social_works = SocialWork::all();
+        $initial_date = $request->initial_date;
+        $ended_date = $request->ended_date;
+
+        $patient_flow = OurProtocol::select(DB::raw('COUNT(*) as total_patient'), DB::raw("DATE_FORMAT(protocols.completion_date,'%M %Y') as month"))
+        ->protocol()
+        ->patient()
+        ->whereBetween('protocols.completion_date', [$initial_date, $ended_date])
+        ->groupBy(DB::raw("DATE_FORMAT(protocols.completion_date,'%M %Y')"))
+        ->orderBy('protocols.completion_date', 'asc')
+        ->get();
+
+        return view('administrators/statistics/patient_flow_per_month')
+        ->with('social_works', $social_works)
+        ->with('initial_date', $initial_date)
+        ->with('ended_date', $ended_date)
+        ->with('data', $patient_flow);
     }
 }

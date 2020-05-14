@@ -19,5 +19,6 @@ return [
     'initial_date' => 'Initial date',
     'ended_date' => 'Ended date',
     'subtitle_annual_collection_social_work' => 'Collection from :initial_date to :ended_date',
+    'months' => 'Months',
 
 ];

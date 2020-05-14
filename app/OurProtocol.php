@@ -35,4 +35,8 @@ class OurProtocol extends Protocol
 		return $query->join('social_works', 'plans.social_work_id', '=', 'social_works.id');
 	}
 
+	public function scopePatient($query) {
+		return $query->join('patients', 'our_protocols.patient_id', '=', 'patients.id');
+	}
+
 }

@@ -3,7 +3,7 @@
 @section('js')
 <script type="text/javascript">
 	$(document).ready(function() {
-	     $("#social_work").val("{{ $social_work ?? '' }}");
+	    // $("#social_work").val("{{ $social_work ?? '' }}");
 	     
 	    $("input[type=submit]").click(function() {
 	      	var action = $(this).attr('dir');
@@ -81,9 +81,7 @@
 
 		<input type="submit" class="btn btn-success mt-3" value="{{ trans('statistics.annual_collection_social_work') }}" dir="{{ route('administrators/statistics/annual_collection_social_work') }}" />
 
-		<button type="submit" class="btn btn-success mt-3" dir=""> 
-			{{ trans('statistics.patient_flow') }} 
-		</button>
+		<input type="submit" class="btn btn-success mt-3" value="{{ trans('statistics.patient_flow') }}" dir="{{ route('administrators/statistics/patient_flow_per_month') }}" />
 
 		<button type="submit" class="btn btn-success mt-3" dir=""> 
 			{{ trans('statistics.track_income') }} 
