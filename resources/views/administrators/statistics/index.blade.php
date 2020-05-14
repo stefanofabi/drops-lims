@@ -63,7 +63,7 @@
 			</select>
 		</div>
 
-		<div class="input-group mt-2 col-md-9 input-form">
+		<div class="input-group mt-2 col-md-6 input-form">
 			<div class="input-group-prepend">
 				<span class="input-group-text"> {{ trans('statistics.initial_date') }} </span>
 			</div>
@@ -71,7 +71,7 @@
 			<input type="date" class="form-control" name="initial_date" value="{{ $initial_date ?? date('Y-m-d') }}">
 		</div>
 
-		<div class="input-group mt-2 col-md-9 input-form">
+		<div class="input-group mt-2 col-md-6 input-form">
 			<div class="input-group-prepend">
 				<span class="input-group-text"> {{ trans('statistics.ended_date') }} </span>
 			</div>
