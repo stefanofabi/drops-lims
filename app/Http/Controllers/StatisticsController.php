@@ -64,7 +64,7 @@ class StatisticsController extends Controller
             if ($pos < $count && $month == intval($anual_report[$pos]['month']) && $year == intval($anual_report[$pos]['year'])) {
                 $m = intval($anual_report[$pos]['month']);
                 $y = intval($anual_report[$pos]['year']);
-                $value = $this->get_month($m);
+                $value = $this->get_month($m)." ".$y;
                 $total_amount = intval($anual_report[$pos]['total_amount']);
 
 	    		$new_array[] = array(
@@ -79,7 +79,7 @@ class StatisticsController extends Controller
 	    		$new_array[] = array(
 	    							'month' => $month,
 	    							'year' => $year,
-	    							'value' => $this->get_month($month),
+	    							'value' => $this->get_month($month)." ".$year,
 	    							'total_amount' => 0
 	    						);	
             }
