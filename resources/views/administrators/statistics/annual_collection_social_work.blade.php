@@ -6,7 +6,7 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-    	$("#social_work").val('{{ $social_work }}');	    
+    	$("#social_work").val('{{ $social_work }}') ;	    
 	});
 </script>
 
@@ -20,7 +20,7 @@
         var data = google.visualization.arrayToDataTable([
           ['Months', 'Collection'],
           @foreach ($data as $month)
-          	['{{ $month->month }}', {{ $month->total_amount }}],
+              ['{{ $month['value'] }}', {{ $month['total_amount'] }}], 	
           @endforeach
         ]);
 
