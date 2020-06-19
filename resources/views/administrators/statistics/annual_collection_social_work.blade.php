@@ -20,7 +20,7 @@
         var data = google.visualization.arrayToDataTable([
           ['Months', 'Collection'],
           @foreach ($data as $month)
-              ['{{ $month['value'] }}', {{ $month['total_amount'] }}], 	
+              ['{{ $month['value'] }}', {{ $month['total'] }}], 	
           @endforeach
         ]);
 

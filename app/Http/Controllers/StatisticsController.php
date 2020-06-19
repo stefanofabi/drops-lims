@@ -32,63 +32,19 @@ class StatisticsController extends Controller
         $initial_date = $request->initial_date;
         $ended_date = $request->ended_date;
 
-    	$anual_report = OurProtocol::select(DB::raw("month(protocols.completion_date) as month"), DB::raw("DATE_FORMAT(protocols.completion_date,'%Y') as year"), DB::raw('SUM(practices.amount) as total_amount'))
+    	$anual_report = OurProtocol::select(DB::raw("MONTH(protocols.completion_date) as month"), DB::raw("YEAR(protocols.completion_date) as year"), DB::raw('SUM(practices.amount) as total'))
     	->protocol()
     	->plan()
     	->social_work()
     	->practices()
         ->where('social_works.id', $social_work)
         ->whereBetween('protocols.completion_date', [$initial_date, $ended_date])
-    	->groupBy('social_works.id', 'social_works.name', DB::raw("DATE_FORMAT(protocols.completion_date,'%M %Y')"), DB::raw("MONTH(protocols.completion_date)"), DB::raw("DATE_FORMAT(protocols.completion_date,'%Y')"))
+    	->groupBy(DB::raw("MONTH(protocols.completion_date)"), DB::raw("YEAR(protocols.completion_date)"))
         ->orderBy('protocols.completion_date', 'asc')
     	->get()
     	->toArray();
 
-    	$new_array = array();
-    	$count = count($anual_report);
-    	$pos = 0;
-        $date = $initial_date;
-
-        $month = intval(date('m', strtotime($initial_date)));
-        $year = intval(date('Y', strtotime($initial_date)));
-
-        $month_end = intval(date('m', strtotime($ended_date)));
-        $year_end = intval(date('Y', strtotime($ended_date)));
-
-        /*
-		It is the only solution I found without having to create a temporary table to be able to group all the months one by one
-        */
-        
-    	while ($month <= $month_end && $year <= $year_end) {
-
-            if ($pos < $count && $month == intval($anual_report[$pos]['month']) && $year == intval($anual_report[$pos]['year'])) {
-                $m = intval($anual_report[$pos]['month']);
-                $y = intval($anual_report[$pos]['year']);
-                $value = $this->get_month($m)." ".$y;
-                $total_amount = intval($anual_report[$pos]['total_amount']);
-
-	    		$new_array[] = array(
-	    							'month' => $m,
-	    							'year' => $y,
-	    							'value' => $value,
-	    							'total_amount' => $total_amount
-	    						);	
-
-	    		$pos++;
-            } else {
-	    		$new_array[] = array(
-	    							'month' => $month,
-	    							'year' => $year,
-	    							'value' => $this->get_month($month)." ".$year,
-	    							'total_amount' => 0
-	    						);	
-            }
-
-            
-    		$date = date('Y-m-d', strtotime($date."+ 1 month"));
-    		$month = intval(date('m', strtotime($date)));
-            $year = intval(date('Y', strtotime($date)));
-    	}
+    	$new_array = $this->generate_array_per_month($anual_report, $initial_date, $ended_date);
 
     	
      	return view('administrators/statistics/annual_collection_social_work')
@@ -106,19 +62,66 @@ class StatisticsController extends Controller
         $initial_date = $request->initial_date;
         $ended_date = $request->ended_date;
 
-        $patient_flow = OurProtocol::select(DB::raw('COUNT(*) as total_patient'), DB::raw("DATE_FORMAT(protocols.completion_date,'%M %Y') as month"))
+        $patient_flow = OurProtocol::select(DB::raw("MONTH(protocols.completion_date) as month"), DB::raw("YEAR(protocols.completion_date) as year"), DB::raw('COUNT(*) as total'))
         ->protocol()
-        ->patient()
         ->whereBetween('protocols.completion_date', [$initial_date, $ended_date])
-        ->groupBy(DB::raw("DATE_FORMAT(protocols.completion_date,'%M %Y')"))
+        ->groupBy(DB::raw("MONTH(protocols.completion_date)"), DB::raw("YEAR(protocols.completion_date)"))
         ->orderBy('protocols.completion_date', 'asc')
         ->get();
+
+        $new_array = $this->generate_array_per_month($patient_flow, $initial_date, $ended_date);
 
         return view('administrators/statistics/patient_flow_per_month')
         ->with('social_works', $social_works)
         ->with('initial_date', $initial_date)
         ->with('ended_date', $ended_date)
-        ->with('data', $patient_flow);
+        ->with('data', $new_array);
+    }
+
+    public function generate_array_per_month($array, $initial_date, $ended_date) {
+    	/*
+		It is the only solution I found without having to create a temporary table to be able to group all the months one by one
+        */
+
+    	$new_array = array();
+    	$count = count($array);
+    	$pos = 0;
+        $date = $initial_date;
+
+        $month = intval(date('m', strtotime($initial_date)));
+        $year = intval(date('Y', strtotime($initial_date)));
+
+        $month_end = intval(date('m', strtotime($ended_date)));
+        $year_end = intval(date('Y', strtotime($ended_date)));
+
+    	while ($month <= $month_end && $year <= $year_end) {
+
+            if ($pos < $count && $month == intval($array[$pos]['month']) && $year == intval($array[$pos]['year'])) {
+                $m = intval($array[$pos]['month']);
+                $y = intval($array[$pos]['year']);
+                $value = $this->get_month($m)." ".$y;
+                $total_amount = intval($array[$pos]['total']);
+
+	    		$new_array[] = array(
+	    							'value' => $value,
+	    							'total' => $total_amount
+	    						);	
+
+	    		$pos++;
+            } else {
+	    		$new_array[] = array(
+	    							'value' => $this->get_month($month)." ".$year,
+	    							'total' => 0
+	    						);	
+            }
+
+            
+    		$date = date('Y-m-d', strtotime($date."+ 1 month"));
+    		$month = intval(date('m', strtotime($date)));
+            $year = intval(date('Y', strtotime($date)));
+    	}
+
+    	return $new_array;    	
     }
 
     public function get_month($month) {

@@ -13,7 +13,7 @@
           ['{{ trans("statistics.months") }}', '{{ trans("patients.patient") }}'],
 
           @foreach ($data as $month)
-            ['{{ $month->month }}', {{ $month->total_patient }}],
+            ['{{ $month['value'] }}', {{ $month['total'] }}],
           @endforeach
         ]);
 
