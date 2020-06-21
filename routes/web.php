@@ -11,6 +11,7 @@
 |
 */
 
+Auth::routes();
 
 Route::group(['middleware' => ['is_admin', 'auth']], function () {
 
@@ -33,7 +34,7 @@ Route::group(['middleware' => ['is_admin', 'auth']], function () {
 
 Route::group(['middleware' => ['is_user', 'auth']], function () {
 
-		Route::get('/home', 'HomeController@index')->name('home');
+		Route::get('/patients/home', 'HomeController@index')->name('patients/home');
 
 });
 
@@ -49,10 +50,17 @@ Route::group(['middleware' => ['web']], function () {
 });
 
 
-Auth::routes();
-
 // For guests
 Route::get('/', function () {
     //
+    $user = auth()->user();
+    if ($user) {
+        if ($user->is_admin) {
+            return redirect()->route('administrators/home');
+        } else {
+            return redirect()->route('patients/home');
+        }
+    }
+
     return redirect()->route('login');
 });
