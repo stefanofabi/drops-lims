@@ -34,8 +34,17 @@ Route::group(['middleware' => ['is_admin', 'auth']], function () {
 
 Route::group(['middleware' => ['is_user', 'auth']], function () {
 
-		Route::get('/patients/home', 'HomeController@index')->name('patients/home');
+        Route::group(
+            [
+                'prefix' => 'patients',
+                'as' => 'patients/',
+            ], function() {
 
+                Route::get('home', 'HomeController@index')->name('home');
+                Route::get('results', 'FamilyMemberController@index_results')->name('results');
+                Route::post('get_protocols', 'FamilyMemberController@get_protocols')->name('get_protocols');
+        }
+        );
 });
 
 Route::group(['middleware' => ['web']], function () {

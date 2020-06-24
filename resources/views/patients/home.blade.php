@@ -14,9 +14,34 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    
-                    You are a user!
                 </div>
+
+                <div class="row">
+                    <div class="col">
+                        <center>
+                            <a class="nav-link" style="color: black" href="{{ route('patients/results') }}">
+                                <h1>
+                                    <i style="font-size: 8vw" class="fas fa-file-medical"></i>
+                                </h1>
+
+                                <br />
+                                {{ trans('home.results') }}
+                            </a>
+                        </center>
+                    </div>
+
+                    <div class="col" style="text-align: center;">
+                            <a class="nav-link" style="color: black" href="{{ route('administrators/determinations') }}">
+                                <h1>
+                                    <i style="font-size: 8vw" class="fas fa-ticket-alt"></i>
+                                </h1>
+
+                                <br />
+                                {{ trans('home.reserve_shift') }}
+                            </a>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>

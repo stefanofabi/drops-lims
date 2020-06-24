@@ -40,7 +40,7 @@ class PatientController extends Controller
     * @return View $view
     */
     public function load(Request $request) {
-        
+
         // Request
         $patient_type = $request['type'];
         $filter = $request['filter'];
@@ -54,7 +54,7 @@ class PatientController extends Controller
         $total_pages = ceil($count_rows / self::PER_PAGE);
 
         $paginate = $this->paginate($page, $total_pages, self::ADJACENTS);
-        
+
         switch($patient_type) {
             case 'animal': {
             	$view = view('administrators/patients/animals/index')
@@ -71,7 +71,7 @@ class PatientController extends Controller
                 ->with('paginate', $paginate);
                 break;
             }
-            
+
             case 'industrial': {
                 $view = view('administrators/patients/industrials/index')
                 ->with('request', $request->all())
@@ -80,7 +80,7 @@ class PatientController extends Controller
                 break;
             }
 
-            default: { 
+            default: {
                 $view = view('administrators/patients/patients');
                 break;
             }
@@ -129,13 +129,13 @@ class PatientController extends Controller
                 $view = view('administrators/patients/humans/show');
                 break;
             }
-            
+
             case 'industrial': {
                 $view = view('administrators/patients/industrials/show');
                 break;
             }
 
-            default: { 
+            default: {
                 $view = view('administrators/patients/patients');
                 break;
             }
@@ -181,14 +181,14 @@ class PatientController extends Controller
                 $view = view('administrators/patients/humans/edit');
                 break;
             }
-            
+
             case 'industrial': {
                 $view = view('administrators/patients/industrials/edit');
                 break;
             }
         }
 
-        return $view		       
+        return $view
 		 ->with('patient', $patient)
 		 ->with('emails', $emails)
 		 ->with('phones', $phones)
@@ -226,7 +226,7 @@ class PatientController extends Controller
                 // for industrials
                 'business_name' => $request->business_name,
                 'tax_condition' => $request->tax_condition,
-                'start_activity' => $request->start_activity,   
+                'start_activity' => $request->start_activity,
             ]);
 
        }, self::RETRIES);
@@ -246,7 +246,7 @@ class PatientController extends Controller
         //
 
         return view('administrators/patients/animals/create');
-    }   
+    }
 
     /**
      * Show the form for creating a new human patient.
@@ -257,7 +257,7 @@ class PatientController extends Controller
     {
         //
 
-        return view('administrators/patients/humans/create');      
+        return view('administrators/patients/humans/create');
     }
 
     /**
@@ -284,7 +284,7 @@ class PatientController extends Controller
         //
 
         $id = DB::transaction(function () use ($request) {
-           
+
             $full_name = $request['full_name'];
             $key = $request['key'];
             $address = $request['address'];

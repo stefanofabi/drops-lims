@@ -39,4 +39,8 @@ class OurProtocol extends Protocol
 		return $query->join('patients', 'our_protocols.patient_id', '=', 'patients.id');
 	}
 
+    public function scopePrescriber($query) {
+        return $query->join('prescribers', 'our_protocols.prescriber_id', '=', 'prescribers.id');
+    }
+
 }

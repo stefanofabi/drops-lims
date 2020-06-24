@@ -45,5 +45,6 @@ return [
     'registered_responsible' => 'Registered responsible',
     'age' => 'Age',
     'calculate_age' => '{0} :day day(s) |[1,*] :year year(s) and :month month(s)',
+    'add_family_member' => 'Add family member',
 
 ];
