@@ -50,5 +50,5 @@
 @endsection
 
 @section('action_page')
-{{ route('patients/get_protocols') }}
+{{ route('patients/protocols/index') }}
 @endsection

@@ -38,8 +38,8 @@
                         <td> {{ $protocol->prescriber }} </td>
 
                         <td class="text-right">
-                            <a href="" class="btn btn-info btn-sm" title="{{ trans('protocols.show_protocol') }}" > <i class="fas fa-eye fa-sm"></i> </a>
-                            <a href="" class="btn btn-info btn-sm" title="{{ trans('protocols.print_report') }}"> <i class="fas fa-print fa-sm"></i> </a>
+                            <a href="{{ route('patients/protocols/show', $protocol->id) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.show_protocol') }}" > <i class="fas fa-eye fa-sm"></i> </a>
+                            <a target="_blank" href="{{ route('patients/protocols/print', $protocol->id) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.print_report') }}"> <i class="fas fa-print fa-sm"></i> </a>
                         </td>
                     </tr>
                 @endforeach

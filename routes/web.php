@@ -41,8 +41,12 @@ Route::group(['middleware' => ['is_user', 'auth']], function () {
             ], function() {
 
                 Route::get('home', 'HomeController@index')->name('home');
-                Route::get('results', 'FamilyMemberController@index_results')->name('results');
-                Route::post('get_protocols', 'FamilyMemberController@get_protocols')->name('get_protocols');
+                Route::get('results', 'UserPatientController@index')->name('results');
+                Route::post('get_protocols', 'UserPatientController@get_protocols')->name('protocols/index');
+                Route::get('protocols/{id}', 'UserPatientController@show_protocol')->name('protocols/show')
+                    ->where('id', '[1-9][0-9]*');
+                Route::get('protocols/print/{id}', 'UserPatientController@print_protocol')->name('protocols/print')
+                    ->where('id', '[1-9][0-9]*');
         }
         );
 });

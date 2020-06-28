@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Traits\PrintProtocol;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -18,6 +19,8 @@ use Lang;
 
 class OurProtocolController extends Controller
 {
+
+    use PrintProtocol;
 
 	private const RETRIES = 5;
 
@@ -47,7 +50,7 @@ class OurProtocolController extends Controller
         return view('administrators/protocols/our/create')
         ->with('patient', $patient)
         ->with('social_works', $social_works);
-        
+
     }
 
     /**
@@ -62,13 +65,13 @@ class OurProtocolController extends Controller
         $id = DB::transaction(function () use ($request) {
 
             $protocol = Protocol::insertGetId([
-                'completion_date' => $request->completion_date, 
+                'completion_date' => $request->completion_date,
                 'observations' => $request->observations,
             ]);
 
             OurProtocol::insert([
             	'protocol_id' => $protocol,
-                'patient_id' => $request->patient_id, 
+                'patient_id' => $request->patient_id,
                 'plan_id' => $request->plan_id,
                 'prescriber_id' => $request->prescriber_id,
                 'quantity_orders' => $request->quantity_orders,
@@ -238,10 +241,10 @@ class OurProtocolController extends Controller
      */
     public function add_practices($protocol_id)
     {
-            
+
         $protocol = OurProtocol::protocol()->findOrFail($protocol_id);
         $plan = $protocol->plan->first();
-        $nomenclator = $plan->nomenclator; 
+        $nomenclator = $plan->nomenclator;
 
         return view('administrators/protocols/our/add_practices')
         ->with('protocol', $protocol)
@@ -294,39 +297,4 @@ class OurProtocolController extends Controller
         }
     }
 
-
-    /**
-     * Returns a report in pdf
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function print($protocol_id)
-    {
-
-        try {
-            $protocol = OurProtocol::protocol()->findOrFail($protocol_id);
-            $prescriber = $protocol->prescriber()->first();
-            $patient = $protocol->patient()->first();
-            $plan = $protocol->plan()->first();
-            $social_work = $plan->social_work()->first();
-            $practices = $protocol->practices;
-            $phone = $patient->phone()->first();
-
-            ob_start();
-            include('pdf/report_001.php');
-            $content = ob_get_clean();
-
-            $html2pdf = new Html2Pdf('P', 'A4', str_replace('_', '-', app()->getLocale()));
-            $html2pdf->pdf->SetTitle(Lang::get('protocols.report_for_protocol')." #$protocol->id");
-            $html2pdf->setDefaultFont('Arial');
-
-            $html2pdf->writeHTML($content);
-            $html2pdf->output("protocol_$protocol_id.pdf");
-        } catch (Html2PdfException $e) {
-            $html2pdf->clean();
-
-            $formatter = new ExceptionFormatter($e);
-            echo $formatter->getHtmlMessage();
-        }
-    }
 }

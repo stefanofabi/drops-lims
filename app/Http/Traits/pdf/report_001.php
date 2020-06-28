@@ -8,12 +8,12 @@
 		);
 
 		if (!empty($date)) {
-			$birth_date = new DateTime(date('Y/m/d', strtotime($date))); 
-			$date_today =  new DateTime(date('Y/m/d', time())); 
+			$birth_date = new DateTime(date('Y/m/d', strtotime($date)));
+			$date_today =  new DateTime(date('Y/m/d', time()));
 
 			if ($date_today >= $birth_date) {
 				$age = date_diff($date_today, $birth_date);
-			
+
 				$response['day'] = ceil($age->format('%d'));
 				$response['month'] = ceil($age->format('%m'));
 				$response['year'] =  ceil($age->format('%Y'));
@@ -46,13 +46,13 @@
 						$new_html = $new_html."".$results[$i_result]->result;
 						$i_result++;
 					}
-					
+
 				} else {
 					// sintaxis error
 					$new_html = "ERROR";
 					break;
 				}
-				
+
 			} else {
 				// there are no more input
 				$new_html = $new_html."".copy_text($html, $i, strlen($html));
@@ -98,7 +98,7 @@
 
 	.result-2 {
 		width: 20mm;
-		text-align: center; 
+		text-align: center;
 		background: #E8E1D6;
 	}
 
@@ -113,7 +113,7 @@
 
 </style>
 
-<page backtop="60mm" backbottom="50mm"> 
+<page backtop="60mm" backbottom="50mm">
 	<page_header>
 
 		<img width="100" height="100" src="<?php echo public_path() ?>/img/logo.png" style="float: left">
@@ -151,12 +151,12 @@
 		    <tr>
 		    	<td> <?php echo Lang::get('patients.home_address').": $patient->address"; ?> </td>
 		    	<td> <?php echo Lang::get('protocols.completion_date').": ".date_format(new DateTime($protocol->completion_date), 'd/m/Y'); ?> </td>
-		    	
+
 		    </tr>
 
 		    <tr>
 		    	<td> <?php echo Lang::get('prescribers.prescriber').": $prescriber->full_name"; ?> </td>
-			    
+
 				<?php
 		    		$array = getAge($patient->birth_date);
 		    		if ($array['month'] == 0) {
@@ -165,7 +165,7 @@
 		    			$result = 1;
 		    		}
 		    	?>
-		        <td> <?php echo Lang::get('patients.age').": ".trans_choice('patients.calculate_age', $result, $array); ?> </td>  
+		        <td> <?php echo Lang::get('patients.age').": ".trans_choice('patients.calculate_age', $result, $array); ?> </td>
 		    </tr>
 
 		    <tr>
