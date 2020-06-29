@@ -61,7 +61,7 @@ class PracticeController extends Controller
                     $nbu_price = $plan->nbu_price;
                     $amount = $nbu_price * $biochemical_unit;
                 }
-                
+
                 case 'derived': {
 
                 }
@@ -119,14 +119,14 @@ class PracticeController extends Controller
     {
         //
 
-        
+
          DB::transaction(function () use ($request, $id) {
 
             Result::where('practice_id', $id)->delete();
-            
+
             if (isset($request->data)) {
             	// ajax does not send empty arrays
-            	
+
 	            $array = $request->data;
 
 	            foreach ($array as $data) {
@@ -136,8 +136,8 @@ class PracticeController extends Controller
 	                ]);
 	            }
             }
-        }, self::RETRIES);       	
-        
+        }, self::RETRIES);
+
 
     }
 

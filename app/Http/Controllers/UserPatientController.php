@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Traits\PrintProtocol;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 use App\FamilyMember;
 use App\OurProtocol;
+use App\Practice;
 
 class UserPatientController extends Controller
 {
@@ -113,6 +115,11 @@ class UserPatientController extends Controller
         return $view;
     }
 
+    /**
+     * Generates the report in pdf format of a protocol
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function print_protocol($id) {
         $user_id = auth()->user()->id;
 
@@ -126,5 +133,58 @@ class UserPatientController extends Controller
         }
 
         $this->print($id);
+    }
+
+    /**
+     * Generates the report in pdf format of a protocol
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function show_practice($id)
+    {
+        $user_id = auth()->user()->id;
+
+        $practice = Practice::findOrFail($id);
+        $protocol = $practice->protocol()->first();
+
+        $protocol = OurProtocol::protocol()->findOrFail($protocol->id);
+        $patient = $protocol->patient()->first();
+
+        $count = FamilyMember::check_relation($user_id, $patient->id);
+
+        if ($count == 0) {
+            return $this->index();
+        }
+
+        $report = $practice->report()->first();
+        $determination = $report->determination()->first();
+
+        return view('patients/protocols/practices/show')
+            ->with('practice', $practice)
+            ->with('protocol', $protocol)
+            ->with('report', $report)
+            ->with('determination', $determination);
+
+    }
+
+    public function get_results(Request $request)
+    {
+
+        $practice_id = $request->practice_id;
+
+        $practice = Practice::findOrFail($practice_id);
+        $protocol = $practice->protocol()->first();
+
+        $protocol = OurProtocol::protocol()->findOrFail($protocol->id);
+        $patient = $protocol->patient()->first();
+        $user_id = auth()->user()->id;
+
+        $count = FamilyMember::check_relation($user_id, $patient->id);
+
+        if ($count == 0) {
+            return $this->index();
+        }
+
+        return $practice->results->toArray();
     }
 }

@@ -8,7 +8,13 @@ class Practice extends Model
 {
     //
 
-    public function report() {
+    public function protocol()
+    {
+        return $this->belongsTo('App\Protocol');
+    }
+
+    public function report()
+    {
 		return $this->belongsTo('App\Report');
 	}
 

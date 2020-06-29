@@ -47,6 +47,10 @@ Route::group(['middleware' => ['is_user', 'auth']], function () {
                     ->where('id', '[1-9][0-9]*');
                 Route::get('protocols/print/{id}', 'UserPatientController@print_protocol')->name('protocols/print')
                     ->where('id', '[1-9][0-9]*');
+                Route::get('protocols/practices/{id}', 'UserPatientController@show_practice')->name('protocols/practices/show')
+                    ->where('id', '[1-9][0-9]*');
+                Route::post('protocols/practices/get_results', 'UserPatientController@get_results')->name('protocols/practices/get_results');
+
         }
         );
 });

@@ -83,15 +83,8 @@
 					<th class="text-right"> {{ trans('forms.actions') }}</th>
 				</tr>
 
-				@php
-					$total_amount = 0;
-				@endphp
 
 				@foreach ($practices as $practice)
-
-					@php
-						$total_amount += $practice->amount;
-					@endphp
 					<tr>
 						<td> {{ $practice->report->determination->code }} </td>
 						<td> {{ $practice->report->determination->name }} </td>
@@ -104,16 +97,10 @@
 							@endif
 						</td>
 						<td class="text-right">
-							<a href="{{ route('administrators/protocols/practices/show', $practice->id) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.show_practice') }}"> <i class="fas fa-eye fa-sm"></i> </a>
+							<a href="{{ route('patients/protocols/practices/show', $practice->id) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.show_practice') }}"> <i class="fas fa-eye fa-sm"></i> </a>
 						</td>
 					</tr>
 				@endforeach
-
-				<tr>
-					<td colspan="5" class="text-right">
-						<h4> Total: $ {{ number_format($total_amount, 2, ",", ".") }} </h4>
-					</td>
-				</tr>
 		</table>
 	</div>
 </div>
