@@ -79,4 +79,12 @@ class Protocol extends Model
     public function scopePractices($query) {
 		return $query->join('practices', 'protocols.id', '=', 'practices.protocol_id');
 	}
+
+    public function scopeOurProtocol($query) {
+        return $query->join('our_protocols', 'protocols.id', '=', 'our_protocols.protocol_id');
+    }
+
+    public function scopePatient($query) {
+        return $query->join('patients', 'our_protocols.patient_id', '=', 'patients.id');
+    }
 }

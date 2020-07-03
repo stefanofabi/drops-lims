@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Traits\PrintProtocol;
+use App\Http\Traits\PrintWorkSheet;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -15,12 +17,14 @@ use App\Affiliate;
 use App\Protocol;
 use App\OurProtocol;
 use App\Prescriber;
+
 use Lang;
 
 class OurProtocolController extends Controller
 {
 
     use PrintProtocol;
+    use PrintWorkSheet;
 
 	private const RETRIES = 5;
 
@@ -260,41 +264,6 @@ class OurProtocolController extends Controller
         $protocol = OurProtocol::protocol()->findOrFail($protocol_id);
 
         return $protocol->practices;
-    }
-
-    /**
-     * Returns a worksheet in pdf
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function print_worksheet($protocol_id)
-    {
-
-        try {
-            $protocol = OurProtocol::protocol()->findOrFail($protocol_id);
-            $prescriber = $protocol->prescriber()->first();
-            $patient = $protocol->patient()->first();
-            $plan = $protocol->plan()->first();
-            $social_work = $plan->social_work()->first();
-            $practices = $protocol->practices;
-            $phone = $patient->phone()->first();
-
-            ob_start();
-            include('pdf/worksheet_001.php');
-            $content = ob_get_clean();
-
-            $html2pdf = new Html2Pdf('P', 'A4', str_replace('_', '-', app()->getLocale()));
-            $html2pdf->pdf->SetTitle(Lang::get('protocols.worksheet_for_protocol')." #$protocol->id");
-            $html2pdf->setDefaultFont('Arial');
-
-            $html2pdf->writeHTML($content);
-            $html2pdf->output("protocol_$protocol_id.pdf");
-        } catch (Html2PdfException $e) {
-            $html2pdf->clean();
-
-            $formatter = new ExceptionFormatter($e);
-            echo $formatter->getHtmlMessage();
-        }
     }
 
 }

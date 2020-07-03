@@ -17,7 +17,7 @@ return [
     'protocol_number' => 'Protocol number',
     'date' => 'Date',
     'type' => 'Type',
-    'observations' => 'Observations', 
+    'observations' => 'Observations',
     'diagnostic' => 'Diagnostic',
     'quantity_orders' => 'Quantity orders',
     'completion_date' => 'Completion date',
@@ -43,5 +43,6 @@ return [
     'result' => 'Result',
     'unloaded_social_work' => 'The patient is not charged with any social work',
     'create_notice' => 'Once you have assigned the protocol to the patient, you can add the practices you need',
- 
+    'print_selected' => 'Print selected',
+
 ];

@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\DB;
 use App\FamilyMember;
 use App\OurProtocol;
 use App\Practice;
+use App\Protocol;
+
+use Lang;
 
 class UserPatientController extends Controller
 {
@@ -132,7 +135,7 @@ class UserPatientController extends Controller
             return $this->index();
         }
 
-        $this->print($id);
+        $this->print($id, array());
     }
 
     /**
@@ -167,6 +170,11 @@ class UserPatientController extends Controller
 
     }
 
+    /**
+     * Returns the results of a practice
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function get_results(Request $request)
     {
 
@@ -186,5 +194,37 @@ class UserPatientController extends Controller
         }
 
         return $practice->results->toArray();
+    }
+
+    /**
+     * Returns a protocol partially in pdf format
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function print_partial_report(Request $request)
+    {
+        if (isset($request->to_print)) {
+            $user_id = auth()->user()->id;
+            $filter_practices = $request->to_print;
+
+            $family = FamilyMember::select('patient_id')->where('user_id', $user_id)->get()->toArray();
+
+            $protocol = Protocol::select('protocols.id as id')
+                ->ourProtocol()
+                ->patient()
+                ->practices()
+                ->whereIn('practices.id', $filter_practices)
+                ->whereIn('patients.id', $family)
+                ->groupBy('protocols.id')
+                ->get();
+
+            if ($protocol->count() == 1) {
+                $this->print($protocol->first()->id, $filter_practices);
+            } else {
+                echo Lang::get('errors.practice_error_protocol');
+            }
+        } else {
+            echo Lang::get('errors.no_data');
+        }
     }
 }

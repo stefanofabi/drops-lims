@@ -22,4 +22,8 @@ class Practice extends Model
     {
         return $this->hasMany('App\Result', 'practice_id');
     }
+
+    public function scopeProtocol($query) {
+        return $query->join('protocols', 'practices.protocol_id', '=', 'protocols.id');
+    }
 }

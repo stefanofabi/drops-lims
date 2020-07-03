@@ -10,6 +10,14 @@
 {{ trans('forms.menu') }}
 @endsection
 
+@section('js')
+    <script type="text/javascript">
+        function print_selection() {
+            $('#print_selection').submit();
+        }
+    </script>
+@endsection
+
 @section('menu')
 <ul class="nav flex-column">
 	<li class="nav-item">
@@ -64,18 +72,23 @@
 
 		<input type="text" class="form-control" value="{{ $protocol->diagnostic }}" disabled>
 	</div>
-
 @endsection
 
 @section('extra-content')
+
 <div class="card mt-3 mb-4">
 	<div class="card-header">
-		<h4> <span class="fas fa-syringe" ></span> {{ trans('determinations.determinations')}} </h4>
+        <div class="btn-group float-right">
+            <button type="button" class="btn btn-primary" onclick="print_selection()">{{ trans('protocols.print_selected') }}</button>
+        </div>
+
+        <h4> <span class="fas fa-syringe" ></span> {{ trans('determinations.determinations')}} </h4>
     </div>
 
     <div class="table-responsive">
 		<table class="table table-striped">
 				<tr class="info">
+                    <th>  </th>
 					<th> {{ trans('determinations.code') }} </th>
 					<th> {{ trans('determinations.determination') }} </th>
 					<th> {{ trans('determinations.amount') }} </th>
@@ -83,24 +96,28 @@
 					<th class="text-right"> {{ trans('forms.actions') }}</th>
 				</tr>
 
+                <form id="print_selection" action="{{ route('patients/protocols/print_selection') }}" method="post" target="_blank">
+                   @csrf
 
-				@foreach ($practices as $practice)
-					<tr>
-						<td> {{ $practice->report->determination->code }} </td>
-						<td> {{ $practice->report->determination->name }} </td>
-						<td> $ {{ number_format($practice->amount, 2, ",", ".") }} </td>
-						<td>
-							@if (empty($practice->results->first()))
-								<span class="badge badge-primary"> {{ trans('forms.no') }} </span>
-							@else
-								<span class="badge badge-success"> {{ trans('forms.yes') }} </span>
-							@endif
-						</td>
-						<td class="text-right">
-							<a href="{{ route('patients/protocols/practices/show', $practice->id) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.show_practice') }}"> <i class="fas fa-eye fa-sm"></i> </a>
-						</td>
-					</tr>
-				@endforeach
+                    @foreach ($practices as $practice)
+                        <tr>
+                            <td style="width: 50px"> <input type="checkbox" name="to_print[]" value="{{ $practice->id }}"> </td>
+                            <td> {{ $practice->report->determination->code }} </td>
+                            <td> {{ $practice->report->determination->name }} </td>
+                            <td> $ {{ number_format($practice->amount, 2, ",", ".") }} </td>
+                            <td>
+                                @if (empty($practice->results->first()))
+                                    <span class="badge badge-primary"> {{ trans('forms.no') }} </span>
+                                @else
+                                    <span class="badge badge-success"> {{ trans('forms.yes') }} </span>
+                                @endif
+                            </td>
+                            <td class="text-right">
+                                <a href="{{ route('patients/protocols/practices/show', $practice->id) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.show_practice') }}"> <i class="fas fa-eye fa-sm"></i> </a>
+                            </td>
+                        </tr>
+                    @endforeach
+                </form>
 		</table>
 	</div>
 </div>
