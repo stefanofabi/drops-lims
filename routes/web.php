@@ -55,6 +55,11 @@ Route::group(['middleware' => ['is_user', 'auth']], function () {
                     ->where('id', '[1-9][0-9]*');
                 Route::post('protocols/practices/get_results', 'UserPatientController@get_results')->name('protocols/practices/get_results');
 
+                Route::get('family_members/index', 'FamilyMemberController@index')->name('family_members/index');
+                Route::get('family_members/create', 'FamilyMemberController@create')->name('family_members/create');
+                Route::post('family_members/store', 'FamilyMemberController@store')->name('family_members/store');
+
+
         }
         );
 });

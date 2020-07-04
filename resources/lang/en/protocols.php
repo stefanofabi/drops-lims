@@ -44,5 +44,5 @@ return [
     'unloaded_social_work' => 'The patient is not charged with any social work',
     'create_notice' => 'Once you have assigned the protocol to the patient, you can add the practices you need',
     'print_selected' => 'Print selected',
-
+    'see_patient' => 'See patient',
 ];

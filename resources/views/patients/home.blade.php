@@ -14,23 +14,23 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                </div>
 
-                <div class="row">
-                    <div class="col">
-                        <center>
-                            <a class="nav-link" style="color: black" href="{{ route('patients/results') }}">
-                                <h1>
-                                    <i style="font-size: 8vw" class="fas fa-file-medical"></i>
-                                </h1>
+                    <div class="row">
+                        <div class="col">
+                            <div style="text-align: center;">
+                                <a class="nav-link" style="color: black" href="{{ route('patients/results') }}">
+                                    <h1>
+                                        <i style="font-size: 8vw" class="fas fa-file-medical"></i>
+                                    </h1>
 
-                                <br />
-                                {{ trans('home.results') }}
-                            </a>
-                        </center>
-                    </div>
+                                    <br />
 
-                    <div class="col" style="text-align: center;">
+                                    {{ trans('home.results') }}
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="col" style="text-align: center;">
                             <a class="nav-link" style="color: black" href="{{ route('administrators/determinations') }}">
                                 <h1>
                                     <i style="font-size: 8vw" class="fas fa-ticket-alt"></i>
@@ -39,9 +39,39 @@
                                 <br />
                                 {{ trans('home.reserve_shift') }}
                             </a>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div style="text-align: center;">
+                                <a class="nav-link" style="color: black" href="{{ route('patients/family_members/index') }}">
+                                    <h1>
+                                        <i style="font-size: 8vw" class="fas fa-users"></i>
+                                    </h1>
+
+                                    <br />
+
+                                    {{ trans('home.family_members') }}
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div style="text-align: center;">
+                                <a class="nav-link" style="color: black" href="{{ route('patients/results') }}">
+                                    <h1>
+                                        <i style="font-size: 8vw" class="fas fa-sign-out-alt"></i>
+                                    </h1>
+
+                                    <br />
+
+                                    {{ trans('auth.logout') }}
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>

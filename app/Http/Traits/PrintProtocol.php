@@ -19,13 +19,13 @@ trait PrintProtocol {
      */
     public function print($protocol_id, $filter_practices = array())
     {
-        try {
-            $protocol = OurProtocol::protocol()->findOrFail($protocol_id);
-            $prescriber = $protocol->prescriber()->first();
-            $patient = $protocol->patient()->first();
-            $plan = $protocol->plan()->first();
-            $social_work = $plan->social_work()->first();
+        $protocol = OurProtocol::protocol()->findOrFail($protocol_id);
+        $prescriber = $protocol->prescriber()->first();
+        $patient = $protocol->patient()->first();
+        $plan = $protocol->plan()->first();
+        $social_work = $plan->social_work()->first();
 
+        try {
             if (empty($filter_practices)) {
                 $practices = $protocol->practices()->get();
             } else {

@@ -18,16 +18,15 @@ trait PrintWorkSheet {
      */
     public function print_worksheet($protocol_id)
     {
+        $protocol = OurProtocol::protocol()->findOrFail($protocol_id);
+        $prescriber = $protocol->prescriber()->first();
+        $patient = $protocol->patient()->first();
+        $plan = $protocol->plan()->first();
+        $social_work = $plan->social_work()->first();
+        $practices = $protocol->practices;
+        $phone = $patient->phone()->first();
 
         try {
-            $protocol = OurProtocol::protocol()->findOrFail($protocol_id);
-            $prescriber = $protocol->prescriber()->first();
-            $patient = $protocol->patient()->first();
-            $plan = $protocol->plan()->first();
-            $social_work = $plan->social_work()->first();
-            $practices = $protocol->practices;
-            $phone = $patient->phone()->first();
-
             ob_start();
             include('pdf/worksheet_001.php');
             $content = ob_get_clean();

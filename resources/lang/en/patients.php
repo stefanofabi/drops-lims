@@ -46,5 +46,10 @@ return [
     'age' => 'Age',
     'calculate_age' => '{0} :day day(s) |[1,*] :year year(s) and :month month(s)',
     'add_family_member' => 'Add family member',
-
+    'related_patients' => 'Below are all the patients with whom you have related your account. We take all security measures so that your data is protected.',
+    'get_security_code' => 'Get new security code for linking',
+    'security_code' => 'Security code',
+    'notice_confidentiality' => 'This is a security notice! Do not lose, share or publish this code. Laboratory personnel will never contact you for any reason. If you lose this code contact immediately because your data and medical results may be exposed',
+    'expiration_notice' => 'This code expires on :date',
+    'unique_identifier' => 'Unique identifier',
 ];

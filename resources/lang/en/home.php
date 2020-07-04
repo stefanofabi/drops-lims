@@ -18,5 +18,5 @@ return [
     'dashboard_admins' => 'Dashboard',
     'results' => 'Results',
     'reserve_shift' => 'Reserve shift',
-
+    'family_members' => 'Family members',
 ];

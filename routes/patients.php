@@ -44,5 +44,7 @@ Route::group(
 		Route::get('destroy/{id}', 'PatientController@destroy')->name('destroy')
 		->where('id', '[1-9][0-9]*');
 
+        Route::post('security_codes/store', 'SecurityCodeController@store')->name('security_codes/store');
+
 	}
 );

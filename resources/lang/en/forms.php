@@ -43,5 +43,5 @@ return [
     'confirm' => 'Do you really want to continue?',
     'initial_date' => 'Initial date',
     'ended_date' => 'Ended date',
-
+    'send' => 'Send',
 ];

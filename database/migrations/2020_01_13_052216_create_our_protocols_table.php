@@ -21,7 +21,7 @@ class CreateOurProtocolsTable extends Migration
             $table->date('withdrawal_date')->nullable();
             $table->unsignedInteger('quantity_orders')->default(0);
             $table->string('diagnostic')->nullable();
-            
+
             // Primary key
             $table->primary('protocol_id');
 

@@ -11,7 +11,7 @@
 
 	Route::get('protocols', 'ProtocolController@index')->name('protocols');
 	Route::post('protocols', 'ProtocolController@load')->name('protocols/load');
-	
+
 	Route::group(
 		[
 			'prefix' => 'protocols',

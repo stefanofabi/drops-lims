@@ -2,7 +2,7 @@
 
 @section('title')
 {{ trans('protocols.show_protocol') }} #{{ $protocol->id }}
-@endsection 
+@endsection
 
 @section('active_protocols', 'active')
 
@@ -19,6 +19,10 @@
 	<li class="nav-item">
 		<a class="nav-link" target="_blank" href="{{ route('administrators/protocols/our/print', $protocol->id) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('protocols.print_report') }} </a>
 	</li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('administrators/patients/show', $patient->id) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('protocols.see_patient') }} </a>
+    </li>
 </ul>
 @endsection
 
@@ -53,7 +57,7 @@
 		<div class="input-group-prepend">
 			<span class="input-group-text"> {{ trans('prescribers.prescriber') }} </span>
 		</div>
-		
+
 		<input type="text" class="form-control" value="{{ $prescriber->full_name }}" disabled>
 	</div>
 
@@ -89,7 +93,7 @@
 		<textarea class="form-control" rows="3" disabled>{{ $protocol->observations }}</textarea>
 	</div>
 
-@endsection	
+@endsection
 
 @section('extra-content')
 <div class="card mt-3 mb-4">
@@ -101,13 +105,13 @@
 		<table class="table table-striped">
 				<tr class="info">
 					<th> {{ trans('determinations.code') }} </th>
-					<th> {{ trans('determinations.determination') }} </th>	
+					<th> {{ trans('determinations.determination') }} </th>
 					<th> {{ trans('determinations.amount') }} </th>
-					<th> {{ trans('determinations.informed') }} </th>	
-					<th class="text-right"> {{ trans('forms.actions') }}</th>	
+					<th> {{ trans('determinations.informed') }} </th>
+					<th class="text-right"> {{ trans('forms.actions') }}</th>
 				</tr>
 
-				@php 
+				@php
 					$total_amount = 0;
 				@endphp
 
@@ -120,15 +124,15 @@
 						<td> {{ $practice->report->determination->code }} </td>
 						<td> {{ $practice->report->determination->name }} </td>
 						<td> $ {{ number_format($practice->amount, 2, ",", ".") }} </td>
-						<td> 
+						<td>
 							@if (empty($practice->results->first()))
 								<span class="badge badge-primary"> {{ trans('forms.no') }} </span>
-							@else 
+							@else
 								<span class="badge badge-success"> {{ trans('forms.yes') }} </span>
 							@endif
 						</td>
 						<td class="text-right">
-							<a href="{{ route('administrators/protocols/practices/show', $practice->id) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.show_practice') }}"> <i class="fas fa-eye fa-sm"></i> </a>	
+							<a href="{{ route('administrators/protocols/practices/show', $practice->id) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.show_practice') }}"> <i class="fas fa-eye fa-sm"></i> </a>
 						</td>
 					</tr>
 				@endforeach

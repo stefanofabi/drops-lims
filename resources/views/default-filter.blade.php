@@ -7,10 +7,10 @@
 
         @section('js')
         @show
-        
+
     </head>
 
-    <body> 
+    <body>
         <div class="container mt-3">
             <div class="card">
                 <div class="card-header">
@@ -20,6 +20,7 @@
                     <h4> @section('main-title') @show </h4>
                 </div>
 
+                @section('card-filters')
                 <div class="card-body">
                     <div class="card">
                         <form method="post" id="select_page" action="@yield('action_page')">
@@ -37,10 +38,11 @@
                         </form>
                     </div>
                 </div>
+                @show
 
                 @section('results')
                 @show
-                
+
             </div>
         </div>
 

@@ -3,14 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Traits\PrintProtocol;
+use App\Http\Traits\PrintSecurityCode;
 use App\Http\Traits\PrintWorkSheet;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
-use Spipu\Html2Pdf\Html2Pdf;
-use Spipu\Html2Pdf\Exception\Html2PdfException;
-use Spipu\Html2Pdf\Exception\ExceptionFormatter;
 
 use App\Patient;
 use App\Affiliate;
@@ -25,6 +22,7 @@ class OurProtocolController extends Controller
 
     use PrintProtocol;
     use PrintWorkSheet;
+    use PrintSecurityCode;
 
 	private const RETRIES = 5;
 

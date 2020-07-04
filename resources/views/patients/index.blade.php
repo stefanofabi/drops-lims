@@ -11,7 +11,7 @@
 @endsection
 
 @section('create-href')
-{{ route('administrators/patients/create') }}
+{{ route('patients/family_members/create') }}
 @endsection
 
 @section('create-text')

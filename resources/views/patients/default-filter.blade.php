@@ -10,6 +10,10 @@
             <li class="nav-item">
                 <a class="nav-link @yield('active_results')" href="{{ route('patients/results') }}"> {{ trans('home.results') }}</a>
             </li>
+
+            <li class="nav-item">
+                <a class="nav-link @yield('active_family_members')" href="{{ route('patients/family_members/index') }}"> {{ trans('home.family_members') }}</a>
+            </li>
         </ul>
 
         <!-- Right Side Of Navbar -->
