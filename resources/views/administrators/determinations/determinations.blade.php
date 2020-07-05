@@ -1,8 +1,8 @@
-@extends('administrators/default-filter') 
+@extends('administrators/default-filter')
 
 @section('title')
 {{ trans('determinations.determinations') }}
-@endsection 
+@endsection
 
 @section('main-title')
 <i class="fas fa-microscope"></i> {{ trans('determinations.determinations') }}
@@ -14,7 +14,7 @@
 
 @section('create-text')
 <span class="fas fa-syringe" ></span> {{ trans('determinations.create_determination') }}
-@endsection 
+@endsection
 
 @section('active_determinations', 'active')
 
@@ -35,7 +35,7 @@
 </script>
 @endsection
 
-@section('filters') 
+@section('filters')
 <!-- Filter by keys -->
 <div class="form-group row">
     <div class="col-md-3">
@@ -49,13 +49,13 @@
 </div>
 
 <div class="form-group row">
-    <div class="col-md-6">
+    <div class="mt-2 col-md-6">
         <input type="text" class="form-control form-control" id="filter" name="filter" placeholder="{{ trans('forms.enter_filter') }}">
     </div>
 
-    <div class="col-md-6">
+    <div class="mt-2 col-md-6">
         <button type="submit" class="btn btn-info">
             <span class="fas fa-search" ></span> {{ trans('forms.search') }} </button>
         </div>
     </div>
-@endsection 
+@endsection

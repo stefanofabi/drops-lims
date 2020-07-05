@@ -1,8 +1,8 @@
-@extends('administrators/default-filter') 
+@extends('administrators/default-filter')
 
 @section('title')
 {{ trans('patients.patients') }}
-@endsection 
+@endsection
 
 @section('main-title')
 <i class="fas fa-user-injured"></i> {{ trans('patients.patients') }}
@@ -14,7 +14,7 @@
 
 @section('create-text')
 <span class="fas fa-user-plus" ></span> {{ trans('patients.create_patient') }}
-@endsection 
+@endsection
 
 @section('active_patients', 'active')
 
@@ -35,7 +35,7 @@
     </script>
 @endsection
 
-@section('filters') 
+@section('filters')
 <!-- Patient type -->
 <div class="col form-group row">
     <div class="custom-control custom-radio custom-control-inline">
@@ -56,16 +56,16 @@
 
 <!-- Filter by keys -->
 <div class="form-group row">
-    <div class="col-md-6">
+    <div class="mt-2 col-md-6">
         <input type="text" class="form-control form-control" id="filter" name="filter" placeholder="{{ trans('forms.enter_filter') }}">
     </div>
 
-    <div class="col-md-6">
+    <div class="mt-2 col-md-6">
         <button type="submit" class="btn btn-info">
             <span class="fas fa-search" ></span> {{ trans('forms.search') }} </button>
         </div>
 </div>
-@endsection 
+@endsection
 
 @section('action_page')
 {{ route('administrators/patients/load') }}

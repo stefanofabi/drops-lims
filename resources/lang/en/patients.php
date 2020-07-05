@@ -52,4 +52,6 @@ return [
     'notice_confidentiality' => 'This is a security notice! Do not lose, share or publish this code. Laboratory personnel will never contact you for any reason. If you lose this code contact immediately because your data and medical results may be exposed',
     'expiration_notice' => 'This code expires on :date',
     'unique_identifier' => 'Unique identifier',
+    'notice_add_family_member' => 'To add a new relative to your account, enter the unique patient identifier and the security code previously requested in our laboratories',
+
 ];

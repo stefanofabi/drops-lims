@@ -25,6 +25,10 @@
 
 @section('content')
 
+    <div class="mb-4">
+        {{ trans('patients.notice_add_family_member') }}
+    </div>
+
     <form method="post" action="{{ route('patients/family_members/store') }}">
         @csrf
 

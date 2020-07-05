@@ -59,7 +59,7 @@
 
                         <div class="col">
                             <div style="text-align: center;">
-                                <a class="nav-link" style="color: black" href="{{ route('patients/results') }}">
+                                <a class="nav-link" style="color: black" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     <h1>
                                         <i style="font-size: 8vw" class="fas fa-sign-out-alt"></i>
                                     </h1>
@@ -67,6 +67,10 @@
                                     <br />
 
                                     {{ trans('auth.logout') }}
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
                                 </a>
                             </div>
                         </div>

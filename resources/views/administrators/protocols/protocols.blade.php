@@ -1,8 +1,8 @@
-@extends('administrators/default-filter') 
+@extends('administrators/default-filter')
 
 @section('title')
 {{ trans('protocols.protocols') }}
-@endsection 
+@endsection
 
 @section('main-title')
 <span class="fas fa-file-medical" ></span> {{ trans('protocols.protocols') }}
@@ -14,7 +14,7 @@
 
 @section('create-text')
 <span class="fas fa-plus" ></span> {{ trans('protocols.create_protocol') }}
-@endsection 
+@endsection
 
 @section('active_protocols', 'active')
 
@@ -32,19 +32,19 @@
     </script>
 @endsection
 
-@section('filters') 
+@section('filters')
 <!-- Filter by keys -->
 <div class="form-group row">
-    <div class="col-md-6">
+    <div class="mt-2 col-md-6">
         <input type="text" class="form-control form-control" id="filter" name="filter" placeholder="{{ trans('forms.enter_filter') }}">
     </div>
 
-    <div class="col-md-6">
+    <div class="mt-2 col-md-6">
         <button type="submit" class="btn btn-info">
             <span class="fas fa-search" ></span> {{ trans('forms.search') }} </button>
         </div>
 </div>
-@endsection 
+@endsection
 
 @section('action_page')
 {{ route('administrators/protocols/load') }}

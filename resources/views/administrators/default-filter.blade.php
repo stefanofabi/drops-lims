@@ -19,21 +19,6 @@
 				<a class="nav-link @yield('active_protocols')" href="{{ route('administrators/protocols') }}"> {{ trans('protocols.protocols') }} </a>
 			</li>
 
-			<div class="dropdown">
-				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					Ajustes
-				</a>
-				<div class="dropdown-menu">
-					<a class="dropdown-item" href="#">Link 1</a>
-					<a class="dropdown-item" href="#">Link 2</a>
-					<a class="dropdown-item" href="#">Link 3</a>
-				</div>
-			</div>
-
-
-			<li class="nav-item">
-				<a class="nav-link disabled" href="#">Disabled</a>
-			</li>
 		</ul>
 
 		<!-- Right Side Of Navbar -->
