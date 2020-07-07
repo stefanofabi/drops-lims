@@ -2,7 +2,7 @@
 
 @section('title')
 {{ trans('protocols.create_protocol') }}
-@endsection 
+@endsection
 
 @section('active_protocols', 'active')
 
@@ -30,7 +30,7 @@
 									},
 							success:  ui
 						});
-						
+
 						return ui;
 					},
 			select: function(event, ui) {
@@ -62,7 +62,7 @@
 									},
 							success:  ui
 						});
-						
+
 						return ui;
 					},
 			select: function(event, ui) {
@@ -103,7 +103,7 @@
 <ul class="nav flex-column">
 	<li class="nav-item">
 		<a class="nav-link" href=""> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('forms.no_options') }} </a>
-	</li>	
+	</li>
 </ul>
 @endsection
 
@@ -118,7 +118,7 @@
 <div class="alert alert-warning">
 	<strong>{{ trans('forms.warning') }}!</strong> {{ trans('protocols.unloaded_social_work') }}
 </div>
-@else 
+@else
 <div class="alert alert-info">
 	<strong>{{ trans('forms.information') }}!</strong> {{ trans('protocols.create_notice') }}
 </div>
@@ -131,7 +131,7 @@
 		<div class="input-group-prepend">
 			<span class="input-group-text"> {{ trans('patients.patient') }} </span>
 		</div>
-		
+
 		<input type="hidden" id="patient_id" name="patient_id" value="{{ $patient['id'] }}">
 		<input type="text" class="form-control" id="patient" value="{{ $patient['full_name'] }}" placeholder="{{ trans('forms.start_typing') }}" required>
 	</div>
@@ -145,14 +145,14 @@
 				<option value=""> {{ trans('forms.select_option') }}</option>
 				@if (isset($social_works))
 					@foreach ($social_works as $social_work)
-						<option value="{{ $social_work->plan_id }}"> 
+						<option value="{{ $social_work->plan_id }}">
 							@if (!empty($social_work->expiration_date) && $social_work->expiration_date < date('Y-m-d'))
 								** {{ trans('social_works.expired_card')}} **
 							@endif
 
-							{{ $social_work->name }}  {{ $social_work->plan }}
+							{{ $social_work->social_work }}  {{ $social_work->plan }}
 
-							@if (!empty($social_work->affiliate_number)) 
+							@if (!empty($social_work->affiliate_number))
 								[{{ $social_work->affiliate_number }}]
 							@endif
 
@@ -166,7 +166,7 @@
 		<div class="input-group-prepend">
 			<span class="input-group-text"> {{ trans('prescribers.prescriber') }} </span>
 		</div>
-		
+
 		<input type="hidden" id="prescriber_id" name="prescriber_id">
 		<input type="text" class="form-control" id="prescriber" placeholder="{{ trans('forms.start_typing') }}" required>
 	</div>
@@ -207,8 +207,8 @@
 		<button type="submit" class="btn btn-primary">
 			<span class="fas fa-save"></span> {{ trans('forms.save') }}
 		</button>
-	</div>	
+	</div>
 </form>
-@endsection	
+@endsection
 
 
