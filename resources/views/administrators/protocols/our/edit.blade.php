@@ -2,7 +2,7 @@
 
 @section('title')
 {{ trans('protocols.edit_protocol') }} #{{ $protocol->id }}
-@endsection 
+@endsection
 
 @section('active_protocols', 'active')
 
@@ -31,7 +31,7 @@
 									},
 							success:  ui
 						});
-						
+
 						return ui;
 					},
 			select: function(event, ui) {
@@ -88,15 +88,15 @@
 		<select class="form-control input-sm" id="plan" name="plan_id">
 				<option value=""> {{ trans('forms.select_option') }}</option>
 					@foreach ($social_works as $social_work)
-						<option value="{{ $social_work->plan_id }}"> 
+						<option value="{{ $social_work->plan_id }}">
 
 							@if (!empty($social_work->expiration_date) && $social_work->expiration_date < date('Y-m-d'))
 								** {{ trans('social_works.expired_card')}} **
 							@endif
 
-							{{ $social_work->name }}  {{ $social_work->plan }}
+							{{ $social_work->social_work }}  {{ $social_work->plan }}
 
-							@if (!empty($social_work->affiliate_number)) 
+							@if (!empty($social_work->affiliate_number))
 								[{{ $social_work->affiliate_number }}]
 							@endif
 
@@ -109,7 +109,7 @@
 		<div class="input-group-prepend">
 			<span class="input-group-text"> {{ trans('prescribers.prescriber') }} </span>
 		</div>
-		
+
 		<input type="hidden" id="prescriber_id" name="prescriber_id" value="{{ $prescriber->id }}">
 		<input type="text" class="form-control" id="prescriber" value="{{ $prescriber->full_name }}">
 	</div>
@@ -150,7 +150,7 @@
 		<button type="submit" class="btn btn-primary">
 			<span class="fas fa-save"></span> {{ trans('forms.save') }}
 		</button>
-	</div>	
+	</div>
 
 </form>
 @endsection
@@ -166,13 +166,13 @@
 		<table class="table table-striped">
 				<tr class="info">
 					<th> {{ trans('determinations.code') }} </th>
-					<th> {{ trans('determinations.determination') }} </th>	
+					<th> {{ trans('determinations.determination') }} </th>
 					<th> {{ trans('determinations.amount') }} </th>
-					<th> {{ trans('determinations.informed') }} </th>	
-					<th class="text-right"> {{ trans('forms.actions') }}</th>	
+					<th> {{ trans('determinations.informed') }} </th>
+					<th class="text-right"> {{ trans('forms.actions') }}</th>
 				</tr>
 
-				@php 
+				@php
 					$total_amount = 0;
 				@endphp
 
@@ -185,16 +185,16 @@
 						<td> {{ $practice->report->determination->code }} </td>
 						<td> {{ $practice->report->determination->name }} </td>
 						<td> $ {{ number_format($practice->amount, 2, ",", ".") }} </td>
-						<td> 
+						<td>
 							@if (empty($practice->results->first()))
 								<span class="badge badge-primary"> {{ trans('forms.no') }} </span>
-							@else 
+							@else
 								<span class="badge badge-success"> {{ trans('forms.yes') }} </span>
 							@endif
 						</td>
 						<td class="text-right">
-							<a href="{{ route('administrators/protocols/practices/edit', $practice->id) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.edit_practice') }}"> <i class="fas fa-edit fa-sm"></i> </a>		
-							<a href="{{ route('administrators/protocols/practices/destroy', $practice->id) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.destroy_practice') }}"> <i class="fas fa-trash fa-sm"></i> </a>		
+							<a href="{{ route('administrators/protocols/practices/edit', $practice->id) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.edit_practice') }}"> <i class="fas fa-edit fa-sm"></i> </a>
+							<a href="{{ route('administrators/protocols/practices/destroy', $practice->id) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.destroy_practice') }}"> <i class="fas fa-trash fa-sm"></i> </a>
 						</td>
 					</tr>
 				@endforeach
