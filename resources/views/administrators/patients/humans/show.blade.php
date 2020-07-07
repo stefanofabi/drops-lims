@@ -58,7 +58,7 @@
 		</li>
 
         <li class="nav-item">
-            <form id="security_code_form" action="{{ route('administrators/patients/security_codes/store') }}" method="post">
+            <form id="security_code_form" target="_blank" action="{{ route('administrators/patients/security_codes/store') }}" method="post">
                 @csrf
                 <input type="hidden" name="patient_id" value="{{ $patient->id }}">
             </form>

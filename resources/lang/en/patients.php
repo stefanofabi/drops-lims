@@ -53,5 +53,5 @@ return [
     'expiration_notice' => 'This code expires on :date',
     'unique_identifier' => 'Unique identifier',
     'notice_add_family_member' => 'To add a new relative to your account, enter the unique patient identifier and the security code previously requested in our laboratories',
-
+    'security_code_for' => 'Security code for patient #:id',
 ];

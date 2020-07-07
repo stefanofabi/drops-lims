@@ -9,7 +9,6 @@ use Spipu\Html2Pdf\Html2Pdf;
 use Lang;
 
 trait PrintSecurityCode {
-
     /**
      * Returns a report in pdf
      *
@@ -23,11 +22,11 @@ trait PrintSecurityCode {
             $content = ob_get_clean();
 
             $html2pdf = new Html2Pdf('P', 'A4', str_replace('_', '-', app()->getLocale()));
-            $html2pdf->pdf->SetTitle(Lang::get('protocols.report_for_protocol')." #$patient_id");
+            $html2pdf->pdf->SetTitle(Lang::get('patients.security_code_for', ['id' => $patient_id]));
             $html2pdf->setDefaultFont('Arial');
 
             $html2pdf->writeHTML($content);
-            $html2pdf->output("security_code_for_patient_$patient_id.pdf");
+            $html2pdf->output(Lang::get('patients.security_code_for', ['id' => $patient_id]).'.pdf');
         } catch (Html2PdfException $e) {
             $html2pdf->clean();
 

@@ -11,7 +11,7 @@
 
 @section('title')
 {{ trans('patients.show_patient') }}
-@endsection 
+@endsection
 
 @section('active_patients', 'active')
 
@@ -24,11 +24,22 @@
 	<ul class="nav flex-column">
 		<li class="nav-item">
 			<a class="nav-link" href=""> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> Crear protocolo </a>
-		</li>		
+		</li>
 
 		<li class="nav-item">
 			<a class="nav-link" href=""> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> Ver protocolos</a>
 		</li>
+
+        <li class="nav-item">
+            <form id="security_code_form" target="_blank" action="{{ route('administrators/patients/security_codes/store') }}" method="post">
+                @csrf
+                <input type="hidden" name="patient_id" value="{{ $patient->id }}">
+            </form>
+
+            <a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('security_code_form').submit();">
+                <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('patients.get_security_code') }}
+            </a>
+        </li>
 	</ul>
 </p>
 @endsection
@@ -109,7 +120,7 @@
 	</div>
 
 	<div class="card-body">
-		
+
 		@include('administrators/patients/phones/show')
 		@include('administrators/patients/emails/show')
 
