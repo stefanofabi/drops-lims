@@ -36,7 +36,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text"> {{ trans('patients.unique_identifier') }} </span>
             </div>
-            <input type="number" class="form-control" name="patient_id" required>
+            <input type="number" class="form-control" name="patient_id" min="1" required>
         </div>
 
         <div class="input-group mt-2 col-md-9">
