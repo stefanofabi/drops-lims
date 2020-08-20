@@ -169,5 +169,40 @@ class PrescriberController extends Controller
     public function destroy($id)
     {
         //
+
+        $prescriber = Prescriber::findOrFail($id);
+
+        $view = view('administrators/prescribers/destroy')->with('prescriber_id', $id);
+
+        if ($prescriber->delete()) {
+            $view->with('type', 'success');
+        } else {
+            $view->with('type', 'danger');
+        }
+
+        return $view;
+    }
+
+    /**
+     * Restore the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function restore($id)
+    {
+        //
+
+        $prescriber = Prescriber::withTrashed()->findOrFail($id);
+
+        $view = view('administrators/prescribers/restore')->with('prescriber_id', $id);
+
+        if ($prescriber->restore()) {
+            $view->with('type', 'success');
+        } else {
+            $view->with('type', 'danger');
+        }
+
+        return $view;
     }
 }

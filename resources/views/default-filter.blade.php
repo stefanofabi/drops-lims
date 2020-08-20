@@ -22,6 +22,10 @@
 
                 @section('card-filters')
                 <div class="card-body">
+
+                    @section('messages')
+                    @show
+                    
                     <div class="card">
                         <form method="post" id="select_page" action="@yield('action_page')">
                             @csrf

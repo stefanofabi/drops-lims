@@ -10,7 +10,7 @@
 */
 
 Route::get('prescribers', 'PrescriberController@index')->name('prescribers');
-Route::post('prescribers', 'PrescriberController@load')->name('prescribers/load');
+Route::post('prescribers/load', 'PrescriberController@load')->name('prescribers/load');
 
 Route::group(
 	[
@@ -30,6 +30,9 @@ Route::group(
 		Route::get('edit/{id}', 'PrescriberController@edit')->name('edit')
 		->where('id', '[1-9][0-9]*');
 
-		Route::get('destroy/{id}', 'PrescriberController@destroy')->name('destroy')
+		Route::delete('destroy/{id}', 'PrescriberController@destroy')->name('destroy')
+		->where('id', '[1-9][0-9]*');
+
+		Route::patch('restore/{id}', 'PrescriberController@restore')->name('restore')
 		->where('id', '[1-9][0-9]*');
 	});

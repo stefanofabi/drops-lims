@@ -18,18 +18,8 @@
 
 @section('active_prescribers', 'active')
 
-@section('js')
-    <script type="text/javascript">
-     $(document).ready(function() {
-        // Put the filter
-        $("#filter" ).val('{{ $request['filter'] ?? '' }}');
-    });
-
-     function load(page) {
-        $("#page" ).val(page);
-        document.all["select_page"].submit();
-     }
-    </script>
+@section('action_page')
+{{ route('administrators/prescribers/load') }}
 @endsection
 
 @section('filters')

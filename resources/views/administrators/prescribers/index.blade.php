@@ -1,5 +1,28 @@
 @extends('administrators/prescribers/prescribers')
 
+@section('js')
+    <script type="text/javascript">
+
+	    function load(page) {
+	        $("#page" ).val(page);
+	        document.all["select_page"].submit();
+	     }
+
+		function destroy_prescriber(form_id){
+		    if (confirm('{{ trans("forms.confirm") }}')) {
+		    	var form = document.getElementById('destroy_prescriber_'+form_id);
+		    	form.submit();
+		    }
+		}
+
+        $(document).ready(function() {
+            // Put the filter
+            $("#filter" ).val('{{ $request['filter'] }}');
+        });   
+
+	</script>
+@append
+
 @section('results')
 
 @if (!sizeof($prescribers))
@@ -22,12 +45,19 @@
 				<td> {{ $prescriber->national_enrollment }} </td>
 
 				<td class="text-right">
-					<a href="{{ route('administrators/prescribers/show', [$prescriber->id]) }}" class="btn btn-info btn-sm" title="{{ trans('prescribers.show_prescriber') }}" > <i class="fas fa-eye fa-sm"></i> </a> 
-					<a href="{{ route('administrators/prescribers/destroy', [$prescriber->id]) }}" class="btn btn-info btn-sm" title="{{ trans('prescribers.destroy_prescriber') }}"> <i class="fas fa-user-slash fa-sm"></i> </a>
+						<a href="{{ route('administrators/prescribers/show', $prescriber->id) }}" class="btn btn-info btn-sm float-left" title="{{ trans('prescribers.show_prescriber') }}" > <i class="fas fa-eye fa-sm"></i> </a> 
+
+						<form id="destroy_prescriber_{{ $prescriber->id }}" method="POST" action="{{ route('administrators/prescribers/destroy', $prescriber->id) }}">
+							@csrf
+							@method('DELETE')
+
+							<a class="btn btn-info btn-sm" title="{{ trans('prescribers.destroy_prescriber') }}" onclick="destroy_prescriber('{{ $prescriber->id }}')" >  
+								<i class="fas fa-user-slash fa-sm"></i> 
+							</a> 						
+						</form>
 				</td>
 			</tr>
 			@endforeach
-
 
 			<tr>
 				<td colspan=7>

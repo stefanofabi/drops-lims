@@ -4,10 +4,15 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Prescriber extends Model
 {
     //
+
+	use SoftDeletes;
+
+    protected $dates = ['deleted_at'];
 
     protected function index($filter, $offset, $length) {
 		$prescribers = DB::table('prescribers')
@@ -18,6 +23,7 @@ class Prescriber extends Model
 				->orWhere("national_enrollment", "like", "$filter%");
 			}
 		})
+		->whereNull('deleted_at')
 		->orderBy('full_name', 'asc')
 		->offset($offset)
 		->limit($length)
@@ -36,6 +42,7 @@ class Prescriber extends Model
 				->orWhere("national_enrollment", "like", "$filter%");
 			}
 		})
+		->whereNull('deleted_at')
 		->count();
 
 		return $count;
