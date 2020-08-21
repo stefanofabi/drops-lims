@@ -24,6 +24,7 @@
                 <div class="card-body">
 
                     @section('messages')
+                        @include('messages')
                     @show
                     
                     <div class="card">

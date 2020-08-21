@@ -9,6 +9,8 @@ use App\Http\Traits\Pagination;
 
 use App\Prescriber;
 
+use Lang;
+
 class PrescriberController extends Controller
 {
 
@@ -170,12 +172,20 @@ class PrescriberController extends Controller
     {
         //
 
-        $prescriber = Prescriber::findOrFail($id);
+        $prescriber = Prescriber::find($id);
 
-        $view = view('administrators/prescribers/destroy')->with('prescriber_id', $id);
+        if (!$prescriber) {
+        	// prescriber not exists
+        	return view('administrators/prescribers/prescribers')
+        	->with('errors', array(
+        		Lang::get('prescribers.error_destroy_prescriber')
+        	));
+        }
+
+        $view = view('administrators/prescribers/destroy');
 
         if ($prescriber->delete()) {
-            $view->with('type', 'success');
+            $view->with('prescriber_id', $id)->with('type', 'success');
         } else {
             $view->with('type', 'danger');
         }
@@ -193,7 +203,15 @@ class PrescriberController extends Controller
     {
         //
 
-        $prescriber = Prescriber::withTrashed()->findOrFail($id);
+        $prescriber = Prescriber::withTrashed()->find($id);
+
+        if (!$prescriber) {
+        	// prescriber not removed
+        	return view('administrators/prescribers/prescribers')
+        	->with('errors', array(
+        		Lang::get('prescribers.error_restore_prescriber')
+        	));
+        }
 
         $view = view('administrators/prescribers/restore')->with('prescriber_id', $id);
 

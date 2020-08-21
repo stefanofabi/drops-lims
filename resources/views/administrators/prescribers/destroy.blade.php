@@ -9,7 +9,7 @@
 		    }
 		}
 	</script>
-@endsection
+@append
 
 @section('messages')
 	<div class="alert alert-{{ $type }} alert-dismissible fade show">

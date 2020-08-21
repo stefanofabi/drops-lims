@@ -14,5 +14,6 @@ return [
 
     'no_data' => 'No data was obtained',
     'practice_error_protocol' => 'Practices belonging to different protocols were detected.',
+    'error_processing_transaction' => 'Error processing transaction',
 
 ];

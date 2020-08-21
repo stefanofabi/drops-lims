@@ -1,5 +1,5 @@
 @section('messages')
-    @if (isset($success_messages))
+    @if (isset($success_messages) && count($success_messages) > 0)
         <div class="alert alert-success">
         	<p><strong> Transacción realizada con éxito </strong> </p>
             <ul>
@@ -12,10 +12,11 @@
 
     @if (count($errors) > 0)
         <div class="alert alert-danger">
-        	<p>Corrige los siguientes errores:</p>
-            <ul>
-                @foreach ($errors->all() as $message)
-                    <li>{{ $message }}</li>
+           <p> <strong> {{ trans('errors.error_processing_transaction') }} </strong> </p>
+
+           <ul>
+                @foreach ($errors as $message)
+                    <li> {{ $message }} </li>
                 @endforeach
             </ul>
         </div>

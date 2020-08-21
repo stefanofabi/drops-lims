@@ -34,5 +34,7 @@ return [
     'danger_destroy_message' => 'Oops! There was an error removing the prescriber, please try again later.',
     'danger_restore' => 'Failed to recover the prescriber',
     'danger_restore_message' => 'Oops! An error occurred while retrieving the prescriber. Please contact the administrator to solve it.',
+    'error_destroy_prescriber' => 'The prescriber was not found and could not be removed',
+    'error_restore_prescriber' => 'The specified prescriber cannot be found and could not be retrieved',
 
 ];
