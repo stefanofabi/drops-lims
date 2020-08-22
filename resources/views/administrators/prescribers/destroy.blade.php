@@ -18,26 +18,26 @@
 		<p>
 			<strong> 
 				@if ($type == 'success') 
-				{{ trans('prescribers.success_destroy') }}        			
+					{{ trans('prescribers.success_destroy') }}        			
 				@else
-				{{ trans('prescribers.danger_destroy') }}
+					{{ trans('prescribers.danger_destroy') }}
 				@endif
 			</strong> 
 		</p>
 
 		<ul>
-			@if ($type == 'success') 
 			<li> 
-				<a href="#" onclick="restore_prescriber()"> {{ trans('prescribers.success_destroy_message') }} </a> 
+				@if ($type == 'success') 
+					<a href="#" onclick="restore_prescriber()"> {{ trans('prescribers.success_destroy_message') }} </a> 
 
-				<form method="POST" id="restore_prescriber" action="{{ route('administrators/prescribers/restore', $prescriber_id) }}">
-					@csrf
-					@method('PATCH')
-				</form>
-			</li>       			
-			@else
-			{{ trans('prescribers.danger_destroy_message') }}
-			@endif
+					<form method="POST" id="restore_prescriber" action="{{ route('administrators/prescribers/restore', $prescriber_id) }}">
+						@csrf
+						@method('PATCH')
+					</form>    			
+				@else
+					{{ trans('prescribers.danger_destroy_message') }}
+				@endif
+			</li> 
 		</ul>
 	</div>
 @endsection

@@ -7,7 +7,7 @@ return [
     | Ajax language lines
     |--------------------------------------------------------------------------
     |
-    | The following language lines are used during ajax for various messages that we must show the user.
+    | The following language lines are used during forms view for various messages that we must show the user.
     | You are free to modify these language lines according to your application's requirements.
     |
     */
@@ -44,4 +44,6 @@ return [
     'initial_date' => 'Initial date',
     'ended_date' => 'Ended date',
     'send' => 'Send',
+    'successful_transaction' => 'Successful transaction',
+
 ];

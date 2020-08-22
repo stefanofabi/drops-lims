@@ -54,4 +54,16 @@ return [
     'unique_identifier' => 'Unique identifier',
     'notice_add_family_member' => 'To add a new relative to your account, enter the unique patient identifier and the security code previously requested in our laboratories',
     'security_code_for' => 'Security code for patient #:id',
+    'success_destroy' => 'Patient successfully removed',
+    'success_destroy_message' => 'Well done! If this was due to an error it is not a problem. Click on this message to undo the changes!',
+    'success_restore' => 'Patient successfully recovered',
+    'success_restore_message' => 'Well done! If you need to modify the patient click on this message.',  
+    'danger_destroy' => 'Failed to remove the patient',  
+    'danger_destroy_message' => 'Oops! There was an error removing the patient, please try again later.',
+    'danger_restore' => 'Failed to recover the patient',
+    'danger_restore_message' => 'Oops! An error occurred while retrieving the patient. Please contact the administrator to solve it.', 
+    'error_destroy_patient' => 'The patient was not found and could not be removed',
+    'error_restore_patient' => 'The patient cannot be found and could not be retrieved',
+
+
 ];

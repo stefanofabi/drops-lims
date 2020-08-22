@@ -18,21 +18,8 @@
 
 @section('active_patients', 'active')
 
-@section('js')
-    <script type="text/javascript">
-     $(document).ready(function() {
-        // Put the filter
-        $("#filter" ).val('{{ $request['filter'] ?? '' }}');
-
-        // Check a type
-        $('input:radio[name="type"][value="{{ $request['type'] ?? '' }}"]').prop('checked', true);
-    });
-
-     function load(page) {
-        $("#page" ).val(page);
-        document.all["select_page"].submit();
-     }
-    </script>
+@section('action_page')
+{{ route('administrators/patients/load') }}
 @endsection
 
 @section('filters')

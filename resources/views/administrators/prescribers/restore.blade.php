@@ -7,23 +7,23 @@
 		<p>
 			<strong> 
 				@if ($type == 'success') 
-				{{ trans('prescribers.success_restore') }}        			
+					{{ trans('prescribers.success_restore') }}        			
 				@else
-				{{ trans('prescribers.danger_restore') }}
+					{{ trans('prescribers.danger_restore') }}
 				@endif
 			</strong> 
 		</p>
 
 		<ul>
-			@if ($type == 'success') 
-				<li> 
+			<li> 
+				@if ($type == 'success') 
 					<a href="{{ route('administrators/prescribers/show', $prescriber_id) }}"> 
-						{{ trans('prescribers.success_restore_message') }} 
-					</a> 
-				</li>       			
-			@else
-				{{ trans('prescribers.danger_restore_message') }}
-			@endif
+							{{ trans('prescribers.success_restore_message') }} 
+					</a>        			
+				@else
+					{{ trans('prescribers.danger_restore_message') }}
+				@endif
+			</li>
 		</ul>
 	</div>
 @endsection

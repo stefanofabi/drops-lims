@@ -1,7 +1,7 @@
 @section('messages')
     @if (isset($success_messages) && count($success_messages) > 0)
         <div class="alert alert-success">
-        	<p><strong> Transacción realizada con éxito </strong> </p>
+        	<p> <strong> {{ trans('forms.successful_transaction') }} </strong> </p>
             <ul>
                 @foreach ($success_messages as $message)
                     <li>{{ $message }}</li>

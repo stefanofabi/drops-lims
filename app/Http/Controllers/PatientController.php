@@ -13,9 +13,10 @@ use App\Phone;
 use App\SocialWork;
 use App\Affiliate;
 
+use Lang;
+
 class PatientController extends Controller
 {
-
     use Pagination;
 
     private const PER_PAGE = 15;
@@ -324,4 +325,65 @@ class PatientController extends Controller
         return redirect()->action('PatientController@show', ['id' => $id]);
     }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
+
+        $patient = Patient::find($id);
+
+        if (!$patient) {
+        	// patient not exists
+        	return view('administrators/patients/patients')
+        	->with('errors', array(
+        		Lang::get('patients.error_destroy_patient')
+        	));
+        }
+
+        $view = view('administrators/patients/destroy');
+
+        if ($patient->delete()) {
+            $view->with('patient_id', $id)->with('type', 'success');
+        } else {
+            $view->with('type', 'danger');
+        }
+
+        return $view;
+    }
+
+    /**
+     * Restore the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function restore($id)
+    {
+        //
+
+        $patient = Patient::onlyTrashed()->find($id);
+
+        if (!$patient) {
+        	// patient not removed
+        	return view('administrators/patients/patients')
+        	->with('errors', array(
+        		Lang::get('patients.error_restore_patient')
+        	));
+        }
+
+        $view = view('administrators/patients/restore')->with('patient_id', $id);
+
+        if ($patient->restore()) {
+            $view->with('type', 'success');
+        } else {
+            $view->with('type', 'danger');
+        }
+
+        return $view;
+    }
 }

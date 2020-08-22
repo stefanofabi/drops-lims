@@ -203,7 +203,7 @@ class PrescriberController extends Controller
     {
         //
 
-        $prescriber = Prescriber::withTrashed()->find($id);
+        $prescriber = Prescriber::onlyTrashed()->find($id);
 
         if (!$prescriber) {
         	// prescriber not removed
