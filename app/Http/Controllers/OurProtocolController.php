@@ -98,10 +98,10 @@ class OurProtocolController extends Controller
         //
 
         $protocol = OurProtocol::protocol()->findOrFail($id);
-        $prescriber = $protocol->prescriber()->first();
-        $patient = $protocol->patient()->first();
-        $plan = $protocol->plan()->first();
-        $social_work = $plan->social_work()->first();
+        $prescriber = $protocol->prescriber()->firstOrFail();
+        $patient = $protocol->patient()->firstOrFail();
+        $plan = $protocol->plan()->firstOrFail();
+        $social_work = $plan->social_work()->firstOrFail();
 
         $practices = $protocol->practices;
 
@@ -125,9 +125,9 @@ class OurProtocolController extends Controller
         //
 
         $protocol = OurProtocol::protocol()->findOrFail($id);
-        $prescriber = $protocol->prescriber()->first();
-        $patient = $protocol->patient()->first();
-        $plan = $protocol->plan()->first();
+        $prescriber = $protocol->prescriber()->firstOrFail();
+        $patient = $protocol->patient()->firstOrFail();
+        $plan = $protocol->plan()->firstOrFail();
 
         $practices = $protocol->practices;
 
@@ -206,6 +206,7 @@ class OurProtocolController extends Controller
                 ->orWhere("owner", "like", "%$filter%");
             }
         })
+        ->whereNull('deleted_at')
         ->get()
         ->toJson();
 
@@ -230,6 +231,7 @@ class OurProtocolController extends Controller
                 ->orWhere("national_enrollment", "like", "$filter%");
             }
         })
+        ->whereNull('deleted_at')
         ->get()
         ->toJson();
 
