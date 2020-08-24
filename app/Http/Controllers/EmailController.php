@@ -106,8 +106,18 @@ class EmailController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
         //
+
+        $id = $request->id;
+
+        $email = Email::findOrFail($id);
+
+        if (!$email->delete()) {
+            return response([], 500);
+        }
+
+        return response([], 200);
     }
 }

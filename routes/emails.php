@@ -16,3 +16,5 @@ Route::post('emails/store', 'EmailController@store')->name('emails/store');
 Route::post('emails/edit', 'EmailController@edit')->name('emails/edit');
 
 Route::post('emails/update', 'EmailController@update')->name('emails/update');
+
+Route::post('emails/destroy', 'EmailController@destroy')->name('emails/destroy');

@@ -1,3 +1,6 @@
+<div id="email_messages">
+</div>
+
 <div class="input-group mb-3">
 	<div class="input-group-prepend">
 		<span class="input-group-text"> {{ trans('emails.emails') }} </span>
@@ -7,7 +10,7 @@
 		<option value=""> {{ trans('forms.select_option') }}</option>
 
 		@foreach ($emails as $email)
-		<option value="{{ $email->id }}"> {{ $email->email }}</option>
+			<option value="{{ $email->id }}"> {{ $email->email }}</option>
 		@endforeach
 	</select>
 
