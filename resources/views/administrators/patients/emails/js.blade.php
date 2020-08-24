@@ -25,6 +25,8 @@
 				// Load results
 				$("#modal_email_id").val(data['id']);
 				$("#modal_email_email").val(data['email']);
+
+				$("#modal_email_email").focus();
 			}
 		});
 

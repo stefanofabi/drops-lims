@@ -26,6 +26,8 @@
 				$("#modal_phone_id").val(data['id']);
 				$("#modal_phone_phone").val(data['phone']);
 				$("#modal_phone_type option[value='"+data['type']+"']").attr("selected",true);
+
+				$("#modal_phone_phone").focus();
 			}
 		});
 
