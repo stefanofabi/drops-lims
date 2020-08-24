@@ -18,5 +18,6 @@ return [
     'add_email' => 'Add email',
     'edit_email' => 'Edit email',
     'warning_destroy_email' => 'There was a problem deleting the mail. Please try again later',
+    'success_destroy_email' => 'Email deleted successfully',
 
 ];

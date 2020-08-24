@@ -1,3 +1,6 @@
+<div id="phones_messages">
+</div>
+
 <div class="input-group mb-3">
 	<div class="input-group-prepend">
 		<span class="input-group-text"> {{ trans('phones.phones') }} </span>
@@ -16,7 +19,7 @@
 			<span class="fas fa-edit"></span> 
 		</button>
 
-		<button type="button" class="btn btn-info btn-md" onclick="return eliminarTelefonoBaul()">
+		<button type="button" class="btn btn-info btn-md" onclick="return destroyPhone()">
 			<span class="fas fa-trash"></span> 
 		</button>
 	</div>

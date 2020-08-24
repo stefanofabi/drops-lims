@@ -1,4 +1,4 @@
-<div id="email_messages">
+<div id="emails_messages">
 </div>
 
 <div class="input-group mb-3">

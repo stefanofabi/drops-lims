@@ -35,7 +35,7 @@
 						</div>
 
 						<select class="form-control input-sm" id="modal_phone_type" name="type">
-							<option value=""> {{ trans('phones.select_type') }} </option>
+							<option value=""> {{ trans('forms.select_option') }} </option>
 							<option value="{{ trans('phones.landline') }}"> {{ trans('phones.landline') }} </option>
 							<option value="{{ trans('phones.mobile') }}"> {{ trans('phones.mobile') }} </option>
 							<option value="{{ trans('phones.whatsapp') }}"> {{ trans('phones.whatsapp') }} </option>

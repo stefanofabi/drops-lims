@@ -16,3 +16,5 @@ Route::post('phones/edit', 'PhoneController@edit')->name('phones/edit');
 Route::post('phones/store', 'PhoneController@store')->name('phones/store');
 
 Route::post('phones/update', 'PhoneController@update')->name('phones/update');
+
+Route::post('phones/destroy', 'PhoneController@destroy')->name('phones/destroy');
