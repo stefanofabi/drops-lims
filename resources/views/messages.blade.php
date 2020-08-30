@@ -1,9 +1,9 @@
 @section('messages')
-    @if (isset($success_messages) && count($success_messages) > 0)
+    @if(Session::has('success'))
         <div class="alert alert-success">
         	<p> <strong> {{ trans('forms.successful_transaction') }} </strong> </p>
             <ul>
-                @foreach ($success_messages as $message)
+                @foreach (Session::get('success') as $message)
                     <li>{{ $message }}</li>
                 @endforeach
             </ul>

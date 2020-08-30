@@ -29,6 +29,8 @@
 
 				$("#modal_phone_phone").focus();
 			}
+		}).fail( function() {
+    		$("#modal_phones_messages").html('<div class="alert alert-danger fade show"> <button type="button" class="close" data-dismiss="alert">&times;</button> <strong> {{ trans("forms.danger") }}! </strong> {{ trans("phones.danger_edited_phone") }} </div>');
 		});
 
 		return false;   	
@@ -51,6 +53,8 @@
 			success:  function (response) {
 				$("#modal_phones_messages").html('<div class="alert alert-success fade show"> <strong> {{ trans("forms.well_done") }}! </strong> {{ trans("phones.success_edited_phone") }} </div>');
 			}
+		}).fail( function() {
+    		$("#modal_phones_messages").html('<div class="alert alert-danger fade show"> <button type="button" class="close" data-dismiss="alert">&times;</button> <strong> {{ trans("forms.danger") }}! </strong> {{ trans("phones.danger_updated_phone") }} </div>');
 		});
 
 		return false;   	

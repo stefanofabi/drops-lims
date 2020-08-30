@@ -3,16 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-
-use App\Http\Controllers\PatientController;
-
 
 use App\Phone;
+use Lang;
+use Session;
 
 class PhoneController extends Controller
 {
-    private const RETRIES = 5;
 
     /**
      * Display a listing of the resource.
@@ -46,17 +43,20 @@ class PhoneController extends Controller
     public function store(Request $request)
     {
         //
-        $id = DB::transaction(function () use ($request) {
 
-            $phone_id = Phone::insertGetId([
-                'patient_id' => $request->id,
-                'phone' => $request->phone,
-                'type' => $request->type,
-            ]);
+        $phone = new Phone;
 
-            return $phone_id;
-        }, self::RETRIES);
+        $phone->patient_id = $request->id;
+        $phone->phone = $request->phone;
+        $phone->type = $request->type;
 
+        if (!$phone->save()) {
+        	return redirect()->back()
+                ->withInput($request->all())
+                ->with('errors', [Lang::get('phones.error_saving_phone')]);
+        }
+
+        Session::flash('success', [Lang::get('phones.success_saving_phone')]);
 
         return redirect()->action('PatientController@edit', ['id' => $request->id]);
     }
@@ -81,8 +81,8 @@ class PhoneController extends Controller
     public function edit(Request $request)
     {
         //
-        $id = $request['id'];
-        return Phone::where('id', $id)->first();
+        $id = $request->id;
+        return Phone::where('id', $id)->firstOrFail();
     }
 
     /**
@@ -95,14 +95,19 @@ class PhoneController extends Controller
     public function update(Request $request)
     {
         //
+
+        $id = $request->id;
+
+        $phone = Phone::findOrFail($id);
+
+        $phone->phone = $request->phone;
+        $phone->type = $request->type;
+
+        if (!$phone->save()) {
+        	return response([], 500);
+        }
         
-        DB::transaction(function () use ($request) {
-            Phone::where('id', '=', $request->id)->update(
-                [
-                    'phone' => $request->phone,
-                    'type' => $request->type,
-                ]);
-        }, self::RETRIES);
+        return response([], 200);
     }
 
     /**

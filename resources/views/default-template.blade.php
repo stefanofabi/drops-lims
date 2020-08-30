@@ -35,6 +35,10 @@
                     </div>
 
                     <div class="card-body">
+                        @section('messages')
+                            @include('messages')
+                        @show
+                        
                         @section('content')
                         @show
                     </div>
