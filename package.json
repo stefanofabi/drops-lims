@@ -12,13 +12,13 @@
     "devDependencies": {
         "axios": "^0.19",
         "cross-env": "^5.1",
-        "laravel-mix": "^5.0.0",
+        "laravel-mix": "^5.0.5",
         "lodash": "^4.17.20",
         "resolve-url-loader": "^2.3.1",
         "sass": "^1.26.10",
         "sass-loader": "^8.0.0",
-        "vue": "^2.5.17",
-        "vue-template-compiler": "^2.6.10"
+        "vue": "^2.6.12",
+        "vue-template-compiler": "^2.6.12"
     },
     "name": "laboratorio",
     "description": "<p align=\"center\"><img src=\"https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg\" width=\"400\"></p>",
