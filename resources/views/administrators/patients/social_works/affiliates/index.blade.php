@@ -4,6 +4,9 @@
 	</div>
 
 	<div class="card-body">
+		<div id="affiliates_messages">
+		</div>
+		
 		<div class="input-group mb-3">
 			<div class="input-group-prepend mb-3">
 				<span class="input-group-text"> {{ trans('social_works.social_work') }} </span>

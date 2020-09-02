@@ -18,5 +18,7 @@ Route::post('social_works/affiliates/edit', 'AffiliateController@edit')->name('s
 
 Route::post('social_works/affiliates/update', 'AffiliateController@update')->name('social_works/affiliates/update');
 
+Route::post('social_works/affiliates/destroy', 'AffiliateController@destroy')->name('social_works/affiliates/destroy');
+
 Route::post('social_works/plans/load', 'SocialWorkController@load_plans')->name('social_works/plans/load')
 ->where('id', '[1-9][0-9]*');

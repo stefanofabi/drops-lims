@@ -4,8 +4,15 @@
 	var change = false;
 
 	function editAffiliate() {
+		var affiliate = $("#affiliate").val();
+
+		if (!affiliate) {
+			alert('{{ trans('forms.select_option') }}');			
+			return false;
+		}
+
 		var parameters = {
-			"id" : $("#affiliate").val(),
+			"id" : affiliate,
 		};
 
 		$.ajax({
@@ -94,6 +101,39 @@
 				}).done( function() {
 					$("#modal_affiliates_messages").html("");
 				});
+
+		return false;
+	}
+
+	function destroyAffiliate() {
+		var affiliate = $("#affiliate").val();
+
+		if (!affiliate) {
+			alert('{{ trans('forms.select_option') }}');
+			return false;
+		}
+
+		var parameters = {
+			"id" : affiliate,
+		};
+
+		$.ajax({
+			data:  parameters,
+			url:   "{{ route('administrators/patients/social_works/affiliates/destroy') }}",
+			type:  'post',
+			beforeSend: function () {
+				$("#affiliates_messages").html('<div class="spinner-border text-info"> </div> {{ trans("forms.please_wait") }}');
+			},
+			success:  function (response) {
+
+				$('#affiliate option[value="'+affiliate+'"]').remove();
+
+				$("#affiliates_messages").html('<div class="alert alert-success fade show"> <button type="button" class="close" data-dismiss="alert">&times;</button> <strong> {{ trans("forms.well_done") }}! </strong> {{ trans("social_works.success_destroy_affiliate") }} </div>');
+			}
+		}).fail( function() {
+    		$("#affiliates_messages").html('<div class="alert alert-warning fade show"> <button type="button" class="close" data-dismiss="alert">&times;</button> <strong> {{ trans("forms.warning") }}! </strong> {{ trans("social_works.warning_destroy_affiliate") }} </div>');
+		});
+
 
 		return false;
 	}

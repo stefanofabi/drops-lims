@@ -118,11 +118,22 @@ class AffiliateController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
         //
+
+        $id = $request->id;
+
+        $affiliate = Affiliate::findOrFail($id);
+
+        if (!$affiliate->delete()) {
+            return response([], 500);
+        }
+
+        return response([], 200);
     }
+
 }

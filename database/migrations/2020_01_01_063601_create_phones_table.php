@@ -22,7 +22,6 @@ class CreatePhonesTable extends Migration
             // Foreign keys
             $table->foreign('patient_id')->references('id')->on('patients')->onDelete('restrict')->onUpdate('cascade');
 
-            $table->softDeletes();
             $table->timestamps();
 
             $table->engine = 'InnoDB';

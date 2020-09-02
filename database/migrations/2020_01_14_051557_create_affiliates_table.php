@@ -25,8 +25,6 @@ class CreateAffiliatesTable extends Migration
             $table->foreign('patient_id')->references('id')->on('patients')->onDelete('restrict')->onUpdate('cascade');
             $table->foreign('plan_id')->references('id')->on('plans')->onDelete('restrict')->onUpdate('cascade');
             
-
-            $table->softDeletes();
             $table->timestamps();
 
             $table->engine = 'InnoDB';
