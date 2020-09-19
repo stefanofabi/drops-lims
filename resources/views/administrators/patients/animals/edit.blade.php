@@ -2,6 +2,12 @@
 
 @section('js')
 <script type="text/javascript">
+
+	function updatePatient() {
+		var form = document.getElementById('update_patient');
+		form.submit();
+	}
+
 	$(document).ready(function() {
         // Select a sex from list
         $('#sex').val('{{ $patient->sex }}');
@@ -56,16 +62,17 @@
 @include('administrators/patients/emails/edit')
 @include('administrators/patients/social_works/affiliates/edit')
 
-<form method="post" action="{{ route('administrators/patients/update', $patient->id) }}">
-	@csrf
-	{{ method_field('PUT') }}
 
-	<div class="card mt-3">
-		<div class="card-header">
-			<h4><i class="fas fa-id-card"></i> {{ trans('forms.complete_personal_data') }} </h4>
-		</div>
 
-		<div class="card-body">
+<div class="card mt-3">
+	<div class="card-header">
+		<h4><i class="fas fa-id-card"></i> {{ trans('forms.complete_personal_data') }} </h4>
+	</div>
+
+	<div class="card-body">
+		<form id="update_patient" method="post" action="{{ route('administrators/patients/update', $patient->id) }}">
+			@csrf
+			{{ method_field('PUT') }}
 
 			<div class="input-group mt-2 col-md-9">
 				<div class="input-group-prepend">
@@ -114,31 +121,34 @@
 				<input type="date" class="form-control" name="birth_date" value="{{ $patient->birth_date }}">
 			</div>
 
-		</div>
+			<input type="submit" style="display: none;">
+
+		</form>
 	</div>
 
+	<div class="card-footer">
+			<div class="text-right">
+				<button onclick="updatePatient();" class="btn btn-primary">
+					<span class="fas fa-save"></span> {{ trans('forms.save') }}
+				</button>
+			</div>
+	</div>
+</div>
 
-	<div class="card mt-3">
-		<div class="card-header">
-			<h4><i class="fas fa-book"></i> {{ trans('forms.complete_contact_information') }} </h4>
-		</div>
 
-		<div class="card-body">
-			
-			@include('administrators/patients/phones/index')
-			@include('administrators/patients/emails/index')
-
-		</div>
+<div class="card mt-3">
+	<div class="card-header">
+		<h4><i class="fas fa-book"></i> {{ trans('forms.complete_contact_information') }} </h4>
 	</div>
 
-	@include('administrators/patients/social_works/affiliates/index')
-	
+	<div class="card-body">
 
-	<div class="float-right mt-3">
-		<button type="submit" class="btn btn-primary">
-			<span class="fas fa-save"></span> {{ trans('forms.save') }}
-		</button>
+		@include('administrators/patients/phones/index')
+		@include('administrators/patients/emails/index')
+
 	</div>
+</div>
 
-</form>
+@include('administrators/patients/social_works/affiliates/index')
+
 @endsection

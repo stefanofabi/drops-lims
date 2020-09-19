@@ -30,16 +30,16 @@
 			<a class="nav-link" href=""> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> Ver protocolos</a>
 		</li>
 
-        <li class="nav-item">
-            <form id="security_code_form" target="_blank" action="{{ route('administrators/patients/security_codes/store') }}" method="post">
-                @csrf
-                <input type="hidden" name="patient_id" value="{{ $patient->id }}">
-            </form>
+		<li class="nav-item">
+			<form id="security_code_form" target="_blank" action="{{ route('administrators/patients/security_codes/store') }}" method="post">
+				@csrf
+				<input type="hidden" name="patient_id" value="{{ $patient->id }}">
+			</form>
 
-            <a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('security_code_form').submit();">
-                <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('patients.get_security_code') }}
-            </a>
-        </li>
+			<a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('security_code_form').submit();">
+				<img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('patients.get_security_code') }}
+			</a>
+		</li>
 	</ul>
 </p>
 @endsection
@@ -66,15 +66,7 @@
 
 			<input type="text" class="form-control" value="{{ $patient->full_name }}" disabled>
 		</div>
-	</div>
-</div>
 
-<div class="card mt-3">
-	<div class="card-header">
-		<h4><i class="fas fa-id-card"></i> {{ trans('forms.complete_fiscal_data') }} </h4>
-	</div>
-
-	<div class="card-body">
 		<div class="input-group mt-2 col-md-9 input-form">
 			<div class="input-group-prepend">
 				<span class="input-group-text"> {{ trans('patients.business_name') }}</span>

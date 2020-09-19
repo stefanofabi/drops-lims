@@ -22,7 +22,6 @@ return [
     'complete_personal_data' => 'Complete personal data',
     'complete_contact_information' => 'Complete contact information',
     'contact_information' => 'Contact information',
-    'complete_fiscal_data' => 'Complete fiscal data',
     'enter_filter' => 'Enter a filter',
     'search' => 'Search',
     'personal_data' => 'Personal data',

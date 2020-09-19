@@ -9,6 +9,9 @@ use App\Http\Controllers\PatientController;
 
 use App\Email;
 
+use Lang;
+use Session;
+
 class EmailController extends Controller
 {
 
@@ -55,6 +58,7 @@ class EmailController extends Controller
             return $email_id;
         }, self::RETRIES);
 
+        Session::flash('success', [Lang::get('emails.success_saving_email')]);
 
         return redirect()->action('PatientController@edit', ['id' => $request->id]);
     }

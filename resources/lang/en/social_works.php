@@ -23,6 +23,7 @@ return [
     'success_edited_affiliate' => 'Affiliate successfully edited',
     'add_social_work' => 'Add social work',
     'success_destroy_affiliate' => 'Affiliate removed successfully',
-    'warning_destroy_affiliate' => 'There was an error deleting the affiliate. Please try again later'
+    'warning_destroy_affiliate' => 'There was an error deleting the affiliate. Please try again later',
+    'success_saving_affiliate' => 'Affiliate saved successfully',
 
 ];

@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\DB;
 use App\SocialWork;
 use App\Affiliate;
 
+use Lang;
+use Session;
+
 class AffiliateController extends Controller
 {
 
@@ -59,6 +62,7 @@ class AffiliateController extends Controller
 
     	}, self::RETRIES);
 
+        Session::flash('success', [Lang::get('social_works.success_saving_affiliate')]);
 
     	return redirect()->action('PatientController@edit', [$request->patient_id]);
         
