@@ -23,7 +23,7 @@
 
 	<div class="card mt-3">
 		<div class="card-header">
-			<h4><i class="fas fa-id-card"></i> {{ trans('forms.complete_fiscal_data') }} </h4>
+			<h4><i class="fas fa-id-card"></i> {{ trans('forms.complete_tax_data') }} </h4>
 		</div>
 
 		<div class="card-body">

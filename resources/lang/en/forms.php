@@ -44,5 +44,6 @@ return [
     'ended_date' => 'Ended date',
     'send' => 'Send',
     'successful_transaction' => 'Successful transaction',
+    'complete_tax_data' => 'Complete tax data',
 
 ];

@@ -1,5 +1,9 @@
 @extends('layouts/app')
 
+@section('title')
+{{ trans('home.dashboard') }}
+@endsection
+
 @section('content')
 
 <div class="container">
