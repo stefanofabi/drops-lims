@@ -38,7 +38,7 @@
     },
     "homepage": "https://github.com/stefanofabi/laboratorio#readme",
     "dependencies": {
-        "@fortawesome/fontawesome-free": "^5.14.0",
+        "@fortawesome/fontawesome-free": "^5.15.0",
         "bootstrap": "^4.5.2",
         "jquery": "^3.5.1",
         "jquery-ui": "^1.12.1",
