@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Phone;
+use App\Models\Phone;
 
 use Lang;
 use Session;

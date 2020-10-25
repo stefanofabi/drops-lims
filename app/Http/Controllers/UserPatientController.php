@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Traits\PrintProtocol;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-use App\FamilyMember;
-use App\OurProtocol;
-use App\Practice;
-use App\Protocol;
+use App\Http\Traits\PrintProtocol;
+
+use App\Models\FamilyMember;
+use App\Models\OurProtocol;
+use App\Models\Practice;
+use App\Models\Protocol;
 
 use Lang;
 

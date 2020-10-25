@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-use App\Prescriber;
+use App\Models\Prescriber;
 
 class PrescriberFactory extends Factory {
 

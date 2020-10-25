@@ -7,8 +7,8 @@ use Illuminate\Support\Facades\DB;
 
 use App\Http\Traits\Pagination;
 
-use App\Nomenclator;
-use App\Determination;
+use App\Models\Nomenclator;
+use App\Models\Determination;
 
 class DeterminationController extends Controller
 {

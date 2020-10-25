@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Plan;
+use App\Models\Plan;
+
 use Lang;
 
 class SocialWorkController extends Controller

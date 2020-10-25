@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 use App\Http\Controllers\PatientController;
 
-use App\Email;
+use App\Models\Email;
 
 use Lang;
 use Session;

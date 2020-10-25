@@ -2,10 +2,11 @@
 
 namespace App\Http\Traits;
 
-use App\OurProtocol;
 use Spipu\Html2Pdf\Exception\ExceptionFormatter;
 use Spipu\Html2Pdf\Exception\Html2PdfException;
 use Spipu\Html2Pdf\Html2Pdf;
+
+use App\Models\OurProtocol;
 
 use Lang;
 

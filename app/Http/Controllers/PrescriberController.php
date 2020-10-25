@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 use App\Http\Traits\Pagination;
 
-use App\Prescriber;
+use App\Models\Prescriber;
 
 use Lang;
 

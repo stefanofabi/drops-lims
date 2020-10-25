@@ -7,8 +7,8 @@ use Illuminate\Support\Facades\DB;
 
 use App\Http\Traits\Pagination;
 
-use App\Protocol;
-use App\Patient;
+use App\Models\Protocol;
+use App\Models\Patient;
 
 class ProtocolController extends Controller
 {

@@ -3,7 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Prescriber;
+
+use App\Models\Prescriber;
 
 class PrescriberSeeder extends Seeder
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Nomenclator extends Model
+class SecurityCode extends Model
 {
     //
 }

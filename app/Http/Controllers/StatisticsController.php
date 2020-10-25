@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-use App\OurProtocol;
-use App\SocialWork;
+use App\Models\OurProtocol;
+use App\Models\SocialWork;
 
 use Lang;
 

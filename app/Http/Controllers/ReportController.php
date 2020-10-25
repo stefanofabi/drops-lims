@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-use App\Determination;
-use App\Report;
+use App\Models\Determination;
+use App\Models\Report;
 
 class ReportController extends Controller
 {

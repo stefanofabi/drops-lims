@@ -9,11 +9,11 @@ use App\Http\Traits\PrintWorkSheet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-use App\Patient;
-use App\Affiliate;
-use App\Protocol;
-use App\OurProtocol;
-use App\Prescriber;
+use App\Models\Patient;
+use App\Models\Affiliate;
+use App\Models\Protocol;
+use App\Models\OurProtocol;
+use App\Models\Prescriber;
 
 use Lang;
 

@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-use App\Practice;
-use App\Report;
-use App\OurProtocol;
-use App\Result;
+use App\Models\Practice;
+use App\Models\Report;
+use App\Models\OurProtocol;
+use App\Models\Result;
 
 class PracticeController extends Controller
 {

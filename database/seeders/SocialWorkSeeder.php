@@ -3,7 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\SocialWork;
+
+use App\Models\SocialWork;
 
 class SocialWorkSeeder extends Seeder
 {

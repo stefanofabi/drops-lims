@@ -3,7 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Nomenclator;
+
+use App\Models\Nomenclator;
 
 class NomenclatorSeeder extends Seeder
 {

@@ -7,11 +7,11 @@ use Illuminate\Support\Facades\DB;
 
 use App\Http\Traits\Pagination;
 
-use App\Patient;
-use App\Email;
-use App\Phone;
-use App\SocialWork;
-use App\Affiliate;
+use App\Models\Patient;
+use App\Models\Email;
+use App\Models\Phone;
+use App\Models\SocialWork;
+use App\Models\Affiliate;
 
 use Lang;
 

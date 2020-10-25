@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Patient;
-use App\SecurityCode;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 use App\Http\Traits\PrintSecurityCode;
+
+use App\Models\Patient;
+use App\Models\SecurityCode;
 
 class SecurityCodeController extends Controller
 {
