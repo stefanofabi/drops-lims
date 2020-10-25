@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 use App\Patient;
 
@@ -13,6 +15,7 @@ class PatientSeeder extends Seeder
     public function run()
     {
         //
-        $patients = factory(Patient::class, 300)->create();
+        
+        Patient::factory()->count(300)->create();
     }
 }

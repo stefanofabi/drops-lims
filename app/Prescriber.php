@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -10,7 +11,7 @@ class Prescriber extends Model
 {
     //
 
-	use SoftDeletes;
+	use HasFactory, SoftDeletes;
 
     protected $dates = ['deleted_at'];
 

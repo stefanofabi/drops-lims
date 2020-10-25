@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 use App\Prescriber;
 
@@ -13,6 +15,6 @@ class PrescriberSeeder extends Seeder
     public function run()
     {
         //
-        factory(Prescriber::class, 100)->create();
+        Prescriber::factory()->count(300)->create();
     }
 }
