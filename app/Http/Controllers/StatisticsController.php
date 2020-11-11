@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 use App\Models\OurProtocol;
 use App\Models\SocialWork;
+use App\Models\Practice;
 
 use Lang;
 
@@ -14,7 +15,8 @@ class StatisticsController extends Controller
 {
     //
 
-    public function index() {
+    public function index() 
+    {
         $social_works = SocialWork::all();
         $initial_date = date('Y-m-d', strtotime(date('Y-m-d')."- 30 days"));
         $ended_date = date('Y-m-d');
@@ -25,7 +27,8 @@ class StatisticsController extends Controller
         ->with('ended_date', $ended_date);
     }
 
-    public function annual_collection_social_work(Request $request) {
+    public function annual_collection_social_work(Request $request) 
+    {
 
         $social_works = SocialWork::all();
         $social_work = $request->social_work;
@@ -56,7 +59,8 @@ class StatisticsController extends Controller
 
     }
 
-    public function patient_flow_per_month(Request $request) {
+    public function patient_flow_per_month(Request $request) 
+    {
 
         $social_works = SocialWork::all();
         $initial_date = $request->initial_date;
@@ -78,7 +82,30 @@ class StatisticsController extends Controller
         ->with('data', $new_array);
     }
 
-    public function generate_array_per_month($array, $initial_date, $ended_date) {
+    public function track_income(Request $request) 
+    {
+    	$social_works = SocialWork::all();
+    	$initial_date = $request->initial_date;
+        $ended_date = $request->ended_date;
+
+    	$track_income = Practice::select(DB::raw("MONTH(protocols.completion_date) as month"), DB::raw("YEAR(protocols.completion_date) as year"), DB::raw('SUM(practices.amount) as total'))
+    	->protocol()
+    	->whereBetween('protocols.completion_date', [$initial_date, $ended_date])
+    	->groupBy(DB::raw("MONTH(protocols.completion_date)"), DB::raw("YEAR(protocols.completion_date)"), 'practices.amount')
+    	->orderBy('protocols.completion_date', 'asc')
+    	->get();
+
+    	$new_array = $this->generate_array_per_month($track_income, $initial_date, $ended_date);
+
+    	return view('administrators/statistics/track_income')
+        ->with('social_works', $social_works)
+        ->with('initial_date', $initial_date)
+        ->with('ended_date', $ended_date)
+        ->with('data', $new_array);
+    }
+
+    public function generate_array_per_month($array, $initial_date, $ended_date) 
+    {
     	/*
 		It is the only solution I found without having to create a temporary table to be able to group all the months one by one
         */
@@ -124,7 +151,8 @@ class StatisticsController extends Controller
     	return $new_array;    	
     }
 
-    public function get_month($month) {
+    public function get_month($month) 
+    {
 
         switch($month) {
             case 1: {
@@ -178,7 +206,7 @@ class StatisticsController extends Controller
             }
             
             case 11: {
-                $month_value = \Lang::get('months.november');
+                $month_value = Lang::get('months.november');
                 break;
             }
             

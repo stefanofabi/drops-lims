@@ -9,11 +9,11 @@ class Plan extends Model
     //
 
     public function nomenclator() {
-		return $this->belongsTo('App\Nomenclator');
+		return $this->belongsTo('App\Models\Nomenclator');
 	}
 
 	public function social_work() {
-		return $this->belongsTo('App\SocialWork');
+		return $this->belongsTo('App\Models\SocialWork');
 	}
 	
 }

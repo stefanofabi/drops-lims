@@ -52,7 +52,7 @@ return [
     'notice_confidentiality' => 'This is a security notice! Do not lose, share or publish this code. Laboratory personnel will never contact you for any reason. If you lose this code contact immediately because your data and medical results may be exposed',
     'expiration_notice' => 'This code expires on :date',
     'unique_identifier' => 'Unique identifier',
-    'notice_add_family_member' => 'To add a new relative to your account, enter the unique patient identifier and the security code previously requested in our laboratories',
+    'notice_add_family_member' => 'To add a new patient to your account, enter the unique patient identifier and the security code previously requested in our laboratories',
     'security_code_for' => 'Security code for patient #:id',
     'success_destroy' => 'Patient successfully removed',
     'success_destroy_message' => 'Well done! If this was due to an error it is not a problem. Click on this message to undo the changes!',

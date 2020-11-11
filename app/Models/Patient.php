@@ -52,7 +52,7 @@ class Patient extends Model
 	}    
 
 	public function phone() {
-		return $this->hasMany('App\Phone');
+		return $this->hasMany('App\Models\Phone');
 	}
     
 }

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-use App\Report;
+use App\Models\Report;
 
 class Determination extends Model
 {
@@ -48,6 +48,6 @@ class Determination extends Model
 	}
 
 	public function nomenclator() {
-		return $this->belongsTo('App\Nomenclator');
+		return $this->belongsTo('App\Models\Nomenclator');
 	}
 }

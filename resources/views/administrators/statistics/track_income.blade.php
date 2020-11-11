@@ -3,13 +3,6 @@
 @section('js')
 @parent
 
-
-<script type="text/javascript">
-	$(document).ready(function() {
-    	$("#social_work").val('{{ $social_work }}') ;	    
-	});
-</script>
-
  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
 
@@ -26,7 +19,7 @@
 
         var options = {
           chart: {
-            title: '{{ trans("statistics.annual_collection_social_work") }}',
+            title: '{{ trans("statistics.track_income") }}',
             subtitle: '{{ trans("statistics.subtitle_collection_from_month_to_month", ['initial_date' => $initial_date, 'ended_date' => $ended_date ]) }}',
           }
         };

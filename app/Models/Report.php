@@ -9,7 +9,7 @@ class Report extends Model
     //
 
     public function determination() {
-		return $this->belongsTo('App\Determination');
+		return $this->belongsTo('App\Models\Determination');
 	}
 
 	public function scopeDetermination($query) {

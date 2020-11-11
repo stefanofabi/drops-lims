@@ -23,4 +23,7 @@ Route::group(
 		Route::post('patient_flow_per_month', 'StatisticsController@patient_flow_per_month')
 		->name('patient_flow_per_month');
 
+		Route::post('track_income', 'StatisticsController@track_income')
+		->name('track_income');
+
 });

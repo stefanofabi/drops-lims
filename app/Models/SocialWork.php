@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-use App\Plan;
+use App\Models\Plan;
 
 class SocialWork extends Model
 {

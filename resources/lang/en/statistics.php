@@ -18,7 +18,7 @@ return [
     'track_income' => 'Track income',
     'initial_date' => 'Initial date',
     'ended_date' => 'Ended date',
-    'subtitle_annual_collection_social_work' => 'Collection from :initial_date to :ended_date',
     'months' => 'Months',
+    'subtitle_collection_from_month_to_month' => 'Collection from :initial_date to :ended_date',
 
 ];

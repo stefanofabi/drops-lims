@@ -10,17 +10,17 @@ class Practice extends Model
 
     public function protocol()
     {
-        return $this->belongsTo('App\Protocol');
+        return $this->belongsTo('App\Models\Protocol');
     }
 
     public function report()
     {
-		return $this->belongsTo('App\Report');
+		return $this->belongsTo('App\Models\Report');
 	}
 
 	public function results()
     {
-        return $this->hasMany('App\Result', 'practice_id');
+        return $this->hasMany('App\Models\Result', 'practice_id');
     }
 
     public function scopeProtocol($query) {

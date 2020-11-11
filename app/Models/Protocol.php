@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-use App\Practice;
+use App\Models\Practice;
 
 class Protocol extends Model
 {
@@ -85,7 +85,7 @@ class Protocol extends Model
 
 	public function practices()
     {
-        return $this->hasMany('App\Practice', 'protocol_id');
+        return $this->hasMany('App\Models\Practice', 'protocol_id');
     }
 
     public function scopePractices($query) {

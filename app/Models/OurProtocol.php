@@ -12,15 +12,15 @@ class OurProtocol extends Protocol
 
 
 	public function plan() {
-		return $this->belongsTo('App\Plan');
+		return $this->belongsTo('App\Models\Plan');
 	}
 
 	public function prescriber() {
-		return $this->belongsTo('App\Prescriber');
+		return $this->belongsTo('App\Models\Prescriber');
 	}
 
 	public function patient() {
-		return $this->belongsTo('App\Patient');
+		return $this->belongsTo('App\Models\Patient');
 	}
 
 	public function scopeProtocol($query) {

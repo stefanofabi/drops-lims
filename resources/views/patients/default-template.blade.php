@@ -1,5 +1,9 @@
 @extends('default-template')
 
+@section('home-href')
+{{ route('patients/home') }}
+@endsection
+
 @section('navbar_menu')
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
