@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('title')
+{{ trans('auth.login') }}
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -8,6 +12,17 @@
                 <div class="card-header">{{ trans('auth.login') }}</div>
 
                 <div class="card-body">
+
+                    @if (Session::has('login_failed'))
+                        <div class="alert alert-danger">
+                            <p> <strong> {{ trans('errors.error_processing_transaction') }} </strong> </p>
+                            
+                            <ul>
+                                {{ Session::get('login_failed') }}
+                            </ul>
+                        </div>
+                    @endif
+
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
 

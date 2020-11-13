@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+
+use Lang;
 
 class LoginController extends Controller
 {
@@ -40,7 +43,7 @@ class LoginController extends Controller
     }
 
 
-     public function login(Request $request)
+    public function login(Request $request)
     {
         $input = $request->all();
 
@@ -51,13 +54,19 @@ class LoginController extends Controller
 
         if(auth()->attempt(array('email' => $input['email'], 'password' => $input['password']))) {
             if (auth()->user()->is_admin) {
-                return redirect()->route('administrators/home');
+                $redirect = redirect()->route('administrators/home');
             } else {
-                return redirect()->route('patients/home');
+                $redirect = redirect()->route('patients/home');
             }
         } else {
-            return redirect()->route('login')
-                ->with('error','Email-Address And Password Are Wrong.');
+            Session::flash('login_failed', Lang::get('auth.failed'));
+
+            $redirect = redirect()->route('login')
+                ->withInput(
+                    $request->except('password')
+                );
         }
+
+        return $redirect;
     }
 }
