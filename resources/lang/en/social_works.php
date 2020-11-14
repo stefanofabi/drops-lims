@@ -25,5 +25,6 @@ return [
     'success_destroy_affiliate' => 'Affiliate removed successfully',
     'warning_destroy_affiliate' => 'There was an error deleting the affiliate. Please try again later',
     'success_saving_affiliate' => 'Affiliate saved successfully',
+    'error_saving_affiliate' => 'There was an error saving the affiliate. Please try again later',
 
 ];

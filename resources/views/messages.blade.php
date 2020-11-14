@@ -10,13 +10,13 @@
         </div>
     @endif
 
-    @if (count($errors) > 0)
+    @if ($errors->any())
         <div class="alert alert-danger">
            <p> <strong> {{ trans('errors.error_processing_transaction') }} </strong> </p>
 
-           <ul>
-                @foreach ($errors as $message)
-                    <li> {{ $message }} </li>
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li> {{ $error }} </li>
                 @endforeach
             </ul>
         </div>

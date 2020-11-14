@@ -340,9 +340,7 @@ class PatientController extends Controller
         if (!$patient) {
         	// patient not exists
         	return view('administrators/patients/patients')
-        	->with('errors', array(
-        		Lang::get('patients.error_destroy_patient')
-        	));
+        	->withErrors(Lang::get('patients.error_destroy_patient'));
         }
 
         $view = view('administrators/patients/destroy');
@@ -371,9 +369,7 @@ class PatientController extends Controller
         if (!$patient) {
         	// patient not removed
         	return view('administrators/patients/patients')
-        	->with('errors', array(
-        		Lang::get('patients.error_restore_patient')
-        	));
+        	->withErrors(Lang::get('patients.error_restore_patient'));
         }
 
         $view = view('administrators/patients/restore')->with('patient_id', $id);

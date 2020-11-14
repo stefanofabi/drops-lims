@@ -9,8 +9,8 @@
 |
 */
 
-Route::get('social_works/affiliates/create/{id}', 'AffiliateController@create')->name('social_works/affiliates/create')
-->where('id', '[1-9][0-9]*');
+Route::get('social_works/affiliates/create/{patient_id}', 'AffiliateController@create')->name('social_works/affiliates/create')
+->where('patient_id', '[1-9][0-9]*');
 
 Route::post('social_works/affiliates/store', 'AffiliateController@store')->name('social_works/affiliates/store');
 

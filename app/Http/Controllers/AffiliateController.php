@@ -3,18 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 use App\Models\SocialWork;
 use App\Models\Affiliate;
 
 use Lang;
-use Session;
 
 class AffiliateController extends Controller
 {
-
-	private const RETRIES = 5;
 
     /**
      * Display a listing of the resource.
@@ -31,13 +27,14 @@ class AffiliateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create($patient_id)
     {
         //
+    
     	$social_works = SocialWork::all();
 
     	return view('administrators/patients/social_works/affiliates/create')
-    	->with('id', $request->id)
+    	->with('id', $patient_id)
     	->with('social_works', $social_works);
     }
 
@@ -50,22 +47,29 @@ class AffiliateController extends Controller
     public function store(Request $request)
     {
         //
-    	DB::transaction(function () use ($request) {
 
-    		$prescriber = Affiliate::insert([
-    			'patient_id' => $request->patient_id,
-    			'plan_id' => $request->plan_id,
-    			'affiliate_number' => $request->affiliate_number,
-    			'expiration_date' => $request->expiration_date,
-    			'security_code' => $request->security_code,
-    		]);
+        $request->validate([
+            'patient_id' => 'required|numeric|min:1',
+            'plan_id' => 'required|numeric|min:1',
+            'affiliate_number' => 'string|nullable',
+            'expiration_date' => 'date|nullable',
+            'security_code' => 'numeric|nullable|min:0|max:999',
+        ]);
 
-    	}, self::RETRIES);
+        $affiliate = new Affiliate($request->all());        
+        if ($affiliate->save()) {
+            $redirect = redirect()->action('PatientController@edit', [$request->patient_id])
+            ->with('success', [
+                Lang::get('social_works.success_saving_affiliate')
+            ]);
+        } else {
+            $redirect = back()->withInput($request->all())
+            ->withErrors(
+                Lang::get('social_works.error_saving_affiliate')
+            );
+        }
 
-        Session::flash('success', [Lang::get('social_works.success_saving_affiliate')]);
-
-    	return redirect()->action('PatientController@edit', [$request->patient_id]);
-        
+    	return $redirect;        
     }
 
     /**
@@ -89,11 +93,14 @@ class AffiliateController extends Controller
     {
         //
         
+        $request->validate([
+            'id' => 'required|numeric|min:1',
+        ]);
+
         return Affiliate::select('affiliates.id', 'plans.id as plan_id', 'social_works.id as social_work_id', 'affiliates.affiliate_number', 'affiliates.security_code', 'affiliates.expiration_date')
         ->plan()
         ->socialWork()
-        ->where('affiliates.id', $request->id)
-        ->first();
+        ->findOrFail($request->id);
     }
 
     /**
@@ -107,16 +114,21 @@ class AffiliateController extends Controller
     {
         //
 
-        DB::transaction(function () use ($request) {
-           Affiliate::where('id', '=', $request->id)
-            ->update(
-                [
-                    'plan_id' => $request->plan_id,
-                    'affiliate_number' => $request->affiliate_number,
-                    'security_code' => $request->security_code,
-                    'expiration_date' => $request->expiration_date,
-                ]);
-        }, self::RETRIES);
+        $request->validate([
+            'id' => 'required|numeric|min:1',
+            'plan_id' => 'required|numeric|min:1',
+            'affiliate_number' => 'string|nullable',
+            'expiration_date' => 'date|nullable',
+            'security_code' => 'numeric|nullable|min:0|max:999',
+        ]);
+
+        $affiliate = Affiliate::findOrFail($request->id);
+
+        if (!$affiliate->update($request->all())) {
+            return response([], 500);
+        } 
+
+        return response([], 200);
     }
 
     /**
@@ -129,9 +141,11 @@ class AffiliateController extends Controller
     {
         //
 
-        $id = $request->id;
+        $request->validate([
+            'id' => 'required|numeric|min:1',
+        ]);
 
-        $affiliate = Affiliate::findOrFail($id);
+        $affiliate = Affiliate::findOrFail($request->id);
 
         if (!$affiliate->delete()) {
             return response([], 500);

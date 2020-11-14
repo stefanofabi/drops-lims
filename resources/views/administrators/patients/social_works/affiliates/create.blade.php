@@ -13,7 +13,6 @@
 @section('js')
 <script type="text/javascript">
 
-
 	function load_plans() {
 
 		var parameters = {
@@ -105,7 +104,13 @@
 			<span class="input-group-text"> {{ trans('social_works.affiliate_number') }} </span>
 		</div>
 
-		<input type="text" class="form-control" name="affiliate_number">
+		<input type="text" class="form-control @error('affiliate_number') is-invalid @enderror" name="affiliate_number" value="{{ old('affiliate_number') }}">
+
+		@error('affiliate_number')
+        	<span class="invalid-feedback" role="alert">
+            	<strong> {{ $message }} </strong>
+       		</span>
+        @enderror
 	</div>
 
 	<div class="input-group mt-2 col-md-9 input-form">
@@ -113,7 +118,13 @@
 			<span class="input-group-text"> {{ trans('social_works.security_code') }} </span>
 		</div>
 
-		<input type="number" class="form-control" name="security_code" min="100" max="999">
+		<input type="number" class="form-control @error('security_code') is-invalid @enderror" name="security_code" min="100" max="999" value="{{ old('security_code') }}">
+
+		@error('security_code')
+        	<span class="invalid-feedback" role="alert">
+            	<strong> {{ $message }} </strong>
+       		</span>
+        @enderror
 	</div>
 	
 	<div class="input-group mt-2 col-md-9 input-form">
@@ -121,7 +132,13 @@
 			<span class="input-group-text"> {{ trans('social_works.expiration_date') }} </span>
 		</div>
 
-		<input type="date" class="form-control" name="expiration_date">
+		<input type="date" class="form-control @error('expiration_date') is-invalid @enderror" name="expiration_date" value="{{ old('expiration_date') }}">
+
+		@error('expiration_date')
+        	<span class="invalid-feedback" role="alert">
+            	<strong> {{ $message }} </strong>
+       		</span>
+        @enderror
 	</div>
 
 	<div class="float-right mt-3">
