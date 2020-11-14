@@ -21,7 +21,7 @@ class OurProtocolController extends Controller
 {
 
     use PrintProtocol;
-    use PrintWorkSheet;
+    use PrintWorksheet;
     use PrintSecurityCode;
 
 	private const RETRIES = 5;

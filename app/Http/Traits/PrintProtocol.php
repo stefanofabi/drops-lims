@@ -35,7 +35,7 @@ trait PrintProtocol {
             $phone = $patient->phone()->first();
 
             ob_start();
-            include('pdf/report_001.php');
+            include('Templates/Reports/report_001.php');
             $content = ob_get_clean();
 
             $html2pdf = new Html2Pdf('P', 'A4', str_replace('_', '-', app()->getLocale()));

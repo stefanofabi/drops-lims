@@ -64,6 +64,7 @@ return [
     'danger_restore_message' => 'Oops! An error occurred while retrieving the patient. Please contact the administrator to solve it.', 
     'error_destroy_patient' => 'The patient was not found and could not be removed',
     'error_restore_patient' => 'The patient cannot be found and could not be retrieved',
-
+    'owner_data' => 'Owner data',
+    'animal_data' => 'Animal data',
 
 ];

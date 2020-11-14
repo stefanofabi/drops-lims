@@ -10,7 +10,7 @@ use App\Models\OurProtocol;
 
 use Lang;
 
-trait PrintWorkSheet {
+trait PrintWorksheet {
 
     /**
      * Returns a worksheet in pdf
@@ -29,7 +29,7 @@ trait PrintWorkSheet {
 
         try {
             ob_start();
-            include('pdf/worksheet_001.php');
+            include('Templates/Worksheets/worksheet_001.php');
             $content = ob_get_clean();
 
             $html2pdf = new Html2Pdf('P', 'A4', str_replace('_', '-', app()->getLocale()));

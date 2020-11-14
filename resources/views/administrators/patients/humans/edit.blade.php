@@ -34,19 +34,27 @@
 @section('menu')
 <ul class="nav flex-column">
 	<li class="nav-item">
-		<a class="nav-link" href="{{ route('administrators/patients/phones/create', $patient->id) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('phones.add_phone') }} </a>
+		<a class="nav-link" href="{{ route('administrators/patients/phones/create', $patient->id) }}"> 
+			<img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('phones.add_phone') }} 
+		</a>
 	</li>		
 
 	<li class="nav-item">
-		<a class="nav-link" href="{{ route('administrators/patients/emails/create', $patient->id) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('emails.add_email') }} </a>
+		<a class="nav-link" href="{{ route('administrators/patients/emails/create', $patient->id) }}"> 
+			<img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('emails.add_email') }} 
+		</a>
 	</li>
 
 	<li class="nav-item">
-		<a class="nav-link" href="{{ route('administrators/patients/social_works/affiliates/create', $patient->id) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('social_works.add_social_work') }} </a>
+		<a class="nav-link" href="{{ route('administrators/patients/social_works/affiliates/create', $patient->id) }}"> 
+			<img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('social_works.add_social_work') }} 
+		</a>
 	</li>
 
 	<li class="nav-item">
-		<a class="nav-link" href="{{ route('administrators/patients/show', $patient->id) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('forms.go_back') }} </a>
+		<a class="nav-link" href="{{ route('administrators/patients/show', $patient->id) }}"> 
+			<img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('forms.go_back') }} 
+		</a>
 	</li>	
 </ul>
 @endsection
@@ -72,18 +80,19 @@
 		<form id="update_patient" method="post" action="{{ route('administrators/patients/update', $patient->id) }}">
 			@csrf
 			{{ method_field('PUT') }}
-			<div class="input-group mt-2 col-md-9">
-				<div class="input-group-prepend">
-					<span class="input-group-text"> {{ trans('patients.dni') }} </span>
-				</div>
-				<input type="number" class="form-control" name="key" value="{{ $patient->key }}">
-			</div>
 
 			<div class="input-group mt-2 col-md-9 input-form">
 				<div class="input-group-prepend">
 					<span class="input-group-text"> {{ trans('patients.full_name') }} </span>
 				</div>
 				<input type="text" class="form-control" name="full_name" value="{{ $patient->full_name }}" required>
+			</div>
+			
+			<div class="input-group mt-2 col-md-9">
+				<div class="input-group-prepend">
+					<span class="input-group-text"> {{ trans('patients.dni') }} </span>
+				</div>
+				<input type="number" class="form-control" name="key" value="{{ $patient->key }}">
 			</div>
 
 			<div class="input-group mt-2 col-md-9 input-form">

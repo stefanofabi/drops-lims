@@ -18,7 +18,7 @@ trait PrintSecurityCode {
     {
         try {
             ob_start();
-            include('pdf/security_code_001.php');
+            include('Templates/Others/security_code_001.php');
             $content = ob_get_clean();
 
             $html2pdf = new Html2Pdf('P', 'A4', str_replace('_', '-', app()->getLocale()));

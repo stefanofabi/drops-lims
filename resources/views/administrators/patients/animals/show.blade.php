@@ -71,6 +71,7 @@
 
 	<div class="card-body">
 
+		<strong> {{ trans('patients.owner_data') }} </strong>
 		<div class="input-group mt-2 col-md-9">
 			<div class="input-group-prepend">
 				<span class="input-group-text"> {{ trans('patients.owner') }} </span>
@@ -78,14 +79,14 @@
 			<input type="text" class="form-control" value="{{ $patient->owner }}" disabled>
 		</div>
 
-		<div class="input-group mt-2 col-md-9 input-form">
+		<div class="input-group mt-2 col-md-9">
 			<div class="input-group-prepend">
-				<span class="input-group-text"> {{ trans('patients.full_name') }} </span>
+				<span class="input-group-text"> {{ trans('patients.dni') }} </span>
 			</div>
-			<input type="text" class="form-control" value="{{ $patient->full_name }}" disabled>
+			<input type="number" class="form-control" value="{{ $patient->key }}" disabled>
 		</div>
 
-		<div class="input-group mt-2 col-md-9 input-form">
+		<div class="input-group mt-2 mb-4 col-md-9 input-form">
 			<div class="input-group-prepend">
 				<span class="input-group-text"> {{ trans('patients.home_address') }} </span>
 			</div>
@@ -95,6 +96,14 @@
 				<span class="input-group-text"> {{ trans('patients.city') }} </span>
 			</div>
 			<input type="text" class="form-control" value="{{ $patient->city }}" disabled>
+		</div>
+
+		<strong> {{ trans('patients.animal_data') }} </strong>
+		<div class="input-group mt-2 col-md-9 input-form">
+			<div class="input-group-prepend">
+				<span class="input-group-text"> {{ trans('patients.full_name') }} </span>
+			</div>
+			<input type="text" class="form-control" value="{{ $patient->full_name }}" disabled>
 		</div>
 
 		<div class="input-group mt-2 col-md-9 input-form">

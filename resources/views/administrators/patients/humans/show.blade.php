@@ -71,18 +71,18 @@
 
 	<div class="card-body">
 
-		<div class="input-group mt-2 col-md-9">
-			<div class="input-group-prepend">
-				<span class="input-group-text"> {{ trans('patients.dni') }} </span>
-			</div>
-			<input type="number" class="form-control" value="{{ $patient->key }}" disabled>
-		</div>
-
 		<div class="input-group mt-2 col-md-9 input-form">
 			<div class="input-group-prepend">
 				<span class="input-group-text"> {{ trans('patients.full_name') }} </span>
 			</div>
 			<input type="text" class="form-control" value="{{ $patient->full_name }}" disabled>
+		</div>
+
+		<div class="input-group mt-2 col-md-9">
+			<div class="input-group-prepend">
+				<span class="input-group-text"> {{ trans('patients.dni') }} </span>
+			</div>
+			<input type="number" class="form-control" value="{{ $patient->key }}" disabled>
 		</div>
 
 		<div class="input-group mt-2 col-md-9 input-form">
