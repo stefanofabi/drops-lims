@@ -52,11 +52,15 @@
 @section('menu')
 <ul class="nav flex-column">
 	<li class="nav-item">
-		<a class="nav-link" href="{{ route('administrators/protocols/our/add_practices', [$protocol->id]) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('protocols.add_practices') }} </a>
+		<a class="nav-link" href="{{ route('administrators/protocols/our/add_practices', [$protocol->id]) }}"> 
+			<img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('protocols.add_practices') }} 
+		</a>
 	</li>
 
 	<li class="nav-item">
-		<a class="nav-link" href="{{ route('administrators/protocols/our/show', [$protocol->id]) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('forms.go_back') }} </a>
+		<a class="nav-link" href="{{ route('administrators/protocols/our/show', [$protocol->id]) }}"> 
+			<img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('forms.go_back') }} 
+		</a>
 	</li>
 </ul>
 @endsection

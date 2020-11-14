@@ -13,15 +13,19 @@
 @section('menu')
 <ul class="nav flex-column">
 	<li class="nav-item">
-		<a class="nav-link" target="_blank" href="{{ route('administrators/protocols/our/print_worksheet', $protocol->id) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('protocols.print_worksheet') }} </a>
+		<a class="nav-link" target="_blank" href="{{ route('administrators/protocols/our/print_worksheet', $protocol->id) }}"> 
+			<img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('protocols.print_worksheet') }} 
+		</a>
 	</li>
 
 	<li class="nav-item">
-		<a class="nav-link" target="_blank" href="{{ route('administrators/protocols/our/print', $protocol->id) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('protocols.print_report') }} </a>
+		<a class="nav-link" target="_blank" href="{{ route('administrators/protocols/our/print', $protocol->id) }}"> 
+			<img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('protocols.print_report') }} 
+		</a>
 	</li>
 
     <li class="nav-item">
-        <a class="nav-link" href="{{ route('administrators/patients/show', $patient->id) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('protocols.see_patient') }} </a>
+        <a class="nav-link" href="{{ route('administrators/patients/show', $patient->id) }}"> <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('protocols.see_patient') }} </a>
     </li>
 </ul>
 @endsection

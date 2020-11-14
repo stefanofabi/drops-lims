@@ -13,15 +13,15 @@
 @section('menu')
 <ul class="nav flex-column">
 	<li class="nav-item">
-		<a class="nav-link" href="{{ route('administrators/patients/animals/create') }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('patients.create_animal') }} </a>
+		<a class="nav-link" href="{{ route('administrators/patients/animals/create') }}"> <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('patients.create_animal') }} </a>
 	</li>		
 
 	<li class="nav-item">
-		<a class="nav-link" href="{{ route('administrators/patients/humans/create') }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('patients.create_human') }}</a>
+		<a class="nav-link" href="{{ route('administrators/patients/humans/create') }}"> <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('patients.create_human') }}</a>
 	</li>
 
 	<li class="nav-item">
-		<a class="nav-link" href="{{ route('administrators/patients/industrials/create') }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('patients.create_industrial') }}</a>
+		<a class="nav-link" href="{{ route('administrators/patients/industrials/create') }}"> <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('patients.create_industrial') }}</a>
 	</li>
 </ul>
 @endsection

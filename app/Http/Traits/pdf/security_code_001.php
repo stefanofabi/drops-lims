@@ -39,7 +39,7 @@
 <page backtop="40mm" backbottom="50mm">
     <page_header>
 
-        <img width="100" height="100" src="<?php echo public_path() ?>/img/logo.png" style="float: left">
+        <img width="100" height="100" src="<?php echo public_path() ?>/images/logo.png" style="float: left">
 
         <table class="cover">
             <tr>

@@ -23,11 +23,18 @@
 <p>
 	<ul class="nav flex-column">
 		<li class="nav-item">
-			<a class="nav-link" href=""> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> Crear protocolo </a>
+			<form id="create_protocol_form" action="{{ route('administrators/protocols/our/create') }}" method="post">
+                @csrf
+                <input type="hidden" name="patient_id" value="{{ $patient->id }}">
+            </form>
+
+			<a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('create_protocol_form').submit();"> 
+				<img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('protocols.create_protocol')}} 
+			</a>
 		</li>
 
 		<li class="nav-item">
-			<a class="nav-link" href=""> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> Ver protocolos</a>
+			<a class="nav-link" href="#"> <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('protocols.view_protocols') }} </a>
 		</li>
 
         <li class="nav-item">
@@ -37,7 +44,7 @@
             </form>
 
             <a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('security_code_form').submit();">
-                <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('patients.get_security_code') }}
+                <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('patients.get_security_code') }}
             </a>
         </li>
 	</ul>
