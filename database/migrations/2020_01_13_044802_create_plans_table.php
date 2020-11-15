@@ -24,7 +24,6 @@ class CreatePlansTable extends Migration
             $table->foreign('social_work_id')->references('id')->on('social_works')->onDelete('restrict')->onUpdate('cascade');
             $table->foreign('nomenclator_id')->references('id')->on('nomenclators')->onDelete('restrict')->onUpdate('cascade');
 
-            $table->softDeletes();
             $table->timestamps();
 
             $table->engine = 'InnoDB';

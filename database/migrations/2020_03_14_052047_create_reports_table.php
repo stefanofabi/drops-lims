@@ -22,7 +22,6 @@ class CreateReportsTable extends Migration
             // Foreign keys
             $table->foreign('determination_id')->references('id')->on('determinations')->onDelete('restrict')->onUpdate('cascade');
 
-            $table->softDeletes();
             $table->timestamps();
 
             $table->engine = 'InnoDB';

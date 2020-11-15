@@ -23,7 +23,6 @@ class CreatePracticesTable extends Migration
             $table->foreign('protocol_id')->references('id')->on('protocols')->onDelete('restrict')->onUpdate('cascade');
             $table->foreign('report_id')->references('id')->on('reports')->onDelete('restrict')->onUpdate('cascade');
 
-            $table->softDeletes();
             $table->timestamps();
 
             $table->engine = 'InnoDB';

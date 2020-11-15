@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\FamilyMember;
 use App\Models\SecurityCode;
 
+use Lang;
+
 class FamilyMemberController extends Controller
 {
     /**
@@ -19,11 +21,12 @@ class FamilyMemberController extends Controller
     public function index()
     {
         //
+
         $user_id = auth()->user()->id;
         $family_members = FamilyMember::get_family($user_id);
 
         return view('patients/family_members/index')
-            ->with('family_members', $family_members);
+        ->with('family_members', $family_members);
     }
 
     /**
@@ -47,37 +50,66 @@ class FamilyMemberController extends Controller
     public function store(Request $request)
     {
         //
+
+        $request->validate([
+            'patient_id' => 'required|numeric|min:1',
+            'security_code' => 'required|string',
+        ]);
+
         $user_id = auth()->user()->id;
-        $patient_id = $request->patient_id;
-        $security_code = $request->security_code;
 
-        $codes = SecurityCode::where('patient_id', $patient_id)
-          //  ->where('security_code', Hash::make($security_code))
-            ->where('expiration_date', '>', date('Y-m-d'))
-            ->get();
+        try {
 
-        $response = false;
-        foreach ($codes as $code) {
-            if (Hash::check($security_code, $code->security_code)) {
-                $response = true;
-                break;
+            DB::beginTransaction();
+
+            $codes = SecurityCode::where('patient_id', $request->patient_id)
+                ->where('expiration_date', '>', date('Y-m-d'))
+                ->whereNull('used_at')
+                ->get();
+            
+            // We verify that the security code entered is valid
+            $response = false;
+            foreach ($codes as $code) {
+                if (Hash::check($request->security_code, $code->security_code)) {
+                    $response = true;
+                    break;
+                }
             }
+
+            if (!$response) {
+                // No valid security codes found
+                return back()->withInput($request->all())->withErrors(Lang::get('errors.invalid_security_code'));
+            }
+
+            // We verify that the user does not already have a related patient
+            $exists = FamilyMember::where('user_id', $user_id)
+                ->where('patient_id', $request->patient_id)
+                ->count();
+
+            if ($exists > 0) {
+                return back()->withErrors(Lang::get('errors.invalid_security_code'));
+            }
+
+            $family_member = new FamilyMember;
+            $family_member->user_id = $user_id;
+            $family_member->patient_id = $request->patient_id;
+            $family_member->save()
+
+            $code->used_at = now();
+            $code->save();
+
+            DB::commit();
+
+            // We take the user to the main view
+            $redirect = redirect()->action([FamilyMemberController::class, 'index']);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            $redirect = back()->withErrors(Lang::get('errors.error_processing_transaction'));
         }
 
-        if ($response) {
-            $exists = FamilyMember::where('user_id', $user_id)->where('patient_id', $patient_id)->count();
-
-            if ($exists == 0) {
-                DB::transaction(function () use ($user_id, $patient_id) {
-                    FamilyMember::insert([
-                        'user_id' => $user_id,
-                        'patient_id' => $patient_id,
-                    ]);
-                }, 3);
-            }
-        }
-
-        return $this->index();
+        return $redirect;;
     }
 
     /**

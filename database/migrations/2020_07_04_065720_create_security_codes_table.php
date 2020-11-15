@@ -18,10 +18,10 @@ class CreateSecurityCodesTable extends Migration
             $table->unsignedBigInteger('patient_id');
             $table->string('security_code');
             $table->date('expiration_date');
+            $table->timestamp('used_at')->nullable();
 
             $table->foreign('patient_id')->references('id')->on('patients')->onDelete('restrict')->onUpdate('cascade');
 
-            $table->softDeletes();
             $table->timestamps();
 
             $table->engine = 'InnoDB';

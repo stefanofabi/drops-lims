@@ -21,7 +21,6 @@ class CreateResultsTable extends Migration
             // Foreign keys
             $table->foreign('practice_id')->references('id')->on('practices')->onDelete('restrict')->onUpdate('cascade');
 
-            $table->softDeletes();
             $table->timestamps();
 
 

@@ -22,8 +22,6 @@ class CreateFamilyMembersTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict')->onUpdate('cascade');
             $table->foreign('patient_id')->references('id')->on('patients')->onDelete('restrict')->onUpdate('cascade');
 
-
-            $table->softDeletes();
             $table->timestamps();
 
             $table->engine = 'InnoDB';

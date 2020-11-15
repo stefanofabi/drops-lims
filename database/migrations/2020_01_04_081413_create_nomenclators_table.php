@@ -17,7 +17,6 @@ class CreateNomenclatorsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name')->nullable();
 
-            $table->softDeletes();
             $table->timestamps();
 
             $table->engine = 'InnoDB';
