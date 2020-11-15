@@ -34,7 +34,7 @@ class AffiliateController extends Controller
     	$social_works = SocialWork::all();
 
     	return view('administrators/patients/social_works/affiliates/create')
-    	->with('id', $patient_id)
+    	->with('patient_id', $patient_id)
     	->with('social_works', $social_works);
     }
 
@@ -49,8 +49,6 @@ class AffiliateController extends Controller
         //
 
         $request->validate([
-            'patient_id' => 'required|numeric|min:1',
-            'plan_id' => 'required|numeric|min:1',
             'affiliate_number' => 'string|nullable',
             'expiration_date' => 'date|nullable',
             'security_code' => 'numeric|nullable|min:0|max:999',
@@ -92,10 +90,6 @@ class AffiliateController extends Controller
     public function edit(Request $request)
     {
         //
-        
-        $request->validate([
-            'id' => 'required|numeric|min:1',
-        ]);
 
         return Affiliate::select('affiliates.id', 'plans.id as plan_id', 'social_works.id as social_work_id', 'affiliates.affiliate_number', 'affiliates.security_code', 'affiliates.expiration_date')
         ->plan()
@@ -115,8 +109,6 @@ class AffiliateController extends Controller
         //
 
         $request->validate([
-            'id' => 'required|numeric|min:1',
-            'plan_id' => 'required|numeric|min:1',
             'affiliate_number' => 'string|nullable',
             'expiration_date' => 'date|nullable',
             'security_code' => 'numeric|nullable|min:0|max:999',
@@ -140,10 +132,6 @@ class AffiliateController extends Controller
     public function destroy(Request $request)
     {
         //
-
-        $request->validate([
-            'id' => 'required|numeric|min:1',
-        ]);
 
         $affiliate = Affiliate::findOrFail($request->id);
 

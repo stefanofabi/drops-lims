@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Models\Phone;
 
 use Lang;
-use Session;
 
 class PhoneController extends Controller
 {
@@ -27,12 +26,12 @@ class PhoneController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
+    public function create($patient_id)
     {
         //
 
         return view('administrators/patients/phones/create')
-        ->with('id', $id);
+        ->with('patient_id', $patient_id);
     }
 
     /**
@@ -45,21 +44,25 @@ class PhoneController extends Controller
     {
         //
 
-        $phone = new Phone;
+		$request->validate([
+            'phone' => 'required|string',
+            'type' => 'required|string',
+        ]);
 
-        $phone->patient_id = $request->id;
-        $phone->phone = $request->phone;
-        $phone->type = $request->type;
+        $phone = new Phone($request->all());
 
-        if (!$phone->save()) {
-        	return redirect()->back()
+        if ($phone->save()) {
+        	$redirect = redirect()->action('PatientController@edit', $request->patient_id)
+        	->with('success', [Lang::get('phones.success_saving_phone')]);
+        } else {
+        	$redirect = redirect()->back()
                 ->withInput($request->all())
-                ->with('errors', [Lang::get('phones.error_saving_phone')]);
+                ->withErrors(
+                	Lang::get('phones.error_saving_phone')
+                );
         }
 
-        Session::flash('success', [Lang::get('phones.success_saving_phone')]);
-
-        return redirect()->action('PatientController@edit', ['id' => $request->id]);
+        return $redirect;
     }
 
     /**
@@ -82,29 +85,28 @@ class PhoneController extends Controller
     public function edit(Request $request)
     {
         //
-        $id = $request->id;
-        return Phone::where('id', $id)->firstOrFail();
+        
+        return Phone::findOrFail($request->id);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request)
     {
         //
 
-        $id = $request->id;
+		$request->validate([
+            'phone' => 'required|string',
+            'type' => 'required|string',
+        ]);
 
-        $phone = Phone::findOrFail($id);
+        $phone = Phone::findOrFail($request->id);
 
-        $phone->phone = $request->phone;
-        $phone->type = $request->type;
-
-        if (!$phone->save()) {
+        if (!$phone->update($request->all())) {
         	return response([], 500);
         }
         
@@ -121,9 +123,7 @@ class PhoneController extends Controller
     {
         //
 
-        $id = $request->id;
-
-        $phone = Phone::findOrFail($id);
+        $phone = Phone::findOrFail($request->id);
 
         if (!$phone->delete()) {
             return response([], 500);

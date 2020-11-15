@@ -8,8 +8,8 @@
 | Here are all the routes related to the emails
 |
 */
-Route::get('emails/create/{id}', 'EmailController@create')->name('emails/create')
-->where('id', '[1-9][0-9]*');
+Route::get('emails/create/{patient_id}', 'EmailController@create')->name('emails/create')
+->where('patient_id', '[1-9][0-9]*');
 
 Route::post('emails/store', 'EmailController@store')->name('emails/store');
 

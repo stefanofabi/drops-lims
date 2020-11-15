@@ -39,12 +39,6 @@ class DeterminationController extends Controller
     */
     public function load(Request $request) {
 
-		$request->validate([
-            'nomenclator' => 'required|numeric|min:1',
-            'filter' => 'string|nullable',
-            'page' => 'required|numeric|min:1',
-        ]);
-
     	$offset = ($request->page - 1) * self::PER_PAGE;
 
     	$query = Determination::index($request->nomenclator, $request->filter, $offset, self::PER_PAGE);
@@ -100,7 +94,7 @@ class DeterminationController extends Controller
         $determination = new Determination($request->all());
 
         if ($determination->save()) {
-        	$redirect = redirect()->action('DeterminationController@show', ['id' => $determination->id]);
+        	$redirect = redirect()->action('DeterminationController@show', $determination->id);
         } else {
         	$redirect = back()->withInput($request->all())
             ->withErrors(

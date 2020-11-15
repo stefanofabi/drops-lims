@@ -13,15 +13,16 @@ class Determination extends Model
 
 	protected $fillable = ['nomenclator_id', 'code', 'name', 'position', 'biochemical_unit'];
 
-	protected function index($nbu_id, $filter, $offset, $length) {
+	protected function index($nomenclator_id, $filter, $offset, $length) {
 		$determination = DB::table('determinations')
-		->where('nomenclator_id', '=', $nbu_id)
+		->where('nomenclator_id', '=', $nomenclator_id)
 		->where(function ($query) use ($filter) {
 			if (!empty($filter)) {
 				$query->orWhere("name", "like", "%$filter%")
 				->orWhere("code", "like", "$filter%");
 			}
 		})
+		->whereNull('deleted_at')
 		->orderBy('code', 'asc')
 		->orderBy('name', 'asc')
 		->offset($offset)
@@ -32,15 +33,16 @@ class Determination extends Model
 	}
 
 
-	protected function count_index($nbu_id, $filter) {
+	protected function count_index($nomenclator_id, $filter) {
 		$count = DB::table('determinations')
-		->where('nomenclator_id', '=', $nbu_id)
+		->where('nomenclator_id', '=', $nomenclator_id)
 		->where(function ($query) use ($filter) {
 			if (!empty($filter)) {
 				$query->orWhere("name", "like", "%$filter%")
 				->orWhere("code", "like", "$filter%");
 			}
 		})
+		->whereNull('deleted_at')
 		->count();
 
 		return $count;

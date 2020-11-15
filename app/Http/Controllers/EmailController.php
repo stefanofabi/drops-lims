@@ -3,20 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 use App\Http\Controllers\PatientController;
 
 use App\Models\Email;
 
 use Lang;
-use Session;
 
 class EmailController extends Controller
 {
 
-    private const RETRIES = 5;
-    
     /**
      * Display a listing of the resource.
      *
@@ -32,10 +28,11 @@ class EmailController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
+    public function create($patient_id)
     {
         //
-        return view('administrators/patients/emails/create')->with('id', $id);
+        
+        return view('administrators/patients/emails/create')->with('patient_id', $patient_id);
     }   
 
     /**
@@ -48,19 +45,25 @@ class EmailController extends Controller
     {
         //
 
-        $id = DB::transaction(function () use ($request) {
+		$request->validate([
+            'email' => 'required|email',
+        ]);
 
-            $email_id = Email::insertGetId([
-                'email' => $request->email,
-                'patient_id' => $request->id,
+        $email = new Email($request->all());
+        
+        if ($email->save()) {
+        	$redirect = redirect()->action('PatientController@edit', $request->patient_id)
+        	->with('success', [
+                Lang::get('emails.success_saving_email')
             ]);
+        } else {
+        	$redirect = back()->withInput($request->all())
+            ->withErrors(
+                Lang::get('emails.error_saving_email')
+            );
+        }
 
-            return $email_id;
-        }, self::RETRIES);
-
-        Session::flash('success', [Lang::get('emails.success_saving_email')]);
-
-        return redirect()->action('PatientController@edit', ['id' => $request->id]);
+        return $redirect;
     }
 
     /**
@@ -83,8 +86,8 @@ class EmailController extends Controller
     public function edit(Request $request)
     {
         //
-        $id = $request['id'];
-        return Email::where('id', $id)->first();
+
+        return Email::findOrFail($request->id);
     }
 
     /**
@@ -97,11 +100,17 @@ class EmailController extends Controller
     public function update(Request $request)
     {
         //
+ 		$request->validate([
+            'email' => 'required|email',
+        ]);
 
-        DB::transaction(function () use ($request) {
-            Email::where('id', '=', $request->id)->update(['email' => $request->email]);
-        }, self::RETRIES);
-        
+ 		$determination = Determination::findOrFail($request->id);
+
+ 		if (!$determination->update($request->all())) {
+ 			return response([], 500);
+ 		}
+
+ 		return response([], 200);
     }
 
     /**
@@ -114,9 +123,7 @@ class EmailController extends Controller
     {
         //
 
-        $id = $request->id;
-
-        $email = Email::findOrFail($id);
+        $email = Email::findOrFail($request->id);
 
         if (!$email->delete()) {
             return response([], 500);

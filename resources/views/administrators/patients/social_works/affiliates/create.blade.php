@@ -67,7 +67,7 @@
 <form method="post" action="{{ route('administrators/patients/social_works/affiliates/store') }}">
 	@csrf
 
-	<input type="hidden" class="form-control" name="patient_id" value="{{ $id }}">
+	<input type="hidden" class="form-control" name="patient_id" value="{{ $patient_id }}">
 
 	<div class="input-group mt-2 col-md-9">
 		<div class="input-group-prepend">
@@ -88,7 +88,7 @@
 			<span class="input-group-text"> {{ trans('social_works.plan') }} </span>
 		</div>
 
-		<select class="form-control" id="plan" name="plan_id" required>
+		<select class="form-control @error('plan_id') is-invalid @enderror" id="plan" name="plan_id" required>
 			<option value=""> {{ trans('forms.select_option') }} </option>
 
 			@if (isset($plans))
@@ -97,6 +97,12 @@
 				@endforeach
 			@endif
 		</select>
+
+		@error('plan_id')
+        	<span class="invalid-feedback" role="alert">
+            	<strong> {{ $message }} </strong>
+       		</span>
+        @enderror
 	</div>		
 
 	<div class="input-group mt-2 col-md-9 input-form">
