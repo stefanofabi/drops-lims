@@ -10,6 +10,9 @@ use App\Models\Report;
 class Determination extends Model
 {
     //
+
+	protected $fillable = ['nomenclator_id', 'code', 'name', 'position', 'biochemical_unit'];
+
 	protected function index($nbu_id, $filter, $offset, $length) {
 		$determination = DB::table('determinations')
 		->where('nomenclator_id', '=', $nbu_id)

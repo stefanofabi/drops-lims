@@ -28,7 +28,7 @@
 
 
 @section('content')
-<form method="post" action="{{ route('administrators/determinations/update', [$determination->id]) }}">
+<form method="post" action="{{ route('administrators/determinations/update', $determination->id) }}">
 	@csrf
 	{{ method_field('PUT') }}
 
@@ -45,7 +45,7 @@
 			<span class="input-group-text"> {{ trans('determinations.code') }} </span>
 		</div>
 
-		<input type="number" class="form-control" name="code" value="{{ $determination->code }}" required>
+		<input type="number" class="form-control" name="code" min="0" value="{{ $determination->code }}" required>
 	</div>
 
 	<div class="input-group mt-2 mb-1 col-md-9 input-form">
@@ -61,17 +61,18 @@
 			<span class="input-group-text"> {{ trans('determinations.position') }} </span>
 		</div>
 
-		<input type="number" class="form-control" name="position" min="0" value="{{ $determination->position }}">
+		<input type="number" class="form-control" name="position" min="1" value="{{ $determination->position }}" required>
 	</div>
 
 	<div class="input-group mt-2 mb-1 col-md-9 input-form">
 		<div class="input-group-prepend">
 			<span class="input-group-text"> {{ trans('determinations.biochemical_unit') }} </span>
 		</div>
-		<input type="number" class="form-control" name="biochemical_unit" min="0" step="0.01" value="{{ $determination->biochemical_unit }}">
+
+		<input type="number" class="form-control" name="biochemical_unit" min="0" step="0.01" value="{{ $determination->biochemical_unit }}" required>
 	</div>
 
-	<div class="mt-2 float-right">
+	<div class="mt-2 mt-4 float-right">
 		<button type="submit" class="btn btn-primary">
 			<span class="fas fa-save"></span> {{ trans('forms.save') }}
 		</button>

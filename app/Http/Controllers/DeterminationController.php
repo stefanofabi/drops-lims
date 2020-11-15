@@ -10,6 +10,8 @@ use App\Http\Traits\Pagination;
 use App\Models\Nomenclator;
 use App\Models\Determination;
 
+use Lang; 
+
 class DeterminationController extends Controller
 {
 
@@ -41,19 +43,21 @@ class DeterminationController extends Controller
     */
     public function load(Request $request) {
 
-        // Request
-    	$filter = $request['filter'];
-    	$page = $request['page'];
-    	$nomenclator = $request['nomenclator'];
+		$request->validate([
+            'nomenclator' => 'required|numeric|min:1',
+            'filter' => 'string|nullable',
+            'page' => 'required|numeric|min:1',
+        ]);
 
-    	$offset = ($page - 1) * self::PER_PAGE;
-    	$query = Determination::index($nomenclator, $filter, $offset, self::PER_PAGE);
+    	$offset = ($request->page - 1) * self::PER_PAGE;
+
+    	$query = Determination::index($request->nomenclator, $request->filter, $offset, self::PER_PAGE);
 
         // Pagination
-    	$count_rows = Determination::count_index($nomenclator, $filter);
+    	$count_rows = Determination::count_index($request->nomenclator, $request->filter);
     	$total_pages = ceil($count_rows / self::PER_PAGE);
 
-    	$paginate = $this->paginate($page, $total_pages, self::ADJACENTS);
+    	$paginate = $this->paginate($request->page, $total_pages, self::ADJACENTS);
 
     	$nomenclators = Nomenclator::all();
 
@@ -88,28 +92,27 @@ class DeterminationController extends Controller
     public function store(Request $request)
     {
         //
-    	$id = DB::transaction(function () use ($request) {
 
-            // data for determinations
-            $code = $request['code'];
-            $name = $request['name'];
-            $nomenclator = $request['nomenclator'];
-            $position = $request['position'];
-            $biochemical_unit = $request['biochemical_unit'];
+		$request->validate([
+            'nomenclator_id' => 'required|numeric|min:1',
+            'code' => 'required|numeric|min:0',
+            'name' => 'required|string',
+            'position' => 'required|numeric|min:1',
+            'biochemical_unit' => 'required|numeric|min:0',
+        ]);
 
-            $determination = Determination::insertGetId([
-               'code' => $code,
-               'name' => $name, 
-               'nomenclator_id' => $nomenclator,
-               'position' => $position,
-               'biochemical_unit' => $biochemical_unit,
-           ]);
+        $determination = new Determination($request->all());
 
-            return $determination;
-        }, self::RETRIES);
+        if ($determination->save()) {
+        	$redirect = redirect()->action('DeterminationController@show', ['id' => $determination->id]);
+        } else {
+        	$redirect = back()->withInput($request->all())
+            ->withErrors(
+                Lang::get('determinations.error_saving_determination')
+            );
+        }
 
-
-    	return redirect()->action('DeterminationController@show', ['id' => $id]);
+    	return $redirect;
     }
 
     /**
@@ -163,21 +166,26 @@ class DeterminationController extends Controller
     public function update(Request $request, $id)
     {
         //
-        DB::transaction(function () use ($request, $id) {
 
+		$request->validate([
+            'code' => 'required|numeric|min:0',
+            'name' => 'required|string',
+            'position' => 'required|numeric|min:1',
+            'biochemical_unit' => 'required|numeric|min:0',
+        ]);
 
-         Determination::where('id', '=', $id)
-         ->update(
-             [
-                'code' => $request->code,
-                'name' => $request->name,
-                'position' => $request->position,
-                'biochemical_unit' => $request->biochemical_unit,
-            ]);
-        }, self::RETRIES);
+		$determination = Determination::findOrFail($id);
 
+		if ($determination->update($request->all())) {
+			$redirect = redirect()->action('DeterminationController@show', $id);
+		} else {
+        	$redirect = back()->withInput($request->all())
+            ->withErrors(
+                Lang::get('determinations.error_updating_determination')
+            );			
+		}
 
-        return redirect()->action('DeterminationController@show', ['id' => $id]);
+        return $redirect;
     }
 
     /**
