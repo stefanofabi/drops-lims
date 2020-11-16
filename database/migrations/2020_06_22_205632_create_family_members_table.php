@@ -18,6 +18,8 @@ class CreateFamilyMembersTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('patient_id');
 
+            $table->unique(['user_id', 'patient_id']);
+
             // Foreign keys
             $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict')->onUpdate('cascade');
             $table->foreign('patient_id')->references('id')->on('patients')->onDelete('restrict')->onUpdate('cascade');

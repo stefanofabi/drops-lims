@@ -26,7 +26,7 @@ class FamilyMemberController extends Controller
         $family_members = FamilyMember::get_family($user_id);
 
         return view('patients/family_members/index')
-        ->with('family_members', $family_members);
+        	->with('family_members', $family_members);
     }
 
     /**
