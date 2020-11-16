@@ -66,7 +66,7 @@ class FamilyMemberController extends Controller
                 ->where('expiration_date', '>', date('Y-m-d'))
                 ->whereNull('used_at')
                 ->get();
-            
+
             // We verify that the security code entered is valid
             $response = false;
             foreach ($codes as $code) {
@@ -87,13 +87,13 @@ class FamilyMemberController extends Controller
                 ->count();
 
             if ($exists > 0) {
-                return back()->withErrors(Lang::get('errors.invalid_security_code'));
+                return back()->withErrors(Lang::get('errors.already_family_member'));
             }
 
             $family_member = new FamilyMember;
             $family_member->user_id = $user_id;
             $family_member->patient_id = $request->patient_id;
-            $family_member->save()
+            $family_member->save();
 
             $code->used_at = now();
             $code->save();
