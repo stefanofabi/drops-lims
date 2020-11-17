@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 
 use App\Http\Controllers\PatientController;
 
@@ -49,19 +50,27 @@ class EmailController extends Controller
             'email' => 'required|email',
         ]);
 
-        $email = new Email($request->all());
-        
-        if ($email->save()) {
-        	$redirect = redirect()->action('PatientController@edit', $request->patient_id)
-        	->with('success', [
-                Lang::get('emails.success_saving_email')
-            ]);
-        } else {
-        	$redirect = back()->withInput($request->all())
-            ->withErrors(
-                Lang::get('emails.error_saving_email')
-            );
-        }
+
+        try {
+            $email = new Email($request->all());
+            
+            if ($email->save()) {
+            	$redirect = redirect()->action('PatientController@edit', $request->patient_id)
+            	->with('success', [
+                    Lang::get('emails.success_saving_email')
+                ]);
+            } else {
+            	$redirect = back()->withInput($request->all())
+                ->withErrors(
+                    Lang::get('emails.error_saving_email')
+                );
+            }
+        } catch (QueryException $e) {
+            $redirect = back()->withInput($request->all())
+                ->withErrors(
+                    Lang::get('errors.error_processing_transaction')
+                );
+        } 
 
         return $redirect;
     }

@@ -45,14 +45,14 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        $input = $request->all();
 
         $this->validate($request, [
             'email' => 'required|email',
             'password' => 'required',
         ]);
+        
 
-        if(auth()->attempt(array('email' => $input['email'], 'password' => $input['password']))) {
+        if(auth()->attempt(array('email' => $request->email, 'password' => $request->password))) {
             if (auth()->user()->is_admin) {
                 $redirect = redirect()->route('administrators/home');
             } else {

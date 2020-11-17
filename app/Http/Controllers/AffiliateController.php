@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 
 use App\Models\SocialWork;
 use App\Models\Affiliate;
@@ -34,8 +35,8 @@ class AffiliateController extends Controller
     	$social_works = SocialWork::all();
 
     	return view('administrators/patients/social_works/affiliates/create')
-    	->with('patient_id', $patient_id)
-    	->with('social_works', $social_works);
+    	   ->with('patient_id', $patient_id)
+    	   ->with('social_works', $social_works);
     }
 
     /**
@@ -54,18 +55,25 @@ class AffiliateController extends Controller
             'security_code' => 'numeric|nullable|min:0|max:999',
         ]);
 
-        $affiliate = new Affiliate($request->all());        
-        if ($affiliate->save()) {
-            $redirect = redirect()->action('PatientController@edit', [$request->patient_id])
-            ->with('success', [
-                Lang::get('social_works.success_saving_affiliate')
-            ]);
-        } else {
+        try {
+            $affiliate = new Affiliate($request->all());        
+            if ($affiliate->save()) {
+                $redirect = redirect()->action('PatientController@edit', [$request->patient_id])
+                ->with('success', [
+                    Lang::get('social_works.success_saving_affiliate')
+                ]);
+            } else {
+                $redirect = back()->withInput($request->all())
+                ->withErrors(
+                    Lang::get('social_works.error_saving_affiliate')
+                );
+            }
+        } catch (QueryException $e) {
             $redirect = back()->withInput($request->all())
-            ->withErrors(
-                Lang::get('social_works.error_saving_affiliate')
-            );
-        }
+                ->withErrors(
+                    Lang::get('errors.error_processing_transaction')
+                );
+        } 
 
     	return $redirect;        
     }
@@ -92,9 +100,9 @@ class AffiliateController extends Controller
         //
 
         return Affiliate::select('affiliates.id', 'plans.id as plan_id', 'social_works.id as social_work_id', 'affiliates.affiliate_number', 'affiliates.security_code', 'affiliates.expiration_date')
-        ->plan()
-        ->socialWork()
-        ->findOrFail($request->id);
+            ->plan()
+            ->socialWork()
+            ->findOrFail($request->id);
     }
 
     /**

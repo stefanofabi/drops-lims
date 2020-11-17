@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 
 use App\Models\Phone;
 
@@ -31,7 +32,7 @@ class PhoneController extends Controller
         //
 
         return view('administrators/patients/phones/create')
-        ->with('patient_id', $patient_id);
+        	->with('patient_id', $patient_id);
     }
 
     /**
@@ -49,18 +50,28 @@ class PhoneController extends Controller
             'type' => 'required|string',
         ]);
 
-        $phone = new Phone($request->all());
+		try {
 
-        if ($phone->save()) {
-        	$redirect = redirect()->action('PatientController@edit', $request->patient_id)
-        	->with('success', [Lang::get('phones.success_saving_phone')]);
-        } else {
-        	$redirect = redirect()->back()
-                ->withInput($request->all())
+	        $phone = new Phone($request->all());
+
+	        if ($phone->save()) {
+	        	$redirect = redirect()->action('PatientController@edit', $request->patient_id)
+	        		->with('success', [
+	        			Lang::get('phones.success_saving_phone')
+	        		]);
+	        } else {
+	        	$redirect = redirect()->back()
+	                ->withInput($request->all())
+	                ->withErrors(
+	                	Lang::get('phones.error_saving_phone')
+	                );
+	        }
+        } catch (QueryException $e) {
+            $redirect = back()->withInput($request->all())
                 ->withErrors(
-                	Lang::get('phones.error_saving_phone')
+                    Lang::get('errors.error_processing_transaction')
                 );
-        }
+        } 
 
         return $redirect;
     }

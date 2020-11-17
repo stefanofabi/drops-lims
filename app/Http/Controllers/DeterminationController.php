@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 
 use App\Http\Traits\Pagination;
 
@@ -52,10 +53,10 @@ class DeterminationController extends Controller
     	$nomenclators = Nomenclator::all();
 
     	$view = view('administrators/determinations/index')
-    	->with('request', $request->all())
-    	->with('determinations', $query)
-    	->with('paginate', $paginate)
-    	->with('nomenclators', $nomenclators);
+    	   ->with('request', $request->all())
+    	   ->with('determinations', $query)
+    	   ->with('paginate', $paginate)
+    	   ->with('nomenclators', $nomenclators);
 
     	return $view;
     }
@@ -84,23 +85,29 @@ class DeterminationController extends Controller
         //
 
 		$request->validate([
-            'nomenclator_id' => 'required|numeric|min:1',
             'code' => 'required|numeric|min:0',
             'name' => 'required|string',
             'position' => 'required|numeric|min:1',
             'biochemical_unit' => 'required|numeric|min:0',
         ]);
 
-        $determination = new Determination($request->all());
+        try {
+            $determination = new Determination($request->all());
 
-        if ($determination->save()) {
-        	$redirect = redirect()->action('DeterminationController@show', $determination->id);
-        } else {
-        	$redirect = back()->withInput($request->all())
-            ->withErrors(
-                Lang::get('determinations.error_saving_determination')
-            );
-        }
+            if ($determination->save()) {
+                $redirect = redirect()->action('DeterminationController@show', $determination->id);
+            } else {
+                $redirect = back()->withInput($request->all())
+                ->withErrors(
+                    Lang::get('determinations.error_saving_determination')
+                );
+            }
+        } catch (QueryException $e) {
+            $redirect = back()->withInput($request->all())
+                ->withErrors(
+                    Lang::get('errors.error_processing_transaction')
+                );
+        } 
 
     	return $redirect;
     }
@@ -121,9 +128,9 @@ class DeterminationController extends Controller
         $reports = Determination::get_reports($id);
 
         return view('administrators/determinations/show')
-        ->with('determination', $determination)
-        ->with('nomenclator', $nomenclator)
-        ->with('reports', $reports);
+            ->with('determination', $determination)
+            ->with('nomenclator', $nomenclator)
+            ->with('reports', $reports);
     }
 
     /**
@@ -141,9 +148,9 @@ class DeterminationController extends Controller
         $reports = Determination::get_reports($id);
 
         return view('administrators/determinations/edit')
-        ->with('determination', $determination)
-        ->with('nomenclator', $nomenclator)
-        ->with('reports', $reports);
+            ->with('determination', $determination)
+            ->with('nomenclator', $nomenclator)
+            ->with('reports', $reports);
     }
 
     /**
