@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Determination;
 use App\Models\Report;
 
+use Lang;
 class ReportController extends Controller
 {
 
@@ -128,5 +129,23 @@ class ReportController extends Controller
     public function destroy($id)
     {
         //
+
+        $report = Report::findOrFail($id);
+        $determination = $report->determination;
+        $nomenclator = $determination->nomenclator;
+
+        $view = view('administrators/determinations/edit')
+            ->with('determination', $determination)
+            ->with('nomenclator', $nomenclator);
+
+        if ($report->delete()) {
+            $view->with('success', [Lang::get('reports.success_destroy')]);
+        } else {
+            $view->withErrors(Lang::get('reports.danger_destroy'));
+        }
+
+        $reports = Determination::get_reports($determination->id);
+
+        return $view->with('reports', $reports);
     }
 }

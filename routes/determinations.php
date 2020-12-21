@@ -9,8 +9,8 @@
 |
 */
 
-Route::post('determinations', 'DeterminationController@load')->name('determinations/load');
 Route::get('determinations', 'DeterminationController@index')->name('determinations');
+Route::post('determinations', 'DeterminationController@load')->name('determinations/load');
 
 Route::group(
 	[
@@ -34,5 +34,8 @@ Route::group(
 		->where('id', '[1-9][0-9]*');
 
 		Route::get('destroy/{id}', 'DeterminationController@destroy')->name('destroy')
+		->where('id', '[1-9][0-9]*');
+
+		Route::patch('restore/{id}', 'DeterminationController@restore')->name('restore')
 		->where('id', '[1-9][0-9]*');
 	});

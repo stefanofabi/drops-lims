@@ -35,6 +35,10 @@
 </script>
 @endsection
 
+@section('action_page')
+{{ route('administrators/determinations/load') }}
+@endsection
+
 @section('filters')
 <!-- Filter by keys -->
 <div class="form-group row">

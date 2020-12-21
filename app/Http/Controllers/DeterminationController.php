@@ -194,5 +194,60 @@ class DeterminationController extends Controller
     public function destroy($id)
     {
         //
+
+        $determination = Determination::find($id);
+
+        $nomenclators = Nomenclator::all();
+
+        if (!$determination) {
+        	// determination not exists
+        	return view('administrators/determinations/determinations')
+        	->withErrors(Lang::get('determinations.error_destroy_determination'))
+        	->with('nomenclators', $nomenclators);
+        }
+
+        $view = view('administrators/determinations/destroy')
+        	->with('nomenclators', $nomenclators);
+
+        if ($determination->delete()) {
+            $view->with('determination_id', $id)->with('type', 'success');
+        } else {
+            $view->with('type', 'danger');
+        }
+
+        return $view;
+    }
+
+
+    /**
+     * Restore the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function restore($id)
+    {
+        //
+
+        $determination = Determination::onlyTrashed()->find($id);
+
+        $nomenclators = Nomenclator::all();
+
+        if (!$determination) {
+        	// determination not removed
+        	return view('administrators/determinations/determinations')
+        		->withErrors(Lang::get('determinations.error_restore_determination'))
+        		->with('nomenclators', $nomenclators);
+        }
+
+        $view = view('administrators/determinations/restore')->with('determination_id', $id)->with('nomenclators', $nomenclators);
+
+        if ($determination->restore()) {
+            $view->with('type', 'success');
+        } else {
+            $view->with('type', 'danger');
+        }
+
+        return $view;
     }
 }

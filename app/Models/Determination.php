@@ -4,12 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 use App\Models\Report;
 
 class Determination extends Model
 {
     //
+
+	use HasFactory, SoftDeletes;
+
+    protected $dates = ['deleted_at'];
 
 	protected $fillable = ['nomenclator_id', 'code', 'name', 'position', 'biochemical_unit'];
 
