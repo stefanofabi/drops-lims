@@ -9,11 +9,12 @@
 |
 */
 
-Route::get('prescribers', 'PrescriberController@index')->name('prescribers');
-Route::post('prescribers/load', 'PrescriberController@load')->name('prescribers/load');
+Route::get('prescribers', 'PrescriberController@index')->name('prescribers')->middleware('permission:crud_prescribers');
+Route::post('prescribers/load', 'PrescriberController@load')->name('prescribers/load')->middleware('permission:crud_prescribers');
 
 Route::group(
 	[
+		'middleware' => 'permission:crud_prescribers',
 		'prefix' => 'prescribers',
 		'as' => 'prescribers/',
 	], function() {

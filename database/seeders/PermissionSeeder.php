@@ -16,8 +16,11 @@ class PermissionSeeder extends Seeder
     public function run()
     {
         //
+        
+        // Reset cached roles and permissions
+        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
-        Permission::create(['name' => 'internal_management']);
+        Permission::create(['name' => 'is_admin']);
     	Permission::create(['name' => 'crud_patients']);
     	Permission::create(['name' => 'crud_prescribers']);
     	Permission::create(['name' => 'crud_determinations']);
@@ -29,6 +32,9 @@ class PermissionSeeder extends Seeder
     	Permission::create(['name' => 'restore_items']);
     	Permission::create(['name' => 'generate_security_code']);
     	Permission::create(['name' => 'settings']);
+
+
+        Permission::create(['name' => 'is_user']);
     	
     }
 }

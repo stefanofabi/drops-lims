@@ -53,7 +53,7 @@ class LoginController extends Controller
         
 
         if(auth()->attempt(array('email' => $request->email, 'password' => $request->password))) {
-            if (auth()->user()->is_admin) {
+            if (auth()->user()->hasPermissionTo('is_admin')) {
                 $redirect = redirect()->route('administrators/home');
             } else {
                 $redirect = redirect()->route('patients/home');

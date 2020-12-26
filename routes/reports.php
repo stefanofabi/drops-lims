@@ -12,6 +12,7 @@
 
 Route::group(
 	[
+		'middleware' => 'permission:crud_reports',
 		'prefix' => 'reports',
 		'as' => 'reports/',
 	], function() {

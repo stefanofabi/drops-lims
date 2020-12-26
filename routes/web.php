@@ -13,7 +13,7 @@
 
 Auth::routes();
 
-Route::group(['middleware' => ['is_admin', 'auth']], function () {
+Route::group(['middleware' => ['permission:is_admin', 'auth']], function () {
 
 		Route::group(
 			[
@@ -81,7 +81,7 @@ Route::get('/', function () {
     //
     $user = auth()->user();
     if ($user) {
-        if ($user->is_admin) {
+        if ($user->hasPermissionTo('is_admin')) {
             return redirect()->route('administrators/home');
         } else {
             return redirect()->route('patients/home');

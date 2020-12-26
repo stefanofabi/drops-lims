@@ -9,11 +9,12 @@
 |
 */
 
-	Route::get('protocols', 'ProtocolController@index')->name('protocols');
-	Route::post('protocols', 'ProtocolController@load')->name('protocols/load');
+	Route::get('protocols', 'ProtocolController@index')->name('protocols')->middleware('permission:crud_protocols');
+	Route::post('protocols', 'ProtocolController@load')->name('protocols/load')->middleware('permission:crud_protocols');
 
 	Route::group(
 		[
+			'middleware' => 'permission:crud_protocols',
 			'prefix' => 'protocols',
 			'as' => 'protocols/',
 		], function() {

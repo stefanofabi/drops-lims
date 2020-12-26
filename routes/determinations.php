@@ -9,11 +9,12 @@
 |
 */
 
-Route::get('determinations', 'DeterminationController@index')->name('determinations');
-Route::post('determinations', 'DeterminationController@load')->name('determinations/load');
+Route::get('determinations', 'DeterminationController@index')->name('determinations')->middleware('permission:crud_determinations');
+Route::post('determinations', 'DeterminationController@load')->name('determinations/load')->middleware('permission:crud_determinations');
 
 Route::group(
 	[
+		'middleware' => 'permission:crud_determinations',
 		'prefix' => 'determinaciones',
 		'as' => 'determinations/',
 	], function() {

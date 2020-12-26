@@ -11,6 +11,7 @@
 	
 	Route::group(
 		[
+			'middleware' => 'permission:crud_practices',
 			'prefix' => 'practices',
 			'as' => 'practices/',
 		], function() {

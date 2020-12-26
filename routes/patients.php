@@ -9,11 +9,12 @@
 |
 */
 
-Route::get('patients', 'PatientController@index')->name('patients');
-Route::post('patients', 'PatientController@load')->name('patients/load');
+Route::get('patients', 'PatientController@index')->name('patients')->middleware('permission:crud_patients');
+Route::post('patients', 'PatientController@load')->name('patients/load')->middleware('permission:crud_patients');
 
 Route::group(
 	[
+		'middleware' => 'permission:crud_patients',
 		'prefix' => 'patients',
 		'as' => 'patients/',
 	], function() {

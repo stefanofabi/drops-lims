@@ -27,7 +27,7 @@ class RoleSeeder extends Seeder
 
         $role_administrator->givePermissionTo(
         	[
-        		'internal_management',
+        		'is_admin',
         		'crud_patients',
         		'crud_prescribers',
         		'crud_determinations',
@@ -45,7 +45,7 @@ class RoleSeeder extends Seeder
 
         $role_secretary->givePermissionTo(
         	[
-        		'internal_management',
+        		'is_admin',
         		'crud_patients',
         		'crud_prescribers',
         		'crud_determinations',
@@ -57,7 +57,7 @@ class RoleSeeder extends Seeder
 
         $role_biochemical->givePermissionTo(
         	[
-        		'internal_management',
+        		'is_admin',
         		'crud_determinations',
         		'crud_reports',
         		'crud_protocols',

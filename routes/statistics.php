@@ -9,10 +9,11 @@
 |
 */
 
-Route::get('statistics', 'StatisticsController@index')->name('statistics');
+Route::get('statistics', 'StatisticsController@index')->name('statistics')->middleware('permission:see_statistics');
 
 Route::group(
 	[
+		'middleware' => 'permission:see_statistics',
 		'prefix' => 'statistics',
 		'as' => 'statistics/',
 	], function() {
