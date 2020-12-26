@@ -18,20 +18,28 @@ class UserSeeder extends Seeder
     {
         //
 
-        User::insert([
+        $user_administrator = new User(
             [
                 'name' => 'Admin',
                 'email' => 'admin@company',
                 'password' => Hash::make('password'),
-                'is_admin' => true,
-                ],
+            ]
+        );
+
+        $user_administrator->saveOrFail();
+        $user_administrator->assignRole('administrator');
+
+
+        $user_patient = new User (
             [
                 'name' => 'User',
                 'email' => 'user@domain',                        
                 'password' => Hash::make('password'),
-                'is_admin' => 0,
             ]
-        ]);
+        );
+
+        $user_patient->saveOrFail();
+        $user_patient->assignRole('patient');
 
     }
 }
