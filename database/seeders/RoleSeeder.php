@@ -66,5 +66,11 @@ class RoleSeeder extends Seeder
         	]
         );
 
+        $role_patient->givePermissionTo(
+            [
+                'is_user'
+            ]
+        );
+
     }
 }

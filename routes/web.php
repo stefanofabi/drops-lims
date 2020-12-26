@@ -32,7 +32,7 @@ Route::group(['middleware' => ['permission:is_admin', 'auth']], function () {
 });
 
 
-Route::group(['middleware' => ['is_user', 'auth']], function () {
+Route::group(['middleware' => ['permission:is_user', 'auth']], function () {
 
         Route::group(
             [
