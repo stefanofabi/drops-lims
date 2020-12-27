@@ -32,6 +32,10 @@ trait PrintProtocol {
                 $practices = $protocol->practices()->get()->whereIn('id', $filter_practices);
             }
 
+            if (!$this->haveResults($practices)) {
+            	exit('No hay practicas informadas');
+            }
+
             $phone = $patient->phone()->first();
 
             ob_start();
@@ -50,5 +54,21 @@ trait PrintProtocol {
             $formatter = new ExceptionFormatter($e);
             echo $formatter->getHtmlMessage();
         }
+    }
+
+    public function haveResults($practices) {
+    	/* Returns true if there is at least one reported practice, false otherwise */
+    	
+    	$count = 0;
+
+        foreach($practices as $practice) {
+        	$count += $practice->results->count();
+
+        	if ($count) {
+            	break;
+            }
+        }
+
+        return $count > 0;
     }
 }
