@@ -19,6 +19,9 @@ class CreateSignPracticesTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->timestamp('sign_date')->useCurrent();	
 
+            // Unique keys
+            $table->unique(['practice_id', 'user_id']);
+
             // Foreign keys
             $table->foreign('practice_id')->references('id')->on('practices')->onDelete('restrict')->onUpdate('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict')->onUpdate('cascade');

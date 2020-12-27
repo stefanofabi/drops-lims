@@ -7,4 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class SecurityCode extends Model
 {
     //
+
+    protected $fillable = ['patient_id'];
+
 }

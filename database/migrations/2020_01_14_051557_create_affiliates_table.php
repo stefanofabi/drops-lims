@@ -21,6 +21,9 @@ class CreateAffiliatesTable extends Migration
             $table->date('expiration_date')->nullable();
             $table->unsignedInteger('security_code')->nullable();
 
+            // Unique keys
+            $table->unique(['patient_id', 'plan_id', 'affiliate_number']);
+
             // Foreign keys
             $table->foreign('patient_id')->references('id')->on('patients')->onDelete('restrict')->onUpdate('cascade');
             $table->foreign('plan_id')->references('id')->on('plans')->onDelete('restrict')->onUpdate('cascade');

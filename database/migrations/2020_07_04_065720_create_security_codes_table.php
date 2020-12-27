@@ -20,6 +20,10 @@ class CreateSecurityCodesTable extends Migration
             $table->date('expiration_date');
             $table->timestamp('used_at')->nullable();
 
+            // Unique keys
+            $table->unique(['patient_id']);
+
+            // Foreign keys
             $table->foreign('patient_id')->references('id')->on('patients')->onDelete('restrict')->onUpdate('cascade');
 
             $table->timestamps();

@@ -19,6 +19,9 @@ class CreatePhonesTable extends Migration
             $table->string('phone')->nullable();
             $table->string('type')->nullable();
 
+            // Unique keys
+            $table->unique(['patient_id', 'phone', 'type']);
+
             // Foreign keys
             $table->foreign('patient_id')->references('id')->on('patients')->onDelete('restrict')->onUpdate('cascade');
 

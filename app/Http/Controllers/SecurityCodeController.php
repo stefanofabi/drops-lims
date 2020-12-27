@@ -51,14 +51,19 @@ class SecurityCodeController extends Controller
         $new_security_code = Str::random(10);
 
         $date_today = date("Y-m-d");
-        $expiration_date = date("Y-m-d",strtotime($date_today."+ 1 week"));
+        $expiration_date = date("Y-m-d", strtotime($date_today."+ 1 week"));
 
         DB::transaction(function () use ($patient_id, $new_security_code, $expiration_date) {
-            SecurityCode::insert([
-                'patient_id' => $patient_id,
-                'security_code' => Hash::make($new_security_code),
-                'expiration_date' => $expiration_date,
-            ]);
+            SecurityCode::updateOrCreate(
+            	[
+	                'patient_id' => $patient_id,
+            	],
+            	[
+            		'patient_id' => $patient_id,
+	                'security_code' => Hash::make($new_security_code),
+	                'expiration_date' => $expiration_date,
+            	]
+            );
         }, 3);
 
         $this->print_security_code($patient->id, $patient->full_name, $new_security_code, $expiration_date);
