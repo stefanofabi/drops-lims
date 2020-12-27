@@ -132,8 +132,8 @@
 			<span class="input-group-text"> {{ trans('patients.patient') }} </span>
 		</div>
 
-		<input type="hidden" id="patient_id" name="patient_id" value="{{ $patient['id'] }}">
-		<input type="text" class="form-control" id="patient" value="{{ $patient['full_name'] }}" placeholder="{{ trans('forms.start_typing') }}" required>
+		<input type="hidden" id="patient_id" name="patient_id" value="{{ $patient->id ?? '' }}">
+		<input type="text" class="form-control" id="patient" value="{{ $patient->full_name ?? '' }}" placeholder="{{ trans('forms.start_typing') }}" required>
 	</div>
 
 	<div class="input-group mt-2 mb-1 col-md-9 input-form">
