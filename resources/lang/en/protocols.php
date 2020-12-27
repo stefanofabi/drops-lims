@@ -46,5 +46,6 @@ return [
     'print_selected' => 'Print selected',
     'see_patient' => 'See patient',
     'view_protocols' => 'View protocols',
+    'empty_protocol' => 'You cannot print protocols with practices without informing',
     
 ];

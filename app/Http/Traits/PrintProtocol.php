@@ -33,7 +33,7 @@ trait PrintProtocol {
             }
 
             if (!$this->haveResults($practices)) {
-            	exit('No hay practicas informadas');
+            	exit(Lang::get('protocols.empty_protocol'));
             }
 
             $phone = $patient->phone()->first();
