@@ -26,5 +26,6 @@ return [
     'logout' => 'Logout',
     'register' => 'Register',
     'name' => 'Name',
+    'signed_in_as' => 'Signed in as :user',
 
 ];
