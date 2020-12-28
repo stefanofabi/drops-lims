@@ -11,6 +11,8 @@
 	$(document).ready(function() {
         // Select a plan from list
         $("#plan").val('{{ $plan->id }}');
+
+        $('[data-toggle="tooltip"]').tooltip();
     });
 
 	$(function() {
@@ -172,7 +174,8 @@
 					<th> {{ trans('determinations.code') }} </th>
 					<th> {{ trans('determinations.determination') }} </th>
 					<th> {{ trans('determinations.amount') }} </th>
-					<th> {{ trans('determinations.informed') }} </th>
+					<th> {{ trans('protocols.informed') }} </th>
+					<th> {{ trans('protocols.signed_off') }} </th>
 					<th class="text-right"> {{ trans('forms.actions') }}</th>
 				</tr>
 
@@ -195,6 +198,13 @@
 							@else
 								<span class="badge badge-success"> {{ trans('forms.yes') }} </span>
 							@endif
+						</td>
+						<td> 
+							@foreach ($practice->signs as $sign)
+								<a href="#" data-toggle="tooltip" title="{{ $sign->user->name }}"> 
+									<img height="30px" width="30px" src="{{ asset('storage/avatars/'.$sign->user->avatar) }}" class="rounded-circle" alt="{{ $sign->user->name }}"> 
+								</a>  
+							@endforeach
 						</td>
 						<td class="text-right">
 							<a href="{{ route('administrators/protocols/practices/edit', $practice->id) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.edit_practice') }}"> <i class="fas fa-edit fa-sm"></i> </a>

@@ -26,7 +26,6 @@ return [
     'destroy_determination' => 'Delete determination',
     'determination_blocked' => 'Determination blocked for security reasons. To make changes click on the lock',
     'edit_determination' => 'Edit determination',
-    'informed' => 'Informed',
     'amount' => 'Amount',
     'error_saving_determination' => 'The determination could not be added. Please, try again later.',
     'error_updating_determination' => 'The determination could not be updated. Please, try again later.',
