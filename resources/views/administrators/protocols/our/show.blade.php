@@ -6,6 +6,15 @@
 
 @section('active_protocols', 'active')
 
+@section('js')
+<script type="text/javascript">
+	$(document).ready(function() {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+
+</script>
+@endsection
+
 @section('menu-title')
 {{ trans('forms.menu') }}
 @endsection
