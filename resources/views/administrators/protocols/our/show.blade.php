@@ -146,11 +146,13 @@
 							@endif
 						</td>
 						<td> 
-							@foreach ($practice->signs as $sign)
-								<a href="#" data-toggle="tooltip" title="{{ $sign->user->name }}"> 
+							@forelse($practice->signs as $sign)
+							    <a style="text-decoration: none" href="#" data-toggle="tooltip" title="{{ $sign->user->name }}"> 
 									<img height="30px" width="30px" src="{{ asset('storage/avatars/'.$sign->user->avatar) }}" class="rounded-circle" alt="{{ $sign->user->name }}"> 
 								</a>  
-							@endforeach
+							@empty
+							    {{ trans('protocols.not_signed')}}
+							@endforelse
 						</td>
 						<td class="text-right">
 							<a href="{{ route('administrators/protocols/practices/show', $practice->id) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.show_practice') }}"> <i class="fas fa-eye fa-sm"></i> </a>

@@ -8,6 +8,7 @@ use Illuminate\Database\QueryException;
 use App\Http\Controllers\PatientController;
 
 use App\Models\Email;
+use App\Models\Patient;
 
 use Lang;
 
@@ -33,7 +34,10 @@ class EmailController extends Controller
     {
         //
         
-        return view('administrators/patients/emails/create')->with('patient_id', $patient_id);
+        $patient = Patient::findOrFail($patient_id);
+        
+        return view('administrators/patients/emails/create')
+            ->with('patient', $patient);
     }   
 
     /**

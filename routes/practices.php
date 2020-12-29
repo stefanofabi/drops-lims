@@ -8,32 +8,35 @@
 | Here are all the routes related to the protocols
 |
 */
-	
-	Route::group(
-		[
-			'middleware' => 'permission:crud_practices',
-			'prefix' => 'practices',
-			'as' => 'practices/',
-		], function() {
 
-			Route::post('find', 'PracticeController@load')->name('load');
+Route::group(
+	[
+		'middleware' => 'permission:crud_practices',
+		'prefix' => 'practices',
+		'as' => 'practices/',
+	], function() {
 
-			Route::get('create', 'PracticeController@create')->name('create');
+		Route::post('find', 'PracticeController@load')->name('load');
 
-			Route::post('store', 'PracticeController@store')->name('store');
+		Route::get('create', 'PracticeController@create')->name('create');
 
-			Route::get('show/{id}', 'PracticeController@show')->name('show')
-			->where('id', '[1-9][0-9]*');
+		Route::post('store', 'PracticeController@store')->name('store');
 
-			Route::put('update/{id}', 'PracticeController@update')->name('update')
-			->where('id', '[1-9][0-9]*');
+		Route::get('show/{id}', 'PracticeController@show')->name('show')
+		->where('id', '[1-9][0-9]*');
 
-			Route::get('edit/{id}', 'PracticeController@edit')->name('edit')
-			->where('id', '[1-9][0-9]*');
+		Route::put('update/{id}', 'PracticeController@update')->name('update')
+		->where('id', '[1-9][0-9]*');
 
-			Route::get('destroy/{id}', 'PracticeController@destroy')->name('destroy')
-			->where('id', '[1-9][0-9]*');
+		Route::put('sign/{id}', 'PracticeController@sign')->name('sign')
+		->where('id', '[1-9][0-9]*')->middleware('permission:sign_practices');
 
-			Route::post('results', 'PracticeController@get_results')->name('results');
+		Route::get('edit/{id}', 'PracticeController@edit')->name('edit')
+		->where('id', '[1-9][0-9]*');
 
-		});
+		Route::get('destroy/{id}', 'PracticeController@destroy')->name('destroy')
+		->where('id', '[1-9][0-9]*');
+
+		Route::post('results', 'PracticeController@get_results')->name('results');
+
+	});

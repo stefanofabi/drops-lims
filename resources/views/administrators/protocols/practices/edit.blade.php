@@ -10,10 +10,13 @@
 <script type="text/javascript">
 
 	$(document).ready(function() {
+		load_results();
+    });
 
-		var parameters = {
+    function load_results() { 
+    	var parameters = {
 			"practice_id" : '{{ $practice->id }}' 
-		};
+		}; 
 
 		$.ajax({
 			data:  parameters,
@@ -31,10 +34,32 @@
 							i++;
  						 });
 					}
+		}).fail( function() {
+    		$("#messages").html('<div class="alert alert-danger fade show"> <button type="button" class="close" data-dismiss="alert">&times;</button> <strong> {{ trans("forms.danger") }}! </strong> {{ trans("forms.failed_transaction") }} </div>');
 		});	
-    });
-		
-	function edit_practice() {
+    }
+
+	function confirm_result(type)  {
+		if (confirm('{{ trans("forms.confirm") }}')) {
+			switch (type) {
+				case 'update': {
+					update_practice();
+					break;
+				}
+
+				@can('sign_practices')
+				case 'sign': {
+					sign_practice();
+					break;
+				}
+				@endcan
+			}
+    	}
+
+    	return false;
+	}
+
+	function update_practice() {
 
 		var array = [];
 
@@ -51,27 +76,48 @@
 
 		$.ajax({
 			data:  parameters,
-			url:   '{{ route("administrators/protocols/practices/update", $practice->id) }}',
+			url:   "{{ route('administrators/protocols/practices/update', [$practice->id]) }}",
 			type:  'put',
+			dataType: 'json',
 			beforeSend: function () {
 						$("#messages").html('<div class="spinner-border text-info"> </div> {{ trans("forms.please_wait") }}');
 					},
-			success:  function (response) {
+			success:  function () {
 						$("#messages").html('<div class="alert alert-success alert-dismissible fade show"> <button type="button" class="close" data-dismiss="alert">&times;</button> <strong> {{ trans("forms.well_done") }}! </strong> {{ trans("protocols.result_loaded") }} </div> ');
 					}
+		}).fail( function() {
+    		$("#messages").html('<div class="alert alert-danger fade show"> <button type="button" class="close" data-dismiss="alert">&times;</button> <strong> {{ trans("forms.danger") }}! </strong> {{ trans("forms.failed_transaction") }} </div>');
 		});			
 
 		return false;
 	}
 
+	@can('sign_practices')
+	function sign_practice() {
 
-	function confirm_result()  {
-		if (confirm('{{ trans("forms.confirm") }}')){
-			edit_practice();
-    	}
+    	var parameters = {
+    		"_token": '{{ csrf_token() }}',
+		}; 
 
-    	return false;
+		$.ajax({
+			data:  parameters,
+			url:   "{{ route('administrators/protocols/practices/sign', [$practice->id]) }}",
+			type:  'put',
+			dataType: 'json',
+			beforeSend: function () {
+				$("#messages").html('<div class="spinner-border text-info"> </div> {{ trans("forms.please_wait") }}');
+					},
+			success:  function (response) {
+				$("#messages").html('<div class="alert alert-success alert-dismissible fade show"> <button type="button" class="close" data-dismiss="alert">&times;</button> <strong> {{ trans("forms.well_done") }}! </strong> '+ response.message +' </div> ');
+					}
+		}).fail( function(response) {
+			var data = response.responseJSON;
+    		$("#messages").html('<div class="alert alert-danger fade show"> <button type="button" class="close" data-dismiss="alert">&times;</button> <strong> {{ trans("forms.danger") }}! </strong> '+ data.message +' </div>');
+		});			
+
+		return false;
 	}
+	@endif
 
 </script>
 @endsection
@@ -106,7 +152,7 @@
 			<span class="input-group-text"> {{ trans('determinations.determination') }} </span>
 		</div>
 
-		<input type="text" class="form-control" value="{{ $determination['name'] }}" disabled>
+		<input type="text" class="form-control" value="{{ $determination->name }}" disabled>
 	</div>
 
 	<div class="input-group mt-2 col-md-9 input-form">
@@ -117,7 +163,7 @@
 		<input type="text" class="form-control" value="{{ $report->name }}" disabled>
 	</div>
 
-		<form method="post" action="{{ route('administrators/protocols/practices/update', [$practice->id]) }}" onsubmit="return confirm_result()">
+		<form method="post" action="#" onsubmit="return false">
 			@csrf
 			{{ method_field('PUT') }}
 
@@ -130,11 +176,17 @@
 					{!! $report->report !!}
 				</div>
 
-				<div class="card-header">
-					<div class="mt-3 float-right">
-						<button type="submit" class="btn btn-primary">
-							<span class="fas fa-save"></span> {{ trans('forms.save') }}
+				<div class="card-header">			
+					<div class="mt-3 float-right">					
+						<button type="submit" class="btn btn-primary" onclick="return confirm_result('update')">
+							<span class="fas fa-save"> </span> {{ trans('forms.save') }} 
 						</button>
+
+						@can('sign_practices')
+							<button type="submit" class="btn btn-primary" onclick="return confirm_result('sign')">
+								<span class="fas fa-signature"> </span> {{ trans('forms.sign') }} 							
+							</button>
+						@endcan 			
 					</div>
 				</div>
 			</div>

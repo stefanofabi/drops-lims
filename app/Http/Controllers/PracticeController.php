@@ -4,11 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\QueryException;
+
 
 use App\Models\Practice;
 use App\Models\Report;
 use App\Models\OurProtocol;
 use App\Models\Result;
+use App\Models\SignPractice;
+
+use Lang;
 
 class PracticeController extends Controller
 {
@@ -119,26 +124,63 @@ class PracticeController extends Controller
     {
         //
 
+        try {
 
-         DB::transaction(function () use ($request, $id) {
+	        DB::transaction(function () use ($request, $id) {
 
-            Result::where('practice_id', $id)->delete();
+	        	Result::where('practice_id', $id)->delete();
 
-            if (isset($request->data)) {
-            	// ajax does not send empty arrays
+	            if (isset($request->data)) {
+	            	// ajax does not send empty arrays
 
-	            $array = $request->data;
+		            $array = $request->data;
 
-	            foreach ($array as $data) {
-	                Result::insert([
-	                    'practice_id' => $id,
-	                    'result' => $data,
-	                ]);
+		            foreach ($array as $data) {
+		                Result::insert([
+		                    'practice_id' => $id,
+		                    'result' => $data,
+		                ]);
+		            }
 	            }
+	        }, self::RETRIES);
+        } catch (QueryException $e) {
+        	return response()->json(['status' => 500, 'message' => Lang::get('forms.failed_transaction')], 500);
+        }
+
+        return response()->json(['status' => 200, 'message' => Lang::get('forms.successful_transaction')], 200);
+    }
+
+    /**
+     * Sign the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function sign(Request $request, $id)
+    {
+        //
+
+        try {
+
+            $signed = new SignPractice(
+                [
+                    'practice_id' => $id,
+                    'user_id' => auth()->user()->id,
+                ]
+            );
+            
+            if (!$signed->save()) {
+            	return response()->json(['status' => 500, 'message' => Lang::get('forms.failed_transaction')], 500);
             }
-        }, self::RETRIES);
 
+        } catch (QueryException $e) {
+            // the user had already signed the practice
 
+            return response()->json(['status' => 200, 'message' => Lang::get('protocols.already_signed')], 200);
+        }
+
+        return response()->json(['status' => 200, 'message' => Lang::get('protocols.success_signed')], 200);
     }
 
     /**

@@ -7,6 +7,7 @@ use Illuminate\Database\QueryException;
 
 use App\Models\SocialWork;
 use App\Models\Affiliate;
+use App\Models\Patient;
 
 use Lang;
 
@@ -31,11 +32,13 @@ class AffiliateController extends Controller
     public function create($patient_id)
     {
         //
-    
+        
+        $patient = Patient::findOrFail($patient_id);
+
     	$social_works = SocialWork::all();
 
     	return view('administrators/patients/social_works/affiliates/create')
-    	   ->with('patient_id', $patient_id)
+    	   ->with('patient', $patient)
     	   ->with('social_works', $social_works);
     }
 

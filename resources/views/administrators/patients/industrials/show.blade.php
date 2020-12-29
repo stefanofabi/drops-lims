@@ -22,29 +22,52 @@
 @section('menu')
 <p>
 	<ul class="nav flex-column">
-		<form id="create_protocol_form" action="{{ route('administrators/protocols/our/create') }}" method="post">
-        	@csrf
-            <input type="hidden" name="patient_id" value="{{ $patient->id }}">
-        </form>
 
-		<a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('create_protocol_form').submit();"> 
-			<img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('protocols.create_protocol')}} 
-		</a>
+       @if(auth()->user()->can('crud_protocols'))
+	        <li class="nav-item">
+				<form id="create_protocol_form" action="{{ route('administrators/protocols/our/create') }}" method="post">
+		        	@csrf
+		            <input type="hidden" name="patient_id" value="{{ $patient->id }}">
+		        </form>
 
-		<li class="nav-item">
-			<a class="nav-link" href=""> <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('protocols.view_protocols') }} </a>
-		</li>
+				<a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('create_protocol_form').submit();"> 
+					<img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('protocols.create_protocol')}} 
+				</a>
+			</li>
+			
+			<li class="nav-item">
+				<a class="nav-link" href="#"> <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('protocols.view_protocols') }} </a>
+			</li>
+		@else 
+			<li class="nav-item">
+				<a class="nav-link" href="#" onclick="alert('{{ trans('forms.no_permission') }}')"> 
+					<img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('protocols.create_protocol')}} 
+				</a>
+			</li>
 
-		<li class="nav-item">
-			<form id="security_code_form" target="_blank" action="{{ route('administrators/patients/security_codes/store') }}" method="post">
-				@csrf
-				<input type="hidden" name="patient_id" value="{{ $patient->id }}">
-			</form>
+			<li class="nav-item">
+				<a class="nav-link" href="#"> <img src="{{ asset('images/drop.png') }}" width="25" height="25" onclick="alert('{{ trans('forms.no_permission') }}')"> {{ trans('protocols.view_protocols') }} </a>
+			</li>
+		@endif
 
-			<a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('security_code_form').submit();">
-				<img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('patients.get_security_code') }}
-			</a>
-		</li>
+		@if(auth()->user()->can('generate_security_codes'))
+			<li class="nav-item">
+				<form id="security_code_form" target="_blank" action="{{ route('administrators/patients/security_codes/store') }}" method="post">
+					@csrf
+					<input type="hidden" name="patient_id" value="{{ $patient->id }}">
+				</form>
+
+				<a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('security_code_form').submit();">
+					<img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('patients.get_security_code') }}
+				</a>
+			</li>
+		@else
+			<li class="nav-item">
+				<a class="nav-link" href="#" onclick="alert('{{ trans('forms.no_permission') }}')">
+					<img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('patients.get_security_code') }}
+				</a>	
+			</li>		
+		@endif
 	</ul>
 </p>
 @endsection

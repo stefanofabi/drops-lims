@@ -53,6 +53,12 @@
 
 @section('menu')
 @include('administrators/patients/edit_menu')
+
+<ul class="nav flex-column">
+	<li class="nav-item">
+		<a class="nav-link" href="{{ route('administrators/patients/edit', $patient->id) }}"> <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('forms.go_back') }} </a>
+	</li>	
+</ul>
 @endsection
 
 @section('content-title')
@@ -67,7 +73,7 @@
 <form method="post" action="{{ route('administrators/patients/social_works/affiliates/store') }}">
 	@csrf
 
-	<input type="hidden" class="form-control" name="patient_id" value="{{ $patient_id }}">
+	<input type="hidden" class="form-control" name="patient_id" value="{{ $patient->id }}">
 
 	<div class="input-group mt-2 col-md-9">
 		<div class="input-group-prepend">

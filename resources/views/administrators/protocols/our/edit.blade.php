@@ -53,11 +53,13 @@
 
 @section('menu')
 <ul class="nav flex-column">
+	@can('crud_practices')
 	<li class="nav-item">
 		<a class="nav-link" href="{{ route('administrators/protocols/our/add_practices', [$protocol->id]) }}"> 
 			<img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('protocols.add_practices') }} 
 		</a>
 	</li>
+	@endcan
 
 	<li class="nav-item">
 		<a class="nav-link" href="{{ route('administrators/protocols/our/show', [$protocol->id]) }}"> 
@@ -200,15 +202,22 @@
 							@endif
 						</td>
 						<td> 
-							@foreach ($practice->signs as $sign)
-								<a href="#" data-toggle="tooltip" title="{{ $sign->user->name }}"> 
+							@forelse($practice->signs as $sign)
+							    <a style="text-decoration: none" href="#" data-toggle="tooltip" title="{{ $sign->user->name }}"> 
 									<img height="30px" width="30px" src="{{ asset('storage/avatars/'.$sign->user->avatar) }}" class="rounded-circle" alt="{{ $sign->user->name }}"> 
 								</a>  
-							@endforeach
+							@empty
+							    {{ trans('protocols.not_signed')}}
+							@endforelse
 						</td>
 						<td class="text-right">
-							<a href="{{ route('administrators/protocols/practices/edit', $practice->id) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.edit_practice') }}"> <i class="fas fa-edit fa-sm"></i> </a>
-							<a href="{{ route('administrators/protocols/practices/destroy', $practice->id) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.destroy_practice') }}"> <i class="fas fa-trash fa-sm"></i> </a>
+							@if(auth()->user()->can('crud_practices'))
+								<a href="{{ route('administrators/protocols/practices/edit', $practice->id) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.edit_practice') }}"> <i class="fas fa-edit fa-sm"></i> </a>
+								<a href="{{ route('administrators/protocols/practices/destroy', $practice->id) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.destroy_practice') }}"> <i class="fas fa-trash fa-sm"></i> </a>
+							@else
+								<a href="#" class="btn btn-info btn-sm" title="{{ trans('protocols.edit_practice') }}"> <i class="fas fa-edit fa-sm" onclick="alert('{{ trans('forms.no_permission') }}')"> </i> </a>
+								<a href="#" class="btn btn-info btn-sm" title="{{ trans('protocols.destroy_practice') }}"> <i class="fas fa-trash fa-sm" onclick="alert('{{ trans('forms.no_permission') }}')"> </i> </a>
+							@endif
 						</td>
 					</tr>
 				@endforeach

@@ -33,11 +33,12 @@ class RoleSeeder extends Seeder
         		'crud_determinations',
         		'crud_reports',
         		'crud_protocols',
+                'print_protocols'
         		'crud_practices',
-        		'sign_protocols',
+        		'sign_practices',
         		'see_statistics',
         		'restore_items',
-        		'generate_security_code',
+        		'generate_security_codes',
         		'settings',
 
         	]
@@ -50,8 +51,9 @@ class RoleSeeder extends Seeder
         		'crud_prescribers',
         		'crud_determinations',
         		'crud_protocols',
+                'print_protocols',
         		'crud_practices',
-        		'generate_security_code',
+        		'generate_security_codes',
         	]
         );
 
@@ -61,8 +63,9 @@ class RoleSeeder extends Seeder
         		'crud_determinations',
         		'crud_reports',
         		'crud_protocols',
+                'print_protocols',
         		'crud_practices',
-        		'sign_protocols',
+        		'sign_practices',
         	]
         );
 

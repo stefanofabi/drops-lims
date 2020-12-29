@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 
 use App\Models\Phone;
+use App\Models\Patient;
 
 use Lang;
 
@@ -31,8 +32,10 @@ class PhoneController extends Controller
     {
         //
 
+    	$patient = Patient::findOrFail($patient_id);
+
         return view('administrators/patients/phones/create')
-        	->with('patient_id', $patient_id);
+        	->with('patient', $patient);
     }
 
     /**
