@@ -106,7 +106,7 @@
 			<span class="input-group-text"> {{ trans('determinations.biochemical_unit') }} </span>
 		</div>
 
-		<input type="number" class="form-control @error('biochemical_unit') is-invalid @enderror" name="biochemical_unit" min="0" step="0.01" value="{{ old('biochemical_unit') }}" required>
+		<input type="number" class="form-control @error('biochemical_unit') is-invalid @enderror" name="biochemical_unit" min="0" step="0.01" value="{{ old('biochemical_unit') ? : '0.00' }}" required>
 
 		@error('biochemical_unit')
         	<span class="invalid-feedback" role="alert">
