@@ -26,11 +26,12 @@ class PermissionSeeder extends Seeder
     	Permission::create(['name' => 'crud_determinations']);
     	Permission::create(['name' => 'crud_reports']);
     	Permission::create(['name' => 'crud_protocols']);
+    	Permission::create(['name' => 'print_protocols']);
     	Permission::create(['name' => 'crud_practices']);
     	Permission::create(['name' => 'sign_practices']);
     	Permission::create(['name' => 'see_statistics']);
     	Permission::create(['name' => 'restore_items']);
-    	Permission::create(['name' => 'generate_security_code']);
+    	Permission::create(['name' => 'generate_security_codes']);
     	Permission::create(['name' => 'settings']);
 
 

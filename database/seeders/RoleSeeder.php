@@ -33,7 +33,7 @@ class RoleSeeder extends Seeder
         		'crud_determinations',
         		'crud_reports',
         		'crud_protocols',
-                'print_protocols'
+                'print_protocols',
         		'crud_practices',
         		'sign_practices',
         		'see_statistics',

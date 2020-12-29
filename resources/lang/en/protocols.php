@@ -47,10 +47,10 @@ return [
     'see_patient' => 'See patient',
     'view_protocols' => 'View protocols',
     'empty_protocol' => 'You cannot print protocols with practices without informing',
-    'informed' => 'Informed',
     'signed_off' => 'Signed off',
     'not_signed' => 'Not signed',
     'already_signed' => 'You had already signed this practice',
     'success_signed' => 'You signed the practice successfully',
+    'informed' => 'Informed',
     
 ];

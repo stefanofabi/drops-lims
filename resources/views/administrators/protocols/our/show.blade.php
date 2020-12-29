@@ -120,7 +120,7 @@
 					<th> {{ trans('determinations.code') }} </th>
 					<th> {{ trans('determinations.determination') }} </th>
 					<th> {{ trans('determinations.amount') }} </th>
-					<th> {{ trans('determinations.informed') }} </th>
+					<th> {{ trans('protocols.informed') }} </th>
 					<th> {{ trans('protocols.signed_off') }} </th>
 					<th class="text-right"> {{ trans('forms.actions') }}</th>
 				</tr>
