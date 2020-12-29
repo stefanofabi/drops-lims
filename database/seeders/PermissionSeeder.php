@@ -26,6 +26,7 @@ class PermissionSeeder extends Seeder
     	Permission::create(['name' => 'crud_determinations']);
     	Permission::create(['name' => 'crud_reports']);
     	Permission::create(['name' => 'crud_protocols']);
+        Permission::create(['name' => 'print_worksheets']);
     	Permission::create(['name' => 'print_protocols']);
     	Permission::create(['name' => 'crud_practices']);
     	Permission::create(['name' => 'sign_practices']);

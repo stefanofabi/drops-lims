@@ -21,21 +21,28 @@
 
 @section('menu')
 <ul class="nav flex-column">
-	<li class="nav-item">
-		<a class="nav-link" target="_blank" href="{{ route('administrators/protocols/our/print_worksheet', $protocol->id) }}"> 
-			<img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('protocols.print_worksheet') }} 
-		</a>
-	</li>
+	@can('print_worksheets')
+		<li class="nav-item">
+			<a class="nav-link" target="_blank" href="{{ route('administrators/protocols/our/print_worksheet', $protocol->id) }}"> 
+				<img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('protocols.print_worksheet') }} 
+			</a>
+		</li>
+	@endcan
 
-	<li class="nav-item">
-		<a class="nav-link" target="_blank" href="{{ route('administrators/protocols/our/print', $protocol->id) }}"> 
-			<img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('protocols.print_report') }} 
-		</a>
-	</li>
+	@can('print_protocols')
+		<li class="nav-item">
+			<a class="nav-link" target="_blank" href="{{ route('administrators/protocols/our/print', $protocol->id) }}"> 
+				<img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('protocols.print_report') }} 
+			</a>
+		</li>
+	@endcan
 
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('administrators/patients/show', $patient->id) }}"> <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('protocols.see_patient') }} </a>
-    </li>
+	@can('crud_patients')
+	    <li class="nav-item">
+	        <a class="nav-link" href="{{ route('administrators/patients/show', $patient->id) }}"> <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('protocols.see_patient') }} </a>
+	    </li>
+	@endcan
+
 </ul>
 @endsection
 
@@ -109,64 +116,66 @@
 @endsection
 
 @section('extra-content')
-<div class="card mt-3 mb-4">
-	<div class="card-header">
-		<h4> <span class="fas fa-syringe" ></span> {{ trans('determinations.determinations')}} </h4>
-    </div>
+@can('crud_practices')
+	<div class="card mt-3 mb-4">
+		<div class="card-header">
+			<h4> <span class="fas fa-syringe" ></span> {{ trans('protocols.practices')}} </h4>
+	    </div>
 
-    <div class="table-responsive">
-		<table class="table table-striped">
-				<tr class="info">
-					<th> {{ trans('determinations.code') }} </th>
-					<th> {{ trans('determinations.determination') }} </th>
-					<th> {{ trans('determinations.amount') }} </th>
-					<th> {{ trans('protocols.informed') }} </th>
-					<th> {{ trans('protocols.signed_off') }} </th>
-					<th class="text-right"> {{ trans('forms.actions') }}</th>
-				</tr>
-
-				@php
-					$total_amount = 0;
-				@endphp
-
-				@foreach ($practices as $practice)
+	    <div class="table-responsive">
+			<table class="table table-striped">
+					<tr class="info">
+						<th> {{ trans('determinations.code') }} </th>
+						<th> {{ trans('determinations.determination') }} </th>
+						<th> {{ trans('determinations.amount') }} </th>
+						<th> {{ trans('protocols.informed') }} </th>
+						<th> {{ trans('protocols.signed_off') }} </th>
+						<th class="text-right"> {{ trans('forms.actions') }}</th>
+					</tr>
 
 					@php
-						$total_amount += $practice->amount;
+						$total_amount = 0;
 					@endphp
+
+					@foreach ($practices as $practice)
+
+						@php
+							$total_amount += $practice->amount;
+						@endphp
+						<tr>
+							<td> {{ $practice->report->determination->code }} </td>
+							<td> {{ $practice->report->determination->name }} </td>
+							<td> $ {{ number_format($practice->amount, 2, ",", ".") }} </td>
+							<td>
+								@if (empty($practice->results->first()))
+									<span class="badge badge-primary"> {{ trans('forms.no') }} </span>
+								@else
+									<span class="badge badge-success"> {{ trans('forms.yes') }} </span>
+								@endif
+							</td>
+							<td> 
+								@forelse($practice->signs as $sign)
+								    <a style="text-decoration: none" href="#" data-toggle="tooltip" title="{{ $sign->user->name }}"> 
+										<img height="30px" width="30px" src="{{ asset('storage/avatars/'.$sign->user->avatar) }}" class="rounded-circle" alt="{{ $sign->user->name }}"> 
+									</a>  
+								@empty
+								    {{ trans('protocols.not_signed')}}
+								@endforelse
+							</td>
+							<td class="text-right">
+								<a href="{{ route('administrators/protocols/practices/show', $practice->id) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.show_practice') }}"> <i class="fas fa-eye fa-sm"></i> </a>
+							</td>
+						</tr>
+					@endforeach
+
 					<tr>
-						<td> {{ $practice->report->determination->code }} </td>
-						<td> {{ $practice->report->determination->name }} </td>
-						<td> $ {{ number_format($practice->amount, 2, ",", ".") }} </td>
-						<td>
-							@if (empty($practice->results->first()))
-								<span class="badge badge-primary"> {{ trans('forms.no') }} </span>
-							@else
-								<span class="badge badge-success"> {{ trans('forms.yes') }} </span>
-							@endif
-						</td>
-						<td> 
-							@forelse($practice->signs as $sign)
-							    <a style="text-decoration: none" href="#" data-toggle="tooltip" title="{{ $sign->user->name }}"> 
-									<img height="30px" width="30px" src="{{ asset('storage/avatars/'.$sign->user->avatar) }}" class="rounded-circle" alt="{{ $sign->user->name }}"> 
-								</a>  
-							@empty
-							    {{ trans('protocols.not_signed')}}
-							@endforelse
-						</td>
-						<td class="text-right">
-							<a href="{{ route('administrators/protocols/practices/show', $practice->id) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.show_practice') }}"> <i class="fas fa-eye fa-sm"></i> </a>
+						<td colspan="6" class="text-right">
+							<h4> Total: $ {{ number_format($total_amount, 2, ",", ".") }} </h4>
 						</td>
 					</tr>
-				@endforeach
-
-				<tr>
-					<td colspan="5" class="text-right">
-						<h4> Total: $ {{ number_format($total_amount, 2, ",", ".") }} </h4>
-					</td>
-				</tr>
-		</table>
+			</table>
+		</div>
 	</div>
-</div>
+@endcan
 @endsection
 

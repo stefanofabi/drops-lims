@@ -12,9 +12,11 @@
 
 @section('menu')
 <ul class="nav flex-column">
-	<li class="nav-item">
-		<a class="nav-link" href="{{ route('administrators/determinations/reports/create', [$determination->id]) }}"> <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('reports.create_report') }} </a>
-	</li>
+	@can('crud_reports')
+		<li class="nav-item">
+			<a class="nav-link" href="{{ route('administrators/determinations/reports/create', [$determination->id]) }}"> <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('reports.create_report') }} </a>
+		</li>
+	@endcan
 
 	<li class="nav-item">
 		<a class="nav-link" href="{{ route('administrators/determinations/show', [$determination->id]) }}"> <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('forms.go_back') }} </a>

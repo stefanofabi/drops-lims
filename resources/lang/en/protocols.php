@@ -52,5 +52,6 @@ return [
     'already_signed' => 'You had already signed this practice',
     'success_signed' => 'You signed the practice successfully',
     'informed' => 'Informed',
+    'practices' => 'Practices',
     
 ];
