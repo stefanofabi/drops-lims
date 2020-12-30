@@ -188,4 +188,7 @@ public/mix-manifest.json
 # PhpStorm
 .idea
 
+# Visual Studio Code
+.vs
+
 # End of https://www.gitignore.io/api/node,linux,laravel,windows,composer
