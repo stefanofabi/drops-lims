@@ -14,8 +14,6 @@ use Lang;
 
 class ReportController extends Controller
 {
-    private const RETRIES = 5;
-
     /**
      * Display a listing of the resource.
      *
