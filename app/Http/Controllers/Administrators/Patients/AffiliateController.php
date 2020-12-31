@@ -61,8 +61,8 @@ class AffiliateController extends Controller
             $affiliate = new Affiliate($request->all());
             if ($affiliate->save()) {
                 $redirect = redirect()->action('PatientController@edit', [$request->patient_id])->with('success', [
-                        Lang::get('social_works.success_saving_affiliate'),
-                    ]);
+                    Lang::get('social_works.success_saving_affiliate'),
+                ]);
             } else {
                 $redirect = back()->withInput($request->all())->withErrors(Lang::get('social_works.error_saving_affiliate'));
             }
