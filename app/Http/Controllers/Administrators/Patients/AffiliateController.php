@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Administrators\Patients;
 
 use App\Http\Controllers\Controller;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 
@@ -59,8 +60,12 @@ class AffiliateController extends Controller
 
         try {
             $affiliate = new Affiliate($request->all());
+
             if ($affiliate->save()) {
-                $redirect = redirect()->action('PatientController@edit', [$request->patient_id])->with('success', [
+                $redirect = redirect()->action([
+                    PatientController::class,
+                    'edit',
+                ], [$request->patient_id])->with('success', [
                     Lang::get('social_works.success_saving_affiliate'),
                 ]);
             } else {
@@ -93,8 +98,23 @@ class AffiliateController extends Controller
     public function edit(Request $request)
     {
         //
+        try {
+            $affiliate = Affiliate::findOrFail($request->id);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['status' => 500, 'message' => Lang::get('errors.not_found')], '500');
+        }
 
-        return Affiliate::select('affiliates.id', 'plans.id as plan_id', 'social_works.id as social_work_id', 'affiliates.affiliate_number', 'affiliates.security_code', 'affiliates.expiration_date')->plan()->socialWork()->findOrFail($request->id);
+        $plan = $affiliate->plan;
+        $social_work = $plan->social_work;
+
+        return response()->json([
+            'id' => $affiliate->id,
+            'plan_id' => $plan->id,
+            'social_work_id' => $social_work->id,
+            'affiliate_number' => $affiliate->affiliate_number,
+            'security_code' => $affiliate->security_code,
+            'expiration_date' => $affiliate->expiration_date,
+        ], 200);
     }
 
     /**
@@ -114,13 +134,22 @@ class AffiliateController extends Controller
             'security_code' => 'numeric|nullable|min:0|max:999',
         ]);
 
-        $affiliate = Affiliate::findOrFail($request->id);
+        try {
+            $affiliate = Affiliate::findOrFail($request->id);
 
-        if (! $affiliate->update($request->all())) {
-            return response([], 500);
+            if (! $affiliate->update($request->all())) {
+                return response()->json([Lang::get('forms.failed_transaction')], 500);
+            }
+        } catch (QueryException $e) {
+            return response()->json([
+                'status' => 500,
+                'message' => Lang::get('errors.error_processing_transaction'),
+            ], 500);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['status' => 500, 'message' => Lang::get('errors.not_found')], 500);
         }
 
-        return response([], 200);
+        return response()->json(['status' => 200, 'message' => Lang::get('forms.successful_transaction')], 200);
     }
 
     /**
@@ -133,12 +162,19 @@ class AffiliateController extends Controller
     {
         //
 
-        $affiliate = Affiliate::findOrFail($request->id);
-
-        if (! $affiliate->delete()) {
-            return response([], 500);
+        try {
+            $affiliate = Affiliate::findOrFail($request->id);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['status' => 500, 'message' => Lang::get('errors.not_found')], 500);
         }
 
-        return response([], 200);
+        if (! $affiliate->delete()) {
+            return response()->json([
+                'status' => 500,
+                'message' => Lang::get('errors.error_processing_transaction'),
+            ], 500);
+        }
+
+        return response()->json(['status' => 200, 'message' => Lang::get('forms.successful_transaction')], 200);
     }
 }

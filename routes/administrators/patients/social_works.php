@@ -10,7 +10,7 @@
 */
 
 use App\Http\Controllers\Administrators\Patients\AffiliateController;
-use App\Http\Controllers\Administrators\Patients\SocialWorkController;
+use App\Http\Controllers\Administrators\SocialWorks\SocialWorkController;
 
 Route::get('social_works/affiliates/create/{patient_id}', [
     AffiliateController::class,

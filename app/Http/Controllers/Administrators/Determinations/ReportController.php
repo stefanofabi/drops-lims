@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 use App\Models\Determination;
 use App\Models\Report;
@@ -118,9 +117,6 @@ class ReportController extends Controller
 
         try {
 
-            /* To maintain the integrity in the printing of the protocols I will apply it in a transaction */
-            DB::beginTransaction();
-
             $report = Report::findOrFail($id);
 
             if ($report->update($request->all())) {
@@ -128,11 +124,7 @@ class ReportController extends Controller
             } else {
                 $redirect = back()->withInput($request->all())->withErrors(Lang::get('determinations.error_updating_determination'));
             }
-
-            DB::commit();
         } catch (QueryException $e) {
-            DB::rollBack();
-
             $redirect = back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
         }
 

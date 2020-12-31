@@ -12,7 +12,6 @@ use App\Http\Traits\Pagination;
 use App\Models\Nomenclator;
 use App\Models\Determination;
 
-use Illuminate\Support\Facades\DB;
 use Lang;
 
 class DeterminationController extends Controller
@@ -158,8 +157,6 @@ class DeterminationController extends Controller
         ]);
 
         try {
-            /* To maintain the integrity in the printing of the protocols I will apply it in a transaction */
-            DB::beginTransaction();
 
             $determination = Determination::findOrFail($id);
 
@@ -168,11 +165,7 @@ class DeterminationController extends Controller
             } else {
                 $redirect = back()->withInput($request->all())->withErrors(Lang::get('determinations.error_updating_determination'));
             }
-
-            DB::commit();
         } catch (QueryException $e) {
-            DB::rollBack();
-
             $redirect = back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
         }
 
