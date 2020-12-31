@@ -117,10 +117,11 @@ class ReportController extends Controller
         //
 
         try {
-            $report = Report::findOrFail($id);
 
             /* To maintain the integrity in the printing of the protocols I will apply it in a transaction */
             DB::beginTransaction();
+
+            $report = Report::findOrFail($id);
 
             if ($report->update($request->all())) {
                 $redirect = redirect()->action([ReportController::class, 'show'], [$id]);
