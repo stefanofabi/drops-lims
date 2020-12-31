@@ -29,7 +29,6 @@ return [
     'amount' => 'Amount',
     'error_saving_determination' => 'The determination could not be added. Please, try again later.',
     'error_updating_determination' => 'The determination could not be updated. Please, try again later.',
-    'error_destroy_determination' => 'The determination was not found and could not be removed',
     'success_destroy' => 'Determination successfully removed',
     'danger_destroy' => 'Failed to remove the determination',
     'success_destroy_message' => 'Well done! If this was due to an error it is not a problem. Click on this message to undo the changes!',

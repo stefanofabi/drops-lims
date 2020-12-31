@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Administrators\Determinations;
 
 use App\Http\Controllers\Controller;
 
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -50,13 +51,26 @@ class ReportController extends Controller
     public function store(Request $request)
     {
         //
-        $report = Report::insertGetId([
-            'name' => $request->name,
-            'report' => $request->report,
-            'determination_id' => $request->determination_id,
+
+        $request->validate([
+            'name' => 'string|nullable',
+            'report' => 'string|nullable',
+            'determination_id' => 'required|numeric|min:1',
         ]);
 
-        return redirect()->action('ReportController@show', [$report]);
+        try {
+            $report = new Report($request->all());
+
+            if ($report->save()) {
+                $redirect = redirect()->action([ReportController::class, 'show'], [$report]);
+            } else {
+                $redirect = back()->withInput($request->all())->withErrors(Lang::get('determinations.error_saving_report'));
+            }
+        } catch (QueryException $e) {
+            $redirect = back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
+        }
+
+        return $redirect;
     }
 
     /**
@@ -102,15 +116,26 @@ class ReportController extends Controller
     {
         //
 
-        DB::transaction(function () use ($request, $id) {
+        try {
+            $report = Report::findOrFail($id);
 
-            $report = Report::where('id', '=', $id)->update([
-                    'name' => $request->name,
-                    'report' => $request->report,
-                ]);
-        }, self::RETRIES);
+            /* To maintain the integrity in the printing of the protocols I will apply it in a transaction */
+            DB::beginTransaction();
 
-        return redirect()->action('ReportController@show', [$id]);
+            if ($report->update($request->all())) {
+                $redirect = redirect()->action([ReportController::class, 'show'], [$id]);
+            } else {
+                $redirect = back()->withInput($request->all())->withErrors(Lang::get('determinations.error_updating_determination'));
+            }
+
+            DB::commit();
+        } catch (QueryException $e) {
+            DB::rollBack();
+
+            $redirect = back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
+        }
+
+        return $redirect;
     }
 
     /**
@@ -135,7 +160,7 @@ class ReportController extends Controller
             $view->withErrors(Lang::get('reports.danger_destroy'));
         }
 
-        $reports = Determination::get_reports($determination->id);
+        $reports = $determination->reports;
 
         return $view->with('reports', $reports);
     }

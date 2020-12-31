@@ -46,19 +46,16 @@ class DeterminationController extends Controller
 
         $offset = ($request->page - 1) * self::PER_PAGE;
 
-        $query = Determination::index($request->nomenclator, $request->filter, $offset, self::PER_PAGE);
+        $determinations = Determination::index($request->nomenclator, $request->filter, $offset, self::PER_PAGE);
 
         // Pagination
-        $count_rows = Determination::count_index($request->nomenclator, $request->filter);
+        $count_rows = $determinations->count();
         $total_pages = ceil($count_rows / self::PER_PAGE);
-
         $paginate = $this->paginate($request->page, $total_pages, self::ADJACENTS);
 
         $nomenclators = Nomenclator::all();
 
-        $view = view('administrators/determinations/index')->with('request', $request->all())->with('determinations', $query)->with('paginate', $paginate)->with('nomenclators', $nomenclators);
-
-        return $view;
+        return view('administrators/determinations/index')->with('request', $request->all())->with('determinations', $determinations)->with('paginate', $paginate)->with('nomenclators', $nomenclators);
     }
 
     /**
@@ -95,7 +92,7 @@ class DeterminationController extends Controller
             $determination = new Determination($request->all());
 
             if ($determination->save()) {
-                $redirect = redirect()->action('DeterminationController@show', $determination->id);
+                $redirect = redirect()->action([DeterminationController::class, 'show'], [$determination->id]);
             } else {
                 $redirect = back()->withInput($request->all())->withErrors(Lang::get('determinations.error_saving_determination'));
             }
@@ -119,7 +116,7 @@ class DeterminationController extends Controller
         $determination = Determination::findOrFail($id);
         $nomenclator = $determination->nomenclator;
 
-        $reports = Determination::get_reports($id);
+        $reports = $determination->reports;
 
         return view('administrators/determinations/show')->with('determination', $determination)->with('nomenclator', $nomenclator)->with('reports', $reports);
     }
@@ -136,7 +133,7 @@ class DeterminationController extends Controller
         $determination = Determination::findOrFail($id);
         $nomenclator = $determination->nomenclator;
 
-        $reports = Determination::get_reports($id);
+        $reports = $determination->reports;
 
         return view('administrators/determinations/edit')->with('determination', $determination)->with('nomenclator', $nomenclator)->with('reports', $reports);
     }
@@ -159,12 +156,16 @@ class DeterminationController extends Controller
             'biochemical_unit' => 'required|numeric|min:0',
         ]);
 
-        $determination = Determination::findOrFail($id);
+        try {
+            $determination = Determination::findOrFail($id);
 
-        if ($determination->update($request->all())) {
-            $redirect = redirect()->action('DeterminationController@show', $id);
-        } else {
-            $redirect = back()->withInput($request->all())->withErrors(Lang::get('determinations.error_updating_determination'));
+            if ($determination->update($request->all())) {
+                $redirect = redirect()->action([DeterminationController::class, 'show'], $id);
+            } else {
+                $redirect = back()->withInput($request->all())->withErrors(Lang::get('determinations.error_updating_determination'));
+            }
+        } catch (QueryException $e) {
+            $redirect = back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
         }
 
         return $redirect;
@@ -180,14 +181,9 @@ class DeterminationController extends Controller
     {
         //
 
-        $determination = Determination::find($id);
+        $determination = Determination::findOrFail($id);
 
         $nomenclators = Nomenclator::all();
-
-        if (! $determination) {
-            // determination not exists
-            return view('administrators/determinations/determinations')->withErrors(Lang::get('determinations.error_destroy_determination'))->with('nomenclators', $nomenclators);
-        }
 
         $view = view('administrators/determinations/destroy')->with('nomenclators', $nomenclators);
 
@@ -210,14 +206,9 @@ class DeterminationController extends Controller
     {
         //
 
-        $determination = Determination::onlyTrashed()->find($id);
+        $determination = Determination::onlyTrashed()->findOrFail($id);
 
         $nomenclators = Nomenclator::all();
-
-        if (! $determination) {
-            // determination not removed
-            return view('administrators/determinations/determinations')->withErrors(Lang::get('determinations.error_restore_determination'))->with('nomenclators', $nomenclators);
-        }
 
         $view = view('administrators/determinations/restore')->with('determination_id', $id)->with('nomenclators', $nomenclators);
 

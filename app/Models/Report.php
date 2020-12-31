@@ -8,6 +8,8 @@ class Report extends Model
 {
     //
 
+    protected $fillable = ['name', 'report', 'name', 'determination_id'];
+
     public function determination() {
 		return $this->belongsTo('App\Models\Determination');
 	}

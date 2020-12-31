@@ -19,45 +19,37 @@ class Determination extends Model
 
 	protected $fillable = ['nomenclator_id', 'code', 'name', 'position', 'biochemical_unit'];
 
+    /**
+     * Get the determinations for the query.
+     */
 	protected function index($nomenclator_id, $filter, $offset, $length) {
-		$determination = DB::table('determinations')
-		->where('nomenclator_id', '=', $nomenclator_id)
-		->where(function ($query) use ($filter) {
-			if (!empty($filter)) {
-				$query->orWhere("name", "like", "%$filter%")
-				->orWhere("code", "like", "$filter%");
-			}
-		})
-		->whereNull('deleted_at')
-		->orderBy('code', 'asc')
-		->orderBy('name', 'asc')
-		->offset($offset)
-		->limit($length)
-		->get();
-
-		return $determination;
+		return DB::table('determinations')
+            ->where('nomenclator_id', '=', $nomenclator_id)
+            ->where(function ($query) use ($filter) {
+                if (!empty($filter)) {
+                    $query->orWhere("name", "like", "%$filter%")
+                    ->orWhere("code", "like", "$filter%");
+                }
+            })
+            ->whereNull('deleted_at')
+            ->orderBy('code', 'asc')
+            ->orderBy('name', 'asc')
+            ->offset($offset)
+            ->limit($length)
+            ->get();
 	}
 
+    /**
+     * Get the reports for the determination.
+     */
+    public function reports()
+    {
+        return $this->hasMany(Report::class);
+    }
 
-	protected function count_index($nomenclator_id, $filter) {
-		$count = DB::table('determinations')
-		->where('nomenclator_id', '=', $nomenclator_id)
-		->where(function ($query) use ($filter) {
-			if (!empty($filter)) {
-				$query->orWhere("name", "like", "%$filter%")
-				->orWhere("code", "like", "$filter%");
-			}
-		})
-		->whereNull('deleted_at')
-		->count();
-
-		return $count;
-	}
-
-	protected function get_reports($id) {
-		return Report::where('determination_id', $id)->get();
-	}
-
+    /**
+     * Get the nomenclator associated with the determination.
+     */
 	public function nomenclator() {
 		return $this->belongsTo('App\Models\Nomenclator');
 	}
