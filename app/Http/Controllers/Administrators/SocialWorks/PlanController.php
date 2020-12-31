@@ -1,14 +1,15 @@
-<?php
+Models\<?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Administrators\SocialWorks;
+
+use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 
 use App\Models\Plan;
-
 use Lang;
 
-class SocialWorkController extends Controller
+class PlanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -33,7 +34,7 @@ class SocialWorkController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -44,7 +45,7 @@ class SocialWorkController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -55,7 +56,7 @@ class SocialWorkController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -66,8 +67,8 @@ class SocialWorkController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -78,26 +79,11 @@ class SocialWorkController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         //
-    }
-
-    /**
-     * Load plans from ajax
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function load_plans(Request $request)
-    {
-        //
-        $social_work_id = $request->social_work_id;
-        $plans = Plan::where('social_work_id', $social_work_id)->get();
-
-        return $plans;
     }
 }

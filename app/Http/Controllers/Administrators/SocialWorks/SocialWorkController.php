@@ -1,13 +1,16 @@
-Models\<?php
+<?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Administrators\SocialWorks;
+
+use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 
 use App\Models\Plan;
+
 use Lang;
 
-class PlanController extends Controller
+class SocialWorkController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,7 +21,6 @@ class PlanController extends Controller
     {
         //
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -33,7 +35,7 @@ class PlanController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -44,7 +46,7 @@ class PlanController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -55,7 +57,7 @@ class PlanController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -66,8 +68,8 @@ class PlanController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -78,11 +80,26 @@ class PlanController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Load plans from ajax
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function load_plans(Request $request)
+    {
+        //
+        $social_work_id = $request->social_work_id;
+        $plans = Plan::where('social_work_id', $social_work_id)->get();
+
+        return $plans;
     }
 }

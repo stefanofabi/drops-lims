@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Administrators\Determinations;
+
+use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -9,11 +11,11 @@ use App\Models\Determination;
 use App\Models\Report;
 
 use Lang;
+
 class ReportController extends Controller
 {
-
     private const RETRIES = 5;
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -22,7 +24,7 @@ class ReportController extends Controller
     public function index()
     {
         //
-        
+
     }
 
     /**
@@ -36,14 +38,13 @@ class ReportController extends Controller
 
         $determination = Determination::findOrFail($id);
 
-        return view('administrators/determinations/reports/create')
-        ->with('determination', $determination);
+        return view('administrators/determinations/reports/create')->with('determination', $determination);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -61,7 +62,7 @@ class ReportController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -71,15 +72,13 @@ class ReportController extends Controller
         $report = Report::findOrFail($id);
         $determination = $report->determination;
 
-        return view('administrators/determinations/reports/show')
-        ->with('report', $report)
-        ->with('determination', $determination);
+        return view('administrators/determinations/reports/show')->with('report', $report)->with('determination', $determination);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -89,16 +88,14 @@ class ReportController extends Controller
         $report = Report::findOrFail($id);
         $determination = $report->determination;
 
-        return view('administrators/determinations/reports/edit')
-        ->with('report', $report)
-        ->with('determination', $determination);
+        return view('administrators/determinations/reports/edit')->with('report', $report)->with('determination', $determination);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -107,15 +104,11 @@ class ReportController extends Controller
 
         DB::transaction(function () use ($request, $id) {
 
-           $report = Report::where('id', '=', $id)
-           ->update(
-               [
-                'name' => $request->name,
-                'report' => $request->report, 
-            ]);
-
-       }, self::RETRIES);
-
+            $report = Report::where('id', '=', $id)->update([
+                    'name' => $request->name,
+                    'report' => $request->report,
+                ]);
+        }, self::RETRIES);
 
         return redirect()->action('ReportController@show', [$id]);
     }
@@ -123,7 +116,7 @@ class ReportController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -134,9 +127,7 @@ class ReportController extends Controller
         $determination = $report->determination;
         $nomenclator = $determination->nomenclator;
 
-        $view = view('administrators/determinations/edit')
-            ->with('determination', $determination)
-            ->with('nomenclator', $nomenclator);
+        $view = view('administrators/determinations/edit')->with('determination', $determination)->with('nomenclator', $nomenclator);
 
         if ($report->delete()) {
             $view->with('success', [Lang::get('reports.success_destroy')]);

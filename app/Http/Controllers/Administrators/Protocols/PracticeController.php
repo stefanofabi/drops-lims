@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Administrators\Protocols;
+
+use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\QueryException;
-
 
 use App\Models\Practice;
 use App\Models\Report;
@@ -17,7 +18,6 @@ use Lang;
 
 class PracticeController extends Controller
 {
-
     private const RETRIES = 5;
 
     /**
@@ -43,7 +43,7 @@ class PracticeController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -60,32 +60,32 @@ class PracticeController extends Controller
             $type = $request->type;
 
             switch ($type) {
-                case 'our': {
+                case 'our':
+                {
                     $protocol = OurProtocol::findOrFail($protocol_id);
                     $plan = $protocol->plan->first();
                     $nbu_price = $plan->nbu_price;
                     $amount = $nbu_price * $biochemical_unit;
                 }
 
-                case 'derived': {
+                case 'derived':
+                {
 
                 }
             }
 
-
             Practice::insert([
                 'protocol_id' => $protocol_id,
                 'report_id' => $report_id,
-                'amount' => $amount
+                'amount' => $amount,
             ]);
-
         }, self::RETRIES);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -96,7 +96,7 @@ class PracticeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -107,17 +107,14 @@ class PracticeController extends Controller
         $report = $practice->report()->first();
         $determination = $report->determination()->first();
 
-        return view('administrators/protocols/practices/edit')
-        ->with('practice', $practice)
-        ->with('report', $report)
-        ->with('determination', $determination);
+        return view('administrators/protocols/practices/edit')->with('practice', $practice)->with('report', $report)->with('determination', $determination);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -126,25 +123,25 @@ class PracticeController extends Controller
 
         try {
 
-	        DB::transaction(function () use ($request, $id) {
+            DB::transaction(function () use ($request, $id) {
 
-	        	Result::where('practice_id', $id)->delete();
+                Result::where('practice_id', $id)->delete();
 
-	            if (isset($request->data)) {
-	            	// ajax does not send empty arrays
+                if (isset($request->data)) {
+                    // ajax does not send empty arrays
 
-		            $array = $request->data;
+                    $array = $request->data;
 
-		            foreach ($array as $data) {
-		                Result::insert([
-		                    'practice_id' => $id,
-		                    'result' => $data,
-		                ]);
-		            }
-	            }
-	        }, self::RETRIES);
+                    foreach ($array as $data) {
+                        Result::insert([
+                            'practice_id' => $id,
+                            'result' => $data,
+                        ]);
+                    }
+                }
+            }, self::RETRIES);
         } catch (QueryException $e) {
-        	return response()->json(['status' => 500, 'message' => Lang::get('forms.failed_transaction')], 500);
+            return response()->json(['status' => 500, 'message' => Lang::get('forms.failed_transaction')], 500);
         }
 
         return response()->json(['status' => 200, 'message' => Lang::get('forms.successful_transaction')], 200);
@@ -153,8 +150,8 @@ class PracticeController extends Controller
     /**
      * Sign the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function sign(Request $request, $id)
@@ -163,17 +160,14 @@ class PracticeController extends Controller
 
         try {
 
-            $signed = new SignPractice(
-                [
+            $signed = new SignPractice([
                     'practice_id' => $id,
                     'user_id' => auth()->user()->id,
-                ]
-            );
-            
-            if (!$signed->save()) {
-            	return response()->json(['status' => 500, 'message' => Lang::get('forms.failed_transaction')], 500);
-            }
+                ]);
 
+            if (! $signed->save()) {
+                return response()->json(['status' => 500, 'message' => Lang::get('forms.failed_transaction')], 500);
+            }
         } catch (QueryException $e) {
             // the user had already signed the practice
 
@@ -186,7 +180,7 @@ class PracticeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -197,7 +191,7 @@ class PracticeController extends Controller
     /**
      * Returns a list of practices available according to the nomenclator of social work
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function load(Request $request)
@@ -206,18 +200,13 @@ class PracticeController extends Controller
         $nomenclator = $request->nomenclator_id;
         $filter = $request->filter;
 
-        $practices = Report::select('reports.id', DB::raw("CONCAT(determinations.name, ' - ', reports.name) as label"))
-        ->determination()
-        ->where('determinations.nomenclator_id', $nomenclator)
-        ->where(function ($query) use ($filter) {
-            if (!empty($filter)) {
-                $query->orWhere("determinations.name", "like", "%$filter%")
-                ->orWhere("determinations.code", "like", "$filter%")
-                ->orWhere("reports.name", "like", "%$filter%");
-            }
-        })
-        ->get()
-        ->toJson();
+        $practices = Report::select('reports.id', DB::raw("CONCAT(determinations.name, ' - ', reports.name) as label"))->determination()->where('determinations.nomenclator_id', $nomenclator)->where(function (
+                $query
+            ) use ($filter) {
+                if (! empty($filter)) {
+                    $query->orWhere("determinations.name", "like", "%$filter%")->orWhere("determinations.code", "like", "$filter%")->orWhere("reports.name", "like", "%$filter%");
+                }
+            })->get()->toJson();
 
         return $practices;
     }
@@ -225,7 +214,7 @@ class PracticeController extends Controller
     /**
      * Returns the results for a practice
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function get_results(Request $request)

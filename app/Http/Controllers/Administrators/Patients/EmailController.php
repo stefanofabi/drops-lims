@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Administrators\Patients;
+
+use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
@@ -14,7 +16,6 @@ use Lang;
 
 class EmailController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      *
@@ -33,48 +34,39 @@ class EmailController extends Controller
     public function create($patient_id)
     {
         //
-        
+
         $patient = Patient::findOrFail($patient_id);
-        
-        return view('administrators/patients/emails/create')
-            ->with('patient', $patient);
-    }   
+
+        return view('administrators/patients/emails/create')->with('patient', $patient);
+    }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         //
 
-		$request->validate([
+        $request->validate([
             'email' => 'required|email',
         ]);
 
-
         try {
             $email = new Email($request->all());
-            
+
             if ($email->save()) {
-            	$redirect = redirect()->action('PatientController@edit', $request->patient_id)
-            	->with('success', [
-                    Lang::get('emails.success_saving_email')
-                ]);
+                $redirect = redirect()->action('PatientController@edit', $request->patient_id)->with('success', [
+                        Lang::get('emails.success_saving_email'),
+                    ]);
             } else {
-            	$redirect = back()->withInput($request->all())
-                ->withErrors(
-                    Lang::get('emails.error_saving_email')
-                );
+                $redirect = back()->withInput($request->all())->withErrors(Lang::get('emails.error_saving_email'));
             }
         } catch (QueryException $e) {
-            $redirect = back()->withInput($request->all())
-                ->withErrors(
-                    Lang::get('errors.error_processing_transaction')
-                );
-        } 
+            $redirect = back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
+        }
 
         return $redirect;
     }
@@ -82,7 +74,7 @@ class EmailController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -93,7 +85,7 @@ class EmailController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function edit(Request $request)
@@ -106,30 +98,30 @@ class EmailController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request)
     {
         //
- 		$request->validate([
+        $request->validate([
             'email' => 'required|email',
         ]);
 
- 		$determination = Determination::findOrFail($request->id);
+        $determination = Determination::findOrFail($request->id);
 
- 		if (!$determination->update($request->all())) {
- 			return response([], 500);
- 		}
+        if (! $determination->update($request->all())) {
+            return response([], 500);
+        }
 
- 		return response([], 200);
+        return response([], 200);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request)
@@ -138,7 +130,7 @@ class EmailController extends Controller
 
         $email = Email::findOrFail($request->id);
 
-        if (!$email->delete()) {
+        if (! $email->delete()) {
             return response([], 500);
         }
 

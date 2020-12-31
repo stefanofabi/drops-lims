@@ -1,7 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Administrators\Patients;
 
+use App\Http\Controllers\Controller;
+
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -11,6 +14,8 @@ use App\Http\Traits\PrintSecurityCode;
 
 use App\Models\Patient;
 use App\Models\SecurityCode;
+
+use Lang;
 
 class SecurityCodeController extends Controller
 {
@@ -39,7 +44,7 @@ class SecurityCodeController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -53,18 +58,20 @@ class SecurityCodeController extends Controller
         $date_today = date("Y-m-d");
         $expiration_date = date("Y-m-d", strtotime($date_today."+ 1 week"));
 
-        DB::transaction(function () use ($patient_id, $new_security_code, $expiration_date) {
-            SecurityCode::updateOrCreate(
-            	[
-	                'patient_id' => $patient_id,
-            	],
-            	[
-            		'patient_id' => $patient_id,
-	                'security_code' => Hash::make($new_security_code),
-	                'expiration_date' => $expiration_date,
-            	]
-            );
-        }, 3);
+        try {
+            DB::beginTransaction();
+            SecurityCode::updateOrCreate([
+                'patient_id' => $patient_id,
+            ], [
+                    'security_code' => Hash::make($new_security_code),
+                    'expiration_date' => $expiration_date,
+                ]);
+            DB::commit();
+        } catch (QueryException $e) {
+            DB::rollBack();
+
+            exit(Lang::get('errors.error_processing_transaction'));
+        }
 
         $this->print_security_code($patient->id, $patient->full_name, $new_security_code, $expiration_date);
     }
@@ -72,7 +79,7 @@ class SecurityCodeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -83,7 +90,7 @@ class SecurityCodeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -94,8 +101,8 @@ class SecurityCodeController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -106,7 +113,7 @@ class SecurityCodeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

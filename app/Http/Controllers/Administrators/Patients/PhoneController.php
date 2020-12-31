@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Administrators\Patients;
+
+use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
@@ -12,7 +14,6 @@ use Lang;
 
 class PhoneController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      *
@@ -32,49 +33,40 @@ class PhoneController extends Controller
     {
         //
 
-    	$patient = Patient::findOrFail($patient_id);
+        $patient = Patient::findOrFail($patient_id);
 
-        return view('administrators/patients/phones/create')
-        	->with('patient', $patient);
+        return view('administrators/patients/phones/create')->with('patient', $patient);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         //
 
-		$request->validate([
+        $request->validate([
             'phone' => 'required|string',
             'type' => 'required|string',
         ]);
 
-		try {
+        try {
 
-	        $phone = new Phone($request->all());
+            $phone = new Phone($request->all());
 
-	        if ($phone->save()) {
-	        	$redirect = redirect()->action('PatientController@edit', $request->patient_id)
-	        		->with('success', [
-	        			Lang::get('phones.success_saving_phone')
-	        		]);
-	        } else {
-	        	$redirect = redirect()->back()
-	                ->withInput($request->all())
-	                ->withErrors(
-	                	Lang::get('phones.error_saving_phone')
-	                );
-	        }
+            if ($phone->save()) {
+                $redirect = redirect()->action('PatientController@edit', $request->patient_id)->with('success', [
+                        Lang::get('phones.success_saving_phone'),
+                    ]);
+            } else {
+                $redirect = redirect()->back()->withInput($request->all())->withErrors(Lang::get('phones.error_saving_phone'));
+            }
         } catch (QueryException $e) {
-            $redirect = back()->withInput($request->all())
-                ->withErrors(
-                    Lang::get('errors.error_processing_transaction')
-                );
-        } 
+            $redirect = back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
+        }
 
         return $redirect;
     }
@@ -82,7 +74,7 @@ class PhoneController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -93,44 +85,44 @@ class PhoneController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function edit(Request $request)
     {
         //
-        
+
         return Phone::findOrFail($request->id);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request)
     {
         //
 
-		$request->validate([
+        $request->validate([
             'phone' => 'required|string',
             'type' => 'required|string',
         ]);
 
         $phone = Phone::findOrFail($request->id);
 
-        if (!$phone->update($request->all())) {
-        	return response([], 500);
+        if (! $phone->update($request->all())) {
+            return response([], 500);
         }
-        
+
         return response([], 200);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request)
@@ -139,7 +131,7 @@ class PhoneController extends Controller
 
         $phone = Phone::findOrFail($request->id);
 
-        if (!$phone->delete()) {
+        if (! $phone->delete()) {
             return response([], 500);
         }
 

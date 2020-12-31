@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Administrators\Patients;
+
+use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -20,6 +22,7 @@ class PatientController extends Controller
     use Pagination;
 
     private const PER_PAGE = 15;
+
     private const ADJACENTS = 4;
 
     private const RETRIES = 5;
@@ -36,11 +39,13 @@ class PatientController extends Controller
     }
 
     /**
-	* Load patients
-    * @param   \Illuminate\Http\Request  $request
-    * @return View $view
-    */
-    public function load(Request $request) {
+     * Load patients
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return View $view
+     */
+    public function load(Request $request)
+    {
 
         // Request
         $patient_type = $request['type'];
@@ -56,37 +61,31 @@ class PatientController extends Controller
 
         $paginate = $this->paginate($page, $total_pages, self::ADJACENTS);
 
-        switch($patient_type) {
-            case 'animal': {
-            	$view = view('administrators/patients/animals/index')
-                ->with('request', $request->all())
-                ->with('data', $query_patients)
-                ->with('paginate', $paginate);
+        switch ($patient_type) {
+            case 'animal':
+            {
+                $view = view('administrators/patients/animals/index')->with('request', $request->all())->with('data', $query_patients)->with('paginate', $paginate);
                 break;
             }
 
-            case 'human': {
-                $view = view('administrators/patients/humans/index')
-                ->with('request', $request->all())
-                ->with('data', $query_patients)
-                ->with('paginate', $paginate);
+            case 'human':
+            {
+                $view = view('administrators/patients/humans/index')->with('request', $request->all())->with('data', $query_patients)->with('paginate', $paginate);
                 break;
             }
 
-            case 'industrial': {
-                $view = view('administrators/patients/industrials/index')
-                ->with('request', $request->all())
-                ->with('data', $query_patients)
-                ->with('paginate', $paginate);
+            case 'industrial':
+            {
+                $view = view('administrators/patients/industrials/index')->with('request', $request->all())->with('data', $query_patients)->with('paginate', $paginate);
                 break;
             }
 
-            default: {
+            default:
+            {
                 $view = view('administrators/patients/patients');
                 break;
             }
         }
-
 
         return $view;
     }
@@ -102,13 +101,13 @@ class PatientController extends Controller
         return view('administrators/patients/create');
     }
 
-
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function show($id) {
+    public function show($id)
+    {
 
         $patient = Patient::findOrFail($id);
 
@@ -120,40 +119,39 @@ class PatientController extends Controller
 
         $patient_type = $patient->type;
 
-        switch($patient_type) {
-            case 'animal': {
+        switch ($patient_type) {
+            case 'animal':
+            {
                 $view = view('administrators/patients/animals/show');
                 break;
             }
 
-            case 'human': {
+            case 'human':
+            {
                 $view = view('administrators/patients/humans/show');
                 break;
             }
 
-            case 'industrial': {
+            case 'industrial':
+            {
                 $view = view('administrators/patients/industrials/show');
                 break;
             }
 
-            default: {
+            default:
+            {
                 $view = view('administrators/patients/patients');
                 break;
             }
         }
 
-        return $view
-        ->with('patient', $patient)
-        ->with('emails', $emails)
-        ->with('phones', $phones)
-        ->with('affiliates', $affiliates);
+        return $view->with('patient', $patient)->with('emails', $emails)->with('phones', $phones)->with('affiliates', $affiliates);
     }
-
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -169,40 +167,36 @@ class PatientController extends Controller
 
         $affiliates = Affiliate::get_social_works($id);
 
-
         $patient_type = $patient->type;
 
-        switch($patient_type) {
-            case 'animal': {
-            	$view = view('administrators/patients/animals/edit');
+        switch ($patient_type) {
+            case 'animal':
+            {
+                $view = view('administrators/patients/animals/edit');
                 break;
             }
 
-            case 'human': {
+            case 'human':
+            {
                 $view = view('administrators/patients/humans/edit');
                 break;
             }
 
-            case 'industrial': {
+            case 'industrial':
+            {
                 $view = view('administrators/patients/industrials/edit');
                 break;
             }
         }
 
-        return $view
-		 ->with('patient', $patient)
-		 ->with('emails', $emails)
-		 ->with('phones', $phones)
-		 ->with('social_works', $social_works)
-		 ->with('affiliates', $affiliates);
+        return $view->with('patient', $patient)->with('emails', $emails)->with('phones', $phones)->with('social_works', $social_works)->with('affiliates', $affiliates);
     }
-
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -211,33 +205,28 @@ class PatientController extends Controller
 
         DB::transaction(function () use ($request, $id) {
 
-           $result_human = Patient::where('id', '=', $id)
-           ->update(
-               [
-                'full_name' => $request->full_name,
-                'key' => $request->key,
-                'address' => $request->address,
-                'city' => $request->city,
-                'sex' => $request->sex,
-                'birth_date' => $request->birth_date,
+            $result_human = Patient::where('id', '=', $id)->update([
+                    'full_name' => $request->full_name,
+                    'key' => $request->key,
+                    'address' => $request->address,
+                    'city' => $request->city,
+                    'sex' => $request->sex,
+                    'birth_date' => $request->birth_date,
 
-                // for animals
-                'owner' => $request->owner,
+                    // for animals
+                    'owner' => $request->owner,
 
-                // for industrials
-                'business_name' => $request->business_name,
-                'tax_condition' => $request->tax_condition,
-                'start_activity' => $request->start_activity,
-            ]);
-
-       }, self::RETRIES);
-
+                    // for industrials
+                    'business_name' => $request->business_name,
+                    'tax_condition' => $request->tax_condition,
+                    'start_activity' => $request->start_activity,
+                ]);
+        }, self::RETRIES);
 
         return redirect()->action('PatientController@show', ['id' => $id]);
     }
 
-
-     /**
+    /**
      * Show the form for creating a new animal patient.
      *
      * @return \Illuminate\Http\Response
@@ -273,11 +262,10 @@ class PatientController extends Controller
         return view('administrators/patients/industrials/create');
     }
 
-
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -302,8 +290,7 @@ class PatientController extends Controller
             $start_activity = $request['start_activity'];
             $tax_condition = $request['tax_condition'];
 
-            $patient = Patient::insertGetId(
-                [
+            $patient = Patient::insertGetId([
                     'key' => $key,
                     'full_name' => $full_name,
                     'sex' => $sex,
@@ -315,12 +302,10 @@ class PatientController extends Controller
                     'business_name' => $business_name,
                     'start_activity' => $start_activity,
                     'tax_condition' => $tax_condition,
-                ]
-            );
+                ]);
 
             return $patient;
         }, self::RETRIES);
-
 
         return redirect()->action('PatientController@show', ['id' => $id]);
     }
@@ -328,7 +313,7 @@ class PatientController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -337,10 +322,9 @@ class PatientController extends Controller
 
         $patient = Patient::find($id);
 
-        if (!$patient) {
-        	// patient not exists
-        	return view('administrators/patients/patients')
-        	->withErrors(Lang::get('patients.error_destroy_patient'));
+        if (! $patient) {
+            // patient not exists
+            return view('administrators/patients/patients')->withErrors(Lang::get('patients.error_destroy_patient'));
         }
 
         $view = view('administrators/patients/destroy');
@@ -357,7 +341,7 @@ class PatientController extends Controller
     /**
      * Restore the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function restore($id)
@@ -366,10 +350,9 @@ class PatientController extends Controller
 
         $patient = Patient::onlyTrashed()->find($id);
 
-        if (!$patient) {
-        	// patient not removed
-        	return view('administrators/patients/patients')
-        	->withErrors(Lang::get('patients.error_restore_patient'));
+        if (! $patient) {
+            // patient not removed
+            return view('administrators/patients/patients')->withErrors(Lang::get('patients.error_restore_patient'));
         }
 
         $view = view('administrators/patients/restore')->with('patient_id', $id);

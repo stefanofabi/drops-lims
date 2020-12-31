@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Administrators\Determinations;
+
+use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
@@ -10,15 +12,15 @@ use App\Http\Traits\Pagination;
 use App\Models\Nomenclator;
 use App\Models\Determination;
 
-use Lang; 
+use Lang;
 
 class DeterminationController extends Controller
 {
+    use Pagination;
 
-	use Pagination;
+    private const PER_PAGE = 15;
 
-	private const PER_PAGE = 15;
-	private const ADJACENTS = 4;
+    private const ADJACENTS = 4;
 
     /**
      * Display a listing of the resource.
@@ -28,37 +30,35 @@ class DeterminationController extends Controller
     public function index()
     {
         //
-    	$nomenclators = Nomenclator::all();
-    	
-    	return view('administrators/determinations/determinations')->with('nomenclators', $nomenclators);
+        $nomenclators = Nomenclator::all();
+
+        return view('administrators/determinations/determinations')->with('nomenclators', $nomenclators);
     }
 
     /**
-    * Load determinations
-    * @param   \Illuminate\Http\Request  $request
-    * @return View $view
-    */
-    public function load(Request $request) {
+     * Load determinations
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return View $view
+     */
+    public function load(Request $request)
+    {
 
-    	$offset = ($request->page - 1) * self::PER_PAGE;
+        $offset = ($request->page - 1) * self::PER_PAGE;
 
-    	$query = Determination::index($request->nomenclator, $request->filter, $offset, self::PER_PAGE);
+        $query = Determination::index($request->nomenclator, $request->filter, $offset, self::PER_PAGE);
 
         // Pagination
-    	$count_rows = Determination::count_index($request->nomenclator, $request->filter);
-    	$total_pages = ceil($count_rows / self::PER_PAGE);
+        $count_rows = Determination::count_index($request->nomenclator, $request->filter);
+        $total_pages = ceil($count_rows / self::PER_PAGE);
 
-    	$paginate = $this->paginate($request->page, $total_pages, self::ADJACENTS);
+        $paginate = $this->paginate($request->page, $total_pages, self::ADJACENTS);
 
-    	$nomenclators = Nomenclator::all();
+        $nomenclators = Nomenclator::all();
 
-    	$view = view('administrators/determinations/index')
-    	   ->with('request', $request->all())
-    	   ->with('determinations', $query)
-    	   ->with('paginate', $paginate)
-    	   ->with('nomenclators', $nomenclators);
+        $view = view('administrators/determinations/index')->with('request', $request->all())->with('determinations', $query)->with('paginate', $paginate)->with('nomenclators', $nomenclators);
 
-    	return $view;
+        return $view;
     }
 
     /**
@@ -69,22 +69,22 @@ class DeterminationController extends Controller
     public function create()
     {
         //
-    	$nomenclators = Nomenclator::all();
+        $nomenclators = Nomenclator::all();
 
-    	return view('administrators/determinations/create')->with('nomenclators', $nomenclators);
+        return view('administrators/determinations/create')->with('nomenclators', $nomenclators);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         //
 
-		$request->validate([
+        $request->validate([
             'code' => 'required|numeric|min:0',
             'name' => 'required|string',
             'position' => 'required|numeric|min:1',
@@ -97,25 +97,19 @@ class DeterminationController extends Controller
             if ($determination->save()) {
                 $redirect = redirect()->action('DeterminationController@show', $determination->id);
             } else {
-                $redirect = back()->withInput($request->all())
-                ->withErrors(
-                    Lang::get('determinations.error_saving_determination')
-                );
+                $redirect = back()->withInput($request->all())->withErrors(Lang::get('determinations.error_saving_determination'));
             }
         } catch (QueryException $e) {
-            $redirect = back()->withInput($request->all())
-                ->withErrors(
-                    Lang::get('errors.error_processing_transaction')
-                );
-        } 
+            $redirect = back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
+        }
 
-    	return $redirect;
+        return $redirect;
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -127,16 +121,13 @@ class DeterminationController extends Controller
 
         $reports = Determination::get_reports($id);
 
-        return view('administrators/determinations/show')
-            ->with('determination', $determination)
-            ->with('nomenclator', $nomenclator)
-            ->with('reports', $reports);
+        return view('administrators/determinations/show')->with('determination', $determination)->with('nomenclator', $nomenclator)->with('reports', $reports);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -147,40 +138,34 @@ class DeterminationController extends Controller
 
         $reports = Determination::get_reports($id);
 
-        return view('administrators/determinations/edit')
-            ->with('determination', $determination)
-            ->with('nomenclator', $nomenclator)
-            ->with('reports', $reports);
+        return view('administrators/determinations/edit')->with('determination', $determination)->with('nomenclator', $nomenclator)->with('reports', $reports);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
         //
 
-		$request->validate([
+        $request->validate([
             'code' => 'required|numeric|min:0',
             'name' => 'required|string',
             'position' => 'required|numeric|min:1',
             'biochemical_unit' => 'required|numeric|min:0',
         ]);
 
-		$determination = Determination::findOrFail($id);
+        $determination = Determination::findOrFail($id);
 
-		if ($determination->update($request->all())) {
-			$redirect = redirect()->action('DeterminationController@show', $id);
-		} else {
-        	$redirect = back()->withInput($request->all())
-            ->withErrors(
-                Lang::get('determinations.error_updating_determination')
-            );			
-		}
+        if ($determination->update($request->all())) {
+            $redirect = redirect()->action('DeterminationController@show', $id);
+        } else {
+            $redirect = back()->withInput($request->all())->withErrors(Lang::get('determinations.error_updating_determination'));
+        }
 
         return $redirect;
     }
@@ -188,7 +173,7 @@ class DeterminationController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -199,15 +184,12 @@ class DeterminationController extends Controller
 
         $nomenclators = Nomenclator::all();
 
-        if (!$determination) {
-        	// determination not exists
-        	return view('administrators/determinations/determinations')
-        	->withErrors(Lang::get('determinations.error_destroy_determination'))
-        	->with('nomenclators', $nomenclators);
+        if (! $determination) {
+            // determination not exists
+            return view('administrators/determinations/determinations')->withErrors(Lang::get('determinations.error_destroy_determination'))->with('nomenclators', $nomenclators);
         }
 
-        $view = view('administrators/determinations/destroy')
-        	->with('nomenclators', $nomenclators);
+        $view = view('administrators/determinations/destroy')->with('nomenclators', $nomenclators);
 
         if ($determination->delete()) {
             $view->with('determination_id', $id)->with('type', 'success');
@@ -218,11 +200,10 @@ class DeterminationController extends Controller
         return $view;
     }
 
-
     /**
      * Restore the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function restore($id)
@@ -233,11 +214,9 @@ class DeterminationController extends Controller
 
         $nomenclators = Nomenclator::all();
 
-        if (!$determination) {
-        	// determination not removed
-        	return view('administrators/determinations/determinations')
-        		->withErrors(Lang::get('determinations.error_restore_determination'))
-        		->with('nomenclators', $nomenclators);
+        if (! $determination) {
+            // determination not removed
+            return view('administrators/determinations/determinations')->withErrors(Lang::get('determinations.error_restore_determination'))->with('nomenclators', $nomenclators);
         }
 
         $view = view('administrators/determinations/restore')->with('determination_id', $id)->with('nomenclators', $nomenclators);

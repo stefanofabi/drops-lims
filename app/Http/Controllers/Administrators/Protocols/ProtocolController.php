@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Administrators\Protocols;
+
+use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 
@@ -11,10 +13,10 @@ use App\Models\Patient;
 
 class ProtocolController extends Controller
 {
-
     use Pagination;
 
     private const PER_PAGE = 15;
+
     private const ADJACENTS = 4;
 
     /**
@@ -29,11 +31,13 @@ class ProtocolController extends Controller
     }
 
     /**
-    * Load protocols
-    * @param   \Illuminate\Http\Request  $request
-    * @return View $view
-    */
-    public function load(Request $request) {
+     * Load protocols
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return View $view
+     */
+    public function load(Request $request)
+    {
 
         // Request
         $filter = $request['filter'];
@@ -48,10 +52,7 @@ class ProtocolController extends Controller
 
         $paginate = $this->paginate($page, $total_pages, self::ADJACENTS);
 
-        $view = view('administrators/protocols/index')
-        ->with('request', $request->all())
-        ->with('protocols', $query)
-        ->with('paginate', $paginate);
+        $view = view('administrators/protocols/index')->with('request', $request->all())->with('protocols', $query)->with('paginate', $paginate);
 
         return $view;
     }
@@ -69,7 +70,7 @@ class ProtocolController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -80,7 +81,7 @@ class ProtocolController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -91,7 +92,7 @@ class ProtocolController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -102,8 +103,8 @@ class ProtocolController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -114,7 +115,7 @@ class ProtocolController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

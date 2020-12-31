@@ -17,6 +17,5 @@ return [
     'error_processing_transaction' => 'Error processing transaction',
     'invalid_security_code' => 'Code does not exist or already used',
     'already_family_member' => 'The patient is already linked to their account',
-    
 
 ];

@@ -3,13 +3,13 @@
 @section('js')
 <script type="text/javascript">
 	$(document).ready(function() {
-	     
+
 	    $("input[type=submit]").click(function() {
 	      	var action = $(this).attr('dir');
 			$('form').attr('action', action);
 	        $('form').submit();
 	    });
-	    
+
 	});
 </script>
 
@@ -17,7 +17,7 @@
 
 @section('title')
 {{ trans('statistics.statistics') }}
-@endsection 
+@endsection
 
 @section('active_statistics', 'active')
 
@@ -28,8 +28,8 @@
 @section('menu')
 <ul class="nav flex-column">
 	<li class="nav-item">
-		<a class="nav-link" href="{{ route('administrators/home') }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('forms.go_back') }} </a>
-	</li>	
+		<a class="nav-link" href="{{ route('administrators/home') }}"> <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('forms.go_back') }} </a>
+	</li>
 </ul>
 @endsection
 
@@ -42,8 +42,8 @@
 @section('content')
 
 	<form method="post" action="">
-		@csrf 
-		
+		@csrf
+
 		<div class="input-group mt-2 mb-3 col-md-6 input-form">
 			<div class="input-group-prepend">
 				<span class="input-group-text"> {{ trans('social_works.social_work') }} </span>
@@ -52,13 +52,13 @@
 			<select class="form-control input-sm" name="social_work" id="social_work">
 					<option value=""> {{ trans('forms.select_option') }}</option>
 						@foreach ($social_works as $social_work)
-							<option value="{{ $social_work->id }}"> 
+							<option value="{{ $social_work->id }}">
 
 								{{ $social_work->name }}
 
 							</option>
 						@endforeach
-				
+
 			</select>
 		</div>
 
@@ -83,7 +83,7 @@
 		<input type="submit" class="btn btn-success mt-3" value="{{ trans('statistics.patient_flow') }}" dir="{{ route('administrators/statistics/patient_flow_per_month') }}" />
 
 		<input type="submit" class="btn btn-success mt-3" value="{{ trans('statistics.track_income') }}" dir="{{ route('administrators/statistics/track_income') }}" />
-			 
+
 		</button>
 	</form>
 

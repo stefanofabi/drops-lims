@@ -8,6 +8,6 @@ class SecurityCode extends Model
 {
     //
 
-    protected $fillable = ['patient_id'];
+    protected $fillable = ['patient_id', 'security_code', 'expiration_date'];
 
 }
