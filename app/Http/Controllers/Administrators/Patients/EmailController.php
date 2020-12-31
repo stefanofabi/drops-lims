@@ -4,10 +4,9 @@ namespace App\Http\Controllers\Administrators\Patients;
 
 use App\Http\Controllers\Controller;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
-
-use App\Http\Controllers\PatientController;
 
 use App\Models\Email;
 use App\Models\Patient;
@@ -58,9 +57,10 @@ class EmailController extends Controller
             $email = new Email($request->all());
 
             if ($email->save()) {
-                $redirect = redirect()->action('PatientController@edit', $request->patient_id)->with('success', [
-                        Lang::get('emails.success_saving_email'),
-                    ]);
+                $redirect = redirect()->action([
+                    PatientController::class,
+                    'edit',
+                ], $request->patient_id);
             } else {
                 $redirect = back()->withInput($request->all())->withErrors(Lang::get('emails.error_saving_email'));
             }
@@ -91,8 +91,13 @@ class EmailController extends Controller
     public function edit(Request $request)
     {
         //
+        try {
+            $email = Email::findOrFail($request->id);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['status' => 500, 'message' => Lang::get('errors.not_found')], 500);
+        }
 
-        return Email::findOrFail($request->id);
+        return response()->json($email, 200);
     }
 
     /**
@@ -109,13 +114,25 @@ class EmailController extends Controller
             'email' => 'required|email',
         ]);
 
-        $determination = Determination::findOrFail($request->id);
+        try {
+            $email = Email::findOrFail($request->id);
 
-        if (! $determination->update($request->all())) {
-            return response([], 500);
+            if (! $email->update($request->all())) {
+                return response(['status' => 500, 'message' => Lang::get('forms.failed_transaction')], 500);
+            }
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'status' => 500,
+                'message' => Lang::get('errors.error_processing_transaction'),
+            ], 500);
+        } catch (QueryException $e) {
+            return response()->json([
+                'status' => 500,
+                'message' => Lang::get('errors.error_processing_transaction'),
+            ], 500);
         }
 
-        return response([], 200);
+        return response(['status' => 200, 'message' => Lang::get('forms.successful_transaction')], 200);
     }
 
     /**
@@ -128,12 +145,19 @@ class EmailController extends Controller
     {
         //
 
-        $email = Email::findOrFail($request->id);
+        try {
+            $email = Email::findOrFail($request->id);
 
-        if (! $email->delete()) {
-            return response([], 500);
+            if (! $email->delete()) {
+                return response([], 500);
+            }
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'status' => 500,
+                'message' => Lang::get('errors.error_processing_transaction'),
+            ], 500);
         }
 
-        return response([], 200);
+        return response(['status' => 200, 'message' => Lang::get('forms.successful_transaction')], 200);
     }
 }
