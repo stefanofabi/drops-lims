@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Administrators\Prescribers;
 
 use App\Http\Controllers\Controller;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -42,23 +43,24 @@ class PrescriberController extends Controller
      */
     public function load(Request $request)
     {
+        $request->validate([
+            'filter' => 'string|nullable',
+            'page' => 'required|numeric|min:1',
+        ]);
 
         // Request
-        $filter = $request['filter'];
-        $page = $request['page'];
+        $filter = $request->filter;
+        $page = $request->page;
 
         $offset = ($page - 1) * self::PER_PAGE;
-        $query = Prescriber::index($filter, $offset, self::PER_PAGE);
+        $prescribers = Prescriber::index($filter, $offset, self::PER_PAGE);
 
         // Pagination
-        $count_rows = Prescriber::count_index($filter);
+        $count_rows = $prescribers->count();
         $total_pages = ceil($count_rows / self::PER_PAGE);
-
         $paginate = $this->paginate($page, $total_pages, self::ADJACENTS);
 
-        $view = view('administrators/prescribers/index')->with('request', $request->all())->with('prescribers', $query)->with('paginate', $paginate);
-
-        return $view;
+        return view('administrators/prescribers/index')->with('request', $request->all())->with('prescribers', $prescribers)->with('paginate', $paginate);
     }
 
     /**
@@ -81,27 +83,18 @@ class PrescriberController extends Controller
     public function store(Request $request)
     {
         //
-        $id = DB::transaction(function () use ($request) {
+        $request->validate([
+            'full_name' => 'required|string',
+            'email' => 'email|nullable',
+        ]);
 
-            // data for prescribers
-            $full_name = $request['full_name'];
-            $phone = $request['phone'];
-            $email = $request['email'];
-            $provincial_enrollment = $request['provincial_enrollment'];
-            $national_enrollment = $request['national_enrollment'];
+        $prescriber = new Prescriber($request->all());
 
-            $prescriber = Prescriber::insertGetId([
-                'full_name' => $full_name,
-                'phone' => $phone,
-                'email' => $email,
-                'provincial_enrollment' => $provincial_enrollment,
-                'national_enrollment' => $national_enrollment,
-            ]);
+        if (! $prescriber->save()) {
+            return redirect()->back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
+        }
 
-            return $prescriber;
-        }, self::RETRIES);
-
-        return redirect()->action('PrescriberController@show', ['id' => $id]);
+        return redirect()->action([PrescriberController::class, 'show'], ['id' => $prescriber->id]);
     }
 
     /**
@@ -142,20 +135,17 @@ class PrescriberController extends Controller
     public function update(Request $request, $id)
     {
         //
+        try {
+            $prescriber = Prescriber::findOrFail($id);
 
-        DB::transaction(function () use ($request, $id) {
+            if (! $prescriber->update($request->all())) {
+                return redirect()->back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
+            }
+        } catch (ModelNotFoundException $exception) {
+            return redirect()->back()->withInput($request->all())->withErrors(Lang::get('errors.not_found'));
+        }
 
-
-            Prescriber::where('id', '=', $id)->update([
-                    'full_name' => $request->full_name,
-                    'phone' => $request->phone,
-                    'email' => $request->email,
-                    'provincial_enrollment' => $request->provincial_enrollment,
-                    'national_enrollment' => $request->national_enrollment,
-                ]);
-        }, self::RETRIES);
-
-        return redirect()->action('PrescriberController@show', ['id' => $id]);
+        return redirect()->action([PrescriberController::class, 'show'], ['id' => $id]);
     }
 
     /**
@@ -172,9 +162,7 @@ class PrescriberController extends Controller
 
         if (! $prescriber) {
             // prescriber not exists
-            return view('administrators/prescribers/prescribers')->with('errors', [
-                    Lang::get('prescribers.error_destroy_prescriber'),
-                ]);
+            return view('administrators/prescribers/prescribers')->withErrors(Lang::get('errors.not_found'),);
         }
 
         $view = view('administrators/prescribers/destroy');
@@ -202,9 +190,7 @@ class PrescriberController extends Controller
 
         if (! $prescriber) {
             // prescriber not removed
-            return view('administrators/prescribers/prescribers')->with('errors', [
-                    Lang::get('prescribers.error_restore_prescriber'),
-                ]);
+            return view('administrators/prescribers/prescribers')->withErrors(Lang::get('errors.not_found'),);
         }
 
         $view = view('administrators/prescribers/restore')->with('prescriber_id', $id);
