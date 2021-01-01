@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Administrators\Protocols;
 
 use App\Http\Controllers\Controller;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\QueryException;
@@ -18,7 +19,6 @@ use Lang;
 
 class PracticeController extends Controller
 {
-    private const RETRIES = 5;
 
     /**
      * Display a listing of the resource.
@@ -50,7 +50,8 @@ class PracticeController extends Controller
     {
         //
 
-        DB::transaction(function () use ($request) {
+        try {
+            DB::beginTransaction();
 
             $report_id = $request->report_id;
             $report = Report::findOrFail($report_id);
@@ -63,7 +64,7 @@ class PracticeController extends Controller
                 case 'our':
                 {
                     $protocol = OurProtocol::findOrFail($protocol_id);
-                    $plan = $protocol->plan->first();
+                    $plan = $protocol->plan;
                     $nbu_price = $plan->nbu_price;
                     $amount = $nbu_price * $biochemical_unit;
                 }
@@ -74,12 +75,31 @@ class PracticeController extends Controller
                 }
             }
 
-            Practice::insert([
+            $practice = new Practice([
                 'protocol_id' => $protocol_id,
                 'report_id' => $report_id,
                 'amount' => $amount,
             ]);
-        }, self::RETRIES);
+
+            if (! $practice->save()) {
+                return response()->json(['status' => 500, 'message' => Lang::get('forms.failed_transaction')], 500);
+            }
+
+            DB::commit();
+        } catch (QueryException $exception) {
+            DB::rollBack();
+
+            return response()->json([
+                'status' => 500,
+                'message' => Lang::get('errors.error_processing_transaction'),
+            ], 500);
+        } catch (ModelNotFoundException $exception) {
+            DB::rollBack();
+
+            return response()->json(['status' => 500, 'message' => Lang::get('errors.not_found')], 500);
+        }
+
+        return response()->json(['status' => 200, 'message' => Lang::get('forms.successful_transaction')], 200);
     }
 
     /**
@@ -104,10 +124,8 @@ class PracticeController extends Controller
         //
 
         $practice = Practice::findOrFail($id);
-        $report = $practice->report()->first();
-        $determination = $report->determination()->first();
 
-        return view('administrators/protocols/practices/edit')->with('practice', $practice)->with('report', $report)->with('determination', $determination);
+        return view('administrators/protocols/practices/edit')->with('practice', $practice);
     }
 
     /**
@@ -123,24 +141,27 @@ class PracticeController extends Controller
 
         try {
 
-            DB::transaction(function () use ($request, $id) {
+            DB::beginTransaction();
 
-                Result::where('practice_id', $id)->delete();
+            Result::where('practice_id', $id)->delete();
 
-                if (isset($request->data)) {
-                    // ajax does not send empty arrays
+            if (isset($request->data)) {
+                // ajax does not send empty arrays
 
-                    $array = $request->data;
+                $array = $request->data;
 
-                    foreach ($array as $data) {
-                        Result::insert([
-                            'practice_id' => $id,
-                            'result' => $data,
-                        ]);
-                    }
+                foreach ($array as $data) {
+                    Result::insert([
+                        'practice_id' => $id,
+                        'result' => $data,
+                    ]);
                 }
-            }, self::RETRIES);
+            }
+
+            DB::commit();
         } catch (QueryException $e) {
+            DB::rollBack();
+
             return response()->json(['status' => 500, 'message' => Lang::get('forms.failed_transaction')], 500);
         }
 
@@ -161,9 +182,9 @@ class PracticeController extends Controller
         try {
 
             $signed = new SignPractice([
-                    'practice_id' => $id,
-                    'user_id' => auth()->user()->id,
-                ]);
+                'practice_id' => $id,
+                'user_id' => auth()->user()->id,
+            ]);
 
             if (! $signed->save()) {
                 return response()->json(['status' => 500, 'message' => Lang::get('forms.failed_transaction')], 500);
@@ -201,12 +222,12 @@ class PracticeController extends Controller
         $filter = $request->filter;
 
         $practices = Report::select('reports.id', DB::raw("CONCAT(determinations.name, ' - ', reports.name) as label"))->determination()->where('determinations.nomenclator_id', $nomenclator)->where(function (
-                $query
-            ) use ($filter) {
-                if (! empty($filter)) {
-                    $query->orWhere("determinations.name", "like", "%$filter%")->orWhere("determinations.code", "like", "$filter%")->orWhere("reports.name", "like", "%$filter%");
-                }
-            })->get()->toJson();
+            $query
+        ) use ($filter) {
+            if (! empty($filter)) {
+                $query->orWhere("determinations.name", "like", "%$filter%")->orWhere("determinations.code", "like", "$filter%")->orWhere("reports.name", "like", "%$filter%");
+            }
+        })->get()->toJson();
 
         return $practices;
     }

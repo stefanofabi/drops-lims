@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use App\Http\Traits\Pagination;
 
 use App\Models\Protocol;
-use App\Models\Patient;
 
 class ProtocolController extends Controller
 {
@@ -38,21 +37,24 @@ class ProtocolController extends Controller
      */
     public function load(Request $request)
     {
+        $request->validate([
+            'filter' => 'string|nullable',
+            'page' => 'required|numeric|min:1',
+        ]);
 
         // Request
-        $filter = $request['filter'];
-        $page = $request['page'];
+        $filter = $request->filter;
+        $page = $request->page;
 
         $offset = ($page - 1) * self::PER_PAGE;
-        $query = Protocol::index($filter, $offset, self::PER_PAGE);
+        $protocols = Protocol::index($filter, $offset, self::PER_PAGE);
 
         // Pagination
-        $count_rows = Protocol::count_index($filter);
+        $count_rows = $protocols->count();
         $total_pages = ceil($count_rows / self::PER_PAGE);
-
         $paginate = $this->paginate($page, $total_pages, self::ADJACENTS);
 
-        $view = view('administrators/protocols/index')->with('request', $request->all())->with('protocols', $query)->with('paginate', $paginate);
+        $view = view('administrators/protocols/index')->with('request', $request->all())->with('protocols', $protocols)->with('paginate', $paginate);
 
         return $view;
     }
