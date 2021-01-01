@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Administrators\Patients;
 
 use App\Http\Controllers\Controller;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -46,48 +48,46 @@ class PatientController extends Controller
      */
     public function load(Request $request)
     {
+        $request->validate([
+            'type' => 'in:animal,human,industrial',
+            'filter' => 'string|nullable',
+            'page' => 'required|numeric|min:1',
+        ]);
 
         // Request
-        $patient_type = $request['type'];
-        $filter = $request['filter'];
-        $page = $request['page'];
+        $patient_type = $request->type;
+        $filter = $request->filter;
+        $page = $request->page;
 
         $offset = ($page - 1) * self::PER_PAGE;
-        $query_patients = Patient::index($filter, $offset, self::PER_PAGE, $patient_type);
+        $patients = Patient::index($filter, $offset, self::PER_PAGE, $patient_type);
 
         // Pagination
-        $count_rows = Patient::count_index($filter, $patient_type);
+        $count_rows = $patients->count();
         $total_pages = ceil($count_rows / self::PER_PAGE);
-
         $paginate = $this->paginate($page, $total_pages, self::ADJACENTS);
 
         switch ($patient_type) {
             case 'animal':
             {
-                $view = view('administrators/patients/animals/index')->with('request', $request->all())->with('data', $query_patients)->with('paginate', $paginate);
+                $view = view('administrators/patients/animals/index');
                 break;
             }
 
             case 'human':
             {
-                $view = view('administrators/patients/humans/index')->with('request', $request->all())->with('data', $query_patients)->with('paginate', $paginate);
+                $view = view('administrators/patients/humans/index');
                 break;
             }
 
             case 'industrial':
             {
-                $view = view('administrators/patients/industrials/index')->with('request', $request->all())->with('data', $query_patients)->with('paginate', $paginate);
-                break;
-            }
-
-            default:
-            {
-                $view = view('administrators/patients/patients');
+                $view = view('administrators/patients/industrials/index');
                 break;
             }
         }
 
-        return $view;
+        return $view->with('request', $request->all())->with('data', $patients)->with('paginate', $paginate);
     }
 
     /**
@@ -110,12 +110,6 @@ class PatientController extends Controller
     {
 
         $patient = Patient::findOrFail($id);
-
-        $emails = Email::get_emails($id);
-
-        $phones = Phone::get_phones($id);
-
-        $affiliates = Affiliate::get_social_works($id);
 
         $patient_type = $patient->type;
 
@@ -140,12 +134,11 @@ class PatientController extends Controller
 
             default:
             {
-                $view = view('administrators/patients/patients');
-                break;
+                return view('administrators/patients/patients')->withErrors(Lang::get('errors.invalid_patient_type'));
             }
         }
 
-        return $view->with('patient', $patient)->with('emails', $emails)->with('phones', $phones)->with('affiliates', $affiliates);
+        return $view->with('patient', $patient);
     }
 
     /**
@@ -159,13 +152,7 @@ class PatientController extends Controller
         //
         $patient = Patient::findOrFail($id);
 
-        $emails = Email::get_emails($id);
-
-        $phones = Phone::get_phones($id);
-
         $social_works = SocialWork::all();
-
-        $affiliates = Affiliate::get_social_works($id);
 
         $patient_type = $patient->type;
 
@@ -187,9 +174,14 @@ class PatientController extends Controller
                 $view = view('administrators/patients/industrials/edit');
                 break;
             }
+
+            default:
+            {
+                return view('administrators/patients/patients')->withErrors(Lang::get('errors.invalid_patient_type'));
+            }
         }
 
-        return $view->with('patient', $patient)->with('emails', $emails)->with('phones', $phones)->with('social_works', $social_works)->with('affiliates', $affiliates);
+        return $view->with('patient', $patient)->with('social_works', $social_works);
     }
 
     /**
@@ -203,27 +195,15 @@ class PatientController extends Controller
     {
         //
 
-        DB::transaction(function () use ($request, $id) {
+        try {
+            $patient = Patient::findOrFail($id);
 
-            $result_human = Patient::where('id', '=', $id)->update([
-                    'full_name' => $request->full_name,
-                    'key' => $request->key,
-                    'address' => $request->address,
-                    'city' => $request->city,
-                    'sex' => $request->sex,
-                    'birth_date' => $request->birth_date,
+            $patient->update($request->all());
+        } catch (ModelNotFoundException $e) {
+            return redirect()->back()->withInput($request->all())->withErrors(Lang::get('errors.not_found'));
+        }
 
-                    // for animals
-                    'owner' => $request->owner,
-
-                    // for industrials
-                    'business_name' => $request->business_name,
-                    'tax_condition' => $request->tax_condition,
-                    'start_activity' => $request->start_activity,
-                ]);
-        }, self::RETRIES);
-
-        return redirect()->action('PatientController@show', ['id' => $id]);
+        return redirect()->action([PatientController::class, 'show'], ['id' => $id]);
     }
 
     /**
@@ -271,43 +251,19 @@ class PatientController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'full_name' => 'required|string',
+            'sex' => 'in:F,M',
+            'type' => 'in:animal,human,industrial',
+        ]);
 
-        $id = DB::transaction(function () use ($request) {
+        $patient = new Patient($request->all());
 
-            $full_name = $request['full_name'];
-            $key = $request['key'];
-            $address = $request['address'];
-            $city = $request['city'];
-            $sex = $request['sex'];
-            $birth_date = $request['birth_date'];
-            $type = $request['type'];
+        if (!$patient->save()) {
+            return redirect()->back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));;
+        }
 
-            // for animals
-            $owner = $request['owner'];
-
-            // for industrials
-            $business_name = $request['business_name'];
-            $start_activity = $request['start_activity'];
-            $tax_condition = $request['tax_condition'];
-
-            $patient = Patient::insertGetId([
-                    'key' => $key,
-                    'full_name' => $full_name,
-                    'sex' => $sex,
-                    'birth_date' => $birth_date,
-                    'city' => $city,
-                    'address' => $address,
-                    'type' => $type,
-                    'owner' => $owner,
-                    'business_name' => $business_name,
-                    'start_activity' => $start_activity,
-                    'tax_condition' => $tax_condition,
-                ]);
-
-            return $patient;
-        }, self::RETRIES);
-
-        return redirect()->action('PatientController@show', ['id' => $id]);
+        return redirect()->action([PatientController::class, 'show'], ['id' => $patient->id]);
     }
 
     /**

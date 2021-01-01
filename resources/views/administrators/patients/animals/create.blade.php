@@ -17,26 +17,26 @@
 				<div class="input-group-prepend">
 					<span class="input-group-text"> {{ trans('patients.owner') }} </span>
 				</div>
-				<input type="text" class="form-control" name="owner" required>
+				<input type="text" class="form-control" name="owner" value="{{ old('owner') }}" required>
 			</div>
 
 			<div class="input-group mt-2 col-md-9">
 				<div class="input-group-prepend">
 					<span class="input-group-text"> {{ trans('patients.dni') }} </span>
 				</div>
-				<input type="number" class="form-control" name="key">
+				<input type="number" class="form-control" name="key" value="{{ old('key') }}">
 			</div>
 
 			<div class="input-group mt-2 mb-4 col-md-9 input-form">
 				<div class="input-group-prepend">
 					<span class="input-group-text"> {{ trans('patients.home_address') }} </span>
 				</div>
-				<input type="text" class="form-control" name="address">
+				<input type="text" class="form-control" name="address" value="{{ old('address') }}">
 
 				<div class="input-group-prepend">
 					<span class="input-group-text"> {{ trans('patients.city') }} </span>
 				</div>
-				<input type="text" class="form-control" name="city">
+				<input type="text" class="form-control" name="city" value="{{ old('city') }}">
 			</div>
 
 			<strong> {{ trans('patients.animal_data') }} </strong>
@@ -44,7 +44,7 @@
 				<div class="input-group-prepend">
 					<span class="input-group-text"> {{ trans('patients.full_name') }} </span>
 				</div>
-				<input type="text" class="form-control" name="full_name" required>
+				<input type="text" class="form-control" name="full_name" value="{{ old('full_name') }}" required>
 			</div>
 
 			<div class="input-group mt-2 col-md-9 input-form">
@@ -65,7 +65,7 @@
 					<span class="input-group-text"> {{ trans('patients.birth_date') }} </span>
 				</div>
 
-				<input type="date" class="form-control" name="birth_date">
+				<input type="date" class="form-control" name="birth_date" value="{{ old('birth_date') }}">
 			</div>
 
 		</div>
@@ -75,6 +75,6 @@
 			<button type="submit" class="btn btn-primary">
 				<span class="fas fa-save"></span> {{ trans('forms.save') }}
 			</button>
-		</div>	
+		</div>
 </form>
 @endsection

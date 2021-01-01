@@ -31,7 +31,7 @@ class CreatePatientsTable extends Migration
             $table->date('start_activity')->nullable();
             
             // to differentiate the type of patient
-           	$table->string('type')->nullable();
+           	$table->string('type');
 
             $table->softDeletes();
             $table->timestamps();

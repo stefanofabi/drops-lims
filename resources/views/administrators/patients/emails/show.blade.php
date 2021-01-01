@@ -6,7 +6,7 @@
 			<select class="form-control input-sm col-md-6" readonly>
 				<option value=""> {{ trans('forms.select_option') }}</option>
 
-				@foreach ($emails as $email)
+				@foreach ($patient->emails as $email)
 				<option value=""> {{ $email->email }}</option>
 				@endforeach
 			</select>

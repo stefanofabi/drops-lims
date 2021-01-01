@@ -6,7 +6,7 @@
 	<select class="form-control input-sm col-md-6" style="margin-right: 1%" readonly>
 		<option value=""> {{ trans('forms.select_option') }}</option>
 
-		@foreach ($phones as $phone)
+		@foreach ($patient->phones as $phone)
 		<option value="{{ $phone->id }}"> {{ $phone->phone }}</option>
 		@endforeach
 	</select>

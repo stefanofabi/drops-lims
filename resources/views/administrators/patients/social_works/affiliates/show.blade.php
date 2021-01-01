@@ -11,14 +11,14 @@
 
 			<select class="form-control input-sm col-md-6" readonly>
 				<option value=""> {{ trans('forms.select_option') }}</option>
-				@foreach ($affiliates as $affiliate)
-				<option value=""> 
+				@foreach ($patient->affiliates as $affiliate)
+				<option value="">
 					@if (!empty($affiliate->expiration_date) && $affiliate->expiration_date < date("Y-m-d"))
 					** {{ trans('social_works.expired_card') }} **
 					@endif
 
-					{{ $affiliate->social_work }} {{ $affiliate->plan }} 
-					
+					{{ $affiliate->plan->social_work->name }} {{ $affiliate->plan->name }}
+
 					@if (!empty($affiliate->affiliate_number))
 						[{{ $affiliate->affiliate_number }}]
 					@endif

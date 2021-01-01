@@ -19,7 +19,7 @@ class Affiliate extends Model
     }
 
     /**
-     * Get the plan associated with the determination.
+     * Get the plan associated with the affiliate.
      */
     public function plan() {
         return $this->belongsTo(Plan::class);

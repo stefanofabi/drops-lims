@@ -16,7 +16,7 @@
 					<span class="input-group-text"> {{ trans('patients.full_name') }} </span>
 				</div>
 
-				<input type="text" class="form-control" name="full_name" required>
+				<input type="text" class="form-control" name="full_name" value="{{ old('full_name') }}" required>
 			</div>
 		</div>
 	</div>
@@ -31,14 +31,14 @@
 				<div class="input-group-prepend">
 					<span class="input-group-text"> {{ trans('patients.business_name') }}</span>
 				</div>
-				<input type="text" class="form-control" name="business_name">
+				<input type="text" class="form-control" name="business_name" value="{{ old('business_name') }}">
 			</div>
 
 			<div class="input-group mt-2 col-md-9">
 				<div class="input-group-prepend">
 					<span class="input-group-text"> {{ trans('patients.cuit') }} </span>
 				</div>
-				<input type="number" class="form-control" name="key">
+				<input type="number" class="form-control" name="key" value="{{ old('key') }}">
 
 				<div class="input-group-prepend">
 					<span class="input-group-text"> {{ trans('patients.tax_condition') }} </span>
@@ -56,12 +56,12 @@
 				<div class="input-group-prepend">
 					<span class="input-group-text"> {{ trans('patients.fiscal_address') }} </span>
 				</div>
-				<input type="text" class="form-control" name="fiscal_address">
+				<input type="text" class="form-control" name="address" value="{{ old('address') }}">
 
 				<div class="input-group-prepend">
 					<span class="input-group-text"> {{ trans('patients.city') }} </span>
 				</div>
-				<input type="text" class="form-control" name="city">
+				<input type="text" class="form-control" name="city" value="{{ old('city') }}">
 			</div>
 
 			<div class="input-group mt-2 col-md-9 input-form">
@@ -69,7 +69,7 @@
 					<span class="input-group-text"> {{ trans('patients.start_activity') }} </span>
 				</div>
 
-				<input type="date" class="form-control" name="start_activity">
+				<input type="date" class="form-control" name="start_activity" value="{{ old('start_activity') }}">
 			</div>
 
 		</div>
@@ -80,6 +80,6 @@
 		<button type="submit" class="btn btn-primary">
 			<span class="fas fa-save"></span> {{ trans('forms.save') }}
 		</button>
-	</div>	
+	</div>
 </form>
 @endsection

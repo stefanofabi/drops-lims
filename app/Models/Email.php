@@ -8,9 +8,5 @@ class Email extends Model
 {
     //
 
-	protected $fillable = ['email', 'patient_id'];
-
-    protected function get_emails($patient_id) {
-    	return Email::where('patient_id', $patient_id)->get();
-    }
+    protected $fillable = ['email', 'patient_id'];
 }

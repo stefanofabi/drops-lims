@@ -15,44 +15,52 @@ class Patient extends Model
 
     protected $dates = ['deleted_at'];
 
-	protected function index($filter, $offset, $length, $type) {
-		$patients = DB::table('patients')
-		->where('type', $type)
-		->where(function ($query) use ($filter) {
-			if (!empty($filter)) {
-				$query->orWhere("full_name", "like", "%$filter%")
-				->orWhere("key", "like", "$filter%")
-				->orWhere("owner", "like", "%$filter%");
-			}
-		})
-		->whereNull('deleted_at')
-		->orderBy('full_name', 'asc')
-		->offset($offset)
-		->limit($length)
-		->get();
+    protected $fillable = [
+        'full_name',
+        'key',
+        'sex',
+        'birth_date',
+        'city',
+        'address',
+        'owner',
+        'business_name',
+        'tax_condition',
+        'start_activity',
+        'type',
+    ];
 
-		return $patients;
-	}
+    protected function index($filter, $offset, $length, $type)
+    {
+        $patients = DB::table('patients')->where('type', $type)->where(function ($query) use ($filter) {
+                if (! empty($filter)) {
+                    $query->orWhere("full_name", "like", "%$filter%")->orWhere("key", "like", "$filter%")->orWhere("owner", "like", "%$filter%");
+                }
+            })->whereNull('deleted_at')->orderBy('full_name', 'asc')->offset($offset)->limit($length)->get();
 
+        return $patients;
+    }
 
-	protected function count_index($filter, $type) {
-		$count = DB::table('patients')
-		->where('type', $type)
-		->where(function ($query) use ($filter) {
-			if (!empty($filter)) {
-				$query->orWhere("full_name", "like", "%$filter%")
-				->orWhere("key", "like", "$filter%")
-				->orWhere("owner", "like", "%$filter%");
-			}
-		})
-		->whereNull('deleted_at')
-		->count();
-		
-		return $count;
-	}    
+    /**
+     * Get the phones for the patient.
+     */
+    public function phones()
+    {
+        return $this->hasMany(Phone::class);
+    }
 
-	public function phone() {
-		return $this->hasMany('App\Models\Phone');
-	}
-    
+    /**
+     * Get the emails for the patient.
+     */
+    public function emails()
+    {
+        return $this->hasMany(Email::class);
+    }
+
+    /**
+     * Get the affiliates for the patient.
+     */
+    public function affiliates()
+    {
+        return $this->hasMany(Affiliate::class);
+    }
 }
