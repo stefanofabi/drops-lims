@@ -5,17 +5,12 @@ namespace App\Http\Controllers\Administrators\Patients;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 use App\Http\Traits\Pagination;
-
 use App\Models\Patient;
-use App\Models\Email;
-use App\Models\Phone;
 use App\Models\SocialWork;
-use App\Models\Affiliate;
+
 
 use Lang;
 
@@ -259,7 +254,7 @@ class PatientController extends Controller
 
         $patient = new Patient($request->all());
 
-        if (!$patient->save()) {
+        if (! $patient->save()) {
             return redirect()->back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));;
         }
 
