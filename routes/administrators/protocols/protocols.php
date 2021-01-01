@@ -31,7 +31,7 @@ Route::group([
     require('practices.php');
 
     Route::group([
-        'prefix' => 'laboratory',
+        'prefix' => 'our',
         'as' => 'our/',
     ], function () {
 
@@ -62,8 +62,11 @@ Route::group([
         Route::get('print_worksheet/{id}', [
             OurProtocolController::class,
             'print_worksheet',
-        ])->name('print_worksheet')->where('id', '[1-9][0-9]*');
+        ])->name('print_worksheet')->where('id', '[1-9][0-9]*')->middleware('permission:print_worksheets');
 
-        Route::get('print/{id}', [OurProtocolController::class, 'print'])->name('print')->where('id', '[1-9][0-9]*');
+        Route::get('print/{id}', [
+            OurProtocolController::class,
+            'print',
+        ])->name('print')->where('id', '[1-9][0-9]*')->middleware('permission:print_protocols');
     });
 });

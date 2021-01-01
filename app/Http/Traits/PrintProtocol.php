@@ -19,11 +19,12 @@ trait PrintProtocol {
      */
     public function print($protocol_id, $filter_practices = array())
     {
-        $protocol = OurProtocol::protocol()->findOrFail($protocol_id);
-        $prescriber = $protocol->prescriber()->first();
-        $patient = $protocol->patient()->first();
-        $plan = $protocol->plan()->first();
-        $social_work = $plan->social_work()->first();
+        $our_protocol = OurProtocol::findOrFail($protocol_id);
+        $protocol = $our_protocol->protocol;
+        $prescriber = $our_protocol->prescriber;
+        $patient = $protocol->patient;
+        $plan = $our_protocol->plan;
+        $social_work = $plan->social_work;
 
         try {
             if (empty($filter_practices)) {
@@ -58,7 +59,7 @@ trait PrintProtocol {
 
     public function haveResults($practices) {
     	/* Returns true if there is at least one reported practice, false otherwise */
-    	
+
     	$count = 0;
 
         foreach($practices as $practice) {

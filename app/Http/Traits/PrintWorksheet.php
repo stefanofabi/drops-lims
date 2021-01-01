@@ -19,13 +19,14 @@ trait PrintWorksheet {
      */
     public function print_worksheet($protocol_id)
     {
-        $protocol = OurProtocol::protocol()->findOrFail($protocol_id);
-        $prescriber = $protocol->prescriber()->first();
-        $patient = $protocol->patient()->first();
-        $plan = $protocol->plan()->first();
-        $social_work = $plan->social_work()->first();
-        $practices = $protocol->practices;
-        $phone = $patient->phone()->first();
+        $our_protocol = OurProtocol::findOrFail($protocol_id);
+        $protocol = $our_protocol->protocol;
+        $prescriber = $our_protocol->prescriber;
+        $patient = $our_protocol->patient;
+        $plan = $our_protocol->plan;
+        $social_work = $plan->social_work;
+        $practices = $our_protocol->protocol->practices;
+        $phone = $patient->phones->first();
 
         try {
             ob_start();
@@ -33,7 +34,7 @@ trait PrintWorksheet {
             $content = ob_get_clean();
 
             $html2pdf = new Html2Pdf('P', 'A4', str_replace('_', '-', app()->getLocale()));
-            $html2pdf->pdf->SetTitle(Lang::get('protocols.worksheet_for_protocol')." #$protocol->id");
+            $html2pdf->pdf->SetTitle(Lang::get('protocols.worksheet_for_protocol')." #$protocol_id");
             $html2pdf->setDefaultFont('Arial');
 
             $html2pdf->writeHTML($content);

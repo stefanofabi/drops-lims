@@ -1,7 +1,7 @@
 @extends('administrators/default-template')
 
 @section('title')
-{{ trans('protocols.edit_protocol') }} #{{ $protocol->id }}
+{{ trans('protocols.edit_protocol') }} #{{ $protocol->protocol_id }}
 @endsection
 
 @section('active_protocols', 'active')
@@ -10,7 +10,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
         // Select a plan from list
-        $("#plan").val('{{ $plan->id }}');
+        $("#plan").val('{{ $protocol->plan_id }}');
 
         $('[data-toggle="tooltip"]').tooltip();
     });
@@ -55,28 +55,28 @@
 <ul class="nav flex-column">
 	@can('crud_practices')
 	<li class="nav-item">
-		<a class="nav-link" href="{{ route('administrators/protocols/our/add_practices', [$protocol->id]) }}"> 
-			<img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('protocols.add_practices') }} 
+		<a class="nav-link" href="{{ route('administrators/protocols/our/add_practices', ['id' => $protocol->protocol_id]) }}">
+			<img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('protocols.add_practices') }}
 		</a>
 	</li>
 	@endcan
 
 	<li class="nav-item">
-		<a class="nav-link" href="{{ route('administrators/protocols/our/show', [$protocol->id]) }}"> 
-			<img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('forms.go_back') }} 
+		<a class="nav-link" href="{{ route('administrators/protocols/our/show', ['id' => $protocol->protocol_id]) }}">
+			<img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('forms.go_back') }}
 		</a>
 	</li>
 </ul>
 @endsection
 
 @section('content-title')
-<i class="fas fa-file-medical"></i> {{ trans('protocols.edit_protocol') }} #{{ $protocol->id }}
+<i class="fas fa-file-medical"></i> {{ trans('protocols.edit_protocol') }} #{{ $protocol->protocol_id }}
 @endsection
 
 
 @section('content')
 
-<form method="post" action="{{ route('administrators/protocols/our/update', [$protocol->id]) }}">
+<form method="post" action="{{ route('administrators/protocols/our/update', ['id' => $protocol->protocol_id]) }}">
 	@csrf
 	{{ method_field('PUT') }}
 
@@ -85,7 +85,7 @@
 			<span class="input-group-text"> {{ trans('patients.patient') }} </span>
 		</div>
 
-		<input type="text" class="form-control" value="{{ $patient->full_name }}" disabled>
+		<input type="text" class="form-control" value="{{ $protocol->patient->full_name }}" disabled>
 	</div>
 
 	<div class="input-group mt-2 col-md-9 input-form">
@@ -95,17 +95,17 @@
 
 		<select class="form-control input-sm" id="plan" name="plan_id">
 				<option value=""> {{ trans('forms.select_option') }}</option>
-					@foreach ($social_works as $social_work)
-						<option value="{{ $social_work->plan_id }}">
+					@foreach ($protocol->patient->affiliates as $affiliate)
+						<option value="{{ $affiliate->plan_id }}">
 
-							@if (!empty($social_work->expiration_date) && $social_work->expiration_date < date('Y-m-d'))
+							@if (!empty($affiliate->plan->social_work->expiration_date) && $affiliate->expiration_date < date('Y-m-d'))
 								** {{ trans('social_works.expired_card')}} **
 							@endif
 
-							{{ $social_work->social_work }}  {{ $social_work->plan }}
+							{{ $affiliate->plan->social_work->name }}  {{ $affiliate->plan->name }}
 
-							@if (!empty($social_work->affiliate_number))
-								[{{ $social_work->affiliate_number }}]
+							@if (!empty($affiliate->affiliate_number))
+								[{{ $affiliate->affiliate_number }}]
 							@endif
 
 						</option>
@@ -118,8 +118,8 @@
 			<span class="input-group-text"> {{ trans('prescribers.prescriber') }} </span>
 		</div>
 
-		<input type="hidden" id="prescriber_id" name="prescriber_id" value="{{ $prescriber->id }}">
-		<input type="text" class="form-control" id="prescriber" value="{{ $prescriber->full_name }}">
+		<input type="hidden" id="prescriber_id" name="prescriber_id" value="{{ $protocol->prescriber->id }}">
+		<input type="text" class="form-control" id="prescriber" value="{{ $protocol->prescriber->full_name }}">
 	</div>
 
 	<div class="input-group mt-2 col-md-9 input-form">
@@ -127,7 +127,7 @@
 			<span class="input-group-text"> {{ trans('protocols.completion_date') }} </span>
 		</div>
 
-		<input type="date" class="form-control" name="completion_date" value="{{ $protocol->completion_date }}">
+		<input type="date" class="form-control" name="completion_date" value="{{ $protocol->protocol->completion_date }}">
 	</div>
 
 	<div class="input-group mt-2 col-md-9 input-form">
@@ -151,7 +151,7 @@
 			<span class="input-group-text"> {{ trans('protocols.observations') }} </span>
 		</div>
 
-		<textarea class="form-control" rows="3" name="observations"> {{ $protocol->observations }} </textarea>
+		<textarea class="form-control" rows="3" name="observations"> {{ $protocol->protocol->observations }} </textarea>
 	</div>
 
 	<div class="mt-3 float-right">
@@ -186,7 +186,7 @@
 						$total_amount = 0;
 					@endphp
 
-					@foreach ($practices as $practice)
+					@foreach ($protocol->protocol->practices as $practice)
 
 						@php
 							$total_amount += $practice->amount;
@@ -202,19 +202,19 @@
 									<span class="badge badge-success"> {{ trans('forms.yes') }} </span>
 								@endif
 							</td>
-							<td> 
+							<td>
 								@forelse($practice->signs as $sign)
-								    <a style="text-decoration: none" href="#" data-toggle="tooltip" title="{{ $sign->user->name }}"> 
-										<img height="30px" width="30px" src="{{ asset('storage/avatars/'.$sign->user->avatar) }}" class="rounded-circle" alt="{{ $sign->user->name }}"> 
-									</a>  
+								    <a style="text-decoration: none" href="#" data-toggle="tooltip" title="{{ $sign->user->name }}">
+										<img height="30px" width="30px" src="{{ asset('storage/avatars/'.$sign->user->avatar) }}" class="rounded-circle" alt="{{ $sign->user->name }}">
+									</a>
 								@empty
 								    {{ trans('protocols.not_signed')}}
 								@endforelse
 							</td>
 							<td class="text-right">
-									<a href="{{ route('administrators/protocols/practices/edit', $practice->id) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.edit_practice') }}"> <i class="fas fa-edit fa-sm"></i> </a>
+									<a href="{{ route('administrators/protocols/practices/edit', ['id' => $practice->id]) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.edit_practice') }}"> <i class="fas fa-edit fa-sm"></i> </a>
 
-									<a href="{{ route('administrators/protocols/practices/destroy', $practice->id) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.destroy_practice') }}"> <i class="fas fa-trash fa-sm"></i> </a>
+									<a href="{{ route('administrators/protocols/practices/destroy', ['id' => $practice->id]) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.destroy_practice') }}"> <i class="fas fa-trash fa-sm"></i> </a>
 							</td>
 						</tr>
 					@endforeach
