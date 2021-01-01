@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 use App\Http\Traits\Pagination;
 
@@ -21,8 +20,6 @@ class PrescriberController extends Controller
     private const PER_PAGE = 15;
 
     private const ADJACENTS = 4;
-
-    private const RETRIES = 5;
 
     /**
      * Display a listing of the resource.
