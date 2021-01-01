@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Administrators\Patients;
 
 use App\Http\Controllers\Controller;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 
@@ -58,9 +59,7 @@ class PhoneController extends Controller
             $phone = new Phone($request->all());
 
             if ($phone->save()) {
-                $redirect = redirect()->action('PatientController@edit', $request->patient_id)->with('success', [
-                        Lang::get('phones.success_saving_phone'),
-                    ]);
+                $redirect = redirect()->action([PatientController::class, 'edit'], $request->patient_id);
             } else {
                 $redirect = redirect()->back()->withInput($request->all())->withErrors(Lang::get('phones.error_saving_phone'));
             }
@@ -92,7 +91,13 @@ class PhoneController extends Controller
     {
         //
 
-        return Phone::findOrFail($request->id);
+        try {
+            $phone = Phone::findOrFail($request->id);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['status' => 500, 'message' => Lang::get('errors.not_found')], 500);
+        }
+
+        return response()->json($phone, 200);
     }
 
     /**
@@ -110,13 +115,22 @@ class PhoneController extends Controller
             'type' => 'required|string',
         ]);
 
-        $phone = Phone::findOrFail($request->id);
+        try {
+            $phone = Phone::findOrFail($request->id);
 
-        if (! $phone->update($request->all())) {
-            return response([], 500);
+            if (! $phone->update($request->all())) {
+                return response()->json(['status' => 500, 'message' => Lang::get('forms.failed_transaction')], 500);
+            }
+        } catch (QueryException $e) {
+            return response()->json([
+                'status' => 500,
+                'message' => Lang::get('errors.error_processing_transaction'),
+            ], 500);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['status' => 500, 'message' => Lang::get('errors.not_found')], 500);
         }
 
-        return response([], 200);
+        return response()->json(['status' => 200, 'message' => Lang::get('forms.successful_transaction')], 200);
     }
 
     /**
@@ -129,12 +143,21 @@ class PhoneController extends Controller
     {
         //
 
-        $phone = Phone::findOrFail($request->id);
+        try {
+            $phone = Phone::findOrFail($request->id);
 
-        if (! $phone->delete()) {
-            return response([], 500);
+            if (! $phone->delete()) {
+                return response()->json(['status' => 500, 'message' => Lang::get('forms.failed_transaction')], 500);
+            }
+        } catch (QueryException $e) {
+            return response()->json([
+                'status' => 500,
+                'message' => Lang::get('errors.error_processing_transaction'),
+            ], 500);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['status' => 500, 'message' => Lang::get('errors.not_found')], 500);
         }
 
-        return response([], 200);
+        return response()->json(['status' => 200, 'message' => Lang::get('forms.successful_transaction')], 200);
     }
 }
