@@ -23,7 +23,7 @@ class Practice extends Model
      */
     public function report()
     {
-        return $this->belongsTo('App\Models\Report');
+        return $this->belongsTo(Report::class);
     }
 
     /**
@@ -31,7 +31,7 @@ class Practice extends Model
      */
     public function results()
     {
-        return $this->hasMany('App\Models\Result', 'practice_id');
+        return $this->hasMany(Result::class, 'practice_id');
     }
 
     /**
@@ -39,7 +39,7 @@ class Practice extends Model
      */
     public function signs()
     {
-        return $this->hasMany('App\Models\SignPractice', 'practice_id');
+        return $this->hasMany(SignPractice::class);
     }
 
     public function scopeProtocol($query)
