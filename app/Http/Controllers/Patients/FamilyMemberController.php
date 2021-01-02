@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Patients;
 
 use App\Http\Controllers\Controller;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -24,11 +26,10 @@ class FamilyMemberController extends Controller
     {
         //
 
-        $user_id = auth()->user()->id;
-        $family_members = FamilyMember::get_family($user_id);
+        $user = auth()->user();
+        $family_members = $user->family_members;
 
-        return view('patients/family_members/index')
-        	->with('family_members', $family_members);
+        return view('patients/family_members/index')->with('family_members', $family_members);
     }
 
     /**
@@ -46,7 +47,7 @@ class FamilyMemberController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -58,57 +59,55 @@ class FamilyMemberController extends Controller
             'security_code' => 'required|string',
         ]);
 
-        $user_id = auth()->user()->id;
-
         try {
 
             DB::beginTransaction();
 
-            $codes = SecurityCode::where('patient_id', $request->patient_id)
-                ->where('expiration_date', '>', date('Y-m-d'))
-                ->whereNull('used_at')
-                ->get();
+            $user_id = auth()->user()->id;
 
-            // We verify that the security code entered is valid
-            $response = false;
-            foreach ($codes as $code) {
-                if (Hash::check($request->security_code, $code->security_code)) {
-                    $response = true;
-                    break;
-                }
+            $security_code = SecurityCode::where('patient_id', $request->patient_id)->firstOrFail();
+
+            if (! Hash::check($request->security_code, $security_code->security_code)) {
+                // Security code not match
+                return redirect()->redirect()->back()->withInput($request->except('security_code'))->withErrors(Lang::get('errors.invalid_security_code'));
             }
 
-            if (!$response) {
-                // No valid security codes found
-                return back()->withInput($request->all())->withErrors(Lang::get('errors.invalid_security_code'));
+            if ($security_code->used_at != null) {
+                // The security code was used
+                return redirect()->back()->withInput($request->except('security_code'))->withErrors(Lang::get('errors.security_code_already_used', ['day' => $security_code->used_at]));
             }
 
-            // We verify that the user does not already have a related patient
-            $exists = FamilyMember::where('user_id', $user_id)
-                ->where('patient_id', $request->patient_id)
-                ->count();
-
-            if ($exists > 0) {
-                return back()->withErrors(Lang::get('errors.already_family_member'));
+            if ($security_code->expiration_date < date('Y-m-d')) {
+                // Security code has expired
+                return redirect()->back()->withInput($request->except('security_code'))->withErrors(Lang::get('errors.security_code_expired', ['day' => $security_code->expiration_date]));
             }
 
-            $family_member = new FamilyMember;
-            $family_member->user_id = $user_id;
-            $family_member->patient_id = $request->patient_id;
-            $family_member->save();
+            $family_member = new FamilyMember([
+                'user_id' => $user_id,
+                'patient_id' => $request->patient_id,
+            ]);
 
-            $code->used_at = now();
-            $code->save();
+            $family_member->saveOrFail();
+
+            $security_code->used_at = now();
+            $security_code->saveOrFail();
 
             DB::commit();
 
             // We take the user to the main view
             $redirect = redirect()->action([FamilyMemberController::class, 'index']);
-
-        } catch (\Exception $e) {
+        } catch (QueryException $exception) {
             DB::rollBack();
 
-            $redirect = back()->withErrors(Lang::get('errors.error_processing_transaction'));
+            $redirect = redirect()->back()->withInput($request->except('security_code'))->withErrors(Lang::get('errors.already_family_member'));
+        } catch (ModelNotFoundException $exception) {
+            DB::rollBack();
+
+            $redirect = redirect()->back()->withInput($request->except('security_code'))->withErrors(Lang::get('errors.not_found'));
+        } catch (\Exception $exception) {
+            DB::rollBack();
+
+            $redirect = redirect()->back()->withInput($request->except('security_code'))->withErrors(Lang::get('errors.error_processing_transaction'));
         }
 
         return $redirect;;
@@ -117,7 +116,7 @@ class FamilyMemberController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -128,7 +127,7 @@ class FamilyMemberController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -139,8 +138,8 @@ class FamilyMemberController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -151,7 +150,7 @@ class FamilyMemberController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

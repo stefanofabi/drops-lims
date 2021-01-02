@@ -9,13 +9,13 @@ class FamilyMember extends Model
 {
     //
 
-    protected function get_family($id)
-    {
-        return DB::table('family_members')
-            ->select('family_members.patient_id', 'patients.full_name')
-            ->join('patients', 'family_members.patient_id', '=', 'patients.id')
-            ->where('family_members.user_id', $id)
-            ->get();
+    protected $fillable = ['user_id', 'patient_id'];
+
+    /**
+     * Get the nomenclator associated with the determination.
+     */
+    public function patient() {
+        return $this->belongsTo(Patient::class);
     }
 
     protected function check_relation($user_id, $patient_id) {

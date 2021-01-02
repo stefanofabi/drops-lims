@@ -15,9 +15,11 @@ return [
     'no_data' => 'No data was obtained',
     'practice_error_protocol' => 'Practices belonging to different protocols were detected.',
     'error_processing_transaction' => 'Error processing transaction',
-    'invalid_security_code' => 'Code does not exist or already used',
+    'invalid_security_code' => 'Security code does not exist',
     'already_family_member' => 'The patient is already linked to their account',
     'not_found' => 'No resource found with identifier',
     'invalid_patient_type' => 'Invalid patient type',
+    'security_code_already_used' => 'The security code was used on :day',
+    'security_code_expired' => 'The security code expired on day :day',
 
 ];

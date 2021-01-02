@@ -32,14 +32,11 @@ class UserPatientController extends Controller
         $initial_date = date('Y-m-d', strtotime(date('Y-m-d')."- 30 days"));
         $ended_date = date('Y-m-d');
 
-        $user_id = auth()->user()->id;
+        $user = auth()->user();
 
-        $family = FamilyMember::get_family($user_id);
+        $family_members = $user->family_members;
 
-        return view('patients/index')
-            ->with('family', $family)
-            ->with('initial_date', $initial_date)
-            ->with('ended_date', $ended_date);
+        return view('patients/index')->with('family', $family_members)->with('initial_date', $initial_date)->with('ended_date', $ended_date);
     }
 
     /**
@@ -63,28 +60,18 @@ class UserPatientController extends Controller
 
             $family = FamilyMember::get_family($user_id);
 
-            $protocols = OurProtocol::select('protocols.id', DB::raw('DATE_FORMAT(protocols.completion_date, "%d/%m/%Y") as completion_date'), 'patients.full_name as patient', 'prescribers.full_name as prescriber')
-                ->protocol()
-                ->patient()
-                ->prescriber()
-                ->where('patient_id', $patient_id)
-                ->whereBetween('protocols.completion_date', [$initial_date, $ended_date])
-                ->orderBy('protocols.completion_date', 'desc')
-                ->get();
+            $protocols = OurProtocol::select('protocols.id', DB::raw('DATE_FORMAT(protocols.completion_date, "%d/%m/%Y") as completion_date'), 'patients.full_name as patient', 'prescribers.full_name as prescriber')->protocol()->patient()->prescriber()->where('patient_id', $patient_id)->whereBetween('protocols.completion_date', [
+                    $initial_date,
+                    $ended_date,
+                ])->orderBy('protocols.completion_date', 'desc')->get();
 
-            $view = view('patients/results')
-                ->with('protocols', $protocols)
-                ->with('patient', $patient_id);
+            $view = view('patients/results')->with('protocols', $protocols)->with('patient', $patient_id);
         } else {
             $view = view('patients/index');
         }
 
-        return $view
-            ->with('family', $family)
-            ->with('initial_date', $initial_date)
-            ->with('ended_date', $ended_date);
+        return $view->with('family', $family)->with('initial_date', $initial_date)->with('ended_date', $ended_date);
     }
-
 
     /**
      * Shows the protocol of a patient
@@ -106,13 +93,7 @@ class UserPatientController extends Controller
             $social_work = $plan->social_work()->first();
             $practices = $protocol->practices;
 
-            $view = view('patients/protocols/show')
-                ->with('protocol', $protocol)
-                ->with('patient', $patient)
-                ->with('prescriber', $prescriber)
-                ->with('plan', $plan)
-                ->with('social_work', $social_work)
-                ->with('practices', $practices);
+            $view = view('patients/protocols/show')->with('protocol', $protocol)->with('patient', $patient)->with('prescriber', $prescriber)->with('plan', $plan)->with('social_work', $social_work)->with('practices', $practices);
         } else {
             $view = $this->index();
         }
@@ -125,7 +106,8 @@ class UserPatientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function print_protocol($id) {
+    public function print_protocol($id)
+    {
         $user_id = auth()->user()->id;
 
         $protocol = OurProtocol::protocol()->findOrFail($id);
@@ -137,7 +119,7 @@ class UserPatientController extends Controller
             return $this->index();
         }
 
-        $this->print($id, array());
+        $this->print($id, []);
     }
 
     /**
@@ -164,12 +146,7 @@ class UserPatientController extends Controller
         $report = $practice->report()->first();
         $determination = $report->determination()->first();
 
-        return view('patients/protocols/practices/show')
-            ->with('practice', $practice)
-            ->with('protocol', $protocol)
-            ->with('report', $report)
-            ->with('determination', $determination);
-
+        return view('patients/protocols/practices/show')->with('practice', $practice)->with('protocol', $protocol)->with('report', $report)->with('determination', $determination);
     }
 
     /**
@@ -211,14 +188,7 @@ class UserPatientController extends Controller
 
             $family = FamilyMember::select('patient_id')->where('user_id', $user_id)->get()->toArray();
 
-            $protocol = Protocol::select('protocols.id as id')
-                ->ourProtocol()
-                ->patient()
-                ->practices()
-                ->whereIn('practices.id', $filter_practices)
-                ->whereIn('patients.id', $family)
-                ->groupBy('protocols.id')
-                ->get();
+            $protocol = Protocol::select('protocols.id as id')->ourProtocol()->patient()->practices()->whereIn('practices.id', $filter_practices)->whereIn('patients.id', $family)->groupBy('protocols.id')->get();
 
             if ($protocol->count() == 1) {
                 $this->print($protocol->first()->id, $filter_practices);

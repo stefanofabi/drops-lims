@@ -40,4 +40,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Get the family members for the user.
+     */
+    public function family_members()
+    {
+        return $this->hasMany(FamilyMember::class);
+    }
+
 }

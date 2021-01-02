@@ -51,7 +51,7 @@
                 <span class="input-group-text"> {{ trans('patients.security_code') }} </span>
             </div>
 
-            <input type="text" class="form-control @error('security_code') is-invalid @enderror" name="security_code"  required>
+            <input type="text" class="form-control @error('security_code') is-invalid @enderror" name="security_code" required>
 
             @error('security_code')
                 <span class="invalid-feedback" role="alert">

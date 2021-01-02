@@ -60,17 +60,24 @@ class SecurityCodeController extends Controller
 
         try {
             DB::beginTransaction();
-            SecurityCode::updateOrCreate([
-                'patient_id' => $patient_id,
-            ], [
-                'security_code' => Hash::make($new_security_code),
-                'expiration_date' => $expiration_date,
-            ]);
+
+            $security_code = $patient->security_code;
+
+            if (! $security_code) {
+                $security_code = new SecurityCode;
+                $security_code->patient_id = $patient_id;
+            }
+
+            $security_code->security_code = Hash::make($new_security_code);
+            $security_code->expiration_date = $expiration_date;
+            $security_code->used_at = null;
+
+            $security_code->saveOrFail();
 
             $this->print_security_code($patient->id, $patient->full_name, $new_security_code, $expiration_date);
 
             DB::commit();
-        } catch (QueryException $exception) {
+        } catch (\Exception $exception) {
             DB::rollBack();
 
             exit(Lang::get('errors.error_processing_transaction'));

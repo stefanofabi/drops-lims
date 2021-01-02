@@ -63,4 +63,12 @@ class Patient extends Model
     {
         return $this->hasMany(Affiliate::class);
     }
+
+    /**
+     * Get the security code associated with the patient.
+     */
+    public function security_code()
+    {
+        return $this->hasOne(SecurityCode::class);
+    }
 }

@@ -1,21 +1,21 @@
 @extends('patients/default-filter')
 
 @section('title')
-{{ trans('home.family_members') }}
+    {{ trans('home.family_members') }}
 @endsection
 
 @section('active_family_members', 'active')
 
 @section('main-title')
-<i class="fas fa-users"></i> {{ trans('home.family_members') }}
+    <i class="fas fa-users"></i> {{ trans('home.family_members') }}
 @endsection
 
 @section('create-href')
-{{ route('patients/family_members/create') }}
+    {{ route('patients/family_members/create') }}
 @endsection
 
 @section('create-text')
-<span class="fas fa-user-plus" ></span> {{ trans('patients.add_family_member') }}
+    <span class="fas fa-user-plus"></span> {{ trans('patients.add_family_member') }}
 @endsection
 
 @section('card-filters')
@@ -24,7 +24,7 @@
 
 @section('results')
 
-    @if (!sizeof($family_members))
+    @if ($family_members->isEmpty())
         <div class="col-md-12"> {{ trans('forms.no_results') }}</div>
     @else
 
@@ -37,10 +37,11 @@
 
                 @foreach ($family_members as $family_member)
                     <tr>
-                        <td> {{ $family_member->full_name }} </td>
+                        <td> {{ $family_member->patient->full_name }} </td>
 
                         <td class="text-right">
-                            <a target="_blank" href="#" class="btn btn-info btn-sm" title="{{ trans('protocols.print_report') }}"> <i class="fas fa-trash fa-sm"></i> </a>
+                            <a target="_blank" href="#" class="btn btn-info btn-sm"
+                               title="{{ trans('protocols.print_report') }}"> <i class="fas fa-trash fa-sm"></i> </a>
                         </td>
                     </tr>
                 @endforeach
@@ -60,5 +61,5 @@
 @endsection
 
 @section('action_page')
-{{ route('patients/protocols/index') }}
+    {{ route('patients/protocols/index') }}
 @endsection

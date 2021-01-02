@@ -8,6 +8,11 @@ class SecurityCode extends Model
 {
     //
 
-    protected $fillable = ['patient_id', 'security_code', 'expiration_date'];
-
+    /**
+     * Get the plan associated with the affiliate.
+     */
+    public function patient()
+    {
+        return $this->belongsTo(Patient::class);
+    }
 }
