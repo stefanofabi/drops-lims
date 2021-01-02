@@ -10,11 +10,16 @@ class Report extends Model
 
     protected $fillable = ['name', 'report', 'determination_id'];
 
-    public function determination() {
-		return $this->belongsTo('App\Models\Determination');
-	}
+    /**
+     * Get the determination associated with the report.
+     */
+    public function determination()
+    {
+        return $this->belongsTo('App\Models\Determination');
+    }
 
-	public function scopeDetermination($query) {
-		return $query->join('determinations', 'determinations.id', '=', 'reports.determination_id');
-	}
+    public function scopeDetermination($query)
+    {
+        return $query->join('determinations', 'determinations.id', '=', 'reports.determination_id');
+    }
 }

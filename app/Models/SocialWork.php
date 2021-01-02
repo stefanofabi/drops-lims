@@ -11,7 +11,7 @@ class SocialWork extends Model
     //
 
     /**
-     * Get the emails for the patient.
+     * Get the plans for the social work.
      */
     public function plans()
     {

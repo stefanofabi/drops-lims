@@ -8,6 +8,5 @@ class Phone extends Model
 {
     //
 
-	protected $fillable = ['patient_id', 'phone', 'type'];
-
+    protected $fillable = ['patient_id', 'phone', 'type'];
 }

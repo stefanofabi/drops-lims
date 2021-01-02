@@ -13,21 +13,33 @@ class OurProtocol extends Protocol
 
     protected $fillable = ['protocol_id', 'patient_id', 'plan_id', 'prescriber_id', 'quantity_orders', 'diagnostic'];
 
+    /**
+     * Get the plan associated with the our protocol.
+     */
     public function plan()
     {
         return $this->belongsTo(Plan::class);
     }
 
+    /**
+     * Get the prescriber associated with the our protocol.
+     */
     public function prescriber()
     {
         return $this->belongsTo(Prescriber::class);
     }
 
+    /**
+     * Get the patient associated with the our protocol.
+     */
     public function patient()
     {
         return $this->belongsTo(Patient::class);
     }
 
+    /**
+     * Get the protocol associated with the our protocol.
+     */
     public function protocol()
     {
         return $this->belongsTo(Protocol::class);

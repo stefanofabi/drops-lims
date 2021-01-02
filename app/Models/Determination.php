@@ -51,6 +51,6 @@ class Determination extends Model
      * Get the nomenclator associated with the determination.
      */
 	public function nomenclator() {
-		return $this->belongsTo('App\Models\Nomenclator');
+		return $this->belongsTo(Nomenclator::class);
 	}
 }

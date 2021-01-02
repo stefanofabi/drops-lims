@@ -12,7 +12,7 @@ class FamilyMember extends Model
     protected $fillable = ['user_id', 'patient_id'];
 
     /**
-     * Get the nomenclator associated with the determination.
+     * Get the patient associated with the family member.
      */
     public function patient() {
         return $this->belongsTo(Patient::class);
