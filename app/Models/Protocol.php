@@ -53,7 +53,12 @@ class Protocol extends Model
 
 	public function practices()
     {
-        return $this->hasMany('App\Models\Practice', 'protocol_id');
+        return $this->hasMany(Practice::class);
+    }
+
+    public function our_protocol()
+    {
+        return $this->hasOne(OurProtocol::class);
     }
 
     public function scopePractices($query) {

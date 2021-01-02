@@ -16,7 +16,7 @@
 
 @section('results')
 
-    @if (!sizeof($protocols))
+    @if ($protocols->isEmpty())
         <div class="col-md-12"> {{ trans('forms.no_results') }}</div>
     @else
 

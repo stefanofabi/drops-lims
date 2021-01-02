@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Patients;
 
 use App\Http\Controllers\Controller;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -13,6 +14,7 @@ use App\Models\FamilyMember;
 use App\Models\OurProtocol;
 use App\Models\Practice;
 use App\Models\Protocol;
+use App\Models\User;
 
 use Lang;
 
@@ -36,7 +38,7 @@ class UserPatientController extends Controller
 
         $family_members = $user->family_members;
 
-        return view('patients/index')->with('family', $family_members)->with('initial_date', $initial_date)->with('ended_date', $ended_date);
+        return view('patients/index')->with('family_members', $family_members)->with('initial_date', $initial_date)->with('ended_date', $ended_date);
     }
 
     /**
@@ -47,30 +49,33 @@ class UserPatientController extends Controller
     public function get_protocols(Request $request)
     {
         //
+        $request->validate([
+            'initial_date' => 'required|date',
+            'ended_date' => 'required|date',
+            'patient_id' => 'required|numeric|min:1',
+        ]);
+
         $initial_date = $request->initial_date;
         $ended_date = $request->ended_date;
 
-        $user_id = auth()->user()->id;
-        $patient_id = $request->patient;
+        $user = auth()->user();
+        $patient_id = $request->patient_id;
 
-        $count = FamilyMember::check_relation($user_id, $patient_id);
+        $count = FamilyMember::check_relation($user->id, $patient_id);
 
         // we check if the user really has a related family member
-        if ($count > 0) {
-
-            $family = FamilyMember::get_family($user_id);
-
-            $protocols = OurProtocol::select('protocols.id', DB::raw('DATE_FORMAT(protocols.completion_date, "%d/%m/%Y") as completion_date'), 'patients.full_name as patient', 'prescribers.full_name as prescriber')->protocol()->patient()->prescriber()->where('patient_id', $patient_id)->whereBetween('protocols.completion_date', [
-                    $initial_date,
-                    $ended_date,
-                ])->orderBy('protocols.completion_date', 'desc')->get();
-
-            $view = view('patients/results')->with('protocols', $protocols)->with('patient', $patient_id);
-        } else {
-            $view = view('patients/index');
+        if (! $count) {
+            return redirect()->back()->withErrors(Lang::get('errors.not_found'));
         }
 
-        return $view->with('family', $family)->with('initial_date', $initial_date)->with('ended_date', $ended_date);
+        $family_members = $user->family_members;
+
+        $protocols = OurProtocol::select('protocols.id', DB::raw('DATE_FORMAT(protocols.completion_date, "%d/%m/%Y") as completion_date'), 'patients.full_name as patient', 'prescribers.full_name as prescriber')->protocol()->patient()->prescriber()->where('patient_id', $patient_id)->whereBetween('protocols.completion_date', [
+            $initial_date,
+            $ended_date,
+        ])->orderBy('protocols.completion_date', 'desc')->get();
+
+        return view('patients/results')->with('protocols', $protocols)->with('patient', $patient_id)->with('family_members', $family_members)->with('initial_date', $initial_date)->with('ended_date', $ended_date);
     }
 
     /**
@@ -80,20 +85,15 @@ class UserPatientController extends Controller
      */
     public function show_protocol($id)
     {
-        $user_id = auth()->user()->id;
+        $user = auth()->user();
 
-        $protocol = OurProtocol::protocol()->findOrFail($id);
-        $patient = $protocol->patient()->first();
+        $our_protocol = OurProtocol::findOrFail($id);
+        $patient = $our_protocol->patient;
 
-        $count = FamilyMember::check_relation($user_id, $patient->id);
+        $count = FamilyMember::check_relation($user->id, $patient->id);
 
         if ($count > 0) {
-            $prescriber = $protocol->prescriber()->first();
-            $plan = $protocol->plan()->first();
-            $social_work = $plan->social_work()->first();
-            $practices = $protocol->practices;
-
-            $view = view('patients/protocols/show')->with('protocol', $protocol)->with('patient', $patient)->with('prescriber', $prescriber)->with('plan', $plan)->with('social_work', $social_work)->with('practices', $practices);
+            $view = view('patients/protocols/show')->with('our_protocol', $our_protocol);
         } else {
             $view = $this->index();
         }

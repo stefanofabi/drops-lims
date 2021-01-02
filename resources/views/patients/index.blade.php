@@ -32,10 +32,10 @@
 
     <div class="col form-group row col-md-6">
         <span for="inputState">{{ trans('patients.patient') }}</span>
-        <select class="form-control" id="patient" name="patient" required>
+        <select class="form-control" id="patient" name="patient_id" required>
             <option value="">{{ trans('forms.select_option') }}</option>
-            @foreach ($family as $member)
-                <option value="{{ $member->patient_id }}"> {{ $member->full_name }}</option>
+            @foreach ($family_members as $family_member)
+                <option value="{{ $family_member->patient->id }}"> {{ $family_member->patient->full_name }}</option>
             @endforeach
         </select>
     </div>
