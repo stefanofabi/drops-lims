@@ -10,8 +10,12 @@ class SocialWork extends Model
 {
     //
 
-    protected function get_plans($social_work) {
-    	return Plan::where('social_work_id', $social_work)->get();
+    /**
+     * Get the emails for the patient.
+     */
+    public function plans()
+    {
+        return $this->hasMany(Plan::class);
     }
 
 }

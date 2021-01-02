@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 
-use App\Models\Plan;
+use App\Models\SocialWork;
 
 use Lang;
 
@@ -98,8 +98,8 @@ class SocialWorkController extends Controller
     {
         //
         $social_work_id = $request->social_work_id;
-        $plans = Plan::where('social_work_id', $social_work_id)->get();
+        $social_work = SocialWork::findOrFail($social_work_id);
 
-        return $plans;
+        return $social_work->plans;
     }
 }
