@@ -19,7 +19,6 @@ use Lang;
 
 class PracticeController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      *

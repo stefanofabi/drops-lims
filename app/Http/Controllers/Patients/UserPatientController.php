@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Patients;
 
 use App\Http\Controllers\Controller;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -14,7 +13,6 @@ use App\Models\FamilyMember;
 use App\Models\OurProtocol;
 use App\Models\Practice;
 use App\Models\Protocol;
-use App\Models\User;
 
 use Lang;
 

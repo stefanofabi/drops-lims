@@ -8,6 +8,8 @@ class Practice extends Model
 {
     //
 
+    protected $fillable = ['protocol_id', 'report_id', 'amount'];
+
     public function protocol()
     {
         return $this->belongsTo('App\Models\Protocol');
