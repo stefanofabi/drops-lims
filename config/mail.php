@@ -62,7 +62,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | E-Mail Encryption Protocol
+    | E-Mail Encryption Protocols
     |--------------------------------------------------------------------------
     |
     | Here you may specify the encryption protocol that should be used when

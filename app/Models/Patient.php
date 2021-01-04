@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -70,5 +71,30 @@ class Patient extends Model
     public function security_code()
     {
         return $this->hasOne(SecurityCode::class);
+    }
+
+    public function age()
+    {
+
+        $age = null;
+
+        $date = $this->birth_date;
+
+        if (! empty($date)) {
+            $birth_date = new \DateTime(date('Y/m/d', strtotime($date)));
+            $date_today = new \DateTime(date('Y/m/d', time()));
+
+            if ($date_today >= $birth_date) {
+                $diff = date_diff($date_today, $birth_date);
+
+                $age = [
+                    'day' => ceil($diff->format('%d')),
+                    'year' => ceil($diff->format('%Y')),
+                    'month' => ceil($diff->format('%m')),
+                ];
+            }
+        }
+
+        return $age;
     }
 }

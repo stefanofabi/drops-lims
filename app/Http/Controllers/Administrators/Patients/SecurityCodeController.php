@@ -4,13 +4,13 @@ namespace App\Http\Controllers\Administrators\Patients;
 
 use App\Http\Controllers\Controller;
 
-use Illuminate\Database\QueryException;
+use App\Laboratory\Prints\SecurityCodes\PrintSecurityCodeContext;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
-use App\Http\Traits\PrintSecurityCode;
+use App\Laboratory\Print\Protocol\PrintSecurityCode;
 
 use App\Models\Patient;
 use App\Models\SecurityCode;
@@ -19,8 +19,6 @@ use Lang;
 
 class SecurityCodeController extends Controller
 {
-    use PrintSecurityCode;
-
     /**
      * Display a listing of the resource.
      *
@@ -74,9 +72,12 @@ class SecurityCodeController extends Controller
 
             $security_code->saveOrFail();
 
-            $this->print_security_code($patient->id, $patient->full_name, $new_security_code, $expiration_date);
-
             DB::commit();
+
+            $strategy = 'basic_style';
+            $strategyClass = PrintSecurityCodeContext::STRATEGIES[$strategy];
+
+            return (new $strategyClass)->print_security_code($patient, $new_security_code, $expiration_date);
         } catch (\Exception $exception) {
             DB::rollBack();
 

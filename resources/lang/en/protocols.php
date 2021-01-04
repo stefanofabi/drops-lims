@@ -4,7 +4,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Protocol language lines
+    | Protocols language lines
     |--------------------------------------------------------------------------
     |
     | The following language lines are used during protocols views for various messages that we must show the user.
@@ -23,7 +23,7 @@ return [
     'completion_date' => 'Completion date',
     'show_protocol' => 'Show protocol',
     'destroy_protocol' => 'Destroy protocol',
-    'protocol_blocked' => 'Protocol blocked for security reasons. To make changes click on the lock',
+    'protocol_blocked' => 'Protocols blocked for security reasons. To make changes click on the lock',
     'edit_protocol' => 'Edit protocol',
     'add_practice' => 'Add practice',
     'enter_practice' => 'Enter a practice',
@@ -53,5 +53,5 @@ return [
     'success_signed' => 'You signed the practice successfully',
     'informed' => 'Informed',
     'practices' => 'Practices',
-    
+
 ];

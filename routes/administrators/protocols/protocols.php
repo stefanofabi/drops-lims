@@ -66,7 +66,7 @@ Route::group([
 
         Route::get('print/{id}', [
             OurProtocolController::class,
-            'print',
+            'print_protocol',
         ])->name('print')->where('id', '[1-9][0-9]*')->middleware('permission:print_protocols');
     });
 });

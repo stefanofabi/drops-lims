@@ -4,7 +4,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Protocol language lines
+    | Protocols language lines
     |--------------------------------------------------------------------------
     |
     | The following language lines are used during protocols views for various messages that we must show the user.
@@ -17,7 +17,7 @@ return [
     'protocol_number' => 'Número de protocolo',
     'date' => 'Fecha',
     'type' => 'Tipo',
-    'observations' => 'Observaciones', 
+    'observations' => 'Observaciones',
     'diagnostic' => 'Diagnóstico',
     'quantity_orders' => 'Cantidad de órdenes',
     'completion_date' => 'Fecha de realización',
@@ -43,5 +43,5 @@ return [
     'result' => 'Resultado',
     'unloaded_social_work' => 'El paciente no tiene cargada ninguna obra social',
     'create_notice' => 'Una vez que haya asignado el protocolo al paciente podrá agregar las prácticas que necesite',
- 
+
 ];

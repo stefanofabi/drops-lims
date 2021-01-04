@@ -46,4 +46,9 @@ class Practice extends Model
     {
         return $query->join('protocols', 'practices.protocol_id', '=', 'protocols.id');
     }
+
+    public function print()
+    {
+        return $this->report->report;
+    }
 }

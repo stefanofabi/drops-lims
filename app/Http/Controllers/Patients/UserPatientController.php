@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-use App\Http\Traits\PrintProtocol;
+use App\Laboratory\Print\Protocol\PrintProtocol;
 
 use App\Models\FamilyMember;
 use App\Models\OurProtocol;

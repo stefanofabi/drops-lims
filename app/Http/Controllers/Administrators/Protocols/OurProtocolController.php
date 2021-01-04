@@ -4,17 +4,14 @@ namespace App\Http\Controllers\Administrators\Protocols;
 
 use App\Http\Controllers\Controller;
 
-use App\Http\Traits\PrintProtocol;
-use App\Http\Traits\PrintSecurityCode;
-use App\Http\Traits\PrintWorkSheet;
-
+use App\Laboratory\Prints\Protocols\Our\PrintProtocolContext;
+use App\Laboratory\Prints\Worksheets\PrintWorksheetContext;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 use App\Models\Patient;
-use App\Models\Affiliate;
 use App\Models\Protocol;
 use App\Models\OurProtocol;
 use App\Models\Prescriber;
@@ -23,10 +20,6 @@ use Lang;
 
 class OurProtocolController extends Controller
 {
-    use PrintProtocol;
-    use PrintWorksheet;
-    use PrintSecurityCode;
-
     private const RETRIES = 5;
 
     /**
@@ -224,5 +217,31 @@ class OurProtocolController extends Controller
         $protocol = OurProtocol::findOrFail($protocol_id)->protocol();
 
         return $protocol->practices;
+    }
+
+    /**
+     * Returns a protocol in pdf
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function print_protocol($protocol_id, $filter_practices = [])
+    {
+        $strategy = 'modern_style';
+        $strategyClass = PrintProtocolContext::STRATEGIES[$strategy];
+
+        return (new $strategyClass)->print($protocol_id, $filter_practices);
+    }
+
+    /**
+     * Returns a worksheet of protocol in pdf
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function print_worksheet($protocol_id, $filter_practices = [])
+    {
+        $strategy = 'simple_style';
+        $strategyClass = PrintWorksheetContext::STRATEGIES[$strategy];
+
+        return (new $strategyClass)->print($protocol_id, $filter_practices);
     }
 }
