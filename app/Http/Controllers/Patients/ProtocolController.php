@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Laboratory\Prints\Protocols\Our\PrintProtocolContext;
 use App\Models\FamilyMember;
 use App\Models\OurProtocol;
-use App\Models\Practice;
 use App\Models\Protocol;
 use Illuminate\Http\Request;
 
