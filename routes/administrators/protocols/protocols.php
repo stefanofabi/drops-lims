@@ -9,16 +9,13 @@
 |
 */
 
-use App\Http\Controllers\Administrators\Protocols\ProtocolController;
-use App\Http\Controllers\Administrators\Protocols\OurProtocolController;
-
 Route::get('protocols', [
-    ProtocolController::class,
+    '\App\Http\Controllers\Administrators\Protocols\ProtocolController',
     'index',
 ])->name('protocols')->middleware('permission:crud_protocols');
 
 Route::post('protocols', [
-    ProtocolController::class,
+    '\App\Http\Controllers\Administrators\Protocols\ProtocolController',
     'load',
 ])->name('protocols/load')->middleware('permission:crud_protocols');
 
@@ -35,37 +32,63 @@ Route::group([
         'as' => 'our/',
     ], function () {
 
-        Route::post('load_patients', [OurProtocolController::class, 'load_patients'])->name('load_patients');
-        Route::post('load_prescribers', [OurProtocolController::class, 'load_prescribers'])->name('load_prescribers');
+        Route::post('load_patients', [
+            '\App\Http\Controllers\Administrators\Protocols\OurProtocolController',
+            'load_patients',
+        ])->name('load_patients');
+
+        Route::post('load_prescribers', [
+            '\App\Http\Controllers\Administrators\Protocols\OurProtocolController',
+            'load_prescribers',
+        ])->name('load_prescribers');
 
         Route::get('add_practices/{id}', [
             OurProtocolController::class,
             'add_practices',
         ])->name('add_practices')->where('id', '[1-9][0-9]*');
 
-        Route::get('create', [OurProtocolController::class, 'create'])->name('create');
-        Route::post('create', [OurProtocolController::class, 'create'])->name('create');
+        Route::get('create', [
+            '\App\Http\Controllers\Administrators\Protocols\OurProtocolController',
+            'create',
+        ])->name('create');
 
-        Route::post('store', [OurProtocolController::class, 'store'])->name('store');
+        Route::post('create', [
+            '\App\Http\Controllers\Administrators\Protocols\OurProtocolController',
+            'create',
+        ])->name('create');
 
-        Route::get('show/{id}', [OurProtocolController::class, 'show'])->name('show')->where('id', '[1-9][0-9]*');
+        Route::post('store', [
+            '\App\Http\Controllers\Administrators\Protocols\OurProtocolController',
+            'store',
+        ])->name('store');
 
-        Route::put('update/{id}', [OurProtocolController::class, 'update'])->name('update')->where('id', '[1-9][0-9]*');
+        Route::get('show/{id}', [
+            '\App\Http\Controllers\Administrators\Protocols\OurProtocolController',
+            'show',
+        ])->name('show')->where('id', '[1-9][0-9]*');
 
-        Route::get('edit/{id}', [OurProtocolController::class, 'edit'])->name('edit')->where('id', '[1-9][0-9]*');
+        Route::put('update/{id}', [
+            '\App\Http\Controllers\Administrators\Protocols\OurProtocolController',
+            'update',
+        ])->name('update')->where('id', '[1-9][0-9]*');
+
+        Route::get('edit/{id}', [
+            '\App\Http\Controllers\Administrators\Protocols\OurProtocolController',
+            'edit',
+        ])->name('edit')->where('id', '[1-9][0-9]*');
 
         Route::get('destroy/{id}', [
-            OurProtocolController::class,
+            '\App\Http\Controllers\Administrators\Protocols\OurProtocolController',
             'destroy',
         ])->name('destroy')->where('id', '[1-9][0-9]*');
 
         Route::get('print_worksheet/{id}', [
-            OurProtocolController::class,
+            '\App\Http\Controllers\Administrators\Protocols\OurProtocolController',
             'print_worksheet',
         ])->name('print_worksheet')->where('id', '[1-9][0-9]*')->middleware('permission:print_worksheets');
 
         Route::get('print/{id}', [
-            OurProtocolController::class,
+            '\App\Http\Controllers\Administrators\Protocols\OurProtocolController',
             'print_protocol',
         ])->name('print')->where('id', '[1-9][0-9]*')->middleware('permission:print_protocols');
     });

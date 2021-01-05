@@ -31,7 +31,9 @@
 							i++;
  						 });
 					}
-		});
+		}).fail( function() {
+            $("#messages").html('<div class="alert alert-danger fade show"> <button type="button" class="close" data-dismiss="alert">&times;</button> <strong> {{ trans("forms.danger") }}! </strong> {{ trans("errors.error_processing_transaction") }} </div>');
+        });
     });
 </script>
 @endsection
@@ -43,11 +45,11 @@
 @section('menu')
 <ul class="nav flex-column">
 	<li class="nav-item">
-		<a class="nav-link" href="#"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('forms.no_options') }} </a>
+		<a class="nav-link" href="#"> <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('forms.no_options') }} </a>
 	</li>
 
 	<li class="nav-item">
-		<a class="nav-link" href="{{ route('patients/protocols/show', $protocol->id) }}"> <img src="{{ asset('img/drop.png') }}" width="25" height="25"> {{ trans('forms.go_back') }} </a>
+		<a class="nav-link" href="{{ route('patients/protocols/show', ['id' => $protocol->id]) }}"> <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('forms.go_back') }} </a>
 	</li>
 </ul>
 @endsection
@@ -62,7 +64,7 @@
 	<div id="messages">	</div>
 
     <div id="report">
-        {!! $report->report !!}
+        {!! $practice->report->report !!}
     </div>
 
 @endsection

@@ -9,10 +9,8 @@
 |
 */
 
-use App\Http\Controllers\Administrators\Statistics\StatisticsController;
-
 Route::get('statistics', [
-    StatisticsController::class,
+    '\App\Http\Controllers\Administrators\Statistics\StatisticsController',
     'index',
 ])->name('statistics')->middleware('permission:see_statistics');
 
@@ -23,14 +21,16 @@ Route::group([
 ], function () {
 
     Route::post('annual_collection_social_work', [
-        StatisticsController::class,
+        '\App\Http\Controllers\Administrators\Statistics\StatisticsController',
         'annual_collection_social_work',
     ])->name('annual_collection_social_work');
 
     Route::post('patient_flow_per_month', [
-        StatisticsController::class,
         'patient_flow_per_month',
     ])->name('patient_flow_per_month');
 
-    Route::post('track_income', [StatisticsController::class, 'track_income'])->name('track_income');
+    Route::post('track_income', [
+        '\App\Http\Controllers\Administrators\Statistics\StatisticsController',
+        'track_income',
+    ])->name('track_income');
 });

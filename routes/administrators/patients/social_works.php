@@ -9,32 +9,32 @@
 |
 */
 
-use App\Http\Controllers\Administrators\Patients\AffiliateController;
-use App\Http\Controllers\Administrators\SocialWorks\SocialWorkController;
-
 Route::get('social_works/affiliates/create/{patient_id}', [
-    AffiliateController::class,
+    '\App\Http\Controllers\Administrators\Patients\AffiliateController',
     'create',
 ])->name('social_works/affiliates/create')->where('patient_id', '[1-9][0-9]*');
 
 Route::post('social_works/affiliates/store', [
-    AffiliateController::class,
+    '\App\Http\Controllers\Administrators\Patients\AffiliateController',
     'store',
 ])->name('social_works/affiliates/store');
 
-Route::post('social_works/affiliates/edit', [AffiliateController::class, 'edit'])->name('social_works/affiliates/edit');
+Route::post('social_works/affiliates/edit', [
+    '\App\Http\Controllers\Administrators\Patients\AffiliateController',
+    'edit',
+])->name('social_works/affiliates/edit');
 
 Route::post('social_works/affiliates/update', [
-    AffiliateController::class,
+    '\App\Http\Controllers\Administrators\Patients\AffiliateController',
     'update',
 ])->name('social_works/affiliates/update');
 
 Route::post('social_works/affiliates/destroy', [
-    AffiliateController::class,
+    '\App\Http\Controllers\Administrators\Patients\AffiliateController',
     'destroy',
 ])->name('social_works/affiliates/destroy');
 
 Route::post('social_works/plans/load', [
-    SocialWorkController::class,
+    '\App\Http\Controllers\Administrators\SocialWorks\SocialWorkController',
     'load_plans',
-])->name('social_works/plans/load')->where('id', '[1-9][0-9]*');
+])->name('social_works/plans/load');

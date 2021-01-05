@@ -19,14 +19,14 @@ class ModernStyleProtocolStrategy implements PrintProtocolStrategyInterface
     {
         $our_protocol = OurProtocol::findOrFail($protocol_id);
         $protocol = $our_protocol->protocol;
-        $practices = $protocol->practices()->get();
+        $practices = $protocol->practices;
 
         if (! empty($filter_practices)) {
             $practices = $practices->whereIn('id', $filter_practices);
         }
 
         if ($this->haveResults($practices)) {
-            exit(Lang::get('protocols.empty_protocol'));
+            return Lang::get('protocols.empty_protocol');
         }
 
         $pdf = PDF::loadView('pdf/protocols/modern_style', [
@@ -34,7 +34,13 @@ class ModernStyleProtocolStrategy implements PrintProtocolStrategyInterface
             'practices' => $practices,
         ]);
 
-        return $pdf->stream('protocol_'.$protocol->id.'.pdf');
+        $protocol_name = "protocol_$protocol->id";
+
+        if ($protocol->practices->count() != $practices->count()) {
+            $protocol_name = 'partial_'.$protocol_name;
+        }
+
+        return $pdf->stream($protocol_name);
     }
 
     public function haveResults($practices)

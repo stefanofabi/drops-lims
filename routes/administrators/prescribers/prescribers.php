@@ -9,14 +9,12 @@
 |
 */
 
-use App\Http\Controllers\Administrators\Prescribers\PrescriberController;
-
 Route::get('prescribers', [
-    PrescriberController::class,
+    '\App\Http\Controllers\Administrators\Prescribers\PrescriberController',
     'index',
 ])->name('prescribers')->middleware('permission:crud_prescribers');
 Route::post('prescribers/load', [
-    PrescriberController::class,
+    '\App\Http\Controllers\Administrators\Prescribers\PrescriberController',
     'load',
 ])->name('prescribers/load')->middleware('permission:crud_prescribers');
 
@@ -25,20 +23,38 @@ Route::group([
     'prefix' => 'prescribers',
     'as' => 'prescribers/',
 ], function () {
-    Route::get('show/{id}', [PrescriberController::class, 'show'])->name('show')->where('id', '[1-9][0-9]*');
+    Route::get('show/{id}', [
+        '\App\Http\Controllers\Administrators\Prescribers\PrescriberController',
+        'show',
+    ])->name('show')->where('id', '[1-9][0-9]*');
 
-    Route::get('create', [PrescriberController::class, 'create'])->name('create');
+    Route::get('create', [
+        '\App\Http\Controllers\Administrators\Prescribers\PrescriberController',
+        'create',
+    ])->name('create');
 
-    Route::post('store', [PrescriberController::class, 'store'])->name('store');
+    Route::post('store', [
+        '\App\Http\Controllers\Administrators\Prescribers\PrescriberController',
+        'store',
+    ])->name('store');
 
-    Route::put('update/{id}', [PrescriberController::class, 'update'])->name('update')->where('id', '[1-9][0-9]*');
+    Route::put('update/{id}', [
+        '\App\Http\Controllers\Administrators\Prescribers\PrescriberController',
+        'update',
+    ])->name('update')->where('id', '[1-9][0-9]*');
 
-    Route::get('edit/{id}', [PrescriberController::class, 'edit'])->name('edit')->where('id', '[1-9][0-9]*');
+    Route::get('edit/{id}', [
+        '\App\Http\Controllers\Administrators\Prescribers\PrescriberController',
+        'edit',
+    ])->name('edit')->where('id', '[1-9][0-9]*');
 
     Route::delete('destroy/{id}', [
-        PrescriberController::class,
+        '\App\Http\Controllers\Administrators\Prescribers\PrescriberController',
         'destroy',
     ])->name('destroy')->where('id', '[1-9][0-9]*');
 
-    Route::patch('restore/{id}', [PrescriberController::class, 'restore'])->name('restore')->where('id', '[1-9][0-9]*');
+    Route::patch('restore/{id}', [
+        '\App\Http\Controllers\Administrators\Prescribers\PrescriberController',
+        'restore',
+    ])->name('restore')->where('id', '[1-9][0-9]*');
 });

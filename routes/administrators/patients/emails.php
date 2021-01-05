@@ -9,17 +9,27 @@
 |
 */
 
-use App\Http\Controllers\Administrators\Patients\EmailController;
-
 Route::get('emails/create/{patient_id}', [
-    EmailController::class,
+    '\App\Http\Controllers\Administrators\Patients\EmailController',
     'create',
 ])->name('emails/create')->where('patient_id', '[1-9][0-9]*');
 
-Route::post('emails/store', [EmailController::class, 'store'])->name('emails/store');
+Route::post('emails/store', [
+    '\App\Http\Controllers\Administrators\Patients\EmailController',
+    'store',
+])->name('emails/store');
 
-Route::post('emails/edit', [EmailController::class, 'edit'])->name('emails/edit');
+Route::post('emails/edit', [
+    '\App\Http\Controllers\Administrators\Patients\EmailController',
+    'edit',
+])->name('emails/edit');
 
-Route::post('emails/update', [EmailController::class, 'update'])->name('emails/update');
+Route::post('emails/update', [
+    '\App\Http\Controllers\Administrators\Patients\EmailController',
+    'update',
+])->name('emails/update');
 
-Route::post('emails/destroy', [EmailController::class, 'destroy'])->name('emails/destroy');
+Route::post('emails/destroy', [
+    '\App\Http\Controllers\Administrators\Patients\EmailController',
+    'destroy',
+])->name('emails/destroy');
