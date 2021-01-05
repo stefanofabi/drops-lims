@@ -62,6 +62,10 @@ class OurProtocolController extends Controller
     {
         //
 
+        $request->validate([
+            'completion_date' => 'required|date'
+        ]);
+
         try {
             DB::beginTransaction();
 
@@ -123,6 +127,10 @@ class OurProtocolController extends Controller
     public function update(Request $request, $id)
     {
         //
+
+        $request->validate([
+            'completion_date' => 'required|date'
+        ]);
 
         try {
             DB::beginTransaction();

@@ -10,8 +10,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
-use App\Laboratory\Print\Protocol\PrintSecurityCode;
-
 use App\Models\Patient;
 use App\Models\SecurityCode;
 

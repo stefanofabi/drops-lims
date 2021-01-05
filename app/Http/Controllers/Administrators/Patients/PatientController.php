@@ -190,6 +190,13 @@ class PatientController extends Controller
     {
         //
 
+        $request->validate([
+            'full_name' => 'required|string',
+            'sex' => 'in:F,M',
+            'type' => 'in:animal,human,industrial',
+            'birth_date' => 'date|nullable'
+        ]);
+
         try {
             $patient = Patient::findOrFail($id);
 
@@ -250,6 +257,7 @@ class PatientController extends Controller
             'full_name' => 'required|string',
             'sex' => 'in:F,M',
             'type' => 'in:animal,human,industrial',
+            'birth_date' => 'date|nullable'
         ]);
 
         $patient = new Patient($request->all());

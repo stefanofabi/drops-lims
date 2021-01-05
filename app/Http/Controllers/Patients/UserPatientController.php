@@ -4,10 +4,9 @@ namespace App\Http\Controllers\Patients;
 
 use App\Http\Controllers\Controller;
 
+use App\Laboratory\Prints\Protocols\Our\PrintProtocolContext;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
-use App\Laboratory\Print\Protocol\PrintProtocol;
 
 use App\Models\FamilyMember;
 use App\Models\OurProtocol;
@@ -18,7 +17,6 @@ use Lang;
 
 class UserPatientController extends Controller
 {
-    use PrintProtocol;
 
     /**
      * Displays a list of patient results
@@ -117,7 +115,10 @@ class UserPatientController extends Controller
             return $this->index();
         }
 
-        $this->print($id, []);
+        $strategy = 'modern_style';
+        $strategyClass = PrintProtocolContext::STRATEGIES[$strategy];
+
+        return (new $strategyClass)->print($id, []);
     }
 
     /**
@@ -186,7 +187,15 @@ class UserPatientController extends Controller
 
             $family = FamilyMember::select('patient_id')->where('user_id', $user_id)->get()->toArray();
 
-            $protocol = Protocol::select('protocols.id as id')->ourProtocol()->patient()->practices()->whereIn('practices.id', $filter_practices)->whereIn('patients.id', $family)->groupBy('protocols.id')->get();
+            // Verify that the selected practices belong to the same protocol and that the patient is linked
+            $protocol = Protocol::select('protocols.id as id')
+                ->ourProtocol()
+                ->patient()
+                ->practices()
+                ->whereIn('practices.id', $filter_practices)
+                ->whereIn('patients.id', $family)
+                ->groupBy('protocols.id')
+                ->get();
 
             if ($protocol->count() == 1) {
                 $this->print($protocol->first()->id, $filter_practices);
