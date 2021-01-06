@@ -2,7 +2,7 @@
 
 @section('title')
 {{ trans('determinations.show_determination') }}
-@endsection 
+@endsection
 
 @section('active_determinations', 'active')
 
@@ -14,7 +14,11 @@
 <ul class="nav flex-column">
 	<li class="nav-item">
 		<a class="nav-link" href="#"> <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('forms.no_options') }} </a>
-	</li>	
+	</li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('administrators/determinations') }}"> <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('forms.go_back') }} </a>
+    </li>
 </ul>
 @endsection
 
@@ -34,7 +38,7 @@
 		<span class="input-group-text"> {{ trans('determinations.nbu') }} </span>
 	</div>
 
-	<input type="text" class="form-control" value="{{ $nomenclator->name }}" disabled>
+	<input type="text" class="form-control" value="{{ $determination->nomenclator->name }}" disabled>
 </div>
 
 <div class="input-group mt-2 col-md-9 input-form">
@@ -68,7 +72,7 @@
 	<input type="number" class="form-control" value="{{ $determination->biochemical_unit }}" disabled>
 </div>
 
-@endsection	
+@endsection
 
 
 @section('extra-content')
@@ -82,10 +86,10 @@
 		<table class="table table-striped">
 				<tr  class="info">
 					<th> {{ trans('reports.name') }} </th>
-					<th class="text-right"> {{ trans('forms.actions') }}</th>	
+					<th class="text-right"> {{ trans('forms.actions') }}</th>
 				</tr>
 
-				@foreach ($reports as $report)
+				@foreach ($determination->reports as $report)
 					<tr>
 						<td> {{ $report->name }} </td>
 						<td class="text-right">

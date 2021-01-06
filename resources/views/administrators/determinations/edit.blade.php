@@ -2,7 +2,7 @@
 
 @section('title')
 {{ trans('determinations.edit_determination') }}
-@endsection 
+@endsection
 
 @section('active_determinations', 'active')
 
@@ -14,13 +14,13 @@
 <ul class="nav flex-column">
 	@can('crud_reports')
 		<li class="nav-item">
-			<a class="nav-link" href="{{ route('administrators/determinations/reports/create', [$determination->id]) }}"> <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('reports.create_report') }} </a>
+			<a class="nav-link" href="{{ route('administrators/determinations/reports/create', ['determination_id' => $determination->id]) }}"> <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('reports.create_report') }} </a>
 		</li>
 	@endcan
 
 	<li class="nav-item">
-		<a class="nav-link" href="{{ route('administrators/determinations/show', [$determination->id]) }}"> <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('forms.go_back') }} </a>
-	</li>		
+		<a class="nav-link" href="{{ route('administrators/determinations/show', ['id' => $determination->id]) }}"> <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('forms.go_back') }} </a>
+	</li>
 </ul>
 @endsection
 
@@ -39,7 +39,7 @@
 			<span class="input-group-text"> {{ trans('determinations.nbu') }} </span>
 		</div>
 
-		<input type="text" class="form-control" value="{{ $nomenclator->name }}" disabled>
+		<input type="text" class="form-control" value="{{ $determination->nomenclator->name }}" disabled>
 	</div>
 
 	<div class="input-group mt-2 mb-1 col-md-9 input-form">
@@ -78,9 +78,9 @@
 		<button type="submit" class="btn btn-primary">
 			<span class="fas fa-save"></span> {{ trans('forms.save') }}
 		</button>
-	</div>	
+	</div>
 </form>
-@endsection	
+@endsection
 
 
 @section('extra-content')
@@ -94,15 +94,15 @@
 		<table class="table table-striped">
 				<tr  class="info">
 					<th> {{ trans('reports.name') }} </th>
-					<th class="text-right"> {{ trans('forms.actions') }}</th>	
+					<th class="text-right"> {{ trans('forms.actions') }}</th>
 				</tr>
 
-				@foreach ($reports as $report)
+				@foreach ($determination->reports as $report)
 					<tr>
 						<td> {{ $report->name }} </td>
 						<td class="text-right">
 							<a href="{{ route('administrators/determinations/reports/edit', [$report->id]) }}" class="btn btn-info btn-sm" title="{{ trans('reports.edit_report') }}"> <i class="fas fa-edit fa-sm"></i> </a>
-							<a href="{{ route('administrators/determinations/reports/destroy', [$report->id]) }}" class="btn btn-info btn-sm" title="{{ trans('reports.destroy_report') }}"> <i class="fas fa-trash fa-sm"></i> </a>			
+							<a href="{{ route('administrators/determinations/reports/destroy', [$report->id]) }}" class="btn btn-info btn-sm" title="{{ trans('reports.destroy_report') }}"> <i class="fas fa-trash fa-sm"></i> </a>
 						</td>
 					</tr>
 				@endforeach

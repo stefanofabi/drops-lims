@@ -114,11 +114,8 @@ class DeterminationController extends Controller
         //
 
         $determination = Determination::findOrFail($id);
-        $nomenclator = $determination->nomenclator;
 
-        $reports = $determination->reports;
-
-        return view('administrators/determinations/show')->with('determination', $determination)->with('nomenclator', $nomenclator)->with('reports', $reports);
+        return view('administrators/determinations/show')->with('determination', $determination);
     }
 
     /**
@@ -131,11 +128,8 @@ class DeterminationController extends Controller
     {
         //
         $determination = Determination::findOrFail($id);
-        $nomenclator = $determination->nomenclator;
 
-        $reports = $determination->reports;
-
-        return view('administrators/determinations/edit')->with('determination', $determination)->with('nomenclator', $nomenclator)->with('reports', $reports);
+        return view('administrators/determinations/edit')->with('determination', $determination);
     }
 
     /**
