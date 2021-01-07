@@ -30,7 +30,7 @@ class PracticeController extends Controller
             return $this->index();
         }
 
-        return view('patients/protocols/practices/show')->with('practice', $practice)->with('protocol', $protocol);
+        return view('patients/protocols/practices/show')->with('practice', $practice);
     }
 
     /**

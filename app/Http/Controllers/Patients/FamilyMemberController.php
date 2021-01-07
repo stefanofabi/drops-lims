@@ -59,9 +59,9 @@ class FamilyMemberController extends Controller
             'security_code' => 'required|string',
         ]);
 
-        try {
+        DB::beginTransaction();
 
-            DB::beginTransaction();
+        try {
 
             $user_id = auth()->user()->id;
 
@@ -87,10 +87,10 @@ class FamilyMemberController extends Controller
                 'patient_id' => $request->patient_id,
             ]);
 
-            $family_member->saveOrFail();
+            $family_member->save();
 
             $security_code->used_at = now();
-            $security_code->saveOrFail();
+            $security_code->save();
 
             DB::commit();
 
@@ -104,10 +104,6 @@ class FamilyMemberController extends Controller
             DB::rollBack();
 
             $redirect = redirect()->back()->withInput($request->except('security_code'))->withErrors(Lang::get('errors.not_found'));
-        } catch (\Exception $exception) {
-            DB::rollBack();
-
-            $redirect = redirect()->back()->withInput($request->except('security_code'))->withErrors(Lang::get('errors.error_processing_transaction'));
         }
 
         return $redirect;;

@@ -49,7 +49,7 @@
 	</li>
 
 	<li class="nav-item">
-		<a class="nav-link" href="{{ route('patients/protocols/show', ['id' => $protocol->id]) }}"> <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('forms.go_back') }} </a>
+		<a class="nav-link" href="{{ route('patients/protocols/show', ['id' => $practice->protocol->id]) }}"> <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('forms.go_back') }} </a>
 	</li>
 </ul>
 @endsection

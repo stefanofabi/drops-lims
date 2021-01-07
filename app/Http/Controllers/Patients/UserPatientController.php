@@ -62,10 +62,14 @@ class UserPatientController extends Controller
 
         $family_members = $user->family_members;
 
-        $protocols = OurProtocol::select('protocols.id', DB::raw('DATE_FORMAT(protocols.completion_date, "%d/%m/%Y") as completion_date'), 'patients.full_name as patient', 'prescribers.full_name as prescriber')->protocol()->patient()->prescriber()->where('patient_id', $patient_id)->whereBetween('protocols.completion_date', [
-            $initial_date,
-            $ended_date,
-        ])->orderBy('protocols.completion_date', 'desc')->get();
+        $protocols = OurProtocol::select('protocols.id', DB::raw('DATE_FORMAT(protocols.completion_date, "%d/%m/%Y") as completion_date'), 'patients.full_name as patient', 'prescribers.full_name as prescriber')
+            ->protocol()
+            ->patient()
+            ->prescriber()
+            ->where('patient_id', $patient_id)
+            ->whereBetween('protocols.completion_date', [$initial_date, $ended_date])
+            ->orderBy('protocols.completion_date', 'desc')
+            ->get();
 
         return view('patients/results')->with('protocols', $protocols)->with('patient', $patient_id)->with('family_members', $family_members)->with('initial_date', $initial_date)->with('ended_date', $ended_date);
     }

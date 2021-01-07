@@ -74,7 +74,14 @@ class ProtocolController extends Controller
         $family = FamilyMember::select('patient_id')->where('user_id', $user_id)->get()->toArray();
 
         // Verify that the selected practices belong to the same protocol and that the patient is linked
-        $protocol = Protocol::select('protocols.id as id')->ourProtocol()->patient()->practices()->whereIn('practices.id', $filter_practices)->whereIn('patients.id', $family)->groupBy('protocols.id')->get();
+        $protocol = Protocol::select('protocols.id as id')
+            ->ourProtocol()
+            ->patient()
+            ->practices()
+            ->whereIn('practices.id', $filter_practices)
+            ->whereIn('patients.id', $family)
+            ->groupBy('protocols.id')
+            ->get();
 
         if ($protocol->count() != 1) {
             return Lang::get('errors.practice_error_protocol');
