@@ -26,6 +26,7 @@ Route::group([
     ])->name('annual_collection_social_work');
 
     Route::post('patient_flow_per_month', [
+        '\App\Http\Controllers\Administrators\Statistics\StatisticsController',
         'patient_flow_per_month',
     ])->name('patient_flow_per_month');
 
