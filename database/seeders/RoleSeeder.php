@@ -41,7 +41,8 @@ class RoleSeeder extends Seeder
         		'restore_items',
         		'generate_security_codes',
         		'settings',
-                'logs_access',
+                'system_logs',
+                'activity_logs',
         	]
         );
 

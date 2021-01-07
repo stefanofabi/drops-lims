@@ -22,7 +22,7 @@ Route::group([
     Route::get('logs', [
         '\Rap2hpoutre\LaravelLogViewer\LogViewerController',
         'index',
-    ])->middleware('permission:logs_access');
+    ])->middleware('permission:system_logs');
 
     require('administrators/patients/patients.php');
     require('administrators/prescribers/prescribers.php');
