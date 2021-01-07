@@ -25,7 +25,7 @@ class ModernStyleProtocolStrategy implements PrintProtocolStrategyInterface
             $practices = $practices->whereIn('id', $filter_practices);
         }
 
-        if ($this->haveResults($practices)) {
+        if (!$this->haveResults($practices)) {
             return Lang::get('protocols.empty_protocol');
         }
 

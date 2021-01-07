@@ -43,7 +43,7 @@ Route::group([
         ])->name('load_prescribers');
 
         Route::get('add_practices/{id}', [
-            OurProtocolController::class,
+            '\App\Http\Controllers\Administrators\Protocols\OurProtocolController',
             'add_practices',
         ])->name('add_practices')->where('id', '[1-9][0-9]*');
 

@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 
 use App\Laboratory\Prints\Protocols\Our\PrintProtocolContext;
 use App\Laboratory\Prints\Worksheets\PrintWorksheetContext;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -63,12 +62,12 @@ class OurProtocolController extends Controller
         //
 
         $request->validate([
-            'completion_date' => 'required|date'
+            'completion_date' => 'required|date',
         ]);
 
-        try {
-            DB::beginTransaction();
+        DB::beginTransaction();
 
+        try {
             $protocol = new Protocol($request->all());
 
             if ($protocol->save()) {
@@ -129,12 +128,14 @@ class OurProtocolController extends Controller
         //
 
         $request->validate([
-            'completion_date' => 'required|date'
+            'completion_date' => 'required|date',
         ]);
 
+        $our_protocol = OurProtocol::findOrFail($id);
+
+        DB::beginTransaction();
+
         try {
-            DB::beginTransaction();
-            $our_protocol = OurProtocol::findOrFail($id);
 
             $our_protocol->update($request->all());
 
@@ -145,10 +146,6 @@ class OurProtocolController extends Controller
             DB::rollBack();
 
             return redirect()->back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
-        } catch (ModelNotFoundException $exception) {
-            DB::rollBack();
-
-            return redirect()->back()->withInput($request->all())->withErrors(Lang::get('errors.not_found'));
         }
 
         return redirect()->action([OurProtocolController::class, 'show'], ['id' => $id]);
@@ -222,7 +219,7 @@ class OurProtocolController extends Controller
      */
     public static function get_practices($protocol_id)
     {
-        $protocol = OurProtocol::findOrFail($protocol_id)->protocol();
+        $protocol = OurProtocol::findOrFail($protocol_id)->protocol;
 
         return $protocol->practices;
     }

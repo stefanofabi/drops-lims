@@ -49,8 +49,13 @@ class PracticeController extends Controller
     {
         //
 
+        $request->validate([
+            'type' => 'in:our,derived',
+        ]);
+
+        DB::beginTransaction();
+
         try {
-            DB::beginTransaction();
 
             $report_id = $request->report_id;
             $report = Report::findOrFail($report_id);
@@ -138,9 +143,9 @@ class PracticeController extends Controller
     {
         //
 
-        try {
+        DB::beginTransaction();
 
-            DB::beginTransaction();
+        try {
 
             Result::where('practice_id', $id)->delete();
 
@@ -220,13 +225,18 @@ class PracticeController extends Controller
         $nomenclator = $request->nomenclator_id;
         $filter = $request->filter;
 
-        $practices = Report::select('reports.id', DB::raw("CONCAT(determinations.name, ' - ', reports.name) as label"))->determination()->where('determinations.nomenclator_id', $nomenclator)->where(function (
-            $query
-        ) use ($filter) {
-            if (! empty($filter)) {
-                $query->orWhere("determinations.name", "like", "%$filter%")->orWhere("determinations.code", "like", "$filter%")->orWhere("reports.name", "like", "%$filter%");
-            }
-        })->get()->toJson();
+        $practices = Report::select('reports.id', DB::raw("CONCAT(determinations.name, ' - ', reports.name) as label"))
+            ->determination()->where('determinations.nomenclator_id', $nomenclator)
+            ->whereNull('determinations.deleted_at')
+            ->where(function ($query) use ($filter) {
+                if (! empty($filter)) {
+                    $query->orWhere("determinations.name", "like", "%$filter%")
+                        ->orWhere("determinations.code", "like", "$filter%")
+                        ->orWhere("reports.name", "like", "%$filter%");
+                }
+            })
+            ->get()
+            ->toJson();
 
         return $practices;
     }

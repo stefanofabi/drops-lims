@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Administrators\Prescribers;
 
 use App\Http\Controllers\Controller;
 
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 use App\Http\Traits\Pagination;
@@ -57,7 +56,7 @@ class PrescriberController extends Controller
         $total_pages = ceil($count_rows / self::PER_PAGE);
         $paginate = $this->paginate($page, $total_pages, self::ADJACENTS);
 
-        return view('administrators/prescribers/index')->with('request', $request->all())->with('prescribers', $prescribers)->with('paginate', $paginate);
+        return view('administrators/prescribers/index')->with('request', $request)->with('prescribers', $prescribers)->with('paginate', $paginate);
     }
 
     /**
