@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Administrators\SocialWorks;
 
 use App\Http\Controllers\Controller;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 use App\Models\SocialWork;
@@ -98,8 +99,13 @@ class SocialWorkController extends Controller
     {
         //
         $social_work_id = $request->social_work_id;
-        $social_work = SocialWork::findOrFail($social_work_id);
 
-        return $social_work->plans;
+        try {
+            $social_work = SocialWork::findOrFail($social_work_id);
+        } catch (ModelNotFoundException $exception) {
+            return response()->json(['status' => 500, 'message' => Lang::get('errors.not_found')], '500');
+        }
+
+        return response()->json($social_work->plans, 200);
     }
 }

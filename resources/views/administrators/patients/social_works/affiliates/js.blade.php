@@ -4,10 +4,13 @@
 	var change = false;
 
 	function editAffiliate() {
+        // In case the user had already opened the modal
+	    change = false;
+
 		var affiliate = $("#affiliate").val();
 
 		if (!affiliate) {
-			alert('{{ trans('forms.select_option') }}');			
+			alert('{{ trans('forms.select_option') }}');
 			return false;
 		}
 
@@ -38,7 +41,7 @@
 			}
 		});
 
-    	return false;   	
+    	return false;
 	}
 
 	function updateAffiliate() {
@@ -62,7 +65,7 @@
 			}
 		});
 
-		return false;   	
+		return false;
 	}
 
 	function load_plans() {
@@ -79,12 +82,12 @@
 				$("#modal_affiliates_messages").html('<div class="spinner-border text-info"> </div> {{ trans("forms.please_wait") }}');
 			},
 			success:  function (response) {
-						
+
 						$("#modal_affiliates_plan").empty();
 						var select_plan = new Option('{{ trans('forms.select_option') }}', '');
 						$("#modal_affiliates_plan").append(select_plan);
 
-						$(jQuery.parseJSON(JSON.stringify(response))).each(function() {  
+						$(jQuery.parseJSON(JSON.stringify(response))).each(function() {
 						         var option = new Option(this.name, this.id);
 
 								/// jquerify the DOM object 'o' so we can use the html method
@@ -98,7 +101,9 @@
 							change = true;
 						}
 					}
-				}).done( function() {
+				}).fail( function() {
+                    $("#modal_affiliates_messages").html('<div class="alert alert-danger fade show"> <button type="button" class="close" data-dismiss="alert">&times;</button> <strong> {{ trans("forms.danger") }}! </strong> {{ trans("errors.not_found") }} </div>');
+                }).done( function() {
 					$("#modal_affiliates_messages").html("");
 				});
 
