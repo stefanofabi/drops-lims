@@ -55,7 +55,7 @@ class DeterminationController extends Controller
 
         $nomenclators = Nomenclator::all();
 
-        return view('administrators/determinations/index')->with('request', $request->all())->with('determinations', $determinations)->with('paginate', $paginate)->with('nomenclators', $nomenclators);
+        return view('administrators/determinations/index')->with('request', $request)->with('determinations', $determinations)->with('paginate', $paginate)->with('nomenclators', $nomenclators);
     }
 
     /**
@@ -92,9 +92,9 @@ class DeterminationController extends Controller
             $determination = new Determination($request->all());
 
             if ($determination->save()) {
-                $redirect = redirect()->action([DeterminationController::class, 'show'], [$determination->id]);
+                $redirect = redirect()->action([DeterminationController::class, 'show'], ['id' => $determination->id]);
             } else {
-                $redirect = back()->withInput($request->all())->withErrors(Lang::get('determinations.error_saving_determination'));
+                $redirect = back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
             }
         } catch (QueryException $e) {
             $redirect = back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
@@ -150,14 +150,13 @@ class DeterminationController extends Controller
             'biochemical_unit' => 'required|numeric|min:0',
         ]);
 
+        $determination = Determination::findOrFail($id);
+
         try {
-
-            $determination = Determination::findOrFail($id);
-
             if ($determination->update($request->all())) {
-                $redirect = redirect()->action([DeterminationController::class, 'show'], $id);
+                $redirect = redirect()->action([DeterminationController::class, 'show'], ['id' => $id]);
             } else {
-                $redirect = back()->withInput($request->all())->withErrors(Lang::get('determinations.error_updating_determination'));
+                $redirect = back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
             }
         } catch (QueryException $e) {
             $redirect = back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
@@ -180,7 +179,7 @@ class DeterminationController extends Controller
 
         $nomenclators = Nomenclator::all();
 
-        $view = view('administrators/determinations/destroy')->with('nomenclators', $nomenclators);
+        $view = view('administrators/determinations/destroy');
 
         if ($determination->delete()) {
             $view->with('determination_id', $id)->with('type', 'success');
@@ -188,7 +187,7 @@ class DeterminationController extends Controller
             $view->with('type', 'danger');
         }
 
-        return $view;
+        return $view->with('nomenclators', $nomenclators);
     }
 
     /**

@@ -62,10 +62,10 @@ class EmailController extends Controller
                     'edit',
                 ], $request->patient_id);
             } else {
-                $redirect = back()->withInput($request->all())->withErrors(Lang::get('emails.error_saving_email'));
+                $redirect = redirect()->back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
             }
         } catch (QueryException $e) {
-            $redirect = back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
+            $redirect = redirect()->back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
         }
 
         return $redirect;
@@ -120,12 +120,12 @@ class EmailController extends Controller
             if (! $email->update($request->all())) {
                 return response(['status' => 500, 'message' => Lang::get('forms.failed_transaction')], 500);
             }
-        } catch (ModelNotFoundException $e) {
+        } catch (ModelNotFoundException $exception) {
             return response()->json([
                 'status' => 500,
-                'message' => Lang::get('errors.error_processing_transaction'),
+                'message' => Lang::get('errors.not_found'),
             ], 500);
-        } catch (QueryException $e) {
+        } catch (QueryException $exception) {
             return response()->json([
                 'status' => 500,
                 'message' => Lang::get('errors.error_processing_transaction'),
@@ -149,12 +149,12 @@ class EmailController extends Controller
             $email = Email::findOrFail($request->id);
 
             if (! $email->delete()) {
-                return response([], 500);
+                return response(['status' => 500, 'message' => Lang::get('forms.failed_transaction')], 500);
             }
-        } catch (ModelNotFoundException $e) {
+        } catch (ModelNotFoundException $exception) {
             return response()->json([
                 'status' => 500,
-                'message' => Lang::get('errors.error_processing_transaction'),
+                'message' => Lang::get('errors.not_found'),
             ], 500);
         }
 

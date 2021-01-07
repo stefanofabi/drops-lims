@@ -2,7 +2,7 @@
 
 @section('title')
 {{ trans('reports.edit_report') }}
-@endsection 
+@endsection
 
 @section('active_determinations', 'active')
 
@@ -27,10 +27,10 @@
 <ul class="nav flex-column">
 	<li class="nav-item">
 		<a class="nav-link" href="#"> <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('forms.no_options') }} </a>
-	</li>	
+	</li>
 
 	<li class="nav-item">
-		<a class="nav-link" href="{{ route('administrators/determinations/edit', $determination->id) }}"> <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('forms.go_back') }} </a>
+		<a class="nav-link" href="{{ route('administrators/determinations/edit', ['id' => $report->determination->id]) }}"> <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('forms.go_back') }} </a>
 	</li>
 </ul>
 @endsection
@@ -45,7 +45,7 @@
 	<strong>{{ trans('forms.danger') }}!</strong> {{ trans('reports.edit_notice') }}
 </div>
 
-<form method="post" action="{{ route('administrators/determinations/reports/update', $report->id) }}" onsubmit="return confirm_changes()">
+<form method="post" action="{{ route('administrators/determinations/reports/update', ['id' => $report->id]) }}" onsubmit="return confirm_changes()">
 	@csrf
 	{{ method_field('PUT') }}
 
@@ -54,7 +54,7 @@
 			<span class="input-group-text"> {{ trans('determinations.determination') }} </span>
 		</div>
 
-		<input type="text" class="form-control" value="{{ $determination->name }}" disabled>
+		<input type="text" class="form-control" value="{{ $report->determination->name }}" disabled>
 	</div>
 
 	<div class="input-group mt-2 col-md-9 input-form">
@@ -80,6 +80,6 @@
 	</div>
 
 </form>
-@endsection	
+@endsection
 
 

@@ -22,10 +22,10 @@
 <script type="text/javascript">
    $(document).ready(function() {
         // Select a nomenclator
-        $('#nomenclator').val("{{ $request['nomenclator'] ?? '' }}")
+        $('#nomenclator').val('{{ $request->nomenclator ?? '' }}');
 
         // Put the filter
-        $("#filter" ).val('{{ $request['filter'] ?? '' }}');
+        $("#filter" ).val('{{ $request->filter ?? '' }}');
     });
 
    function load(page) {
@@ -46,7 +46,7 @@
         <select class="form-control @error('nomenclator') is-invalid @enderror" id="nomenclator" name="nomenclator" required>
             <option value=""> {{ trans('forms.select_option') }} </option>
             @foreach ($nomenclators as $nomenclator)
-            <option value="{{ $nomenclator['id'] }}"> {{ $nomenclator['name'] }} </option>
+            <option value="{{ $nomenclator->id }}"> {{ $nomenclator->name }} </option>
             @endforeach
         </select>
 

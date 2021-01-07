@@ -59,9 +59,9 @@ class ReportController extends Controller
             $report = new Report($request->all());
 
             if ($report->save()) {
-                $redirect = redirect()->action([ReportController::class, 'show'], [$report]);
+                $redirect = redirect()->action([ReportController::class, 'show'], ['id' => $report->id]);
             } else {
-                $redirect = back()->withInput($request->all())->withErrors(Lang::get('determinations.error_saving_report'));
+                $redirect = back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
             }
         } catch (QueryException $e) {
             $redirect = back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
@@ -81,9 +81,8 @@ class ReportController extends Controller
         //
 
         $report = Report::findOrFail($id);
-        $determination = $report->determination;
 
-        return view('administrators/determinations/reports/show')->with('report', $report)->with('determination', $determination);
+        return view('administrators/determinations/reports/show')->with('report', $report);
     }
 
     /**
@@ -97,9 +96,8 @@ class ReportController extends Controller
         //
 
         $report = Report::findOrFail($id);
-        $determination = $report->determination;
 
-        return view('administrators/determinations/reports/edit')->with('report', $report)->with('determination', $determination);
+        return view('administrators/determinations/reports/edit')->with('report', $report);
     }
 
     /**
@@ -113,16 +111,15 @@ class ReportController extends Controller
     {
         //
 
+        $report = Report::findOrFail($id);
+
         try {
-
-            $report = Report::findOrFail($id);
-
             if ($report->update($request->all())) {
-                $redirect = redirect()->action([ReportController::class, 'show'], [$id]);
+                $redirect = redirect()->action([ReportController::class, 'show'], ['id' => $id]);
             } else {
-                $redirect = back()->withInput($request->all())->withErrors(Lang::get('determinations.error_updating_determination'));
+                $redirect = back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
             }
-        } catch (QueryException $e) {
+        } catch (QueryException $exception) {
             $redirect = back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
         }
 
@@ -140,10 +137,8 @@ class ReportController extends Controller
         //
 
         $report = Report::findOrFail($id);
-        $determination = $report->determination;
-        $nomenclator = $determination->nomenclator;
 
-        $view = view('administrators/determinations/edit')->with('determination', $determination)->with('nomenclator', $nomenclator);
+        $view = view('administrators/determinations/edit');
 
         if ($report->delete()) {
             $view->with('success', [Lang::get('reports.success_destroy')]);
@@ -151,8 +146,6 @@ class ReportController extends Controller
             $view->withErrors(Lang::get('reports.danger_destroy'));
         }
 
-        $reports = $determination->reports;
-
-        return $view->with('reports', $reports);
+        return $view->with('determination', $report->determination);
     }
 }

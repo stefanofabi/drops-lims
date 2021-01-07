@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 
 use App\Laboratory\Prints\SecurityCodes\PrintSecurityCodeContext;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -55,7 +54,6 @@ class SecurityCodeController extends Controller
         $expiration_date = date("Y-m-d", strtotime($date_today."+ 1 week"));
 
         try {
-            DB::beginTransaction();
 
             $security_code = $patient->security_code;
 
@@ -70,14 +68,11 @@ class SecurityCodeController extends Controller
 
             $security_code->saveOrFail();
 
-            DB::commit();
-
             $strategy = 'basic_style';
             $strategyClass = PrintSecurityCodeContext::STRATEGIES[$strategy];
 
             return (new $strategyClass)->print_security_code($patient, $new_security_code, $expiration_date);
         } catch (\Exception $exception) {
-            DB::rollBack();
 
             exit(Lang::get('errors.error_processing_transaction'));
         }

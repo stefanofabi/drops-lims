@@ -30,17 +30,17 @@ Route::group([
         'store',
     ])->name('store');
 
-    Route::put('update/{id}', [
-        '\App\Http\Controllers\Administrators\Determinations\ReportController',
-        'update',
-    ])->name('update')->where('id', '[1-9][0-9]*');
-
     Route::get('edit/{id}', [
         '\App\Http\Controllers\Administrators\Determinations\ReportController',
         'edit',
     ])->name('edit')->where('id', '[1-9][0-9]*');
 
-    Route::get('destroy/{id}', [
+    Route::put('update/{id}', [
+        '\App\Http\Controllers\Administrators\Determinations\ReportController',
+        'update',
+    ])->name('update')->where('id', '[1-9][0-9]*');
+
+    Route::delete('destroy/{id}', [
         '\App\Http\Controllers\Administrators\Determinations\ReportController',
         'destroy',
     ])->name('destroy')->where('id', '[1-9][0-9]*');

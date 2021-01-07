@@ -8,7 +8,7 @@
 
 	@if (!sizeof($data))
 		<div class="col-md-12"> {{ trans('forms.no_results') }}</div>
-	@else 
+	@else
 
 		<div class="table-responsive">
 			<table class="table table-striped">
@@ -28,13 +28,13 @@
 					<td> {{ date('d/m/Y', strtotime($patient->birth_date)) }} </td>
 
 					<td class="text-right">
-						<a href="{{ route('administrators/patients/show', $patient->id) }}" class="btn btn-info btn-sm float-left" title="{{ trans('patients.show_patient') }}" > <i class="fas fa-eye fa-sm"></i> </a> 
+						<a href="{{ route('administrators/patients/show', $patient->id) }}" class="btn btn-info btn-sm float-left" title="{{ trans('patients.show_patient') }}" > <i class="fas fa-eye fa-sm"></i> </a>
+
+                        <a class="btn btn-info btn-sm" title="{{ trans('patients.destroy_patient') }}" onclick="destroy_patient('{{ $patient->id }}')"> <i class="fas fa-user-slash fa-sm"> </i> </a>
 
 						<form id="destroy_patient_{{ $patient->id }}" method="POST" action="{{ route('administrators/patients/destroy', $patient->id) }}">
 							@csrf
 							@method('DELETE')
-							
-							<a class="btn btn-info btn-sm" title="{{ trans('patients.destroy_patient') }}" onclick="destroy_patient('{{ $patient->id }}')"> <i class="fas fa-user-slash fa-sm"> </i> </a>
 						</form>
 					</td>
 				</tr>

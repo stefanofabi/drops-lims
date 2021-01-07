@@ -34,20 +34,10 @@ Route::group([
         'show',
     ])->name('show')->where('id', '[1-9][0-9]*');
 
-    Route::get('create', ['\App\Http\Controllers\Administrators\Patients\PatientController', 'create'])->name('create');
-
-    Route::get('animals/create', [
+    Route::get('create/{type?}', [
         '\App\Http\Controllers\Administrators\Patients\PatientController',
-        'create_animal',
-    ])->name('animals/create');
-    Route::get('humans/create', [
-        '\App\Http\Controllers\Administrators\Patients\PatientController',
-        'create_human',
-    ])->name('humans/create');
-    Route::get('industrials/create', [
-        '\App\Http\Controllers\Administrators\Patients\PatientController',
-        'create_industrial',
-    ])->name('industrials/create');
+        'create',
+    ])->name('create')->where('type', 'animal|human|industrial');
 
     Route::post('store', ['\App\Http\Controllers\Administrators\Patients\PatientController', 'store'])->name('store');
 

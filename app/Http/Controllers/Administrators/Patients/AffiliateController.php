@@ -65,13 +65,11 @@ class AffiliateController extends Controller
                 $redirect = redirect()->action([
                     PatientController::class,
                     'edit',
-                ], [$request->patient_id])->with('success', [
-                    Lang::get('social_works.success_saving_affiliate'),
-                ]);
+                ], ['id' => $request->patient_id]);
             } else {
-                $redirect = back()->withInput($request->all())->withErrors(Lang::get('social_works.error_saving_affiliate'));
+                $redirect = back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
             }
-        } catch (QueryException $e) {
+        } catch (QueryException $exception) {
             $redirect = back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
         }
 
@@ -100,17 +98,14 @@ class AffiliateController extends Controller
         //
         try {
             $affiliate = Affiliate::findOrFail($request->id);
-        } catch (ModelNotFoundException $e) {
+        } catch (ModelNotFoundException $exception) {
             return response()->json(['status' => 500, 'message' => Lang::get('errors.not_found')], '500');
         }
 
-        $plan = $affiliate->plan;
-        $social_work = $plan->social_work;
-
         return response()->json([
             'id' => $affiliate->id,
-            'plan_id' => $plan->id,
-            'social_work_id' => $social_work->id,
+            'plan_id' => $affiliate->plan->id,
+            'social_work_id' => $affiliate->plan->social_work->id,
             'affiliate_number' => $affiliate->affiliate_number,
             'security_code' => $affiliate->security_code,
             'expiration_date' => $affiliate->expiration_date,
@@ -138,14 +133,14 @@ class AffiliateController extends Controller
             $affiliate = Affiliate::findOrFail($request->id);
 
             if (! $affiliate->update($request->all())) {
-                return response()->json([Lang::get('forms.failed_transaction')], 500);
+                return response()->json(['status' => 500, 'message' => Lang::get('forms.failed_transaction')], 500);
             }
         } catch (QueryException $e) {
             return response()->json([
                 'status' => 500,
                 'message' => Lang::get('errors.error_processing_transaction'),
             ], 500);
-        } catch (ModelNotFoundException $e) {
+        } catch (ModelNotFoundException $exception) {
             return response()->json(['status' => 500, 'message' => Lang::get('errors.not_found')], 500);
         }
 
@@ -164,14 +159,14 @@ class AffiliateController extends Controller
 
         try {
             $affiliate = Affiliate::findOrFail($request->id);
-        } catch (ModelNotFoundException $e) {
+        } catch (ModelNotFoundException $exception) {
             return response()->json(['status' => 500, 'message' => Lang::get('errors.not_found')], 500);
         }
 
         if (! $affiliate->delete()) {
             return response()->json([
                 'status' => 500,
-                'message' => Lang::get('errors.error_processing_transaction'),
+                'message' => Lang::get('forms.failed_transaction'),
             ], 500);
         }
 

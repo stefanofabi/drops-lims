@@ -1,7 +1,9 @@
 @extends('administrators/determinations/determinations')
 
 @section('js')
-	@if ($type == 'success') 
+    @parent
+
+	@if ($type == 'success')
 		<script type="text/javascript">
 			function restore_determination() {
 			    if (confirm('{{ trans("forms.confirm") }}')) {
@@ -18,28 +20,28 @@
 		<button type="button" class="close" data-dismiss="alert">&times;</button>
 
 		<p>
-			<strong> 
-				@if ($type == 'success') 
-					{{ trans('determinations.success_destroy') }}        			
+			<strong>
+				@if ($type == 'success')
+					{{ trans('determinations.success_destroy') }}
 				@else
 					{{ trans('determinations.danger_destroy') }}
 				@endif
-			</strong> 
+			</strong>
 		</p>
 
 		<ul>
 			<li>
-				@if ($type == 'success') 
-					<a href="#" onclick="restore_determination()"> {{ trans('determinations.success_destroy_message') }} </a> 
+				@if ($type == 'success')
+					<a href="#" onclick="restore_determination()"> {{ trans('determinations.success_destroy_message') }} </a>
 
-					<form method="POST" id="restore_determination" action="{{ route('administrators/determinations/restore', $determination_id) }}">
+					<form method="POST" id="restore_determination" action="{{ route('administrators/determinations/restore', ['id' => $determination_id]) }}">
 						@csrf
 						@method('PATCH')
-					</form>					     			
+					</form>
 				@else
 					{{ trans('determinations.danger_destroy_message') }}
 				@endif
-			</li>  
+			</li>
 		</ul>
 	</div>
 @endsection

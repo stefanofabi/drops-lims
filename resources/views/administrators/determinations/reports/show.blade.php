@@ -2,7 +2,7 @@
 
 @section('title')
 {{ trans('reports.show_report') }}
-@endsection 
+@endsection
 
 @section('active_determinations', 'active')
 
@@ -14,10 +14,10 @@
 <ul class="nav flex-column">
 	<li class="nav-item">
 		<a class="nav-link" href="#"> <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('forms.no_options') }} </a>
-	</li>	
+	</li>
 
 	<li class="nav-item">
-		<a class="nav-link" href="{{ route('administrators/determinations/show', $determination->id) }}"> <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('forms.go_back') }} </a>
+		<a class="nav-link" href="{{ route('administrators/determinations/show', ['id' => $report->determination->id]) }}"> <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('forms.go_back') }} </a>
 	</li>
 </ul>
 @endsection
@@ -29,7 +29,7 @@
 
 @section('content')
 	<div class="alert alert-info fade show">
-		<a href="{{ route('administrators/determinations/reports/edit', $report->id) }}" class="btn btn-info btn-sm"> <i class="fas fa-lock-open"></i> </a>
+		<a href="{{ route('administrators/determinations/reports/edit', ['id' => $report->id]) }}" class="btn btn-info btn-sm"> <i class="fas fa-lock-open"></i> </a>
 		{{ trans('reports.report_blocked') }}
 	</div>
 
@@ -38,7 +38,7 @@
 			<span class="input-group-text"> {{ trans('determinations.determination') }} </span>
 		</div>
 
-		<input type="text" class="form-control" value="{{ $determination->name }}" disabled>
+		<input type="text" class="form-control" value="{{ $report->determination->name }}" disabled>
 	</div>
 
 	<div class="input-group mt-2 col-md-9 input-form">
@@ -57,6 +57,6 @@
 		<textarea class="form-control" rows="10" disabled>{{ $report->report }}</textarea>
 	</div>
 
-@endsection	
+@endsection
 
 

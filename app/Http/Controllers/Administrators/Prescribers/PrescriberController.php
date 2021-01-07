@@ -132,14 +132,11 @@ class PrescriberController extends Controller
     public function update(Request $request, $id)
     {
         //
-        try {
-            $prescriber = Prescriber::findOrFail($id);
 
-            if (! $prescriber->update($request->all())) {
-                return redirect()->back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
-            }
-        } catch (ModelNotFoundException $exception) {
-            return redirect()->back()->withInput($request->all())->withErrors(Lang::get('errors.not_found'));
+        $prescriber = Prescriber::findOrFail($id);
+
+        if (! $prescriber->update($request->all())) {
+            return redirect()->back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
 
         return redirect()->action([PrescriberController::class, 'show'], ['id' => $id]);
@@ -155,12 +152,7 @@ class PrescriberController extends Controller
     {
         //
 
-        $prescriber = Prescriber::find($id);
-
-        if (! $prescriber) {
-            // prescriber not exists
-            return view('administrators/prescribers/prescribers')->withErrors(Lang::get('errors.not_found'),);
-        }
+        $prescriber = Prescriber::findOrFail($id);
 
         $view = view('administrators/prescribers/destroy');
 
@@ -183,12 +175,7 @@ class PrescriberController extends Controller
     {
         //
 
-        $prescriber = Prescriber::onlyTrashed()->find($id);
-
-        if (! $prescriber) {
-            // prescriber not removed
-            return view('administrators/prescribers/prescribers')->withErrors(Lang::get('errors.not_found'),);
-        }
+        $prescriber = Prescriber::onlyTrashed()->findOrFail($id);
 
         $view = view('administrators/prescribers/restore')->with('prescriber_id', $id);
 

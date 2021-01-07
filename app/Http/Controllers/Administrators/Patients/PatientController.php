@@ -4,13 +4,11 @@ namespace App\Http\Controllers\Administrators\Patients;
 
 use App\Http\Controllers\Controller;
 
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 use App\Http\Traits\Pagination;
 use App\Models\Patient;
 use App\Models\SocialWork;
-
 
 use Lang;
 
@@ -32,6 +30,7 @@ class PatientController extends Controller
     public function index()
     {
         //
+
         return view('administrators/patients/patients');
     }
 
@@ -90,10 +89,62 @@ class PatientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($type = null)
     {
         //
-        return view('administrators/patients/create');
+
+        switch ($type) {
+            case 'animal':
+            {
+                $view = view('administrators/patients/animals/create');
+                break;
+            }
+
+            case 'human':
+            {
+                $view = view('administrators/patients/humans/create');
+                break;
+            }
+
+            case 'industrial':
+            {
+                $view = view('administrators/patients/industrials/create');
+                break;
+            }
+
+            default:
+            {
+                $view = view('administrators/patients/create');
+                break;
+            }
+        }
+
+        return $view;
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
+        $request->validate([
+            'full_name' => 'required|string',
+            'sex' => 'in:F,M',
+            'type' => 'in:animal,human,industrial',
+            'birth_date' => 'date|nullable',
+        ]);
+
+        $patient = new Patient($request->all());
+
+        if (! $patient->save()) {
+            return redirect()->back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));;
+        }
+
+        return redirect()->action([PatientController::class, 'show'], ['id' => $patient->id]);
     }
 
     /**
@@ -194,79 +245,16 @@ class PatientController extends Controller
             'full_name' => 'required|string',
             'sex' => 'in:F,M',
             'type' => 'in:animal,human,industrial',
-            'birth_date' => 'date|nullable'
+            'birth_date' => 'date|nullable',
         ]);
 
-        try {
-            $patient = Patient::findOrFail($id);
+        $patient = Patient::findOrFail($id);
 
-            $patient->update($request->all());
-        } catch (ModelNotFoundException $e) {
-            return redirect()->back()->withInput($request->all())->withErrors(Lang::get('errors.not_found'));
-        }
-
-        return redirect()->action([PatientController::class, 'show'], ['id' => $id]);
-    }
-
-    /**
-     * Show the form for creating a new animal patient.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create_animal()
-    {
-        //
-
-        return view('administrators/patients/animals/create');
-    }
-
-    /**
-     * Show the form for creating a new human patient.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create_human()
-    {
-        //
-
-        return view('administrators/patients/humans/create');
-    }
-
-    /**
-     * Show the form for creating a new industrial patient.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create_industrial()
-    {
-        //
-
-        return view('administrators/patients/industrials/create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-        $request->validate([
-            'full_name' => 'required|string',
-            'sex' => 'in:F,M',
-            'type' => 'in:animal,human,industrial',
-            'birth_date' => 'date|nullable'
-        ]);
-
-        $patient = new Patient($request->all());
-
-        if (! $patient->save()) {
+        if (! $patient->update($request->all())) {
             return redirect()->back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));;
         }
 
-        return redirect()->action([PatientController::class, 'show'], ['id' => $patient->id]);
+        return redirect()->action([PatientController::class, 'show'], ['id' => $id]);
     }
 
     /**
@@ -279,12 +267,7 @@ class PatientController extends Controller
     {
         //
 
-        $patient = Patient::find($id);
-
-        if (! $patient) {
-            // patient not exists
-            return view('administrators/patients/patients')->withErrors(Lang::get('errors.not_found'));
-        }
+        $patient = Patient::findOrFail($id);
 
         $view = view('administrators/patients/destroy');
 
@@ -307,12 +290,7 @@ class PatientController extends Controller
     {
         //
 
-        $patient = Patient::onlyTrashed()->find($id);
-
-        if (! $patient) {
-            // patient not removed
-            return view('administrators/patients/patients')->withErrors(Lang::get('errors.not_found'));
-        }
+        $patient = Patient::onlyTrashed()->findOrFail($id);
 
         $view = view('administrators/patients/restore')->with('patient_id', $id);
 
