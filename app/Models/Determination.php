@@ -6,8 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-
-use App\Models\Report;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Determination extends Model
 {
@@ -15,9 +14,13 @@ class Determination extends Model
 
 	use HasFactory, SoftDeletes;
 
+    use LogsActivity;
+
     protected $dates = ['deleted_at'];
 
 	protected $fillable = ['nomenclator_id', 'code', 'name', 'position', 'biochemical_unit'];
+
+    protected static $logFillable = true;
 
     /**
      * Get the determinations for the query.

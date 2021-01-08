@@ -3,15 +3,21 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
 
-class OurProtocol extends Protocol
+class OurProtocol extends Model
 {
     //
+
+    use LogsActivity;
+
     protected $primaryKey = "protocol_id";
 
     public $incrementing = false;
 
     protected $fillable = ['protocol_id', 'patient_id', 'plan_id', 'prescriber_id', 'quantity_orders', 'diagnostic'];
+
+    protected static $logFillable = true;
 
     /**
      * Get the plan associated with the our protocol.

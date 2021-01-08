@@ -19,10 +19,15 @@ Route::group([
     'as' => 'administrators/',
 ], function () {
 
-    Route::get('logs', [
+    Route::get('logs/system_logs', [
         '\Rap2hpoutre\LaravelLogViewer\LogViewerController',
         'index',
     ])->middleware('permission:system_logs');
+
+    Route::get('logs/activity_logs', [
+        '\App\Http\Controllers\Administrators\ActivityViewerController',
+        'index',
+    ])->middleware('permission:activity_logs');
 
     require('administrators/patients/patients.php');
     require('administrators/prescribers/prescribers.php');

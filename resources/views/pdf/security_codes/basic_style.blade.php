@@ -1,7 +1,7 @@
 @extends('pdf/base')
 
 @section('title')
-    {{ trans('protocols.protocol_number') }}
+    {{ trans('patients.security_code_for', ['id' => $patient->id]) }}
 @endsection
 
 @section('style')

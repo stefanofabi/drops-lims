@@ -4,14 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
-
-use App\Models\Practice;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Protocol extends Model
 {
     //
 
+    use LogsActivity;
+
     protected $fillable = ['completion_date', 'observations'];
+
+    protected static $logFillable = true;
 
     protected function index($filter, $offset, $length)
     {

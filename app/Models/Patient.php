@@ -2,17 +2,19 @@
 
 namespace App\Models;
 
-use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Patient extends Model
 {
     //
 
     use HasFactory, SoftDeletes;
+
+    use LogsActivity;
 
     protected $dates = ['deleted_at'];
 
@@ -29,6 +31,8 @@ class Patient extends Model
         'start_activity',
         'type',
     ];
+
+    protected static $logAttributes = ['full_name', 'key', 'owner', 'business_name', 'type'];
 
     protected function index($filter, $offset, $length, $type)
     {

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Prescriber extends Model
 {
@@ -13,9 +14,13 @@ class Prescriber extends Model
 
     use HasFactory, SoftDeletes;
 
+    use LogsActivity;
+
     protected $dates = ['deleted_at'];
 
     protected $fillable = ['full_name', 'phone', 'email', 'provincial_enrollment', 'national_enrollment'];
+
+    protected static $logFillable = true;
 
     protected function index($filter, $offset, $length)
     {
