@@ -20,6 +20,12 @@
 
 	                    <div role="none" class="dropdown-divider"> </div>
 
+                        @can('is_admin')
+                        <a class="dropdown-item" href="{{ route('administrators/settings/index') }}">
+                            {{ trans('settings.settings') }}
+                        </a>
+                        @endcan
+
 	                    <a class="dropdown-item" href="{{ route('logout') }}"
 	                    onclick="event.preventDefault();
 	                    document.getElementById('logout-form').submit();">

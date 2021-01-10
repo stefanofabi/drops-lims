@@ -17,10 +17,10 @@ class SocialWorkSeeder extends Seeder
     {
         //
         SocialWork::insert([
-            ['name' => 'Swiss Medical'],
-            ['name' => 'OSDE'],
-            ['name' => 'Galeno'],
-            ['name' => 'Medife'],
+            ['name' => 'Social work #1'],
+            ['name' => 'Social work #2'],
+            ['name' => 'Social work #3'],
+            ['name' => 'Social work #4'],
         ]);
     }
 }

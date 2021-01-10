@@ -1,11 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Administrators;
+namespace App\Http\Controllers\Administrators\Settings;
 
 use App\Http\Controllers\Controller;
 use \Spatie\Activitylog\Models\Activity;
-
-//use Illuminate\Http\Request;
 
 class ActivityViewerController extends Controller
 {
@@ -22,6 +20,6 @@ class ActivityViewerController extends Controller
 
         $activities = Activity::all();
 
-        return view('administrators/logs/activity_logs')->with('activities', $activities);
+        return view('administrators/settings/logs/activity_logs')->with('activities', $activities);
     }
 }

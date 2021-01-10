@@ -18,20 +18,20 @@ class PlanSeeder extends Seeder
         //
     	Plan::insert([
     		[
-    			'name' => 'SB01',
+    			'name' => 'Plan #1',
     			'nbu_price' => '65.0',
     			'social_work_id' => '1',
     			'nomenclator_id' => '1',
     		],
     		[
-    			'name' => 'SB02',
+    			'name' => 'Plan #2',
     			'nbu_price' => '68.5',
     			'social_work_id' => '1',
     			'nomenclator_id' => '1',
     		],
 
     		[
-    			'name' => 'Plata',
+    			'name' => 'Plan #3',
     			'nbu_price' => '50.5',
     			'social_work_id' => '2',
     			'nomenclator_id' => '2',

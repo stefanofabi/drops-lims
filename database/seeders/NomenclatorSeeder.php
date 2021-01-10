@@ -17,9 +17,9 @@ class NomenclatorSeeder extends Seeder
     {
         //
         Nomenclator::insert([
-            ['name' => 'NBU PMO v2012'],
-            ['name' => 'NBU PMO v2016'],
-            ['name' => 'NBU PMO v2020'],
+            ['name' => 'Nomenclator #1'],
+            ['name' => 'Nomenclator #2'],
+            ['name' => 'Nomenclator #3'],
         ]);
     }
 }

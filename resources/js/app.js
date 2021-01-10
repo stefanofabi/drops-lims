@@ -10,3 +10,5 @@ require('./bootstrap');
 require('jquery-ui/ui/widgets/autocomplete.js');
 
 require('@fortawesome/fontawesome-free/js/all.js');
+
+require('datatables.net-bs4/js/dataTables.bootstrap4.js');
