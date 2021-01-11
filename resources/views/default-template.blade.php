@@ -7,7 +7,7 @@
 
         @section('js')
         @show
-        
+
     </head>
 
     <body>
@@ -22,7 +22,7 @@
                     <div class="card-body">
                             @section('menu')
                             @show
-     
+
                     </div>
                 </div>
             </div>
@@ -31,6 +31,7 @@
             <div class="col-md-9 mt-3 mb-3 float-left">
                 <div class="card">
                     <div class="card-header">
+                        @section('header-content') @show
                         <h4> @section('content-title') @show </h4>
                     </div>
 
@@ -38,7 +39,7 @@
                         @section('messages')
                             @include('messages')
                         @show
-                        
+
                         @section('content')
                         @show
                     </div>
@@ -48,7 +49,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="mr-3 ml-3">
         @section('extra-content')
         @show

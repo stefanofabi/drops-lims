@@ -19,10 +19,25 @@ Route::group([
         'index',
     ])->name('index');
 
+    Route::get('create', [
+        '\App\Http\Controllers\Administrators\Settings\NomenclatorController',
+        'create',
+    ])->name('create');
+
+    Route::post('store', [
+        '\App\Http\Controllers\Administrators\Settings\NomenclatorController',
+        'store',
+    ])->name('store');
+
     Route::get('edit/{id}', [
         '\App\Http\Controllers\Administrators\Settings\NomenclatorController',
         'edit',
     ])->name('edit')->where('id', '[1-9][0-9]*');
+
+    Route::put('update/{id}', [
+        '\App\Http\Controllers\Administrators\Settings\NomenclatorController',
+        'update',
+    ])->name('update')->where('id', '[1-9][0-9]*');
 
     Route::delete('destroy/{id}', [
         '\App\Http\Controllers\Administrators\Settings\NomenclatorController',
