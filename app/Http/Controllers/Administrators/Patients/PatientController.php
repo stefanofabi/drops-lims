@@ -246,6 +246,7 @@ class PatientController extends Controller
             'sex' => 'in:F,M',
             'type' => 'in:animal,human,industrial',
             'birth_date' => 'date|nullable',
+            'start_activity' => 'date|nullable',
         ]);
 
         $patient = Patient::findOrFail($id);

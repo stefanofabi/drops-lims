@@ -37,6 +37,8 @@
        		</span>
             @enderror
         </div>
+
+        <input type="submit" style="display: none;">
     </form>
 @endsection
 
