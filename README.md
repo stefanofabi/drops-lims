@@ -28,7 +28,7 @@ What things do you need to install the project and how to do it
 
 ### Installation 🔧
 
-1. Clone the repository on our local machine or server
+1. Clone the repository on your local machine or server
 
 ```
 # git clone https://github.com/stefanofabi/srlab.git
