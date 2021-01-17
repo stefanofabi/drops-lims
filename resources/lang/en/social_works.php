@@ -27,5 +27,8 @@ return [
     'success_saving_affiliate' => 'Affiliate saved successfully',
     'error_saving_affiliate' => 'There was an error saving the affiliate. Please try again later',
     'nomenclators' => 'Nomenclators',
+    'create_social_work' => 'Create social work',
+    'name' => 'Name',
+    'update_social_work' => 'Update social work',
 
 ];

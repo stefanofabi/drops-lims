@@ -15,6 +15,7 @@ Route::group([
 ], function () {
 
     require('nomenclators.php');
+    require('social_works.php');
 
     Route::get('logs/system_logs', [
         '\Rap2hpoutre\LaravelLogViewer\LogViewerController',

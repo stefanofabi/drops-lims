@@ -27,7 +27,7 @@ Route::group([
 
     require('emails.php');
     require('phones.php');
-    require('social_works.php');
+    require('affiliates.php');
 
     Route::get('show/{id}', [
         '\App\Http\Controllers\Administrators\Patients\PatientController',

@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Administrators\SocialWorks;
+namespace App\Http\Controllers\Administrators\Settings;
 
 use App\Http\Controllers\Controller;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 use App\Models\SocialWork;
@@ -21,6 +22,10 @@ class SocialWorkController extends Controller
     public function index()
     {
         //
+
+        $social_works = SocialWork::all();
+
+        return view('administrators/settings/social_works/index')->with('social_works', $social_works);
     }
 
     /**
@@ -31,6 +36,8 @@ class SocialWorkController extends Controller
     public function create()
     {
         //
+
+        return view('administrators/settings/social_works/create');
     }
 
     /**
@@ -42,6 +49,18 @@ class SocialWorkController extends Controller
     public function store(Request $request)
     {
         //
+
+        $request->validate([
+            'name' => 'required|string',
+        ]);
+
+        $social_work = new SocialWork($request->all());
+
+        if (! $social_work->save()) {
+            return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
+        }
+
+        return redirect()->action([SocialWorkController::class, 'index']);
     }
 
     /**
@@ -64,6 +83,10 @@ class SocialWorkController extends Controller
     public function edit($id)
     {
         //
+
+        $social_work = SocialWork::findOrFail($id);
+
+        return view('administrators/settings/social_works/edit')->with('social_work', $social_work);
     }
 
     /**
@@ -76,6 +99,18 @@ class SocialWorkController extends Controller
     public function update(Request $request, $id)
     {
         //
+
+        $request->validate([
+            'name' => 'required|string',
+        ]);
+
+        $social_work = SocialWork::findOrFail($id);
+
+        if (! $social_work->update($request->all())) {
+            return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
+        }
+
+        return redirect()->action([SocialWorkController::class, 'index']);
     }
 
     /**
@@ -87,6 +122,18 @@ class SocialWorkController extends Controller
     public function destroy($id)
     {
         //
+
+        $social_work = SocialWork::findOrFail($id);
+
+        try {
+            if (! $social_work->delete()) {
+                return back()->withErrors(Lang::get('forms.failed_transaction'));
+            }
+        } catch (QueryException $exception) {
+            return back()->withErrors(Lang::get('errors.error_processing_transaction'));
+        }
+
+        return redirect()->action([SocialWorkController::class, 'index']);
     }
 
     /**

@@ -4,11 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-use App\Models\Plan;
-
 class SocialWork extends Model
 {
     //
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name',
+    ];
 
     /**
      * Get the plans for the social work.
@@ -17,5 +24,4 @@ class SocialWork extends Model
     {
         return $this->hasMany(Plan::class);
     }
-
 }
