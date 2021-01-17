@@ -49,10 +49,11 @@ What things do you need to install the project and how to do it
 # npm install
 # npm run dev
 ```
-4. Create a link to the storage folder that contains everything related to the application.
+4. Create a link to the storage folder that contains everything related to the application and create the application key that will protect user sessions and other data.
 
 ```
 # php artisan storage:link
+# php artisan key:generate
 ```
 
 5. Finally execute the migrations and seeds
