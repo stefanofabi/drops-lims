@@ -76,7 +76,7 @@
 
 		$.ajax({
 			data:  parameters,
-			url:   "{{ route('administrators/patients/social_works/plans/load') }}",
+			url:   "{{ route('administrators/settings/social_works/plans/load') }}",
 			type:  'post',
 			beforeSend: function () {
 				$("#modal_affiliates_messages").html('<div class="spinner-border text-info"> </div> {{ trans("forms.please_wait") }}');

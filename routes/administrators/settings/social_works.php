@@ -47,5 +47,5 @@ Route::group([
     Route::post('plans/load', [
         '\App\Http\Controllers\Administrators\Settings\SocialWorkController',
         'load_plans',
-    ])->name('social_works/plans/load');
+    ])->name('plans/load');
 });

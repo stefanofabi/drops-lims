@@ -2,7 +2,7 @@
 
 @section('title')
 {{ trans('social_works.add_social_work') }}
-@endsection 
+@endsection
 
 @section('active_patients', 'active')
 
@@ -22,7 +22,7 @@
 
 		$.ajax({
 			data:  parameters,
-			url:   "{{ route('administrators/patients/social_works/plans/load') }}",
+			url:   "{{ route('administrators/settings/social_works/plans/load') }}",
 			type:  'post',
 			beforeSend: function () {
 				$("#messages").html('<div class="spinner-border text-info"> </div> {{ trans("forms.please_wait") }} ');
@@ -33,7 +33,7 @@
 						var select_plan = new Option('{{ trans('forms.select_option') }}', '');
 						$("#plan").append(select_plan);
 
-						$(jQuery.parseJSON(JSON.stringify(response))).each(function() {  
+						$(jQuery.parseJSON(JSON.stringify(response))).each(function() {
 						         var option = new Option(this.name, this.id);
 
 								/// jquerify the DOM object 'o' so we can use the html method
@@ -57,7 +57,7 @@
 <ul class="nav flex-column">
 	<li class="nav-item">
 		<a class="nav-link" href="{{ route('administrators/patients/edit', $patient->id) }}"> <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('forms.go_back') }} </a>
-	</li>	
+	</li>
 </ul>
 @endsection
 
@@ -109,7 +109,7 @@
             	<strong> {{ $message }} </strong>
        		</span>
         @enderror
-	</div>		
+	</div>
 
 	<div class="input-group mt-2 col-md-9 input-form">
 		<div class="input-group-prepend">
@@ -138,7 +138,7 @@
        		</span>
         @enderror
 	</div>
-	
+
 	<div class="input-group mt-2 col-md-9 input-form">
 		<div class="input-group-prepend">
 			<span class="input-group-text"> {{ trans('social_works.expiration_date') }} </span>
@@ -157,8 +157,8 @@
 		<button type="submit" class="btn btn-primary">
 			<span class="fas fa-save"></span> {{ trans('forms.save') }}
 		</button>
-	</div>	
+	</div>
 </form>
-@endsection	
+@endsection
 
 
