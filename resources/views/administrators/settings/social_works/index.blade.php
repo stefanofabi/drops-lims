@@ -5,13 +5,35 @@
 @endsection
 
 @section('content-title')
-    <i class="fas fa-archive"> </i> {{ trans('social_works.social_works') }}
+    <i class="fas fa-heartbeat"> </i> {{ trans('social_works.social_works') }}
 @endsection
 
 @section('js')
     <script>
         $(document).ready(function () {
-            $('#mySocialWorksTable').DataTable();
+            $('#mySocialWorksTable').DataTable({
+                "language": {
+                    "info": '{{ trans('datatables.info') }}',
+                    "infoEmpty": '{{ trans('datatables.info_empty') }}',
+                    "infoFiltered": '{{ trans('datatables.info_filtered') }}',
+                    "search": '{{ trans('datatables.search') }}',
+                    "paginate": {
+                        "first": '{{ trans('datatables.first') }}',
+                        "last": '{{ trans('datatables.last') }}',
+                        "previous": '{{ trans('datatables.previous') }}',
+                        "next": '{{ trans('datatables.next') }}',
+                    },
+                    "lengthMenu": '{{ trans('datatables.show') }} '+
+                        '<select class="form-control form-control-sm">'+
+                        '<option value="10"> 10 </option>'+
+                        '<option value="20"> 20 </option>'+
+                        '<option value="30"> 30 </option>'+
+                        '<option value="-1"> {{ trans('datatables.all') }} </option>'+
+                        '</select> {{ trans('datatables.records') }}',
+                    "emptyTable": '{{ trans('datatables.no_data') }}',
+                    "zeroRecords": '{{ trans('datatables.no_match_records') }}',
+                }
+            });
         });
 
         function destroy_social_work(form_id){

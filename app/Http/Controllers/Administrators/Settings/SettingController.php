@@ -20,4 +20,16 @@ class SettingController extends Controller
 
         return view('administrators/settings/index');
     }
+
+    /**
+     * Display a end day view
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function generate_reports()
+    {
+        //
+
+        return view('administrators/settings/generate_reports');
+    }
 }

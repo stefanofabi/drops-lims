@@ -15,7 +15,7 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="#"> <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('settings.end_day') }} </a>
+            <a class="nav-link" href="{{ route('administrators/settings/generate_reports') }}"> <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('settings.generate_reports') }} </a>
         </li>
 
         <li class="nav-item">

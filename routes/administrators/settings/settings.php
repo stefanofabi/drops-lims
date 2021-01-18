@@ -17,6 +17,16 @@ Route::group([
     require('nomenclators.php');
     require('social_works.php');
 
+    Route::get('index', [
+        '\App\Http\Controllers\Administrators\Settings\SettingController',
+        'index',
+    ])->name('index');
+
+    Route::get('generate_reports', [
+        '\App\Http\Controllers\Administrators\Settings\SettingController',
+        'generate_reports',
+    ])->name('generate_reports');
+
     Route::get('logs/system_logs', [
         '\Rap2hpoutre\LaravelLogViewer\LogViewerController',
         'index',
@@ -26,10 +36,4 @@ Route::group([
         '\App\Http\Controllers\Administrators\Settings\ActivityViewerController',
         'index',
     ])->name('activity_logs')->middleware('permission:activity_logs');
-
-    Route::get('index', [
-        '\App\Http\Controllers\Administrators\Settings\SettingController',
-        'index',
-    ])->name('index');
-
 });
