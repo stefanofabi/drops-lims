@@ -3,10 +3,14 @@
 @section('js')
 
 <script type="text/javascript">
+    function send() {
+        let submitButton = $('#submit-button');
+        submitButton.click();
+    }
 
 	$(document).ready(function() {
         // Select a nomenclator from list
-        $("#nomenclator_id").val("{{ old('nomenclator_id') }}");
+        $("#nomenclator_id").val('{{ old('nomenclator_id') }}');
     });
 
 </script>
@@ -15,7 +19,7 @@
 
 @section('title')
 {{ trans('determinations.create_determination') }}
-@endsection 
+@endsection
 
 @section('active_determinations', 'active')
 
@@ -27,7 +31,7 @@
 <ul class="nav flex-column">
 	<li class="nav-item">
 		<a class="nav-link" href=""> <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('determinations.add_nbu') }} </a>
-	</li>	
+	</li>
 </ul>
 @endsection
 
@@ -58,7 +62,7 @@
        		</span>
         @enderror
 	</div>
-	
+
 	<div class="input-group mt-2 mb-1 col-md-9 input-form">
 		<div class="input-group-prepend">
 			<span class="input-group-text"> {{ trans('determinations.code') }} </span>
@@ -115,12 +119,16 @@
         @enderror
 	</div>
 
-	<div class="float-right mt-4">
-		<button type="submit" class="btn btn-primary">
-			<span class="fas fa-save"></span> {{ trans('forms.save') }}
-		</button>
-	</div>	
+    <input type="submit" id="submit-button" style="display: none;">
 </form>
-@endsection	
+@endsection
 
-
+@section('more-content')
+    <div class="card-footer">
+        <div class="float-right">
+            <button type="button" onclick="send()" class="btn btn-primary">
+                <span class="fas fa-save"></span> {{ trans('forms.save') }}
+            </button>
+        </div>
+    </div>
+@endsection

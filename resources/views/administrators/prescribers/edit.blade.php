@@ -1,8 +1,17 @@
 @extends('administrators/default-template')
 
+@section('js')
+    <script type="text/javascript">
+        function send() {
+            let submitButton = $('#submit-button');
+            submitButton.click();
+        }
+    </script>
+@endsection
+
 @section('title')
 {{ trans('prescribers.edit_prescriber') }}
-@endsection 
+@endsection
 
 @section('active_prescribers', 'active')
 
@@ -36,7 +45,14 @@
 		<div class="input-group-prepend">
 			<span class="input-group-text"> {{ trans('prescribers.full_name') }} </span>
 		</div>
-		<input type="text" class="form-control" name="full_name" value="{{ $prescriber->full_name }}" required>
+
+		<input type="text" class="form-control @error('full_name') is-invalid @enderror" name="full_name" value="{{ $prescriber->full_name }}" required>
+
+        @error('full_name')
+        <span class="invalid-feedback" role="alert">
+                <strong> {{ $message }} </strong>
+            </span>
+        @enderror
 	</div>
 
 	<div class="input-group mt-2 col-md-9 input-form">
@@ -52,7 +68,13 @@
 			<span class="input-group-text"> {{ trans('prescribers.email') }} </span>
 		</div>
 
-		<input type="email" class="form-control" name="email" value="{{ $prescriber->email }}">
+		<input type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $prescriber->email }}">
+
+        @error('email')
+        <span class="invalid-feedback" role="alert">
+                <strong> {{ $message }} </strong>
+            </span>
+        @enderror
 	</div>
 
 
@@ -68,12 +90,18 @@
 		<input type="number" class="form-control" name="national_enrollment" min="0" value="{{ $prescriber['national_enrollment'] }}">
 	</div>
 
-	<div class="float-right mt-3">
-		<button type="submit" class="btn btn-primary">
-			<span class="fas fa-save"></span> {{ trans('forms.save') }}
-		</button>
-	</div>	
+    <input id="submit-button" type="submit" style="display: none;">
 </form>
-@endsection	
+@endsection
+
+@section('more-content')
+    <div class="card-footer">
+        <div class="float-right">
+            <button type="submit" onclick="send()" class="btn btn-primary">
+                <span class="fas fa-save"></span> {{ trans('forms.save') }}
+            </button>
+        </div>
+    </div>
+@endsection
 
 
