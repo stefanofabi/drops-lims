@@ -30,5 +30,5 @@ return [
     'create_social_work' => 'Create social work',
     'name' => 'Name',
     'update_social_work' => 'Update social work',
-
+    'plans' => 'Plans',
 ];

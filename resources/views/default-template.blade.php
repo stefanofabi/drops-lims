@@ -47,6 +47,9 @@
                     @section('more-content')
                     @show
                 </div>
+
+                @section('column-extra-content')
+                @show
             </div>
         </div>
 
