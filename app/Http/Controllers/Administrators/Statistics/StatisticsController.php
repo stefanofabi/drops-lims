@@ -34,10 +34,14 @@ class StatisticsController extends Controller
         $initial_date = $request->initial_date;
         $ended_date = $request->ended_date;
 
-        $anual_report = OurProtocol::select(DB::raw("MONTH(protocols.completion_date) as month"), DB::raw("YEAR(protocols.completion_date) as year"), DB::raw('SUM(practices.amount) as total'))->protocol()->plan()->social_work()->practices()->where('social_works.id', $social_work)->whereBetween('protocols.completion_date', [
-            $initial_date,
-            $ended_date,
-        ])->groupBy(DB::raw("MONTH(protocols.completion_date)"), DB::raw("YEAR(protocols.completion_date)"))->orderBy('protocols.completion_date', 'asc')->get()->toArray();
+        $anual_report = OurProtocol::select(DB::raw("MONTH(protocols.completion_date) as month"), DB::raw("YEAR(protocols.completion_date) as year"), DB::raw('SUM(practices.amount) as total'))
+            ->protocol()
+            ->plan()
+            ->social_work()
+            ->practices()
+            ->where('social_works.id', $social_work)
+            ->whereBetween('protocols.completion_date', [$initial_date, $ended_date])
+            ->groupBy(DB::raw("MONTH(protocols.completion_date)"), DB::raw("YEAR(protocols.completion_date)"))->orderBy('protocols.completion_date', 'asc')->get()->toArray();
 
         $new_array = $this->generate_array_per_month($anual_report, $initial_date, $ended_date);
 

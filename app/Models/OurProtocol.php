@@ -75,4 +75,9 @@ class OurProtocol extends Model
     {
         return $query->join('prescribers', 'our_protocols.prescriber_id', '=', 'prescribers.id');
     }
+
+    public function scopePractices($query)
+    {
+        return $query->join('practices', 'our_protocols.protocol_id', '=', 'practices.id');
+    }
 }
