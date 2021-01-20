@@ -8,6 +8,11 @@
 
 @section('js')
     <script type="text/javascript">
+        function send() {
+            let submitButton = $('#submit-button');
+            submitButton.click();
+        }
+
         function destroy_report(form_id) {
             if (confirm('{{ trans("forms.confirm") }}')) {
                 var form = document.getElementById('destroy_report_' + form_id);
@@ -91,14 +96,19 @@
                    value="{{ $determination->biochemical_unit }}" required>
         </div>
 
-        <div class="mt-2 mt-4 float-right">
-            <button type="submit" class="btn btn-primary">
-                <span class="fas fa-save"></span> {{ trans('forms.save') }}
-            </button>
-        </div>
+        <input id="submit-button" type="submit" style="display: none;">
     </form>
 @endsection
 
+@section('more-content')
+    <div class="card-footer">
+        <div class="mt-2 float-right">
+            <button onclick="send()" type="submit" class="btn btn-primary">
+                <span class="fas fa-save"></span> {{ trans('forms.save') }}
+            </button>
+        </div>
+    </div>
+@endsection
 
 @section('extra-content')
     <div class="card margins-boxs-tb mb-3">

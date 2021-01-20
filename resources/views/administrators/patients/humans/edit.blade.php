@@ -4,9 +4,9 @@
 
     <script type="text/javascript">
 
-        function updatePatient() {
-            var form = document.getElementById('update_patient');
-            form.submit();
+        function send() {
+            let submitButton = $('#submit-button');
+            submitButton.click();
         }
 
         $(document).ready(function () {
@@ -60,7 +60,7 @@
         </div>
 
         <div class="card-body">
-            <form id="update_patient" method="post"
+            <form method="post"
                   action="{{ route('administrators/patients/update', $patient->id) }}">
                 @csrf
                 {{ method_field('PUT') }}
@@ -134,13 +134,13 @@
                     @enderror
                 </div>
 
-                <input type="submit" style="display: none;">
+                <input id="submit-button" type="submit" style="display: none;">
             </form>
         </div>
 
         <div class="card-footer">
             <div class="text-right">
-                <button onclick="updatePatient();" class="btn btn-primary">
+                <button onclick="send();" class="btn btn-primary">
                     <span class="fas fa-save"></span> {{ trans('forms.save') }}
                 </button>
             </div>

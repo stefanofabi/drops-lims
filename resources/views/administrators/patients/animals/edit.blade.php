@@ -3,9 +3,9 @@
 @section('js')
     <script type="text/javascript">
 
-        function updatePatient() {
-            var form = document.getElementById('update_patient');
-            form.submit();
+        function send() {
+            let submitButton = $('#submit-button');
+            submitButton.click();
         }
 
         $(document).ready(function () {
@@ -61,8 +61,7 @@
         </div>
 
         <div class="card-body">
-            <form id="update_patient" method="post"
-                  action="{{ route('administrators/patients/update', $patient->id) }}">
+            <form method="post" action="{{ route('administrators/patients/update', $patient->id) }}">
                 @csrf
                 {{ method_field('PUT') }}
 
@@ -110,7 +109,8 @@
                         <span class="input-group-text"> {{ trans('patients.full_name') }} </span>
                     </div>
 
-                    <input type="text" class="form-control @error('full_name') is-invalid @enderror" name="full_name" value="{{ $patient->full_name }}" required>
+                    <input type="text" class="form-control @error('full_name') is-invalid @enderror" name="full_name"
+                           value="{{ $patient->full_name }}" required>
 
                     @error('full_name')
                     <span class="invalid-feedback" role="alert">
@@ -124,7 +124,8 @@
                         <span class="input-group-text"> {{ trans('patients.sex') }} </span>
                     </div>
 
-                    <select class="form-control input-sm @error('sex') is-invalid @enderror" id="sex" name="sex" required>
+                    <select class="form-control input-sm @error('sex') is-invalid @enderror" id="sex" name="sex"
+                            required>
                         <option value=""> {{ trans('patients.select_sex') }} </option>
                         <option value="F"> {{ trans('patients.female') }} </option>
                         <option value="M"> {{ trans('patients.male') }} </option>
@@ -143,7 +144,8 @@
                         <span class="input-group-text"> {{ trans('patients.birth_date') }} </span>
                     </div>
 
-                    <input type="date" class="form-control @error('birth_date') is-invalid @enderror" name="birth_date" value="{{ $patient->birth_date }}">
+                    <input type="date" class="form-control @error('birth_date') is-invalid @enderror" name="birth_date"
+                           value="{{ $patient->birth_date }}">
 
                     @error('birth_date')
                     <span class="invalid-feedback" role="alert">
@@ -152,14 +154,14 @@
                     @enderror
                 </div>
 
-                <input type="submit" style="display: none;">
+                <input id="submit-button" type="submit" style="display: none;">
 
             </form>
         </div>
 
         <div class="card-footer">
             <div class="text-right">
-                <button onclick="updatePatient();" class="btn btn-primary">
+                <button onclick="send();" class="btn btn-primary">
                     <span class="fas fa-save"></span> {{ trans('forms.save') }}
                 </button>
             </div>
