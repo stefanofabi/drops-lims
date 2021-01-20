@@ -8,6 +8,18 @@ class Plan extends Model
 {
     //
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name',
+        'nbu_price',
+        'social_work_id',
+        'nomenclator_id',
+    ];
+
+    /**
      * Get the nomenclator associated with the plan.
      */
     public function nomenclator()

@@ -2,8 +2,13 @@
 
 @section('js')
     <script type="text/javascript">
-        function updateSocialWork() {
-            var form = document.getElementById('update_social_work');
+        function send() {
+            let submitButton = $('#submit-button');
+            submitButton.click();
+        }
+
+        function destroy_plan(form_id) {
+            var form = document.getElementById('destroy_plan_'+form_id);
             form.submit();
         }
     </script>
@@ -20,8 +25,7 @@
 
 @section('content')
 
-    <form method="post" action="{{ route('administrators/settings/social_works/update', ['id' => $social_work->id]) }}"
-          id="update_nomenclator">
+    <form method="post" action="{{ route('administrators/settings/social_works/update', ['id' => $social_work->id]) }}">
         @csrf
         @method('PUT')
 
@@ -40,14 +44,14 @@
             @enderror
         </div>
 
-        <input type="submit" style="display: none;">
+        <input id="submit-button" type="submit" style="display: none;">
     </form>
 @endsection
 
 @section('more-content')
     <div class="card-footer">
         <div class="float-right">
-            <button type="submit" class="btn btn-primary" onclick="updateSocialWork();">
+            <button type="submit" class="btn btn-primary" onclick="send();">
                 <span class="fas fa-save"></span> {{ trans('forms.save') }}
             </button>
         </div>
@@ -58,6 +62,11 @@
 @section('column-extra-content')
     <div class="card mt-3">
         <div class="card-header">
+            <div class="btn-group float-right">
+                <a href="{{ route('administrators/settings/social_works/plans/create', ['social_work_id' => $social_work->id]) }}"
+                   class="btn btn-info"><i class="fas fa-plus"></i> {{ trans('social_works.create_plan') }} </a>
+            </div>
+
             <h4><i class="fas fa-sitemap"> </i> {{ trans('social_works.plans') }} </h4>
         </div>
 
@@ -66,6 +75,8 @@
                 <thead>
                 <tr>
                     <th> {{ trans('social_works.name') }} </th>
+                    <th> {{ trans('nomenclators.nomenclator') }} </th>
+                    <th> {{ trans('social_works.nbu_price') }} </th>
                     <th class="text-right"> {{ trans('forms.actions') }} </th>
                 </tr>
                 </thead>
@@ -75,14 +86,18 @@
                     <tr>
                         <td> {{ $plan->name }} </td>
 
+                        <td> {{ $plan->nomenclator->name }} </td>
+
+                        <td> ${{ $plan->nbu_price }} </td>
+
                         <td class="text-right">
                             <a href="{{ route('administrators/settings/social_works/plans/edit', ['id' => $plan->id]) }}"
                                class="btn btn-info btn-sm" title="{{ trans('determinations.show_determination') }}">
                                 <i class="fas fa-edit fa-sm"> </i>
                             </a>
 
-                            <a class="btn btn-info btn-sm" title="{{ trans('social_works.destroy_social_work') }}"
-                               onclick="destroy_social_work('{{ $plan->id }}')">
+                            <a class="btn btn-info btn-sm" title="{{ trans('social_works.destroy_plan') }}"
+                               onclick="destroy_plan('{{ $plan->id }}')">
                                 <i class="fas fa-trash fa-sm"></i>
                             </a>
 

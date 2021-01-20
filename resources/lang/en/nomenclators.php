@@ -16,4 +16,5 @@ return [
     'create_nomenclator' => 'Create nomenclator',
     'name' => 'Name',
     'update_nomenclator' => 'Update nomenclator',
+    'nomenclator' => 'Nomenclator',
 ];

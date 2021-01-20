@@ -31,4 +31,8 @@ return [
     'name' => 'Name',
     'update_social_work' => 'Update social work',
     'plans' => 'Plans',
+    'edit_plan' => 'Edit plan',
+    'nbu_price' => 'Biochemical unit price',
+    'create_plan' => 'Create plan',
+
 ];
