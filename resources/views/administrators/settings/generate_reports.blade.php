@@ -10,9 +10,9 @@
 
 @section('js')
     <script type="text/javascript">
-        function generateReport() {
-            var form = document.getElementById('generate_report');
-            form.submit();
+        function send(submit_button_id) {
+            let submitButton = $('#'+submit_button_id);
+            submitButton.click();
         }
     </script>
 
@@ -21,10 +21,10 @@
 @section('content')
 
     <div class="card">
-        <div class="card-header"><h5> {{ trans('settings.protocol_report') }} </h5></div>
+        <div class="card-header"><h5> {{ trans('settings.protocols_report') }} </h5></div>
 
         <div class="card-body">
-            <form method="post" target="_blank" id="generate_report" action="#">
+            <form method="post" target="_blank" action="{{ route('administrators/settings/protocols_report') }}">
                 @csrf
 
                 <div class="input-group col-md-6 input-form">
@@ -32,7 +32,7 @@
                         <span class="input-group-text"> {{ trans('statistics.initial_date') }} </span>
                     </div>
 
-                    <input type="date" class="form-control" name="address" value="{{ date('Y-m-d') }}">
+                    <input type="date" class="form-control" name="initial_date" value="{{ date('Y-m-d') }}" required>
                 </div>
 
                 <div class="input-group mt-2 col-md-6 input-form">
@@ -40,15 +40,53 @@
                         <span class="input-group-text"> {{ trans('statistics.ended_date') }} </span>
                     </div>
 
-                    <input type="date" class="form-control" name="address" value="{{ date('Y-m-d') }}">
+                    <input type="date" class="form-control" name="ended_date" value="{{ date('Y-m-d') }}" required>
                 </div>
 
+                <input id="generate_protocols_report" type="submit" style="display: none;">
             </form>
         </div>
 
         <div class="card-footer">
             <div class="text-right">
-                <button onclick="generateReport();" class="btn btn-primary">
+                <button onclick="send('generate_protocols_report');" class="btn btn-primary">
+                    <span class="fas fa-file-pdf"></span> {{ trans('settings.generate_report') }}
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="card mt-3">
+        <div class="card-header"><h5> {{ trans('settings.patients_flow') }} </h5></div>
+
+        <div class="card-body">
+            <form method="post" target="_blank" action="{{ route('administrators/settings/patients_flow') }}">
+                @csrf
+
+                <div class="input-group col-md-6 input-form">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> {{ trans('statistics.initial_date') }} </span>
+                    </div>
+
+                    <input type="date" class="form-control" name="initial_date" value="{{ date('Y-m-d') }}" required>
+                </div>
+
+                <div class="input-group mt-2 col-md-6 input-form">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> {{ trans('statistics.ended_date') }} </span>
+                    </div>
+
+                    <input type="date" class="form-control" name="ended_date" value="{{ date('Y-m-d') }}" required>
+                </div>
+
+                <input id="submit_patients_flow" type="submit" style="display: none;">
+            </form>
+        </div>
+
+        <div class="card-footer">
+            <div class="text-right">
+                <button onclick="send('submit_patients_flow');" class="btn btn-primary">
                     <span class="fas fa-file-pdf"></span> {{ trans('settings.generate_report') }}
                 </button>
             </div>

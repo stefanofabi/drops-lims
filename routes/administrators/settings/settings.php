@@ -27,6 +27,16 @@ Route::group([
         'generate_reports',
     ])->name('generate_reports');
 
+    Route::post('protocols_report', [
+        '\App\Http\Controllers\Administrators\Settings\SettingController',
+        'protocols_report',
+    ])->name('protocols_report');
+
+    Route::post('patients_flow', [
+        '\App\Http\Controllers\Administrators\Settings\SettingController',
+        'patients_flow',
+    ])->name('patients_flow');
+
     Route::get('logs/system_logs', [
         '\Rap2hpoutre\LaravelLogViewer\LogViewerController',
         'index',
