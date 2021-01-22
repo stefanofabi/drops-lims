@@ -14,5 +14,7 @@ return [
 
     'date' => 'Date',
     'total_records' => 'Total records',
+    'patients_flow_report_from_to' => 'Patients flow report from :initial_date to :ended_date',
+    'protocols_report_from_to' => 'Protocols report from :initial_date to :ended_date',
 
 ];

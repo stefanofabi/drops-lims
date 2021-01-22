@@ -16,6 +16,7 @@ class CreateSocialWorksTable extends Migration
         Schema::create('social_works', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->nullable();
+            $table->string('acronym')->nullable();
 
             $table->timestamps();
 

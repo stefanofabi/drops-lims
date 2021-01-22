@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Administrators\Settings;
 
 use App\Http\Controllers\Controller;
-use App\Models\Patient;
 use App\Models\Protocol;
 use Illuminate\Http\Request;
 
@@ -54,10 +53,14 @@ class SettingController extends Controller
         $initial_date = $request->initial_date;
         $ended_date = $request->ended_date;
 
-        $protocols = Protocol::whereBetween('completion_date', [$initial_date, $ended_date]);
+        $protocols = Protocol::whereBetween('completion_date', [$initial_date, $ended_date])
+            ->orderBy('completion_date', 'ASC')
+            ->get();;
 
         $pdf = PDF::loadView('pdf/generate_reports/protocols_report', [
-            'protocols' => $protocols
+            'protocols' => $protocols,
+            'initial_date' => $initial_date,
+            'ended_date' => $ended_date,
         ]);
 
         return $pdf->stream('protocols_report');

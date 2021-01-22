@@ -2,7 +2,7 @@
 
 
 @section('title')
-    {{ trans('settings.patients_flow_report_from_to', ['initial_date' => date('d/m/Y', strtotime($initial_date)), 'ended_date' => date('d/m/Y', strtotime($ended_date))]) }}
+    {{ trans('pdf.patients_flow_report_from_to', ['initial_date' => date('d/m/Y', strtotime($initial_date)), 'ended_date' => date('d/m/Y', strtotime($ended_date))]) }}
 @endsection
 
 @section('style')
@@ -35,7 +35,7 @@
     <div id="second_column">
         <table class="cover">
             <tr>
-                <td class="title"> {{ trans('settings.patients_flow_report_from_to', ['initial_date' => date('d/m/Y', strtotime($initial_date)), 'ended_date' => date('d/m/Y', strtotime($ended_date))]) }}
+                <td class="title"> {{ trans('pdf.patients_flow_report_from_to', ['initial_date' => date('d/m/Y', strtotime($initial_date)), 'ended_date' => date('d/m/Y', strtotime($ended_date))]) }}
                 </td>
             </tr>
         </table>
@@ -53,7 +53,6 @@
         </table>
     </div>
 @endsection
-
 
 @section('body')
     <table style="margin-top: 3%" border="1" cellspacing="0">
