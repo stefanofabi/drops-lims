@@ -14,7 +14,7 @@ return [
 
     'settings' => 'Settings',
     'protocols_report' => 'Protocols report',
-    'debt_social_works' => 'See debt of social works',
+    'debt_social_works' => 'Debt of social works',
     'system_logs' => 'System logs',
     'activity_logs' => 'Activity logs',
     'generate_reports' => 'Generate reports',

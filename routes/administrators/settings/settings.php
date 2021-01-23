@@ -37,6 +37,11 @@ Route::group([
         'patients_flow',
     ])->name('patients_flow');
 
+    Route::post('debt_social_works', [
+        '\App\Http\Controllers\Administrators\Settings\SettingController',
+        'debt_social_works',
+    ])->name('debt_social_works');
+
     Route::get('logs/system_logs', [
         '\Rap2hpoutre\LaravelLogViewer\LogViewerController',
         'index',

@@ -41,7 +41,10 @@ class StatisticsController extends Controller
             ->practices()
             ->where('social_works.id', $social_work)
             ->whereBetween('protocols.completion_date', [$initial_date, $ended_date])
-            ->groupBy(DB::raw("MONTH(protocols.completion_date)"), DB::raw("YEAR(protocols.completion_date)"))->orderBy('protocols.completion_date', 'asc')->get()->toArray();
+            ->groupBy(DB::raw("MONTH(protocols.completion_date)"), DB::raw("YEAR(protocols.completion_date)"))
+            ->orderBy('protocols.completion_date', 'asc')
+            ->get()
+            ->toArray();
 
         $new_array = $this->generate_array_per_month($anual_report, $initial_date, $ended_date);
 

@@ -38,7 +38,6 @@
     </style>
 @endsection
 
-
 @section('header')
     <div id="first_column">
         <img width="80" height="80" src="{{ asset('images/logo.png') }}">
