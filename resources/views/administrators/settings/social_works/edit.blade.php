@@ -8,7 +8,7 @@
         }
 
         function destroy_plan(form_id) {
-            var form = document.getElementById('destroy_plan_'+form_id);
+            var form = document.getElementById('destroy_plan_' + form_id);
             form.submit();
         }
     </script>
@@ -71,14 +71,14 @@
         </div>
 
         <div class="table-responsive">
-            <table class="table table-striped" id="mySocialWorksTable">
+            <table class="table table-striped">
                 <thead>
-                <tr>
-                    <th> {{ trans('social_works.name') }} </th>
-                    <th> {{ trans('nomenclators.nomenclator') }} </th>
-                    <th> {{ trans('social_works.nbu_price') }} </th>
-                    <th class="text-right"> {{ trans('forms.actions') }} </th>
-                </tr>
+                    <tr>
+                        <th> {{ trans('social_works.name') }} </th>
+                        <th> {{ trans('nomenclators.nomenclator') }} </th>
+                        <th> {{ trans('social_works.nbu_price') }} </th>
+                        <th class="text-right"> {{ trans('forms.actions') }} </th>
+                    </tr>
                 </thead>
 
                 <tbody>
@@ -92,7 +92,7 @@
 
                         <td class="text-right">
                             <a href="{{ route('administrators/settings/social_works/plans/edit', ['id' => $plan->id]) }}"
-                               class="btn btn-info btn-sm" title="{{ trans('determinations.show_determination') }}">
+                               class="btn btn-info btn-sm" title="{{ trans('social_works.edit_plan') }}">
                                 <i class="fas fa-edit fa-sm"> </i>
                             </a>
 
@@ -113,4 +113,66 @@
             </table>
         </div>
     </div>
+@endsection
+
+@section('extra-content')
+    <div class="card">
+
+        <div class="card-header">
+            <div class="btn-group float-right">
+                <a href="{{ route('administrators/settings/social_works/payments/create', ['social_work_id' => $social_work->id]) }}"
+                   class="btn btn-info"><i class="fas fa-plus"></i> {{ trans('social_works.create_payment') }} </a>
+            </div>
+
+            <h4><i class="fas fa-cash-register"> </i> {{ trans('social_works.payments') }} </h4>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th> {{ trans('social_works.month') }} </th>
+                    <th> {{ trans('social_works.year') }} </th>
+                    <th> {{ trans('social_works.payment_date') }} </th>
+                    <th> {{ trans('social_works.payment_amount') }} </th>
+                    <th class="text-right"> {{ trans('forms.actions') }} </th>
+                </tr>
+                </thead>
+
+                <tbody>
+                @foreach ($social_work->payments as $payment)
+                    <tr>
+                        <td> {{ $payment->month }} </td>
+
+                        <td> {{ $payment->year }} </td>
+
+                        <td> {{ date('d/m/Y', strtotime($payment->payment_date)) }} </td>
+
+                        <td> ${{ $payment->amount }} </td>
+
+                        <td class="text-right">
+                            <a href="{{ route('administrators/settings/social_works/payments/edit', ['id' => $payment->id]) }}"
+                               class="btn btn-info btn-sm" title="{{ trans('social_works.edit_payment') }}">
+                                <i class="fas fa-edit fa-sm"> </i>
+                            </a>
+
+                            <a class="btn btn-info btn-sm" title="{{ trans('social_works.destroy_payment') }}"
+                               onclick="destroy_payment('{{ $payment->id }}')">
+                                <i class="fas fa-trash fa-sm"></i>
+                            </a>
+
+                            <form id="destroy_plan_{{ $plan->id }}" method="POST"
+                                  action="{{ route('administrators/settings/social_works/payments/destroy', ['id' => $payment->id]) }}">
+                                @csrf
+                                @method('DELETE')
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
 @endsection

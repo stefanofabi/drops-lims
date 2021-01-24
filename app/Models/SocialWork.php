@@ -24,4 +24,12 @@ class SocialWork extends Model
     {
         return $this->hasMany(Plan::class);
     }
+
+    /**
+     * Get the payments for the social work.
+     */
+    public function payments()
+    {
+        return $this->hasMany(PaymentSocialWork::class);
+    }
 }

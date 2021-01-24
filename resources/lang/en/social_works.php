@@ -34,5 +34,13 @@ return [
     'edit_plan' => 'Edit plan',
     'nbu_price' => 'Biochemical unit price',
     'create_plan' => 'Create plan',
+    'month' => 'Month',
+    'year' => 'Year',
+    'payment_date' => 'Payment date',
+    'payment_amount' => 'Payment amount',
+    'create_payment' => 'Create payment',
+    'payments' => 'Payments',
+    'edit_payment' => 'Edit payment',
+    'destroy_payment' => 'Destroy payment',
 
 ];
