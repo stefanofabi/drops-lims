@@ -113,6 +113,14 @@
 		<textarea class="form-control" rows="3" disabled>{{ $protocol->protocol->observations }}</textarea>
 	</div>
 
+    <div class="input-group mt-2 mb-1 col-md-9 input-form">
+        <div class="input-group-prepend">
+            <span class="input-group-text"> {{ trans('billing_periods.billing_period') }} </span>
+        </div>
+
+        <input type="text" class="form-control" value="{{ $protocol->billing_period->name }} [{{ $protocol->billing_period->start_date }} - {{ $protocol->billing_period->end_date }}]" disabled>
+    </div>
+
 @endsection
 
 @section('extra-content')

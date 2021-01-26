@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 
 use App\Laboratory\Prints\Protocols\Our\PrintProtocolContext;
 use App\Laboratory\Prints\Worksheets\PrintWorksheetContext;
+use App\Models\BillingPeriod;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -48,7 +49,12 @@ class OurProtocolController extends Controller
             $affiliates = [];
         }
 
-        return view('administrators/protocols/our/create')->with('patient', $patient)->with('affiliates', $affiliates);
+        $current_date = date('Y-m-d');
+
+        return view('administrators/protocols/our/create')
+            ->with('patient', $patient)
+            ->with('billing_periods', $this->get_billing_periods($current_date))
+            ->with('current_billing_period', $this->get_current_billing_period());
     }
 
     /**
@@ -112,6 +118,7 @@ class OurProtocolController extends Controller
         //
 
         $protocol = OurProtocol::findOrFail($id);
+
 
         return view('administrators/protocols/our/edit')->with('protocol', $protocol);
     }
@@ -248,5 +255,32 @@ class OurProtocolController extends Controller
         $strategyClass = PrintWorksheetContext::STRATEGIES[$strategy];
 
         return (new $strategyClass)->print($protocol_id, $filter_practices);
+    }
+
+    /**
+     * Returns a worksheet of protocol in pdf
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function get_billing_periods($current_date) {
+
+        $start_date = date("Y-m-d", strtotime($current_date."- 1 year"));
+        $end_date = date("Y-m-d", strtotime($current_date."+ 1 year"));
+
+        $billing_periods = BillingPeriod::where('start_date', '>=', $start_date)
+            ->where('end_date', '<=', $end_date)
+            ->orderBy('start_date', 'ASC')
+            ->orderBy('end_date', 'ASC')
+            ->get();
+
+        return $billing_periods;
+    }
+
+    public function get_current_billing_period() {
+        $current_date = date('Y-m-d');
+
+        $current_billing_period = BillingPeriod::where('start_date', '<=', $current_date)->where('end_date', '>=', $current_date)->first();
+
+        return $current_billing_period;
     }
 }

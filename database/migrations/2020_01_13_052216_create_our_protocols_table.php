@@ -21,6 +21,7 @@ class CreateOurProtocolsTable extends Migration
             $table->date('withdrawal_date')->nullable();
             $table->unsignedInteger('quantity_orders')->default(0);
             $table->string('diagnostic')->nullable();
+            $table->unsignedBigInteger('billing_period_id');
 
             // Primary key
             $table->primary('protocol_id');
@@ -30,6 +31,7 @@ class CreateOurProtocolsTable extends Migration
             $table->foreign('patient_id')->references('id')->on('patients')->onDelete('restrict')->onUpdate('cascade');
             $table->foreign('prescriber_id')->references('id')->on('prescribers')->onDelete('restrict')->onUpdate('cascade');
             $table->foreign('plan_id')->references('id')->on('plans')->onDelete('restrict')->onUpdate('cascade');
+            $table->foreign('billing_period_id')->references('id')->on('billing_periods')->onDelete('restrict')->onUpdate('cascade');
 
 
             $table->softDeletes();

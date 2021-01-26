@@ -95,6 +95,11 @@
 
             return false;
         }
+
+        $(document).ready(function () {
+            // Select a billing period from list
+            $("#billing_period").val("{{ $current_billing_period->id ?? '' }}");
+        });
     </script>
 @endsection
 
@@ -149,20 +154,22 @@
             <select class="form-control input-sm" name="plan_id" required>
                 <option value=""> {{ trans('forms.select_option') }}</option>
 
-                @foreach ($affiliates as $affiliate)
-                    <option value="{{ $affiliate->plan_id }}">
-                        @if (!empty($affiliate->expiration_date) && $affiliate->expiration_date < date('Y-m-d'))
-                            ** {{ trans('social_works.expired_card')}} **
-                        @endif
+                @if(isset($patient->affiliates))
+                    @foreach ($patient->affiliates as $affiliate)
+                        <option value="{{ $affiliate->plan_id }}">
+                            @if (!empty($affiliate->expiration_date) && $affiliate->expiration_date < date('Y-m-d'))
+                                ** {{ trans('social_works.expired_card')}} **
+                            @endif
 
-                        {{ $affiliate->plan->social_work->name }}  {{ $affiliate->plan->name }}
+                            {{ $affiliate->plan->social_work->name }}  {{ $affiliate->plan->name }}
 
-                        @if (!empty($affiliate->affiliate_number))
-                            [{{ $affiliate->affiliate_number }}]
-                        @endif
+                            @if (!empty($affiliate->affiliate_number))
+                                [{{ $affiliate->affiliate_number }}]
+                            @endif
 
-                    </option>
-                @endforeach
+                        </option>
+                    @endforeach
+                @endif
             </select>
         </div>
 
@@ -206,6 +213,22 @@
             </div>
 
             <textarea class="form-control" rows="3" name="observations"></textarea>
+        </div>
+
+        <div class="input-group mt-2 mb-1 col-md-9 input-form">
+            <div class="input-group-prepend">
+                <span class="input-group-text"> {{ trans('billing_periods.billing_period') }} </span>
+            </div>
+
+            <select id="billing_period" class="form-control input-sm" name="billing_period_id" required>
+                <option value=""> {{ trans('forms.select_option') }}</option>
+
+                @foreach ($billing_periods as $billing_period)
+                    <option value="{{ $billing_period->id }}">
+                        {{ $billing_period->name }} [{{ date('d-m-Y', strtotime($billing_period->start_date)) }} - {{ date('d-m-Y', strtotime($billing_period->end_date)) }}]
+                    </option>
+                @endforeach
+            </select>
         </div>
 
         <div class="mt-3 float-right">

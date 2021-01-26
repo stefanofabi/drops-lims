@@ -61,6 +61,12 @@
 	</li>
 	@endcan
 
+    <li class="nav-item">
+        <a class="nav-link" href="#">
+            <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('billing_periods.edit_billing_period') }}
+        </a>
+    </li>
+
 	<li class="nav-item">
 		<a class="nav-link" href="{{ route('administrators/protocols/our/show', ['id' => $protocol->protocol_id]) }}">
 			<img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('forms.go_back') }}

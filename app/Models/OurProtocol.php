@@ -15,7 +15,15 @@ class OurProtocol extends Model
 
     public $incrementing = false;
 
-    protected $fillable = ['protocol_id', 'patient_id', 'plan_id', 'prescriber_id', 'quantity_orders', 'diagnostic'];
+    protected $fillable = [
+        'protocol_id',
+        'patient_id',
+        'plan_id',
+        'prescriber_id',
+        'quantity_orders',
+        'diagnostic',
+        'billing_period_id',
+    ];
 
     protected static $logFillable = true;
 
@@ -49,6 +57,14 @@ class OurProtocol extends Model
     public function protocol()
     {
         return $this->belongsTo(Protocol::class);
+    }
+
+    /**
+     * Get the billing period associated with the our protocol.
+     */
+    public function billing_period()
+    {
+        return $this->belongsTo(BillingPeriod::class);
     }
 
     public function scopeProtocol($query)
