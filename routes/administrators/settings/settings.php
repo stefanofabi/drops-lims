@@ -15,7 +15,7 @@ Route::group([
 ], function () {
 
     require('nomenclators.php');
-    require('social_works.php');
+    require('social_works/social_works.php');
 
     Route::get('index', [
         '\App\Http\Controllers\Administrators\Settings\SettingController',

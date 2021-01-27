@@ -18,32 +18,32 @@ Route::group([
     require('payments_social_works.php');
 
     Route::get('index', [
-        '\App\Http\Controllers\Administrators\Settings\SocialWorkController',
+        '\App\Http\Controllers\Administrators\Settings\SocialWorks\SocialWorkController',
         'index',
     ])->name('index');
 
     Route::get('create', [
-        '\App\Http\Controllers\Administrators\Settings\SocialWorkController',
+        '\App\Http\Controllers\Administrators\Settings\SocialWorks\SocialWorkController',
         'create',
     ])->name('create');
 
     Route::post('store', [
-        '\App\Http\Controllers\Administrators\Settings\SocialWorkController',
+        '\App\Http\Controllers\Administrators\Settings\SocialWorks\SocialWorkController',
         'store',
     ])->name('store');
 
     Route::get('edit/{id}', [
-        '\App\Http\Controllers\Administrators\Settings\SocialWorkController',
+        '\App\Http\Controllers\Administrators\Settings\SocialWorks\SocialWorkController',
         'edit',
     ])->name('edit')->where('id', '[1-9][0-9]*');
 
     Route::put('update/{id}', [
-        '\App\Http\Controllers\Administrators\Settings\SocialWorkController',
+        '\App\Http\Controllers\Administrators\Settings\SocialWorks\SocialWorkController',
         'update',
     ])->name('update')->where('id', '[1-9][0-9]*');
 
     Route::delete('destroy/{id}', [
-        '\App\Http\Controllers\Administrators\Settings\SocialWorkController',
+        '\App\Http\Controllers\Administrators\Settings\SocialWorks\SocialWorkController',
         'destroy',
     ])->name('destroy')->where('id', '[1-9][0-9]*');
 

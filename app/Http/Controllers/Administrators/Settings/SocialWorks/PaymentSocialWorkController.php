@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Administrators\Settings;
+namespace App\Http\Controllers\Administrators\Settings\SocialWorks;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
