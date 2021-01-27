@@ -2,7 +2,7 @@
 
 
 @section('title')
-    {{ trans('pdf.debt_social_work_report_from_to', ['initial_date' => date('d/m/Y', strtotime($initial_date)), 'ended_date' => date('d/m/Y', strtotime($ended_date))]) }}
+    {{ trans('pdf.social_work_debt_report_from_to', ['start_date' => date('d/m/Y', strtotime($start_date)), 'end_date' => date('d/m/Y', strtotime($end_date))]) }}
 @endsection
 
 @section('style')
@@ -26,15 +26,19 @@
         }
 
         .small {
-            width: 20mm;
+            width: 25mm;
         }
 
         .medium {
-            width: 30mm;
+            width: 35mm;
         }
 
         .large {
-            width: 80mm;
+            width: 60mm;
+        }
+
+        .billingPeriodsTable td {
+            text-align: center;
         }
     </style>
 @endsection
@@ -47,7 +51,7 @@
     <div id="second_column">
         <table class="cover">
             <tr>
-                <td class="title"> {{ trans('pdf.debt_social_work_report_from_to', ['initial_date' => date('d/m/Y', strtotime($initial_date)), 'ended_date' => date('d/m/Y', strtotime($ended_date))]) }}
+                <td class="title"> {{ trans('pdf.social_work_debt_report_from_to', ['start_date' => date('d/m/Y', strtotime($start_date)), 'end_date' => date('d/m/Y', strtotime($end_date))]) }}
                 </td>
             </tr>
         </table>
@@ -67,20 +71,22 @@
 @endsection
 
 @section('body')
-    <table style="margin-top: 3%" border="1" cellspacing="0">
+    <table class="billingPeriodsTable" style="margin-top: 3%" border="1" cellspacing="0">
         <tr>
-            <td class="small"><strong> {{ trans('pdf.month') }} </strong></td>
-            <td class="small"><strong> {{ trans('pdf.year') }}</strong></td>
-            <td class="large"><strong> {{ trans('social_works.social_work') }}</strong></td>
-            <td class="medium"><strong> {{ trans('pdf.total_amount') }} </strong></td>
+            <td class="medium"> <strong> {{ trans('billing_periods.billing_period') }} </strong></td>
+            <td class="small"> <strong> {{ trans('billing_periods.start_date') }} </strong> </td>
+            <td class="small"> <strong> {{ trans('billing_periods.end_date') }} </strong> </td>
+            <td class="large"> <strong> {{ trans('social_works.social_work') }} </strong> </td>
+            <td class="medium"> <strong> {{ trans('pdf.total_amount') }} </strong> </td>
         </tr>
 
-        @foreach ($social_works as $social_work)
+        @foreach ($billing_periods as $billing_period)
             <tr>
-                <td> {{ $social_work->month }} </td>
-                <td> {{ $social_work->year }} </td>
-                <td> {{ $social_work->social_work }} </td>
-                <td> ${{ $social_work->total_amount }} </td>
+                <td> {{ $billing_period->name }} </td>
+                <td> {{ date('d/m/Y', strtotime($billing_period->start_date)) }} </td>
+                <td> {{ date('d/m/Y', strtotime($billing_period->end_date)) }} </td>
+                <td> {{ $billing_period->social_work }} </td>
+                <td> ${{ $billing_period->total_amount }} </td>
             </tr>
         @endforeach
     </table>

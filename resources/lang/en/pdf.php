@@ -19,6 +19,6 @@ return [
     'total_amount' => 'Total amount',
     'month' => 'Month',
     'year' => 'Year',
-    'debt_social_work_report_from_to' => 'Debt social works report from :initial_date to :ended_date',
+    'social_work_debt_report_from_to' => 'Social works debt report from :start_date to :end_date',
 
 ];

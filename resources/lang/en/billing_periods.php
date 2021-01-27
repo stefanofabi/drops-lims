@@ -15,5 +15,7 @@ return [
     'billing_period' => 'Billing period',
     'billing_period_from_to' => 'Billing period from :start_date to :end_date',
     'edit_billing_period' => 'Edit billing period',
+    'start_date' => 'Start date',
+    'end_date' => 'End date',
 
 ];

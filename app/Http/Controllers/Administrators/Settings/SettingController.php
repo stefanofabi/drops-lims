@@ -109,29 +109,32 @@ class SettingController extends Controller
         //
 
         $request->validate([
-            'initial_date' => 'required|date',
-            'ended_date' => 'required|date',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date',
         ]);
 
-        $initial_date = $request->initial_date;
-        $ended_date = $request->ended_date;
+        $start_date = $request->start_date;
+        $end_date = $request->end_date;
 
-        $social_works = DB::table('social_works')
-            ->select('social_works.name as social_work', DB::raw("MONTH(protocols.completion_date) as month"), DB::raw("YEAR(protocols.completion_date) as year"), DB::raw('SUM(practices.amount) as total_amount'))
+        $billing_periods = DB::table('social_works')
+            ->select('billing_periods.name', 'billing_periods.start_date', 'billing_periods.end_date', 'social_works.name as social_work', DB::raw('SUM(practices.amount) as total_amount'))
             ->join('plans', 'social_works.id', '=', 'plans.social_work_id')
             ->join('our_protocols', 'plans.id', 'our_protocols.plan_id')
             ->join('protocols', 'our_protocols.protocol_id', '=', 'protocols.id')
             ->join('practices', 'protocols.id', '=', 'practices.protocol_id')
-            ->whereBetween('protocols.completion_date', [$initial_date, $ended_date])
-            ->groupBy('social_works.id', 'social_works.name', DB::raw('MONTH(protocols.completion_date)'), DB::raw('YEAR(protocols.completion_date)'))
-            ->orderBy('protocols.completion_date', 'ASC')
+            ->join('billing_periods', 'our_protocols.billing_period_id', '=', 'billing_periods.id')
+            ->where('billing_periods.start_date', '>=', $start_date)
+            ->where('billing_periods.end_date', '<=', $end_date)
+            ->groupBy('billing_periods.id', 'billing_periods.name', 'billing_periods.start_date', 'billing_periods.end_date', 'social_works.id', 'social_works.name')
+            ->orderBy('billing_periods.start_date', 'ASC')
+            ->orderBy('billing_periods.end_date', 'ASC')
             ->orderBy('social_works.name', 'ASC')
             ->get();
 
         $pdf = PDF::loadView('pdf/generate_reports/debt_social_works', [
-            'social_works' => $social_works,
-            'initial_date' => $initial_date,
-            'ended_date' => $ended_date,
+            'billing_periods' => $billing_periods,
+            'start_date' => $start_date,
+            'end_date' => $end_date,
         ]);
 
         return $pdf->stream('protocols_report');
