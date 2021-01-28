@@ -11,6 +11,11 @@ class Phone extends Model
 
     use LogsActivity;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = ['patient_id', 'phone', 'type'];
 
     protected static $logFillable = true;

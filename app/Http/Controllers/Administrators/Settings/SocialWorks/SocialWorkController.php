@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Administrators\Settings\SocialWorks;
 
 use App\Http\Controllers\Controller;
 
+use App\Models\PaymentSocialWork;
+use Faker\Provider\Payment;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -86,7 +88,16 @@ class SocialWorkController extends Controller
 
         $social_work = SocialWork::findOrFail($id);
 
-        return view('administrators/settings/social_works/edit')->with('social_work', $social_work);
+        $payments = PaymentSocialWork::select('payment_social_works.id', 'payment_date', 'amount', 'name as billing_period')
+            ->join('billing_periods', 'payment_social_works.billing_period_id', '=', 'billing_periods.id')
+            ->where('social_work_id', $social_work->id)
+            ->orderBy('billing_periods.end_date', 'DESC')
+            ->orderBy('payment_date', 'ASC')
+            ->get();
+
+        return view('administrators/settings/social_works/edit')
+            ->with('social_work', $social_work)
+            ->with('payments', $payments);
     }
 
     /**

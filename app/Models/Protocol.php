@@ -12,6 +12,11 @@ class Protocol extends Model
 
     use LogsActivity;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = ['completion_date', 'observations'];
 
     protected static $logFillable = true;

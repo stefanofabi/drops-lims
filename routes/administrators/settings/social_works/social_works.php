@@ -16,6 +16,7 @@ Route::group([
 
     require('plans.php');
     require('payments_social_works.php');
+    require('billing_periods.php');
 
     Route::get('index', [
         '\App\Http\Controllers\Administrators\Settings\SocialWorks\SocialWorkController',

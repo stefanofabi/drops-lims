@@ -3,7 +3,13 @@
 namespace App\Http\Controllers\Administrators\Settings\SocialWorks;
 
 use App\Http\Controllers\Controller;
+use App\Models\BillingPeriod;
+use App\Models\PaymentSocialWork;
+use App\Models\SocialWork;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+
+use Lang;
 
 class PaymentSocialWorkController extends Controller
 {
@@ -22,9 +28,12 @@ class PaymentSocialWorkController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($social_work_id)
     {
         //
+        $social_work = SocialWork::findOrFail($social_work_id);
+
+        return view('administrators/settings/social_works/payments/create')->with('social_work', $social_work);
     }
 
     /**
@@ -36,6 +45,30 @@ class PaymentSocialWorkController extends Controller
     public function store(Request $request)
     {
         //
+
+        $request->validate([
+            'payment_date' => 'required|date',
+            'amount' => 'required|numeric',
+            'billing_period_id' => 'required|numeric|min:1',
+        ]);
+
+        $billing_period = BillingPeriod::findOrFail($request->billing_period_id);
+
+        if ($billing_period->end_date > $request->payment_date) {
+            return back()->withInput($request->all())->withErrors(Lang::get('payment_social_works.payment_before_billing_period'));
+        }
+
+        try {
+            $payment = new PaymentSocialWork($request->all());
+
+            if (!$payment->save()) {
+                return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
+            }
+        } catch (QueryException $exception) {
+            return back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
+        }
+
+        return redirect()->action([SocialWorkController::class, 'edit'], ['id' => $request->social_work_id]);
     }
 
     /**
@@ -58,6 +91,10 @@ class PaymentSocialWorkController extends Controller
     public function edit($id)
     {
         //
+
+        $payment = PaymentSocialWork::findOrFail($id);
+
+        return view('administrators/settings/social_works/payments/edit')->with('payment', $payment);
     }
 
     /**
@@ -70,6 +107,30 @@ class PaymentSocialWorkController extends Controller
     public function update(Request $request, $id)
     {
         //
+
+        $request->validate([
+            'payment_date' => 'required|date',
+            'amount' => 'required|numeric',
+            'billing_period_id' => 'required|numeric|min:1',
+        ]);
+
+        try {
+            $payment = PaymentSocialWork::findOrFail($id);
+
+            $billing_period = $payment->billing_period;
+
+            if ($billing_period->end_date > $request->payment_date) {
+                return back()->withInput($request->all())->withErrors(Lang::get('payment_social_works.payment_before_billing_period'));
+            }
+
+            if (!$payment->update($request->all())) {
+                return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
+            }
+        } catch (QueryException $exception) {
+            return back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
+        }
+
+        return redirect()->action([SocialWorkController::class, 'edit'], ['id' => $payment->social_work_id]);
     }
 
     /**
@@ -81,5 +142,33 @@ class PaymentSocialWorkController extends Controller
     public function destroy($id)
     {
         //
+
+        $payment = PaymentSocialWork::findOrFail($id);
+
+        if (!$payment->delete()) {
+            return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
+        }
+
+        return redirect()->action([SocialWorkController::class, 'edit'], ['id' => $payment->social_work_id]);
+    }
+
+    /**
+     * Returns a list of filtered payments
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function load_billing_periods(Request $request)
+    {
+        //
+
+        // label column is required
+        $filter = $request->filter;
+
+        $billing_periods = BillingPeriod::select('id', 'name as label', 'start_date', 'end_date')
+            ->where('name', 'like', "%$filter%")
+            ->get()
+            ->toJson();
+
+        return $billing_periods;
     }
 }

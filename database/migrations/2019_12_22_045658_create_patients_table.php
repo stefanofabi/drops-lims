@@ -29,9 +29,9 @@ class CreatePatientsTable extends Migration
             $table->string('business_name')->nullable();
             $table->string('tax_condition')->nullable();
             $table->date('start_activity')->nullable();
-            
+
             // to differentiate the type of patient
-           	$table->string('type');
+           	$table->enum('type', ['animal', 'human', 'industrial']);
 
             $table->softDeletes();
             $table->timestamps();

@@ -32,15 +32,10 @@ return [
     'update_social_work' => 'Update social work',
     'plans' => 'Plans',
     'edit_plan' => 'Edit plan',
+    'destroy_plan' => 'Destroy plan',
     'nbu_price' => 'Biochemical unit price',
     'create_plan' => 'Create plan',
     'month' => 'Month',
     'year' => 'Year',
-    'payment_date' => 'Payment date',
-    'payment_amount' => 'Payment amount',
-    'create_payment' => 'Create payment',
-    'payments' => 'Payments',
-    'edit_payment' => 'Edit payment',
-    'destroy_payment' => 'Destroy payment',
 
 ];

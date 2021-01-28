@@ -16,13 +16,13 @@ class CreatePaymentSocialWorksTable extends Migration
         Schema::create('payment_social_works', function (Blueprint $table) {
             $table->id();
             $table->date('payment_date');
-            $table->unsignedInteger('month');
-            $table->unsignedInteger('year');
             $table->unsignedBigInteger('social_work_id');
+            $table->unsignedBigInteger('billing_period_id');
             $table->double('amount')->default(0.0);
 
             // Foreign keys
             $table->foreign('social_work_id')->references('id')->on('social_works')->onDelete('restrict')->onUpdate('cascade');
+            $table->foreign('billing_period_id')->references('id')->on('billing_periods')->onDelete('restrict')->onUpdate('cascade');
 
             $table->timestamps();
 
