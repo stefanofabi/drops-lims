@@ -29,9 +29,4 @@ Route::group([
         '\App\Http\Controllers\Administrators\Settings\SocialWorks\PaymentSocialWorkController',
         'destroy',
     ])->name('destroy')->where('id', '[1-9][0-9]*');
-
-    Route::post('load_payments', [
-        '\App\Http\Controllers\Administrators\Settings\SocialWorks\PaymentSocialWorkController',
-        'load_payments',
-    ])->name('load');
 });

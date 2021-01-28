@@ -37,5 +37,7 @@ return [
     'create_plan' => 'Create plan',
     'month' => 'Month',
     'year' => 'Year',
+    'edit_social_work' => 'Edit social work',
+    'destroy_social_work' => 'Destroy social work',
 
 ];

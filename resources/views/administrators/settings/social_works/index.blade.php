@@ -68,7 +68,7 @@
 
                     <td class="text-right">
                         <a href="{{ route('administrators/settings/social_works/edit', ['id' => $social_work->id]) }}"
-                           class="btn btn-info btn-sm" title="{{ trans('determinations.show_determination') }}">
+                           class="btn btn-info btn-sm" title="{{ trans('social_works.edit_social_work') }}">
                             <i class="fas fa-edit fa-sm"> </i>
                         </a>
 

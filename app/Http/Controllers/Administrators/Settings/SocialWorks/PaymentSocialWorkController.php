@@ -151,24 +151,4 @@ class PaymentSocialWorkController extends Controller
 
         return redirect()->action([SocialWorkController::class, 'edit'], ['id' => $payment->social_work_id]);
     }
-
-    /**
-     * Returns a list of filtered payments
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function load_billing_periods(Request $request)
-    {
-        //
-
-        // label column is required
-        $filter = $request->filter;
-
-        $billing_periods = BillingPeriod::select('id', 'name as label', 'start_date', 'end_date')
-            ->where('name', 'like', "%$filter%")
-            ->get()
-            ->toJson();
-
-        return $billing_periods;
-    }
 }
