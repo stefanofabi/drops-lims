@@ -5,6 +5,11 @@ Route::group([
     'as' => 'billing_periods/',
 ], function () {
 
+    Route::get('index', [
+        '\App\Http\Controllers\Administrators\Settings\SocialWorks\BillingPeriodController',
+        'index',
+    ])->name('index');
+
     Route::get('create', [
         '\App\Http\Controllers\Administrators\Settings\SocialWorks\BillingPeriodController',
         'create',

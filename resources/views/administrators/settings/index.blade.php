@@ -11,19 +11,19 @@
 @section('menu')
     <ul class="nav flex-column">
         <li class="nav-item">
-            <a class="nav-link" href="#"> <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('settings.debt_social_works') }} </a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('administrators/settings/generate_reports') }}"> <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('settings.generate_reports') }} </a>
-        </li>
-
-        <li class="nav-item">
             <a class="nav-link" href="{{ route('administrators/settings/nomenclators/index') }}"> <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('social_works.nomenclators') }} </a>
         </li>
 
         <li class="nav-item">
+            <a class="nav-link" href="{{ route('administrators/settings/social_works/billing_periods/index') }}"> <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('billing_periods.billing_periods') }} </a>
+        </li>
+
+        <li class="nav-item">
             <a class="nav-link" href="{{ route('administrators/settings/social_works/index') }}"> <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('social_works.social_works') }} </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('administrators/settings/generate_reports') }}"> <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('settings.generate_reports') }} </a>
         </li>
 
         <li class="nav-item">
