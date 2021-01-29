@@ -79,11 +79,11 @@
                             </a>
 
                             <a class="btn btn-info btn-sm" title="{{ trans('billing_periods.destroy_billing_period') }}"
-                               onclick="destroy_social_work('{{ $billing_period->id }}')">
+                               onclick="destroy_billing_period('{{ $billing_period->id }}')">
                                 <i class="fas fa-trash fa-sm"></i>
                             </a>
 
-                            <form id="destroy_social_work_{{ $billing_period->id }}" method="POST"
+                            <form id="destroy_billing_period_{{ $billing_period->id }}" method="POST"
                                   action="{{ route('administrators/settings/social_works/billing_periods/destroy', ['id' => $billing_period->id]) }}">
                                 @csrf
                                 @method('DELETE')
