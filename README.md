@@ -81,7 +81,7 @@ Remember to modify passwords in development!
 Thank you for considering contributing to the SrLab app! You can do it in:
 - [MercadoPago](https://www.mercadopago.com/mla/debits/new?preapproval_plan_id=2c93808477025e4f017704a6960805b5)
 - [PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UHXMAB3HMS9CG)
-- Bitcoin Wallet: 1BxrkKPuLTkYUAeMrxzLEKvr5MGFu3NLpU
+- [Bitcoin](https://www.blockchain.com/btc/address/1BxrkKPuLTkYUAeMrxzLEKvr5MGFu3NLpU)
 
 ## Security Vulnerabilities
 
