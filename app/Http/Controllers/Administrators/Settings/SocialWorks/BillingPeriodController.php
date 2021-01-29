@@ -7,6 +7,8 @@ use App\Models\BillingPeriod;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
+use Lang;
+
 class BillingPeriodController extends Controller
 {
     /**
@@ -87,7 +89,7 @@ class BillingPeriodController extends Controller
 
         $billing_period = BillingPeriod::findOrFail($id);
 
-        return view('administrators/settings/social_work/billing_periods/edit')->with('billing_period', $billing_period);
+        return view('administrators/settings/social_works/billing_periods/edit')->with('billing_period', $billing_period);
     }
 
     /**

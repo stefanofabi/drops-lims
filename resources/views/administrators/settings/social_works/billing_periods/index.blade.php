@@ -9,6 +9,11 @@
 @endsection
 
 @section('js')
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.13/dataRender/datetime.js"></script>
+
+
     <script>
         $(document).ready(function () {
             $('#myBillingPeriodsTable').DataTable({
@@ -32,7 +37,10 @@
                         '</select> {{ trans('datatables.records') }}',
                     "emptyTable": '{{ trans('datatables.no_data') }}',
                     "zeroRecords": '{{ trans('datatables.no_match_records') }}',
-                }
+                },
+                "columnDefs": [
+                    { "targets": 1, "render": $.fn.dataTable.render.moment('YYYY-MM-DD', 'DD/MM/YYYY') }
+                ]
             });
         });
 
@@ -68,7 +76,7 @@
                     <tr>
                         <td> {{ $billing_period->name }} </td>
 
-                        <td> {{ date('d/m/Y', strtotime($billing_period->start_date)) }} </td>
+                        <td> {{ $billing_period->start_date }} </td>
 
                         <td> {{ date('d/m/Y', strtotime($billing_period->end_date)) }} </td>
 

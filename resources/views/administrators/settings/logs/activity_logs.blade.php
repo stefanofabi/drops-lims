@@ -189,15 +189,15 @@
             @else
                 <table id="table-log" class="table table-striped">
                     <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Causer</th>
-                        <th>Affected model</th>
-                        <th>Attributes affected</th>
-                    </tr>
+                        <tr>
+                            <th>Date</th>
+                            <th>Causer</th>
+                            <th>Affected model</th>
+                            <th>Attributes affected</th>
+                        </tr>
                     </thead>
-                    <tbody>
 
+                    <tbody>
                     @foreach($activities as $activity)
                         <tr>
                             <td class="text"> {{ date_format($activity->updated_at, 'd/m/Y H:i') }}Hs. </td>
