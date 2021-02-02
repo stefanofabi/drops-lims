@@ -23,7 +23,7 @@ What things do you need to install the project and how to do it
 - Composer
 - NPM
 - PHP 8
-- Relational database (MySQL, Mariadb, etc.)
+- Relational database (MySQL, MariaDB, etc.)
 ```
 
 ### Installation 🔧
