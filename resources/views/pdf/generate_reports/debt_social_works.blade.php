@@ -30,11 +30,11 @@
         }
 
         .medium {
-            width: 35mm;
+            width: 40mm;
         }
 
         .large {
-            width: 60mm;
+            width: 50mm;
         }
 
         .billingPeriodsTable td {
@@ -86,7 +86,15 @@
                 <td> {{ date('d/m/Y', strtotime($billing_period->start_date)) }} </td>
                 <td> {{ date('d/m/Y', strtotime($billing_period->end_date)) }} </td>
                 <td> {{ $billing_period->social_work }} </td>
-                <td> ${{ $billing_period->total_amount }} </td>
+                <td>
+                    ${{ number_format($billing_period->total_amount, 2, ',', '.') }}
+
+                    @if ($billing_period->total_amount > 0)
+                        ({{ $billing_period->total_paid * 100 / $billing_period->total_amount }}%)
+                    @else
+                        (0%)
+                    @endif
+                </td>
             </tr>
         @endforeach
     </table>

@@ -10,11 +10,11 @@
 @endsection
 
 @section('title')
-    {{ trans('billing_periods.create_billing_period') }}
+    {{ trans('billing_periods.edit_billing_period') }}
 @endsection
 
 @section('content-title')
-    <i class="fas fa-plus"> </i> {{ trans('billing_periods.create_billing_period') }}
+    <i class="fas fa-plus"> </i> {{ trans('billing_periods.edit_billing_period') }}
 @endsection
 
 

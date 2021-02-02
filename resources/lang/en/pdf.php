@@ -17,6 +17,7 @@ return [
     'patients_flow_report_from_to' => 'Patients flow report from :initial_date to :ended_date',
     'protocols_report_from_to' => 'Protocols report from :initial_date to :ended_date',
     'total_amount' => 'Total amount',
+    'total_paid' => 'Total paid',
     'month' => 'Month',
     'year' => 'Year',
     'social_work_debt_report_from_to' => 'Social works debt report from :start_date to :end_date',

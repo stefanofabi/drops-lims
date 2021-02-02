@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Administrators\Settings;
 
 use App\Http\Controllers\Controller;
-use App\Models\Protocol;
 use Illuminate\Http\Request;
-
 use Illuminate\Support\Facades\DB;
+
+use App\Models\Protocol;
+use App\Models\Practice;
+
 use PDF;
 
 class SettingController extends Controller
@@ -115,22 +117,29 @@ class SettingController extends Controller
 
         $start_date = $request->start_date;
         $end_date = $request->end_date;
+    //
 
-        $billing_periods = DB::table('social_works')
-            ->select('billing_periods.name', 'billing_periods.start_date', 'billing_periods.end_date', 'social_works.name as social_work', DB::raw('SUM(practices.amount) as total_amount'))
-            ->join('plans', 'social_works.id', '=', 'plans.social_work_id')
-            ->join('our_protocols', 'plans.id', 'our_protocols.plan_id')
-            ->join('protocols', 'our_protocols.protocol_id', '=', 'protocols.id')
-            ->join('practices', 'protocols.id', '=', 'practices.protocol_id')
-            ->join('billing_periods', 'our_protocols.billing_period_id', '=', 'billing_periods.id')
+        
+        $practices = Practice::select('protocol_id', DB::raw('SUM(amount) as total_amount'))->groupBy('protocol_id');
+        
+        $billing_periods = DB::table('billing_periods')
+            ->select('billing_periods.name', 'billing_periods.start_date', 'billing_periods.end_date', 'social_works.name as social_work', 'practices.total_amount', DB::raw('COALESCE(SUM(payment_social_works.amount), 0.0) as total_paid'))
+            ->join('our_protocols', 'billing_periods.id', 'our_protocols.billing_period_id')
+            ->join('plans', 'our_protocols.plan_id', '=', 'plans.id')
+            ->join('social_works', 'plans.social_work_id', '=', 'social_works.id')
+            ->leftJoin('protocols', 'our_protocols.protocol_id', '=', 'protocols.id')
+            ->leftJoinSub($practices, 'practices', function ($join) {
+                $join->on('protocols.id', '=', 'practices.protocol_id');
+            })
+            ->leftJoin('payment_social_works', 'billing_periods.id', 'payment_social_works.billing_period_id')
             ->where('billing_periods.start_date', '>=', $start_date)
             ->where('billing_periods.end_date', '<=', $end_date)
-            ->groupBy('billing_periods.id', 'billing_periods.name', 'billing_periods.start_date', 'billing_periods.end_date', 'social_works.id', 'social_works.name')
+            ->groupBy('billing_periods.id', 'billing_periods.name', 'billing_periods.start_date', 'billing_periods.end_date', 'social_works.name', 'practices.total_amount')
             ->orderBy('billing_periods.start_date', 'ASC')
             ->orderBy('billing_periods.end_date', 'ASC')
             ->orderBy('social_works.name', 'ASC')
             ->get();
-
+       
         $pdf = PDF::loadView('pdf/generate_reports/debt_social_works', [
             'billing_periods' => $billing_periods,
             'start_date' => $start_date,
