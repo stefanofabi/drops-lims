@@ -25,7 +25,6 @@ class CreateDerivedProtocolsTable extends Migration
             $table->foreign('protocol_id')->references('id')->on('protocols')->onDelete('restrict')->onUpdate('cascade');
             $table->foreign('patient_id')->references('id')->on('derived_patients')->onDelete('restrict')->onUpdate('cascade');
 
-            $table->softDeletes();
             $table->timestamps();
 
             $table->engine = 'InnoDB';

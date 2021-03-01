@@ -183,11 +183,17 @@ class OurProtocolController extends Controller
         // label column is required
         $filter = $request->filter;
 
-        $patients = Patient::select('full_name as label', 'id')->where(function ($query) use ($filter) {
+        $patients = Patient::select('full_name as label', 'id')
+        ->where(function ($query) use ($filter) {
             if (! empty($filter)) {
-                $query->orWhere("full_name", "like", "%$filter%")->orWhere("key", "like", "$filter%")->orWhere("owner", "like", "%$filter%");
+                $query->orWhere("full_name", "like", "%$filter%")
+                    ->orWhere("key", "like", "$filter%")
+                    ->orWhere("owner", "like", "%$filter%");
             }
-        })->whereNull('deleted_at')->get()->toJson();
+        })
+        ->whereNull('deleted_at')
+        ->get()
+        ->toJson();
 
         return $patients;
     }
@@ -202,11 +208,17 @@ class OurProtocolController extends Controller
         // label column is required
         $filter = $request->filter;
 
-        $prescribers = Prescriber::select('full_name as label', 'id')->where(function ($query) use ($filter) {
+        $prescribers = Prescriber::select('full_name as label', 'id')
+        ->where(function ($query) use ($filter) {
             if (! empty($filter)) {
-                $query->orWhere("full_name", "like", "%$filter%")->orWhere("provincial_enrollment", "like", "$filter%")->orWhere("national_enrollment", "like", "$filter%");
+                $query->orWhere("full_name", "like", "%$filter%")
+                ->orWhere("provincial_enrollment", "like", "$filter%")
+                ->orWhere("national_enrollment", "like", "$filter%");
             }
-        })->whereNull('deleted_at')->get()->toJson();
+        })
+        ->whereNull('deleted_at')
+        ->get()
+        ->toJson();
 
         return $prescribers;
     }

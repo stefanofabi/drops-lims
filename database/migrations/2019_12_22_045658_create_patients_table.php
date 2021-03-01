@@ -33,7 +33,6 @@ class CreatePatientsTable extends Migration
             // to differentiate the type of patient
            	$table->enum('type', ['animal', 'human', 'industrial']);
 
-            $table->softDeletes();
             $table->timestamps();
 
             $table->engine = 'InnoDB';

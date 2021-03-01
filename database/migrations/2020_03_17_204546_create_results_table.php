@@ -23,7 +23,6 @@ class CreateResultsTable extends Migration
 
             $table->timestamps();
 
-
             $table->engine = 'InnoDB';
         });
     }

@@ -49,8 +49,6 @@ class Protocol extends Model
                         ->orWhere("patients.owner", "like", "%$filter%");
                 }
             })
-            ->whereNull('patients.deleted_at')
-            ->whereNull('protocols.deleted_at')
             ->union($derived_protocols)
             ->orderBy('id', 'desc')
             ->get();
@@ -59,7 +57,7 @@ class Protocol extends Model
     }
 
     /**
-     * Get the practices for the determination.
+     * Get the practices for the protocol.
      */
     public function practices()
     {
@@ -72,20 +70,5 @@ class Protocol extends Model
     public function our_protocol()
     {
         return $this->hasOne(OurProtocol::class);
-    }
-
-    public function scopePractices($query)
-    {
-        return $query->join('practices', 'protocols.id', '=', 'practices.protocol_id');
-    }
-
-    public function scopeOurProtocol($query)
-    {
-        return $query->join('our_protocols', 'protocols.id', '=', 'our_protocols.protocol_id');
-    }
-
-    public function scopePatient($query)
-    {
-        return $query->join('patients', 'our_protocols.patient_id', '=', 'patients.id');
     }
 }

@@ -31,10 +31,9 @@ class Determination extends Model
             ->where(function ($query) use ($filter) {
                 if (!empty($filter)) {
                     $query->orWhere("name", "like", "%$filter%")
-                    ->orWhere("code", "like", "$filter%");
+                        ->orWhere("code", "like", "$filter%");
                 }
             })
-            ->whereNull('deleted_at')
             ->orderBy('code', 'asc')
             ->orderBy('name', 'asc')
             ->offset($offset)

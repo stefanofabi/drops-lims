@@ -68,6 +68,7 @@ class SecurityCodeController extends Controller
             $security_code->expiration_date = $expiration_date;
             $security_code->used_at = null;
 
+            // save using transactions
             $security_code->saveOrFail();
 
             $strategy = 'modern_style';

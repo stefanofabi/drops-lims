@@ -22,14 +22,4 @@ class Affiliate extends Model
     {
         return $this->belongsTo(Plan::class);
     }
-
-    public function scopePlan($query)
-    {
-        return $query->join('plans', 'plans.id', '=', 'affiliates.plan_id');
-    }
-
-    public function scopeSocialWork($query)
-    {
-        return $query->join('social_works', 'social_works.id', '=', 'plans.social_work_id');
-    }
 }

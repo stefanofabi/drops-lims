@@ -24,7 +24,6 @@ class CreateDeterminationsTable extends Migration
             // Foreign keys
             $table->foreign('nomenclator_id')->references('id')->on('nomenclators')->onDelete('restrict')->onUpdate('cascade');
 
-            $table->softDeletes();
             $table->timestamps();
 
             $table->engine = 'InnoDB';

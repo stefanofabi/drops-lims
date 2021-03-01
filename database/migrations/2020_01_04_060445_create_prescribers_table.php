@@ -21,7 +21,6 @@ class CreatePrescribersTable extends Migration
             $table->integer('provincial_enrollment')->unsigned()->nullable();
             $table->integer('national_enrollment')->unsigned()->nullable();
 
-            $table->softDeletes();
             $table->timestamps();
 
             $table->engine = 'InnoDB';

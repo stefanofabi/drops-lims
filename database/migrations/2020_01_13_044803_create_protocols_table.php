@@ -18,8 +18,6 @@ class CreateProtocolsTable extends Migration
             $table->date('completion_date')->nullable();
             $table->string('observations')->nullable();
 
-
-            $table->softDeletes();
             $table->timestamps();
 
             $table->engine = 'InnoDB';

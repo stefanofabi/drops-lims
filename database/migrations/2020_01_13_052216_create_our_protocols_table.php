@@ -33,8 +33,6 @@ class CreateOurProtocolsTable extends Migration
             $table->foreign('plan_id')->references('id')->on('plans')->onDelete('restrict')->onUpdate('cascade');
             $table->foreign('billing_period_id')->references('id')->on('billing_periods')->onDelete('restrict')->onUpdate('cascade');
 
-
-            $table->softDeletes();
             $table->timestamps();
 
             $table->engine = 'InnoDB';

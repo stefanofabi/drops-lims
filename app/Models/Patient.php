@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -12,7 +11,7 @@ class Patient extends Model
 {
     //
 
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
     use LogsActivity;
 
@@ -36,11 +35,18 @@ class Patient extends Model
 
     protected function index($filter, $offset, $length, $type)
     {
-        $patients = DB::table('patients')->where('type', $type)->where(function ($query) use ($filter) {
-            if (! empty($filter)) {
-                $query->orWhere("full_name", "like", "%$filter%")->orWhere("key", "like", "$filter%")->orWhere("owner", "like", "%$filter%");
-            }
-        })->whereNull('deleted_at')->orderBy('full_name', 'asc')->offset($offset)->limit($length)->get();
+        $patients = DB::table('patients')->where('type', $type)
+            ->where(function ($query) use ($filter) {
+                if (! empty($filter)) {
+                    $query->orWhere("full_name", "like", "%$filter%")
+                        ->orWhere("key", "like", "$filter%")
+                        ->orWhere("owner", "like", "%$filter%");
+                }
+            })
+            ->orderBy('full_name', 'asc')
+            ->offset($offset)
+            ->limit($length)
+            ->get();
 
         return $patients;
     }

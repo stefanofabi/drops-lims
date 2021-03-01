@@ -66,34 +66,4 @@ class OurProtocol extends Model
     {
         return $this->belongsTo(BillingPeriod::class);
     }
-
-    public function scopeProtocol($query)
-    {
-        return $query->join('protocols', 'our_protocols.protocol_id', '=', 'protocols.id');
-    }
-
-    public function scopePlan($query)
-    {
-        return $query->join('plans', 'our_protocols.plan_id', '=', 'plans.id');
-    }
-
-    public function scopeSocial_Work($query)
-    {
-        return $query->join('social_works', 'plans.social_work_id', '=', 'social_works.id');
-    }
-
-    public function scopePatient($query)
-    {
-        return $query->join('patients', 'our_protocols.patient_id', '=', 'patients.id');
-    }
-
-    public function scopePrescriber($query)
-    {
-        return $query->join('prescribers', 'our_protocols.prescriber_id', '=', 'prescribers.id');
-    }
-
-    public function scopePractices($query)
-    {
-        return $query->join('practices', 'our_protocols.protocol_id', '=', 'practices.id');
-    }
 }

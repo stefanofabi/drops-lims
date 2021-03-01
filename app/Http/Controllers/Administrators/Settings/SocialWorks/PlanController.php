@@ -89,7 +89,9 @@ class PlanController extends Controller
         $plan = Plan::findOrFail($id);
         $nomenclators = Nomenclator::all();
 
-        return view('administrators/settings/social_works/plans/edit')->with('plan', $plan)->with('nomenclators', $nomenclators);
+        return view('administrators/settings/social_works/plans/edit')
+            ->with('plan', $plan)
+            ->with('nomenclators', $nomenclators);
     }
 
     /**

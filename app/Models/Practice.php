@@ -32,7 +32,7 @@ class Practice extends Model
     }
 
     /**
-     * Get the results for the determination.
+     * Get the results for the practice.
      */
     public function results()
     {
@@ -40,20 +40,10 @@ class Practice extends Model
     }
 
     /**
-     * Get the signs for the determination.
+     * Get the signs for the practice.
      */
     public function signs()
     {
         return $this->hasMany(SignPractice::class);
-    }
-
-    public function scopeProtocol($query)
-    {
-        return $query->join('protocols', 'practices.protocol_id', '=', 'protocols.id');
-    }
-
-    public function print()
-    {
-        return $this->report->report;
     }
 }
