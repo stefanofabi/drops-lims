@@ -5,7 +5,7 @@ namespace App\Laboratory\Prints\SecurityCodes;
 use Lang;
 use PDF;
 
-class BasicStyleStrategy implements PrintSecurityCodeStrategyInterface
+class ModernStyleStrategy implements PrintSecurityCodeStrategyInterface
 {
     /**
      * Returns a security code to patient in pdf
@@ -18,7 +18,7 @@ class BasicStyleStrategy implements PrintSecurityCodeStrategyInterface
     public function print_security_code($patient, $security_code, $expiration_date)
     {
 
-        $pdf = PDF::loadView('pdf/security_codes/basic_style', [
+        $pdf = PDF::loadView('pdf/security_codes/modern_style', [
             'patient' => $patient,
             'security_code' => $security_code,
             'expiration_date' => $expiration_date,

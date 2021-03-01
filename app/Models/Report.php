@@ -22,9 +22,4 @@ class Report extends Model
     {
         return $this->belongsTo('App\Models\Determination');
     }
-
-    public function scopeDetermination($query)
-    {
-        return $query->join('determinations', 'determinations.id', '=', 'reports.determination_id');
-    }
 }

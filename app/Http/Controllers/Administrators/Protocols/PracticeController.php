@@ -214,20 +214,21 @@ class PracticeController extends Controller
     }
 
     /**
-     * Returns a list of practices available according to the nomenclator of social work
+     * Returns a list of practice reports available according to the nomenclator of social work
      *
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function load(Request $request)
+    public function load_practices(Request $request)
     {
         //
-        $nomenclator = $request->nomenclator_id;
+        $nomenclator_id = $request->nomenclator_id;
         $filter = $request->filter;
 
-        $practices = Report::select('reports.id', DB::raw("CONCAT(determinations.name, ' - ', reports.name) as label"))
-            ->determination()->where('determinations.nomenclator_id', $nomenclator)
-            ->whereNull('determinations.deleted_at')
+        $reports = DB::table('reports')
+            ->select('reports.id', DB::raw("CONCAT(determinations.name, ' - ', reports.name) as label"))
+            ->join('determinations', 'determinations.id', '=', 'reports.determination_id')
+            ->where('determinations.nomenclator_id', $nomenclator_id)
             ->where(function ($query) use ($filter) {
                 if (! empty($filter)) {
                     $query->orWhere("determinations.name", "like", "%$filter%")
@@ -238,7 +239,7 @@ class PracticeController extends Controller
             ->get()
             ->toJson();
 
-        return $practices;
+        return $reports;
     }
 
     /**

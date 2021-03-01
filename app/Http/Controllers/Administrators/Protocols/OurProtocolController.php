@@ -20,8 +20,7 @@ use Lang;
 
 class OurProtocolController extends Controller
 {
-    private const RETRIES = 5;
-
+    
     /**
      * Display a listing of the resource.
      *
@@ -41,9 +40,9 @@ class OurProtocolController extends Controller
     {
         //
         $patient_id = $request->patient_id;
-        $patient = Patient::find($patient_id);
+        
 
-        if ($patient) {
+        if ($patient = Patient::find($patient_id)) {
             $affiliates = $patient->affiliates;
         } else {
             $affiliates = [];
@@ -76,10 +75,15 @@ class OurProtocolController extends Controller
         try {
             $protocol = new Protocol($request->all());
 
-            if ($protocol->save()) {
-                $our_protocol = new OurProtocol($request->all());
-                $our_protocol->protocol_id = $protocol->id;
-                $our_protocol->save();
+            if (!$protocol->save()) {
+                return redirect()->back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
+            }
+
+            $our_protocol = new OurProtocol($request->all());
+            $our_protocol->protocol_id = $protocol->id;
+            
+            if (!$our_protocol->save()) {
+                return redirect()->back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
             }
 
             DB::commit();
@@ -144,9 +148,9 @@ class OurProtocolController extends Controller
 
         try {
 
-            $our_protocol->update($request->all());
-
-            $our_protocol->protocol->update($request->all());
+            if (!$our_protocol->update($request->all()) || !$our_protocol->protocol->update($request->all())) {
+                return redirect()->back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
+            }
 
             DB::commit();
         } catch (QueryException $exception) {
@@ -264,8 +268,8 @@ class OurProtocolController extends Controller
      */
     public function get_billing_periods($current_date) {
 
-        $start_date = date("Y-m-d", strtotime($current_date."- 1 year"));
-        $end_date = date("Y-m-d", strtotime($current_date."+ 1 year"));
+        $start_date = date("Y-m-d", strtotime($current_date."- 6 month"));
+        $end_date = date("Y-m-d", strtotime($current_date."+ 6 month"));
 
         $billing_periods = BillingPeriod::where('start_date', '>=', $start_date)
             ->where('end_date', '<=', $end_date)

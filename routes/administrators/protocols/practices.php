@@ -15,7 +15,7 @@ Route::group([
     'as' => 'practices/',
 ], function () {
 
-    Route::post('find', ['\App\Http\Controllers\Administrators\Protocols\PracticeController', 'load'])->name('load');
+    Route::post('find', ['\App\Http\Controllers\Administrators\Protocols\PracticeController', 'load_practices'])->name('load_practices');
 
     Route::get('create', [
         '\App\Http\Controllers\Administrators\Protocols\PracticeController',

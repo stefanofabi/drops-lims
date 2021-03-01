@@ -53,14 +53,11 @@ class EmailController extends Controller
             'email' => 'required|email',
         ]);
 
+        $email = new Email($request->all());
+        
         try {
-            $email = new Email($request->all());
-
             if ($email->save()) {
-                $redirect = redirect()->action([
-                    PatientController::class,
-                    'edit',
-                ], $request->patient_id);
+                $redirect = redirect()->action([PatientController::class,'edit'], ['id' => $request->patient_id]);
             } else {
                 $redirect = redirect()->back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
             }

@@ -63,7 +63,7 @@ class ReportController extends Controller
             } else {
                 $redirect = back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
             }
-        } catch (QueryException $e) {
+        } catch (QueryException $exception) {
             $redirect = back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
         }
 
@@ -140,10 +140,15 @@ class ReportController extends Controller
 
         $view = view('administrators/determinations/edit');
 
-        if ($report->delete()) {
-            $view->with('success', [Lang::get('reports.success_destroy')]);
-        } else {
-            $view->withErrors(Lang::get('reports.danger_destroy'));
+        try {
+            if ($report->delete()) {
+                $view->with('success', [Lang::get('reports.success_destroy')]);
+            } else {
+                $view->withErrors(Lang::get('reports.danger_destroy'));
+            }
+        } catch (QueryException $exception) {
+            return back()->withErrors(Lang::get('errors.error_processing_transaction'));
+       
         }
 
         return $view->with('determination', $report->determination);

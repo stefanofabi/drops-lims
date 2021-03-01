@@ -16,6 +16,8 @@ use Lang;
 
 class SecurityCodeController extends Controller
 {
+    private const SECURITY_CODE_LENGTH = 10;
+
     /**
      * Display a listing of the resource.
      *
@@ -48,7 +50,7 @@ class SecurityCodeController extends Controller
         $patient_id = $request->patient_id;
         $patient = Patient::findOrFail($patient_id);
 
-        $new_security_code = Str::random(10);
+        $new_security_code = Str::random(self::SECURITY_CODE_LENGTH);
 
         $date_today = date("Y-m-d");
         $expiration_date = date("Y-m-d", strtotime($date_today."+ 1 week"));
@@ -68,7 +70,7 @@ class SecurityCodeController extends Controller
 
             $security_code->saveOrFail();
 
-            $strategy = 'basic_style';
+            $strategy = 'modern_style';
             $strategyClass = PrintSecurityCodeContext::STRATEGIES[$strategy];
 
             return (new $strategyClass)->print_security_code($patient, $new_security_code, $expiration_date);

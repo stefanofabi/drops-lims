@@ -56,7 +56,10 @@ class PrescriberController extends Controller
         $total_pages = ceil($count_rows / self::PER_PAGE);
         $paginate = $this->paginate($page, $total_pages, self::ADJACENTS);
 
-        return view('administrators/prescribers/index')->with('request', $request)->with('prescribers', $prescribers)->with('paginate', $paginate);
+        return view('administrators/prescribers/index')
+            ->with('request', $request)
+            ->with('prescribers', $prescribers)
+            ->with('paginate', $paginate);
     }
 
     /**
@@ -86,9 +89,14 @@ class PrescriberController extends Controller
 
         $prescriber = new Prescriber($request->all());
 
-        if (! $prescriber->save()) {
-            return redirect()->back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
+        try {
+            if (! $prescriber->save()) {
+                return redirect()->back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
+            }
+        } catch (QueryException $exception) {
+            return redirect()->back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
         }
+        
 
         return redirect()->action([PrescriberController::class, 'show'], ['id' => $prescriber->id]);
     }
@@ -134,8 +142,12 @@ class PrescriberController extends Controller
 
         $prescriber = Prescriber::findOrFail($id);
 
-        if (! $prescriber->update($request->all())) {
-            return redirect()->back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
+        try {
+            if (! $prescriber->update($request->all())) {
+                return redirect()->back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
+            }
+        } catch (QueryException $exception) {
+            return redirect()->back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
         }
 
         return redirect()->action([PrescriberController::class, 'show'], ['id' => $id]);
@@ -155,33 +167,14 @@ class PrescriberController extends Controller
 
         $view = view('administrators/prescribers/destroy');
 
-        if ($prescriber->delete()) {
-            $view->with('prescriber_id', $id)->with('type', 'success');
-        } else {
-            $view->with('type', 'danger');
-        }
-
-        return $view;
-    }
-
-    /**
-     * Restore the specified resource from storage.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function restore($id)
-    {
-        //
-
-        $prescriber = Prescriber::onlyTrashed()->findOrFail($id);
-
-        $view = view('administrators/prescribers/restore')->with('prescriber_id', $id);
-
-        if ($prescriber->restore()) {
-            $view->with('type', 'success');
-        } else {
-            $view->with('type', 'danger');
+        try {
+            if ($prescriber->delete()) {
+                $view->with('prescriber_id', $id)->with('type', 'success');
+            } else {
+                $view->with('type', 'danger');
+            }
+        } catch (QueryException $exception) {
+            return redirect()->back()->withErrors(Lang::get('errors.error_processing_transaction'));
         }
 
         return $view;

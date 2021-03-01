@@ -54,12 +54,11 @@ class PhoneController extends Controller
             'type' => 'required|string',
         ]);
 
+        $phone = new Phone($request->all());
+
         try {
-
-            $phone = new Phone($request->all());
-
             if ($phone->save()) {
-                $redirect = redirect()->action([PatientController::class, 'edit'], $request->patient_id);
+                $redirect = redirect()->action([PatientController::class, 'edit'], ['id' => $request->patient_id]);
             } else {
                 $redirect = redirect()->back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
             }

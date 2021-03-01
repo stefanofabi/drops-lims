@@ -39,7 +39,9 @@ class AffiliateController extends Controller
 
         $social_works = SocialWork::all();
 
-        return view('administrators/patients/social_works/affiliates/create')->with('patient', $patient)->with('social_works', $social_works);
+        return view('administrators/patients/social_works/affiliates/create')
+            ->with('patient', $patient)
+            ->with('social_works', $social_works);
     }
 
     /**
@@ -62,10 +64,7 @@ class AffiliateController extends Controller
             $affiliate = new Affiliate($request->all());
 
             if ($affiliate->save()) {
-                $redirect = redirect()->action([
-                    PatientController::class,
-                    'edit',
-                ], ['id' => $request->patient_id]);
+                $redirect = redirect()->action([PatientController::class, 'edit'], ['id' => $request->patient_id]);
             } else {
                 $redirect = back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
             }
@@ -163,7 +162,7 @@ class AffiliateController extends Controller
             return response()->json(['status' => 500, 'message' => Lang::get('errors.not_found')], 500);
         }
 
-        if (! $affiliate->delete()) {
+        if (!$affiliate->delete()) {
             return response()->json([
                 'status' => 500,
                 'message' => Lang::get('forms.failed_transaction'),

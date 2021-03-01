@@ -55,7 +55,11 @@ class DeterminationController extends Controller
 
         $nomenclators = Nomenclator::all();
 
-        return view('administrators/determinations/index')->with('request', $request)->with('determinations', $determinations)->with('paginate', $paginate)->with('nomenclators', $nomenclators);
+        return view('administrators/determinations/index')
+            ->with('request', $request)
+            ->with('determinations', $determinations)
+            ->with('paginate', $paginate)
+            ->with('nomenclators', $nomenclators);
     }
 
     /**
@@ -181,37 +185,16 @@ class DeterminationController extends Controller
 
         $view = view('administrators/determinations/destroy');
 
-        if ($determination->delete()) {
-            $view->with('determination_id', $id)->with('type', 'success');
-        } else {
-            $view->with('type', 'danger');
+        try {
+            if ($determination->delete()) {
+                $view->with('determination_id', $id)->with('type', 'success');
+            } else {
+                $view->with('type', 'danger');
+            }
+        } catch (QueryException $exception) {
+            return back()->withErrors(Lang::get('errors.error_processing_transaction'));
         }
-
+        
         return $view->with('nomenclators', $nomenclators);
-    }
-
-    /**
-     * Restore the specified resource from storage.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function restore($id)
-    {
-        //
-
-        $determination = Determination::onlyTrashed()->findOrFail($id);
-
-        $nomenclators = Nomenclator::all();
-
-        $view = view('administrators/determinations/restore')->with('determination_id', $id)->with('nomenclators', $nomenclators);
-
-        if ($determination->restore()) {
-            $view->with('type', 'success');
-        } else {
-            $view->with('type', 'danger');
-        }
-
-        return $view;
     }
 }

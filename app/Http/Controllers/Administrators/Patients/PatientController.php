@@ -81,7 +81,10 @@ class PatientController extends Controller
             }
         }
 
-        return $view->with('request', $request->all())->with('data', $patients)->with('paginate', $paginate);
+        return $view
+            ->with('request', $request)
+            ->with('data', $patients)
+            ->with('paginate', $paginate);
     }
 
     /**
@@ -112,11 +115,7 @@ class PatientController extends Controller
                 break;
             }
 
-            default:
-            {
-                $view = view('administrators/patients/create');
-                break;
-            }
+            // other cases has filtered in web routes
         }
 
         return $view;
@@ -139,9 +138,13 @@ class PatientController extends Controller
         ]);
 
         $patient = new Patient($request->all());
-
-        if (! $patient->save()) {
-            return redirect()->back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));;
+        
+        try {
+            if (! $patient->save()) {
+                return redirect()->back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));;
+            }
+        } catch (QueryException $exception) {
+            return redirect()->back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
         }
 
         return redirect()->action([PatientController::class, 'show'], ['id' => $patient->id]);
@@ -178,10 +181,7 @@ class PatientController extends Controller
                 break;
             }
 
-            default:
-            {
-                return view('administrators/patients/patients')->withErrors(Lang::get('errors.invalid_patient_type'));
-            }
+            // others cases has filtered in enum field
         }
 
         return $view->with('patient', $patient);
@@ -221,10 +221,7 @@ class PatientController extends Controller
                 break;
             }
 
-            default:
-            {
-                return view('administrators/patients/patients')->withErrors(Lang::get('errors.invalid_patient_type'));
-            }
+            // others cases has filtered in enum field
         }
 
         return $view->with('patient', $patient)->with('social_works', $social_works);
@@ -251,8 +248,12 @@ class PatientController extends Controller
 
         $patient = Patient::findOrFail($id);
 
-        if (! $patient->update($request->all())) {
-            return redirect()->back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));;
+        try {
+            if (! $patient->update($request->all())) {
+                return redirect()->back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));;
+            }
+        } catch (QueryException $exception) {
+            $redirect = redirect()->back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
         }
 
         return redirect()->action([PatientController::class, 'show'], ['id' => $id]);
@@ -271,34 +272,14 @@ class PatientController extends Controller
         $patient = Patient::findOrFail($id);
 
         $view = view('administrators/patients/destroy');
-
-        if ($patient->delete()) {
-            $view->with('patient_id', $id)->with('type', 'success');
-        } else {
-            $view->with('type', 'danger');
-        }
-
-        return $view;
-    }
-
-    /**
-     * Restore the specified resource from storage.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function restore($id)
-    {
-        //
-
-        $patient = Patient::onlyTrashed()->findOrFail($id);
-
-        $view = view('administrators/patients/restore')->with('patient_id', $id);
-
-        if ($patient->restore()) {
-            $view->with('type', 'success');
-        } else {
-            $view->with('type', 'danger');
+        try {
+            if ($patient->delete()) {
+                $view->with('patient_id', $id)->with('type', 'success');
+            } else {
+                $view->with('type', 'danger');
+            }
+        } catch (QueryException $exception) {
+            return redirect()->back()->withErrors(Lang::get('errors.error_processing_transaction'));
         }
 
         return $view;

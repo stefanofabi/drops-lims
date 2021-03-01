@@ -20,7 +20,7 @@
 
                     $.ajax({
                         data: parameters,
-                        url: '{{ route("administrators/protocols/practices/load") }}',
+                        url: '{{ route("administrators/protocols/practices/load_practices") }}',
                         type: 'post',
                         dataType: 'json',
                         success: ui
