@@ -91,7 +91,7 @@
                 </thead>
 
                 <tbody>
-                @foreach ($social_work->plans as $plan)
+                @forelse ($social_work->plans as $plan)
                     <tr>
                         <td> {{ $plan->name }} </td>
 
@@ -117,7 +117,11 @@
                             </form>
                         </td>
                     </tr>
-                @endforeach
+                @empty
+                <tr>
+                    <td colspan="4"> {{ trans('forms.no_data') }}</td>
+                </tr>
+                @endforelse
                 </tbody>
             </table>
         </div>
@@ -177,12 +181,10 @@
                     </tr>
                 @empty
                 <tr>
-                    <td> {{ trans('forms.no_data') }}</td>
+                    <td colspan="4"> {{ trans('forms.no_data') }}</td>
                 </tr>
                 @endforelse
             </table>
         </div>
-
     </div>
-
 @endsection

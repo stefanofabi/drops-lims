@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Administrators\Settings\SocialWorks;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Database\QueryException;
+use Illuminate\Http\Request;
+
 use App\Models\BillingPeriod;
 use App\Models\PaymentSocialWork;
 use App\Models\SocialWork;
-use Illuminate\Database\QueryException;
-use Illuminate\Http\Request;
 
 use Lang;
 
@@ -114,8 +115,9 @@ class PaymentSocialWorkController extends Controller
             'billing_period_id' => 'required|numeric|min:1',
         ]);
 
+        $payment = PaymentSocialWork::findOrFail($id);
+
         try {
-            $payment = PaymentSocialWork::findOrFail($id);
 
             $billing_period = $payment->billing_period;
 
@@ -145,8 +147,12 @@ class PaymentSocialWorkController extends Controller
 
         $payment = PaymentSocialWork::findOrFail($id);
 
-        if (!$payment->delete()) {
-            return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
+        try {
+            if (!$payment->delete()) {
+                return back()->withErrors(Lang::get('forms.failed_transaction'));
+            }
+        } catch (QueryException $exception) {
+            return back()->withErrors(Lang::get('errors.error_processing_transaction'));
         }
 
         return redirect()->action([SocialWorkController::class, 'edit'], ['id' => $payment->social_work_id]);

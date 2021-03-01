@@ -117,8 +117,6 @@ class SettingController extends Controller
 
         $start_date = $request->start_date;
         $end_date = $request->end_date;
-    //
-
         
         $practices = Practice::select('protocol_id', DB::raw('SUM(amount) as total_amount'))->groupBy('protocol_id');
         

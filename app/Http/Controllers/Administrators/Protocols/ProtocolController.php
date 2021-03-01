@@ -53,7 +53,7 @@ class ProtocolController extends Controller
         $count_rows = $protocols->count();
         $total_pages = ceil($count_rows / self::PER_PAGE);
         $paginate = $this->paginate($page, $total_pages, self::ADJACENTS);
-
+        
         return view('administrators/protocols/index')
             ->with('request', $request->all())
             ->with('protocols', $protocols)

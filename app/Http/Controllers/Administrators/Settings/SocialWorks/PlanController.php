@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Administrators\Settings\SocialWorks;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Database\QueryException;
+use Illuminate\Http\Request;
+
 use App\Models\Nomenclator;
 use App\Models\Plan;
 use App\Models\SocialWork;
-use Illuminate\Database\QueryException;
-use Illuminate\Http\Request;
+
+use Lang;
 
 class PlanController extends Controller
 {
@@ -29,7 +32,7 @@ class PlanController extends Controller
     public function create($social_work_id)
     {
         //
-        $social_work = SocialWork::FindOrFail($social_work_id);
+        $social_work = SocialWork::findOrFail($social_work_id);
         $nomenclators = Nomenclator::all();
 
         return view('administrators/settings/social_works/plans/create')->with('social_work', $social_work)->with('nomenclators', $nomenclators);
@@ -60,7 +63,7 @@ class PlanController extends Controller
             return back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
         }
 
-        return redirect()->action([SocialWorkController::class, 'edit'], $plan->social_work_id);
+        return redirect()->action([SocialWorkController::class, 'edit'], ['id' => $plan->social_work_id]);
     }
 
     /**
@@ -138,6 +141,6 @@ class PlanController extends Controller
             return back()->withErrors(Lang::get('errors.error_processing_transaction'));
         }
 
-        return redirect()->action([SocialWorkController::class, 'edit'], $plan->social_work_id);
+        return redirect()->action([SocialWorkController::class, 'edit'], ['id' => $plan->social_work_id]);
     }
 }

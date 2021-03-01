@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Administrators\Settings\SocialWorks;
 
 use App\Http\Controllers\Controller;
-use App\Models\BillingPeriod;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+
+use App\Models\BillingPeriod;
 
 use Lang;
 
@@ -59,8 +60,12 @@ class BillingPeriodController extends Controller
 
         $billing_period = new BillingPeriod($request->all());
 
-        if (!$billing_period->save()) {
-            return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
+        try {
+            if (!$billing_period->save()) {
+                return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
+            }
+        } catch (QueryException $exception) {
+            return redirect()->back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
         }
 
         return redirect()->action([BillingPeriodController::class, 'edit'], ['id' => $billing_period->id]);
@@ -115,8 +120,12 @@ class BillingPeriodController extends Controller
 
         $billing_period = BillingPeriod::findOrFail($id);
 
-        if (!$billing_period->update($request->all())) {
-            return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
+        try {
+            if (!$billing_period->update($request->all())) {
+                return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
+            }
+        } catch (QueryException $exception) {
+            return redirect()->back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
         }
 
         return redirect()->action([BillingPeriodController::class, 'index']);
@@ -153,10 +162,10 @@ class BillingPeriodController extends Controller
     public function load_billing_periods(Request $request)
     {
         //
-
-        // label column is required
+        
         $filter = $request->filter;
-
+        
+        // label column is required
         $billing_periods = BillingPeriod::select('id', 'name as label', 'start_date', 'end_date')
             ->where('name', 'like', "%$filter%")
             ->get()

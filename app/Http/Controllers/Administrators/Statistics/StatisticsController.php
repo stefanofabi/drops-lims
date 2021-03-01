@@ -35,10 +35,10 @@ class StatisticsController extends Controller
         $ended_date = $request->ended_date;
 
         $anual_report = OurProtocol::select(DB::raw("MONTH(protocols.completion_date) as month"), DB::raw("YEAR(protocols.completion_date) as year"), DB::raw('SUM(practices.amount) as total'))
-            ->protocol()
-            ->plan()
-            ->social_work()
-            ->practices()
+            ->join('protocols', 'our_protocols.protocol_id', '=', 'protocols.id')
+            ->join('plans', 'our_protocols.plan_id', '=', 'plans.id')
+            ->join('social_works', 'plans.social_work_id', '=', 'social_works.id')
+            ->join('practices', 'our_protocols.protocol_id', '=', 'practices.id')
             ->where('social_works.id', $social_work)
             ->whereBetween('protocols.completion_date', [$initial_date, $ended_date])
             ->groupBy(DB::raw("MONTH(protocols.completion_date)"), DB::raw("YEAR(protocols.completion_date)"))
@@ -58,10 +58,12 @@ class StatisticsController extends Controller
         $initial_date = $request->initial_date;
         $ended_date = $request->ended_date;
 
-        $patient_flow = OurProtocol::select(DB::raw("MONTH(protocols.completion_date) as month"), DB::raw("YEAR(protocols.completion_date) as year"), DB::raw('COUNT(*) as total'))->protocol()->whereBetween('protocols.completion_date', [
-            $initial_date,
-            $ended_date,
-        ])->groupBy(DB::raw("MONTH(protocols.completion_date)"), DB::raw("YEAR(protocols.completion_date)"))->orderBy('protocols.completion_date', 'asc')->get();
+        $patient_flow = OurProtocol::select(DB::raw("MONTH(protocols.completion_date) as month"), DB::raw("YEAR(protocols.completion_date) as year"), DB::raw('COUNT(*) as total'))
+            ->join('protocols', 'our_protocols.protocol_id', '=', 'protocols.id')
+            ->whereBetween('protocols.completion_date', [$initial_date,$ended_date])
+            ->groupBy(DB::raw("MONTH(protocols.completion_date)"), DB::raw("YEAR(protocols.completion_date)"))
+            ->orderBy('protocols.completion_date', 'asc')
+            ->get();
 
         $new_array = $this->generate_array_per_month($patient_flow, $initial_date, $ended_date);
 
@@ -74,14 +76,19 @@ class StatisticsController extends Controller
         $initial_date = $request->initial_date;
         $ended_date = $request->ended_date;
 
-        $track_income = Practice::select(DB::raw("MONTH(protocols.completion_date) as month"), DB::raw("YEAR(protocols.completion_date) as year"), DB::raw('SUM(practices.amount) as total'))->protocol()->whereBetween('protocols.completion_date', [
-            $initial_date,
-            $ended_date,
-        ])->groupBy(DB::raw("MONTH(protocols.completion_date)"), DB::raw("YEAR(protocols.completion_date)"), 'practices.amount')->orderBy('protocols.completion_date', 'asc')->get();
+        $track_income = Practice::select(DB::raw("MONTH(protocols.completion_date) as month"), DB::raw("YEAR(protocols.completion_date) as year"), DB::raw('SUM(practices.amount) as total'))
+            ->join('protocols', 'our_protocols.protocol_id', '=', 'protocols.id')
+            ->whereBetween('protocols.completion_date', [$initial_date, $ended_date])
+            ->groupBy(DB::raw("MONTH(protocols.completion_date)"), DB::raw("YEAR(protocols.completion_date)"), 'practices.amount')
+            ->orderBy('protocols.completion_date', 'asc')
+            ->get();
 
         $new_array = $this->generate_array_per_month($track_income, $initial_date, $ended_date);
 
-        return view('administrators/statistics/track_income')->with('social_works', $social_works)->with('initial_date', $initial_date)->with('ended_date', $ended_date)->with('data', $new_array);
+        return view('administrators/statistics/track_income')
+            ->with('social_works', $social_works)
+            ->with('initial_date', $initial_date)->with('ended_date', $ended_date)
+            ->with('data', $new_array);
     }
 
     public function generate_array_per_month($array, $initial_date, $ended_date)

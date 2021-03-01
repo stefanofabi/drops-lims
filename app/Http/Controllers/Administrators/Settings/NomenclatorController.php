@@ -53,9 +53,12 @@ class NomenclatorController extends Controller
         ]);
 
         $nomenclator = new Nomenclator($request->all());
-
-        if (! $nomenclator->save()) {
-            return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
+        try {
+            if (! $nomenclator->save()) {
+                return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
+            }
+        } catch (QueryException $exception) {
+            return back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
         }
 
         return redirect()->action([NomenclatorController::class, 'index']);
@@ -102,11 +105,15 @@ class NomenclatorController extends Controller
         ]);
 
         $nomenclator = Nomenclator::findOrFail($id);
-
-        if (! $nomenclator->update($request->all())) {
-            return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
+        
+        try {
+            if (! $nomenclator->update($request->all())) {
+                return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
+            }
+        } catch (QueryException $exception) {
+            return back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
         }
-
+        
         return redirect()->action([NomenclatorController::class, 'index']);
     }
 
