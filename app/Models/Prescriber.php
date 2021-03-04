@@ -15,8 +15,6 @@ class Prescriber extends Model
 
     use LogsActivity;
 
-    protected $dates = ['deleted_at'];
-
     protected $fillable = ['full_name', 'phone', 'email', 'provincial_enrollment', 'national_enrollment'];
 
     protected static $logFillable = true;
@@ -31,7 +29,6 @@ class Prescriber extends Model
                         ->orWhere("national_enrollment", "like", "$filter%");
                 }
             })
-            ->whereNull('deleted_at')
             ->orderBy('full_name', 'asc')
             ->offset($offset)
             ->limit($length)

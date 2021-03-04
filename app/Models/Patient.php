@@ -15,8 +15,6 @@ class Patient extends Model
 
     use LogsActivity;
 
-    protected $dates = ['deleted_at'];
-
     protected $fillable = [
         'full_name',
         'key',

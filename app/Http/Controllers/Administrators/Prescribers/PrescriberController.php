@@ -165,18 +165,14 @@ class PrescriberController extends Controller
 
         $prescriber = Prescriber::findOrFail($id);
 
-        $view = view('administrators/prescribers/destroy');
-
         try {
-            if ($prescriber->delete()) {
-                $view->with('prescriber_id', $id)->with('type', 'success');
-            } else {
-                $view->with('type', 'danger');
+            if (!$prescriber->delete()) {
+                return back()->withErrors(Lang::get('forms.failed_transaction'));
             }
         } catch (QueryException $exception) {
-            return redirect()->back()->withErrors(Lang::get('errors.error_processing_transaction'));
+            return back()->withErrors(Lang::get('errors.error_processing_transaction'));
         }
 
-        return $view;
+        return view('administrators/prescribers/prescribers')->with('success', [Lang::get('prescribers.success_destroy_message')]);
     }
 }

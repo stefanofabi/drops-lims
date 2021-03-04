@@ -12,11 +12,9 @@ class Determination extends Model
 {
     //
 
-	use HasFactory, SoftDeletes;
+	use HasFactory;
 
     use LogsActivity;
-
-    protected $dates = ['deleted_at'];
 
 	protected $fillable = ['nomenclator_id', 'code', 'name', 'position', 'biochemical_unit'];
 

@@ -183,18 +183,16 @@ class DeterminationController extends Controller
 
         $nomenclators = Nomenclator::all();
 
-        $view = view('administrators/determinations/destroy');
-
         try {
-            if ($determination->delete()) {
-                $view->with('determination_id', $id)->with('type', 'success');
-            } else {
-                $view->with('type', 'danger');
+            if (!$determination->delete()) {
+                return back()->withErrors(Lang::get('forms.failed_transaction'));
             }
         } catch (QueryException $exception) {
             return back()->withErrors(Lang::get('errors.error_processing_transaction'));
         }
         
-        return $view->with('nomenclators', $nomenclators);
+        return view('administrators/determinations/determinations')
+            ->with('success', [Lang::get('determinations.success_destroy_message')])
+            ->with('nomenclators', $nomenclators);
     }
 }

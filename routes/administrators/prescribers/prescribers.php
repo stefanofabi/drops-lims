@@ -52,9 +52,5 @@ Route::group([
         '\App\Http\Controllers\Administrators\Prescribers\PrescriberController',
         'destroy',
     ])->name('destroy')->where('id', '[1-9][0-9]*');
-
-    Route::patch('restore/{id}', [
-        '\App\Http\Controllers\Administrators\Prescribers\PrescriberController',
-        'restore',
-    ])->name('restore')->where('id', '[1-9][0-9]*');
+    
 });

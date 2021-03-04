@@ -20,8 +20,6 @@ class PatientController extends Controller
 
     private const ADJACENTS = 4;
 
-    private const RETRIES = 5;
-
     /**
      * Display a listing of the resource.
      *
@@ -271,17 +269,14 @@ class PatientController extends Controller
 
         $patient = Patient::findOrFail($id);
 
-        $view = view('administrators/patients/destroy');
         try {
-            if ($patient->delete()) {
-                $view->with('patient_id', $id)->with('type', 'success');
-            } else {
-                $view->with('type', 'danger');
+            if (!$patient->delete()) {
+                return back()->withErrors(Lang::get('forms.failed_transaction'));
             }
         } catch (QueryException $exception) {
-            return redirect()->back()->withErrors(Lang::get('errors.error_processing_transaction'));
+            return back()->withErrors(Lang::get('errors.error_processing_transaction'));
         }
 
-        return $view;
+        return view('administrators/patients/patients')->with('success', [Lang::get('patients.success_destroy_message')]);
     }
 }

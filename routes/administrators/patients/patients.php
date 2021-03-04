@@ -56,13 +56,9 @@ Route::group([
         'destroy',
     ])->name('destroy')->where('id', '[1-9][0-9]*');
 
-    Route::patch('restore/{id}', [
-        '\App\Http\Controllers\Administrators\Patients\PatientController',
-        'restore',
-    ])->name('restore')->where('id', '[1-9][0-9]*');
-
     Route::post('security_codes/store', [
         '\App\Http\Controllers\Administrators\Patients\SecurityCodeController',
         'store',
     ])->name('security_codes/store');
+    
 });

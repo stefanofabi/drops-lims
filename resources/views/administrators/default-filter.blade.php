@@ -12,7 +12,6 @@
 					<a class="nav-link @yield('active_patients')" href="{{ route('administrators/patients') }}"> {{ trans('patients.patients') }} </a>
 				</li>
 			@endcan
-			
 
 			@can('crud_prescribers')
 				<li class="nav-item">
