@@ -3,7 +3,6 @@
 namespace App\Laboratory\Repositories\Patients;
 
 use App\Laboratory\Repositories\Patients\PatientRepositoryInterface;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 use App\Models\Patient; 
 
@@ -12,7 +11,7 @@ final class PatientRepository implements PatientRepositoryInterface
     protected $model;
 
     /**
-     * PostRepository constructor.
+     * PatientRepository constructor.
      *
      * @param Patient $patient
      */
@@ -33,8 +32,7 @@ final class PatientRepository implements PatientRepositoryInterface
 
     public function update(array $data, $id)
     {
-        return $this->model->where('id', $id)
-            ->update($data);
+        return $this->model->where('id', $id)->update($data);
     }
 
     public function delete($id)

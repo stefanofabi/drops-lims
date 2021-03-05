@@ -57,7 +57,7 @@ class Patient extends Model
     /**
      * Get the security code associated with the patient.
      */
-    public function security_code()
+    public function securityCode()
     {
         return $this->hasOne(SecurityCode::class);
     }

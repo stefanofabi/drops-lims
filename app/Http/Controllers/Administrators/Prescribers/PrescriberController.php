@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\Administrators\Prescribers;
 
 use App\Http\Controllers\Controller;
-
 use Illuminate\Http\Request;
-
 use App\Http\Traits\Pagination;
 
 use App\Models\Prescriber;

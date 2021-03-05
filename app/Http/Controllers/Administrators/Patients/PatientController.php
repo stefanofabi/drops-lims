@@ -7,8 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Traits\Pagination;
 
 use App\Laboratory\Repositories\Patients\PatientRepositoryInterface;
-
-use App\Models\SocialWork;
+use App\Laboratory\Repositories\SocialWorks\SocialWorkRepositoryInterface;
 
 use Lang;
 
@@ -21,11 +20,15 @@ class PatientController extends Controller
     private const ADJACENTS = 4;
 
     /** @var \App\Laboratory\Repositories\Patients\PatientRepositoryInterface */
-    private $repository;
+    private $patientRepository;
 
-    public function __construct(PatientRepositoryInterface $repository)
+    /** @var \App\Laboratory\Repositories\SocialWorks\SocialWorkRepositoryInterface */
+    private $socialWorkRepository;
+
+    public function __construct(PatientRepositoryInterface $patientRepository, SocialWorkRepositoryInterface $socialWorkRepository)
     {
-        $this->repository = $repository;
+        $this->patientRepository = $patientRepository;
+        $this->socialWorkRepository = $socialWorkRepository;
     }
 
     /**
@@ -60,7 +63,7 @@ class PatientController extends Controller
         $page = $request->page;
 
         $offset = ($page - 1) * self::PER_PAGE;
-        $patients = $this->repository->index($filter, $offset, self::PER_PAGE, $patient_type);
+        $patients = $this->patientRepository->index($filter, $offset, self::PER_PAGE, $patient_type);
 
         // Pagination
         $count_rows = $patients->count();
@@ -148,7 +151,7 @@ class PatientController extends Controller
         ]);
         
         try {
-            if (! $patient = $this->repository->create($request->all())) {
+            if (! $patient = $this->patientRepository->create($request->all())) {
                 return redirect()->back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));;
             }
         } catch (QueryException $exception) {
@@ -166,7 +169,7 @@ class PatientController extends Controller
     public function show($id)
     {
 
-        $patient = $this->repository->findOrFail($id);
+        $patient = $this->patientRepository->findOrFail($id);
 
         $patient_type = $patient->type;
 
@@ -204,9 +207,9 @@ class PatientController extends Controller
     public function edit($id)
     {
         //
-        $patient = $this->repository->findOrFail($id);
+        $patient = $this->patientRepository->findOrFail($id);
 
-        $social_works = SocialWork::all();
+        $social_works = $this->socialWorkRepository->all();
 
         switch ($patient->type) {
             case 'animal':
@@ -252,10 +255,8 @@ class PatientController extends Controller
             'start_activity' => 'date|nullable',
         ]);
         
-      //  $patient = $this->repository->findOrFail($id);
-
         try {
-            if (! $this->repository->update($request->except(['_token', '_method']), $id)) {
+            if (! $this->patientRepository->update($request->except(['_token', '_method']), $id)) {
                 return redirect()->back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));;
             }
         } catch (QueryException $exception) {
@@ -276,7 +277,7 @@ class PatientController extends Controller
         //
 
         try {
-            if (!$this->repository->delete($id)) {
+            if (!$this->patientRepository->delete($id)) {
                 return back()->withErrors(Lang::get('forms.failed_transaction'));
             }
         } catch (QueryException $exception) {

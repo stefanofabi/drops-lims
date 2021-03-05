@@ -21,6 +21,11 @@ class AppServiceProvider extends ServiceProvider
             'App\Laboratory\Repositories\Patients\PatientRepository'
         );
 
+        $this->app->bind(
+            'App\Laboratory\Repositories\SocialWorks\SocialWorkRepositoryInterface',
+            'App\Laboratory\Repositories\SocialWorks\SocialWorkRepository'
+        );
+
     }
 
     /**
