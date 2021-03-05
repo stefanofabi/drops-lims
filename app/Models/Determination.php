@@ -3,8 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -21,25 +19,6 @@ class Determination extends Model
     protected static $logFillable = true;
 
     /**
-     * Get the determinations for the query.
-     */
-	protected function index($nomenclator_id, $filter, $offset, $length) {
-		return DB::table('determinations')
-            ->where('nomenclator_id', '=', $nomenclator_id)
-            ->where(function ($query) use ($filter) {
-                if (!empty($filter)) {
-                    $query->orWhere("name", "like", "%$filter%")
-                        ->orWhere("code", "like", "$filter%");
-                }
-            })
-            ->orderBy('code', 'asc')
-            ->orderBy('name', 'asc')
-            ->offset($offset)
-            ->limit($length)
-            ->get();
-	}
-
-    /**
      * Get the reports for the determination.
      */
     public function reports()
@@ -50,7 +29,8 @@ class Determination extends Model
     /**
      * Get the nomenclator associated with the determination.
      */
-	public function nomenclator() {
+	public function nomenclator() 
+    {
 		return $this->belongsTo(Nomenclator::class);
 	}
 }

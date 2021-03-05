@@ -30,6 +30,11 @@ class AppServiceProvider extends ServiceProvider
             'App\Laboratory\Repositories\Prescribers\PrescriberRepositoryInterface',
             'App\Laboratory\Repositories\Prescribers\PrescriberRepository'
         );
+
+        $this->app->bind(
+            'App\Laboratory\Repositories\Determinations\DeterminationRepositoryInterface',
+            'App\Laboratory\Repositories\Determinations\DeterminationRepository'
+        );
     }
 
     /**
