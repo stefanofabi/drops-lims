@@ -11,9 +11,9 @@ final class SocialWorkRepository implements SocialWorkRepositoryInterface
     protected $model;
 
     /**
-     *SocialWorkRepository constructor.
+     * SocialWorkRepository constructor.
      *
-     * @param SocialWork $patient
+     * @param SocialWork $socialWork
      */
     public function __construct(SocialWork $socialWork)
     {

@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Traits\Pagination;
 
-use App\Models\Prescriber;
+use App\Laboratory\Repositories\Prescribers\PrescriberRepositoryInterface;
 
 use Lang;
 
@@ -17,6 +17,14 @@ class PrescriberController extends Controller
     private const PER_PAGE = 15;
 
     private const ADJACENTS = 4;
+
+    /** @var \App\Laboratory\Repositories\Prescribers\PrescriberRepositoryInterface */
+    private $prescriberRepository;
+
+    public function __construct(PrescriberRepositoryInterface $prescriberRepository)
+    {
+        $this->prescriberRepository = $prescriberRepository;
+    }
 
     /**
      * Display a listing of the resource.
@@ -47,7 +55,7 @@ class PrescriberController extends Controller
         $page = $request->page;
 
         $offset = ($page - 1) * self::PER_PAGE;
-        $prescribers = Prescriber::index($filter, $offset, self::PER_PAGE);
+        $prescribers = $this->prescriberRepository->index($filter, $offset, self::PER_PAGE);
 
         // Pagination
         $count_rows = $prescribers->count();
@@ -85,17 +93,14 @@ class PrescriberController extends Controller
             'email' => 'email|nullable',
         ]);
 
-        $prescriber = new Prescriber($request->all());
-
         try {
-            if (! $prescriber->save()) {
+            if (! $prescriber = $this->prescriberRepository->create($request->all())) {
                 return redirect()->back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
             }
         } catch (QueryException $exception) {
             return redirect()->back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
         }
         
-
         return redirect()->action([PrescriberController::class, 'show'], ['id' => $prescriber->id]);
     }
 
@@ -108,7 +113,7 @@ class PrescriberController extends Controller
     public function show($id)
     {
         //
-        $prescriber = Prescriber::findOrFail($id);
+        $prescriber = $this->prescriberRepository->findOrFail($id);
 
         return view('administrators/prescribers/show')->with('prescriber', $prescriber);
     }
@@ -122,7 +127,7 @@ class PrescriberController extends Controller
     public function edit($id)
     {
         //
-        $prescriber = Prescriber::findOrFail($id);
+        $prescriber = $this->prescriberRepository->findOrFail($id);
 
         return view('administrators/prescribers/edit')->with('prescriber', $prescriber);
     }
@@ -138,10 +143,8 @@ class PrescriberController extends Controller
     {
         //
 
-        $prescriber = Prescriber::findOrFail($id);
-
         try {
-            if (! $prescriber->update($request->all())) {
+            if (! $this->prescriberRepository->update($request->except(['_token', '_method']), $id)) {
                 return redirect()->back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
             }
         } catch (QueryException $exception) {
@@ -161,10 +164,8 @@ class PrescriberController extends Controller
     {
         //
 
-        $prescriber = Prescriber::findOrFail($id);
-
         try {
-            if (!$prescriber->delete()) {
+            if (!$this->prescriberRepository->delete($id)) {
                 return back()->withErrors(Lang::get('forms.failed_transaction'));
             }
         } catch (QueryException $exception) {
