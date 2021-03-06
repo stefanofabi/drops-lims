@@ -11,8 +11,7 @@ use Illuminate\Http\Request;
 use App\Laboratory\Repositories\Patients\PatientRepositoryInterface;
 use App\Laboratory\Repositories\Protocols\Our\OurProtocolRepositoryInterface;
 use App\Laboratory\Repositories\Prescribers\PrescriberRepositoryInterface;
-
-use App\Models\BillingPeriod;
+use App\Laboratory\Repositories\BillingPeriods\BillingPeriodRepositoryInterface;
 
 use Lang;
 
@@ -28,14 +27,19 @@ class OurProtocolController extends Controller
     /** @var \App\Laboratory\Repositories\Prescribers\PrescriberRepositoryInterface */
     private $prescriberRepository;
 
+    /** @var \App\Laboratory\Repositories\BillingPeriods\BillingPeriodRepositoryInterface */
+    private $billingPeriodRepository;
+
     public function __construct (
         OurProtocolRepositoryInterface $ourProtocolRepository, 
         PatientRepositoryInterface $patientRepository, 
-        PrescriberRepositoryInterface $prescriberRepository
+        PrescriberRepositoryInterface $prescriberRepository,
+        BillingPeriodRepositoryInterface $billingPeriodRepository
     ) {
         $this->ourProtocolRepository = $ourProtocolRepository;
         $this->patientRepository = $patientRepository;
         $this->prescriberRepository = $prescriberRepository;
+        $this->billingPeriodRepository = $billingPeriodRepository;
     }
 
     /**
@@ -69,8 +73,8 @@ class OurProtocolController extends Controller
 
         return view('administrators/protocols/our/create')
             ->with('patient', $patient)
-            ->with('billing_periods', $this->get_billing_periods($current_date))
-            ->with('current_billing_period', $this->get_current_billing_period());
+            ->with('billing_periods', $this->billingPeriodRepository->getBillingPeriods($current_date))
+            ->with('current_billing_period', $this->billingPeriodRepository->getCurrentBillingPeriod());
     }
 
     /**
@@ -251,30 +255,4 @@ class OurProtocolController extends Controller
         return (new $strategyClass)->print($protocol_id, $filter_practices);
     }
 
-    /**
-     * Returns a worksheet of protocol in pdf
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function get_billing_periods($current_date) {
-
-        $start_date = date("Y-m-d", strtotime($current_date."- 6 month"));
-        $end_date = date("Y-m-d", strtotime($current_date."+ 6 month"));
-
-        $billing_periods = BillingPeriod::where('start_date', '>=', $start_date)
-            ->where('end_date', '<=', $end_date)
-            ->orderBy('start_date', 'ASC')
-            ->orderBy('end_date', 'ASC')
-            ->get();
-
-        return $billing_periods;
-    }
-
-    public function get_current_billing_period() {
-        $current_date = date('Y-m-d');
-
-        $current_billing_period = BillingPeriod::where('start_date', '<=', $current_date)->where('end_date', '>=', $current_date)->first();
-
-        return $current_billing_period;
-    }
 }
