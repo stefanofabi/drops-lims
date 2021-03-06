@@ -95,10 +95,10 @@ class PrescriberController extends Controller
 
         try {
             if (! $prescriber = $this->prescriberRepository->create($request->all())) {
-                return redirect()->back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
+                return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
             }
         } catch (QueryException $exception) {
-            return redirect()->back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
+            return back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
         }
         
         return redirect()->action([PrescriberController::class, 'show'], ['id' => $prescriber->id]);

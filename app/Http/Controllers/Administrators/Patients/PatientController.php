@@ -152,10 +152,10 @@ class PatientController extends Controller
         
         try {
             if (! $patient = $this->patientRepository->create($request->all())) {
-                return redirect()->back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));;
+                return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));;
             }
         } catch (QueryException $exception) {
-            return redirect()->back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
+            return back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
         }
 
         return redirect()->action([PatientController::class, 'show'], ['id' => $patient->id]);

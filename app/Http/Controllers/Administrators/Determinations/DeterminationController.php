@@ -100,10 +100,10 @@ class DeterminationController extends Controller
 
         try {
             if (! $determination = $this->determinationRepository->create($request->all())) {
-                $redirect = back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
+                return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
             }
         } catch (QueryException $e) {
-            $redirect = back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
+            return back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
         }
 
         return redirect()->action([DeterminationController::class, 'show'], ['id' => $determination->id]);
