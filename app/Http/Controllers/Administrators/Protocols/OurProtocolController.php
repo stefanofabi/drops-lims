@@ -6,21 +6,38 @@ use App\Http\Controllers\Controller;
 
 use App\Laboratory\Prints\Protocols\Our\PrintProtocolContext;
 use App\Laboratory\Prints\Worksheets\PrintWorksheetContext;
-use App\Models\BillingPeriod;
-use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
-use App\Models\Patient;
-use App\Models\Protocol;
-use App\Models\OurProtocol;
-use App\Models\Prescriber;
+use App\Laboratory\Repositories\Patients\PatientRepositoryInterface;
+use App\Laboratory\Repositories\Protocols\Our\OurProtocolRepositoryInterface;
+use App\Laboratory\Repositories\Prescribers\PrescriberRepositoryInterface;
+
+use App\Models\BillingPeriod;
 
 use Lang;
 
 class OurProtocolController extends Controller
 {
-    
+
+    /** @var \App\Laboratory\Repositories\Protocols\Our\OurProtocolRepositoryInterface */
+    private $ourProtocolRepository;
+
+    /** @var \App\Laboratory\Repositories\Patients\PatientRepositoryInterface */
+    private $patientRepository;
+
+    /** @var \App\Laboratory\Repositories\Prescribers\PrescriberRepositoryInterface */
+    private $prescriberRepository;
+
+    public function __construct (
+        OurProtocolRepositoryInterface $ourProtocolRepository, 
+        PatientRepositoryInterface $patientRepository, 
+        PrescriberRepositoryInterface $prescriberRepository
+    ) {
+        $this->ourProtocolRepository = $ourProtocolRepository;
+        $this->patientRepository = $patientRepository;
+        $this->prescriberRepository = $prescriberRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -42,7 +59,7 @@ class OurProtocolController extends Controller
         $patient_id = $request->patient_id;
         
 
-        if ($patient = Patient::find($patient_id)) {
+        if ($patient = $this->patientRepository->find($patient_id)) {
             $affiliates = $patient->affiliates;
         } else {
             $affiliates = [];
@@ -69,31 +86,23 @@ class OurProtocolController extends Controller
         $request->validate([
             'completion_date' => 'required|date',
         ]);
-
-        DB::beginTransaction();
-
-        try {
-            $protocol = new Protocol($request->all());
-
-            if (!$protocol->save()) {
-                return redirect()->back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
-            }
-
-            $our_protocol = new OurProtocol($request->all());
-            $our_protocol->protocol_id = $protocol->id;
-            
-            if (!$our_protocol->save()) {
-                return redirect()->back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
-            }
-
-            DB::commit();
-        } catch (QueryException $exception) {
-            DB::rollBack();
-
-            return redirect()->back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
+        
+        if (! $our_protocol = $this->ourProtocolRepository->create(
+            [
+                'completion_date' => $request->completion_date,
+                'observations' => $request->observations,
+            ], 
+            [
+                'plan_id' => $request->plan_id,
+                'prescriber_id' => $request->prescriber_id,
+                'withdrawal_date' => $request->withdrawal_date,
+                'quantity_orders' => $request->quantity_orders,
+                'diagnostic' => $request->diagnostic,              
+            ])) {
+                return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
 
-        return redirect()->action([OurProtocolController::class, 'show'], ['id' => $protocol->id]);
+        return redirect()->action([OurProtocolController::class, 'show'], ['id' => $our_protocol->protocol_id]);
     }
 
     /**
@@ -106,7 +115,7 @@ class OurProtocolController extends Controller
     {
         //
 
-        $protocol = OurProtocol::findOrFail($id);
+        $protocol = $this->ourProtocolRepository->findOrFail($id);
 
         return view('administrators/protocols/our/show')->with('protocol', $protocol);
     }
@@ -121,7 +130,7 @@ class OurProtocolController extends Controller
     {
         //
 
-        $protocol = OurProtocol::findOrFail($id);
+        $protocol = $this->ourProtocolRepository->findOrFail($id);
 
 
         return view('administrators/protocols/our/edit')->with('protocol', $protocol);
@@ -136,29 +145,28 @@ class OurProtocolController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //  
 
         $request->validate([
             'completion_date' => 'required|date',
+            'quantity_orders' => 'required|numeric|min:0',
         ]);
 
-        $our_protocol = OurProtocol::findOrFail($id);
-
-        DB::beginTransaction();
-
-        try {
-
-            if (!$our_protocol->update($request->all()) || !$our_protocol->protocol->update($request->all())) {
-                return redirect()->back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
+        if (! $this->ourProtocolRepository->update(
+            [
+                'completion_date' => $request->completion_date,
+                'observations' => $request->observations
+            ], 
+            [
+                'plan_id' => $request->plan_id,
+                'prescriber_id' => $request->prescriber_id,
+                'withdrawal_date' => $request->withdrawal_date,
+                'quantity_orders' => $request->quantity_orders,
+                'diagnostic' => $request->diagnostic,              
+            ], $id)) {
+                return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
             }
-
-            DB::commit();
-        } catch (QueryException $exception) {
-            DB::rollBack();
-
-            return redirect()->back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
-        }
-
+        
         return redirect()->action([OurProtocolController::class, 'show'], ['id' => $id]);
     }
 
@@ -180,22 +188,8 @@ class OurProtocolController extends Controller
      */
     public function load_patients(Request $request)
     {
-        // label column is required
-        $filter = $request->filter;
-
-        $patients = Patient::select('full_name as label', 'id')
-        ->where(function ($query) use ($filter) {
-            if (! empty($filter)) {
-                $query->orWhere("full_name", "like", "%$filter%")
-                    ->orWhere("key", "like", "$filter%")
-                    ->orWhere("owner", "like", "%$filter%");
-            }
-        })
-        ->whereNull('deleted_at')
-        ->get()
-        ->toJson();
-
-        return $patients;
+        
+        return $this->patientRepository->loadPatients($request->filter);
     }
 
     /**
@@ -205,22 +199,8 @@ class OurProtocolController extends Controller
      */
     public function load_prescribers(Request $request)
     {
-        // label column is required
-        $filter = $request->filter;
-
-        $prescribers = Prescriber::select('full_name as label', 'id')
-        ->where(function ($query) use ($filter) {
-            if (! empty($filter)) {
-                $query->orWhere("full_name", "like", "%$filter%")
-                ->orWhere("provincial_enrollment", "like", "$filter%")
-                ->orWhere("national_enrollment", "like", "$filter%");
-            }
-        })
-        ->whereNull('deleted_at')
-        ->get()
-        ->toJson();
-
-        return $prescribers;
+        
+        return $this->prescriberRepository->loadPrescribers($request->filter);
     }
 
     /**
@@ -230,7 +210,7 @@ class OurProtocolController extends Controller
      */
     public function add_practices($protocol_id)
     {
-        $our_protocol = OurProtocol::findOrFail($protocol_id);
+        $our_protocol = $this->ourProtocolRepository->findOrFail($protocol_id);
 
         return view('administrators/protocols/our/add_practices')->with('protocol', $our_protocol);
     }
@@ -242,9 +222,7 @@ class OurProtocolController extends Controller
      */
     public static function get_practices($protocol_id)
     {
-        $protocol = OurProtocol::findOrFail($protocol_id)->protocol;
-
-        return $protocol->practices;
+        return $this->ourProtocolRepository->getPractices($protocol_id);
     }
 
     /**

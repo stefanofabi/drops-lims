@@ -65,4 +65,20 @@ final class PrescriberRepository implements PrescriberRepositoryInterface
             ->limit($length)
             ->get();
     }
+
+    public function loadPrescribers($filter)
+    {
+        // label column is required
+   
+        return $this->model->select('full_name as label', 'id')
+            ->where(function ($query) use ($filter) {
+                if (! empty($filter)) {
+                    $query->orWhere("full_name", "like", "%$filter%")
+                    ->orWhere("provincial_enrollment", "like", "$filter%")
+                    ->orWhere("national_enrollment", "like", "$filter%");
+                }
+            })
+            ->get()
+            ->toJson();
+    }
 }

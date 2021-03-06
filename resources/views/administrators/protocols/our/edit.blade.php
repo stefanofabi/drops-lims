@@ -10,7 +10,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
         // Select a plan from list
-        $("#plan").val('{{ $protocol->plan_id }}');
+        $("#plan").val('{{ @old('plan_id') ?? $protocol->plan_id }}');
 
         $('[data-toggle="tooltip"]').tooltip();
     });
@@ -124,8 +124,8 @@
 			<span class="input-group-text"> {{ trans('prescribers.prescriber') }} </span>
 		</div>
 
-		<input type="hidden" id="prescriber_id" name="prescriber_id" value="{{ $protocol->prescriber->id }}">
-		<input type="text" class="form-control" id="prescriber" value="{{ $protocol->prescriber->full_name }}">
+		<input type="hidden" id="prescriber_id" name="prescriber_id" value="{{ @old('prescriber_id') ?? $protocol->prescriber->id }}">
+		<input type="text" class="form-control" id="prescriber" name="prescriber" value="{{ @old('prescriber') ?? $protocol->prescriber->full_name }}">
 	</div>
 
 	<div class="input-group mt-2 col-md-9 input-form">
@@ -133,7 +133,7 @@
 			<span class="input-group-text"> {{ trans('protocols.completion_date') }} </span>
 		</div>
 
-		<input type="date" class="form-control" name="completion_date" value="{{ $protocol->protocol->completion_date }}">
+		<input type="date" class="form-control" name="completion_date" value="{{ @old('completion_date') ?? $protocol->protocol->completion_date }}">
 	</div>
 
 	<div class="input-group mt-2 col-md-9 input-form">
@@ -141,7 +141,7 @@
 			<span class="input-group-text"> {{ trans('protocols.quantity_orders') }} </span>
 		</div>
 
-		<input type="number" class="form-control" name="quantity_orders" value="{{ $protocol->quantity_orders }}">
+		<input type="number" class="form-control" name="quantity_orders" value="{{ @old('quantity_orders') ?? $protocol->quantity_orders }}" min="0">
 	</div>
 
 	<div class="input-group mt-2 col-md-9 input-form">
@@ -149,7 +149,7 @@
 			<span class="input-group-text"> {{ trans('protocols.diagnostic') }} </span>
 		</div>
 
-		<input type="text" class="form-control" name="diagnostic" value="{{ $protocol->diagnostic }}">
+		<input type="text" class="form-control" name="diagnostic" value="{{ @old('diagnostic') ?? $protocol->diagnostic }}">
 	</div>
 
 	<div class="input-group mt-2 col-md-9 input-form">
@@ -157,7 +157,7 @@
 			<span class="input-group-text"> {{ trans('protocols.observations') }} </span>
 		</div>
 
-		<textarea class="form-control" rows="3" name="observations"> {{ $protocol->protocol->observations }} </textarea>
+		<textarea class="form-control" rows="3" name="observations"> {{ @old('observations') ?? $protocol->protocol->observations }} </textarea>
 	</div>
 
 	<div class="mt-3 float-right">

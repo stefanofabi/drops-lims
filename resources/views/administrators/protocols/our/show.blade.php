@@ -118,7 +118,7 @@
             <span class="input-group-text"> {{ trans('billing_periods.billing_period') }} </span>
         </div>
 
-        <input type="text" class="form-control" value="{{ $protocol->billing_period->name }} [{{ $protocol->billing_period->start_date }} - {{ $protocol->billing_period->end_date }}]" disabled>
+        <input type="text" class="form-control" value="{{ $protocol->billingPeriod->name }} [{{ $protocol->billingPeriod->start_date }} - {{ $protocol->billingPeriod->end_date }}]" disabled>
     </div>
 
 @endsection

@@ -65,4 +65,19 @@ final class PatientRepository implements PatientRepositoryInterface
             ->limit($length)
             ->get();
     }
+
+    public function loadPatients($filter) {
+        // label column is required
+        
+        return $this->model->select('full_name as label', 'id') 
+            ->where(function ($query) use ($filter) {
+                if (! empty($filter)) {
+                    $query->orWhere("full_name", "like", "%$filter%")
+                        ->orWhere("key", "like", "$filter%")
+                        ->orWhere("owner", "like", "%$filter%");
+                }
+            })
+            ->get()
+            ->toJson();
+    }
 }

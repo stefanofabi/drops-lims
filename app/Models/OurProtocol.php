@@ -62,7 +62,7 @@ class OurProtocol extends Model
     /**
      * Get the billing period associated with the our protocol.
      */
-    public function billing_period()
+    public function billingPeriod()
     {
         return $this->belongsTo(BillingPeriod::class);
     }
