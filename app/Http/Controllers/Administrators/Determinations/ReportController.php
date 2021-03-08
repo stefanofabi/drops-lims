@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Administrators\Determinations;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Laboratory\Repositories\Determinations\DeterminationRepositoryInterface;
+use App\Contracts\Repository\DeterminationRepositoryInterface;
 use App\Models\Report;
 
 use Lang;

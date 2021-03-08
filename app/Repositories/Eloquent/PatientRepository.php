@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Laboratory\Repositories\Patients;
+namespace App\Repositories\Eloquent;
 
-use App\Laboratory\Repositories\Patients\PatientRepositoryInterface;
+use App\Contracts\Repository\PatientRepositoryInterface;
 
 use App\Models\Patient; 
 

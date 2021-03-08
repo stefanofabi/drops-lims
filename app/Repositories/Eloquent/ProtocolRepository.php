@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Laboratory\Repositories\Protocols;
+namespace App\Repositories\Eloquent;
 
-use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 
-use App\Laboratory\Repositories\Protocols\ProtocolRepositoryInterface;
+use App\Contracts\Repository\ProtocolRepositoryInterface;
 
 use App\Models\Protocol; 
 

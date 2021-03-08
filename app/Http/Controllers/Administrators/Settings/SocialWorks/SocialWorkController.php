@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
-use App\Laboratory\Repositories\SocialWorks\SocialWorkRepositoryInterface;
+use App\Contracts\Repository\SocialWorkRepositoryInterface;
 
 use App\Models\PaymentSocialWork;
 

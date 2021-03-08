@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Traits\Pagination;
 
-use App\Laboratory\Repositories\Protocols\ProtocolRepositoryInterface;
+use App\Contracts\Repository\ProtocolRepositoryInterface;
 
 class ProtocolController extends Controller
 {

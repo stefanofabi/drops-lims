@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Laboratory\Repositories\Prescribers;
+namespace App\Repositories\Eloquent;
 
-use App\Laboratory\Repositories\Prescribers\PrescriberRepositoryInterface;
+use App\Contracts\Repository\PrescriberRepositoryInterface;
 
 use App\Models\Prescriber; 
 

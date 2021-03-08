@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 
-use App\Laboratory\Repositories\Patients\PatientRepositoryInterface;
+use App\Contracts\Repository\PatientRepositoryInterface;
 
 use App\Models\Phone;
 

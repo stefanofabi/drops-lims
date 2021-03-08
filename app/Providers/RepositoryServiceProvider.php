@@ -4,26 +4,26 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
-use App\Laboratory\Repositories\Patients\PatientRepositoryInterface;
-use App\Laboratory\Repositories\Patients\PatientRepository;
+use App\Contracts\Repository\PatientRepositoryInterface;
+use App\Repositories\Eloquent\PatientRepository;
 
-use App\Laboratory\Repositories\SocialWorks\SocialWorkRepositoryInterface;
-use App\Laboratory\Repositories\SocialWorks\SocialWorkRepository;
+use App\Contracts\Repository\SocialWorkRepositoryInterface;
+use App\Repositories\Eloquent\SocialWorkRepository;
 
-use App\Laboratory\Repositories\Prescribers\PrescriberRepositoryInterface;
-use App\Laboratory\Repositories\Prescribers\PrescriberRepository;
+use App\Contracts\Repository\PrescriberRepositoryInterface;
+use App\Repositories\Eloquent\PrescriberRepository;
 
-use App\Laboratory\Repositories\Determinations\DeterminationRepositoryInterface;
-use App\Laboratory\Repositories\Determinations\DeterminationRepository;
+use App\Contracts\Repository\DeterminationRepositoryInterface;
+use App\Repositories\Eloquent\DeterminationRepository;
 
-use App\Laboratory\Repositories\Protocols\ProtocolRepositoryInterface;
-use App\Laboratory\Repositories\Protocols\ProtocolRepository;
+use App\Contracts\Repository\ProtocolRepositoryInterface;
+use App\Repositories\Eloquent\ProtocolRepository;
 
-use App\Laboratory\Repositories\BillingPeriods\BillingPeriodRepositoryInterface;
-use App\Laboratory\Repositories\BillingPeriods\BillingPeriodRepository;
+use App\Contracts\Repository\BillingPeriodRepositoryInterface;
+use App\Repositories\Eloquent\BillingPeriodRepository;
 
-use App\Laboratory\Repositories\Nomenclators\NomenclatorRepositoryInterface;
-use App\Laboratory\Repositories\Nomenclators\NomenclatorRepository;
+use App\Contracts\Repository\NomenclatorRepositoryInterface;
+use App\Repositories\Eloquent\NomenclatorRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Laboratory\Repositories;
+namespace App\Contracts\Repository;
 
 interface RepositoryInterface
 {

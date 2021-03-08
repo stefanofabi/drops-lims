@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Traits\Pagination;
 
-use App\Laboratory\Repositories\Determinations\DeterminationRepositoryInterface;
-use App\Laboratory\Repositories\Nomenclators\NomenclatorRepositoryInterface;
+use App\Contracts\Repository\DeterminationRepositoryInterface;
+use App\Contracts\Repository\NomenclatorRepositoryInterface;
 
 use Lang;
 

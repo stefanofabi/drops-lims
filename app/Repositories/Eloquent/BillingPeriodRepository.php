@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Laboratory\Repositories\BillingPeriods;
+namespace App\Repositories\Eloquent;
 
-use App\Laboratory\Repositories\BillingPeriods\BillingPeriodRepositoryInterface;
+use App\Contracts\Repository\BillingPeriodRepositoryInterface;
 
 use App\Models\BillingPeriod; 
 

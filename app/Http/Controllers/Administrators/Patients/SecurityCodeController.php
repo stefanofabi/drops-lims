@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
-use App\Laboratory\Repositories\Patients\PatientRepositoryInterface;
+use App\Contracts\Repository\PatientRepositoryInterface;
 
 use App\Models\SecurityCode;
 

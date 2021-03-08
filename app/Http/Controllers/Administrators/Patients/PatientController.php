@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Traits\Pagination;
 
-use App\Laboratory\Repositories\Patients\PatientRepositoryInterface;
-use App\Laboratory\Repositories\SocialWorks\SocialWorkRepositoryInterface;
+use App\Contracts\Repository\PatientRepositoryInterface;
+use App\Contracts\Repository\SocialWorkRepositoryInterface;
 
 use Lang;
 

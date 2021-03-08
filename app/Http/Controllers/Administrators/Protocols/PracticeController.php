@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\QueryException;
 
-use App\Laboratory\Repositories\Protocols\ProtocolRepositoryInterface;
+use App\Contracts\Repository\ProtocolRepositoryInterface;
 
 use App\Models\Practice;
 use App\Models\Report;

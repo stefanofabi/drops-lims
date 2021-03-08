@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Administrators\Settings;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Laboratory\Repositories\Nomenclators\NomenclatorRepositoryInterface;
+use App\Contracts\Repository\NomenclatorRepositoryInterface;
 
 use Lang;
 

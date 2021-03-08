@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 
-use App\Laboratory\Repositories\Patients\PatientRepositoryInterface;
-use App\Laboratory\Repositories\SocialWorks\SocialWorkRepositoryInterface;
+use App\Contracts\Repository\PatientRepositoryInterface;
+use App\Contracts\Repository\SocialWorkRepositoryInterface;
 use App\Models\Affiliate;
 
 

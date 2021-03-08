@@ -3,7 +3,7 @@
 namespace App\Laboratory\Prints\Protocols\Our;
 
 use App\Laboratory\Prints\Protocols\PrintProtocolStrategyInterface;
-use App\Laboratory\Repositories\Protocols\ProtocolRepository;
+use App\Repositories\Eloquent\ProtocolRepository;
 
 use PDF;
 use Lang;

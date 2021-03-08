@@ -1,23 +1,23 @@
 <?php
 
-namespace App\Laboratory\Repositories\Nomenclators;
+namespace App\Repositories\Eloquent;
 
-use App\Laboratory\Repositories\Nomenclators\NomenclatorRepositoryInterface;
+use App\Contracts\Repository\SocialWorkRepositoryInterface;
 
-use App\Models\Nomenclator; 
+use App\Models\SocialWork; 
 
-final class NomenclatorRepository implements NomenclatorRepositoryInterface
+final class SocialWorkRepository implements SocialWorkRepositoryInterface
 {
     protected $model;
 
     /**
-     * NomenclatorRepository constructor.
+     * SocialWorkRepository constructor.
      *
-     * @param Nomenclator $nomenclator
+     * @param SocialWork $socialWork
      */
-    public function __construct(Nomenclator $nomenclator)
+    public function __construct(SocialWork $socialWork)
     {
-        $this->model = $nomenclator;
+        $this->model = $socialWork;
     }
 
     public function all()
@@ -49,5 +49,4 @@ final class NomenclatorRepository implements NomenclatorRepositoryInterface
     {
         return $this->model->findOrFail($id);
     }
-    
 }

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Administrators\Settings\SocialWorks;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Laboratory\Repositories\SocialWorks\SocialWorkRepositoryInterface;
+use App\Contracts\Repository\SocialWorkRepositoryInterface;
 
 use App\Models\BillingPeriod;
 use App\Models\PaymentSocialWork;

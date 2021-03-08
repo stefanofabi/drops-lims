@@ -3,7 +3,7 @@
 namespace App\Laboratory\Prints\Worksheets;
 
 use App\Laboratory\Prints\Worksheets\PrintWorksheetStrategyInterface;
-use App\Laboratory\Repositories\Protocols\ProtocolRepository;
+use App\Repositories\Eloquent\ProtocolRepository;
 
 use PDF;
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Laboratory\Repositories\Determinations;
+namespace App\Repositories\Eloquent;
 
-use App\Laboratory\Repositories\Determinations\DeterminationRepositoryInterface;
+use App\Contracts\Repository\DeterminationRepositoryInterface;
 
 use App\Models\Determination; 
 

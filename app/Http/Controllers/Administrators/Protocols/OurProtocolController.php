@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Administrators\Protocols;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Laboratory\Repositories\Patients\PatientRepositoryInterface;
-use App\Laboratory\Repositories\Protocols\ProtocolRepositoryInterface;
-use App\Laboratory\Repositories\Prescribers\PrescriberRepositoryInterface;
-use App\Laboratory\Repositories\BillingPeriods\BillingPeriodRepositoryInterface;
+use App\Contracts\Repository\PatientRepositoryInterface;
+use App\Contracts\Repository\ProtocolRepositoryInterface;
+use App\Contracts\Repository\PrescriberRepositoryInterface;
+use App\Contracts\Repository\BillingPeriodRepositoryInterface;
 
 use App\Laboratory\Prints\Worksheets\PrintWorksheetContext;
 use App\Laboratory\Prints\Protocols\Our\PrintOurProtocolContext;
