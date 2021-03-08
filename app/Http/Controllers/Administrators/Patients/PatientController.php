@@ -149,13 +149,9 @@ class PatientController extends Controller
             'type' => 'in:animal,human,industrial',
             'birth_date' => 'date|nullable',
         ]);
-        
-        try {
-            if (! $patient = $this->patientRepository->create($request->all())) {
-                return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));;
-            }
-        } catch (QueryException $exception) {
-            return back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
+
+        if (! $patient = $this->patientRepository->create($request->all())) {
+            return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));;
         }
 
         return redirect()->action([PatientController::class, 'show'], ['id' => $patient->id]);
@@ -207,6 +203,7 @@ class PatientController extends Controller
     public function edit($id)
     {
         //
+        
         $patient = $this->patientRepository->findOrFail($id);
 
         $social_works = $this->socialWorkRepository->all();
@@ -255,12 +252,8 @@ class PatientController extends Controller
             'start_activity' => 'date|nullable',
         ]);
         
-        try {
-            if (! $this->patientRepository->update($request->except(['_token', '_method']), $id)) {
-                return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));;
-            }
-        } catch (QueryException $exception) {
-            return back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
+        if (! $this->patientRepository->update($request->except(['_token', '_method']), $id)) {
+            return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));;
         }
 
         return redirect()->action([PatientController::class, 'show'], ['id' => $id]);
@@ -276,14 +269,11 @@ class PatientController extends Controller
     {
         //
 
-        try {
-            if (!$this->patientRepository->delete($id)) {
-                return back()->withErrors(Lang::get('forms.failed_transaction'));
-            }
-        } catch (QueryException $exception) {
-            return back()->withErrors(Lang::get('errors.error_processing_transaction'));
+        if (!$this->patientRepository->delete($id)) {
+            return back()->withErrors(Lang::get('forms.failed_transaction'));
         }
 
-        return view('administrators/patients/patients')->with('success', [Lang::get('patients.success_destroy_message')]);
+        return view('administrators/patients/patients')
+            ->with('success', [Lang::get('patients.success_destroy_message')]);
     }
 }

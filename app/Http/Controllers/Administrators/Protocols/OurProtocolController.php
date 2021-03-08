@@ -106,15 +106,11 @@ class OurProtocolController extends Controller
             'quantity_orders' => 'required|numeric|min:0',
         ]);
 
-        try {
-            if (! $our_protocol = $this->protocolRepository->create($request->all())) {
-                return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
-            }
-        } catch (QueryException $exception) {
-            return back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
+        if (! $protocol = $this->protocolRepository->create($request->all())) {
+            return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
         
-        return redirect()->action([OurProtocolController::class, 'show'], ['id' => $our_protocol->id]);
+        return redirect()->action([OurProtocolController::class, 'show'], ['id' => $protocol->id]);
     }
 
     /**
@@ -144,7 +140,6 @@ class OurProtocolController extends Controller
 
         $protocol = $this->protocolRepository->findOrFail($id);
 
-
         return view('administrators/protocols/our/edit')->with('protocol', $protocol);
     }
 
@@ -166,15 +161,11 @@ class OurProtocolController extends Controller
             'quantity_orders' => 'required|numeric|min:0',
         ]);
         
-        try {
-            // If you wish, you can make $request->except('patient_id')
-            if (! $this->protocolRepository->update($request->all(), $id)) {
-                return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
-            }
-        } catch (QueryException $exception) {
-            return back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
+        // If you wish, you can make $request->except('patient_id')
+        if (! $this->protocolRepository->update($request->all(), $id)) {
+            return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
-        
+
         return redirect()->action([OurProtocolController::class, 'show'], ['id' => $id]);
     }
 
@@ -218,9 +209,9 @@ class OurProtocolController extends Controller
      */
     public function add_practices($protocol_id)
     {
-        $our_protocol = $this->protocolRepository->findOrFail($protocol_id);
+        $protocol = $this->protocolRepository->findOrFail($protocol_id);
 
-        return view('administrators/protocols/our/add_practices')->with('protocol', $our_protocol);
+        return view('administrators/protocols/our/add_practices')->with('protocol', $protocol);
     }
 
     /**

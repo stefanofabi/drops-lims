@@ -3,17 +3,25 @@
 namespace App\Http\Controllers\Administrators\Settings\SocialWorks;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+
+use App\Laboratory\Repositories\SocialWorks\SocialWorkRepositoryInterface;
 
 use App\Models\BillingPeriod;
 use App\Models\PaymentSocialWork;
-use App\Models\SocialWork;
 
 use Lang;
 
 class PaymentSocialWorkController extends Controller
 {
+    /** @var \App\Laboratory\Repositories\SocialWorks\SocialWorkRepositoryInterface */
+    private $socialWorkRepository;
+
+    public function __construct(SocialWorkRepositoryInterface $socialWorkRepository)
+    {
+        $this->socialWorkRepository = $socialWorkRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -32,7 +40,7 @@ class PaymentSocialWorkController extends Controller
     public function create($social_work_id)
     {
         //
-        $social_work = SocialWork::findOrFail($social_work_id);
+        $social_work = $this->socialWorkRepository->findOrFail($social_work_id);
 
         return view('administrators/settings/social_works/payments/create')->with('social_work', $social_work);
     }
@@ -59,15 +67,11 @@ class PaymentSocialWorkController extends Controller
             return back()->withInput($request->all())->withErrors(Lang::get('payment_social_works.payment_before_billing_period'));
         }
 
-        try {
-            $payment = new PaymentSocialWork($request->all());
+        $payment = new PaymentSocialWork($request->all());
 
-            if (!$payment->save()) {
+        if (!$payment->save()) {
                 return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
-            }
-        } catch (QueryException $exception) {
-            return back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
-        }
+        }       
 
         return redirect()->action([SocialWorkController::class, 'edit'], ['id' => $request->social_work_id]);
     }
@@ -117,19 +121,14 @@ class PaymentSocialWorkController extends Controller
 
         $payment = PaymentSocialWork::findOrFail($id);
 
-        try {
+        $billing_period = $payment->billing_period;
 
-            $billing_period = $payment->billing_period;
+        if ($billing_period->end_date > $request->payment_date) {
+            return back()->withInput($request->all())->withErrors(Lang::get('payment_social_works.payment_before_billing_period'));
+        }
 
-            if ($billing_period->end_date > $request->payment_date) {
-                return back()->withInput($request->all())->withErrors(Lang::get('payment_social_works.payment_before_billing_period'));
-            }
-
-            if (!$payment->update($request->all())) {
-                return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
-            }
-        } catch (QueryException $exception) {
-            return back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
+        if (!$payment->update($request->all())) {
+            return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
 
         return redirect()->action([SocialWorkController::class, 'edit'], ['id' => $payment->social_work_id]);
@@ -146,13 +145,9 @@ class PaymentSocialWorkController extends Controller
         //
 
         $payment = PaymentSocialWork::findOrFail($id);
-
-        try {
-            if (!$payment->delete()) {
-                return back()->withErrors(Lang::get('forms.failed_transaction'));
-            }
-        } catch (QueryException $exception) {
-            return back()->withErrors(Lang::get('errors.error_processing_transaction'));
+            
+        if (!$payment->delete()) {
+            return back()->withErrors(Lang::get('forms.failed_transaction'));
         }
 
         return redirect()->action([SocialWorkController::class, 'edit'], ['id' => $payment->social_work_id]);

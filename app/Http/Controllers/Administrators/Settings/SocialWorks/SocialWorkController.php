@@ -4,16 +4,24 @@ namespace App\Http\Controllers\Administrators\Settings\SocialWorks;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
-use App\Models\SocialWork;
+use App\Laboratory\Repositories\SocialWorks\SocialWorkRepositoryInterface;
+
 use App\Models\PaymentSocialWork;
 
 use Lang;
 
 class SocialWorkController extends Controller
 {
+    /** @var \App\Laboratory\Repositories\SocialWorks\SocialWorkRepositoryInterface */
+    private $socialWorkRepository;
+
+    public function __construct(SocialWorkRepositoryInterface $socialWorkRepository)
+    {
+        $this->socialWorkRepository = $socialWorkRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -23,7 +31,7 @@ class SocialWorkController extends Controller
     {
         //
 
-        $social_works = SocialWork::all();
+        $social_works = $this->socialWorkRepository->all();
 
         return view('administrators/settings/social_works/index')->with('social_works', $social_works);
     }
@@ -56,14 +64,9 @@ class SocialWorkController extends Controller
 
         $social_work = new SocialWork($request->all());
         
-        try {
-            if (! $social_work->save()) {
-                return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
-            }
-        } catch (QueryException $exception) {
-            return back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
-        }
-        
+        if (! $this->socialWorkRepository->create($request->all())) {
+            return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
+        }      
 
         return redirect()->action([SocialWorkController::class, 'index']);
     }
@@ -89,7 +92,7 @@ class SocialWorkController extends Controller
     {
         //
 
-        $social_work = SocialWork::findOrFail($id);
+        $social_work = $this->socialWorkRepository->findOrFail($id);
 
         $payments = PaymentSocialWork::select('payment_social_works.id', 'payment_date', 'amount', 'name as billing_period')
             ->join('billing_periods', 'payment_social_works.billing_period_id', '=', 'billing_periods.id')
@@ -117,17 +120,11 @@ class SocialWorkController extends Controller
         $request->validate([
             'name' => 'required|string',
         ]);
-
-        $social_work = SocialWork::findOrFail($id);
-
-        try {
-            if (! $social_work->update($request->all())) {
-                return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
-            }
-        } catch (QueryException $exception) {
-            return back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
+        
+        if (! $this->socialWorkRepository->update($request->except(['_token', '_method']), $id)) {
+            return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
-
+        
         return redirect()->action([SocialWorkController::class, 'index']);
     }
 
@@ -141,16 +138,10 @@ class SocialWorkController extends Controller
     {
         //
 
-        $social_work = SocialWork::findOrFail($id);
-
-        try {
-            if (! $social_work->delete()) {
+        if (! $this->socialWorkRepository->delete($id)) {
                 return back()->withErrors(Lang::get('forms.failed_transaction'));
-            }
-        } catch (QueryException $exception) {
-            return back()->withErrors(Lang::get('errors.error_processing_transaction'));
         }
-
+    
         return redirect()->action([SocialWorkController::class, 'index']);
     }
 

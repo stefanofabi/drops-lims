@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Administrators\Determinations;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Database\QueryException;
 use App\Http\Traits\Pagination;
 
 use App\Laboratory\Repositories\Determinations\DeterminationRepositoryInterface;
@@ -102,14 +101,10 @@ class DeterminationController extends Controller
             'biochemical_unit' => 'required|numeric|min:0',
         ]);
 
-        try {
-            if (! $determination = $this->determinationRepository->create($request->all())) {
-                return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
-            }
-        } catch (QueryException $e) {
-            return back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
+        if (! $determination = $this->determinationRepository->create($request->all())) {
+            return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
-
+    
         return redirect()->action([DeterminationController::class, 'show'], ['id' => $determination->id]);
     }
 
@@ -160,12 +155,8 @@ class DeterminationController extends Controller
             'biochemical_unit' => 'required|numeric|min:0',
         ]);
 
-        try {
-            if (!$this->determinationRepository->update($request->except(['_token', '_method']), $id)) {
-                return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
-            }
-        } catch (QueryException $e) {
-            return back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
+        if (!$this->determinationRepository->update($request->except(['_token', '_method']), $id)) {
+            return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
 
         return redirect()->action([DeterminationController::class, 'show'], ['id' => $id]);
@@ -181,16 +172,12 @@ class DeterminationController extends Controller
     {
         //
 
-        $nomenclators = $this->nomenclatorRepository->all();
-
-        try {
-            if (!$this->determinationRepository->delete($id)) {
-                return back()->withErrors(Lang::get('forms.failed_transaction'));
-            }
-        } catch (QueryException $exception) {
-            return back()->withErrors(Lang::get('errors.error_processing_transaction'));
+        if (!$this->determinationRepository->delete($id)) {
+            return back()->withErrors(Lang::get('forms.failed_transaction'));
         }
         
+        $nomenclators = $this->nomenclatorRepository->all();
+
         return view('administrators/determinations/determinations')
             ->with('success', [Lang::get('determinations.success_destroy_message')])
             ->with('nomenclators', $nomenclators);

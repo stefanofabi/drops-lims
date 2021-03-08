@@ -3,15 +3,22 @@
 namespace App\Http\Controllers\Administrators\Settings;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
-use App\Models\Nomenclator;
+use App\Laboratory\Repositories\Nomenclators\NomenclatorRepositoryInterface;
 
 use Lang;
 
 class NomenclatorController extends Controller
 {
+    /** @var \App\Laboratory\Repositories\Nomenclators\NomenclatorRepositoryInterface */
+    private $nomenclatorRepository;
+
+    public function __construct(NomenclatorRepositoryInterface $nomenclatorRepository)
+    {
+        $this->nomenclatorRepository = $nomenclatorRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -21,7 +28,7 @@ class NomenclatorController extends Controller
     {
         //
 
-        $nomenclators = Nomenclator::all();
+        $nomenclators = $this->nomenclatorRepository->all();
 
         return view('administrators/settings/nomenclators/index')->with('nomenclators', $nomenclators);
     }
@@ -52,15 +59,10 @@ class NomenclatorController extends Controller
             'name' => 'required|string',
         ]);
 
-        $nomenclator = new Nomenclator($request->all());
-        try {
-            if (! $nomenclator->save()) {
+        if (! $this->nomenclatorRepository->create($request->all())) {
                 return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
-            }
-        } catch (QueryException $exception) {
-            return back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
         }
-
+  
         return redirect()->action([NomenclatorController::class, 'index']);
     }
 
@@ -84,7 +86,7 @@ class NomenclatorController extends Controller
     public function edit($id)
     {
         //
-        $nomenclator = Nomenclator::findOrFail($id);
+        $nomenclator = $this->nomenclatorRepository->findOrFail($id);
 
         return view('administrators/settings/nomenclators/edit')->with('nomenclator', $nomenclator);
     }
@@ -103,17 +105,11 @@ class NomenclatorController extends Controller
         $request->validate([
             'name' => 'required|string',
         ]);
-
-        $nomenclator = Nomenclator::findOrFail($id);
         
-        try {
-            if (! $nomenclator->update($request->all())) {
-                return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
-            }
-        } catch (QueryException $exception) {
-            return back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
+        if (! $this->nomenclatorRepository->update($request->except(['_token', '_method']), $id)) {
+            return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
-        
+  
         return redirect()->action([NomenclatorController::class, 'index']);
     }
 
@@ -127,16 +123,10 @@ class NomenclatorController extends Controller
     {
         //
 
-        $nomenclator = Nomenclator::findOrFail($id);
-
-        try {
-            if (! $nomenclator->delete()) {
-                return back()->withErrors(Lang::get('forms.failed_transaction'));
-            }
-        } catch (QueryException $exception) {
-            return back()->withErrors(Lang::get('errors.error_processing_transaction'));
+        if (! $this->nomenclatorRepository->delete($id)) {
+            return back()->withErrors(Lang::get('forms.failed_transaction'));
         }
-
+      
         return redirect()->action([NomenclatorController::class, 'index']);
     }
 }

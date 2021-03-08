@@ -3,17 +3,31 @@
 namespace App\Http\Controllers\Administrators\Settings\SocialWorks;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
-use App\Models\Nomenclator;
+use App\Laboratory\Repositories\SocialWorks\SocialWorkRepositoryInterface;
+use App\Laboratory\Repositories\Nomenclators\NomenclatorRepositoryInterface;
+
 use App\Models\Plan;
-use App\Models\SocialWork;
 
 use Lang;
 
 class PlanController extends Controller
 {
+    /** @var \App\Laboratory\Repositories\SocialWorks\SocialWorkRepositoryInterface */
+    private $socialWorkRepository;
+
+    /** @var \App\Laboratory\Repositories\Nomenclators\NomenclatorRepositoryInterface */
+    private $nomenclatorRepository;
+
+    public function __construct(
+        SocialWorkRepositoryInterface $socialWorkRepository, 
+        NomenclatorRepositoryInterface $nomenclatorRepository
+    ) {
+        $this->socialWorkRepository = $socialWorkRepository;
+        $this->nomenclatorRepository = $nomenclatorRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -32,10 +46,12 @@ class PlanController extends Controller
     public function create($social_work_id)
     {
         //
-        $social_work = SocialWork::findOrFail($social_work_id);
-        $nomenclators = Nomenclator::all();
+        $social_work =  $this->socialWorkRepository->findOrFail($social_work_id);
+        $nomenclators = $this->nomenclatorRepository->all();
 
-        return view('administrators/settings/social_works/plans/create')->with('social_work', $social_work)->with('nomenclators', $nomenclators);
+        return view('administrators/settings/social_works/plans/create')
+            ->with('social_work', $social_work)
+            ->with('nomenclators', $nomenclators);
     }
 
     /**
@@ -52,15 +68,11 @@ class PlanController extends Controller
             'name' => 'required|string',
             'nbu_price' => 'required|numeric',
         ]);
+ 
+        $plan = new Plan($request->all());
 
-        try {
-            $plan = new Plan($request->all());
-
-            if (! $plan->save()) {
-                return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
-            }
-        } catch (QueryException $exception) {
-            return back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
+        if (! $plan->save()) {
+            return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
 
         return redirect()->action([SocialWorkController::class, 'edit'], ['id' => $plan->social_work_id]);
@@ -86,8 +98,9 @@ class PlanController extends Controller
     public function edit($id)
     {
         //
+        
         $plan = Plan::findOrFail($id);
-        $nomenclators = Nomenclator::all();
+        $nomenclators = $this->nomenclatorRepository->all();
 
         return view('administrators/settings/social_works/plans/edit')
             ->with('plan', $plan)
@@ -111,16 +124,12 @@ class PlanController extends Controller
         ]);
 
         $plan = Plan::findOrFail($id);
-
-        try {
-            if (! $plan->update($request->all())) {
-                return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
-            }
-        } catch (QueryException $exception) {
-            return back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
+    
+        if (! $plan->update($request->all())) {
+            return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
 
-        return redirect()->action([SocialWorkController::class, 'edit'], $plan->social_work_id);
+        return redirect()->action([SocialWorkController::class, 'edit'], ['id' => $plan->social_work_id]);
     }
 
     /**
@@ -135,12 +144,8 @@ class PlanController extends Controller
 
         $plan = Plan::findOrFail($id);
 
-        try {
-            if (! $plan->delete()) {
-                return back()->withErrors(Lang::get('forms.failed_transaction'));
-            }
-        } catch (QueryException $exception) {
-            return back()->withErrors(Lang::get('errors.error_processing_transaction'));
+        if (! $plan->delete()) {
+            return back()->withErrors(Lang::get('forms.failed_transaction'));
         }
 
         return redirect()->action([SocialWorkController::class, 'edit'], ['id' => $plan->social_work_id]);

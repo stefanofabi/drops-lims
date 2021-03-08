@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Administrators\Determinations;
 
 use App\Http\Controllers\Controller;
-
-use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 use App\Laboratory\Repositories\Determinations\DeterminationRepositoryInterface;
@@ -66,18 +64,11 @@ class ReportController extends Controller
 
         $report = new Report($request->all());
 
-        try {
-
-            if ($report->save()) {
-                $redirect = redirect()->action([ReportController::class, 'show'], ['id' => $report->id]);
-            } else {
-                $redirect = back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
-            }
-        } catch (QueryException $exception) {
-            $redirect = back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
+        if (!$report->save()) {
+            return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
 
-        return $redirect;
+        return redirect()->action([ReportController::class, 'show'], ['id' => $report->id]);
     }
 
     /**
@@ -123,17 +114,11 @@ class ReportController extends Controller
 
         $report = Report::findOrFail($id);
 
-        try {
-            if ($report->update($request->all())) {
-                $redirect = redirect()->action([ReportController::class, 'show'], ['id' => $id]);
-            } else {
-                $redirect = back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
-            }
-        } catch (QueryException $exception) {
-            $redirect = back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
+        if (!$report->update($request->all())) {
+            return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
 
-        return $redirect;
+        return redirect()->action([ReportController::class, 'show'], ['id' => $id]);
     }
 
     /**
@@ -147,20 +132,17 @@ class ReportController extends Controller
         //
 
         $report = Report::findOrFail($id);
-
+        $determination = $report->determination;
+        
         $view = view('administrators/determinations/edit');
-
-        try {
-            if ($report->delete()) {
-                $view->with('success', [Lang::get('reports.success_destroy')]);
-            } else {
-                $view->withErrors(Lang::get('reports.danger_destroy'));
-            }
-        } catch (QueryException $exception) {
-            return back()->withErrors(Lang::get('errors.error_processing_transaction'));
-       
+        
+        if ($report->delete()) {
+            $view->with('success', [Lang::get('reports.success_destroy')]);
+        } else {
+            $view->withErrors(Lang::get('reports.danger_destroy'));
         }
 
-        return $view->with('determination', $report->determination);
+
+        return $view->with('determination', $determination);
     }
 }

@@ -4,6 +4,9 @@ namespace App\Exceptions;
 
 use Throwable;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Database\QueryException;
+
+use Lang;
 
 class Handler extends ExceptionHandler
 {
@@ -46,6 +49,11 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+    	// To remove try-catch blocks from controllers
+    	if ($exception instanceof QueryException) {
+    		return back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
+    	}
+
         return parent::render($request, $exception);
     }
 }

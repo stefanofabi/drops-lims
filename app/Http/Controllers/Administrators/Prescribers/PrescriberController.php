@@ -94,14 +94,10 @@ class PrescriberController extends Controller
             'email' => 'email|nullable',
         ]);
 
-        try {
-            if (! $prescriber = $this->prescriberRepository->create($request->all())) {
-                return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
-            }
-        } catch (QueryException $exception) {
-            return back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
+        if (! $prescriber = $this->prescriberRepository->create($request->all())) {
+            return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
-        
+
         return redirect()->action([PrescriberController::class, 'show'], ['id' => $prescriber->id]);
     }
 
@@ -144,12 +140,8 @@ class PrescriberController extends Controller
     {
         //
 
-        try {
-            if (! $this->prescriberRepository->update($request->except(['_token', '_method']), $id)) {
-                return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
-            }
-        } catch (QueryException $exception) {
-            return back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
+        if (! $this->prescriberRepository->update($request->except(['_token', '_method']), $id)) {
+            return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
 
         return redirect()->action([PrescriberController::class, 'show'], ['id' => $id]);
@@ -165,14 +157,11 @@ class PrescriberController extends Controller
     {
         //
 
-        try {
-            if (!$this->prescriberRepository->delete($id)) {
-                return back()->withErrors(Lang::get('forms.failed_transaction'));
-            }
-        } catch (QueryException $exception) {
-            return back()->withErrors(Lang::get('errors.error_processing_transaction'));
+        if (!$this->prescriberRepository->delete($id)) {
+            return back()->withErrors(Lang::get('forms.failed_transaction'));
         }
 
-        return view('administrators/prescribers/prescribers')->with('success', [Lang::get('prescribers.success_destroy_message')]);
+        return view('administrators/prescribers/prescribers')
+            ->with('success', [Lang::get('prescribers.success_destroy_message')]);
     }
 }
