@@ -22,6 +22,9 @@ use App\Laboratory\Repositories\Protocols\ProtocolRepository;
 use App\Laboratory\Repositories\BillingPeriods\BillingPeriodRepositoryInterface;
 use App\Laboratory\Repositories\BillingPeriods\BillingPeriodRepository;
 
+use App\Laboratory\Repositories\Nomenclators\NomenclatorRepositoryInterface;
+use App\Laboratory\Repositories\Nomenclators\NomenclatorRepository;
+
 class RepositoryServiceProvider extends ServiceProvider
 {
     /**
@@ -39,6 +42,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(DeterminationRepositoryInterface::class, DeterminationRepository::class);
         $this->app->bind(ProtocolRepositoryInterface::class, ProtocolRepository::class);
         $this->app->bind(BillingPeriodRepositoryInterface::class, BillingPeriodRepository::class);
+        $this->app->bind(NomenclatorRepositoryInterface::class, NomenclatorRepository::class);
         
     }
 

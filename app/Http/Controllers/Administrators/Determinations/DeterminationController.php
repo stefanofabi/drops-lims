@@ -8,7 +8,7 @@ use Illuminate\Database\QueryException;
 use App\Http\Traits\Pagination;
 
 use App\Laboratory\Repositories\Determinations\DeterminationRepositoryInterface;
-use App\Models\Nomenclator;
+use App\Laboratory\Repositories\Nomenclators\NomenclatorRepositoryInterface;
 
 use Lang;
 
@@ -23,9 +23,13 @@ class DeterminationController extends Controller
     /** @var \App\Laboratory\Repositories\Determinations\DeterminationRepositoryInterface */
     private $determinationRepository;
 
-    public function __construct(DeterminationRepositoryInterface $determinationRepository)
+    /** @var \App\Laboratory\Repositories\Nomenclators\NomenclatorRepositoryInterface */
+    private $nomenclatorRepository;
+
+    public function __construct(DeterminationRepositoryInterface $determinationRepository, NomenclatorRepositoryInterface $nomenclatorRepository)
     {
         $this->determinationRepository = $determinationRepository;
+        $this->nomenclatorRepository = $nomenclatorRepository;
     }
 
     /**
@@ -36,7 +40,7 @@ class DeterminationController extends Controller
     public function index()
     {
         //
-        $nomenclators = Nomenclator::all();
+        $nomenclators = $this->nomenclatorRepository->all();
 
         return view('administrators/determinations/determinations')->with('nomenclators', $nomenclators);
     }
@@ -59,7 +63,7 @@ class DeterminationController extends Controller
         $total_pages = ceil($count_rows / self::PER_PAGE);
         $paginate = $this->paginate($request->page, $total_pages, self::ADJACENTS);
 
-        $nomenclators = Nomenclator::all();
+        $nomenclators = $this->nomenclatorRepository->all();
 
         return view('administrators/determinations/index')
             ->with('request', $request)
@@ -76,7 +80,7 @@ class DeterminationController extends Controller
     public function create()
     {
         //
-        $nomenclators = Nomenclator::all();
+        $nomenclators = $this->nomenclatorRepository->all();
 
         return view('administrators/determinations/create')->with('nomenclators', $nomenclators);
     }
@@ -177,7 +181,7 @@ class DeterminationController extends Controller
     {
         //
 
-        $nomenclators = Nomenclator::all();
+        $nomenclators = $this->nomenclatorRepository->all();
 
         try {
             if (!$this->determinationRepository->delete($id)) {
