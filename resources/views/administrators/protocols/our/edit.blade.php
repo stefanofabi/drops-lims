@@ -1,7 +1,7 @@
 @extends('administrators/default-template')
 
 @section('title')
-{{ trans('protocols.edit_protocol') }} #{{ $protocol->protocol_id }}
+{{ trans('protocols.edit_protocol') }} #{{ $protocol->id }}
 @endsection
 
 @section('active_protocols', 'active')
@@ -55,7 +55,7 @@
 <ul class="nav flex-column">
 	@can('crud_practices')
 	<li class="nav-item">
-		<a class="nav-link" href="{{ route('administrators/protocols/our/add_practices', ['id' => $protocol->protocol_id]) }}">
+		<a class="nav-link" href="{{ route('administrators/protocols/our/add_practices', ['id' => $protocol->id]) }}">
 			<img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('protocols.add_practices') }}
 		</a>
 	</li>
@@ -68,7 +68,7 @@
     </li>
 
 	<li class="nav-item">
-		<a class="nav-link" href="{{ route('administrators/protocols/our/show', ['id' => $protocol->protocol_id]) }}">
+		<a class="nav-link" href="{{ route('administrators/protocols/our/show', ['id' => $protocol->id]) }}">
 			<img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('forms.go_back') }}
 		</a>
 	</li>
@@ -76,13 +76,13 @@
 @endsection
 
 @section('content-title')
-<i class="fas fa-file-medical"></i> {{ trans('protocols.edit_protocol') }} #{{ $protocol->protocol_id }}
+<i class="fas fa-file-medical"></i> {{ trans('protocols.edit_protocol') }} #{{ $protocol->id }}
 @endsection
 
 
 @section('content')
 
-<form method="post" action="{{ route('administrators/protocols/our/update', ['id' => $protocol->protocol_id]) }}">
+<form method="post" action="{{ route('administrators/protocols/our/update', ['id' => $protocol->id]) }}">
 	@csrf
 	{{ method_field('PUT') }}
 
@@ -133,7 +133,7 @@
 			<span class="input-group-text"> {{ trans('protocols.completion_date') }} </span>
 		</div>
 
-		<input type="date" class="form-control" name="completion_date" value="{{ @old('completion_date') ?? $protocol->protocol->completion_date }}">
+		<input type="date" class="form-control" name="completion_date" value="{{ @old('completion_date') ?? $protocol->completion_date }}">
 	</div>
 
 	<div class="input-group mt-2 col-md-9 input-form">
@@ -157,7 +157,7 @@
 			<span class="input-group-text"> {{ trans('protocols.observations') }} </span>
 		</div>
 
-		<textarea class="form-control" rows="3" name="observations"> {{ @old('observations') ?? $protocol->protocol->observations }} </textarea>
+		<textarea class="form-control" rows="3" name="observations"> {{ @old('observations') ?? $protocol->observations }} </textarea>
 	</div>
 
 	<div class="mt-3 float-right">
@@ -192,7 +192,7 @@
 						$total_amount = 0;
 					@endphp
 
-					@foreach ($protocol->protocol->practices as $practice)
+					@foreach ($protocol->practices as $practice)
 
 						@php
 							$total_amount += $practice->amount;

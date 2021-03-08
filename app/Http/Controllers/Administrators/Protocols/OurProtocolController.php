@@ -3,23 +3,23 @@
 namespace App\Http\Controllers\Administrators\Protocols;
 
 use App\Http\Controllers\Controller;
-
-use App\Laboratory\Prints\Protocols\Our\PrintProtocolContext;
-use App\Laboratory\Prints\Worksheets\PrintWorksheetContext;
 use Illuminate\Http\Request;
 
 use App\Laboratory\Repositories\Patients\PatientRepositoryInterface;
-use App\Laboratory\Repositories\Protocols\Our\OurProtocolRepositoryInterface;
+use App\Laboratory\Repositories\Protocols\ProtocolRepositoryInterface;
 use App\Laboratory\Repositories\Prescribers\PrescriberRepositoryInterface;
 use App\Laboratory\Repositories\BillingPeriods\BillingPeriodRepositoryInterface;
+
+use App\Laboratory\Prints\Worksheets\PrintWorksheetContext;
+use App\Laboratory\Prints\Protocols\Our\PrintOurProtocolContext;
 
 use Lang;
 
 class OurProtocolController extends Controller
 {
 
-    /** @var \App\Laboratory\Repositories\Protocols\Our\OurProtocolRepositoryInterface */
-    private $ourProtocolRepository;
+    /** @var \App\Laboratory\Repositories\Protocols\ProtocolRepositoryInterface */
+    private $protocolRepository;
 
     /** @var \App\Laboratory\Repositories\Patients\PatientRepositoryInterface */
     private $patientRepository;
@@ -30,16 +30,26 @@ class OurProtocolController extends Controller
     /** @var \App\Laboratory\Repositories\BillingPeriods\BillingPeriodRepositoryInterface */
     private $billingPeriodRepository;
 
+    /** @var \App\Laboratory\Prints\Worksheets\PrintWorksheetContext */
+    private $printWorksheetContext;
+
+    /** @var \App\Laboratory\Prints\Protocols\Our\PrintOurProtocolContext */
+    private $printOurProtocolContext;
+
     public function __construct (
-        OurProtocolRepositoryInterface $ourProtocolRepository, 
+        ProtocolRepositoryInterface $protocolRepository, 
         PatientRepositoryInterface $patientRepository, 
         PrescriberRepositoryInterface $prescriberRepository,
-        BillingPeriodRepositoryInterface $billingPeriodRepository
+        BillingPeriodRepositoryInterface $billingPeriodRepository,
+        PrintWorksheetContext $printWorksheetContext,
+        PrintOurProtocolContext $printOurProtocolContext
     ) {
-        $this->ourProtocolRepository = $ourProtocolRepository;
+        $this->protocolRepository = $protocolRepository;
         $this->patientRepository = $patientRepository;
         $this->prescriberRepository = $prescriberRepository;
         $this->billingPeriodRepository = $billingPeriodRepository;
+        $this->printWorksheetContext = $printWorksheetContext;
+        $this->printOurProtocolContext = $printOurProtocolContext;
     }
 
     /**
@@ -89,24 +99,22 @@ class OurProtocolController extends Controller
 
         $request->validate([
             'completion_date' => 'required|date',
+            'patient_id' => 'required|numeric|min:1',
+            'plan_id' => 'required|numeric|min:1',
+            'prescriber_id' => 'required|numeric|min:1',
+            'billing_period_id' => 'required|numeric|min:1',
+            'quantity_orders' => 'required|numeric|min:0',
         ]);
-        
-        if (! $our_protocol = $this->ourProtocolRepository->create(
-            [
-                'completion_date' => $request->completion_date,
-                'observations' => $request->observations,
-            ], 
-            [
-                'plan_id' => $request->plan_id,
-                'prescriber_id' => $request->prescriber_id,
-                'withdrawal_date' => $request->withdrawal_date,
-                'quantity_orders' => $request->quantity_orders,
-                'diagnostic' => $request->diagnostic,              
-            ])) {
-                return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
-        }
 
-        return redirect()->action([OurProtocolController::class, 'show'], ['id' => $our_protocol->protocol_id]);
+        try {
+            if (! $our_protocol = $this->protocolRepository->create($request->all())) {
+                return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
+            }
+        } catch (QueryException $exception) {
+            return back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
+        }
+        
+        return redirect()->action([OurProtocolController::class, 'show'], ['id' => $our_protocol->id]);
     }
 
     /**
@@ -119,7 +127,7 @@ class OurProtocolController extends Controller
     {
         //
 
-        $protocol = $this->ourProtocolRepository->findOrFail($id);
+        $protocol = $this->protocolRepository->findOrFail($id);
 
         return view('administrators/protocols/our/show')->with('protocol', $protocol);
     }
@@ -134,7 +142,7 @@ class OurProtocolController extends Controller
     {
         //
 
-        $protocol = $this->ourProtocolRepository->findOrFail($id);
+        $protocol = $this->protocolRepository->findOrFail($id);
 
 
         return view('administrators/protocols/our/edit')->with('protocol', $protocol);
@@ -150,26 +158,22 @@ class OurProtocolController extends Controller
     public function update(Request $request, $id)
     {
         //  
-
+        
         $request->validate([
             'completion_date' => 'required|date',
+            'plan_id' => 'required|numeric|min:1',
+            'prescriber_id' => 'required|numeric|min:1',
             'quantity_orders' => 'required|numeric|min:0',
         ]);
-
-        if (! $this->ourProtocolRepository->update(
-            [
-                'completion_date' => $request->completion_date,
-                'observations' => $request->observations
-            ], 
-            [
-                'plan_id' => $request->plan_id,
-                'prescriber_id' => $request->prescriber_id,
-                'withdrawal_date' => $request->withdrawal_date,
-                'quantity_orders' => $request->quantity_orders,
-                'diagnostic' => $request->diagnostic,              
-            ], $id)) {
+        
+        try {
+            // If you wish, you can make $request->except('patient_id')
+            if (! $this->protocolRepository->update($request->all(), $id)) {
                 return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
             }
+        } catch (QueryException $exception) {
+            return back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
+        }
         
         return redirect()->action([OurProtocolController::class, 'show'], ['id' => $id]);
     }
@@ -214,7 +218,7 @@ class OurProtocolController extends Controller
      */
     public function add_practices($protocol_id)
     {
-        $our_protocol = $this->ourProtocolRepository->findOrFail($protocol_id);
+        $our_protocol = $this->protocolRepository->findOrFail($protocol_id);
 
         return view('administrators/protocols/our/add_practices')->with('protocol', $our_protocol);
     }
@@ -226,7 +230,7 @@ class OurProtocolController extends Controller
      */
     public static function get_practices($protocol_id)
     {
-        return $this->ourProtocolRepository->getPractices($protocol_id);
+        return $this->protocolRepository->getPractices($protocol_id);
     }
 
     /**
@@ -237,9 +241,11 @@ class OurProtocolController extends Controller
     public function print_protocol($protocol_id, $filter_practices = [])
     {
         $strategy = 'modern_style';
-        $strategyClass = PrintProtocolContext::STRATEGIES[$strategy];
+        $strategyClass = PrintOurProtocolContext::STRATEGIES[$strategy];
 
-        return (new $strategyClass)->print($protocol_id, $filter_practices);
+        $this->printOurProtocolContext->setStrategy(new $strategyClass);
+
+        return $this->printOurProtocolContext->print($protocol_id, $filter_practices);
     }
 
     /**
@@ -252,7 +258,9 @@ class OurProtocolController extends Controller
         $strategy = 'simple_style';
         $strategyClass = PrintWorksheetContext::STRATEGIES[$strategy];
 
-        return (new $strategyClass)->print($protocol_id, $filter_practices);
+        $this->printWorksheetContext->setStrategy(new $strategyClass);
+        
+        return $this->printWorksheetContext->print($protocol_id, $filter_practices);
     }
 
 }

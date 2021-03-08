@@ -1,7 +1,7 @@
 @extends('administrators/default-template')
 
 @section('title')
-{{ trans('protocols.show_protocol') }} #{{ $protocol->protocol_id }}
+{{ trans('protocols.show_protocol') }} #{{ $protocol->id }}
 @endsection
 
 @section('active_protocols', 'active')
@@ -23,7 +23,7 @@
 <ul class="nav flex-column">
 	@can('print_worksheets')
 		<li class="nav-item">
-			<a class="nav-link" target="_blank" href="{{ route('administrators/protocols/our/print_worksheet', ['id' => $protocol->protocol_id]) }}">
+			<a class="nav-link" target="_blank" href="{{ route('administrators/protocols/our/print_worksheet', ['id' => $protocol->id]) }}">
 				<img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('protocols.print_worksheet') }}
 			</a>
 		</li>
@@ -31,7 +31,7 @@
 
 	@can('print_protocols')
 		<li class="nav-item">
-			<a class="nav-link" target="_blank" href="{{ route('administrators/protocols/our/print', ['id' => $protocol->protocol_id]) }}">
+			<a class="nav-link" target="_blank" href="{{ route('administrators/protocols/our/print', ['id' => $protocol->id]) }}">
 				<img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('protocols.print_report') }}
 			</a>
 		</li>
@@ -47,13 +47,13 @@
 @endsection
 
 @section('content-title')
-<i class="fas fa-file-medical"></i> {{ trans('protocols.show_protocol') }} #{{ $protocol->protocol_id }}
+<i class="fas fa-file-medical"></i> {{ trans('protocols.show_protocol') }} #{{ $protocol->id }}
 @endsection
 
 
 @section('content')
 	<div class="alert alert-info fade show">
-		<a href="{{ route('administrators/protocols/our/edit', ['id' => $protocol->protocol_id]) }}" class="btn btn-info btn-sm"> <i class="fas fa-lock-open"></i> </a>
+		<a href="{{ route('administrators/protocols/our/edit', ['id' => $protocol->id]) }}" class="btn btn-info btn-sm"> <i class="fas fa-lock-open"></i> </a>
 		{{ trans('protocols.protocol_blocked') }}
 	</div>
 
@@ -86,7 +86,7 @@
 			<span class="input-group-text"> {{ trans('protocols.completion_date') }} </span>
 		</div>
 
-		<input type="date" class="form-control" value="{{ $protocol->protocol->completion_date }}" disabled>
+		<input type="date" class="form-control" value="{{ $protocol->completion_date }}" disabled>
 	</div>
 
 	<div class="input-group mt-2 mb-1 col-md-9 input-form">
@@ -110,7 +110,7 @@
 			<span class="input-group-text"> {{ trans('protocols.observations') }} </span>
 		</div>
 
-		<textarea class="form-control" rows="3" disabled>{{ $protocol->protocol->observations }}</textarea>
+		<textarea class="form-control" rows="3" disabled>{{ $protocol->observations }}</textarea>
 	</div>
 
     <div class="input-group mt-2 mb-1 col-md-9 input-form">
@@ -145,7 +145,7 @@
 						$total_amount = 0;
 					@endphp
 
-					@foreach ($protocol->protocol->practices as $practice)
+					@foreach ($protocol->practices as $practice)
 
 						@php
 							$total_amount += $practice->amount;

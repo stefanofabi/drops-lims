@@ -1,7 +1,7 @@
 @extends('administrators/default-template')
 
 @section('title')
-    {{ trans('protocols.edit_protocol') }} #{{ $protocol->protocol_id }}
+    {{ trans('protocols.edit_protocol') }} #{{ $protocol->id }}
 @endsection
 
 @section('active_protocols', 'active')
@@ -39,7 +39,7 @@
         function add_practice() {
             var parameters = {
                 "_token": "{{ csrf_token() }}",
-                "protocol_id": '{{ $protocol->protocol_id }}',
+                "protocol_id": '{{ $protocol->id }}',
                 "report_id": $("#report_id").val(),
                 "type": 'our',
             };
@@ -82,14 +82,14 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('administrators/protocols/our/edit', ['id' => $protocol->protocol_id]) }}"> <img
+            <a class="nav-link" href="{{ route('administrators/protocols/our/edit', ['id' => $protocol->id]) }}"> <img
                     src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('forms.go_back') }} </a>
         </li>
     </ul>
 @endsection
 
 @section('content-title')
-    <i class="fas fa-file-medical"></i> {{ trans('protocols.add_practices_for_protocol') }} #{{ $protocol->protocol_id }}
+    <i class="fas fa-file-medical"></i> {{ trans('protocols.add_practices_for_protocol') }} #{{ $protocol->id }}
 @endsection
 
 
@@ -138,7 +138,7 @@
                         $total_amount = 0;
                     @endphp
 
-                    @foreach ($protocol->protocol->practices as $practice)
+                    @foreach ($protocol->practices as $practice)
 
                         @php
                             $total_amount += $practice->amount;

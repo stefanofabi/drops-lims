@@ -2,14 +2,23 @@
 
 namespace App\Laboratory\Prints\Protocols\Our;
 
-use App\Models\OurProtocol;
 use App\Laboratory\Prints\Protocols\PrintProtocolStrategyInterface;
+use App\Laboratory\Repositories\Protocols\ProtocolRepository;
 
 use PDF;
 use Lang;
 
 class ModernStyleProtocolStrategy implements PrintProtocolStrategyInterface
 {
+
+    /** @var \App\Laboratory\Repositories\Protocols\ProtocolRepository */
+    private $protocolRepository;    
+    
+    public function __construct () 
+    {
+        $this->protocolRepository = resolve(ProtocolRepository::class);
+    }   
+
     /**
      * Returns a report in pdf
      *
@@ -17,20 +26,20 @@ class ModernStyleProtocolStrategy implements PrintProtocolStrategyInterface
      */
     public function print($protocol_id, $filter_practices = [])
     {
-        $our_protocol = OurProtocol::findOrFail($protocol_id);
-        $protocol = $our_protocol->protocol;
-        $practices = $protocol->practices;
+        $protocol = $this->protocolRepository->findOrFail($protocol_id);
 
-        if (! empty($filter_practices)) {
+        if (empty($filter_practices)) {
+            $practices = $protocol->practices;
+        } else {
             $practices = $practices->whereIn('id', $filter_practices);
         }
-
+        /*
         if (!$this->haveResults($practices)) {
             return Lang::get('protocols.empty_protocol');
-        }
+        }*/
 
         $pdf = PDF::loadView('pdf/protocols/modern_style', [
-            'our_protocol' => $our_protocol,
+            'protocol' => $protocol,
             'practices' => $practices,
         ]);
 

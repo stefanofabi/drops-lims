@@ -9,9 +9,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\QueryException;
 
+use App\Laboratory\Repositories\Protocols\ProtocolRepositoryInterface;
+
 use App\Models\Practice;
 use App\Models\Report;
-use App\Models\OurProtocol;
 use App\Models\Result;
 use App\Models\SignPractice;
 
@@ -19,6 +20,15 @@ use Lang;
 
 class PracticeController extends Controller
 {
+    /** @var \App\Laboratory\Repositories\Protocols\ProtocolRepositoryInterface */
+    private $protocolRepository;
+
+    public function __construct (
+        ProtocolRepositoryInterface $protocolRepository
+    ) {
+        $this->protocolRepository = $protocolRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -67,10 +77,12 @@ class PracticeController extends Controller
             switch ($type) {
                 case 'our':
                 {
-                    $protocol = OurProtocol::findOrFail($protocol_id);
+                    $protocol = $this->protocolRepository->findOrFail($protocol_id);
                     $plan = $protocol->plan;
                     $nbu_price = $plan->nbu_price;
                     $amount = $nbu_price * $biochemical_unit;
+
+                    break;
                 }
 
                 case 'derived':

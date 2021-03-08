@@ -1,19 +1,17 @@
 <?php
 
-namespace App\Laboratory\Prints\Worksheets;
+namespace App\Laboratory\Prints\Protocols\Our;
 
-use App\Laboratory\Prints\Worksheets\PrintWorksheetStrategyInterface;
-use App\Laboratory\Prints\Worksheets\SimpleStyleWorksheetStrategy;
+use App\Laboratory\Prints\Protocols\PrintProtocolStrategyInterface;
+use App\Laboratory\Prints\Protocols\Our\ModernStyleProtocolStrategy;
 
 use RuntimeException;
 
-final class PrintWorksheetContext
+final class PrintOurProtocolContext
 {
     const STRATEGIES = [
-        'simple_style' => SimpleStyleWorksheetStrategy::class,
+        'modern_style' => ModernStyleProtocolStrategy::class,
     ];
-
-    private $strategy;
 
     /**
      * Call strategy print() method.
@@ -27,11 +25,13 @@ final class PrintWorksheetContext
         return $this->strategy->print($protocol_id, $filter_practices);
     }
 
-    public function setStrategy(PrintWorksheetStrategyInterface $strategy) {
+    public function setStrategy(PrintProtocolStrategyInterface $strategy) 
+    {
         $this->strategy = $strategy;
     }
 
-    public function getStrategy() { 
+    public function getStrategy() 
+    { 
         return $this->strategy; 
     } 
 }

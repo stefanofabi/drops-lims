@@ -9,7 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
-use App\Models\Patient;
+use App\Laboratory\Repositories\Patients\PatientRepositoryInterface;
+
 use App\Models\SecurityCode;
 
 use Lang;
@@ -17,6 +18,14 @@ use Lang;
 class SecurityCodeController extends Controller
 {
     private const SECURITY_CODE_LENGTH = 10;
+
+    /** @var \App\Laboratory\Repositories\Patients\PatientRepositoryInterface */
+    private $patientRepository;
+
+    public function __construct(PatientRepositoryInterface $patientRepository)
+    {
+        $this->patientRepository = $patientRepository;
+    }
 
     /**
      * Display a listing of the resource.
@@ -48,7 +57,7 @@ class SecurityCodeController extends Controller
     {
         //
         $patient_id = $request->patient_id;
-        $patient = Patient::findOrFail($patient_id);
+        $patient = $this->patientRepository->findOrFail($patient_id);
 
         $new_security_code = Str::random(self::SECURITY_CODE_LENGTH);
 

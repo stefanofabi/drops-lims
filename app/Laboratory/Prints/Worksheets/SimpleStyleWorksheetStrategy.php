@@ -3,13 +3,21 @@
 namespace App\Laboratory\Prints\Worksheets;
 
 use App\Laboratory\Prints\Worksheets\PrintWorksheetStrategyInterface;
-use App\Models\OurProtocol;
+use App\Laboratory\Repositories\Protocols\ProtocolRepository;
 
-use Lang;
 use PDF;
 
-class SimpleStyleWorksheetStrategy implements PrintWorksheetStrategyInterface
+final class SimpleStyleWorksheetStrategy implements PrintWorksheetStrategyInterface
 {
+
+    /** @var \App\Laboratory\Repositories\Protocols\ProtocolRepository */
+    private $protocolRepository;    
+    
+    public function __construct () 
+    {
+        $this->protocolRepository = resolve(ProtocolRepository::class);
+    }   
+
     /**
      * Returns a worksheet in pdf
      *
@@ -17,16 +25,16 @@ class SimpleStyleWorksheetStrategy implements PrintWorksheetStrategyInterface
      */
     public function print($protocol_id, $filter_practices = [])
     {
-        $our_protocol = OurProtocol::findOrFail($protocol_id);
-        $protocol = $our_protocol->protocol;
-        $practices = $protocol->practices;
+        $protocol = $this->protocolRepository->findOrFail($protocol_id);
 
-        if (! empty($filter_practices)) {
+        if (empty($filter_practices)) {
+            $practices = $protocol->practices;
+        } else {
             $practices = $practices->whereIn('id', $filter_practices);
         }
 
         $pdf = PDF::loadView('pdf/worksheets/simple_style', [
-            'our_protocol' => $our_protocol,
+            'protocol' => $protocol,
             'practices' => $practices,
         ]);
 

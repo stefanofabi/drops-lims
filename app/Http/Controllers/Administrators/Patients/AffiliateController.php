@@ -8,14 +8,27 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 
-use App\Models\SocialWork;
+use App\Laboratory\Repositories\Patients\PatientRepositoryInterface;
+use App\Laboratory\Repositories\SocialWorks\SocialWorkRepositoryInterface;
 use App\Models\Affiliate;
-use App\Models\Patient;
+
 
 use Lang;
 
 class AffiliateController extends Controller
 {
+    /** @var \App\Laboratory\Repositories\Patients\PatientRepositoryInterface */
+    private $patientRepository;
+
+    /** @var \App\Laboratory\Repositories\SocialWorks\SocialWorkRepositoryInterface */
+    private $socialWorkRepository;
+
+    public function __construct(PatientRepositoryInterface $patientRepository, SocialWorkRepositoryInterface $socialWorkRepository)
+    {
+        $this->patientRepository = $patientRepository;
+        $this->socialWorkRepository = $socialWorkRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -35,13 +48,9 @@ class AffiliateController extends Controller
     {
         //
 
-        $patient = Patient::findOrFail($patient_id);
-
-        $social_works = SocialWork::all();
-
         return view('administrators/patients/social_works/affiliates/create')
-            ->with('patient', $patient)
-            ->with('social_works', $social_works);
+            ->with('patient', $this->patientRepository->findOrFail($patient_id))
+            ->with('social_works', $this->socialWorkRepository->all());
     }
 
     /**

@@ -27,6 +27,11 @@ Route::group([
 
     require('practices.php');
 
+    Route::get('create', [
+        '\App\Http\Controllers\Administrators\Protocols\ProtocolController',
+        'create',
+    ])->name('create');
+
     Route::group([
         'prefix' => 'our',
         'as' => 'our/',

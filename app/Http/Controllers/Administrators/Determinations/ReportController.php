@@ -7,13 +7,22 @@ use App\Http\Controllers\Controller;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
-use App\Models\Determination;
+use App\Laboratory\Repositories\Determinations\DeterminationRepositoryInterface;
 use App\Models\Report;
 
 use Lang;
 
 class ReportController extends Controller
 {
+
+    /** @var \App\Laboratory\Repositories\Determinations\DeterminationRepositoryInterface */
+    private $determinationRepository;
+
+    public function __construct(DeterminationRepositoryInterface $determinationRepository)
+    {
+        $this->determinationRepository = $determinationRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -30,11 +39,11 @@ class ReportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
+    public function create($determination_id)
     {
         //
 
-        $determination = Determination::findOrFail($id);
+        $determination = $this->determinationRepository->findOrFail($determination_id);
 
         return view('administrators/determinations/reports/create')->with('determination', $determination);
     }
@@ -55,8 +64,9 @@ class ReportController extends Controller
             'determination_id' => 'required|numeric|min:1',
         ]);
 
+        $report = new Report($request->all());
+
         try {
-            $report = new Report($request->all());
 
             if ($report->save()) {
                 $redirect = redirect()->action([ReportController::class, 'show'], ['id' => $report->id]);

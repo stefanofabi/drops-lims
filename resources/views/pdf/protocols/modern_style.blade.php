@@ -1,7 +1,7 @@
 @extends('pdf/base')
 
 @section('title')
-    {{ trans('protocols.protocol_number') }} #{{ $our_protocol->protocol_id }}
+    {{ trans('protocols.protocol_number') }} #{{ $protocol->id }}
 @endsection
 
 @section('style')
@@ -82,29 +82,29 @@
 
     <table class="info">
         <tr>
-            <td> {{ trans('patients.patient') }}: {{ $our_protocol->patient->full_name  }} </td>
-            <td> {{ trans('protocols.protocol_number') }}: #{{ $our_protocol->protocol_id }} </td>
+            <td> {{ trans('patients.patient') }}: {{ $protocol->patient->full_name  }} </td>
+            <td> {{ trans('protocols.protocol_number') }}: #{{ $protocol->id }} </td>
         </tr>
 
         <tr>
-            <td> {{ trans('patients.home_address') }}: {{ $our_protocol->patient->address }} </td>
-            <td>  {{ trans('protocols.completion_date') }}: @if ($our_protocol->protocol->completion_date) {{ date_format(new DateTime($our_protocol->protocol->completion_date), 'd/m/Y') }} @endif </td>
+            <td> {{ trans('patients.home_address') }}: {{ $protocol->patient->address }} </td>
+            <td>  {{ trans('protocols.completion_date') }}: @if ($protocol->completion_date) {{ date_format(new DateTime($protocol->completion_date), 'd/m/Y') }} @endif </td>
         </tr>
 
         <tr>
-            <td> {{ trans('prescribers.prescriber') }}: {{ $our_protocol->prescriber->full_name }} </td>
+            <td> {{ trans('prescribers.prescriber') }}: {{ $protocol->prescriber->full_name }} </td>
             <td>
                 @php
-                    $age = $our_protocol->patient->age();
+                    $age = $protocol->patient->age();
                     $format_type = $age != null && $age['year'] > 0;
                 @endphp
 
-                {{ trans('patients.age') }}: @if ($age != null) {{ trans_choice('patients.calculate_age', true ? 1 : 0 , $our_protocol->patient->age()) }} @endif
+                {{ trans('patients.age') }}: @if ($age != null) {{ trans_choice('patients.calculate_age', true ? 1 : 0 , $protocol->patient->age()) }} @endif
             </td>
         </tr>
 
         <tr>
-            <td> {{ trans('social_works.social_work')  }}: {{ $our_protocol->plan->social_work->name }} </td>
+            <td> {{ trans('social_works.social_work')  }}: {{ $protocol->plan->social_work->name }} </td>
             <td> </td>
         </tr>
     </table>

@@ -3,12 +3,10 @@
 namespace App\Http\Controllers\Administrators\Protocols;
 
 use App\Http\Controllers\Controller;
-
 use Illuminate\Http\Request;
-
 use App\Http\Traits\Pagination;
 
-use App\Models\Protocol;
+use App\Laboratory\Repositories\Protocols\ProtocolRepositoryInterface;
 
 class ProtocolController extends Controller
 {
@@ -17,6 +15,15 @@ class ProtocolController extends Controller
     private const PER_PAGE = 15;
 
     private const ADJACENTS = 4;
+
+    /** @var \App\Laboratory\Repositories\Protocols\ProtocolRepositoryInterface */
+    private $protocolRepository;
+
+    public function __construct (
+        ProtocolRepositoryInterface $protocolRepository
+    ) {
+        $this->protocolRepository = $protocolRepository;
+    }
 
     /**
      * Display a listing of the resource.
@@ -47,7 +54,7 @@ class ProtocolController extends Controller
         $page = $request->page;
 
         $offset = ($page - 1) * self::PER_PAGE;
-        $protocols = Protocol::index($filter, $offset, self::PER_PAGE);
+        $protocols = $this->protocolRepository->index($filter, $offset, self::PER_PAGE);
 
         // Pagination
         $count_rows = $protocols->count();
@@ -68,6 +75,8 @@ class ProtocolController extends Controller
     public function create()
     {
         //
+
+        return view('administrators/protocols/create');
     }
 
     /**

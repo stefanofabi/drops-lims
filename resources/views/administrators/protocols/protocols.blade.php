@@ -9,7 +9,7 @@
 @endsection
 
 @section('create-href')
-{{ route('administrators/protocols/our/create') }}
+{{ route('administrators/protocols/create') }}
 @endsection
 
 @section('create-text')
