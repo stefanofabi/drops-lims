@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Contracts\Repository\DeterminationRepositoryInterface;
-use App\Models\Report;
+use App\Contracts\Repository\ReportRepositoryInterface;
 
 use Lang;
 
@@ -16,9 +16,15 @@ class ReportController extends Controller
     /** @var \App\Laboratory\Repositories\Determinations\DeterminationRepositoryInterface */
     private $determinationRepository;
 
-    public function __construct(DeterminationRepositoryInterface $determinationRepository)
-    {
+    /** @var \App\Laboratory\Repositories\Determinations\ReportRepositoryInterface */
+    private $reportRepository;
+
+    public function __construct(
+        DeterminationRepositoryInterface $determinationRepository,
+        ReportRepositoryInterface $reportRepository
+    ) {
         $this->determinationRepository = $determinationRepository;
+        $this->reportRepository = $reportRepository;
     }
 
     /**
@@ -62,9 +68,7 @@ class ReportController extends Controller
             'determination_id' => 'required|numeric|min:1',
         ]);
 
-        $report = new Report($request->all());
-
-        if (!$report->save()) {
+        if (! $report = $this->reportRepository->create($request->all())) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
 
@@ -81,7 +85,7 @@ class ReportController extends Controller
     {
         //
 
-        $report = Report::findOrFail($id);
+        $report = $this->reportRepository->findOrFail($id);
 
         return view('administrators/determinations/reports/show')->with('report', $report);
     }
@@ -96,7 +100,7 @@ class ReportController extends Controller
     {
         //
 
-        $report = Report::findOrFail($id);
+        $report = $this->reportRepository->findOrFail($id);
 
         return view('administrators/determinations/reports/edit')->with('report', $report);
     }
@@ -112,9 +116,7 @@ class ReportController extends Controller
     {
         //
 
-        $report = Report::findOrFail($id);
-
-        if (!$report->update($request->all())) {
+        if (! $this->reportRepository->update($request->except(['_token', '_method']), $id)) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
 
@@ -131,18 +133,13 @@ class ReportController extends Controller
     {
         //
 
-        $report = Report::findOrFail($id);
+        $report = $this->reportRepository->findOrFail($id);
         $determination = $report->determination;
         
-        $view = view('administrators/determinations/edit');
-        
-        if ($report->delete()) {
-            $view->with('success', [Lang::get('reports.success_destroy')]);
-        } else {
-            $view->withErrors(Lang::get('reports.danger_destroy'));
+        if (!$report->delete($id)) {
+            return back()->withErrors(Lang::get('forms.failed_transaction'));
         }
 
-
-        return $view->with('determination', $determination);
+        return redirect()->action([DeterminationController::class, 'edit'], ['id' => $determination->id]);
     }
 }

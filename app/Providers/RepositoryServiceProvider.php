@@ -25,6 +25,9 @@ use App\Repositories\Eloquent\BillingPeriodRepository;
 use App\Contracts\Repository\NomenclatorRepositoryInterface;
 use App\Repositories\Eloquent\NomenclatorRepository;
 
+use App\Contracts\Repository\ReportRepositoryInterface;
+use App\Repositories\Eloquent\ReportRepository;
+
 class RepositoryServiceProvider extends ServiceProvider
 {
     /**
@@ -43,6 +46,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(ProtocolRepositoryInterface::class, ProtocolRepository::class);
         $this->app->bind(BillingPeriodRepositoryInterface::class, BillingPeriodRepository::class);
         $this->app->bind(NomenclatorRepositoryInterface::class, NomenclatorRepository::class);
+        $this->app->bind(ReportRepositoryInterface::class, ReportRepository::class);
         
     }
 

@@ -10,9 +10,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Database\QueryException;
 
 use App\Contracts\Repository\ProtocolRepositoryInterface;
+use App\Contracts\Repository\ReportRepositoryInterface;
 
 use App\Models\Practice;
-use App\Models\Report;
 use App\Models\Result;
 use App\Models\SignPractice;
 
@@ -20,13 +20,19 @@ use Lang;
 
 class PracticeController extends Controller
 {
+
     /** @var \App\Laboratory\Repositories\Protocols\ProtocolRepositoryInterface */
     private $protocolRepository;
 
+    /** @var \App\Laboratory\Repositories\Determinations\ReportRepositoryInterface */
+    private $reportRepository;
+
     public function __construct (
-        ProtocolRepositoryInterface $protocolRepository
+        ProtocolRepositoryInterface $protocolRepository,
+        ReportRepositoryInterface $reportRepository
     ) {
         $this->protocolRepository = $protocolRepository;
+        $this->reportRepository = $reportRepository;
     }
 
     /**
@@ -68,7 +74,7 @@ class PracticeController extends Controller
         try {
 
             $report_id = $request->report_id;
-            $report = Report::findOrFail($report_id);
+            $report = $this->reportRepository->findOrFail($report_id);
             $determination = $report->determination;
             $biochemical_unit = $determination->biochemical_unit;
             $protocol_id = $request->protocol_id;

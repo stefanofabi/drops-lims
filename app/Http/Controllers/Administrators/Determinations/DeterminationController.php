@@ -25,8 +25,10 @@ class DeterminationController extends Controller
     /** @var \App\Laboratory\Repositories\Nomenclators\NomenclatorRepositoryInterface */
     private $nomenclatorRepository;
 
-    public function __construct(DeterminationRepositoryInterface $determinationRepository, NomenclatorRepositoryInterface $nomenclatorRepository)
-    {
+    public function __construct(
+        DeterminationRepositoryInterface $determinationRepository, 
+        NomenclatorRepositoryInterface $nomenclatorRepository
+    ) {
         $this->determinationRepository = $determinationRepository;
         $this->nomenclatorRepository = $nomenclatorRepository;
     }
