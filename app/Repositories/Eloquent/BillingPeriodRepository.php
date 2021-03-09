@@ -6,6 +6,10 @@ use App\Contracts\Repository\BillingPeriodRepositoryInterface;
 
 use App\Models\BillingPeriod; 
 
+use App\Exceptions\QueryValidateException;
+
+use Lang;
+
 final class BillingPeriodRepository implements BillingPeriodRepositoryInterface
 {
     protected $model;
@@ -22,16 +26,24 @@ final class BillingPeriodRepository implements BillingPeriodRepositoryInterface
 
     public function all()
     {
-        return $this->model->all();
+        return $this->model->orderBy('start_date', 'DESC')->orderBy('end_date', 'DESC')->get();
     }
 
     public function create(array $data)
     {
+        if ($data['start_date'] > $data['end_date']) {
+            throw new QueryValidateException(Lang::get('billing_periods.start_date_after_end_date'));
+        }
+
         return $this->model->create($data);
     }
 
     public function update(array $data, $id)
     {
+        if ($data['start_date'] > $data['end_date']) {
+            throw new QueryValidateException(Lang::get('billing_periods.start_date_after_end_date'));
+        }
+
         return $this->model->where('id', $id)->update($data);
     }
 
@@ -81,5 +93,19 @@ final class BillingPeriodRepository implements BillingPeriodRepositoryInterface
             ->where('end_date', '>=', $current_date)
             ->first();
 
+    }
+
+    /**
+     * Returns a list billing periods filtered.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function loadBillingPeriods($filter) {
+        return $this->model
+            // label column is required
+            ->select('id', 'name as label', 'start_date', 'end_date')
+            ->where('name', 'like', "%$filter%")
+            ->get()
+            ->toJson();
     }
 }

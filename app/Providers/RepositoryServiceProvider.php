@@ -28,6 +28,9 @@ use App\Repositories\Eloquent\NomenclatorRepository;
 use App\Contracts\Repository\ReportRepositoryInterface;
 use App\Repositories\Eloquent\ReportRepository;
 
+use App\Contracts\Repository\PaymentSocialWorkRepositoryInterface;
+use App\Repositories\Eloquent\PaymentSocialWorkRepository;
+
 class RepositoryServiceProvider extends ServiceProvider
 {
     /**
@@ -47,6 +50,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(BillingPeriodRepositoryInterface::class, BillingPeriodRepository::class);
         $this->app->bind(NomenclatorRepositoryInterface::class, NomenclatorRepository::class);
         $this->app->bind(ReportRepositoryInterface::class, ReportRepository::class);
+        $this->app->bind(PaymentSocialWorkRepositoryInterface::class, PaymentSocialWorkRepository::class);
         
     }
 

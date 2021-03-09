@@ -3,15 +3,22 @@
 namespace App\Http\Controllers\Administrators\Settings\SocialWorks;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
-use App\Models\BillingPeriod;
+use App\Contracts\Repository\BillingPeriodRepositoryInterface;
 
 use Lang;
 
 class BillingPeriodController extends Controller
 {
+    /** @var \App\Laboratory\Repositories\BillingPeriods\BillingPeriodRepositoryInterface */
+    private $billingPeriodRepository;
+
+    public function __construct (BillingPeriodRepositoryInterface $billingPeriodRepository) 
+    {
+        $this->billingPeriodRepository = $billingPeriodRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -21,9 +28,10 @@ class BillingPeriodController extends Controller
     {
         //
 
-        $billing_periods = BillingPeriod::orderBy('start_date', 'DESC')->orderBy('end_date', 'DESC')->get();
+        $billing_periods = $this->billingPeriodRepository->all();
 
-        return view('administrators/settings/social_works/billing_periods/index')->with('billing_periods', $billing_periods);
+        return view('administrators/settings/social_works/billing_periods/index')
+            ->with('billing_periods', $billing_periods);
     }
 
     /**
@@ -54,18 +62,8 @@ class BillingPeriodController extends Controller
             'end_date' => 'required|date',
         ]);
 
-        if ($request->start_date > $request->end_date) {
-            return back()->withInput($request->all())->withErrors(Lang::get('billing_periods.start_date_after_end_date'));
-        }
-
-        $billing_period = new BillingPeriod($request->all());
-
-        try {
-            if (!$billing_period->save()) {
-                return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
-            }
-        } catch (QueryException $exception) {
-            return redirect()->back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
+        if (! $billing_period = $this->billingPeriodRepository->create($request->all())) {
+            return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
 
         return redirect()->action([BillingPeriodController::class, 'edit'], ['id' => $billing_period->id]);
@@ -92,9 +90,10 @@ class BillingPeriodController extends Controller
     {
         //
 
-        $billing_period = BillingPeriod::findOrFail($id);
+        $billing_period = $this->billingPeriodRepository->findOrFail($id);
 
-        return view('administrators/settings/social_works/billing_periods/edit')->with('billing_period', $billing_period);
+        return view('administrators/settings/social_works/billing_periods/edit')
+            ->with('billing_period', $billing_period);
     }
 
     /**
@@ -114,20 +113,10 @@ class BillingPeriodController extends Controller
             'end_date' => 'required|date',
         ]);
 
-        if ($request->start_date > $request->end_date) {
-            return back()->withInput($request->all())->withErrors(Lang::get('billing_periods.start_date_after_end_date'));
+        if (!$this->billingPeriodRepository->update($request->except(['_token', '_method']), $id)) {
+            return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
-
-        $billing_period = BillingPeriod::findOrFail($id);
-
-        try {
-            if (!$billing_period->update($request->all())) {
-                return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
-            }
-        } catch (QueryException $exception) {
-            return redirect()->back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
-        }
-
+ 
         return redirect()->action([BillingPeriodController::class, 'index']);
     }
 
@@ -141,16 +130,10 @@ class BillingPeriodController extends Controller
     {
         //
 
-        $billing_period = BillingPeriod::findOrFail($id);
-
-        try {
-            if (!$billing_period->delete()) {
-                return back()->withErrors(Lang::get('forms.failed_transaction'));
-            }
-        } catch (QueryException $exception) {
-            return back()->withErrors(Lang::get('errors.error_processing_transaction'));
+        if (!$this->billingPeriodRepository->delete($id)) {
+            return back()->withErrors(Lang::get('forms.failed_transaction'));
         }
-
+ 
         return redirect()->action([BillingPeriodController::class, 'index']);
     }
 
@@ -162,15 +145,7 @@ class BillingPeriodController extends Controller
     public function load_billing_periods(Request $request)
     {
         //
-        
-        $filter = $request->filter;
-        
-        // label column is required
-        $billing_periods = BillingPeriod::select('id', 'name as label', 'start_date', 'end_date')
-            ->where('name', 'like', "%$filter%")
-            ->get()
-            ->toJson();
 
-        return $billing_periods;
+        return $this->billingPeriodRepository->loadBillingPeriods($request->filter);
     }
 }

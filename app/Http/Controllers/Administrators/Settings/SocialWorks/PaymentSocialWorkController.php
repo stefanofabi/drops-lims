@@ -6,9 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Contracts\Repository\SocialWorkRepositoryInterface;
+use App\Contracts\Repository\BillingPeriodRepositoryInterface;
+use App\Contracts\Repository\PaymentSocialWorkRepositoryInterface;
 
-use App\Models\BillingPeriod;
-use App\Models\PaymentSocialWork;
+use App\Exceptions\QueryValidateException;
 
 use Lang;
 
@@ -17,9 +18,17 @@ class PaymentSocialWorkController extends Controller
     /** @var \App\Laboratory\Repositories\SocialWorks\SocialWorkRepositoryInterface */
     private $socialWorkRepository;
 
-    public function __construct(SocialWorkRepositoryInterface $socialWorkRepository)
-    {
+    /** @var \App\Laboratory\Repositories\BillingPeriods\BillingPeriodRepositoryInterface */
+    private $billingPeriodRepository;
+    
+    public function __construct(
+        SocialWorkRepositoryInterface $socialWorkRepository,
+        BillingPeriodRepositoryInterface $billingPeriodRepository,
+        PaymentSocialWorkRepositoryInterface $paymentSocialWorkRepository,
+    ) {
         $this->socialWorkRepository = $socialWorkRepository;
+        $this->billingPeriodRepository = $billingPeriodRepository;
+        $this->paymentSocialWorkRepository = $paymentSocialWorkRepository;
     }
 
     /**
@@ -40,6 +49,7 @@ class PaymentSocialWorkController extends Controller
     public function create($social_work_id)
     {
         //
+
         $social_work = $this->socialWorkRepository->findOrFail($social_work_id);
 
         return view('administrators/settings/social_works/payments/create')->with('social_work', $social_work);
@@ -61,18 +71,10 @@ class PaymentSocialWorkController extends Controller
             'billing_period_id' => 'required|numeric|min:1',
         ]);
 
-        $billing_period = BillingPeriod::findOrFail($request->billing_period_id);
-
-        if ($billing_period->end_date > $request->payment_date) {
-            return back()->withInput($request->all())->withErrors(Lang::get('payment_social_works.payment_before_billing_period'));
+        if (! $this->paymentSocialWorkRepository->create($request->all())) {
+            return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
-
-        $payment = new PaymentSocialWork($request->all());
-
-        if (!$payment->save()) {
-                return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
-        }       
-
+   
         return redirect()->action([SocialWorkController::class, 'edit'], ['id' => $request->social_work_id]);
     }
 
@@ -97,7 +99,7 @@ class PaymentSocialWorkController extends Controller
     {
         //
 
-        $payment = PaymentSocialWork::findOrFail($id);
+        $payment = $this->paymentSocialWorkRepository->findOrFail($id);
 
         return view('administrators/settings/social_works/payments/edit')->with('payment', $payment);
     }
@@ -119,19 +121,11 @@ class PaymentSocialWorkController extends Controller
             'billing_period_id' => 'required|numeric|min:1',
         ]);
 
-        $payment = PaymentSocialWork::findOrFail($id);
-
-        $billing_period = $payment->billing_period;
-
-        if ($billing_period->end_date > $request->payment_date) {
-            return back()->withInput($request->all())->withErrors(Lang::get('payment_social_works.payment_before_billing_period'));
-        }
-
-        if (!$payment->update($request->all())) {
+        if (! $this->paymentSocialWorkRepository->update($request->except(['_token', '_method', 'billing_period']), $id)) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
 
-        return redirect()->action([SocialWorkController::class, 'edit'], ['id' => $payment->social_work_id]);
+        return redirect()->action([SocialWorkController::class, 'edit'], ['id' => $this->paymentSocialWorkRepository->findOrFail($id)->social_work_id]);
     }
 
     /**
@@ -143,13 +137,13 @@ class PaymentSocialWorkController extends Controller
     public function destroy($id)
     {
         //
+        
+        $social_work_id = $this->paymentSocialWorkRepository->findOrFail($id)->social_work_id;  
 
-        $payment = PaymentSocialWork::findOrFail($id);
-            
-        if (!$payment->delete()) {
+        if (! $this->paymentSocialWorkRepository->delete($id)) {
             return back()->withErrors(Lang::get('forms.failed_transaction'));
         }
 
-        return redirect()->action([SocialWorkController::class, 'edit'], ['id' => $payment->social_work_id]);
+        return redirect()->action([SocialWorkController::class, 'edit'], ['id' => $social_work_id]);
     }
 }
