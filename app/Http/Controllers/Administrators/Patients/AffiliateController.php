@@ -10,23 +10,37 @@ use Illuminate\Database\QueryException;
 
 use App\Contracts\Repository\PatientRepositoryInterface;
 use App\Contracts\Repository\SocialWorkRepositoryInterface;
-use App\Models\Affiliate;
-
+use App\Contracts\Repository\AffiliateRepositoryInterface;
 
 use Lang;
 
 class AffiliateController extends Controller
 {
-    /** @var \App\Laboratory\Repositories\Patients\PatientRepositoryInterface */
+    private const ATTRIBUTES = [
+        'patient_id',
+        'plan_id', 
+        'affiliate_number',
+        'expiration_date',
+        'security_code',
+    ];
+
+    /** @var \App\Contracts\Repository\AffiliateRepositoryInterface */
+    private $affiliateRepository;
+
+    /** @var \App\Contracts\Repository\PatientRepositoryInterface */
     private $patientRepository;
 
-    /** @var \App\Laboratory\Repositories\SocialWorks\SocialWorkRepositoryInterface */
+    /** @var \App\Contracts\Repository\SocialWorkRepositoryInterface */
     private $socialWorkRepository;
 
-    public function __construct(PatientRepositoryInterface $patientRepository, SocialWorkRepositoryInterface $socialWorkRepository)
-    {
+    public function __construct(
+        PatientRepositoryInterface $patientRepository, 
+        SocialWorkRepositoryInterface $socialWorkRepository,
+        AffiliateRepositoryInterface $affiliateRepository
+    ) {
         $this->patientRepository = $patientRepository;
         $this->socialWorkRepository = $socialWorkRepository;
+        $this->affiliateRepository = $affiliateRepository;
     }
 
     /**
@@ -69,19 +83,11 @@ class AffiliateController extends Controller
             'security_code' => 'numeric|nullable|min:0|max:999',
         ]);
 
-        try {
-            $affiliate = new Affiliate($request->all());
-
-            if ($affiliate->save()) {
-                $redirect = redirect()->action([PatientController::class, 'edit'], ['id' => $request->patient_id]);
-            } else {
-                $redirect = back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
-            }
-        } catch (QueryException $exception) {
-            $redirect = back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
+        if (! $affiliate = $this->affiliateRepository->create($request->only(self::ATTRIBUTES))) {
+            return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
 
-        return $redirect;
+        return redirect()->action([PatientController::class, 'edit'], ['id' => $affiliate->patient_id]);
     }
 
     /**
@@ -105,15 +111,15 @@ class AffiliateController extends Controller
     {
         //
         try {
-            $affiliate = Affiliate::findOrFail($request->id);
+            $affiliate = $this->affiliateRepository->findOrFail($request->id);
         } catch (ModelNotFoundException $exception) {
-            return response()->json(['status' => 500, 'message' => Lang::get('errors.not_found')], '500');
+            return response()->json(['message' => Lang::get('errors.not_found')], 404);
         }
 
         return response()->json([
             'id' => $affiliate->id,
-            'plan_id' => $affiliate->plan->id,
-            'social_work_id' => $affiliate->plan->social_work->id,
+            'plan_id' => $affiliate->plan_id,
+            'social_work_id' => $affiliate->plan->social_work_id,
             'affiliate_number' => $affiliate->affiliate_number,
             'security_code' => $affiliate->security_code,
             'expiration_date' => $affiliate->expiration_date,
@@ -130,29 +136,22 @@ class AffiliateController extends Controller
     public function update(Request $request)
     {
         //
-
+        
         $request->validate([
             'affiliate_number' => 'string|nullable',
             'expiration_date' => 'date|nullable',
             'security_code' => 'numeric|nullable|min:0|max:999',
         ]);
-
+       
         try {
-            $affiliate = Affiliate::findOrFail($request->id);
-
-            if (! $affiliate->update($request->all())) {
-                return response()->json(['status' => 500, 'message' => Lang::get('forms.failed_transaction')], 500);
+            if (! $this->affiliateRepository->update($request->only(self::ATTRIBUTES), $request->id)) {
+                return response()->json(['message' => Lang::get('forms.failed_transaction')], 500);
             }
-        } catch (QueryException $e) {
-            return response()->json([
-                'status' => 500,
-                'message' => Lang::get('errors.error_processing_transaction'),
-            ], 500);
-        } catch (ModelNotFoundException $exception) {
-            return response()->json(['status' => 500, 'message' => Lang::get('errors.not_found')], 500);
+        } catch (QueryException $exception) {
+            return response()->json(['message' => Lang::get('errors.error_processing_transaction')], 500);
         }
 
-        return response()->json(['status' => 200, 'message' => Lang::get('forms.successful_transaction')], 200);
+        return response()->json(['message' => Lang::get('forms.successful_transaction')], 200);
     }
 
     /**
@@ -165,19 +164,10 @@ class AffiliateController extends Controller
     {
         //
 
-        try {
-            $affiliate = Affiliate::findOrFail($request->id);
-        } catch (ModelNotFoundException $exception) {
-            return response()->json(['status' => 500, 'message' => Lang::get('errors.not_found')], 500);
+        if (! $this->affiliateRepository->delete($request->id)) {
+            return response()->json(['message' => Lang::get('forms.failed_transaction')], 500);
         }
 
-        if (!$affiliate->delete()) {
-            return response()->json([
-                'status' => 500,
-                'message' => Lang::get('forms.failed_transaction'),
-            ], 500);
-        }
-
-        return response()->json(['status' => 200, 'message' => Lang::get('forms.successful_transaction')], 200);
+        return response()->json(['message' => Lang::get('forms.successful_transaction')], 200);
     }
 }
