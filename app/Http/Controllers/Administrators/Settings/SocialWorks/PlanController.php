@@ -7,8 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Contracts\Repository\SocialWorkRepositoryInterface;
 use App\Contracts\Repository\NomenclatorRepositoryInterface;
-
-use App\Models\Plan;
+use App\Contracts\Repository\PlanRepositoryInterface;
 
 use Lang;
 
@@ -20,12 +19,17 @@ class PlanController extends Controller
     /** @var \App\Laboratory\Repositories\Nomenclators\NomenclatorRepositoryInterface */
     private $nomenclatorRepository;
 
+    /** @var \App\Laboratory\Repositories\Nomenclators\PlanRepositoryInterface */
+    private $planRepository;
+
     public function __construct(
         SocialWorkRepositoryInterface $socialWorkRepository, 
-        NomenclatorRepositoryInterface $nomenclatorRepository
+        NomenclatorRepositoryInterface $nomenclatorRepository,
+        PlanRepositoryInterface $planRepository
     ) {
         $this->socialWorkRepository = $socialWorkRepository;
         $this->nomenclatorRepository = $nomenclatorRepository;
+        $this->planRepository = $planRepository;
     }
 
     /**
@@ -68,10 +72,8 @@ class PlanController extends Controller
             'name' => 'required|string',
             'nbu_price' => 'required|numeric',
         ]);
- 
-        $plan = new Plan($request->all());
 
-        if (! $plan->save()) {
+        if (! $plan = $this->planRepository->create($request->all())) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
 
@@ -99,7 +101,7 @@ class PlanController extends Controller
     {
         //
         
-        $plan = Plan::findOrFail($id);
+        $plan = $this->planRepository->findOrFail($id);
         $nomenclators = $this->nomenclatorRepository->all();
 
         return view('administrators/settings/social_works/plans/edit')
@@ -122,14 +124,12 @@ class PlanController extends Controller
             'name' => 'required|string',
             'nbu_price' => 'required|numeric',
         ]);
-
-        $plan = Plan::findOrFail($id);
     
-        if (! $plan->update($request->all())) {
+        if (! $this->planRepository->update($request->except(['_token', '_method']), $id)) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
 
-        return redirect()->action([SocialWorkController::class, 'edit'], ['id' => $plan->social_work_id]);
+        return redirect()->action([SocialWorkController::class, 'edit'], ['id' => $this->planRepository->findOrFail($id)->social_work_id]);
     }
 
     /**
@@ -142,12 +142,12 @@ class PlanController extends Controller
     {
         //
 
-        $plan = Plan::findOrFail($id);
+        $social_work_id = $this->planRepository->findOrFail($id)->social_work_id;
 
-        if (! $plan->delete()) {
+        if (! $this->planRepository->delete($id)) {
             return back()->withErrors(Lang::get('forms.failed_transaction'));
         }
 
-        return redirect()->action([SocialWorkController::class, 'edit'], ['id' => $plan->social_work_id]);
+        return redirect()->action([SocialWorkController::class, 'edit'], ['id' => $social_work_id]);
     }
 }

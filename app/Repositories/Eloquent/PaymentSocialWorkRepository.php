@@ -76,7 +76,7 @@ final class PaymentSocialWorkRepository implements PaymentSocialWorkRepositoryIn
     }
 
     public function getPaymentsFromSocialWork($social_work_id) {
-        return $this->paymentSocialWorkRepository
+        return $this->model
             ->select('payment_social_works.id', 'payment_date', 'amount', 'name as billing_period')
             ->join('billing_periods', 'payment_social_works.billing_period_id', '=', 'billing_periods.id')
             ->where('social_work_id', $social_work_id)
