@@ -7,8 +7,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 use App\Contracts\Repository\SocialWorkRepositoryInterface;
-
-use App\Models\PaymentSocialWork;
+use App\Contracts\Repository\PaymentSocialWorkRepositoryInterface;
 
 use Lang;
 
@@ -17,9 +16,15 @@ class SocialWorkController extends Controller
     /** @var \App\Laboratory\Repositories\SocialWorks\SocialWorkRepositoryInterface */
     private $socialWorkRepository;
 
-    public function __construct(SocialWorkRepositoryInterface $socialWorkRepository)
-    {
+    /** @var \App\Laboratory\Repositories\SocialWorks\PaymentSocialWorkRepositoryInterface */
+    private $paymentSocialWorkRepository;
+
+    public function __construct(
+        SocialWorkRepositoryInterface $socialWorkRepository,
+        PaymentSocialWorkRepositoryInterface $paymentSocialWorkRepository
+    ) {
         $this->socialWorkRepository = $socialWorkRepository;
+        $this->paymentSocialWorkRepository = $paymentSocialWorkRepository;
     }
 
     /**
@@ -61,8 +66,6 @@ class SocialWorkController extends Controller
         $request->validate([
             'name' => 'required|string',
         ]);
-
-        $social_work = new SocialWork($request->all());
         
         if (! $this->socialWorkRepository->create($request->all())) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
@@ -94,12 +97,7 @@ class SocialWorkController extends Controller
 
         $social_work = $this->socialWorkRepository->findOrFail($id);
 
-        $payments = PaymentSocialWork::select('payment_social_works.id', 'payment_date', 'amount', 'name as billing_period')
-            ->join('billing_periods', 'payment_social_works.billing_period_id', '=', 'billing_periods.id')
-            ->where('social_work_id', $social_work->id)
-            ->orderBy('billing_periods.end_date', 'DESC')
-            ->orderBy('payment_date', 'ASC')
-            ->get();
+        $payments = $this->paymentSocialWorkRepository->getPaymentsFromSocialWork($social_work->id);
 
         return view('administrators/settings/social_works/edit')
             ->with('social_work', $social_work)
@@ -157,7 +155,7 @@ class SocialWorkController extends Controller
         $social_work_id = $request->social_work_id;
 
         try {
-            $social_work = SocialWork::findOrFail($social_work_id);
+            $social_work = $this->socialWorkRepository->findOrFail($social_work_id);
         } catch (ModelNotFoundException $exception) {
             return response()->json(['status' => 500, 'message' => Lang::get('errors.not_found')], '500');
         }
