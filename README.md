@@ -22,7 +22,7 @@ What things do you need to install the project and how to do it
 ```
 - Composer
 - NPM
-- PHP 8
+- PHP 8 with php-mbstring extension
 - Relational database (MySQL, MariaDB, etc.)
 ```
 
