@@ -9,20 +9,30 @@ use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 
 use App\Contracts\Repository\PatientRepositoryInterface;
-
-use App\Models\Email;
+use App\Contracts\Repository\EmailRepositoryInterface;
 
 use Lang;
 
 class EmailController extends Controller
 {
 
-    /** @var \App\Laboratory\Repositories\Patients\PatientRepositoryInterface */
+    private const ATTRIBUTES = [
+        'patient_id',
+        'email',
+    ];
+
+    /** @var \App\Contracts\Repository\PatientRepositoryInterface */
     private $patientRepository;
 
-    public function __construct(PatientRepositoryInterface $patientRepository)
-    {
+    /** @var \App\Contracts\Repository\EmailRepositoryInterface */
+    private $emailRepository;
+
+    public function __construct(
+        PatientRepositoryInterface $patientRepository,
+        EmailRepositoryInterface $emailRepository
+    ) {
         $this->patientRepository = $patientRepository;
+        $this->emailRepository = $emailRepository;
     }
 
     /**
@@ -44,7 +54,8 @@ class EmailController extends Controller
     {
         //
 
-        return view('administrators/patients/emails/create')->with('patient', $this->patientRepository->findOrFail($patient_id));
+        return view('administrators/patients/emails/create')
+            ->with('patient', $this->patientRepository->findOrFail($patient_id));
     }
 
     /**
@@ -60,20 +71,12 @@ class EmailController extends Controller
         $request->validate([
             'email' => 'required|email',
         ]);
-
-        $email = new Email($request->all());
-        
-        try {
-            if ($email->save()) {
-                $redirect = redirect()->action([PatientController::class,'edit'], ['id' => $request->patient_id]);
-            } else {
-                $redirect = redirect()->back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
-            }
-        } catch (QueryException $e) {
-            $redirect = redirect()->back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
+          
+        if (! $this->emailRepository->create($request->only(self::ATTRIBUTES))) {
+            return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
-
-        return $redirect;
+      
+        return redirect()->action([PatientController::class,'edit'], ['id' => $request->patient_id]);
     }
 
     /**
@@ -97,9 +100,9 @@ class EmailController extends Controller
     {
         //
         try {
-            $email = Email::findOrFail($request->id);
-        } catch (ModelNotFoundException $e) {
-            return response()->json(['status' => 500, 'message' => Lang::get('errors.not_found')], 500);
+            $email = $this->emailRepository->findOrFail($request->id);
+        } catch (ModelNotFoundException $exception) {
+            return response()->json(['message' => Lang::get('errors.not_found')], 404);
         }
 
         return response()->json($email, 200);
@@ -120,24 +123,14 @@ class EmailController extends Controller
         ]);
 
         try {
-            $email = Email::findOrFail($request->id);
-
-            if (! $email->update($request->all())) {
-                return response(['status' => 500, 'message' => Lang::get('forms.failed_transaction')], 500);
+            if (! $this->emailRepository->update($request->only(self::ATTRIBUTES), $request->id)) {
+                return response(['message' => Lang::get('forms.failed_transaction')], 500);
             }
-        } catch (ModelNotFoundException $exception) {
-            return response()->json([
-                'status' => 500,
-                'message' => Lang::get('errors.not_found'),
-            ], 500);
         } catch (QueryException $exception) {
-            return response()->json([
-                'status' => 500,
-                'message' => Lang::get('errors.error_processing_transaction'),
-            ], 500);
+            return response()->json(['message' => Lang::get('errors.error_processing_transaction')], 500);
         }
 
-        return response(['status' => 200, 'message' => Lang::get('forms.successful_transaction')], 200);
+        return response(['message' => Lang::get('forms.successful_transaction')], 200);
     }
 
     /**
@@ -150,19 +143,10 @@ class EmailController extends Controller
     {
         //
 
-        try {
-            $email = Email::findOrFail($request->id);
-
-            if (! $email->delete()) {
-                return response(['status' => 500, 'message' => Lang::get('forms.failed_transaction')], 500);
-            }
-        } catch (ModelNotFoundException $exception) {
-            return response()->json([
-                'status' => 500,
-                'message' => Lang::get('errors.not_found'),
-            ], 500);
+        if (! $this->emailRepository->delete($request->id)) {
+            return response(['message' => Lang::get('forms.failed_transaction')], 500);
         }
-
-        return response(['status' => 200, 'message' => Lang::get('forms.successful_transaction')], 200);
+     
+        return response(['message' => Lang::get('forms.successful_transaction')], 200);
     }
 }

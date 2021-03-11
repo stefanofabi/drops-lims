@@ -115,7 +115,7 @@ class AffiliateController extends Controller
         } catch (ModelNotFoundException $exception) {
             return response()->json(['message' => Lang::get('errors.not_found')], 404);
         }
-
+        
         return response()->json([
             'id' => $affiliate->id,
             'plan_id' => $affiliate->plan_id,

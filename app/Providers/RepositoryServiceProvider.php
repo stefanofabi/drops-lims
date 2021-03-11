@@ -37,6 +37,8 @@ use App\Repositories\Eloquent\PlanRepository;
 use App\Contracts\Repository\AffiliateRepositoryInterface;
 use App\Repositories\Eloquent\AffiliateRepository;
 
+use App\Contracts\Repository\EmailRepositoryInterface;
+use App\Repositories\Eloquent\EmailRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -60,6 +62,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(PaymentSocialWorkRepositoryInterface::class, PaymentSocialWorkRepository::class);
         $this->app->bind(PlanRepositoryInterface::class, PlanRepository::class);
         $this->app->bind(AffiliateRepositoryInterface::class, AffiliateRepository::class);
+        $this->app->bind(EmailRepositoryInterface::class, EmailRepository::class);
 
     }
 
