@@ -12,6 +12,13 @@ use Lang;
 
 class PaymentSocialWorkController extends Controller
 {
+    private const ATTRIBUTES = [
+        'payment_date',
+        'social_work_id',
+        'billing_period_id',
+        'amount',
+    ];
+
     /** @var \App\Contracts\Repository\SocialWorkRepositoryInterface */
     private $socialWorkRepository;
     
@@ -63,7 +70,7 @@ class PaymentSocialWorkController extends Controller
             'billing_period_id' => 'required|numeric|min:1',
         ]);
 
-        if (! $this->paymentSocialWorkRepository->create($request->all())) {
+        if (! $this->paymentSocialWorkRepository->create($request->only(self::ATTRIBUTES))) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
    
@@ -113,7 +120,7 @@ class PaymentSocialWorkController extends Controller
             'billing_period_id' => 'required|numeric|min:1',
         ]);
 
-        if (! $this->paymentSocialWorkRepository->update($request->except(['_token', '_method', 'billing_period']), $id)) {
+        if (! $this->paymentSocialWorkRepository->update($request->only(self::ATTRIBUTES), $id)) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
 

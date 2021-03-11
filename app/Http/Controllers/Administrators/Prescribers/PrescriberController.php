@@ -12,6 +12,14 @@ use Lang;
 
 class PrescriberController extends Controller
 {
+    private const ATTRIBUTES = [
+        'full_name',
+        'phone',
+        'email',
+        'provincial_enrollment',
+        'national_enrollment',
+    ];
+
     use Pagination;
 
     private const PER_PAGE = 15;
@@ -94,7 +102,7 @@ class PrescriberController extends Controller
             'email' => 'email|nullable',
         ]);
 
-        if (! $prescriber = $this->prescriberRepository->create($request->all())) {
+        if (! $prescriber = $this->prescriberRepository->create($request->only(self::ATTRIBUTES))) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
 
@@ -140,7 +148,7 @@ class PrescriberController extends Controller
     {
         //
 
-        if (! $this->prescriberRepository->update($request->except(['_token', '_method']), $id)) {
+        if (! $this->prescriberRepository->update($request->only(self::ATTRIBUTES), $id)) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
 

@@ -11,6 +11,10 @@ use Lang;
 
 class NomenclatorController extends Controller
 {
+    private const ATTRIBUTES = [
+        'name',
+    ];
+
     /** @var \App\Contracts\Repository\NomenclatorRepositoryInterface */
     private $nomenclatorRepository;
 
@@ -59,7 +63,7 @@ class NomenclatorController extends Controller
             'name' => 'required|string',
         ]);
 
-        if (! $this->nomenclatorRepository->create($request->all())) {
+        if (! $this->nomenclatorRepository->create($request->only(self::ATTRIBUTES))) {
                 return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
   
@@ -106,7 +110,7 @@ class NomenclatorController extends Controller
             'name' => 'required|string',
         ]);
         
-        if (! $this->nomenclatorRepository->update($request->except(['_token', '_method']), $id)) {
+        if (! $this->nomenclatorRepository->update($request->only(self::ATTRIBUTES), $id)) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
   

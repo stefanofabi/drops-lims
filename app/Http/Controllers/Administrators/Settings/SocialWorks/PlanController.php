@@ -13,6 +13,13 @@ use Lang;
 
 class PlanController extends Controller
 {
+    private const ATTRIBUTES = [
+        'name',
+        'nbu_price',
+        'social_work_id',
+        'nomenclator_id',
+    ];
+
     /** @var \App\Contracts\Repository\SocialWorkRepositoryInterface */
     private $socialWorkRepository;
 
@@ -73,7 +80,7 @@ class PlanController extends Controller
             'nbu_price' => 'required|numeric',
         ]);
 
-        if (! $plan = $this->planRepository->create($request->all())) {
+        if (! $plan = $this->planRepository->create($request->only(self::ATTRIBUTES))) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
 
@@ -125,7 +132,7 @@ class PlanController extends Controller
             'nbu_price' => 'required|numeric',
         ]);
     
-        if (! $this->planRepository->update($request->except(['_token', '_method']), $id)) {
+        if (! $this->planRepository->update($request->only(self::ATTRIBUTES), $id)) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
 

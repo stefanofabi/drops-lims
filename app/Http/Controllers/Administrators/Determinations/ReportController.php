@@ -12,6 +12,11 @@ use Lang;
 
 class ReportController extends Controller
 {
+    private const ATTRIBUTES = [
+        'name',
+        'report',
+        'determination_id',
+    ];
 
     /** @var \App\Contracts\Repository\DeterminationRepositoryInterface */
     private $determinationRepository;
@@ -68,7 +73,7 @@ class ReportController extends Controller
             'determination_id' => 'required|numeric|min:1',
         ]);
 
-        if (! $report = $this->reportRepository->create($request->all())) {
+        if (! $report = $this->reportRepository->create($request->only(self::ATTRIBUTES))) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
 
@@ -116,7 +121,7 @@ class ReportController extends Controller
     {
         //
 
-        if (! $this->reportRepository->update($request->except(['_token', '_method']), $id)) {
+        if (! $this->reportRepository->update($request->only(self::ATTRIBUTES), $id)) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
 
@@ -133,13 +138,12 @@ class ReportController extends Controller
     {
         //
 
-        $report = $this->reportRepository->findOrFail($id);
-        $determination = $report->determination;
+        $determination_id = $this->reportRepository->findOrFail($id)->determination_id;
         
-        if (!$report->delete($id)) {
+        if (! $this->reportRepository->delete($id)) {
             return back()->withErrors(Lang::get('forms.failed_transaction'));
         }
 
-        return redirect()->action([DeterminationController::class, 'edit'], ['id' => $determination->id]);
+        return redirect()->action([DeterminationController::class, 'edit'], ['id' => $determination_id]);
     }
 }

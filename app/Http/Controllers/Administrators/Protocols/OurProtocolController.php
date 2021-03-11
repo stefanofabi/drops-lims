@@ -17,6 +17,18 @@ use Lang;
 
 class OurProtocolController extends Controller
 {
+    private const ATTRIBUTES = [
+        'completion_date',
+        'observations',
+        'type',
+        'patient_id',
+        'plan_id',
+        'prescriber_id',
+        'withdrawal_date',
+        'quantity_orders',
+        'diagnostic',
+        'billing_period_id',
+    ];
 
     /** @var \App\Contracts\Repository\ProtocolRepositoryInterface */
     private $protocolRepository;
@@ -106,7 +118,7 @@ class OurProtocolController extends Controller
             'quantity_orders' => 'required|numeric|min:0',
         ]);
 
-        if (! $protocol = $this->protocolRepository->create($request->all())) {
+        if (! $protocol = $this->protocolRepository->create($request->only(self::ATTRIBUTES))) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
         
@@ -161,8 +173,7 @@ class OurProtocolController extends Controller
             'quantity_orders' => 'required|numeric|min:0',
         ]);
         
-        // If you wish, you can make $request->except('patient_id')
-        if (! $this->protocolRepository->update($request->all(), $id)) {
+        if (! $this->protocolRepository->update($request->only(self::ATTRIBUTES), $id)) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
 

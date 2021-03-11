@@ -13,6 +13,11 @@ use Lang;
 
 class SocialWorkController extends Controller
 {
+    private const ATTRIBUTES = [
+        'name',
+        'acronym',
+    ];
+
     /** @var \App\Contracts\Repository\SocialWorkRepositoryInterface */
     private $socialWorkRepository;
 
@@ -67,7 +72,7 @@ class SocialWorkController extends Controller
             'name' => 'required|string',
         ]);
         
-        if (! $this->socialWorkRepository->create($request->all())) {
+        if (! $this->socialWorkRepository->create($request->only(self::ATTRIBUTES))) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }      
 
@@ -119,7 +124,7 @@ class SocialWorkController extends Controller
             'name' => 'required|string',
         ]);
         
-        if (! $this->socialWorkRepository->update($request->except(['_token', '_method']), $id)) {
+        if (! $this->socialWorkRepository->update($request->only(self::ATTRIBUTES), $id)) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
         
@@ -157,7 +162,7 @@ class SocialWorkController extends Controller
         try {
             $social_work = $this->socialWorkRepository->findOrFail($social_work_id);
         } catch (ModelNotFoundException $exception) {
-            return response()->json(['status' => 500, 'message' => Lang::get('errors.not_found')], '500');
+            return response()->json(['message' => Lang::get('errors.not_found')], '500');
         }
 
         return response()->json($social_work->plans, 200);

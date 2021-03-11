@@ -11,6 +11,12 @@ use Lang;
 
 class BillingPeriodController extends Controller
 {
+    private const ATTRIBUTES = [
+        'name',
+        'start_date',
+        'end_date',
+    ];
+
     /** @var \App\Contracts\Repository\BillingPeriodRepositoryInterface */
     private $billingPeriodRepository;
 
@@ -62,7 +68,7 @@ class BillingPeriodController extends Controller
             'end_date' => 'required|date',
         ]);
 
-        if (! $billing_period = $this->billingPeriodRepository->create($request->all())) {
+        if (! $billing_period = $this->billingPeriodRepository->create($request->only(self::ATTRIBUTES))) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
 
@@ -113,7 +119,7 @@ class BillingPeriodController extends Controller
             'end_date' => 'required|date',
         ]);
 
-        if (!$this->billingPeriodRepository->update($request->except(['_token', '_method']), $id)) {
+        if (!$this->billingPeriodRepository->update($request->only(self::ATTRIBUTES), $id)) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
  

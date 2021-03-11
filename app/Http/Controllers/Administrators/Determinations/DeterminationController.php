@@ -13,6 +13,14 @@ use Lang;
 
 class DeterminationController extends Controller
 {
+    private const ATTRIBUTES = [
+        'nomenclator_id',
+        'code',
+        'name',
+        'position',
+        'biochemical_unit',
+    ];
+
     use Pagination;
 
     private const PER_PAGE = 15;
@@ -103,7 +111,7 @@ class DeterminationController extends Controller
             'biochemical_unit' => 'required|numeric|min:0',
         ]);
 
-        if (! $determination = $this->determinationRepository->create($request->all())) {
+        if (! $determination = $this->determinationRepository->create($request->only(self::ATTRIBUTES))) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
     
@@ -158,7 +166,7 @@ class DeterminationController extends Controller
             'biochemical_unit' => 'required|numeric|min:0',
         ]);
 
-        if (!$this->determinationRepository->update($request->except(['_token', '_method']), $id)) {
+        if (!$this->determinationRepository->update($request->only(self::ATTRIBUTES), $id)) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
 

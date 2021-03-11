@@ -9,20 +9,30 @@ use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 
 use App\Contracts\Repository\PatientRepositoryInterface;
-
-use App\Models\Phone;
+use App\Contracts\Repository\PhoneRepositoryInterface;
 
 use Lang;
 
 class PhoneController extends Controller
 {
+    private const ATTRIBUTES = [
+        'patient_id',
+        'phone',
+        'type',
+    ];
 
     /** @var \App\Contracts\Repository\PatientRepositoryInterface */
     private $patientRepository;
 
-    public function __construct(PatientRepositoryInterface $patientRepository)
-    {
+    /** @var \App\Contracts\Repository\PatientRepositoryInterface */
+    private $phoneRepository;
+
+    public function __construct(
+        PatientRepositoryInterface $patientRepository,
+        PhoneRepositoryInterface $phoneRepository,
+    ) {
         $this->patientRepository = $patientRepository;
+        $this->phoneRepository = $phoneRepository;
     }
 
     /**
@@ -62,19 +72,11 @@ class PhoneController extends Controller
             'type' => 'required|string',
         ]);
 
-        $phone = new Phone($request->all());
-
-        try {
-            if ($phone->save()) {
-                $redirect = redirect()->action([PatientController::class, 'edit'], ['id' => $request->patient_id]);
-            } else {
-                $redirect = redirect()->back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
-            }
-        } catch (QueryException $e) {
-            $redirect = back()->withInput($request->all())->withErrors(Lang::get('errors.error_processing_transaction'));
+        if (! $this->phoneRepository->create($request->only(self::ATTRIBUTES))) {
+            return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
 
-        return $redirect;
+        return redirect()->action([PatientController::class, 'edit'], ['id' => $request->patient_id]);
     }
 
     /**
@@ -99,9 +101,9 @@ class PhoneController extends Controller
         //
 
         try {
-            $phone = Phone::findOrFail($request->id);
+            $phone = $this->phoneRepository->findOrFail($request->id);
         } catch (ModelNotFoundException $exception) {
-            return response()->json(['status' => 500, 'message' => Lang::get('errors.not_found')], 500);
+            return response()->json(['message' => Lang::get('errors.not_found')], 404);
         }
 
         return response()->json($phone, 200);
@@ -123,21 +125,14 @@ class PhoneController extends Controller
         ]);
 
         try {
-            $phone = Phone::findOrFail($request->id);
-
-            if (! $phone->update($request->all())) {
-                return response()->json(['status' => 500, 'message' => Lang::get('forms.failed_transaction')], 500);
+            if (! $this->phoneRepository->update($request->only(self::ATTRIBUTES), $request->id)) {
+                return response()->json(['message' => Lang::get('forms.failed_transaction')], 500);
             }
-        } catch (QueryException $e) {
-            return response()->json([
-                'status' => 500,
-                'message' => Lang::get('errors.error_processing_transaction'),
-            ], 500);
-        } catch (ModelNotFoundException $exception) {
-            return response()->json(['status' => 500, 'message' => Lang::get('errors.not_found')], 500);
+        } catch (QueryException $exception) {
+            return response()->json(['message' => Lang::get('errors.error_processing_transaction')], 500);
         }
 
-        return response()->json(['status' => 200, 'message' => Lang::get('forms.successful_transaction')], 200);
+        return response()->json(['message' => Lang::get('forms.successful_transaction')], 200);
     }
 
     /**
@@ -151,20 +146,13 @@ class PhoneController extends Controller
         //
 
         try {
-            $phone = Phone::findOrFail($request->id);
-
-            if (! $phone->delete()) {
-                return response()->json(['status' => 500, 'message' => Lang::get('forms.failed_transaction')], 500);
+            if (! $this->phoneRepository->delete($request->id)) {
+                return response()->json(['message' => Lang::get('forms.failed_transaction')], 500);
             }
-        } catch (QueryException $e) {
-            return response()->json([
-                'status' => 500,
-                'message' => Lang::get('errors.error_processing_transaction'),
-            ], 500);
-        } catch (ModelNotFoundException $exception) {
-            return response()->json(['status' => 500, 'message' => Lang::get('errors.not_found')], 500);
+        } catch (QueryException $exception) {
+            return response()->json(['message' => Lang::get('errors.error_processing_transaction')], 500);
         }
 
-        return response()->json(['status' => 200, 'message' => Lang::get('forms.successful_transaction')], 200);
+        return response()->json(['message' => Lang::get('forms.successful_transaction')], 200);
     }
 }

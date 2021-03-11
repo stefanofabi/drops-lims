@@ -13,6 +13,20 @@ use Lang;
 
 class PatientController extends Controller
 {
+    private const ATTRIBUTES = [
+        'full_name',
+        'key',
+        'sex',
+        'birth_date',
+        'city',
+        'address',
+        'owner',
+        'business_name',
+        'tax_condition',
+        'start_activity',
+        'type',
+    ];
+
     use Pagination;
 
     private const PER_PAGE = 15;
@@ -25,8 +39,10 @@ class PatientController extends Controller
     /** @var \App\Contracts\Repository\SocialWorkRepositoryInterface */
     private $socialWorkRepository;
 
-    public function __construct(PatientRepositoryInterface $patientRepository, SocialWorkRepositoryInterface $socialWorkRepository)
-    {
+    public function __construct(
+        PatientRepositoryInterface $patientRepository, 
+        SocialWorkRepositoryInterface $socialWorkRepository
+    ) {
         $this->patientRepository = $patientRepository;
         $this->socialWorkRepository = $socialWorkRepository;
     }
@@ -150,7 +166,7 @@ class PatientController extends Controller
             'birth_date' => 'date|nullable',
         ]);
 
-        if (! $patient = $this->patientRepository->create($request->all())) {
+        if (! $patient = $this->patientRepository->create($request->only(self::ATTRIBUTES))) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));;
         }
 
@@ -230,7 +246,9 @@ class PatientController extends Controller
             // others cases has filtered in enum field
         }
 
-        return $view->with('patient', $patient)->with('social_works', $social_works);
+        return $view
+            ->with('patient', $patient)
+            ->with('social_works', $social_works);
     }
 
     /**
@@ -252,7 +270,7 @@ class PatientController extends Controller
             'start_activity' => 'date|nullable',
         ]);
         
-        if (! $this->patientRepository->update($request->except(['_token', '_method']), $id)) {
+        if (! $this->patientRepository->update($request->only(self::ATTRIBUTES), $id)) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));;
         }
 
