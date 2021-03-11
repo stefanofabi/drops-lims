@@ -2,7 +2,6 @@
 
 namespace App\Laboratory\Prints\SecurityCodes;
 
-use Lang;
 use PDF;
 
 class ModernStyleStrategy implements PrintSecurityCodeStrategyInterface

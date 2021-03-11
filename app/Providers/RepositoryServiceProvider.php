@@ -43,6 +43,8 @@ use App\Repositories\Eloquent\EmailRepository;
 use App\Contracts\Repository\PhoneRepositoryInterface;
 use App\Repositories\Eloquent\PhoneRepository;
 
+use App\Contracts\Repository\SecurityCodeRepositoryInterface;
+use App\Repositories\Eloquent\SecurityCodeRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -68,6 +70,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(AffiliateRepositoryInterface::class, AffiliateRepository::class);
         $this->app->bind(EmailRepositoryInterface::class, EmailRepository::class);
         $this->app->bind(PhoneRepositoryInterface::class, PhoneRepository::class);
+        $this->app->bind(SecurityCodeRepositoryInterface::class, SecurityCodeRepository::class);
 
     }
 

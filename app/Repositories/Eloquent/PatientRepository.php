@@ -4,7 +4,7 @@ namespace App\Repositories\Eloquent;
 
 use App\Contracts\Repository\PatientRepositoryInterface;
 
-use App\Models\Patient; 
+use App\Models\Patient;
 
 final class PatientRepository implements PatientRepositoryInterface
 {
