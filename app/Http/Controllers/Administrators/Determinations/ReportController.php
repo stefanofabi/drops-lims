@@ -13,10 +13,10 @@ use Lang;
 class ReportController extends Controller
 {
 
-    /** @var \App\Laboratory\Repositories\Determinations\DeterminationRepositoryInterface */
+    /** @var \App\Contracts\Repository\DeterminationRepositoryInterface */
     private $determinationRepository;
 
-    /** @var \App\Laboratory\Repositories\Determinations\ReportRepositoryInterface */
+    /** @var \App\Contracts\Repository\ReportRepositoryInterface */
     private $reportRepository;
 
     public function __construct(

@@ -18,7 +18,7 @@ class PrescriberController extends Controller
 
     private const ADJACENTS = 4;
 
-    /** @var \App\Laboratory\Repositories\Prescribers\PrescriberRepositoryInterface */
+    /** @var \App\Contracts\Repository\PrescriberRepositoryInterface */
     private $prescriberRepository;
 
     public function __construct(PrescriberRepositoryInterface $prescriberRepository)

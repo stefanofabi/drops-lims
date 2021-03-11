@@ -21,10 +21,10 @@ use Lang;
 class PracticeController extends Controller
 {
 
-    /** @var \App\Laboratory\Repositories\Protocols\ProtocolRepositoryInterface */
+    /** @var \App\Contracts\Repository\ProtocolRepositoryInterface */
     private $protocolRepository;
 
-    /** @var \App\Laboratory\Repositories\Determinations\ReportRepositoryInterface */
+    /** @var \App\Contracts\Repository\ReportRepositoryInterface */
     private $reportRepository;
 
     public function __construct (

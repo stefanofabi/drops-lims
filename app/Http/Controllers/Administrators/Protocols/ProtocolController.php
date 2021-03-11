@@ -16,7 +16,7 @@ class ProtocolController extends Controller
 
     private const ADJACENTS = 4;
 
-    /** @var \App\Laboratory\Repositories\Protocols\ProtocolRepositoryInterface */
+    /** @var \App\Contracts\Repository\ProtocolRepositoryInterface */
     private $protocolRepository;
 
     public function __construct (

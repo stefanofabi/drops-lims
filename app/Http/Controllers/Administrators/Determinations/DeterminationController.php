@@ -19,10 +19,10 @@ class DeterminationController extends Controller
 
     private const ADJACENTS = 4;
 
-    /** @var \App\Laboratory\Repositories\Determinations\DeterminationRepositoryInterface */
+    /** @var \App\Contracts\Repository\DeterminationRepositoryInterface */
     private $determinationRepository;
 
-    /** @var \App\Laboratory\Repositories\Nomenclators\NomenclatorRepositoryInterface */
+    /** @var \App\Contracts\Repository\NomenclatorRepositoryInterface */
     private $nomenclatorRepository;
 
     public function __construct(

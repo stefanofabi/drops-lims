@@ -11,7 +11,7 @@ use Lang;
 
 class NomenclatorController extends Controller
 {
-    /** @var \App\Laboratory\Repositories\Nomenclators\NomenclatorRepositoryInterface */
+    /** @var \App\Contracts\Repository\NomenclatorRepositoryInterface */
     private $nomenclatorRepository;
 
     public function __construct(NomenclatorRepositoryInterface $nomenclatorRepository)

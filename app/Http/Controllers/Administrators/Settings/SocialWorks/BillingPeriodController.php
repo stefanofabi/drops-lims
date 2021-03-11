@@ -11,7 +11,7 @@ use Lang;
 
 class BillingPeriodController extends Controller
 {
-    /** @var \App\Laboratory\Repositories\BillingPeriods\BillingPeriodRepositoryInterface */
+    /** @var \App\Contracts\Repository\BillingPeriodRepositoryInterface */
     private $billingPeriodRepository;
 
     public function __construct (BillingPeriodRepositoryInterface $billingPeriodRepository) 

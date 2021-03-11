@@ -13,13 +13,13 @@ use Lang;
 
 class PlanController extends Controller
 {
-    /** @var \App\Laboratory\Repositories\SocialWorks\SocialWorkRepositoryInterface */
+    /** @var \App\Contracts\Repository\SocialWorkRepositoryInterface */
     private $socialWorkRepository;
 
-    /** @var \App\Laboratory\Repositories\Nomenclators\NomenclatorRepositoryInterface */
+    /** @var \App\Contracts\Repository\NomenclatorRepositoryInterface */
     private $nomenclatorRepository;
 
-    /** @var \App\Laboratory\Repositories\Nomenclators\PlanRepositoryInterface */
+    /** @var \App\Contracts\Repository\PlanRepositoryInterface */
     private $planRepository;
 
     public function __construct(

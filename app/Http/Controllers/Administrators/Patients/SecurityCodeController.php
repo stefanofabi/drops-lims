@@ -19,7 +19,7 @@ class SecurityCodeController extends Controller
 {
     private const SECURITY_CODE_LENGTH = 10;
 
-    /** @var \App\Laboratory\Repositories\Patients\PatientRepositoryInterface */
+    /** @var \App\Contracts\Repository\PatientRepositoryInterface */
     private $patientRepository;
 
     public function __construct(PatientRepositoryInterface $patientRepository)

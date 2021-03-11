@@ -17,7 +17,7 @@ use Lang;
 class PhoneController extends Controller
 {
 
-    /** @var \App\Laboratory\Repositories\Patients\PatientRepositoryInterface */
+    /** @var \App\Contracts\Repository\PatientRepositoryInterface */
     private $patientRepository;
 
     public function __construct(PatientRepositoryInterface $patientRepository)

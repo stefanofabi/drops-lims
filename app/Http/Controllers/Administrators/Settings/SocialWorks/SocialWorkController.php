@@ -13,10 +13,10 @@ use Lang;
 
 class SocialWorkController extends Controller
 {
-    /** @var \App\Laboratory\Repositories\SocialWorks\SocialWorkRepositoryInterface */
+    /** @var \App\Contracts\Repository\SocialWorkRepositoryInterface */
     private $socialWorkRepository;
 
-    /** @var \App\Laboratory\Repositories\SocialWorks\PaymentSocialWorkRepositoryInterface */
+    /** @var \App\Contracts\Repository\PaymentSocialWorkRepositoryInterface */
     private $paymentSocialWorkRepository;
 
     public function __construct(

@@ -18,16 +18,16 @@ use Lang;
 class OurProtocolController extends Controller
 {
 
-    /** @var \App\Laboratory\Repositories\Protocols\ProtocolRepositoryInterface */
+    /** @var \App\Contracts\Repository\ProtocolRepositoryInterface */
     private $protocolRepository;
 
-    /** @var \App\Laboratory\Repositories\Patients\PatientRepositoryInterface */
+    /** @var \App\Contracts\Repository\PatientRepositoryInterface */
     private $patientRepository;
 
-    /** @var \App\Laboratory\Repositories\Prescribers\PrescriberRepositoryInterface */
+    /** @var \App\Contracts\Repository\PrescriberRepositoryInterface */
     private $prescriberRepository;
 
-    /** @var \App\Laboratory\Repositories\BillingPeriods\BillingPeriodRepositoryInterface */
+    /** @var \App\Contracts\Repository\BillingPeriodRepositoryInterface */
     private $billingPeriodRepository;
 
     /** @var \App\Laboratory\Prints\Worksheets\PrintWorksheetContext */

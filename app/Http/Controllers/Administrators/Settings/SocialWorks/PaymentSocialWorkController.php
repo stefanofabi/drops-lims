@@ -6,28 +6,20 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Contracts\Repository\SocialWorkRepositoryInterface;
-use App\Contracts\Repository\BillingPeriodRepositoryInterface;
 use App\Contracts\Repository\PaymentSocialWorkRepositoryInterface;
-
-use App\Exceptions\QueryValidateException;
 
 use Lang;
 
 class PaymentSocialWorkController extends Controller
 {
-    /** @var \App\Laboratory\Repositories\SocialWorks\SocialWorkRepositoryInterface */
+    /** @var \App\Contracts\Repository\SocialWorkRepositoryInterface */
     private $socialWorkRepository;
-
-    /** @var \App\Laboratory\Repositories\BillingPeriods\BillingPeriodRepositoryInterface */
-    private $billingPeriodRepository;
     
     public function __construct(
         SocialWorkRepositoryInterface $socialWorkRepository,
-        BillingPeriodRepositoryInterface $billingPeriodRepository,
         PaymentSocialWorkRepositoryInterface $paymentSocialWorkRepository,
     ) {
         $this->socialWorkRepository = $socialWorkRepository;
-        $this->billingPeriodRepository = $billingPeriodRepository;
         $this->paymentSocialWorkRepository = $paymentSocialWorkRepository;
     }
 

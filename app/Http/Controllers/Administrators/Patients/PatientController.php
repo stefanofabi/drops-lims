@@ -19,10 +19,10 @@ class PatientController extends Controller
 
     private const ADJACENTS = 4;
 
-    /** @var \App\Laboratory\Repositories\Patients\PatientRepositoryInterface */
+    /** @var \App\Contracts\Repository\PatientRepositoryInterface */
     private $patientRepository;
 
-    /** @var \App\Laboratory\Repositories\SocialWorks\SocialWorkRepositoryInterface */
+    /** @var \App\Contracts\Repository\SocialWorkRepositoryInterface */
     private $socialWorkRepository;
 
     public function __construct(PatientRepositoryInterface $patientRepository, SocialWorkRepositoryInterface $socialWorkRepository)
