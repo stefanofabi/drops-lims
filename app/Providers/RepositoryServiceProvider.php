@@ -52,6 +52,8 @@ use App\Repositories\Eloquent\PracticeRepository;
 use App\Contracts\Repository\ResultRepositoryInterface;
 use App\Repositories\Eloquent\ResultRepository;
 
+use App\Contracts\Repository\SignPracticeRepositoryInterface;
+use App\Repositories\Eloquent\SignPracticeRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -80,6 +82,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(SecurityCodeRepositoryInterface::class, SecurityCodeRepository::class);
         $this->app->bind(PracticeRepositoryInterface::class, PracticeRepository::class);
         $this->app->bind(ResultRepositoryInterface::class, ResultRepository::class);
+        $this->app->bind(SignPracticeRepositoryInterface::class, SignPracticeRepository::class);
 
     }
 

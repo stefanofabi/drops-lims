@@ -12,8 +12,7 @@ use App\Contracts\Repository\ProtocolRepositoryInterface;
 use App\Contracts\Repository\ReportRepositoryInterface;
 use App\Contracts\Repository\PracticeRepositoryInterface;
 use App\Contracts\Repository\ResultRepositoryInterface;
-
-use App\Models\SignPractice;
+use App\Contracts\Repository\SignPracticeRepositoryInterface;
 
 use Lang;
 
@@ -32,16 +31,22 @@ class PracticeController extends Controller
     /** @var \App\Contracts\Repository\ResultRepositoryInterface */
     private $resultRepository;
 
+    /** @var \App\Contracts\Repository\SignPracticeRepositoryInterface */
+    private $signPracticeRepository;
+
+
     public function __construct (
         ProtocolRepositoryInterface $protocolRepository,
         ReportRepositoryInterface $reportRepository,
         PracticeRepositoryInterface $practiceRepository,
-        ResultRepositoryInterface $resultRepository
+        ResultRepositoryInterface $resultRepository,
+        SignPracticeRepositoryInterface $signPracticeRepository
     ) {
         $this->protocolRepository = $protocolRepository;
         $this->reportRepository = $reportRepository;
         $this->practiceRepository = $practiceRepository;
         $this->resultRepository = $resultRepository;
+        $this->signPracticeRepository = $signPracticeRepository;
     }
 
     /**
@@ -148,22 +153,16 @@ class PracticeController extends Controller
         //
 
         try {
-
-            $signed = new SignPractice([
-                'practice_id' => $id,
-                'user_id' => auth()->user()->id,
-            ]);
-
-            if (! $signed->save()) {
-                return response()->json(['status' => 500, 'message' => Lang::get('forms.failed_transaction')], 500);
+            if (! $this->signPracticeRepository->create(['practice_id' => $id, 'user_id' => auth()->user()->id])) {
+                return response()->json(['message' => Lang::get('forms.failed_transaction')], 500);
             }
-        } catch (QueryException $e) {
+        } catch (QueryException $exception) {
             // the user had already signed the practice
 
-            return response()->json(['status' => 200, 'message' => Lang::get('protocols.already_signed')], 200);
+            return response()->json(['message' => Lang::get('protocols.already_signed')], 200);
         }
 
-        return response()->json(['status' => 200, 'message' => Lang::get('protocols.success_signed')], 200);
+        return response()->json(['message' => Lang::get('protocols.success_signed')], 200);
     }
 
     /**
