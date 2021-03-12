@@ -91,12 +91,14 @@ class OurProtocolController extends Controller
             $affiliates = [];
         }
 
-        $current_date = date('Y-m-d');
+        $billing_periods = $this->billingPeriodRepository->getBillingPeriods();
+
+        $current_billing_period = $this->billingPeriodRepository->getCurrentBillingPeriod();
 
         return view('administrators/protocols/our/create')
             ->with('patient', $patient)
-            ->with('billing_periods', $this->billingPeriodRepository->getBillingPeriods($current_date))
-            ->with('current_billing_period', $this->billingPeriodRepository->getCurrentBillingPeriod());
+            ->with('billing_periods', $billing_periods)
+            ->with('current_billing_period', $current_billing_period);
     }
 
     /**
@@ -247,7 +249,7 @@ class OurProtocolController extends Controller
 
         $this->printOurProtocolContext->setStrategy(new $strategyClass);
 
-        return $this->printOurProtocolContext->print($protocol_id, $filter_practices);
+        return $this->printOurProtocolContext->printProtocol($protocol_id, $filter_practices);
     }
 
     /**
@@ -262,7 +264,7 @@ class OurProtocolController extends Controller
 
         $this->printWorksheetContext->setStrategy(new $strategyClass);
         
-        return $this->printWorksheetContext->print($protocol_id, $filter_practices);
+        return $this->printWorksheetContext->printWorksheet($protocol_id, $filter_practices);
     }
 
 }

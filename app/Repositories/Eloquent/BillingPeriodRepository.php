@@ -67,7 +67,9 @@ final class BillingPeriodRepository implements BillingPeriodRepositoryInterface
      *
      * @return \Illuminate\Http\Response
      */
-    public function getBillingPeriods($current_date) {
+    public function getBillingPeriods() {
+        $current_date = date('Y-m-d');
+        
         $start_date = date("Y-m-d", strtotime($current_date."- 6 month"));
         $end_date = date("Y-m-d", strtotime($current_date."+ 6 month"));
 

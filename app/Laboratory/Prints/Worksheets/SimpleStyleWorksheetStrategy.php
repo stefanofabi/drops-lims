@@ -23,7 +23,7 @@ final class SimpleStyleWorksheetStrategy implements PrintWorksheetStrategyInterf
      *
      * @return \Illuminate\Http\Response
      */
-    public function print($protocol_id, $filter_practices = [])
+    public function printWorksheet($protocol_id, $filter_practices = [])
     {
         $protocol = $this->protocolRepository->findOrFail($protocol_id);
 

@@ -124,7 +124,9 @@ class PaymentSocialWorkController extends Controller
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
 
-        return redirect()->action([SocialWorkController::class, 'edit'], ['id' => $this->paymentSocialWorkRepository->findOrFail($id)->social_work_id]);
+        $social_work_id = $this->paymentSocialWorkRepository->findOrFail($id)->social_work_id;
+
+        return redirect()->action([SocialWorkController::class, 'edit'], ['id' => $social_work_id]);
     }
 
     /**

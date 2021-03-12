@@ -99,13 +99,17 @@ class EmailController extends Controller
     public function edit(Request $request)
     {
         //
+
         try {
             $email = $this->emailRepository->findOrFail($request->id);
         } catch (ModelNotFoundException $exception) {
             return response()->json(['message' => Lang::get('errors.not_found')], 404);
         }
 
-        return response()->json($email, 200);
+        return response()->json([
+            'id' => $email->id,
+            'email' => $email->email,
+        ], 200);
     }
 
     /**

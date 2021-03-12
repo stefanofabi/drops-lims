@@ -57,7 +57,9 @@ class PlanController extends Controller
     public function create($social_work_id)
     {
         //
+
         $social_work =  $this->socialWorkRepository->findOrFail($social_work_id);
+        
         $nomenclators = $this->nomenclatorRepository->all();
 
         return view('administrators/settings/social_works/plans/create')
@@ -109,6 +111,7 @@ class PlanController extends Controller
         //
         
         $plan = $this->planRepository->findOrFail($id);
+        
         $nomenclators = $this->nomenclatorRepository->all();
 
         return view('administrators/settings/social_works/plans/edit')
@@ -136,7 +139,9 @@ class PlanController extends Controller
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
 
-        return redirect()->action([SocialWorkController::class, 'edit'], ['id' => $this->planRepository->findOrFail($id)->social_work_id]);
+        $social_work_id = $this->planRepository->findOrFail($id)->social_work_id;
+        
+        return redirect()->action([SocialWorkController::class, 'edit'], ['id' => $social_work_id]);
     }
 
     /**

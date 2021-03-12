@@ -11,5 +11,5 @@ interface PrintProtocolStrategyInterface
      * @param array $filter_practices
      * @return \Illuminate\Http\Response
      */
-    public function print($protocol_id, $filter_practices = []);
+    public function printProtocol($protocol_id, $filter_practices = []);
 }

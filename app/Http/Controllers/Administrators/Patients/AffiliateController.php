@@ -62,9 +62,13 @@ class AffiliateController extends Controller
     {
         //
 
+        $patient = $this->patientRepository->findOrFail($patient_id);
+        
+        $social_works = $this->socialWorkRepository->all();
+
         return view('administrators/patients/social_works/affiliates/create')
-            ->with('patient', $this->patientRepository->findOrFail($patient_id))
-            ->with('social_works', $this->socialWorkRepository->all());
+            ->with('patient', $patient)
+            ->with('social_works', $social_works);
     }
 
     /**

@@ -183,9 +183,7 @@ class PatientController extends Controller
 
         $patient = $this->patientRepository->findOrFail($id);
 
-        $patient_type = $patient->type;
-
-        switch ($patient_type) {
+        switch ($patient->type) {
             case 'animal':
             {
                 $view = view('administrators/patients/animals/show');

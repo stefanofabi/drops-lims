@@ -71,8 +71,12 @@ class SecurityCodeController extends Controller
             $strategyClass = PrintSecurityCodeContext::STRATEGIES[$strategy];
             $this->printSecurityCodeContext->setStrategy(new $strategyClass);
             
-            return $this->printSecurityCodeContext->print_security_code($this->patientRepository->findOrFail($request->patient_id), $security_code['security_code'], $security_code['expiration_date']);
-       
+            return $this->printSecurityCodeContext
+                ->print_security_code(
+                    $this->patientRepository->findOrFail($request->patient_id),
+                    $security_code['security_code'],
+                    $security_code['expiration_date']
+                );
     }
 
     /**

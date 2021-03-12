@@ -106,7 +106,11 @@ class PhoneController extends Controller
             return response()->json(['message' => Lang::get('errors.not_found')], 404);
         }
 
-        return response()->json($phone, 200);
+        return response()->json([
+            'id' => $phone->id,
+            'phone' => $phone->phone,
+            'type' => $phone->type,
+        ], 200);
     }
 
     /**
@@ -145,14 +149,10 @@ class PhoneController extends Controller
     {
         //
 
-        try {
-            if (! $this->phoneRepository->delete($request->id)) {
-                return response()->json(['message' => Lang::get('forms.failed_transaction')], 500);
-            }
-        } catch (QueryException $exception) {
-            return response()->json(['message' => Lang::get('errors.error_processing_transaction')], 500);
+        if (! $this->phoneRepository->delete($request->id)) {
+            return response()->json(['message' => Lang::get('forms.failed_transaction')], 500);
         }
-
+       
         return response()->json(['message' => Lang::get('forms.successful_transaction')], 200);
     }
 }

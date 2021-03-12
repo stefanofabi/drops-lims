@@ -18,13 +18,13 @@ final class PrintWorksheetContext
     /**
      * Call strategy print() method.
      */
-    public function print($protocol_id, $filter_practices = [])
+    public function printWorksheet($protocol_id, $filter_practices = [])
     {
         if (is_null($this->strategy)) {
             throw new RuntimeException('Missing strategy');    
         }
 
-        return $this->strategy->print($protocol_id, $filter_practices);
+        return $this->strategy->printWorksheet($protocol_id, $filter_practices);
     }
 
     public function setStrategy(PrintWorksheetStrategyInterface $strategy) {

@@ -24,7 +24,7 @@ class ModernStyleProtocolStrategy implements PrintProtocolStrategyInterface
      *
      * @return \Illuminate\Http\Response
      */
-    public function print($protocol_id, $filter_practices = [])
+    public function printProtocol($protocol_id, $filter_practices = [])
     {
         $protocol = $this->protocolRepository->findOrFail($protocol_id);
 
@@ -33,10 +33,10 @@ class ModernStyleProtocolStrategy implements PrintProtocolStrategyInterface
         } else {
             $practices = $practices->whereIn('id', $filter_practices);
         }
-        /*
+        
         if (!$this->haveResults($practices)) {
             return Lang::get('protocols.empty_protocol');
-        }*/
+        }
 
         $pdf = PDF::loadView('pdf/protocols/modern_style', [
             'protocol' => $protocol,

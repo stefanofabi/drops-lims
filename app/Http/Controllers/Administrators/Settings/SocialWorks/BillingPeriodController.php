@@ -68,11 +68,11 @@ class BillingPeriodController extends Controller
             'end_date' => 'required|date',
         ]);
 
-        if (! $billing_period = $this->billingPeriodRepository->create($request->only(self::ATTRIBUTES))) {
+        if (! $this->billingPeriodRepository->create($request->only(self::ATTRIBUTES))) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
 
-        return redirect()->action([BillingPeriodController::class, 'edit'], ['id' => $billing_period->id]);
+        return redirect()->action([BillingPeriodController::class, 'index']);
     }
 
     /**
