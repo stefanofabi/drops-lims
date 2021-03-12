@@ -46,6 +46,9 @@ use App\Repositories\Eloquent\PhoneRepository;
 use App\Contracts\Repository\SecurityCodeRepositoryInterface;
 use App\Repositories\Eloquent\SecurityCodeRepository;
 
+use App\Contracts\Repository\PracticeRepositoryInterface;
+use App\Repositories\Eloquent\PracticeRepository;
+
 class RepositoryServiceProvider extends ServiceProvider
 {
     /**
@@ -71,7 +74,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(EmailRepositoryInterface::class, EmailRepository::class);
         $this->app->bind(PhoneRepositoryInterface::class, PhoneRepository::class);
         $this->app->bind(SecurityCodeRepositoryInterface::class, SecurityCodeRepository::class);
-
+        $this->app->bind(PracticeRepositoryInterface::class, PracticeRepository::class);
     }
 
     /**

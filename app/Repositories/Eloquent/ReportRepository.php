@@ -2,6 +2,8 @@
 
 namespace App\Repositories\Eloquent;
 
+use Illuminate\Support\Facades\DB;
+
 use App\Contracts\Repository\ReportRepositoryInterface;
 
 use App\Models\Report; 
@@ -50,4 +52,19 @@ final class ReportRepository implements ReportRepositoryInterface
         return $this->model->findOrFail($id);
     }
     
+    public function getReportsFromNomenclator($nomenclator_id, $filter) {
+        return $this->model
+            ->select('reports.id', DB::raw("CONCAT(determinations.name, ' - ', reports.name) as label"))
+            ->join('determinations', 'determinations.id', '=', 'reports.determination_id')
+            ->where('determinations.nomenclator_id', $nomenclator_id)
+            ->where(function ($query) use ($filter) {
+                if (! empty($filter)) {
+                    $query->orWhere("determinations.name", "like", "%$filter%")
+                        ->orWhere("determinations.code", "like", "$filter%")
+                        ->orWhere("reports.name", "like", "%$filter%");
+                }
+            })
+            ->get()
+            ->toJson();
+    }
 }

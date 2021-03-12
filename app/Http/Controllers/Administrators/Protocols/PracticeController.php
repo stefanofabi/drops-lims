@@ -11,8 +11,8 @@ use Illuminate\Database\QueryException;
 
 use App\Contracts\Repository\ProtocolRepositoryInterface;
 use App\Contracts\Repository\ReportRepositoryInterface;
+use App\Contracts\Repository\PracticeRepositoryInterface;
 
-use App\Models\Practice;
 use App\Models\Result;
 use App\Models\SignPractice;
 
@@ -27,12 +27,17 @@ class PracticeController extends Controller
     /** @var \App\Contracts\Repository\ReportRepositoryInterface */
     private $reportRepository;
 
+    /** @var \App\Contracts\Repository\PracticeRepositoryInterface */
+    private $practiceRepository;
+
     public function __construct (
         ProtocolRepositoryInterface $protocolRepository,
-        ReportRepositoryInterface $reportRepository
+        ReportRepositoryInterface $reportRepository,
+        PracticeRepositoryInterface $practiceRepository
     ) {
         $this->protocolRepository = $protocolRepository;
         $this->reportRepository = $reportRepository;
+        $this->practiceRepository = $practiceRepository;
     }
 
     /**
@@ -65,63 +70,28 @@ class PracticeController extends Controller
     {
         //
 
-        $request->validate([
-            'type' => 'in:our,derived',
-        ]);
+        try  {
 
-        DB::beginTransaction();
+            $report = $this->reportRepository->findOrFail($request->report_id);
 
-        try {
+            $protocol = $this->protocolRepository->findOrFail($request->protocol_id);
 
-            $report_id = $request->report_id;
-            $report = $this->reportRepository->findOrFail($report_id);
-            $determination = $report->determination;
-            $biochemical_unit = $determination->biochemical_unit;
-            $protocol_id = $request->protocol_id;
-            $type = $request->type;
+            $amount = $this->practiceRepository->getPracticePrice($report, $protocol);
 
-            switch ($type) {
-                case 'our':
-                {
-                    $protocol = $this->protocolRepository->findOrFail($protocol_id);
-                    $plan = $protocol->plan;
-                    $nbu_price = $plan->nbu_price;
-                    $amount = $nbu_price * $biochemical_unit;
-
-                    break;
-                }
-
-                case 'derived':
-                {
-
-                }
-            }
-
-            $practice = new Practice([
-                'protocol_id' => $protocol_id,
-                'report_id' => $report_id,
+            if (! $this->practiceRepository->create([
+                'report_id' => $report->id,
+                'protocol_id' => $protocol->id,
                 'amount' => $amount,
-            ]);
-
-            if (! $practice->save()) {
-                return response()->json(['status' => 500, 'message' => Lang::get('forms.failed_transaction')], 500);
+            ])) {
+                return response()->json(['message' => Lang::get('forms.failed_transaction')], 500);
             }
-
-            DB::commit();
-        } catch (QueryException $exception) {
-            DB::rollBack();
-
-            return response()->json([
-                'status' => 500,
-                'message' => Lang::get('errors.error_processing_transaction'),
-            ], 500);
         } catch (ModelNotFoundException $exception) {
-            DB::rollBack();
-
-            return response()->json(['status' => 500, 'message' => Lang::get('errors.not_found')], 500);
+            return response()->json(['message' => Lang::get('errors.not_found')], 404);
+        } catch (QueryException $exception) {
+            return response()->json(['message' => Lang::get('errors.error_processing_transaction')], 500);
         }
-
-        return response()->json(['status' => 200, 'message' => Lang::get('forms.successful_transaction')], 200);
+        
+        return response()->json(['message' => Lang::get('forms.successful_transaction')], 200);
     }
 
     /**
@@ -145,7 +115,7 @@ class PracticeController extends Controller
     {
         //
 
-        $practice = Practice::findOrFail($id);
+        $practice = $this->practiceRepository->findOrFail($id);
 
         return view('administrators/protocols/practices/edit')->with('practice', $practice);
     }
@@ -240,24 +210,8 @@ class PracticeController extends Controller
     public function load_practices(Request $request)
     {
         //
-        $nomenclator_id = $request->nomenclator_id;
-        $filter = $request->filter;
 
-        $reports = DB::table('reports')
-            ->select('reports.id', DB::raw("CONCAT(determinations.name, ' - ', reports.name) as label"))
-            ->join('determinations', 'determinations.id', '=', 'reports.determination_id')
-            ->where('determinations.nomenclator_id', $nomenclator_id)
-            ->where(function ($query) use ($filter) {
-                if (! empty($filter)) {
-                    $query->orWhere("determinations.name", "like", "%$filter%")
-                        ->orWhere("determinations.code", "like", "$filter%")
-                        ->orWhere("reports.name", "like", "%$filter%");
-                }
-            })
-            ->get()
-            ->toJson();
-
-        return $reports;
+        return $this->reportRepository->getReportsFromNomenclator($request->nomenclator_id, $request->filter);
     }
 
     /**
@@ -270,7 +224,7 @@ class PracticeController extends Controller
     {
         //
         $practice_id = $request->practice_id;
-        $practice = Practice::findOrFail($practice_id);
+        $practice = $this->practiceRepository->findOrFail($practice_id);
 
         return $practice->results->toArray();
     }
