@@ -53,7 +53,7 @@
 		<div class="input-group-prepend">
 			<span class="input-group-text"> {{ trans('reports.report') }} </span>
 		</div>
-
+		
 		<textarea class="form-control" rows="10" disabled>{{ $report->report }}</textarea>
 	</div>
 

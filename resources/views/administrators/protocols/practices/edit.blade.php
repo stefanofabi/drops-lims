@@ -76,7 +76,7 @@
 
             $.ajax({
                 data: parameters,
-                url: "{{ route('administrators/protocols/practices/update', ['id' => $practice->id]) }}",
+                url: "{{ route('administrators/protocols/practices/inform_results', ['practice_id' => $practice->id]) }}",
                 type: 'put',
                 dataType: 'json',
                 beforeSend: function () {

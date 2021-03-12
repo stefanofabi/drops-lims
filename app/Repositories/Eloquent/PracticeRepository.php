@@ -75,5 +75,4 @@ final class PracticeRepository implements PracticeRepositoryInterface
 
         return $amount;
     }
-    
 }

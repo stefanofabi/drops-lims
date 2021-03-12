@@ -6,14 +6,13 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Database\QueryException;
 
 use App\Contracts\Repository\ProtocolRepositoryInterface;
 use App\Contracts\Repository\ReportRepositoryInterface;
 use App\Contracts\Repository\PracticeRepositoryInterface;
+use App\Contracts\Repository\ResultRepositoryInterface;
 
-use App\Models\Result;
 use App\Models\SignPractice;
 
 use Lang;
@@ -30,14 +29,19 @@ class PracticeController extends Controller
     /** @var \App\Contracts\Repository\PracticeRepositoryInterface */
     private $practiceRepository;
 
+    /** @var \App\Contracts\Repository\ResultRepositoryInterface */
+    private $resultRepository;
+
     public function __construct (
         ProtocolRepositoryInterface $protocolRepository,
         ReportRepositoryInterface $reportRepository,
-        PracticeRepositoryInterface $practiceRepository
+        PracticeRepositoryInterface $practiceRepository,
+        ResultRepositoryInterface $resultRepository
     ) {
         $this->protocolRepository = $protocolRepository;
         $this->reportRepository = $reportRepository;
         $this->practiceRepository = $practiceRepository;
+        $this->resultRepository = $resultRepository;
     }
 
     /**
@@ -130,34 +134,6 @@ class PracticeController extends Controller
     public function update(Request $request, $id)
     {
         //
-
-        DB::beginTransaction();
-
-        try {
-
-            Result::where('practice_id', $id)->delete();
-
-            if (isset($request->data)) {
-                // ajax does not send empty arrays
-
-                $array = $request->data;
-
-                foreach ($array as $data) {
-                    Result::insert([
-                        'practice_id' => $id,
-                        'result' => $data,
-                    ]);
-                }
-            }
-
-            DB::commit();
-        } catch (QueryException $e) {
-            DB::rollBack();
-
-            return response()->json(['status' => 500, 'message' => Lang::get('forms.failed_transaction')], 500);
-        }
-
-        return response()->json(['status' => 200, 'message' => Lang::get('forms.successful_transaction')], 200);
     }
 
     /**
@@ -227,5 +203,21 @@ class PracticeController extends Controller
         $practice = $this->practiceRepository->findOrFail($practice_id);
 
         return $practice->results->toArray();
+    }
+
+    /**
+     * Inform the results of a practice
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param int $practice_id
+     * @return \Illuminate\Http\Response
+     */
+    public function informResults(Request $request, $practice_id)
+    {
+        if (!$this->resultRepository->informResults($request->data, $practice_id)) {
+            return response()->json(['message' => Lang::get('forms.failed_transaction')], 500);
+        }
+
+        return response()->json(['message' => Lang::get('forms.successful_transaction')], 200);
     }
 }

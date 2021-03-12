@@ -29,10 +29,10 @@ Route::group([
         'show',
     ])->name('show')->where('id', '[1-9][0-9]*');
 
-    Route::put('update/{id}', [
+    Route::put('inform_results/{practice_id}', [
         '\App\Http\Controllers\Administrators\Protocols\PracticeController',
-        'update',
-    ])->name('update')->where('id', '[1-9][0-9]*');
+        'informResults',
+    ])->name('inform_results')->where('practice_id', '[1-9][0-9]*');
 
     Route::put('sign/{id}', [
         '\App\Http\Controllers\Administrators\Protocols\PracticeController',
