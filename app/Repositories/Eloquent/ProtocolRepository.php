@@ -84,4 +84,12 @@ final class ProtocolRepository implements ProtocolRepositoryInterface
             ->limit($length)
             ->get();
     }
+
+    public function getProtocolsInDatesRange($initial_date, $ended_date) 
+    {
+        return $this->model
+            ->whereBetween('completion_date', [$initial_date, $ended_date])
+            ->orderBy('completion_date', 'ASC')
+            ->get();
+    }
 }

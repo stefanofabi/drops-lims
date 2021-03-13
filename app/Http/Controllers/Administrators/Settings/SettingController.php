@@ -4,15 +4,31 @@ namespace App\Http\Controllers\Administrators\Settings;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
-use App\Models\Protocol;
-use App\Models\Practice;
+use App\Contracts\Repository\ProtocolRepositoryInterface;
+use App\Contracts\Repository\BillingPeriodRepositoryInterface;
 
+use Illuminate\Database\QueryException;
+
+use Lang;
 use PDF;
 
 class SettingController extends Controller
 {
+    /** @var \App\Contracts\Repository\ProtocolRepositoryInterface */
+    private $protocolRepository;
+
+    /** @var \App\Contracts\Repository\BillingPeriodRepositoryInterface */
+    private $billingPeriodRepository;
+
+    public function __construct (
+        ProtocolRepositoryInterface $protocolRepository,
+        BillingPeriodRepositoryInterface $billingPeriodRepository
+    ) {
+        $this->protocolRepository = $protocolRepository;
+        $this->billingPeriodRepository = $billingPeriodRepository;
+    }
+
     //
     /**
      * Display a listing of the resource.
@@ -53,17 +69,12 @@ class SettingController extends Controller
             'ended_date' => 'required|date',
         ]);
 
-        $initial_date = $request->initial_date;
-        $ended_date = $request->ended_date;
-
-        $protocols = Protocol::whereBetween('completion_date', [$initial_date, $ended_date])
-            ->orderBy('completion_date', 'ASC')
-            ->get();;
+        $protocols = $this->protocolRepository->getProtocolsInDatesRange($request->initial_date, $request->ended_date);
 
         $pdf = PDF::loadView('pdf/generate_reports/protocols_report', [
             'protocols' => $protocols,
-            'initial_date' => $initial_date,
-            'ended_date' => $ended_date,
+            'initial_date' => $request->initial_date,
+            'ended_date' => $request->ended_date, 
         ]);
 
         return $pdf->stream('protocols_report');
@@ -83,21 +94,20 @@ class SettingController extends Controller
             'initial_date' => 'required|date',
             'ended_date' => 'required|date',
         ]);
-
-        $initial_date = $request->initial_date;
-        $ended_date = $request->ended_date;
-
-        $protocols = Protocol::whereBetween('completion_date', [$initial_date, $ended_date])
-            ->orderBy('completion_date', 'ASC')
-            ->get();
-
+        
+        try {
+            $protocols = $this->protocolRepository->getProtocolsInDatesRange($request->initial_date, $request->ended_date);
+        } catch (QueryException $exception) {
+            return response(Lang::get('errors.generate_pdf'), 500);
+        }
+        
         $pdf = PDF::loadView('pdf/generate_reports/patients_flow', [
             'protocols' => $protocols,
-            'initial_date' => $initial_date,
-            'ended_date' => $ended_date,
+            'initial_date' => $request->initial_date,
+            'ended_date' => $request->ended_date,
         ]);
 
-        return $pdf->stream('protocols_report');
+        return $pdf->stream('patient_flow');
     }
 
     /**
@@ -115,35 +125,18 @@ class SettingController extends Controller
             'end_date' => 'required|date',
         ]);
 
-        $start_date = $request->start_date;
-        $end_date = $request->end_date;
-        
-        $practices = Practice::select('protocol_id', DB::raw('SUM(amount) as total_amount'))->groupBy('protocol_id');
-        
-        $billing_periods = DB::table('billing_periods')
-            ->select('billing_periods.name', 'billing_periods.start_date', 'billing_periods.end_date', 'social_works.name as social_work', 'practices.total_amount', DB::raw('COALESCE(SUM(payment_social_works.amount), 0.0) as total_paid'))
-            ->join('our_protocols', 'billing_periods.id', 'our_protocols.billing_period_id')
-            ->join('plans', 'our_protocols.plan_id', '=', 'plans.id')
-            ->join('social_works', 'plans.social_work_id', '=', 'social_works.id')
-            ->leftJoin('protocols', 'our_protocols.protocol_id', '=', 'protocols.id')
-            ->leftJoinSub($practices, 'practices', function ($join) {
-                $join->on('protocols.id', '=', 'practices.protocol_id');
-            })
-            ->leftJoin('payment_social_works', 'billing_periods.id', 'payment_social_works.billing_period_id')
-            ->where('billing_periods.start_date', '>=', $start_date)
-            ->where('billing_periods.end_date', '<=', $end_date)
-            ->groupBy('billing_periods.id', 'billing_periods.name', 'billing_periods.start_date', 'billing_periods.end_date', 'social_works.name', 'practices.total_amount')
-            ->orderBy('billing_periods.start_date', 'ASC')
-            ->orderBy('billing_periods.end_date', 'ASC')
-            ->orderBy('social_works.name', 'ASC')
-            ->get();
-       
+        try {
+            $billing_periods = $this->billingPeriodRepository->getAmountBilledByPeriod($request->start_date, $request->end_date);
+        } catch (QueryException $exception) {
+            return response(Lang::get('errors.generate_pdf'), 500);
+        }
+
         $pdf = PDF::loadView('pdf/generate_reports/debt_social_works', [
             'billing_periods' => $billing_periods,
-            'start_date' => $start_date,
-            'end_date' => $end_date,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
         ]);
 
-        return $pdf->stream('protocols_report');
+        return $pdf->stream('debt_social_works');
     }
 }
