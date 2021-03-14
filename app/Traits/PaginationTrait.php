@@ -1,8 +1,8 @@
 <?php 
 
-namespace App\Http\Traits;
+namespace App\Traits;
 
-trait Pagination {
+trait PaginationTrait {
 
 	public function paginate($page, $tpages, $adjacents) {
 		$prevlabel = "&lsaquo; Prev";

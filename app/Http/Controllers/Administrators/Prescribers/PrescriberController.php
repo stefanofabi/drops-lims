@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Administrators\Prescribers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Traits\Pagination;
+use App\Traits\PaginationTrait;
 
 use App\Contracts\Repository\PrescriberRepositoryInterface;
 
@@ -20,7 +20,7 @@ class PrescriberController extends Controller
         'national_enrollment',
     ];
 
-    use Pagination;
+    use PaginationTrait;
 
     private const PER_PAGE = 15;
 

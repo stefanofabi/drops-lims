@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Administrators\Determinations;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Traits\Pagination;
+use App\Traits\PaginationTrait;
 
 use App\Contracts\Repository\DeterminationRepositoryInterface;
 use App\Contracts\Repository\NomenclatorRepositoryInterface;
@@ -21,7 +21,7 @@ class DeterminationController extends Controller
         'biochemical_unit',
     ];
 
-    use Pagination;
+    use PaginationTrait;
 
     private const PER_PAGE = 15;
 

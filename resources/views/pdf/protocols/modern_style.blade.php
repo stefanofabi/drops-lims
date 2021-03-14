@@ -114,8 +114,8 @@
     @foreach ($practices as $practice)
         @if (!empty($practice->report->report))
             <div class="page-break-inside">
-            {!! $practice->print() !!}
-            <hr>
+                {!! $practice->print() !!}
+                <hr>
             </div>
         @endif
     @endforeach

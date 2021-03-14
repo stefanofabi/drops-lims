@@ -4,12 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
+use App\Traits\ConvertTrait;
 
 class Practice extends Model
 {
     //
 
     use LogsActivity;
+    
+    use ConvertTrait; 
     
     protected $fillable = ['protocol_id', 'report_id', 'amount'];
 
@@ -45,5 +48,10 @@ class Practice extends Model
     public function signs()
     {
         return $this->hasMany(SignPractice::class);
+    }
+
+    public function print() {
+ 
+        return $this->ConvertToPDF($this->report->report, $this->results);
     }
 }

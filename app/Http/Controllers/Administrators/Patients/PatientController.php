@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Administrators\Patients;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Traits\Pagination;
+use App\Traits\PaginationTrait;
 
 use App\Contracts\Repository\PatientRepositoryInterface;
 use App\Contracts\Repository\SocialWorkRepositoryInterface;
@@ -27,7 +27,7 @@ class PatientController extends Controller
         'type',
     ];
 
-    use Pagination;
+    use PaginationTrait;
 
     private const PER_PAGE = 15;
 

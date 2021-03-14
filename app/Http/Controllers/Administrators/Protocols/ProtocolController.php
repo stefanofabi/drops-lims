@@ -4,13 +4,13 @@ namespace App\Http\Controllers\Administrators\Protocols;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Traits\Pagination;
+use App\Traits\PaginationTrait;
 
 use App\Contracts\Repository\ProtocolRepositoryInterface;
 
 class ProtocolController extends Controller
 {
-    use Pagination;
+    use PaginationTrait;
 
     private const PER_PAGE = 15;
 
