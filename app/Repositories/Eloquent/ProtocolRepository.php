@@ -90,6 +90,53 @@ final class ProtocolRepository implements ProtocolRepositoryInterface
         return $this->model
             ->whereBetween('completion_date', [$initial_date, $ended_date])
             ->orderBy('completion_date', 'ASC')
+            ->where('protocols.type', 'our')
+            ->get();
+    }
+
+    /*
+    * Returns a list with the monthly collection of each social work on the specified dates
+    */
+    public function getCollectionSocialWork($social_work_id, $start_date, $end_date) 
+    {
+        return $this->model
+            ->select(DB::raw('MONTH(protocols.completion_date) as month'), DB::raw('YEAR(protocols.completion_date) as year'), DB::raw('SUM(practices.amount) as total'))
+            ->join('plans', 'protocols.plan_id', '=', 'plans.id')
+            ->join('social_works', 'plans.social_work_id', '=', 'social_works.id')
+            ->join('practices', 'protocols.id', '=', 'practices.protocol_id')
+            ->where('social_works.id', $social_work_id)
+            ->where('protocols.type', 'our')
+            ->whereBetween('protocols.completion_date', [$start_date, $end_date])
+            ->groupBy(DB::raw("MONTH(protocols.completion_date)"), DB::raw("YEAR(protocols.completion_date)"))
+            ->orderBy('protocols.completion_date', 'asc')
+            ->get();
+    }
+
+    /*
+    * Returns a list with the monthly flow of patients on the specified dates
+    */
+    public function getPatientFlow($start_date, $end_date) 
+    {
+        return $this->model
+            ->select(DB::raw('MONTH(protocols.completion_date) as month'), DB::raw('YEAR(protocols.completion_date) as year'), DB::raw('COUNT(*) as total'))
+            ->where('protocols.type', 'our')
+            ->whereBetween('protocols.completion_date', [$start_date, $end_date])
+            ->groupBy(DB::raw('MONTH(protocols.completion_date)'), DB::raw('YEAR(protocols.completion_date)'))
+            ->orderBy('protocols.completion_date', 'asc')
+            ->get();
+    }
+
+    /*
+    * Returns a list the monthly collection of the laboratory on the specified dates
+    */
+    public function getTrackIncome($start_date, $end_date) 
+    {
+        return $this->model
+            ->select(DB::raw("MONTH(protocols.completion_date) as month"), DB::raw("YEAR(protocols.completion_date) as year"), DB::raw('SUM(practices.amount) as total'))
+            ->join('practices', 'protocols.id', '=', 'practices.protocol_id')
+            ->whereBetween('protocols.completion_date', [$start_date, $end_date])
+            ->groupBy(DB::raw('MONTH(protocols.completion_date)'), DB::raw('YEAR(protocols.completion_date)'), 'practices.amount')
+            ->orderBy('protocols.completion_date', 'asc')
             ->get();
     }
 }

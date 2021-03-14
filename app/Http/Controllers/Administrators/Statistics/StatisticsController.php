@@ -5,93 +5,93 @@ namespace App\Http\Controllers\Administrators\Statistics;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
-use App\Models\OurProtocol;
-use App\Models\SocialWork;
-use App\Models\Practice;
+use App\Contracts\Repository\SocialWorkRepositoryInterface;
+use App\Contracts\Repository\ProtocolRepositoryInterface;
 
 use Lang;
+use DateTime;
 
 class StatisticsController extends Controller
 {
     //
 
+    /** @var \App\Contracts\Repository\SocialWorkRepositoryInterface */
+    private $socialWorkRepository;
+
+    /** @var \App\Contracts\Repository\ProtocolRepositoryInterface */
+    private $protocolRepository;
+
+    public function __construct(
+        SocialWorkRepositoryInterface $socialWorkRepository,
+        ProtocolRepositoryInterface $protocolRepository
+
+    ) {
+        $this->socialWorkRepository = $socialWorkRepository;
+        $this->protocolRepository = $protocolRepository;
+    }
+
     public function index()
     {
-        $social_works = SocialWork::all();
+        $social_works = $this->socialWorkRepository->all();
         $initial_date = date('Y-m-d', strtotime(date('Y-m-d')."- 30 days"));
         $ended_date = date('Y-m-d');
 
-        return view('administrators/statistics/index')->with('social_works', $social_works)->with('initial_date', $initial_date)->with('ended_date', $ended_date);
+        return view('administrators/statistics/index')
+            ->with('social_works', $social_works)
+            ->with('initial_date', $initial_date)
+            ->with('ended_date', $ended_date);
     }
 
     public function annual_collection_social_work(Request $request)
     {
 
-        $social_works = SocialWork::all();
-        $social_work = $request->social_work;
-        $initial_date = $request->initial_date;
-        $ended_date = $request->ended_date;
+        $social_works = $this->socialWorkRepository->all();
 
-        $anual_report = OurProtocol::select(DB::raw("MONTH(protocols.completion_date) as month"), DB::raw("YEAR(protocols.completion_date) as year"), DB::raw('SUM(practices.amount) as total'))
-            ->join('protocols', 'our_protocols.protocol_id', '=', 'protocols.id')
-            ->join('plans', 'our_protocols.plan_id', '=', 'plans.id')
-            ->join('social_works', 'plans.social_work_id', '=', 'social_works.id')
-            ->join('practices', 'our_protocols.protocol_id', '=', 'practices.id')
-            ->where('social_works.id', $social_work)
-            ->whereBetween('protocols.completion_date', [$initial_date, $ended_date])
-            ->groupBy(DB::raw("MONTH(protocols.completion_date)"), DB::raw("YEAR(protocols.completion_date)"))
-            ->orderBy('protocols.completion_date', 'asc')
-            ->get()
-            ->toArray();
-
-        $new_array = $this->generate_array_per_month($anual_report, $initial_date, $ended_date);
-
-        return view('administrators/statistics/annual_collection_social_work')->with('social_works', $social_works)->with('social_work', $social_work)->with('initial_date', $initial_date)->with('ended_date', $ended_date)->with('data', $new_array);
+        $anual_report = $this->protocolRepository->getCollectionSocialWork($request->social_work, $request->initial_date, $request->ended_date);
+        
+        $new_array = $this->generate_array_per_month($anual_report, $request->initial_date, $request->ended_date);
+       
+        return view('administrators/statistics/annual_collection_social_work')
+            ->with('social_works', $social_works)
+            ->with('social_work', $request->social_work)
+            ->with('initial_date', $request->initial_date)
+            ->with('ended_date', $request->ended_date)
+            ->with('data', $new_array);
     }
 
     public function patient_flow_per_month(Request $request)
     {
 
-        $social_works = SocialWork::all();
-        $initial_date = $request->initial_date;
-        $ended_date = $request->ended_date;
+        $social_works = $this->socialWorkRepository->all();
 
-        $patient_flow = OurProtocol::select(DB::raw("MONTH(protocols.completion_date) as month"), DB::raw("YEAR(protocols.completion_date) as year"), DB::raw('COUNT(*) as total'))
-            ->join('protocols', 'our_protocols.protocol_id', '=', 'protocols.id')
-            ->whereBetween('protocols.completion_date', [$initial_date,$ended_date])
-            ->groupBy(DB::raw("MONTH(protocols.completion_date)"), DB::raw("YEAR(protocols.completion_date)"))
-            ->orderBy('protocols.completion_date', 'asc')
-            ->get();
+        $patient_flow = $this->protocolRepository->getPatientFlow($request->initial_date, $request->ended_date);
 
-        $new_array = $this->generate_array_per_month($patient_flow, $initial_date, $ended_date);
+        $new_array = $this->generate_array_per_month($patient_flow, $request->initial_date, $request->ended_date);
 
-        return view('administrators/statistics/patient_flow_per_month')->with('social_works', $social_works)->with('initial_date', $initial_date)->with('ended_date', $ended_date)->with('data', $new_array);
+        return view('administrators/statistics/patient_flow_per_month')
+            ->with('social_works', $social_works)
+            ->with('initial_date', $request->initial_date)
+            ->with('ended_date', $request->ended_date)
+            ->with('data', $new_array);
     }
 
     public function track_income(Request $request)
     {
-        $social_works = SocialWork::all();
-        $initial_date = $request->initial_date;
-        $ended_date = $request->ended_date;
+        $social_works = $this->socialWorkRepository->all();
 
-        $track_income = Practice::select(DB::raw("MONTH(protocols.completion_date) as month"), DB::raw("YEAR(protocols.completion_date) as year"), DB::raw('SUM(practices.amount) as total'))
-            ->join('protocols', 'our_protocols.protocol_id', '=', 'protocols.id')
-            ->whereBetween('protocols.completion_date', [$initial_date, $ended_date])
-            ->groupBy(DB::raw("MONTH(protocols.completion_date)"), DB::raw("YEAR(protocols.completion_date)"), 'practices.amount')
-            ->orderBy('protocols.completion_date', 'asc')
-            ->get();
+        $track_income = $this->protocolRepository->getTrackIncome($request->initial_date, $request->ended_date);
 
-        $new_array = $this->generate_array_per_month($track_income, $initial_date, $ended_date);
+        $new_array = $this->generate_array_per_month($track_income, $request->initial_date, $request->ended_date);
 
         return view('administrators/statistics/track_income')
             ->with('social_works', $social_works)
-            ->with('initial_date', $initial_date)->with('ended_date', $ended_date)
+            ->with('initial_date', $request->initial_date)
+            ->with('ended_date', $request->ended_date)
             ->with('data', $new_array);
     }
 
-    public function generate_array_per_month($array, $initial_date, $ended_date)
+    public function generate_array_per_month($array, $start_date, $end_date)
     {
         /*
         It is the only solution I found without having to create a temporary table to be able to group all the months one by one
@@ -100,16 +100,16 @@ class StatisticsController extends Controller
         $new_array = [];
         $count = count($array);
         $pos = 0;
-        $date = $initial_date;
+        
+        $start_date = new DateTime($start_date);
+        $end_date = new DateTime($end_date);
 
-        $month = intval(date('m', strtotime($initial_date)));
-        $year = intval(date('Y', strtotime($initial_date)));
+        while ($start_date <= $end_date) {
 
-        $month_end = intval(date('m', strtotime($ended_date)));
-        $year_end = intval(date('Y', strtotime($ended_date)));
+            $month = intval($start_date->format('m'));
+            $year = intval($start_date->format('Y'));
 
-        while ($month <= $month_end && $year <= $year_end) {
-
+            // The month stored in the array is consecutive
             if ($pos < $count && $month == intval($array[$pos]['month']) && $year == intval($array[$pos]['year'])) {
                 $m = intval($array[$pos]['month']);
                 $y = intval($array[$pos]['year']);
@@ -123,15 +123,15 @@ class StatisticsController extends Controller
 
                 $pos++;
             } else {
+                // As no data was obtained this month we will save it with a null value
                 $new_array[] = [
                     'value' => $this->get_month($month)." ".$year,
                     'total' => 0,
                 ];
             }
 
-            $date = date('Y-m-d', strtotime($date."+ 1 month"));
-            $month = intval(date('m', strtotime($date)));
-            $year = intval(date('Y', strtotime($date)));
+            // This prevents errors to the increase the month
+            $start_date->modify('first day of next month');
         }
 
         return $new_array;

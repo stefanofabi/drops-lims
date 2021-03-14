@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 
+use App\Contracts\Repository\PracticeRepositoryInterface;
 use App\Contracts\Repository\ProtocolRepositoryInterface;
 use App\Contracts\Repository\ReportRepositoryInterface;
-use App\Contracts\Repository\PracticeRepositoryInterface;
 use App\Contracts\Repository\ResultRepositoryInterface;
 use App\Contracts\Repository\SignPracticeRepositoryInterface;
 
@@ -19,21 +19,20 @@ use Lang;
 class PracticeController extends Controller
 {
 
+    /** @var \App\Contracts\Repository\PracticeRepositoryInterface */
+    private $practiceRepository;
+
     /** @var \App\Contracts\Repository\ProtocolRepositoryInterface */
     private $protocolRepository;
 
     /** @var \App\Contracts\Repository\ReportRepositoryInterface */
     private $reportRepository;
 
-    /** @var \App\Contracts\Repository\PracticeRepositoryInterface */
-    private $practiceRepository;
-
     /** @var \App\Contracts\Repository\ResultRepositoryInterface */
     private $resultRepository;
 
     /** @var \App\Contracts\Repository\SignPracticeRepositoryInterface */
     private $signPracticeRepository;
-
 
     public function __construct (
         ProtocolRepositoryInterface $protocolRepository,
