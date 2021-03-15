@@ -22,7 +22,7 @@ final class NomenclatorRepository implements NomenclatorRepositoryInterface
 
     public function all()
     {
-        return $this->model->all();
+        return $this->model->orderBy('name', 'asc')->get();
     }
 
     public function create(array $data)

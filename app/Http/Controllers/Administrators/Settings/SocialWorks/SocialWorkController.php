@@ -162,7 +162,7 @@ class SocialWorkController extends Controller
         try {
             $social_work = $this->socialWorkRepository->findOrFail($social_work_id);
         } catch (ModelNotFoundException $exception) {
-            return response()->json(['message' => Lang::get('errors.not_found')], '500');
+            return response()->json(['message' => Lang::get('errors.not_found')], 404);
         }
 
         return response()->json($social_work->plans, 200);

@@ -6,11 +6,12 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use Illuminate\Database\QueryException;
 
 use App\Contracts\Repository\PatientRepositoryInterface;
 use App\Contracts\Repository\SocialWorkRepositoryInterface;
 use App\Contracts\Repository\AffiliateRepositoryInterface;
+
+use Illuminate\Database\QueryException;
 
 use Lang;
 

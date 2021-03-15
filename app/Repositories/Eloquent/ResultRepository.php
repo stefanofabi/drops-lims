@@ -40,9 +40,9 @@ final class ResultRepository implements ResultRepositoryInterface
         throw new NotImplementedException('Not implemented');
     }
 
-    public function delete($practice_id)
+    public function delete($id)
     {
-        return $this->model->where('practice_id', $practice_id)->delete();
+        throw new NotImplementedException('Not implemented');
     }
 
     public function find($id)
@@ -55,23 +55,26 @@ final class ResultRepository implements ResultRepositoryInterface
         throw new NotImplementedException('Not implemented');
     }
 
-    public function informResults(array $results, $practice_id) 
+    public function informResults($practice_id, $results) 
     {
 
         DB::beginTransaction();
 
         try {
 
-            $this->model->delete($practice_id);
+            $this->model->where('practice_id', $practice_id)->delete();
 
-            foreach ($results as $result) {
-                $this->create(['practice_id' => $practice_id, 'result' => $result]);
+            // AJAX dont send empty arrays
+            if (is_array($results)) {
+                foreach ($results as $result) {
+                    $this->create(['practice_id' => $practice_id, 'result' => $result]);
+                }
             }
 
             DB::commit();
         } catch (Exception $exception) {
             DB::rollBack();
-
+            dd($exception);
             return false;
         }
 

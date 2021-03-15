@@ -197,8 +197,8 @@ class PracticeController extends Controller
     public function get_results(Request $request)
     {
         //
-        $practice_id = $request->practice_id;
-        $practice = $this->practiceRepository->findOrFail($practice_id);
+        
+        $practice = $this->practiceRepository->findOrFail($request->practice_id);
 
         return $practice->results->toArray();
     }
@@ -212,7 +212,7 @@ class PracticeController extends Controller
      */
     public function informResults(Request $request, $practice_id)
     {
-        if (!$this->resultRepository->informResults($request->data, $practice_id)) {
+        if (!$this->resultRepository->informResults($practice_id, $request->data)) {
             return response()->json(['message' => Lang::get('forms.failed_transaction')], 500);
         }
 

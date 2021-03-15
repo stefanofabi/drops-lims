@@ -6,10 +6,11 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use Illuminate\Database\QueryException;
 
 use App\Contracts\Repository\PatientRepositoryInterface;
 use App\Contracts\Repository\PhoneRepositoryInterface;
+
+use Illuminate\Database\QueryException;
 
 use Lang;
 
@@ -53,8 +54,9 @@ class PhoneController extends Controller
     public function create($patient_id)
     {
         //
-
-        return view('administrators/patients/phones/create')->with('patient', $this->patientRepository->findOrFail($patient_id));
+        $patient = $this->patientRepository->findOrFail($patient_id);
+        
+        return view('administrators/patients/phones/create')->with('patient', $patient);
     }
 
     /**
