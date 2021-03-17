@@ -74,7 +74,7 @@ Email: user@domain
 Password: password
 ```
 
-Remember to modify passwords in development!
+Remember to modify passwords in production!
 
 ## Contributing
 
