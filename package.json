@@ -16,7 +16,7 @@
         "postcss": "^8.2.6",
         "resolve-url-loader": "^3.1.2",
         "sass": "^1.32.8",
-        "sass-loader": "^10.1.1"
+        "sass-loader": "^11.0.1"
     },
     "name": "srlab",
     "description": "<p align=\"center\"><img src=\"https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg\" width=\"400\"></p>",
