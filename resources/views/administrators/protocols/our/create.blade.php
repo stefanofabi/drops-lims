@@ -230,7 +230,7 @@
             </select>
         </div>
 
-        <div class="mt-3 float-right">
+        <div class="mt-3 float-end">
             <button type="submit" class="btn btn-primary">
                 <span class="fas fa-save"></span> {{ trans('forms.save') }}
             </button>

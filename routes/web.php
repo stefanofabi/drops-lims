@@ -40,19 +40,23 @@ Route::group(['middleware' => ['permission:is_user', 'auth']], function () {
         Route::get('home', ['\App\Http\Controllers\HomeController', 'index'])->name('home');
 
         Route::get('results', ['\App\Http\Controllers\Patients\UserPatientController', 'index'])->name('results');
+        
         Route::post('get_protocols', [
             '\App\Http\Controllers\Patients\UserPatientController',
             'get_protocols',
-        ])->name('protocols/index');
+        ])->name('protocols/index')
+        ->middleware('verify_relation_family_member');
 
         Route::get('protocols/{id}', [
             '\App\Http\Controllers\Patients\ProtocolController',
             'show',
         ])->name('protocols/show')->where('id', '[1-9][0-9]*');
+
         Route::get('protocols/print/{id}', [
             '\App\Http\Controllers\Patients\ProtocolController',
             'print_protocol',
         ])->name('protocols/print')->where('id', '[1-9][0-9]*');
+
         Route::post('protocols/print_selection', [
             '\App\Http\Controllers\Patients\ProtocolController',
             'print_partial_report',

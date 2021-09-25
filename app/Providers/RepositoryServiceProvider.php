@@ -55,6 +55,9 @@ use App\Repositories\Eloquent\ResultRepository;
 use App\Contracts\Repository\SignPracticeRepositoryInterface;
 use App\Repositories\Eloquent\SignPracticeRepository;
 
+use App\Contracts\Repository\FamilyMemberRepositoryInterface;
+use App\Repositories\Eloquent\FamilyMemberRepository;
+
 class RepositoryServiceProvider extends ServiceProvider
 {
     /**
@@ -83,6 +86,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(PracticeRepositoryInterface::class, PracticeRepository::class);
         $this->app->bind(ResultRepositoryInterface::class, ResultRepository::class);
         $this->app->bind(SignPracticeRepositoryInterface::class, SignPracticeRepository::class);
+        $this->app->bind(FamilyMemberRepositoryInterface::class, FamilyMemberRepository::class);
 
     }
 

@@ -139,7 +139,7 @@
         </div>
 
         <div class="card-footer">
-            <div class="text-right">
+            <div class="text-end">
                 <button onclick="send();" class="btn btn-primary">
                     <span class="fas fa-save"></span> {{ trans('forms.save') }}
                 </button>

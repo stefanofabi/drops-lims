@@ -32,14 +32,14 @@
             <table class="table table-striped">
                 <tr>
                     <th> {{ trans('patients.patient') }} </th>
-                    <th class="text-right"> {{ trans('forms.actions') }} </th>
+                    <th class="text-end"> {{ trans('forms.actions') }} </th>
                 </tr>
 
                 @foreach ($family_members as $family_member)
                     <tr>
                         <td> {{ $family_member->patient->full_name }} </td>
 
-                        <td class="text-right">
+                        <td class="text-end">
                             <a target="_blank" href="#" class="btn btn-info btn-sm"
                                title="{{ trans('protocols.print_report') }}"> <i class="fas fa-trash fa-sm"></i> </a>
                         </td>
@@ -49,7 +49,7 @@
 
                 <tr>
                     <td colspan=7>
-					<span class="float-right">
+					<span class="float-end">
 
 					</span>
                     </td>

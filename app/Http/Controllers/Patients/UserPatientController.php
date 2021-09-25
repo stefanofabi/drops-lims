@@ -5,15 +5,21 @@ namespace App\Http\Controllers\Patients;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
-use App\Models\FamilyMember;
-use App\Models\OurProtocol;
+use App\Contracts\Repository\ProtocolRepositoryInterface;
 
 use Lang;
 
 class UserPatientController extends Controller
 {
+    /** @var \App\Contracts\Repository\ProtocolRepositoryInterface */
+    private $protocolRepository;    
+
+    public function __construct (ProtocolRepositoryInterface $protocolRepository)
+    {
+        $this->protocolRepository = $protocolRepository;
+    }
+
     /**
      * Displays a list of patient results
      *
@@ -30,7 +36,10 @@ class UserPatientController extends Controller
 
         $family_members = $user->family_members;
 
-        return view('patients/index')->with('family_members', $family_members)->with('initial_date', $initial_date)->with('ended_date', $ended_date);
+        return view('patients/index')
+            ->with('family_members', $family_members)
+            ->with('initial_date', $initial_date)
+            ->with('ended_date', $ended_date);
     }
 
     /**
@@ -49,28 +58,18 @@ class UserPatientController extends Controller
 
         $initial_date = $request->initial_date;
         $ended_date = $request->ended_date;
-
         $user = auth()->user();
         $patient_id = $request->patient_id;
 
-        $count = FamilyMember::check_relation($user->id, $patient_id);
-
-        // we check if the user really has a related family member
-        if (! $count) {
-            return redirect()->back()->withErrors(Lang::get('errors.not_found'));
-        }
-
         $family_members = $user->family_members;
 
-        $protocols = OurProtocol::select('protocols.id', DB::raw('DATE_FORMAT(protocols.completion_date, "%d/%m/%Y") as completion_date'), 'patients.full_name as patient', 'prescribers.full_name as prescriber')
-            ->protocol()
-            ->patient()
-            ->prescriber()
-            ->where('patient_id', $patient_id)
-            ->whereBetween('protocols.completion_date', [$initial_date, $ended_date])
-            ->orderBy('protocols.completion_date', 'desc')
-            ->get();
+        $protocols = $this->protocolRepository->getProtocolsInDatesRange($initial_date, $ended_date, $patient_id);
 
-        return view('patients/results')->with('protocols', $protocols)->with('patient', $patient_id)->with('family_members', $family_members)->with('initial_date', $initial_date)->with('ended_date', $ended_date);
+        return view('patients/results')
+            ->with('protocols', $protocols)
+            ->with('patient', $patient_id)
+            ->with('family_members', $family_members)
+            ->with('initial_date', $initial_date)
+            ->with('ended_date', $ended_date);
     }
 }

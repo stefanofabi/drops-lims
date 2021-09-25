@@ -27,17 +27,17 @@
                     <th> {{ trans('protocols.completion_date') }} </th>
                     <th> {{ trans('patients.patient') }} </th>
                     <th> {{ trans('prescribers.prescriber') }} </th>
-                    <th class="text-right"> {{ trans('forms.actions') }} </th>
+                    <th class="text-end"> {{ trans('forms.actions') }} </th>
                 </tr>
 
                 @foreach ($protocols as $protocol)
                     <tr>
                         <td> {{ $protocol->id }} </td>
-                        <td> {{ $protocol->completion_date }} </td>
-                        <td> {{ $protocol->patient }} </td>
-                        <td> {{ $protocol->prescriber }} </td>
+                        <td> {{ date('d-m-Y', strtotime($protocol->completion_date)) }} </td>
+                        <td> {{ $protocol->patient->full_name }} </td>
+                        <td> {{ $protocol->prescriber->full_name }} </td>
 
-                        <td class="text-right">
+                        <td class="text-end">
                             <a href="{{ route('patients/protocols/show', $protocol->id) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.show_protocol') }}" > <i class="fas fa-eye fa-sm"></i> </a>
                             <a target="_blank" href="{{ route('patients/protocols/print', $protocol->id) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.print_report') }}"> <i class="fas fa-print fa-sm"></i> </a>
                         </td>
@@ -47,7 +47,7 @@
 
                 <tr>
                     <td colspan=7>
-					<span class="float-right">
+					<span class="float-end">
 
 					</span>
                     </td>
