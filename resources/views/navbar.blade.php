@@ -1,6 +1,6 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-info">
 		<div class="container">
-            <a class="navbar-brand" href="@yield('home-href')"> <img width="30" height="30" src="{{ asset('images/logo.png') }}"> </a>
+            <a class="navbar-brand" href="@yield('home-href')"> <img width="100" height="30" src="{{ asset('images/logo.png') }}"> </a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>

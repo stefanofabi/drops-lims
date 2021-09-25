@@ -1,4 +1,4 @@
-<title> @yield('title') - SrLab</title>
+<title> @yield('title') - Drops</title>
 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
