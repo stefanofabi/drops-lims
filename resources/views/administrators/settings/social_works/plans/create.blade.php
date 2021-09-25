@@ -57,7 +57,7 @@
                 <span class="input-group-text"> {{ trans('nomenclators.nomenclator') }} </span>
             </div>
 
-            <select id="nomenclator" class="form-control" name="nomenclator_id">
+            <select id="nomenclator" class="form-select" name="nomenclator_id">
                 <option value=""> {{ trans('forms.select_option') }}</option>
                 @foreach ($nomenclators as $nomenclator)
                     <option value="{{ $nomenclator->id }}"> {{ $nomenclator->name }}</option>
@@ -87,7 +87,7 @@
 
 @section('more-content')
     <div class="card-footer">
-        <div class="float-right">
+        <div class="float-end">
             <button type="submit" class="btn btn-primary" onclick="send();">
                 <span class="fas fa-save"></span> {{ trans('forms.save') }}
             </button>

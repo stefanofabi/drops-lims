@@ -46,7 +46,7 @@
 @endsection
 
 @section('header-content')
-    <div class="btn-group float-right">
+    <div class="btn-group float-end">
         <a href="{{ route('administrators/settings/nomenclators/create') }}" class="btn btn-info"> <span class="fas fa-plus"></span> {{ trans('nomenclators.create_nomenclator') }} </a>
     </div>
 @endsection
@@ -57,7 +57,7 @@
             <thead>
             <tr>
                 <th> {{ trans('nomenclators.name') }} </th>
-                <th class="text-right"> {{ trans('forms.actions') }} </th>
+                <th class="text-end"> {{ trans('forms.actions') }} </th>
             </tr>
             </thead>
 
@@ -66,7 +66,7 @@
                 <tr>
                     <td> {{ $nomenclator->name }} </td>
 
-                    <td class="text-right">
+                    <td class="text-end">
                         <a href="{{ route('administrators/settings/nomenclators/edit', ['id' => $nomenclator->id]) }}"
                            class="btn btn-info btn-sm" title="{{ trans('determinations.show_determination') }}">
                             <i class="fas fa-edit fa-sm"> </i>

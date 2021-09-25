@@ -46,7 +46,7 @@
 @endsection
 
 @section('header-content')
-    <div class="btn-group float-right">
+    <div class="btn-group float-end">
         <a href="{{ route('administrators/settings/social_works/create') }}" class="btn btn-info"> <span class="fas fa-plus"></span> {{ trans('social_works.create_social_work') }} </a>
     </div>
 @endsection
@@ -57,7 +57,7 @@
             <thead>
             <tr>
                 <th> {{ trans('social_works.name') }} </th>
-                <th class="text-right"> {{ trans('forms.actions') }} </th>
+                <th class="text-end"> {{ trans('forms.actions') }} </th>
             </tr>
             </thead>
 
@@ -66,7 +66,7 @@
                 <tr>
                     <td> {{ $social_work->name }} </td>
 
-                    <td class="text-right">
+                    <td class="text-end">
                         <a href="{{ route('administrators/settings/social_works/edit', ['id' => $social_work->id]) }}"
                            class="btn btn-info btn-sm" title="{{ trans('social_works.edit_social_work') }}">
                             <i class="fas fa-edit fa-sm"> </i>

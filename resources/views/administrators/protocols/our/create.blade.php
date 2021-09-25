@@ -150,7 +150,7 @@
                 <span class="input-group-text"> {{ trans('social_works.social_work') }} </span>
             </div>
 
-            <select class="form-control input-sm" name="plan_id" required>
+            <select class="form-select input-sm" name="plan_id" required>
                 <option value=""> {{ trans('forms.select_option') }}</option>
 
                 @if(isset($patient->affiliates))

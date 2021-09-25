@@ -46,7 +46,7 @@
 @endsection
 
 @section('header-content')
-    <div class="btn-group float-right">
+    <div class="btn-group float-end">
         <a href="{{ route('administrators/settings/social_works/billing_periods/create') }}" class="btn btn-info"> <span class="fas fa-plus"></span> {{ trans('billing_periods.create_billing_period') }} </a>
     </div>
 @endsection
@@ -59,7 +59,7 @@
                     <th> {{ trans('billing_periods.name') }} </th>
                     <th> {{ trans('billing_periods.start_date') }} </th>
                     <th> {{ trans('billing_periods.end_date') }} </th>
-                    <th class="text-right"> {{ trans('forms.actions') }} </th>
+                    <th class="text-end"> {{ trans('forms.actions') }} </th>
                 </tr>
             </thead>
 
@@ -72,7 +72,7 @@
 
                         <td> {{ $billing_period->end_date }} </td>
 
-                        <td class="text-right">
+                        <td class="text-end">
                             <a href="{{ route('administrators/settings/social_works/billing_periods/edit', ['id' => $billing_period->id]) }}"
                                class="btn btn-info btn-sm" title="{{ trans('billing_periods.edit_billing_period') }}">
                                 <i class="fas fa-edit fa-sm"> </i>

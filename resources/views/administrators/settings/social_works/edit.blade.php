@@ -59,7 +59,7 @@
 
 @section('more-content')
     <div class="card-footer">
-        <div class="float-right">
+        <div class="float-end">
             <button type="submit" class="btn btn-primary" onclick="send();">
                 <span class="fas fa-save"></span> {{ trans('forms.save') }}
             </button>
@@ -71,7 +71,7 @@
 @section('column-extra-content')
     <div class="card mt-3">
         <div class="card-header">
-            <div class="btn-group float-right">
+            <div class="btn-group float-end">
                 <a href="{{ route('administrators/settings/social_works/plans/create', ['social_work_id' => $social_work->id]) }}"
                    class="btn btn-info"><i class="fas fa-plus"></i> {{ trans('social_works.create_plan') }} </a>
             </div>
@@ -86,7 +86,7 @@
                         <th> {{ trans('social_works.name') }} </th>
                         <th> {{ trans('nomenclators.nomenclator') }} </th>
                         <th> {{ trans('social_works.nbu_price') }} </th>
-                        <th class="text-right"> {{ trans('forms.actions') }} </th>
+                        <th class="text-end"> {{ trans('forms.actions') }} </th>
                     </tr>
                 </thead>
 
@@ -99,7 +99,7 @@
 
                         <td> ${{ $plan->nbu_price }} </td>
 
-                        <td class="text-right">
+                        <td class="text-end">
                             <a href="{{ route('administrators/settings/social_works/plans/edit', ['id' => $plan->id]) }}"
                                class="btn btn-info btn-sm" title="{{ trans('social_works.edit_plan') }}">
                                 <i class="fas fa-edit fa-sm"> </i>
@@ -132,7 +132,7 @@
     <div class="card mb-3">
 
         <div class="card-header">
-            <div class="btn-group float-right">
+            <div class="btn-group float-end">
                 <a href="{{ route('administrators/settings/social_works/payments/create', ['social_work_id' => $social_work->id]) }}"
                    class="btn btn-info"><i class="fas fa-plus"></i> {{ trans('payment_social_works.create_payment') }} </a>
             </div>
@@ -146,7 +146,7 @@
                     <th> {{ trans('billing_periods.billing_period') }} </th>
                     <th> {{ trans('payment_social_works.payment_date') }} </th>
                     <th> {{ trans('payment_social_works.payment_amount') }} </th>
-                    <th class="text-right"> {{ trans('forms.actions') }} </th>
+                    <th class="text-end"> {{ trans('forms.actions') }} </th>
                 </tr>
 
                 @forelse ($payments as $payment)
@@ -161,7 +161,7 @@
 
                         <td> ${{ $payment->amount }} </td>
 
-                        <td class="text-right">
+                        <td class="text-end">
                             <a href="{{ route('administrators/settings/social_works/payments/edit', ['id' => $payment->id]) }}"
                                class="btn btn-info btn-sm" title="{{ trans('payment_social_works.edit_payment') }}">
                                 <i class="fas fa-edit fa-sm"> </i>

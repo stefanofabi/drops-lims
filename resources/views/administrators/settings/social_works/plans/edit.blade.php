@@ -59,7 +59,7 @@
                 <span class="input-group-text"> {{ trans('nomenclators.nomenclator') }} </span>
             </div>
 
-            <select id="nomenclator" class="form-control" name="nomenclator_id">
+            <select id="nomenclator" class="form-select" name="nomenclator_id">
                 <option> {{ trans('forms.select_option') }}</option>
                 @foreach ($nomenclators as $nomenclator)
                     <option value="{{ $nomenclator->id }}"> {{ $nomenclator->name }}</option>
