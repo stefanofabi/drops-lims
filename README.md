@@ -1,6 +1,6 @@
-## About SrLab
+## About Drops LIMS
 
-SrLab is a web application for the management of clinical laboratories. SrLab establishes well-defined processes in the area of your laboratory from the arrival of the patient to the delivery of results and even their follow-up. We facilitate the most common tasks that are often used in any laboratory, such as:
+Drops LIMS is a web application for the management of clinical laboratories. Drops LIMS establishes well-defined processes in the area of your laboratory from the arrival of the patient to the delivery of results and even their follow-up. We facilitate the most common tasks that are often used in any laboratory, such as:
 
 - Internal worksheets for the laboratory
 - Monitoring of social works debt
@@ -9,7 +9,7 @@ SrLab is a web application for the management of clinical laboratories. SrLab es
 - User permissions for internal administration
 - System activity log and system logs
 
-SrLab is accessible, powerful, and provides the tools you need to bring that peace of mind to your lab.
+Drops LIMS is accessible, powerful, and provides the tools you need to bring that peace of mind to your lab.
 
 ## Starting 🚀
 
@@ -31,13 +31,13 @@ What things do you need to install the project and how to do it
 1. Clone the repository on your local machine or server
 
 ```
-# git clone https://github.com/stefanofabi/srlab.git
+# git clone https://github.com/stefanofabi/drops-lims.git
 ```
 
 2. Create a copy of the .env.example file and rename it to .env. Inside it we will edit the environment variables to establish the connection to the database.
 
 ```
-# cd srlab
+# cd drops-lims
 # cp .env.example .env
 # vim .env
 ```
@@ -78,7 +78,7 @@ Remember to modify passwords in production!
 
 ## Contributing
 
-Thank you for considering contributing to the SrLab app! You can do it in:
+Thank you for considering contributing to the Drops app! You can do it in:
 - [MercadoPago](https://www.mercadopago.com/mla/debits/new?preapproval_plan_id=2c93808477025e4f017704a6960805b5)
 - [PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UHXMAB3HMS9CG)
 - [Bitcoin](https://www.blockchain.com/btc/address/1BxrkKPuLTkYUAeMrxzLEKvr5MGFu3NLpU)
@@ -91,4 +91,4 @@ The estimated time to fix such vulnerability if it exists will depend exclusivel
 
 ## License
 
-The SrLab app is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+The Drops LIMS app is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
