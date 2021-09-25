@@ -14,7 +14,7 @@
         <div class="container mt-3">
             <div class="card">
                 <div class="card-header">
-                    <div class="btn-group float-right">
+                    <div class="btn-group float-end">
                         <a  href="@yield('create-href', '#')" class="btn btn-info"> @yield('create-text') </a>
                     </div>
                     <h4> @section('main-title') @show </h4>

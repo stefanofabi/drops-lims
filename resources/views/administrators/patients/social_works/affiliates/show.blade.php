@@ -5,11 +5,11 @@
 
 	<div class="card-body">
 		<div class="input-group mb-3">
-			<div class="input-group-prepend mb-3">
+			<div class="input-group-prepend">
 				<span class="input-group-text"> {{ trans('social_works.social_work') }} </span>
 			</div>
 
-			<select class="form-control input-sm col-md-6" readonly>
+			<select class="form-select input-sm col-md-6" readonly>
 				<option value=""> {{ trans('forms.select_option') }}</option>
 				@foreach ($patient->affiliates as $affiliate)
 				<option value="">

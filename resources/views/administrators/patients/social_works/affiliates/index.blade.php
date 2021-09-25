@@ -8,11 +8,11 @@
 		</div>
 
 		<div class="input-group mb-3">
-			<div class="input-group-prepend mb-3">
+			<div class="input-group-prepend">
 				<span class="input-group-text"> {{ trans('social_works.social_work') }} </span>
 			</div>
 
-			<select class="form-control input-sm col-md-6" id="affiliate">
+			<select class="form-select input-sm col-md-6" id="affiliate">
 				<option value=""> {{ trans('forms.select_option') }}</option>
 				@foreach ($patient->affiliates as $affiliate)
 					<option value="{{ $affiliate->id }}">
@@ -29,7 +29,7 @@
 				@endforeach
 			</select>
 
-			<div class="ml-2">
+			<div class="ms-2">
 				<button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#editAffiliate" onclick="return editAffiliate()">
 					<span class="fas fa-edit"></span>
 				</button>

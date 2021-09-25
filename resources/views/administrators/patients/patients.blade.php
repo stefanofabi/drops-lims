@@ -24,21 +24,15 @@
 
 @section('filters')
 <!-- Patient type -->
-<div class="col form-group row">
-    <div class="custom-control custom-radio custom-control-inline">
-        <input type="radio" class="custom-control-input" id="tipoAnimal" name="type" value="animal" required>
-        <label class="custom-control-label" for="tipoAnimal"> {{ trans('patients.animal') }}</label>
-    </div>
+<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+    <input type="radio" class="btn-check" id="tipoAnimal" name="type" value="animal" required>
+    <label class="btn btn-outline-primary" for="tipoAnimal"> {{ trans('patients.animal') }}</label>
 
-    <div class="custom-control custom-radio custom-control-inline">
-        <input type="radio" class="custom-control-input" id="tipoHumano" name="type" value="human" required>
-        <label class="custom-control-label" for="tipoHumano"> {{ trans('patients.human') }} </label>
-    </div>
+    <input type="radio" class="btn-check" id="tipoHumano" name="type" value="human" required>
+    <label class="btn btn-outline-primary" for="tipoHumano"> {{ trans('patients.human') }} </label>
 
-    <div class="custom-control custom-radio custom-control-inline">
-        <input type="radio" class="custom-control-input" id="tipoIndustrial" name="type" value="industrial" required>
-        <label class="custom-control-label" for="tipoIndustrial"> {{ trans('patients.industrial') }} </label>
-    </div>
+    <input type="radio" class="btn-check" id="tipoIndustrial" name="type" value="industrial" required>
+    <label class="btn btn-outline-primary" for="tipoIndustrial"> {{ trans('patients.industrial') }} </label>
 </div>
 
 <!-- Filter by keys -->

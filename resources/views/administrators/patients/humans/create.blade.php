@@ -43,7 +43,7 @@
                         <span class="input-group-text"> {{ trans('patients.sex') }} </span>
                     </div>
 
-                    <select class="form-control input-sm" name="sex" required>
+                    <select class="form-select input-sm" name="sex" required>
                         <option value=""> {{ trans('forms.select_option') }} </option>
                         <option value="F"> {{ trans('patients.female') }} </option>
                         <option value="M"> {{ trans('patients.male') }} </option>
@@ -62,7 +62,7 @@
             </div>
         </div>
 
-        <div class="float-right mt-3">
+        <div class="float-end mt-3">
             <button type="submit" class="btn btn-primary">
                 <span class="fas fa-save"></span> {{ trans('forms.save') }}
             </button>

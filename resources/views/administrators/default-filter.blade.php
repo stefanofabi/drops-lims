@@ -6,7 +6,7 @@
 
 @section('navbar_menu')
 	<div class="collapse navbar-collapse" id="navbarSupportedContent">
-		<ul class="navbar-nav mr-auto">
+		<ul class="navbar-nav me-auto">
 			@can('crud_patients')
 				<li class="nav-item">
 					<a class="nav-link @yield('active_patients')" href="{{ route('administrators/patients') }}"> {{ trans('patients.patients') }} </a>

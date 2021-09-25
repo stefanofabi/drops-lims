@@ -43,7 +43,7 @@
 <!-- Filter by keys -->
 <div class="form-group row">
     <div class="col-md-3">
-        <select class="form-control @error('nomenclator') is-invalid @enderror" id="nomenclator" name="nomenclator" required>
+        <select class="form-select @error('nomenclator') is-invalid @enderror" id="nomenclator" name="nomenclator" required>
             <option value=""> {{ trans('forms.select_option') }} </option>
             @foreach ($nomenclators as $nomenclator)
             <option value="{{ $nomenclator->id }}"> {{ $nomenclator->name }} </option>

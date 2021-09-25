@@ -76,7 +76,7 @@
 	</div>
 
 
-	<div class="float-right mt-3">
+	<div class="float-end mt-3">
 		<button type="submit" class="btn btn-primary">
 			<span class="fas fa-save"></span> {{ trans('forms.save') }}
 		</button>

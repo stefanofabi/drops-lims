@@ -61,7 +61,7 @@
 			<span class="input-group-text"> {{ trans('phones.type') }} </span>
 		</div>
 
-		<select class="form-control input-sm @error('type') is-invalid @enderror" id="type" name="type" required>
+		<select class="form-select input-sm @error('type') is-invalid @enderror" id="type" name="type" required>
 			<option value=""> {{ trans('forms.select_option') }} </option>
 			<option value="Landline"> {{ trans('phones.landline') }} </option>
 			<option value="Mobile"> {{ trans('phones.mobile') }} </option>

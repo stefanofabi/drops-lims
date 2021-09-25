@@ -124,7 +124,7 @@
                         <span class="input-group-text"> {{ trans('patients.sex') }} </span>
                     </div>
 
-                    <select class="form-control input-sm @error('sex') is-invalid @enderror" id="sex" name="sex"
+                    <select class="form-select input-sm @error('sex') is-invalid @enderror" id="sex" name="sex"
                             required>
                         <option value=""> {{ trans('patients.select_sex') }} </option>
                         <option value="F"> {{ trans('patients.female') }} </option>

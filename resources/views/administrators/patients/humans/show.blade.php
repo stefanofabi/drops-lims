@@ -123,7 +123,7 @@
 				<span class="input-group-text"> {{ trans('patients.sex') }} </span>
 			</div>
 
-			<select class="form-control input-sm" id="sex" disabled>
+			<select class="form-select input-sm" id="sex" disabled>
 				<option value=""> {{ trans('patients.select_sex') }} </option>
 				<option value="F"> {{ trans('patients.female') }} </option>
 				<option value="M"> {{ trans('patients.male') }} </option>
