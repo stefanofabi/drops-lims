@@ -74,7 +74,7 @@ final class SecurityCodeRepository implements SecurityCodeRepositoryInterface
 
     public function update(array $data, $id)
     {
-        throw new NotImplementedException('Method has not implemented');
+        return $this->model->where('id', $id)->update($data);
     }
 
     public function delete($id)
@@ -84,11 +84,16 @@ final class SecurityCodeRepository implements SecurityCodeRepositoryInterface
 
     public function find($id)
     {
-        return $this->model->find($id);
+        throw new NotImplementedException('Method has not implemented');
     }
 
-    public function findOrFail($id)
+    public function findOrFail($patient_id)
     {
-        return $this->model->findOrFail($id);
+        throw new NotImplementedException('Method has not implemented');
+    }
+
+    public function getSecurityCodeAssociate($patient_id) 
+    {
+        return $this->model->where('patient_id', $patient_id)->firstOrFail();
     }
 }

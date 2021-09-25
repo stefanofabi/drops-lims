@@ -66,6 +66,7 @@ Route::group(['middleware' => ['permission:is_user', 'auth']], function () {
             '\App\Http\Controllers\Patients\PracticeController',
             'show',
         ])->name('protocols/practices/show')->where('id', '[1-9][0-9]*');
+
         Route::post('protocols/practices/get_results', [
             '\App\Http\Controllers\Patients\PracticeController',
             'get_results',
@@ -75,14 +76,17 @@ Route::group(['middleware' => ['permission:is_user', 'auth']], function () {
             '\App\Http\Controllers\Patients\FamilyMemberController',
             'index',
         ])->name('family_members/index');
+
         Route::get('family_members/create', [
             '\App\Http\Controllers\Patients\FamilyMemberController',
             'create',
         ])->name('family_members/create');
+
         Route::post('family_members/store', [
             '\App\Http\Controllers\Patients\FamilyMemberController',
             'store',
-        ])->name('family_members/store');
+        ])->name('family_members/store')
+        ->middleware('verify_security_code');
     });
 });
 

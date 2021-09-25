@@ -8,15 +8,26 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 
-use App\Models\FamilyMember;
-use App\Models\SecurityCode;
+use App\Contracts\Repository\FamilyMemberRepositoryInterface;
+use App\Contracts\Repository\SecurityCodeRepositoryInterface;
 
 use Lang;
 
 class FamilyMemberController extends Controller
 {
+    /** @var \App\Contracts\Repository\FamilyMemberRepositoryInterface */
+    private $familyMemberRepository;
+
+    /** @var \App\Contracts\Repository\SecurityCodeRepositoryInterface */
+    private $securityCodeRepository;
+
+    public function __construct (FamilyMemberRepositoryInterface $familyMemberRepository, SecurityCodeRepositoryInterface $securityCodeRepository)
+    {
+        $this->familyMemberRepository = $familyMemberRepository;
+        $this->securityCodeRepository = $securityCodeRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -29,7 +40,8 @@ class FamilyMemberController extends Controller
         $user = auth()->user();
         $family_members = $user->family_members;
 
-        return view('patients/family_members/index')->with('family_members', $family_members);
+        return view('patients/family_members/index')
+            ->with('family_members', $family_members);
     }
 
     /**
@@ -65,32 +77,10 @@ class FamilyMemberController extends Controller
 
             $user_id = auth()->user()->id;
 
-            $security_code = SecurityCode::where('patient_id', $request->patient_id)->firstOrFail();
+            $family_member = $this->familyMemberRepository->create(['user_id' => $user_id, 'patient_id' => $request->patient_id]);
 
-            if (! Hash::check($request->security_code, $security_code->security_code)) {
-                // Security code not match
-                return redirect()->redirect()->back()->withInput($request->except('security_code'))->withErrors(Lang::get('errors.invalid_security_code'));
-            }
-
-            if ($security_code->used_at != null) {
-                // The security code was used
-                return redirect()->back()->withInput($request->except('security_code'))->withErrors(Lang::get('errors.security_code_already_used', ['day' => $security_code->used_at]));
-            }
-
-            if ($security_code->expiration_date < date('Y-m-d')) {
-                // Security code has expired
-                return redirect()->back()->withInput($request->except('security_code'))->withErrors(Lang::get('errors.security_code_expired', ['day' => $security_code->expiration_date]));
-            }
-
-            $family_member = new FamilyMember([
-                'user_id' => $user_id,
-                'patient_id' => $request->patient_id,
-            ]);
-
-            $family_member->save();
-
-            $security_code->used_at = now();
-            $security_code->save();
+            $security_code = $this->securityCodeRepository->getSecurityCodeAssociate($request->patient_id);
+            $this->securityCodeRepository->update(['used_at' => now()], $security_code->id);
 
             DB::commit();
 
