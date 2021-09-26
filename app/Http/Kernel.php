@@ -67,8 +67,9 @@ class Kernel extends HttpKernel
         'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,
         'verify_relation_family_member' => \App\Http\Middleware\VerifyRelationFamilyMember::class,
         'verify_security_code' => \App\Http\Middleware\VerifySecurityCode::class,
-        'verify_protocol_access' => \App\Http\Middleware\VerifyProtocolAccess::class,
-        'verify_partial_report' => \App\Http\Middleware\VerifyPartialReport::class,
+        'verify_protocol_access_relation' => \App\Http\Middleware\VerifyProtocolAccessRelation::class,
+        'verify_partial_report_relation' => \App\Http\Middleware\VerifyPartialReportRelation::class,
+        'verify_practice_access_relation' => \App\Http\Middleware\VerifyPracticeAccessRelation::class,
 
     ];
 

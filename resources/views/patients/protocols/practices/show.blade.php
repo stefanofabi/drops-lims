@@ -12,7 +12,7 @@
 	$(document).ready(function() {
 
 		var parameters = {
-			"practice_id" : '{{ $practice->id }}'
+			"id" : '{{ $practice->id }}'
 		};
 
 		$.ajax({

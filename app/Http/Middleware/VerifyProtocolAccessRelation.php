@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Contracts\Repository\ProtocolRepositoryInterface;
 use App\Contracts\Repository\FamilyMemberRepositoryInterface;
 
-class VerifyProtocolAccess
+class VerifyProtocolAccessRelation
 {
     /** @var \App\Contracts\Repository\ProtocolRepositoryInterface */
     private $protocolRepository;

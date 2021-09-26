@@ -52,30 +52,33 @@ Route::group(['middleware' => ['permission:is_user', 'auth']], function () {
             'show',
         ])->name('protocols/show')
         ->where('id', '[1-9][0-9]*')
-        ->middleware('verify_protocol_access');
+        ->middleware('verify_protocol_access_relation');
 
         Route::get('protocols/print/{id}', [
             '\App\Http\Controllers\Patients\ProtocolController',
             'printProtocol',
         ])->name('protocols/print')
         ->where('id', '[1-9][0-9]*')
-        ->middleware('verify_protocol_access');
+        ->middleware('verify_protocol_access_relation');
 
         Route::post('protocols/print_selection', [
             '\App\Http\Controllers\Patients\ProtocolController',
             'printPartialReport',
         ])->name('protocols/print_selection')
-        ->middleware('verify_partial_report');
+        ->middleware('verify_partial_report_relation');
 
         Route::get('protocols/practices/{id}', [
             '\App\Http\Controllers\Patients\PracticeController',
             'show',
-        ])->name('protocols/practices/show')->where('id', '[1-9][0-9]*');
+        ])->name('protocols/practices/show')
+        ->where('id', '[1-9][0-9]*')
+        ->middleware('verify_practice_access_relation');
 
         Route::post('protocols/practices/get_results', [
             '\App\Http\Controllers\Patients\PracticeController',
             'get_results',
-        ])->name('protocols/practices/get_results');
+        ])->name('protocols/practices/get_results')
+        ->middleware('verify_practice_access_relation');
 
         Route::get('family_members/index', [
             '\App\Http\Controllers\Patients\FamilyMemberController',

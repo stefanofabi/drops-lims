@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Contracts\Repository\ProtocolRepositoryInterface;
 use App\Contracts\Repository\FamilyMemberRepositoryInterface;
 
-class VerifyPartialReport
+class VerifyPartialReportRelation
 {
     /** @var \App\Contracts\Repository\ProtocolRepositoryInterface */
     private $protocolRepository;
