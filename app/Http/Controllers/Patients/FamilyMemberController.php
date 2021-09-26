@@ -3,14 +3,9 @@
 namespace App\Http\Controllers\Patients;
 
 use App\Http\Controllers\Controller;
-
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 use App\Contracts\Repository\FamilyMemberRepositoryInterface;
-use App\Contracts\Repository\SecurityCodeRepositoryInterface;
 
 use Lang;
 
@@ -19,13 +14,9 @@ class FamilyMemberController extends Controller
     /** @var \App\Contracts\Repository\FamilyMemberRepositoryInterface */
     private $familyMemberRepository;
 
-    /** @var \App\Contracts\Repository\SecurityCodeRepositoryInterface */
-    private $securityCodeRepository;
-
-    public function __construct (FamilyMemberRepositoryInterface $familyMemberRepository, SecurityCodeRepositoryInterface $securityCodeRepository)
+    public function __construct (FamilyMemberRepositoryInterface $familyMemberRepository)
     {
         $this->familyMemberRepository = $familyMemberRepository;
-        $this->securityCodeRepository = $securityCodeRepository;
     }
 
     /**
@@ -71,32 +62,9 @@ class FamilyMemberController extends Controller
             'security_code' => 'required|string',
         ]);
 
-        DB::beginTransaction();
+        $this->familyMemberRepository->create(['user_id' => auth()->user()->id, 'patient_id' => $request->patient_id]); 
 
-        try {
-
-            $user_id = auth()->user()->id;
-
-            $family_member = $this->familyMemberRepository->create(['user_id' => $user_id, 'patient_id' => $request->patient_id]);
-
-            $security_code = $this->securityCodeRepository->getSecurityCodeAssociate($request->patient_id);
-            $this->securityCodeRepository->update(['used_at' => now()], $security_code->id);
-
-            DB::commit();
-
-            // We take the user to the main view
-            $redirect = redirect()->action([FamilyMemberController::class, 'index']);
-        } catch (QueryException $exception) {
-            DB::rollBack();
-
-            $redirect = redirect()->back()->withInput($request->except('security_code'))->withErrors(Lang::get('errors.already_family_member'));
-        } catch (ModelNotFoundException $exception) {
-            DB::rollBack();
-
-            $redirect = redirect()->back()->withInput($request->except('security_code'))->withErrors(Lang::get('errors.not_found'));
-        }
-
-        return $redirect;;
+        return redirect()->action([FamilyMemberController::class, 'index']);
     }
 
     /**

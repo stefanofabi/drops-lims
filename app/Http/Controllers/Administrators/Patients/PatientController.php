@@ -269,7 +269,7 @@ class PatientController extends Controller
         ]);
         
         if (! $this->patientRepository->update($request->only(self::ATTRIBUTES), $id)) {
-            return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));;
+            return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
 
         return redirect()->action([PatientController::class, 'show'], ['id' => $id]);
