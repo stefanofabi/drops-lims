@@ -22,5 +22,6 @@ return [
     'security_code_already_used' => 'The security code was used on :day',
     'security_code_expired' => 'The security code expired on day :day',
     'generate_pdf' => 'Error generating PDF file',
+    'no_access_protocol' => 'No access to the protocol',
 
 ];

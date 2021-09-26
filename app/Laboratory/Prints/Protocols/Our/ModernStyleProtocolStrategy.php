@@ -28,9 +28,9 @@ class ModernStyleProtocolStrategy implements PrintProtocolStrategyInterface
     {
         $protocol = $this->protocolRepository->findOrFail($protocol_id);
 
-        if (empty($filter_practices)) {
-            $practices = $protocol->practices;
-        } else {
+        $practices = $protocol->practices;
+
+        if (! empty($filter_practices)) {
             $practices = $practices->whereIn('id', $filter_practices);
         }
         

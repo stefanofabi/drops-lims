@@ -7,8 +7,6 @@ use Illuminate\Http\Request;
 
 use App\Contracts\Repository\FamilyMemberRepositoryInterface;
 
-use Lang;
-
 class FamilyMemberController extends Controller
 {
     /** @var \App\Contracts\Repository\FamilyMemberRepositoryInterface */

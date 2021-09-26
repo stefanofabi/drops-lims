@@ -88,4 +88,12 @@ final class FamilyMemberRepository implements FamilyMemberRepositoryInterface
 
         return $exists ? true : false;
     }
+
+    public function getFamilyMembers($user_id) {
+        return $this->model
+            ->select('patient_id')
+            ->where('user_id', $user_id)
+            ->get()
+            ->toArray();
+    }
 }
