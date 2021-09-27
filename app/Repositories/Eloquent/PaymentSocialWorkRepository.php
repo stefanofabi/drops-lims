@@ -6,8 +6,6 @@ use App\Contracts\Repository\PaymentSocialWorkRepositoryInterface;
 
 use App\Models\PaymentSocialWork; 
 
-use App\Exceptions\QueryValidateException;
-
 use Lang;
 
 final class PaymentSocialWorkRepository implements PaymentSocialWorkRepositoryInterface
