@@ -3,18 +3,33 @@
 namespace App\Http\Controllers\Patients;
 
 use App\Http\Controllers\Controller;
+
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 use App\Contracts\Repository\FamilyMemberRepositoryInterface;
+use App\Contracts\Repository\SecurityCodeRepositoryInterface;
+
+use Throwable;
+
+use Lang;
 
 class FamilyMemberController extends Controller
 {
     /** @var \App\Contracts\Repository\FamilyMemberRepositoryInterface */
     private $familyMemberRepository;
 
-    public function __construct (FamilyMemberRepositoryInterface $familyMemberRepository)
-    {
+    /** @var \App\Contracts\Repository\SecurityCodeRepositoryInterface */
+    private $securityCodeRepository;
+
+    public function __construct (
+        FamilyMemberRepositoryInterface $familyMemberRepository, 
+        SecurityCodeRepositoryInterface $securityCodeRepository
+    ) {
         $this->familyMemberRepository = $familyMemberRepository;
+        $this->securityCodeRepository = $securityCodeRepository;
     }
 
     /**
@@ -60,7 +75,24 @@ class FamilyMemberController extends Controller
             'security_code' => 'required|string',
         ]);
 
-        $this->familyMemberRepository->create(['user_id' => auth()->user()->id, 'patient_id' => $request->patient_id]); 
+        DB::beginTransaction();
+
+        try {
+
+            $family_member = $this->familyMemberRepository->create([
+                'user_id' => auth()->user()->id, 
+                'patient_id' => $request->patient_id
+            ]);
+
+            $security_code = $this->securityCodeRepository->getSecurityCodeAssociate($request->patient_id);
+            $this->securityCodeRepository->update(['used_at' => now()], $security_code->id);
+
+            DB::commit();
+        } catch (Throwable $throwable) {
+            DB::rollBack();
+
+            return redirect()->back()->withInput($request->except('security_code'))->withErrors(Lang::get('errors.error_processing_transaction'));
+        }
 
         return redirect()->action([FamilyMemberController::class, 'index']);
     }
