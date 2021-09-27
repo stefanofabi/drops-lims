@@ -1,14 +1,15 @@
 <!-- Modal Email -->
-<div class="modal fade" id="editEmail">
+<div class="modal fade" id="editEmail" tabindex="-1" aria-labelledby="editModalEmail" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
 
 			<div class="modal-header">
 				<h4 class="modal-title"><i class="fas fa-at"></i> {{ trans('emails.edit_email') }} </h4>
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 
 			<div class="modal-body">
+				<!-- Ajax results -->
 				<div id="modal_email_messages"> </div>
 
 				<form class="form-horizontal" method="post" onsubmit="return updateEmail()">
@@ -24,9 +25,8 @@
 					
 					<div class="modal-footer">
 						<button type="submit" class="btn btn-primary"> {{ trans('forms.save') }} </button>
-						<button type="button" class="btn btn-danger" data-dismiss="modal"> {{ trans('forms.cancel') }} </button>
+						<button type="button" class="btn btn-danger" data-bs-dismiss="modal"> {{ trans('forms.cancel') }} </button>
 					</div>
-					
 				</form>
 			</div>
 		</div>

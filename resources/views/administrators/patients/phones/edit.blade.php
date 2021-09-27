@@ -1,17 +1,17 @@
 <!-- Modal -->
-<div class="modal fade" id="editPhone">
+<div class="modal fade" id="editPhone" tabindex="-1" aria-labelledby="editModalPhone" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
 
 			<!-- Modal Header -->
 			<div class="modal-header">
 				<h4 class="modal-title" id="myModalLabel"><i class="fas fa-phone"></i> {{ trans('phones.edit_phone') }} </h4>
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 
 			<!-- Modal body -->
 			<div class="modal-body">
-				<!-- Carga los datos ajax -->
+				<!-- Ajax results -->
 				<div id="modal_phones_messages"></div>
 				
 				<form class="form-horizontal" method="post" onsubmit="return updatePhone();">
@@ -45,7 +45,7 @@
 					<!-- Modal footer -->
 					<div class="modal-footer">
 						<button type="submit" class="btn btn-primary"> {{ trans('forms.save') }} </button>
-						<button type="button" class="btn btn-danger" data-dismiss="modal"> {{ trans('forms.cancel') }} </button>
+						<button type="button" class="btn btn-danger" data-bs-dismiss="modal"> {{ trans('forms.cancel') }} </button>
 					</div>
 
 				</form>

@@ -1,11 +1,11 @@
 <!-- Modal -->
-<div class="modal fade" id="editAffiliate">
+<div class="modal fade" id="editAffiliate" tabindex="-1" aria-labelledby="editModalAffiliate" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
 			<!-- Modal Header -->
 			<div class="modal-header">
 				<h4 class="modal-title" id="myModalLabel"><i class="fas fa-address-card"></i> {{ trans('social_works.edit_affiliate') }}</h4>
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 
 			<!-- Modal body -->
@@ -65,7 +65,7 @@
 					<!-- Modal footer -->
 					<div class="modal-footer">
 						<button type="submit" class="btn btn-primary"> {{ trans('forms.save') }} </button>
-						<button type="button" class="btn btn-danger" data-dismiss="modal"> {{ trans('forms.cancel') }} </button>
+						<button type="button" class="btn btn-danger" data-bs-dismiss="modal"> {{ trans('forms.cancel') }} </button>
 					</div>
 				</form>
 			</div>

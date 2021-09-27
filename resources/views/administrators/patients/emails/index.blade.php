@@ -15,7 +15,7 @@
 	</select>
 
 	<div class="ms-2">
-		<button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#editEmail" onclick="return editEmail()">
+		<button type="button" class="btn btn-info btn-md" data-bs-toggle="modal" data-bs-target="#editEmail" onclick="return editEmail()">
 			<span class="fas fa-edit"></span>
 		</button>
 

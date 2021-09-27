@@ -30,7 +30,7 @@
 			</select>
 
 			<div class="ms-2">
-				<button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#editAffiliate" onclick="return editAffiliate()">
+				<button type="button" class="btn btn-info btn-md" data-bs-toggle="modal" data-bs-target="#editAffiliate" onclick="return editAffiliate()">
 					<span class="fas fa-edit"></span>
 				</button>
 
