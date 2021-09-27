@@ -9,7 +9,7 @@ use App\Contracts\Repository\FamilyMemberRepositoryInterface;
 
 use Lang;
 
-class VerifyRelationFamilyMember
+class VerifyFamilyMemberRelation
 {
     /** @var \App\Contracts\Repository\FamilyMemberRepositoryInterface */
     private $familyMemberRepository;
@@ -28,15 +28,8 @@ class VerifyRelationFamilyMember
      */
     public function handle(Request $request, Closure $next)
     {
-        $user = auth()->user();
-        $patient_id = $request->patient_id;
-       
-        $exists = $this->familyMemberRepository->verifyRelation($user->id, $patient_id);
 
-        // we check if the user really has a related family member
-        if (! $exists) {
-            return redirect()->back()->withErrors(Lang::get('errors.not_found'));
-        }
+        $this->familyMemberRepository->findFamilyMemberRelationOrFail(auth()->user()->id, $request->patient_id);
 
         return $next($request);
     }

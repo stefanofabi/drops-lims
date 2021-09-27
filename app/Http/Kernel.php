@@ -65,12 +65,13 @@ class Kernel extends HttpKernel
         'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
         'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
         'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,
-        'verify_relation_family_member' => \App\Http\Middleware\VerifyRelationFamilyMember::class,
+        'verify_family_member_relation' => \App\Http\Middleware\VerifyFamilyMemberRelation::class,
         'verify_security_code' => \App\Http\Middleware\VerifySecurityCode::class,
         'verify_protocol_access_relation' => \App\Http\Middleware\VerifyProtocolAccessRelation::class,
         'verify_partial_report_relation' => \App\Http\Middleware\VerifyPartialReportRelation::class,
         'verify_practice_access_relation' => \App\Http\Middleware\VerifyPracticeAccessRelation::class,
-
+        'verify_billing_period_dates' => \App\Http\Middleware\VerifyBillingPeriodDates::class,
+        
     ];
 
     /**

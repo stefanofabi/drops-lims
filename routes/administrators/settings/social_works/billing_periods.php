@@ -18,7 +18,8 @@ Route::group([
     Route::post('store', [
         '\App\Http\Controllers\Administrators\Settings\SocialWorks\BillingPeriodController',
         'store',
-    ])->name('store');
+    ])->name('store')
+    ->middleware('verify_billing_period_dates');
 
     Route::get('edit/{id}', [
         '\App\Http\Controllers\Administrators\Settings\SocialWorks\BillingPeriodController',
@@ -28,7 +29,8 @@ Route::group([
     Route::put('update/{id}', [
         '\App\Http\Controllers\Administrators\Settings\SocialWorks\BillingPeriodController',
         'update',
-    ])->name('update')->where('id', '[1-9][0-9]*');
+    ])->name('update')->where('id', '[1-9][0-9]*')
+    ->middleware('verify_billing_period_dates');
 
     Route::delete('destroy/{id}', [
         '\App\Http\Controllers\Administrators\Settings\SocialWorks\BillingPeriodController',

@@ -8,8 +8,6 @@ use App\Contracts\Repository\BillingPeriodRepositoryInterface;
 
 use App\Models\BillingPeriod; 
 
-use App\Exceptions\QueryValidateException;
-
 use Lang;
 
 final class BillingPeriodRepository implements BillingPeriodRepositoryInterface
@@ -33,19 +31,11 @@ final class BillingPeriodRepository implements BillingPeriodRepositoryInterface
 
     public function create(array $data)
     {
-        if ($data['start_date'] > $data['end_date']) {
-            throw new QueryValidateException(Lang::get('billing_periods.start_date_after_end_date'));
-        }
-
         return $this->model->create($data);
     }
 
     public function update(array $data, $id)
     {
-        if ($data['start_date'] > $data['end_date']) {
-            throw new QueryValidateException(Lang::get('billing_periods.start_date_after_end_date'));
-        }
-
         return $this->model->where('id', $id)->update($data);
     }
 

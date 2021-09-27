@@ -45,7 +45,7 @@ Route::group(['middleware' => ['permission:is_user', 'auth']], function () {
             '\App\Http\Controllers\Patients\UserPatientController',
             'get_protocols',
         ])->name('protocols/index')
-        ->middleware('verify_relation_family_member');
+        ->middleware('verify_family_member_relation');
 
         Route::get('protocols/show/{id}', [
             '\App\Http\Controllers\Patients\ProtocolController',

@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
 
 use App\Exceptions\PrintException;
 use App\Exceptions\NotImplementedException;
-use Exception;
+use Throwable;
 
 use Lang;
 
@@ -60,7 +60,7 @@ final class SecurityCodeRepository implements SecurityCodeRepositoryInterface
             ]);
 
             DB::commit();
-        } catch (Exception $exception) {
+        } catch (Throwable $throwable) {
             DB::rollBack();
             
             throw new PrintException(Lang::get('errors.generate_pdf'));

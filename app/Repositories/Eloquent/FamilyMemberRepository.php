@@ -50,14 +50,12 @@ final class FamilyMemberRepository implements FamilyMemberRepositoryInterface
         return $this->model->findOrFail($id);
     }
 
-    public function verifyRelation($user_id, $patient_id) 
+    public function findFamilyMemberRelationOrFail($user_id, $patient_id) 
     {
-        $exists = $this->model
+        return $this->model
             ->where('user_id', $user_id)
             ->where('patient_id', $patient_id)
-            ->first();
-
-        return $exists ? true : false;
+            ->firstOrFail();
     }
 
     public function getFamilyMembers($user_id) 

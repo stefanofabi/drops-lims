@@ -65,18 +65,17 @@ class SecurityCodeController extends Controller
     {
         //
           
-            $security_code = $this->securityCodeRepository->create($request->only(self::ATTRIBUTES));
+        $security_code = $this->securityCodeRepository->create($request->only(self::ATTRIBUTES));
             
-            $strategy = 'modern_style';
-            $strategyClass = PrintSecurityCodeContext::STRATEGIES[$strategy];
-            $this->printSecurityCodeContext->setStrategy(new $strategyClass);
+        $strategy = 'modern_style';
+        $strategyClass = PrintSecurityCodeContext::STRATEGIES[$strategy];
+        $this->printSecurityCodeContext->setStrategy(new $strategyClass);
             
-            return $this->printSecurityCodeContext
-                ->print_security_code(
-                    $this->patientRepository->findOrFail($request->patient_id),
-                    $security_code['security_code'],
-                    $security_code['expiration_date']
-                );
+        return $this->printSecurityCodeContext->print_security_code(
+            $this->patientRepository->findOrFail($request->patient_id),
+            $security_code['security_code'],
+            $security_code['expiration_date']
+        );
     }
 
     /**
