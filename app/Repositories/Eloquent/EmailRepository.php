@@ -6,6 +6,8 @@ use App\Contracts\Repository\EmailRepositoryInterface;
 
 use App\Models\Email; 
 
+use App\Exceptions\NotImplementedException;
+
 final class EmailRepository implements EmailRepositoryInterface
 {
     protected $model;
@@ -22,7 +24,7 @@ final class EmailRepository implements EmailRepositoryInterface
 
     public function all()
     {
-        return $this->model->all();
+        throw new NotImplementedException('Method has not implemented');
     }
 
     public function create(array $data)

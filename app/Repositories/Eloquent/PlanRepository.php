@@ -6,6 +6,8 @@ use App\Contracts\Repository\PlanRepositoryInterface;
 
 use App\Models\Plan; 
 
+use App\Exceptions\NotImplementedException;
+
 use Lang;
 
 final class PlanRepository implements PlanRepositoryInterface
@@ -24,7 +26,7 @@ final class PlanRepository implements PlanRepositoryInterface
 
     public function all()
     {
-        return $this->model->all();
+        throw new NotImplementedException('Method has not implemented');
     }
 
     public function create(array $data)

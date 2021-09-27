@@ -6,6 +6,8 @@ use App\Contracts\Repository\PhoneRepositoryInterface;
 
 use App\Models\Phone; 
 
+use App\Exceptions\NotImplementedException;
+
 final class PhoneRepository implements PhoneRepositoryInterface
 {
     protected $model;
@@ -22,7 +24,7 @@ final class PhoneRepository implements PhoneRepositoryInterface
 
     public function all()
     {
-        return $this->model->all();
+        throw new NotImplementedException('Method has not implemented');
     }
 
     public function create(array $data)

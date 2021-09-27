@@ -6,6 +6,8 @@ use App\Contracts\Repository\AffiliateRepositoryInterface;
 
 use App\Models\Affiliate; 
 
+use App\Exceptions\NotImplementedException;
+
 final class AffiliateRepository implements AffiliateRepositoryInterface
 {
     protected $model;
@@ -22,7 +24,7 @@ final class AffiliateRepository implements AffiliateRepositoryInterface
 
     public function all()
     {
-        return $this->model->all();
+        throw new NotImplementedException('Method has not implemented');
     }
 
     public function create(array $data)
