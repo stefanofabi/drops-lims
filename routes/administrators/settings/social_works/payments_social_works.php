@@ -13,7 +13,8 @@ Route::group([
     Route::post('store', [
         '\App\Http\Controllers\Administrators\Settings\SocialWorks\PaymentSocialWorkController',
         'store',
-    ])->name('store');
+    ])->name('store')
+    ->middleware('verify_payment_date_social_work');
 
     Route::get('edit/{id}', [
         '\App\Http\Controllers\Administrators\Settings\SocialWorks\PaymentSocialWorkController',
@@ -23,7 +24,9 @@ Route::group([
     Route::put('update/{id}', [
         '\App\Http\Controllers\Administrators\Settings\SocialWorks\PaymentSocialWorkController',
         'update',
-    ])->name('update')->where('id', '[1-9][0-9]*');
+    ])->name('update')
+    ->where('id', '[1-9][0-9]*')
+    ->middleware('verify_payment_date_social_work');
 
     Route::delete('destroy/{id}', [
         '\App\Http\Controllers\Administrators\Settings\SocialWorks\PaymentSocialWorkController',

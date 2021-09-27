@@ -3,7 +3,6 @@
 namespace App\Repositories\Eloquent;
 
 use App\Contracts\Repository\PaymentSocialWorkRepositoryInterface;
-use App\Contracts\Repository\BillingPeriodRepositoryInterface; 
 
 use App\Models\PaymentSocialWork; 
 
@@ -15,20 +14,14 @@ final class PaymentSocialWorkRepository implements PaymentSocialWorkRepositoryIn
 {
     protected $model;
 
-    /** @var \App\Laboratory\Repositories\BillingPeriods\BillingPeriodRepositoryInterface */
-    private $billingPeriodRepository;
-
     /**
      * PaymentSocialWorkRepository constructor.
      *
      * @param PaymentSocialWorkRepositoryInterface $paymentSocialWork
      */
-    public function __construct(
-        PaymentSocialWork $paymentSocialWork, 
-        BillingPeriodRepositoryInterface $billingPeriodRepository
-    ) {
+    public function __construct(PaymentSocialWork $paymentSocialWork) 
+    {
         $this->model = $paymentSocialWork;
-        $this->billingPeriodRepository = $billingPeriodRepository;
     }
 
     public function all()
@@ -38,25 +31,11 @@ final class PaymentSocialWorkRepository implements PaymentSocialWorkRepositoryIn
 
     public function create(array $data)
     {
-        $billing_period = $this->billingPeriodRepository->findOrFail($data['billing_period_id']);
-
-        if ($billing_period->end_date > $data['payment_date']) {
-            throw new QueryValidateException(Lang::get('payment_social_works.payment_before_billing_period'));
-        }
-
         return $this->model->create($data);
     }
 
     public function update(array $data, $id)
-    {
-        $payment = $this->model->findOrFail($id);
-
-        $billing_period = $payment->billing_period;
-
-        if ($billing_period->end_date > $data['payment_date']) {
-            throw new QueryValidateException(Lang::get('payment_social_works.payment_before_billing_period'));
-        }
-        
+    {       
         return $this->model->where('id', $id)->update($data);
     }
 

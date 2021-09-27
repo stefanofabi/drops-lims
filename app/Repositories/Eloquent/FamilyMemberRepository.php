@@ -4,7 +4,9 @@ namespace App\Repositories\Eloquent;
 
 use App\Contracts\Repository\FamilyMemberRepositoryInterface;
 
-use App\Models\FamilyMember; 
+use App\Models\FamilyMember;
+
+use App\Exceptions\NotImplementedException;
 
 final class FamilyMemberRepository implements FamilyMemberRepositoryInterface
 {
@@ -22,7 +24,7 @@ final class FamilyMemberRepository implements FamilyMemberRepositoryInterface
 
     public function all()
     {
-        
+        throw new NotImplementedException('Method has not implemented');
     }
 
     public function create(array $data)
@@ -32,7 +34,7 @@ final class FamilyMemberRepository implements FamilyMemberRepositoryInterface
 
     public function update(array $data, $id)
     {
-        
+        throw new NotImplementedException('Method has not implemented');
     }
 
     public function delete($id)
