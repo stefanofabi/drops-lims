@@ -36,10 +36,11 @@ class PatientFactory extends Factory {
 			        'city' => $this->faker->city,
 			        'address' => $this->faker->streetAddress, 
 
-			        // for animals
 			        'owner' => $this->faker->name().' '.$this->faker->lastName(),
-			        'key' => $this->faker->randomNumber(8),
-			        
+			        'identification_number' => $this->faker->randomNumber(8),
+			        'phone' => $this->faker->phoneNumber,
+					'email' => $this->faker->safeEmail,
+					
 			        'type' => $type,
 			    ];
 
@@ -50,11 +51,13 @@ class PatientFactory extends Factory {
 				$array = [
 			        //
 			        'full_name' => $this->faker->lastName()." ". $this->faker->name(),
-			        'key' => $this->faker->randomNumber(8),
+			        'identification_number' => $this->faker->randomNumber(8),
 			        'sex' => $this->faker->randomElement($array = array('F', 'M')),
 			        'birth_date' => $this->faker->date($format = 'Y-m-d', $max = 'now'),
 			        'city' => $this->faker->city,
 			        'address' => $this->faker->streetAddress, 
+					'phone' => $this->faker->phoneNumber,
+					'email' => $this->faker->safeEmail,
 			        
 			        'type' => $type,
 			    ];
@@ -66,14 +69,14 @@ class PatientFactory extends Factory {
 				$array = [
 			        //
 			        'full_name' => $this->faker->lastName()." ". $this->faker->name(),
-			        'key' => $this->faker->randomNumber(8),
-			        'sex' => $this->faker->randomElement($array = array('F', 'M')),
-			        'birth_date' => $this->faker->date($format = 'Y-m-d', $max = 'now'),
+			        'identification_number' => $this->faker->randomNumber(8),
 			        'city' => $this->faker->city,
 			        'address' => $this->faker->streetAddress, 
+					'phone' => $this->faker->phoneNumber,
+					'email' => $this->faker->safeEmail,					
 
 			        // for industrials
-			        'business_name' => $this->faker->name(),
+			        'business_name' => $this->faker->company,
 					'tax_condition' => $this->faker->randomElement(array('Exempt', 'Monotax', 'Registered Responsible')),   
 					'start_activity' => $this->faker->date($format = 'Y-m-d', $max = 'now'),
 
