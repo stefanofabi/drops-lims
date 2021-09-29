@@ -6,6 +6,24 @@
 
 @section('active_patients', 'active')
 
+@section('js')
+<script type="text/javascript">
+	var enableForm = false;
+
+	$(document).ready(function() {
+        // Select a sex from list
+        $('#sex').val("{{ @old('full_name') }}");
+    });
+
+	function submitForm() 
+	{
+		let submitButton = $('#submit-button');
+        submitButton.click();
+
+    }
+</script>
+@endsection
+
 @section('menu-title')
 {{ trans('forms.menu') }}
 @endsection

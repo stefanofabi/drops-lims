@@ -57,5 +57,9 @@ return [
     'success_destroy_message' => 'Well done! Patient was successfully removed',
     'owner_data' => 'Owner data',
     'animal_data' => 'Animal data',
-
+    'email' => 'Email',
+    'alternative_email' => 'Alternative email',
+    'phone' => 'Phone',
+    'alternative_phone' => 'Alternative phone',
+    
 ];

@@ -13,19 +13,6 @@ use Lang;
 
 class PatientController extends Controller
 {
-    private const ATTRIBUTES = [
-        'full_name',
-        'key',
-        'sex',
-        'birth_date',
-        'city',
-        'address',
-        'owner',
-        'business_name',
-        'tax_condition',
-        'start_activity',
-        'type',
-    ];
 
     use PaginationTrait;
 
@@ -162,15 +149,17 @@ class PatientController extends Controller
         $request->validate([
             'full_name' => 'required|string',
             'sex' => 'in:F,M',
-            'type' => 'in:animal,human,industrial',
             'birth_date' => 'date|nullable',
+            'email' => 'email|nullable',
+            'alternative_email' => 'email|nullable',
+            'type' => 'in:animal,human,industrial',
         ]);
 
-        if (! $patient = $this->patientRepository->create($request->only(self::ATTRIBUTES))) {
+        if (! $patient = $this->patientRepository->create($request->all())) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));;
         }
 
-        return redirect()->action([PatientController::class, 'show'], ['id' => $patient->id]);
+        return redirect()->action([PatientController::class, 'edit'], ['id' => $patient->id]);
     }
 
     /**
@@ -180,32 +169,7 @@ class PatientController extends Controller
      */
     public function show($id)
     {
-
-        $patient = $this->patientRepository->findOrFail($id);
-
-        switch ($patient->type) {
-            case 'animal':
-            {
-                $view = view('administrators/patients/animals/show');
-                break;
-            }
-
-            case 'human':
-            {
-                $view = view('administrators/patients/humans/show');
-                break;
-            }
-
-            case 'industrial':
-            {
-                $view = view('administrators/patients/industrials/show');
-                break;
-            }
-
-            // others cases has filtered in enum field
-        }
-
-        return $view->with('patient', $patient);
+        //
     }
 
     /**
@@ -263,16 +227,17 @@ class PatientController extends Controller
         $request->validate([
             'full_name' => 'required|string',
             'sex' => 'in:F,M',
-            'type' => 'in:animal,human,industrial',
             'birth_date' => 'date|nullable',
-            'start_activity' => 'date|nullable',
+            'email' => 'email|nullable',
+            'alternative_email' => 'email|nullable',
+            'type' => 'in:animal,human,industrial',
         ]);
-        
-        if (! $this->patientRepository->update($request->only(self::ATTRIBUTES), $id)) {
+
+        if (! $this->patientRepository->update($request->all(), $id)) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
-
-        return redirect()->action([PatientController::class, 'show'], ['id' => $id]);
+        
+        return redirect()->action([PatientController::class, 'edit'], ['id' => $id]);
     }
 
     /**

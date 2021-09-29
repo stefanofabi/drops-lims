@@ -24,16 +24,7 @@ Route::group([
     'prefix' => 'patients',
     'as' => 'patients/',
 ], function () {
-
-    require('emails.php');
-    require('phones.php');
-    require('affiliates.php');
-
-    Route::get('show/{id}', [
-        '\App\Http\Controllers\Administrators\Patients\PatientController',
-        'show',
-    ])->name('show')->where('id', '[1-9][0-9]*');
-
+    
     Route::get('create/{type?}', [
         '\App\Http\Controllers\Administrators\Patients\PatientController',
         'create',

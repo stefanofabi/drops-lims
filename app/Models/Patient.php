@@ -16,19 +16,35 @@ class Patient extends Model
 
     protected $fillable = [
         'full_name',
-        'key',
+        'identification_number',
         'sex',
         'birth_date',
         'city',
         'address',
+        'phone',
+        'alternative_phone',
+        'email',
+        'alternative_email',
+
+        // For animals
         'owner',
+
+        // For industrials
         'business_name',
         'tax_condition',
         'start_activity',
-        'type',
     ];
 
-    protected static $logAttributes = ['full_name', 'key', 'owner', 'business_name', 'type'];
+    protected static $logAttributes = [
+        'full_name',
+        'identification_number', 
+        'phone',
+        'alternative_phone',
+        'email',
+        'alternative_email',
+        'owner', 
+        'business_name', 
+        'type'];
 
     /**
      * Get the phones for the patient.

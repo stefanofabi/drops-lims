@@ -94,13 +94,11 @@
 </form>
 @endsection
 
-@section('more-content')
-    <div class="card-footer">
-        <div class="float-right">
-            <button type="submit" onclick="send()" class="btn btn-primary">
-                <span class="fas fa-save"></span> {{ trans('forms.save') }}
-            </button>
-        </div>
+@section('content-footer')
+    <div class="float-end">
+        <button type="submit" onclick="send()" class="btn btn-primary">
+        	<span class="fas fa-save"></span> {{ trans('forms.save') }}
+        </button>
     </div>
 @endsection
 
