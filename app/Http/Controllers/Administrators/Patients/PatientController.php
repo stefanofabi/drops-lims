@@ -39,64 +39,30 @@ class PatientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
 
-        return view('administrators/patients/patients');
-    }
-
-    /**
-     * Load patients
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return View $view
-     */
-    public function load(Request $request)
-    {
         $request->validate([
-            'type' => 'in:animal,human,industrial',
+            'type' => 'required|in:animal,human,industrial',
             'filter' => 'string|nullable',
             'page' => 'required|numeric|min:1',
         ]);
 
-        // Request
-        $patient_type = $request->type;
-        $filter = $request->filter;
-        $page = $request->page;
-
-        $offset = ($page - 1) * self::PER_PAGE;
-        $patients = $this->patientRepository->index($filter, $offset, self::PER_PAGE, $patient_type);
+        $offset = ($request->page - 1) * self::PER_PAGE;
+        $patients = $this->patientRepository->index($request->filter, $offset, self::PER_PAGE, $request->type);
 
         // Pagination
         $count_rows = $patients->count();
         $total_pages = ceil($count_rows / self::PER_PAGE);
-        $paginate = $this->paginate($page, $total_pages, self::ADJACENTS);
-
-        switch ($patient_type) {
-            case 'animal':
-            {
-                $view = view('administrators/patients/animals/index');
-                break;
-            }
-
-            case 'human':
-            {
-                $view = view('administrators/patients/humans/index');
-                break;
-            }
-
-            case 'industrial':
-            {
-                $view = view('administrators/patients/industrials/index');
-                break;
-            }
-        }
+        $paginate = $this->paginate($request->page, $total_pages, self::ADJACENTS);
+        
+        $view = $this->getView($request->type, "index");
 
         return $view
-            ->with('request', $request)
-            ->with('data', $patients)
-            ->with('paginate', $paginate);
+            ->with('data', $request->all())
+            ->with('patients', $patients)
+            ->with('paginate', $paginate);;
     }
 
     /**
@@ -104,36 +70,11 @@ class PatientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($type = null)
+    public function create($patient_type)
     {
         //
-
-        switch ($type) {
-            case 'animal':
-            {
-                $view = view('administrators/patients/animals/create');
-                break;
-            }
-
-            case 'human':
-            {
-                $view = view('administrators/patients/humans/create');
-                break;
-            }
-
-            case 'industrial':
-            {
-                $view = view('administrators/patients/industrials/create');
-                break;
-            }
-
-            default: {
-                $view = view('administrators/patients/create');
-                break;
-            }
-        }
-
-        return $view;
+        
+        return $this->getView($patient_type, 'create');
     }
 
     /**
@@ -256,5 +197,12 @@ class PatientController extends Controller
 
         return view('administrators/patients/patients')
             ->with('success', [Lang::get('patients.success_destroy_message')]);
+    }
+
+    public function getView($patient_type, $view_type)
+    {
+        $patient_type .= "s";
+
+        return view("administrators/patients/$patient_type/$view_type");
     }
 }

@@ -5,11 +5,6 @@
 @append
 
 @section('results')
-
-	@if (!sizeof($data))
-		<div class="col-md-12"> {{ trans('forms.no_results') }}</div>
-	@else 
-
 		<div class="table-responsive">
 			<table class="table table-striped">
 				<tr>
@@ -20,16 +15,16 @@
 					<th class="text-end"> {{ trans('forms.actions') }} </th>
 				</tr>
 
-				@foreach ($data as $patient)
+				@foreach ($patients as $patient)
 				<tr>
 					<td> {{ $patient->full_name }} </td>
 					<td> {{ $patient->business_name }} </td>
-					<td> {{ $patient->key }} </td>
+					<td> {{ $patient->identification_number }} </td>
 					<td> {{ $patient->city }} </td>
 
 
 					<td class="text-end">
-						<a href="{{ route('administrators/patients/show', $patient->id) }}" class="btn btn-info btn-sm float-left" title="{{ trans('patients.show_patient') }}" > <i class="fas fa-eye fa-sm"></i> </a> 
+						<a href="{{ route('administrators/patients/edit', $patient->id) }}" class="btn btn-info btn-sm" title="{{ trans('patients.show_patient') }}" > <i class="fas fa-eye fa-sm"></i> </a> 
 
 						<a class="btn btn-info btn-sm" title="{{ trans('patients.destroy_patient') }}" onclick="destroy_patient('{{ $patient->id }}')"> <i class="fas fa-user-slash fa-sm"> </i> </a>
 						
@@ -52,5 +47,4 @@
 
 			</table>
 		</div>
-	@endif
 @endsection

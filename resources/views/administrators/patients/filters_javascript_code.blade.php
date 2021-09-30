@@ -14,9 +14,9 @@
 
     $(document).ready(function() {
         // Put the filter
-        $("#filter" ).val('{{ $request->filter ?? '' }}');
+        $("#filter" ).val("{{ $data['filter'] ?? '' }}");
 
         // Check a type
-        $('input:radio[name="type"][value="{{ $request->type ?? '' }}"]').prop('checked', true);
+        $('input:radio[name="type"][value="{{ $data['type'] ?? '' }}"]').prop('checked', true);
     });
 </script>

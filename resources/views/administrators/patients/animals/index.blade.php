@@ -20,7 +20,7 @@
 					<th class="text-end"> {{ trans('forms.actions') }} </th>
 				</tr>
 
-				@foreach ($data as $patient)
+				@foreach ($patients as $patient)
 					<tr>
 						<td> {{ $patient->full_name }} </td>
 						<td> {{ $patient->owner }} </td>
@@ -28,7 +28,7 @@
 						<td> {{ date('d/m/Y', strtotime($patient->birth_date)) }} </td>
 
 						<td class="text-end">
-							<a href="{{ route('administrators/patients/edit', $patient->id) }}" class="btn btn-info btn-sm float-left" title="{{ trans('patients.edit_patient') }}" > <i class="fas fa-user-edit fa-sm"> </i> </a> 
+							<a href="{{ route('administrators/patients/edit', $patient->id) }}" class="btn btn-info btn-sm" title="{{ trans('patients.edit_patient') }}" > <i class="fas fa-user-edit fa-sm"> </i> </a> 
 
 							<a class="btn btn-info btn-sm" title="{{ trans('patients.destroy_patient') }}" onclick="destroy_patient('{{ $patient->id }}')"> <i class="fas fa-user-slash fa-sm"> </i> </a>
 							

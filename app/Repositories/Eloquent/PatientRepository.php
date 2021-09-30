@@ -56,7 +56,7 @@ final class PatientRepository implements PatientRepositoryInterface
             ->where(function ($query) use ($filter) {
                 if (! empty($filter)) {
                     $query->orWhere("full_name", "like", "%$filter%")
-                        ->orWhere("key", "like", "$filter%")
+                        ->orWhere("identification_number", "like", "$filter%")
                         ->orWhere("owner", "like", "%$filter%");
                 }
             })

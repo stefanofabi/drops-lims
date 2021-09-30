@@ -7,7 +7,6 @@
 
         @section('js')
         @show
-
     </head>
 
     <body>
@@ -20,30 +19,20 @@
                     <h4> @section('main-title') @show </h4>
                 </div>
 
-                @section('card-filters')
                 <div class="card-body">
-
                     @section('messages')
                         @include('messages')
                     @show
                     
-                    <div class="card">
-                        <form method="post" id="select_page" action="@yield('action_page')">
-                            @csrf
-                            <div class="card-header">
-                                <h5><i class="fas fa-filter"></i> {{ trans('forms.complete_filters') }} </h5>
-                            </div>
-
-                            <div class="card-body">
-                                @section('filters')
-                                @show
-                            </div>
-
-                            <input type="hidden" id="page" name ="page" value="1">
-                        </form>
-                    </div>
+                    <form id="select_page" action="@yield('action_page')">
+                        <h5><i class="fas fa-filter"></i> {{ trans('forms.complete_filters') }} </h5>
+                          
+                        @section('filters')
+                        @show
+                      
+                        <input type="hidden" id="page" name ="page" value="1">
+                    </form>
                 </div>
-                @show
 
                 @section('results')
                 @show

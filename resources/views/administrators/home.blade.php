@@ -23,7 +23,7 @@
                             @can('crud_patients')
                                 <div class="col" style="text-align: center;">
                                     <a class="nav-link" style="color: black"
-                                       href="{{ route('administrators/patients') }}">
+                                       href="{{ route('administrators/patients/index', ['type' => 'human', 'page' => 1]) }}">
                                         <h1>
                                             <i style="font-size: 8vw" class="fas fa-user-injured"></i>
                                         </h1>

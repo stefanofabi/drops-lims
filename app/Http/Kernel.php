@@ -72,7 +72,7 @@ class Kernel extends HttpKernel
         'verify_practice_access_relation' => \App\Http\Middleware\VerifyPracticeAccessRelation::class,
         'verify_billing_period_dates' => \App\Http\Middleware\VerifyBillingPeriodDates::class,
         'verify_payment_date_social_work' => \App\Http\Middleware\VerifyPaymentDateSocialWork::class,
-        
+
     ];
 
     /**

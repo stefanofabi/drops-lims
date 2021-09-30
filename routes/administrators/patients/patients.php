@@ -9,23 +9,16 @@
 |
 */
 
-Route::get('patients', [
-    '\App\Http\Controllers\Administrators\Patients\PatientController',
-    'index',
-])->name('patients')->middleware('permission:crud_patients');
-
-Route::post('patients', [
-    '\App\Http\Controllers\Administrators\Patients\PatientController',
-    'load',
-])->name('patients/load')->middleware('permission:crud_patients');
-
 Route::group([
     'middleware' => 'permission:crud_patients',
     'prefix' => 'patients',
     'as' => 'patients/',
 ], function () {
     
-    Route::get('create/{type?}', [
+    Route::get('index', ['\App\Http\Controllers\Administrators\Patients\PatientController', 'index'])
+    ->name('index');
+
+    Route::get('create/{type}', [
         '\App\Http\Controllers\Administrators\Patients\PatientController',
         'create',
     ])->name('create')->where('type', 'animal|human|industrial');
