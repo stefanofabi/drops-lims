@@ -20,7 +20,7 @@
 					<td> {{ $patient->full_name }} </td>
 					<td> {{ $patient->identification_number }} </td>
 					<td> {{ $patient->city }} </td>
-					<td> {{ date('d/m/Y', strtotime($patient->birth_date)) }} </td>
+					<td> @if ($patient->birth_date) {{ date('d/m/Y', strtotime($patient->birth_date)) }} @endif </td>
 
 					<td class="text-end">
 						<a href="{{ route('administrators/patients/edit', $patient->id) }}" class="btn btn-info btn-sm" title="{{ trans('patients.show_patient') }}" > <i class="fas fa-user-edit fa-sm"></i> </a>
