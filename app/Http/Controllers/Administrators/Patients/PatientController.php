@@ -61,8 +61,8 @@ class PatientController extends Controller
 
         return $view
             ->with('data', $request->all())
-            ->with('patients', $patients)
-            ->with('paginate', $paginate);;
+            ->with('patients', $patients->skip($offset)->take(self::PER_PAGE))
+            ->with('paginate', $paginate);
     }
 
     /**

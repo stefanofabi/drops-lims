@@ -52,7 +52,8 @@ final class PatientRepository implements PatientRepositoryInterface
 
     public function index($filter, $offset, $length, $type)
     {
-        return $this->model->where('type', $type)
+        return $this->model
+            ->where('type', $type)
             ->where(function ($query) use ($filter) {
                 if (! empty($filter)) {
                     $query->orWhere("full_name", "like", "%$filter%")
@@ -61,8 +62,6 @@ final class PatientRepository implements PatientRepositoryInterface
                 }
             })
             ->orderBy('full_name', 'asc')
-            ->offset($offset)
-            ->limit($length)
             ->get();
     }
 
