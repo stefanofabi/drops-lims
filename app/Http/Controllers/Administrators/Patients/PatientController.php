@@ -93,7 +93,7 @@ class PatientController extends Controller
             'birth_date' => 'date|nullable',
             'email' => 'email|nullable',
             'alternative_email' => 'email|nullable',
-            'type' => 'in:animal,human,industrial',
+            'type' => 'required|in:animal,human,industrial',
         ]);
 
         if (! $patient = $this->patientRepository->create($request->all())) {
@@ -127,29 +127,7 @@ class PatientController extends Controller
 
         $social_works = $this->socialWorkRepository->all();
 
-        switch ($patient->type) {
-            case 'animal':
-            {
-                $view = view('administrators/patients/animals/edit');
-                break;
-            }
-
-            case 'human':
-            {
-                $view = view('administrators/patients/humans/edit');
-                break;
-            }
-
-            case 'industrial':
-            {
-                $view = view('administrators/patients/industrials/edit');
-                break;
-            }
-
-            // others cases has filtered in enum field
-        }
-
-        return $view
+        return $this->getView($patient->type, 'edit')
             ->with('patient', $patient)
             ->with('social_works', $social_works);
     }

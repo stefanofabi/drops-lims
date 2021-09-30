@@ -33,6 +33,8 @@ class Patient extends Model
         'business_name',
         'tax_condition',
         'start_activity',
+
+        'type',
     ];
 
     protected static $logAttributes = [

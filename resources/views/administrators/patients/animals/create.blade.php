@@ -3,6 +3,8 @@
 @section('content')
 <form method="post" action="{{ route('administrators/patients/store') }}">
 	@csrf
+
+	<input type="hidden" name="type" value="animal">
  
 	<div class="col-10">
 		<h4><i class="fas fa-book"></i> {{ trans('patients.animal_data') }} </h4>

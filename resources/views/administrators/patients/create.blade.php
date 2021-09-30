@@ -12,7 +12,7 @@
 
 	$(document).ready(function() {
         // Select a sex from list
-        $('#sex').val("{{ @old('full_name') }}");
+        $('#sex').val("{{ @old('sex') }}");
     });
 
 	function submitForm() 

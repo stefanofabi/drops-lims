@@ -19,8 +19,6 @@ return [
     'go_back' => 'Go back',
     'actions' => 'Actions',
     'no_options' => 'There are no options available',
-    'complete_personal_data' => 'Complete personal data',
-    'complete_contact_information' => 'Complete contact information',
     'contact_information' => 'Contact information',
     'enter_filter' => 'Enter a filter',
     'search' => 'Search',

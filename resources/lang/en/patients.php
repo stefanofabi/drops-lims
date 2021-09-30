@@ -61,5 +61,6 @@ return [
     'alternative_email' => 'Alternative email',
     'phone' => 'Phone',
     'alternative_phone' => 'Alternative phone',
+    'personal_data' => 'Personal data',
     
 ];

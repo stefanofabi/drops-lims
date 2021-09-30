@@ -24,7 +24,7 @@
 
 @section('filters')
 <!-- Patient type -->
-<div class="btn-group mt-3" role="group" aria-label="Basic radio toggle button group">
+<div class="btn-group mt-3" role="group" aria-label="Patients filters">
     <input type="radio" class="btn-check" id="animalType" name="type" value="animal" required>
     <label class="btn btn-outline-primary" for="animalType"> {{ trans('patients.animal') }}</label>
 
