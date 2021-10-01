@@ -20,6 +20,9 @@
 
 		$("input").removeAttr('readonly');
 		$("select").removeAttr('disabled');
+
+		$("#submitButtonVisible").removeClass('disabled');
+
 		enableForm = true;
 	}
 
@@ -103,7 +106,7 @@
 
 @section('content-footer')
 <div class="float-end">
-    <button type="submit" class="btn btn-primary" onclick="submitForm()">
+    <button type="submit" class="btn btn-primary disabled" onclick="submitForm()" id="submitButtonVisible">
         <span class="fas fa-save"></span> {{ trans('forms.save') }}
     </button>
 </div>

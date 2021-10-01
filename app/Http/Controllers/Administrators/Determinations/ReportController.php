@@ -12,11 +12,6 @@ use Lang;
 
 class ReportController extends Controller
 {
-    private const ATTRIBUTES = [
-        'name',
-        'report',
-        'determination_id',
-    ];
 
     /** @var \App\Contracts\Repository\DeterminationRepositoryInterface */
     private $determinationRepository;
@@ -68,16 +63,16 @@ class ReportController extends Controller
         //
 
         $request->validate([
-            'name' => 'string|nullable',
+            'name' => 'required|string|nullable',
             'report' => 'string|nullable',
             'determination_id' => 'required|numeric|min:1',
         ]);
 
-        if (! $report = $this->reportRepository->create($request->only(self::ATTRIBUTES))) {
+        if (! $report = $this->reportRepository->create($request->all())) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
 
-        return redirect()->action([ReportController::class, 'show'], ['id' => $report->id]);
+        return redirect()->action([ReportController::class, 'edit'], ['id' => $report->id]);
     }
 
     /**
@@ -89,10 +84,6 @@ class ReportController extends Controller
     public function show($id)
     {
         //
-
-        $report = $this->reportRepository->findOrFail($id);
-
-        return view('administrators/determinations/reports/show')->with('report', $report);
     }
 
     /**
@@ -121,11 +112,11 @@ class ReportController extends Controller
     {
         //
 
-        if (! $this->reportRepository->update($request->only(self::ATTRIBUTES), $id)) {
+        if (! $this->reportRepository->update($request->all(), $id)) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
 
-        return redirect()->action([ReportController::class, 'show'], ['id' => $id]);
+        return redirect()->action([ReportController::class, 'edit'], ['id' => $id]);
     }
 
     /**

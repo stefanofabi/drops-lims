@@ -2,12 +2,14 @@
 
 @section('js')
 <script type="text/javascript">
-    function submitForm() {
+    function submitForm() 
+	{
         let submitButton = $('#submit-button');
         submitButton.click();
     }
 
-	$(document).ready(function() {
+	$(document).ready(function() 
+	{
         // Select a nomenclator from list
         $("#nomenclator").val("{{ old('nomenclator_id') }}");
     });

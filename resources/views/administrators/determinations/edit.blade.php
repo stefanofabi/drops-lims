@@ -22,6 +22,9 @@
 
 		$("input").removeAttr('readonly');
 		$("select").removeAttr('disabled');
+
+		$("#submitButtonVisible").removeClass('disabled');
+
 		enableForm = true;
 	}
 
@@ -71,7 +74,7 @@
 			<i class="fas fa-lock-open"></i>
 		</button>
 
-		{{ trans('patients.patient_blocked') }}
+		{{ trans('determinations.determination_blocked') }}
 	</div>
 @endif
 
@@ -130,46 +133,44 @@
 
 @section('content-footer')
 <div class="float-end">
-    <button type="submit" class="btn btn-primary" onclick="submitForm()">
+    <button type="submit" class="btn btn-primary disabled" onclick="submitForm()" id="submitButtonVisible">
         <span class="fas fa-save"></span> {{ trans('forms.save') }}
     </button>
 </div>
 @endsection
 
 @section('extra-content')
-    <div class="card margins-boxs-tb mb-3">
-        <div class="card-header">
-            <h4><span class="fas fa-file-alt"></span> {{ trans('reports.index_reports')}} </h4>
-        </div>
+<div class="card margins-boxs-tb mb-3">
+	<div class="card-header">
+		<h4><span class="fas fa-file-alt"></span> {{ trans('reports.index_reports')}} </h4>
+	</div>
 
+	<div class="table-responsive">
+		<table class="table table-striped">
+			<tr class="info">
+				<th> {{ trans('reports.name') }} </th>
+				<th class="text-end"> {{ trans('forms.actions') }}</th>
+			</tr>
+			@foreach ($determination->reports as $report)
+			<tr>
+				<td> {{ $report->name }} </td>
+				<td class="text-end">
+					<a href="{{ route('administrators/determinations/reports/edit', ['id' => $report->id]) }}" class="btn btn-info btn-sm" title="{{ trans('reports.edit_report') }}"> 
+					    <i class="fas fa-edit fa-sm"></i> 
+					</a>
 
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <tr class="info">
-                    <th> {{ trans('reports.name') }} </th>
-                    <th class="text-right"> {{ trans('forms.actions') }}</th>
-                </tr>
-
-                @foreach ($determination->reports as $report)
-                    <tr>
-                        <td> {{ $report->name }} </td>
-                        <td class="text-right" style="width: 400px">
-                            <a href="{{ route('administrators/determinations/reports/edit', ['id' => $report->id]) }}"
-                               class="btn btn-info btn-sm" title="{{ trans('reports.edit_report') }}"> <i
-                                    class="fas fa-edit fa-sm"></i> </a>
-
-                            <a class="btn btn-info btn-sm" title="{{ trans('reports.destroy_report') }}"
-                               onclick="destroy_report('{{ $report->id }}')"> <i class="fas fa-trash fa-sm"></i> </a>
-
-                            <form id="destroy_report_{{ $report->id }}" method="POST"
-                                  action="{{ route('administrators/determinations/reports/destroy', ['id' => $report->id]) }}">
-                                @csrf
-                                @method('DELETE')
-                            </form>
-                        </td>
-                    </tr>
-                @endforeach
-            </table>
-        </div>
-    </div>
+					<a class="btn btn-info btn-sm" title="{{ trans('reports.destroy_report') }}" onclick="destroy_report('{{ $report->id }}')">
+					    <i class="fas fa-trash fa-sm"></i> 
+					</a>
+                    
+					<form id="destroy_report_{{ $report->id }}" method="POST" action="{{ route('administrators/determinations/reports/destroy', ['id' => $report->id]) }}">
+						@csrf
+						@method('DELETE')
+					</form>
+				</td>
+			</tr>
+			@endforeach
+		</table>
+	</div>
+</div>
 @endsection

@@ -34,7 +34,7 @@ final class ReportRepository implements ReportRepositoryInterface
 
     public function update(array $data, $id)
     {
-        return $this->model->where('id', $id)->update($data);
+        return $this->model->find($id)->update($data);
     }
 
     public function delete($id)

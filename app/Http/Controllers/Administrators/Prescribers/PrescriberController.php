@@ -124,6 +124,11 @@ class PrescriberController extends Controller
     {
         //
 
+        $request->validate([
+            'full_name' => 'required|string',
+            'email' => 'email|nullable',
+        ]);
+        
         if (! $this->prescriberRepository->update($request->all(), $id)) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
