@@ -17,56 +17,44 @@
 
         $(document).ready(function() {
             // Put the filter
-            $("#filter" ).val('{{ $request->filter }}');
+            $("#filter" ).val('{{ $data['filter'] ?? '' }}');
         });
 
 	</script>
 @append
 
 @section('results')
-	@if (!sizeof($prescribers))
-		<div class="col-md-12"> {{ trans('forms.no_results') }}</div>
-	@else
+<div class="table-responsive">
+	<table class="table table-striped">
+		<tr>
+			<th> {{ trans('prescribers.prescriber') }} </th>
+			<th> {{ trans('prescribers.provincial_enrollment') }} </th>
+			<th> {{ trans('prescribers.national_enrollment') }} </th>
+			<th class="text-end"> {{ trans('forms.actions') }} </th>
+		</tr>
 
-		<div class="table-responsive">
-			<table class="table table-striped">
-				<tr>
-					<th> {{ trans('prescribers.prescriber') }} </th>
-					<th> {{ trans('prescribers.provincial_enrollment') }} </th>
-					<th> {{ trans('prescribers.national_enrollment') }} </th>
-					<th class="text-end"> {{ trans('forms.actions') }} </th>
-				</tr>
+		@foreach ($prescribers as $prescriber)
+			<tr>
+				<td> {{ $prescriber->full_name }} </td>
+				<td> {{ $prescriber->provincial_enrollment }} </td>
+				<td> {{ $prescriber->national_enrollment }} </td>
 
-				@foreach ($prescribers as $prescriber)
-				<tr>
-					<td> {{ $prescriber->full_name }} </td>
-					<td> {{ $prescriber->provincial_enrollment }} </td>
-					<td> {{ $prescriber->national_enrollment }} </td>
+				<td class="text-end">
+						<a href="{{ route('administrators/prescribers/edit', $prescriber->id) }}" class="btn btn-info btn-sm" title="{{ trans('prescribers.edit_prescriber') }}" > <i class="fas fa-user-edit fa-sm"></i> </a>
 
-					<td class="text-end">
-							<a href="{{ route('administrators/prescribers/show', $prescriber->id) }}" class="btn btn-info btn-sm float-left" title="{{ trans('prescribers.show_prescriber') }}" > <i class="fas fa-eye fa-sm"></i> </a>
+						<a class="btn btn-info btn-sm" title="{{ trans('prescribers.destroy_prescriber') }}" onclick="destroy_prescriber('{{ $prescriber->id }}')" >
+							<i class="fas fa-user-slash fa-sm"></i>
+						</a>
 
-							<a class="btn btn-info btn-sm" title="{{ trans('prescribers.destroy_prescriber') }}" onclick="destroy_prescriber('{{ $prescriber->id }}')" >
-								<i class="fas fa-user-slash fa-sm"></i>
-							</a>
+						<form id="destroy_prescriber_{{ $prescriber->id }}" method="POST" action="{{ route('administrators/prescribers/destroy', $prescriber->id) }}">
+							@csrf
+							@method('DELETE')
+						</form>
+				</td>
+			</tr>
+		@endforeach
+	</table>	
+</div>
 
-							<form id="destroy_prescriber_{{ $prescriber->id }}" method="POST" action="{{ route('administrators/prescribers/destroy', $prescriber->id) }}">
-								@csrf
-								@method('DELETE')
-							</form>
-					</td>
-				</tr>
-				@endforeach
-
-				<tr>
-					<td colspan=7>
-						<span class="float-right">
-								{!! $paginate !!}
-						</span>
-					</td>
-				</tr>
-
-			</table>
-		</div>
-	@endif
+{!! $paginate !!}
 @endsection

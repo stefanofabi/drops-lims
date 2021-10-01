@@ -77,7 +77,7 @@ class PatientFactory extends Factory {
 
 			        // for industrials
 			        'business_name' => $this->faker->company,
-					'tax_condition' => $this->faker->randomElement(array('Exempt', 'Monotax', 'Registered Responsible')),   
+					'tax_condition_id' => $this->faker->randomElement(array(1,2,3,4)),   
 					'start_activity' => $this->faker->date($format = 'Y-m-d', $max = 'now'),
 
 			        'type' => $type,

@@ -109,6 +109,6 @@
 		</div>
 	</div>
 
-	<input type="submit" style="display: none"  id ="submit-button">
+	<input type="submit" style="display: none" id="submit-button">
 </form>
 @endsection

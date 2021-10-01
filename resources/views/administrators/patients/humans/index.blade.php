@@ -34,17 +34,8 @@
 					</td>
 				</tr>
 				@endforeach
-
-
-				<tr>
-					<td colspan=7>
-						<span class="float-end">
-								{!! $paginate !!}
-						</span>
-					</td>
-				</tr>
-
 			</table>
 		</div>
 
+		{!! $paginate !!}
 @endsection

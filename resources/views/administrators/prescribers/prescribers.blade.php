@@ -19,7 +19,7 @@
 @section('active_prescribers', 'active')
 
 @section('action_page')
-{{ route('administrators/prescribers/load') }}
+{{ route('administrators/prescribers/index') }}
 @endsection
 
 @section('filters')

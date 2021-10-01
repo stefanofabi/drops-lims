@@ -15,7 +15,7 @@
 
             @can('crud_prescribers')
 	            <li class="nav-item">
-	                <a class="nav-link @yield('active_prescribers')" href="{{ route('administrators/prescribers') }}"> {{ trans('prescribers.prescribers') }}</a>
+	                <a class="nav-link @yield('active_prescribers')" href="{{ route('administrators/prescribers/index', ['page' => 1]) }}"> {{ trans('prescribers.prescribers') }}</a>
 	            </li>
 	        @endcan
 

@@ -18,8 +18,8 @@ class CreatePrescribersTable extends Migration
             $table->string('full_name')->nullable();
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
-            $table->integer('provincial_enrollment')->unsigned()->nullable();
-            $table->integer('national_enrollment')->unsigned()->nullable();
+            $table->string('provincial_enrollment')->nullable();
+            $table->string('national_enrollment')->nullable();
 
             $table->timestamps();
 

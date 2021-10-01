@@ -18,7 +18,7 @@ return [
     'human' => 'Human',
     'industrial' => 'Industrial',
     'patient' => 'Patient',
-    'dni' => 'DNI',
+    'identification_number' => 'Identification number',
     'city' => 'City',
     'home_address' => 'Home address',
     'birth_date' => 'Birth date',
@@ -33,7 +33,6 @@ return [
     'patient_blocked' => 'Patient blocked for security reasons. To make changes click on the lock',
     'show_patient' => 'Show patient',
     'owner' => 'Owner',
-    'cuit' => 'CUIT',
     'tax_condition' => 'Tax condition',
     'business_name' => 'Business name',
     'fiscal_address' => 'Fiscal address',
@@ -62,5 +61,6 @@ return [
     'phone' => 'Phone',
     'alternative_phone' => 'Alternative phone',
     'personal_data' => 'Personal data',
+    'tax_data' => 'Tax data',
     
 ];

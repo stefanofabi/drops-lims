@@ -7,7 +7,7 @@ trait PaginationTrait {
 	public function paginate($page, $tpages, $adjacents) {
 		$prevlabel = "&lsaquo; Prev";
 		$nextlabel = "Next &rsaquo;";
-		$out = '<ul class="pagination justify-content-end" style="margin:20px 0">';
+		$out = '<ul class="pagination justify-content-end me-2" style="margin:20px 0">';
 	
 	// previous label
 

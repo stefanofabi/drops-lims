@@ -32,7 +32,7 @@ final class PrescriberRepository implements PrescriberRepositoryInterface
 
     public function update(array $data, $id)
     {
-        return $this->model->where('id', $id)->update($data);
+        return $this->model->find($id)->update($data);
     }
 
     public function delete($id)
@@ -50,7 +50,7 @@ final class PrescriberRepository implements PrescriberRepositoryInterface
         return $this->model->findOrFail($id);
     }
 
-    public function index($filter, $offset, $length)
+    public function index($filter)
     {
         return $this->model
             ->where(function ($query) use ($filter) {
@@ -61,8 +61,6 @@ final class PrescriberRepository implements PrescriberRepositoryInterface
                 }
             })
             ->orderBy('full_name', 'asc')
-            ->offset($offset)
-            ->limit($length)
             ->get();
     }
 

@@ -8,6 +8,7 @@ use App\Traits\PaginationTrait;
 
 use App\Contracts\Repository\PatientRepositoryInterface;
 use App\Contracts\Repository\SocialWorkRepositoryInterface;
+use App\Contracts\Repository\TaxConditionRepositoryInterface;
 
 use Lang;
 
@@ -26,12 +27,17 @@ class PatientController extends Controller
     /** @var \App\Contracts\Repository\SocialWorkRepositoryInterface */
     private $socialWorkRepository;
 
+    /** @var \App\Contracts\Repository\TaxConditionRepositoryInterface */
+    private $taxConditionRepository;
+
     public function __construct(
         PatientRepositoryInterface $patientRepository, 
-        SocialWorkRepositoryInterface $socialWorkRepository
+        SocialWorkRepositoryInterface $socialWorkRepository,
+        TaxConditionRepositoryInterface $taxConditionRepository
     ) {
         $this->patientRepository = $patientRepository;
         $this->socialWorkRepository = $socialWorkRepository;
+        $this->taxConditionRepository = $taxConditionRepository;
     }
 
     /**
@@ -50,7 +56,7 @@ class PatientController extends Controller
         ]);
 
         $offset = ($request->page - 1) * self::PER_PAGE;
-        $patients = $this->patientRepository->index($request->filter, $offset, self::PER_PAGE, $request->type);
+        $patients = $this->patientRepository->index($request->filter, $request->type);
 
         // Pagination
         $count_rows = $patients->count();
@@ -74,7 +80,10 @@ class PatientController extends Controller
     {
         //
         
-        return $this->getView($patient_type, 'create');
+        $tax_conditions = $this->taxConditionRepository->all();
+
+        return $this->getView($patient_type, 'create')
+            ->with('tax_conditions', $tax_conditions);
     }
 
     /**
@@ -127,9 +136,12 @@ class PatientController extends Controller
 
         $social_works = $this->socialWorkRepository->all();
 
+        $tax_conditions = $this->taxConditionRepository->all();
+
         return $this->getView($patient->type, 'edit')
             ->with('patient', $patient)
-            ->with('social_works', $social_works);
+            ->with('social_works', $social_works)
+            ->with('tax_conditions', $tax_conditions);
     }
 
     /**

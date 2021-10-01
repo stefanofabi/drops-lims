@@ -5,8 +5,9 @@
 	var enableForm = false;
 
 	$(document).ready(function() {
-        // Select a sex from list
+        // Select a option from list
         $('#sex').val("{{ @old('sex') ?? $patient->sex }}");
+		$('#taxCondition').val("{{ @old('tax_condition_id') ?? $patient->tax_condition_id }}");
 
 		@if (sizeof($errors) > 0)
 		enableSubmitForm();
@@ -24,11 +25,10 @@
 
 	function submitForm() 
 	{
-		if (enableForm) {
+		if (enableForm) 
+		{
 			let submitButton = $('#submit-button');
             submitButton.click();
-		} else {
-			alert("{{ trans('patients.patient_blocked') }}")
 		}
     }
 </script>

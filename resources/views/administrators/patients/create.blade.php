@@ -10,9 +10,11 @@
 <script type="text/javascript">
 	var enableForm = false;
 
-	$(document).ready(function() {
-        // Select a sex from list
+	$(document).ready(function() 
+	{
+        // Select a option from list
         $('#sex').val("{{ @old('sex') }}");
+		$('#taxCondition').val("{{ @old('tax_condition_id') }}");
     });
 
 	function submitForm() 
@@ -44,14 +46,7 @@
 </ul>
 @endsection
 
-
 @section('content-title')
 <i class="fas fa-user-injured"></i> {{ trans('patients.create_patient') }}
-@endsection
-
-@section('content')
-<div class="alert alert-info">
-	<strong> {{ trans('forms.notice') }}! </strong> {{ trans('forms.select_for_continue') }}
-</div>
 @endsection
 

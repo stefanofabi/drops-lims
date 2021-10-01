@@ -43,7 +43,6 @@ return [
     'send' => 'Send',
     'successful_transaction' => 'Successful transaction',
     'failed_transaction' => 'Failed transaction',
-    'complete_tax_data' => 'Complete tax data',
     'sign' => 'Sign',
     'no_permission' => 'You do not have permission to perform this action',
     'no_data' => 'No data',

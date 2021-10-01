@@ -14,7 +14,13 @@ class Prescriber extends Model
 
     use LogsActivity;
 
-    protected $fillable = ['full_name', 'phone', 'email', 'provincial_enrollment', 'national_enrollment'];
+    protected $fillable = [
+        'full_name', 
+        'phone', 
+        'email', 
+        'provincial_enrollment', 
+        'national_enrollment',
+    ];
 
     protected static $logFillable = true;
 

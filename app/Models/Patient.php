@@ -31,7 +31,7 @@ class Patient extends Model
 
         // For industrials
         'business_name',
-        'tax_condition',
+        'tax_condition_id',
         'start_activity',
 
         'type',

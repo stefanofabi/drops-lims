@@ -12,14 +12,6 @@ use Lang;
 
 class PrescriberController extends Controller
 {
-    private const ATTRIBUTES = [
-        'full_name',
-        'phone',
-        'email',
-        'provincial_enrollment',
-        'national_enrollment',
-    ];
-
     use PaginationTrait;
 
     private const PER_PAGE = 15;
@@ -39,40 +31,26 @@ class PrescriberController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        return view('administrators/prescribers/prescribers');
-    }
 
-    /**
-     * Load prescribers
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return View $view
-     */
-    public function load(Request $request)
-    {
         $request->validate([
             'filter' => 'string|nullable',
             'page' => 'required|numeric|min:1',
         ]);
 
-        // Request
-        $filter = $request->filter;
-        $page = $request->page;
-
-        $offset = ($page - 1) * self::PER_PAGE;
-        $prescribers = $this->prescriberRepository->index($filter, $offset, self::PER_PAGE);
+        $offset = ($request->page - 1) * self::PER_PAGE;
+        $prescribers = $this->prescriberRepository->index($request->filter, $offset, self::PER_PAGE);
 
         // Pagination
         $count_rows = $prescribers->count();
         $total_pages = ceil($count_rows / self::PER_PAGE);
-        $paginate = $this->paginate($page, $total_pages, self::ADJACENTS);
-
+        $paginate = $this->paginate($request->page, $total_pages, self::ADJACENTS);
+        
         return view('administrators/prescribers/index')
-            ->with('request', $request)
-            ->with('prescribers', $prescribers)
+            ->with('data', $request->all())
+            ->with('prescribers', $prescribers->skip($offset)->take(self::PER_PAGE))
             ->with('paginate', $paginate);
     }
 
@@ -84,6 +62,7 @@ class PrescriberController extends Controller
     public function create()
     {
         //
+
         return view('administrators/prescribers/create');
     }
 
@@ -102,11 +81,11 @@ class PrescriberController extends Controller
             'email' => 'email|nullable',
         ]);
 
-        if (! $prescriber = $this->prescriberRepository->create($request->only(self::ATTRIBUTES))) {
+        if (! $prescriber = $this->prescriberRepository->create($request->all())) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
 
-        return redirect()->action([PrescriberController::class, 'show'], ['id' => $prescriber->id]);
+        return redirect()->action([PrescriberController::class, 'edit'], ['id' => $prescriber->id]);
     }
 
     /**
@@ -118,9 +97,6 @@ class PrescriberController extends Controller
     public function show($id)
     {
         //
-        $prescriber = $this->prescriberRepository->findOrFail($id);
-
-        return view('administrators/prescribers/show')->with('prescriber', $prescriber);
     }
 
     /**
@@ -148,11 +124,11 @@ class PrescriberController extends Controller
     {
         //
 
-        if (! $this->prescriberRepository->update($request->only(self::ATTRIBUTES), $id)) {
+        if (! $this->prescriberRepository->update($request->all(), $id)) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
 
-        return redirect()->action([PrescriberController::class, 'show'], ['id' => $id]);
+        return redirect()->action([PrescriberController::class, 'edit'], ['id' => $id]);
     }
 
     /**
@@ -165,7 +141,7 @@ class PrescriberController extends Controller
     {
         //
 
-        if (!$this->prescriberRepository->delete($id)) {
+        if (! $this->prescriberRepository->delete($id)) {
             return back()->withErrors(Lang::get('forms.failed_transaction'));
         }
 

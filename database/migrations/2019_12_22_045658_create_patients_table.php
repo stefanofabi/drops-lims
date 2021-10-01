@@ -37,7 +37,7 @@ class CreatePatientsTable extends Migration
 
             // For industrials
             $table->string('business_name')->nullable();
-            $table->string('tax_condition')->nullable();
+            $table->unsignedBigInteger('tax_condition_id')->nullable();
             $table->date('start_activity')->nullable();
 
             // To differentiate the type of patient
@@ -45,6 +45,7 @@ class CreatePatientsTable extends Migration
 
             // Foreign keys
             $table->foreign('plan_id')->references('id')->on('plans')->onDelete('restrict')->onUpdate('cascade');
+            $table->foreign('tax_condition_id')->references('id')->on('tax_conditions')->onDelete('restrict')->onUpdate('cascade');
 
             $table->timestamps();
 

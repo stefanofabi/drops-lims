@@ -50,7 +50,7 @@ final class PatientRepository implements PatientRepositoryInterface
         return $this->model->findOrFail($id);
     }
 
-    public function index($filter, $offset, $length, $type)
+    public function index($filter, $type)
     {
         return $this->model
             ->where('type', $type)

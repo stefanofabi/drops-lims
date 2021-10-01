@@ -98,10 +98,9 @@
 				<input type="email" class="form-control @error('alternative_email') is-invalid @enderror" name="alternative_email" value="{{ @old('alternative_email') }}">
 			</div>
 		</div>
-
 	</div>
 
-	<input type="submit" style="display: none"  id ="submit-button">
+	<input type="submit" style="display: none" id="submit-button">
 </form>
 @endsection
 
