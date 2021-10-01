@@ -1,27 +1,17 @@
 @extends('administrators/prescribers/prescribers')
 
 @section('js')
-    <script type="text/javascript">
+@parent 
 
-	    function load(page) {
-	        $("#page" ).val(page);
-	        document.all["select_page"].submit();
-	     }
-
-		function destroy_prescriber(form_id){
-		    if (confirm('{{ trans("forms.confirm") }}')) {
-		    	var form = document.getElementById('destroy_prescriber_'+form_id);
-		    	form.submit();
-		    }
+<script type="text/javascript">
+	function destroy_prescriber(form_id){
+		if (confirm('{{ trans("forms.confirm") }}')) {
+		    var form = document.getElementById('destroy_prescriber_'+form_id);
+		    form.submit();
 		}
-
-        $(document).ready(function() {
-            // Put the filter
-            $("#filter" ).val('{{ $data['filter'] ?? '' }}');
-        });
-
-	</script>
-@append
+	}
+</script>
+@endsection
 
 @section('results')
 <div class="table-responsive">

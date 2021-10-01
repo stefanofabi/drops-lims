@@ -8,7 +8,7 @@
 
 			<!-- Left Side Of Navbar -->
             @section('navbar_menu')
-            @show
+			@show
 
 	        <!-- Right Side Of Navbar -->
 	        <ul class="navbar-nav ms-auto">

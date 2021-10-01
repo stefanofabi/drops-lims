@@ -17,7 +17,7 @@ return [
     'code' => 'Code',
     'determination' => 'Determination',
     'select_nbu' => 'Select a nomenclator',
-    'add_nbu' => 'Add nomenclator',
+    'add_nomenclator' => 'Add nomenclator',
     'name' => 'Name',
     'nbu' => 'Nomenclator',
     'position' => 'Position',
@@ -30,5 +30,6 @@ return [
     'error_saving_determination' => 'The determination could not be added. Please, try again later.',
     'error_updating_determination' => 'The determination could not be updated. Please, try again later.',
     'success_destroy_message' => 'Well done! Determination was successfully removed',
-
+    'determination_data' => 'Determination data',
+    
 ];

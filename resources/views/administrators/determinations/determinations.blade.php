@@ -5,7 +5,7 @@
 @endsection
 
 @section('main-title')
-<i class="fas fa-microscope"></i> {{ trans('determinations.determinations') }}
+<i class="fas fa-syringe"></i> {{ trans('determinations.determinations') }}
 @endsection
 
 @section('create-href')
@@ -13,7 +13,7 @@
 @endsection
 
 @section('create-text')
-<span class="fas fa-syringe" ></span> {{ trans('determinations.create_determination') }}
+<span class="fas fa-plus" ></span> {{ trans('determinations.create_determination') }}
 @endsection
 
 @section('active_determinations', 'active')
@@ -22,10 +22,10 @@
 <script type="text/javascript">
    $(document).ready(function() {
         // Select a nomenclator
-        $('#nomenclator').val('{{ $request->nomenclator ?? '' }}');
+        $('#nomenclator').val("{{ $data['nomenclator_id'] ?? '' }}");
 
         // Put the filter
-        $("#filter" ).val('{{ $request->filter ?? '' }}');
+        $("#filter" ).val("{{ $data['filter'] ?? '' }}");
     });
 
    function load(page) {
@@ -36,15 +36,16 @@
 @endsection
 
 @section('action_page')
-{{ route('administrators/determinations/load') }}
+{{ route('administrators/determinations/index') }}
 @endsection
 
 @section('filters')
 <!-- Filter by keys -->
 <div class="form-group row">
     <div class="col-md-3">
-        <select class="form-select @error('nomenclator') is-invalid @enderror" id="nomenclator" name="nomenclator" required>
+        <select class="form-select mt-2 @error('nomenclator') is-invalid @enderror" name="nomenclator_id" id="nomenclator" required>
             <option value=""> {{ trans('forms.select_option') }} </option>
+            
             @foreach ($nomenclators as $nomenclator)
             <option value="{{ $nomenclator->id }}"> {{ $nomenclator->name }} </option>
             @endforeach

@@ -9,15 +9,6 @@
 |
 */
 
-Route::get('determinations', [
-    '\App\Http\Controllers\Administrators\Determinations\DeterminationController',
-    'index',
-])->name('determinations')->middleware('permission:crud_determinations');
-Route::post('determinations', [
-    '\App\Http\Controllers\Administrators\Determinations\DeterminationController',
-    'load',
-])->name('determinations/load')->middleware('permission:crud_determinations');
-
 Route::group([
     'middleware' => 'permission:crud_determinations',
     'prefix' => 'determinations',
@@ -25,6 +16,9 @@ Route::group([
 ], function () {
 
     require('reports.php');
+
+    Route::get('index', ['\App\Http\Controllers\Administrators\Determinations\DeterminationController', 'index'])
+    ->name('index');
 
     Route::get('create', [
         '\App\Http\Controllers\Administrators\Determinations\DeterminationController',
@@ -35,11 +29,6 @@ Route::group([
         '\App\Http\Controllers\Administrators\Determinations\DeterminationController',
         'store',
     ])->name('store');
-
-    Route::get('show/{id}', [
-        '\App\Http\Controllers\Administrators\Determinations\DeterminationController',
-        'show',
-    ])->name('show')->where('id', '[1-9][0-9]*');
 
     Route::get('edit/{id}', [
         '\App\Http\Controllers\Administrators\Determinations\DeterminationController',

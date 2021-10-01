@@ -37,7 +37,7 @@
                             @can('crud_determinations')
                                 <div class="col" style="text-align: center;">
                                     <a class="nav-link" style="color: black"
-                                       href="{{ route('administrators/determinations') }}">
+                                       href="{{ route('administrators/determinations/index', ['page' => 1]) }}">
                                         <h1>
                                             <i style="font-size: 8vw" class="fas fa-syringe"></i>
                                         </h1>

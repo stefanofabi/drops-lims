@@ -1,20 +1,18 @@
 @extends('administrators/default-template')
 
 @section('js')
-
 <script type="text/javascript">
-    function send() {
+    function submitForm() {
         let submitButton = $('#submit-button');
         submitButton.click();
     }
 
 	$(document).ready(function() {
         // Select a nomenclator from list
-        $("#nomenclator_id").val('{{ old('nomenclator_id') }}');
+        $("#nomenclator").val("{{ old('nomenclator_id') }}");
     });
 
 </script>
-
 @endsection
 
 @section('title')
@@ -30,7 +28,7 @@
 @section('menu')
 <ul class="nav flex-column">
 	<li class="nav-item">
-		<a class="nav-link" href=""> <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('determinations.add_nbu') }} </a>
+		<a class="nav-link" href=""> <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('determinations.add_nomenclator') }} </a>
 	</li>
 </ul>
 @endsection
@@ -44,91 +42,65 @@
 <form method="post" action="{{ route('administrators/determinations/store') }}">
 	@csrf
 
-	<div class="input-group mt-2 mb-1 col-md-9 input-form">
-		<div class="input-group-prepend">
-			<span class="input-group-text"> {{ trans('determinations.nbu') }} </span>
+	<div class="col-10">
+		<h4><i class="fas fa-book-medical"></i> {{ trans('determinations.determination_data') }} </h4>
+		<hr class="col-6">
+
+		<div class="input-group mt-2">
+			<div class="input-group-prepend">
+				<span class="input-group-text"> {{ trans('determinations.nbu') }} </span>
+			</div>
+
+			<select class="form-select input-sm @error('nomenclator_id') is-invalid @enderror" name="nomenclator_id" id="nomenclator"  required>
+				<option value=""> {{ trans('forms.select_option') }} </option>
+
+				@foreach ($nomenclators as $nomenclator)
+				<option value="{{ $nomenclator->id }}"> {{ $nomenclator->name }} </option>
+				@endforeach
+			</select>
 		</div>
 
-		<select id="nomenclator_id" class="form-control input-sm @error('nomenclator_id') is-invalid @enderror" name="nomenclator_id" required>
-			<option value=""> {{ trans('forms.select_option') }} </option>
-			@foreach ($nomenclators as $nomenclator)
-			<option value="{{ $nomenclator->id }}"> {{ $nomenclator->name }} </option>
-			@endforeach
-		</select>
+		<div class="input-group mt-2">
+			<div class="input-group-prepend">
+				<span class="input-group-text"> {{ trans('determinations.code') }} </span>
+			</div>
 
-		@error('nomenclator_id')
-        	<span class="invalid-feedback" role="alert">
-            	<strong> {{ $message }} </strong>
-       		</span>
-        @enderror
-	</div>
-
-	<div class="input-group mt-2 mb-1 col-md-9 input-form">
-		<div class="input-group-prepend">
-			<span class="input-group-text"> {{ trans('determinations.code') }} </span>
+			<input type="number" class="form-control @error('code') is-invalid @enderror" name="code" min="0" value="{{ old('code') }}" required>
 		</div>
 
-		<input type="number" class="form-control @error('code') is-invalid @enderror" name="code" min="0" value="{{ old('code') }}" required>
+		<div class="input-group mt-2">
+			<div class="input-group-prepend">
+				<span class="input-group-text"> {{ trans('determinations.name') }} </span>
+			</div>
 
-		@error('code')
-        	<span class="invalid-feedback" role="alert">
-            	<strong> {{ $message }} </strong>
-       		</span>
-        @enderror
-	</div>
-
-	<div class="input-group mt-2 mb-1 col-md-9 input-form">
-		<div class="input-group-prepend">
-			<span class="input-group-text"> {{ trans('determinations.name') }} </span>
+			<input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required>
 		</div>
 
-		<input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required>
+		<div class="input-group mt-2">
+			<div class="input-group-prepend">
+				<span class="input-group-text"> {{ trans('determinations.position') }} </span>
+			</div>
 
-		@error('name')
-        	<span class="invalid-feedback" role="alert">
-            	<strong> {{ $message }} </strong>
-       		</span>
-        @enderror
-	</div>
-
-	<div class="input-group mt-2 mb-1 col-md-9 input-form">
-		<div class="input-group-prepend">
-			<span class="input-group-text"> {{ trans('determinations.position') }} </span>
+			<input type="number" class="form-control @error('position') is-invalid @enderror" name="position" min="1" value="{{ old('position') }}" required>
 		</div>
 
-		<input type="number" class="form-control @error('position') is-invalid @enderror" name="position" min="1" value="{{ old('position') ? : '1' }}" required>
+		<div class="input-group mt-2">
+			<div class="input-group-prepend">
+				<span class="input-group-text"> {{ trans('determinations.biochemical_unit') }} </span>
+			</div>
 
-		@error('position')
-        	<span class="invalid-feedback" role="alert">
-            	<strong> {{ $message }} </strong>
-       		</span>
-        @enderror
-	</div>
-
-	<div class="input-group mt-2 mb-1 col-md-9 input-form">
-		<div class="input-group-prepend">
-			<span class="input-group-text"> {{ trans('determinations.biochemical_unit') }} </span>
+			<input type="number" class="form-control @error('biochemical_unit') is-invalid @enderror" name="biochemical_unit" min="0" step="0.01" value="{{ old('biochemical_unit') }}" required>
 		</div>
-
-		<input type="number" class="form-control @error('biochemical_unit') is-invalid @enderror" name="biochemical_unit" min="0" step="0.01" value="{{ old('biochemical_unit') ? : '0.00' }}" required>
-
-		@error('biochemical_unit')
-        	<span class="invalid-feedback" role="alert">
-            	<strong> {{ $message }} </strong>
-       		</span>
-        @enderror
 	</div>
 
-    <input type="submit" id="submit-button" style="display: none;">
+    <input type="submit" style="display: none" id="submit-button">
 </form>
 @endsection
 
-@section('more-content')
-    <div class="card-footer">
-        <div class="float-end">
-            <button type="button" onclick="send()" class="btn btn-primary">
-                <span class="fas fa-save"></span> {{ trans('forms.save') }}
-            </button>
-        </div>
-    </div>
+@section('content-footer')
+<div class="float-end">
+    <button type="submit" class="btn btn-primary" onclick="submitForm()">
+        <span class="fas fa-save"></span> {{ trans('forms.save') }}
+    </button>
+</div>
 @endsection

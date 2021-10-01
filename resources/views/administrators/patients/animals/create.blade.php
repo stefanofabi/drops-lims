@@ -51,7 +51,7 @@
 
 			<div class="input-group mt-2">
 				<div class="input-group-prepend">
-					<span class="input-group-text"> {{ trans('patients.dni') }} </span>
+					<span class="input-group-text"> {{ trans('patients.identification_number') }} </span>
 				</div>
 
 				<input type="number" class="form-control @error('identification_number') is-invalid @enderror" name="identification_number"  value="{{ @old('identification_number') }}">
@@ -102,12 +102,4 @@
 
 	<input type="submit" style="display: none" id="submit-button">
 </form>
-@endsection
-
-@section('content-footer')
-<div class="float-end">
-    <button type="submit" class="btn btn-primary" onclick="submitForm()">
-        <span class="fas fa-save"></span> {{ trans('forms.save') }}
-    </button>
-</div>
 @endsection

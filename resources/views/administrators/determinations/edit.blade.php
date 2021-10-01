@@ -7,19 +7,41 @@
 @section('active_determinations', 'active')
 
 @section('js')
-    <script type="text/javascript">
-        function send() {
-            let submitButton = $('#submit-button');
-            submitButton.click();
-        }
+<script type="text/javascript">
+	var enableForm = false;
 
-        function destroy_report(form_id) {
-            if (confirm('{{ trans("forms.confirm") }}')) {
-                var form = document.getElementById('destroy_report_' + form_id);
-                form.submit();
-            }
+	$(document).ready(function() {
+		@if (sizeof($errors) > 0)
+		enableSubmitForm();
+		@endif
+    });
+
+	function enableSubmitForm() 
+	{
+		$('#securityMessage').hide('slow');
+
+		$("input").removeAttr('readonly');
+		$("select").removeAttr('disabled');
+		enableForm = true;
+	}
+
+	function submitForm() 
+	{
+		if (enableForm) 
+		{
+			let submitButton = $('#submit-button');
+            submitButton.click();
+		}
+    }
+
+    function destroy_report(form_id)
+    {
+        if (confirm('{{ trans("forms.confirm") }}')) {
+            var form = document.getElementById('destroy_report_' + form_id);
+            form.submit();
         }
-    </script>
+    }
+</script>
 @endsection
 
 @section('menu-title')
@@ -30,17 +52,10 @@
     <ul class="nav flex-column">
         @can('crud_reports')
             <li class="nav-item">
-                <a class="nav-link"
-                   href="{{ route('administrators/determinations/reports/create', ['determination_id' => $determination->id]) }}">
-                    <img src="{{ asset('images/drop.png') }}" width="25"
-                         height="25"> {{ trans('reports.create_report') }} </a>
+                <a class="nav-link" href="{{ route('administrators/determinations/reports/create', ['determination_id' => $determination->id]) }}">
+                    <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('reports.create_report') }} </a>
             </li>
         @endcan
-
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('administrators/determinations/show', ['id' => $determination->id]) }}">
-                <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('forms.go_back') }} </a>
-        </li>
     </ul>
 @endsection
 
@@ -50,64 +65,75 @@
 
 
 @section('content')
-    <form method="post" action="{{ route('administrators/determinations/update', $determination->id) }}">
-        @csrf
-        {{ method_field('PUT') }}
+@if (sizeof($errors) == 0)
+	<div id="securityMessage" class="alert alert-info fade show">
+		<button type="submit" onclick="enableSubmitForm()" class="btn btn-info btn-sm">
+			<i class="fas fa-lock-open"></i>
+		</button>
 
-        <div class="input-group mt-2 mb-1 col-md-9 input-form">
-            <div class="input-group-prepend">
-                <span class="input-group-text"> {{ trans('determinations.nbu') }} </span>
-            </div>
+		{{ trans('patients.patient_blocked') }}
+	</div>
+@endif
 
-            <input type="text" class="form-control" value="{{ $determination->nomenclator->name }}" disabled>
-        </div>
+<form method="post" action="{{ route('administrators/determinations/update', $determination->id) }}">
+    @csrf
+     {{ method_field('PUT') }}
 
-        <div class="input-group mt-2 mb-1 col-md-9 input-form">
-            <div class="input-group-prepend">
-                <span class="input-group-text"> {{ trans('determinations.code') }} </span>
-            </div>
+    <div class="col-10">
+		<h4><i class="fas fa-book-medical"></i> {{ trans('determinations.determination_data') }} </h4>
+		<hr class="col-6">
 
-            <input type="number" class="form-control" name="code" min="0" value="{{ $determination->code }}" required>
-        </div>
+		<div class="input-group mt-2">
+			<div class="input-group-prepend">
+				<span class="input-group-text"> {{ trans('determinations.nbu') }} </span>
+			</div>
 
-        <div class="input-group mt-2 mb-1 col-md-9 input-form">
-            <div class="input-group-prepend">
-                <span class="input-group-text"> {{ trans('determinations.name') }} </span>
-            </div>
+			<input type="text" class="form-control" value="{{ $determination->nomenclator->name }}" disabled>
+		</div>
 
-            <input type="text" class="form-control" name="name" value="{{ $determination->name }}" required>
-        </div>
+		<div class="input-group mt-2">
+			<div class="input-group-prepend">
+				<span class="input-group-text"> {{ trans('determinations.code') }} </span>
+			</div>
 
-        <div class="input-group mt-2 mb-1 col-md-9 input-form">
-            <div class="input-group-prepend">
-                <span class="input-group-text"> {{ trans('determinations.position') }} </span>
-            </div>
+			<input type="number" class="form-control @error('code') is-invalid @enderror" name="code" min="0" value="{{ old('code') ?? $determination->code }}" required readonly>
+		</div>
 
-            <input type="number" class="form-control" name="position" min="1" value="{{ $determination->position }}"
-                   required>
-        </div>
+		<div class="input-group mt-2">
+			<div class="input-group-prepend">
+				<span class="input-group-text"> {{ trans('determinations.name') }} </span>
+			</div>
 
-        <div class="input-group mt-2 mb-1 col-md-9 input-form">
-            <div class="input-group-prepend">
-                <span class="input-group-text"> {{ trans('determinations.biochemical_unit') }} </span>
-            </div>
+			<input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') ?? $determination->name }}" required readonly>
+		</div>
 
-            <input type="number" class="form-control" name="biochemical_unit" min="0" step="0.01"
-                   value="{{ $determination->biochemical_unit }}" required>
-        </div>
+		<div class="input-group mt-2">
+			<div class="input-group-prepend">
+				<span class="input-group-text"> {{ trans('determinations.position') }} </span>
+			</div>
 
-        <input id="submit-button" type="submit" style="display: none;">
-    </form>
+			<input type="number" class="form-control @error('position') is-invalid @enderror" name="position" min="1" value="{{ old('position') ?? $determination->position }}" required readonly> 
+		</div>
+
+		<div class="input-group mt-2">
+			<div class="input-group-prepend">
+				<span class="input-group-text"> {{ trans('determinations.biochemical_unit') }} </span>
+			</div>
+
+			<input type="number" class="form-control @error('biochemical_unit') is-invalid @enderror" name="biochemical_unit" min="0" step="0.01" value="{{ old('biochemical_unit') ?? $determination->biochemical_unit }}" required readonly>
+		</div>
+	</div>
+    
+    <input id="submit-button" type="submit" style="display: none;">
+</form>
 @endsection
 
-@section('more-content')
-    <div class="card-footer">
-        <div class="mt-2 float-right">
-            <button onclick="send()" type="submit" class="btn btn-primary">
-                <span class="fas fa-save"></span> {{ trans('forms.save') }}
-            </button>
-        </div>
-    </div>
+@section('content-footer')
+<div class="float-end">
+    <button type="submit" class="btn btn-primary" onclick="submitForm()">
+        <span class="fas fa-save"></span> {{ trans('forms.save') }}
+    </button>
+</div>
 @endsection
 
 @section('extra-content')

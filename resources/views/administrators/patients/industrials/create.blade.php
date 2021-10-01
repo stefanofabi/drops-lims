@@ -102,11 +102,3 @@
 	<input type="submit" style="display: none" id="submit-button">
 </form>
 @endsection
-
-@section('content-footer')
-<div class="float-end">
-    <button type="submit" class="btn btn-primary" onclick="submitForm()">
-        <span class="fas fa-save"></span> {{ trans('forms.save') }}
-    </button>
-</div>
-@endsection

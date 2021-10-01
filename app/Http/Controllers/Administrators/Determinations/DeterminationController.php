@@ -13,13 +13,6 @@ use Lang;
 
 class DeterminationController extends Controller
 {
-    private const ATTRIBUTES = [
-        'nomenclator_id',
-        'code',
-        'name',
-        'position',
-        'biochemical_unit',
-    ];
 
     use PaginationTrait;
 
@@ -46,39 +39,28 @@ class DeterminationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        $nomenclators = $this->nomenclatorRepository->all();
 
-        return view('administrators/determinations/determinations')->with('nomenclators', $nomenclators);
-    }
-
-    /**
-     * Load determinations
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return View $view
-     */
-    public function load(Request $request)
-    {
+        $request->validate([
+            'filter' => 'string|nullable',
+            'page' => 'required|numeric|min:1',
+        ]);
 
         $offset = ($request->page - 1) * self::PER_PAGE;
-
-        $determinations = $this->determinationRepository->index($request->nomenclator, $request->filter, $offset, self::PER_PAGE);
+        $determinations = $this->determinationRepository->index($request->filter, $request->nomenclator_id);
 
         // Pagination
         $count_rows = $determinations->count();
         $total_pages = ceil($count_rows / self::PER_PAGE);
         $paginate = $this->paginate($request->page, $total_pages, self::ADJACENTS);
 
-        $nomenclators = $this->nomenclatorRepository->all();
-
         return view('administrators/determinations/index')
-            ->with('request', $request)
-            ->with('determinations', $determinations)
-            ->with('paginate', $paginate)
-            ->with('nomenclators', $nomenclators);
+            ->with('data', $request->all())
+            ->with('determinations', $determinations->skip($offset)->take(self::PER_PAGE))
+            ->with('nomenclators', $this->nomenclatorRepository->all())
+            ->with('paginate', $paginate);
     }
 
     /**
@@ -111,11 +93,11 @@ class DeterminationController extends Controller
             'biochemical_unit' => 'required|numeric|min:0',
         ]);
 
-        if (! $determination = $this->determinationRepository->create($request->only(self::ATTRIBUTES))) {
+        if (! $determination = $this->determinationRepository->create($request->all())) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
     
-        return redirect()->action([DeterminationController::class, 'show'], ['id' => $determination->id]);
+        return redirect()->action([DeterminationController::class, 'edit'], ['id' => $determination->id]);
     }
 
     /**
@@ -127,10 +109,6 @@ class DeterminationController extends Controller
     public function show($id)
     {
         //
-
-        $determination = $this->determinationRepository->findOrFail($id);
-
-        return view('administrators/determinations/show')->with('determination', $determination);
     }
 
     /**
@@ -166,11 +144,11 @@ class DeterminationController extends Controller
             'biochemical_unit' => 'required|numeric|min:0',
         ]);
 
-        if (!$this->determinationRepository->update($request->only(self::ATTRIBUTES), $id)) {
+        if (! $this->determinationRepository->update($request->all(), $id)) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
 
-        return redirect()->action([DeterminationController::class, 'show'], ['id' => $id]);
+        return redirect()->action([DeterminationController::class, 'edit'], ['id' => $id]);
     }
 
     /**
@@ -183,7 +161,7 @@ class DeterminationController extends Controller
     {
         //
 
-        if (!$this->determinationRepository->delete($id)) {
+        if (! $this->determinationRepository->delete($id)) {
             return back()->withErrors(Lang::get('forms.failed_transaction'));
         }
         

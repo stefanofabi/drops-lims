@@ -32,7 +32,7 @@ final class DeterminationRepository implements DeterminationRepositoryInterface
 
     public function update(array $data, $id)
     {
-        return $this->model->where('id', $id)->update($data);
+        return $this->model->find($id)->update($data);
     }
 
     public function delete($id)
@@ -50,20 +50,18 @@ final class DeterminationRepository implements DeterminationRepositoryInterface
         return $this->model->findOrFail($id);
     }
 
-    public function index($nomenclator_id, $filter, $offset, $length) 
+    public function index($filter, $nomenclator_id) 
     {
 		return $this->model
             ->where('nomenclator_id', '=', $nomenclator_id)
             ->where(function ($query) use ($filter) {
-                if (!empty($filter)) {
+                if (! empty($filter)) {
                     $query->orWhere("name", "like", "%$filter%")
                         ->orWhere("code", "like", "$filter%");
                 }
             })
             ->orderBy('code', 'asc')
             ->orderBy('name', 'asc')
-            ->offset($offset)
-            ->limit($length)
             ->get();
 	}
 }

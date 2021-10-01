@@ -50,3 +50,10 @@
 <i class="fas fa-user-injured"></i> {{ trans('patients.create_patient') }}
 @endsection
 
+@section('content-footer')
+<div class="float-end">
+    <button type="submit" class="btn btn-primary" onclick="submitForm()">
+        <span class="fas fa-save"></span> {{ trans('forms.save') }}
+    </button>
+</div>
+@endsection
