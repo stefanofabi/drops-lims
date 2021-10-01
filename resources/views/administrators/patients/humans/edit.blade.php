@@ -16,7 +16,7 @@
     {{ method_field('PUT') }}
 
     <div class="col-10">  
-        <h4><i class="fas fa-book"></i> {{ trans('patients.personal_data') }} </h4>
+        <h4><i class="fas fa-id-card"></i> {{ trans('patients.personal_data') }} </h4>
 		<hr class="col-6">
 
         <div class="input-group mt-2">
@@ -70,7 +70,7 @@
         </div>   
 
 		<div class="mt-3">
-			<h4><i class="fas fa-book"></i> {{ trans('forms.contact_information') }} </h4>
+			<h4><i class="fas fa-phone"></i> {{ trans('forms.contact_information') }} </h4>
 			<hr class="col-6">
 
 			<div class="input-group mt-2">
