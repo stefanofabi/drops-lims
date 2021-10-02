@@ -7,13 +7,9 @@
 @section('active_protocols', 'active')
 
 @section('js')
-
     <script type="text/javascript">
-
-        var token = $('meta[name="csrf-token"]').attr('content');
-
         $(function () {
-            $("#patient").autocomplete({
+            $("#patientAutoComplete").autocomplete({
                 minLength: 2,
                 source: function (event, ui) {
                     var parameters = {
@@ -35,13 +31,9 @@
                 },
                 select: function (event, ui) {
                     event.preventDefault();
-                    $('#patient').val(ui.item.label);
-                    $('#patient_id').val(ui.item.id);
+                    $('#patient').val(ui.item.id);
 
-                    redirect_by_post('{{ route("administrators/protocols/our/create") }}', {
-                        patient_id: ui.item.id,
-                        '_token': token
-                    }, false);
+                    $('#submitPatient').click();
                 }
             });
         });
@@ -76,26 +68,6 @@
             });
         });
 
-        /* function to redirect a webpage to another using post method */
-        function redirect_by_post(purl, pparameters, in_new_tab) {
-            pparameters = (typeof pparameters == 'undefined') ? {} : pparameters;
-            in_new_tab = (typeof in_new_tab == 'undefined') ? true : in_new_tab;
-
-            var form = document.createElement("form");
-            $(form).attr("id", "reg-form").attr("name", "reg-form").attr("action", purl).attr("method", "post").attr("enctype", "multipart/form-data");
-            if (in_new_tab) {
-                $(form).attr("target", "_blank");
-            }
-            $.each(pparameters, function (key) {
-                $(form).append('<input type="text" name="' + key + '" value="' + this + '" />');
-            });
-            document.body.appendChild(form);
-            form.submit();
-            document.body.removeChild(form);
-
-            return false;
-        }
-
         $(document).ready(function () {
             // Select a billing period from list
             $("#billing_period").val("{{ $current_billing_period->id ?? '' }}");
@@ -122,7 +94,7 @@
 
 @section('content')
 
-    @if (!empty($patient) && $patient->affiliates->isEmpty())
+    @if (!empty($patient) && empty($patient->social_work_id))
         <div class="alert alert-warning">
             <strong>{{ trans('forms.warning') }}!</strong> {{ trans('protocols.unloaded_social_work') }}
         </div>
@@ -132,6 +104,12 @@
         </div>
     @endif
 
+    <form action="{{ route('administrators/protocols/our/create') }}">
+        <input type="hidden" name="patient_id" id="patient">
+
+        <input type="submit" class="d-none" id="submitPatient">
+    </form>
+
     <form method="post" action="{{ route('administrators/protocols/our/store') }}">
         @csrf
 
@@ -140,9 +118,8 @@
                 <span class="input-group-text"> {{ trans('patients.patient') }} </span>
             </div>
 
-            <input type="hidden" id="patient_id" name="patient_id" value="{{ $patient->id ?? '' }}">
-            <input type="text" class="form-control" id="patient" value="{{ $patient->full_name ?? '' }}"
-                   placeholder="{{ trans('forms.start_typing') }}" required>
+            <input type="hidden" name="patient_id" value="{{ $patient->id ?? '' }}">
+            <input type="text" class="form-control" id="patientAutoComplete" placeholder="{{ trans('forms.start_typing') }}" value="{{ $patient->full_name ?? '' }}" required>
         </div>
 
         <div class="input-group mt-2 mb-1 col-md-9 input-form">
@@ -150,26 +127,7 @@
                 <span class="input-group-text"> {{ trans('social_works.social_work') }} </span>
             </div>
 
-            <select class="form-select input-sm" name="plan_id" required>
-                <option value=""> {{ trans('forms.select_option') }}</option>
-
-                @if(isset($patient->affiliates))
-                    @foreach ($patient->affiliates as $affiliate)
-                        <option value="{{ $affiliate->plan_id }}">
-                            @if (!empty($affiliate->expiration_date) && $affiliate->expiration_date < date('Y-m-d'))
-                                ** {{ trans('social_works.expired_card')}} **
-                            @endif
-
-                            {{ $affiliate->plan->social_work->name }}  {{ $affiliate->plan->name }}
-
-                            @if (!empty($affiliate->affiliate_number))
-                                [{{ $affiliate->affiliate_number }}]
-                            @endif
-
-                        </option>
-                    @endforeach
-                @endif
-            </select>
+            <input type="text" class="form-control" id="socialWorkAutoComplete" placeholder="{{ trans('forms.start_typing') }}" value="{{ $patient->plan->social_work->name ?? '' }}" required>
         </div>
 
         <div class="input-group mt-2 mb-1 col-md-9 input-form">

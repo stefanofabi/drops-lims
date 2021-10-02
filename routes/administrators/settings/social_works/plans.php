@@ -29,9 +29,4 @@ Route::group([
         '\App\Http\Controllers\Administrators\Settings\SocialWorks\PlanController',
         'destroy',
     ])->name('destroy')->where('id', '[1-9][0-9]*');
-
-    Route::post('load', [
-        '\App\Http\Controllers\Administrators\Settings\SocialWorks\SocialWorkController',
-        'load_plans',
-    ])->name('load');
 });

@@ -21,7 +21,8 @@ Route::group([
     Route::get('create/{type}', [
         '\App\Http\Controllers\Administrators\Patients\PatientController',
         'create',
-    ])->name('create')->where('type', 'animal|human|industrial');
+    ])->name('create')
+    ->where('type', 'animal|human|industrial');
 
     Route::post('store', ['\App\Http\Controllers\Administrators\Patients\PatientController', 'store'])->name('store');
 

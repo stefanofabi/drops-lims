@@ -97,8 +97,46 @@
 				<input type="email" class="form-control @error('alternative_email') is-invalid @enderror" name="alternative_email" value="{{ @old('alternative_email') ?? $patient->alternative_email }}" readonly>
 			</div>
 		</div>
+
+        <div class="mt-3">
+            <h4><i class="fas fa-heart"></i> {{ trans('social_works.social_work') }} </h4>
+			<hr class="col-6">
+
+            <div class="input-group mt-2">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> {{ trans('social_works.social_work') }} </span>
+                </div>
+
+                <input type="text" class="form-control" name="social_work_name" id="socialWorkAutoComplete" placeholder="{{ trans('forms.start_typing') }}" value="@if (old('social_work_name')) {{ old('social_work_name') }} @elseif ($patient->plan_id) {{ $patient->plan->social_work->name }} - {{ $patient->plan->name }} @endif" required readonly>
+                <input type="hidden" name="plan_id" id="plan" value="{{ @old('plan_id') ?? $patient->plan_id }}">
+            </div>
+
+            <div class="input-group mt-2">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> {{ trans('social_works.affiliate_number') }} </span>
+                </div>
+
+                <input type="text" class="form-control @error('affiliate_number') is-invalid @enderror" name="affiliate_number" value="{{ old('affiliate_number') ?? $patient->affiliate_number }}" readonly>
+            </div>
+
+            <div class="input-group mt-2">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> {{ trans('social_works.security_code') }} </span>
+                </div>
+
+                <input type="number" class="form-control @error('security_code') is-invalid @enderror" name="security_code" min="100" max="999" value="{{ old('security_code') ?? $patient->security_code }}" readonly>
+            </div>
+
+            <div class="input-group mt-2">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> {{ trans('social_works.expiration_date') }} </span>
+                </div>
+
+                <input type="date" class="form-control @error('expiration_date') is-invalid @enderror" name="expiration_date" value="{{ old('expiration_date') ?? $patient->expiration_date }}" readonly>
+            </div>
+        </div>
     </div>
 
-    <input type="submit" style="display: none" id="submit-button">
+    <input type="submit" class="d-none" id="submit-button">
 </form>
 @endsection

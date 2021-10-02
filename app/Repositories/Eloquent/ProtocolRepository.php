@@ -59,7 +59,7 @@ final class ProtocolRepository implements ProtocolRepositoryInterface
         return $protocol->practices;
     }
 
-    public function index($filter, $offset, $length)
+    public function index($filter)
     {
 
         return $this->model
@@ -73,15 +73,13 @@ final class ProtocolRepository implements ProtocolRepositoryInterface
                 if (! empty($filter)) {
                     $query->orWhere("protocols.id", "like", "$filter%")
                         ->orWhere("patients.full_name", "like", "%$filter%")
-                        ->orWhere("patients.key", "like", "$filter%")
+                        ->orWhere("patients.identification_number", "like", "$filter%")
                         ->orWhere("patients.owner", "like", "%$filter%")
                         ->orWhere("derived_patients.full_name", "like", "%$filter%")
                         ->orWhere("derived_patients.key", "like", "$filter%");
                 }
             })
             ->orderBy('id', 'desc')
-            ->offset($offset)
-            ->limit($length)
             ->get();
     }
 

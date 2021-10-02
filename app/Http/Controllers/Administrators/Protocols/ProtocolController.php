@@ -30,20 +30,10 @@ class ProtocolController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        return view('administrators/protocols/protocols');
-    }
 
-    /**
-     * Load protocols
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return View $view
-     */
-    public function load(Request $request)
-    {
         $request->validate([
             'filter' => 'string|nullable',
             'page' => 'required|numeric|min:1',
@@ -54,7 +44,7 @@ class ProtocolController extends Controller
         $page = $request->page;
 
         $offset = ($page - 1) * self::PER_PAGE;
-        $protocols = $this->protocolRepository->index($filter, $offset, self::PER_PAGE);
+        $protocols = $this->protocolRepository->index($filter);
 
         // Pagination
         $count_rows = $protocols->count();
@@ -62,9 +52,11 @@ class ProtocolController extends Controller
         $paginate = $this->paginate($page, $total_pages, self::ADJACENTS);
         
         return view('administrators/protocols/index')
-            ->with('request', $request->all())
-            ->with('protocols', $protocols)
+            ->with('data', $request->all())
+            ->with('protocols', $protocols->skip($offset)->take(self::PER_PAGE))
             ->with('paginate', $paginate);
+
+        return view('administrators/protocols/index');
     }
 
     /**
@@ -72,11 +64,25 @@ class ProtocolController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($type_protocol)
     {
         //
 
-        return view('administrators/protocols/create');
+        switch ($type_protocol) 
+        {
+            case 'our': 
+            {
+                $redirect = redirect()->action([OurProtocolController::class, 'create']);
+                break;
+            }
+
+            case 'our': 
+                {
+                    break;
+                }
+        }
+
+        return $redirect; 
     }
 
     /**

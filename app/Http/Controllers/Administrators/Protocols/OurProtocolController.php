@@ -82,14 +82,8 @@ class OurProtocolController extends Controller
     public function create(Request $request)
     {
         //
-        $patient_id = $request->patient_id;
-        
 
-        if ($patient = $this->patientRepository->find($patient_id)) {
-            $affiliates = $patient->affiliates;
-        } else {
-            $affiliates = [];
-        }
+        $patient = $this->patientRepository->find($request->patient_id);
 
         $billing_periods = $this->billingPeriodRepository->getBillingPeriods();
 

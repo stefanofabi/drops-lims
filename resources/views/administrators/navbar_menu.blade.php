@@ -20,7 +20,7 @@
 
 		@can('crud_protocols')
 			<li class="nav-item">
-				<a class="nav-link @yield('active_protocols')" href="{{ route('administrators/protocols') }}"> {{ trans('protocols.protocols') }} </a>
+				<a class="nav-link @yield('active_protocols')" href="{{ route('administrators/protocols/index', ['page' => 1]) }}"> {{ trans('protocols.protocols') }} </a>
 			</li>
 		@endcan
 	</ul>

@@ -58,6 +58,11 @@ class PatientFactory extends Factory {
 			        'address' => $this->faker->streetAddress, 
 					'phone' => $this->faker->phoneNumber,
 					'email' => $this->faker->safeEmail,
+
+					'plan_id' => $this->faker->randomElement($array = array(1, 2, 3)),
+					'affiliate_number' => $this->faker->randomNumber(8),
+					'security_code' => $this->faker->randomNumber(3),
+					'expiration_date' => $this->faker->date($format = 'Y-m-d', $max = date('Y-m-d', strtotime('+10 years'))),
 			        
 			        'type' => $type,
 			    ];

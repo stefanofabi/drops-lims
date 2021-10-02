@@ -26,6 +26,12 @@ class Patient extends Model
         'email',
         'alternative_email',
 
+        // For humans
+        'plan_id',
+        'affiliate_number',
+        'security_code',
+        'expiration_date',
+
         // For animals
         'owner',
 
@@ -49,29 +55,13 @@ class Patient extends Model
         'type'];
 
     /**
-     * Get the phones for the patient.
+     * Get the plan associated with the affiliate.
      */
-    public function phones()
+    public function plan()
     {
-        return $this->hasMany(Phone::class);
+        return $this->belongsTo(Plan::class);
     }
-
-    /**
-     * Get the emails for the patient.
-     */
-    public function emails()
-    {
-        return $this->hasMany(Email::class);
-    }
-
-    /**
-     * Get the affiliates for the patient.
-     */
-    public function affiliates()
-    {
-        return $this->hasMany(Affiliate::class);
-    }
-
+    
     /**
      * Get the security code associated with the patient.
      */

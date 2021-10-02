@@ -20,15 +20,16 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
 
         $this->call(TaxConditionSeeder::class);
-        
-        $this->call(PatientSeeder::class);
-
-        $this->call(PrescriberSeeder::class);
 
         $this->call(NomenclatorSeeder::class);
 
         $this->call(SocialWorkSeeder::class);
-        
+
         $this->call(PlanSeeder::class);
+        
+        $this->call(PatientSeeder::class);
+
+        $this->call(PrescriberSeeder::class);
+       
     }
 }

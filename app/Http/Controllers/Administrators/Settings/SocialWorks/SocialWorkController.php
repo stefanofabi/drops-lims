@@ -149,22 +149,15 @@ class SocialWorkController extends Controller
     }
 
     /**
-     * Load plans from ajax
+     * Load social works from ajax
      *
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function load_plans(Request $request)
+    public function getSocialWorks(Request $request)
     {
         //
-        $social_work_id = $request->social_work_id;
 
-        try {
-            $social_work = $this->socialWorkRepository->findOrFail($social_work_id);
-        } catch (ModelNotFoundException $exception) {
-            return response()->json(['message' => Lang::get('errors.not_found')], 404);
-        }
-
-        return response()->json($social_work->plans, 200);
+        return $this->socialWorkRepository->getSocialWorks($request->filter);
     }
 }

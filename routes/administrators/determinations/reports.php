@@ -15,11 +15,6 @@ Route::group([
     'as' => 'reports/',
 ], function () {
 
-    Route::get('show/{id}', [
-        '\App\Http\Controllers\Administrators\Determinations\ReportController',
-        'show',
-    ])->name('show')->where('id', '[1-9][0-9]*');
-
     Route::get('create/{determination_id}', [
         '\App\Http\Controllers\Administrators\Determinations\ReportController',
         'create',

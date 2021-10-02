@@ -48,5 +48,9 @@ Route::group([
         'destroy',
     ])->name('destroy')->where('id', '[1-9][0-9]*');
 
+    Route::post('get-social-works', [
+        '\App\Http\Controllers\Administrators\Settings\SocialWorks\SocialWorkController',
+        'getSocialWorks',
+    ])->name('getSocialWorks');
 
 });

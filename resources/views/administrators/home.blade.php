@@ -51,7 +51,7 @@
                             @can('crud_protocols')
                                 <div class="col" style="text-align: center;">
                                     <a class="nav-link" style="color: black"
-                                       href="{{ route('administrators/protocols') }}">
+                                       href="{{ route('administrators/protocols/index', ['page' => 1]) }}">
                                         <h1>
                                             <i style="font-size: 8vw" class="fas fa-file-medical"></i>
                                         </h1>
@@ -108,7 +108,6 @@
                                     </a>
                                 </div>
                             @endcan
-
                         </div>
                     </div>
                 </div>

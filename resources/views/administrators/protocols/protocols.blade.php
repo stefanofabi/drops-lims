@@ -9,7 +9,7 @@
 @endsection
 
 @section('create-href')
-{{ route('administrators/protocols/create') }}
+{{ route('administrators/protocols/our/create') }}
 @endsection
 
 @section('create-text')
@@ -22,7 +22,7 @@
     <script type="text/javascript">
 	    $(document).ready(function() {
 	        // Put the filter
-	        $("#filter" ).val('{{ $request['filter'] ?? '' }}');
+	        $("#filter" ).val('{{ $data['filter'] ?? '' }}');
 	    });
 
 	    function load(page) {
@@ -47,5 +47,5 @@
 @endsection
 
 @section('action_page')
-{{ route('administrators/protocols/load') }}
+{{ route('administrators/protocols/index') }}
 @endsection
