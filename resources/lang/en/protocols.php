@@ -54,5 +54,7 @@ return [
     'informed' => 'Informed',
     'practices' => 'Practices',
     'total_amount' => 'Total amount',
-
+    'medical_order_data' => 'Medical order data',
+    'billing_data' => 'Billing data',
+    
 ];

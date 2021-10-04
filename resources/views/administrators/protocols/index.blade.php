@@ -13,11 +13,12 @@
 
 			@foreach ($protocols as $protocol)
 			<tr>
-				<td> @if (date('Y-m-d') == $protocol->completion_date) 
-						<span class="badge badge-success">New</span>
-					@endif 
-
+				<td> 
 					{{ $protocol->id }} 
+
+					@if (date('Y-m-d') == $protocol->completion_date) 
+						<span class="badge bg-success bg-sm">New</span>
+					@endif 
 				</td>
 
 				<td> {{ $protocol->patient }} </td>
