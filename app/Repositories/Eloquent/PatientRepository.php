@@ -68,7 +68,7 @@ final class PatientRepository implements PatientRepositoryInterface
     public function loadPatients($filter) {
         // label column is required
         
-        return $this->model->select('full_name as label', 'id') 
+        $patients = $this->model->select('full_name as label', 'id') 
             ->where(function ($query) use ($filter) {
                 if (! empty($filter)) {
                     $query->orWhere("full_name", "like", "%$filter%")
@@ -76,7 +76,13 @@ final class PatientRepository implements PatientRepositoryInterface
                         ->orWhere("owner", "like", "%$filter%");
                 }
             })
-            ->get()
-            ->toJson();
+            ->get();
+
+        if ($patients->isEmpty()) 
+        {
+            return response()->json(['label' => 'No records found']);
+        }
+
+        return $patients;
     }
 }

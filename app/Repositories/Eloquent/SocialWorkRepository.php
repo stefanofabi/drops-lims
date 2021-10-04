@@ -65,7 +65,8 @@ final class SocialWorkRepository implements SocialWorkRepositoryInterface
             }) 
             ->get();
 
-        if ($social_works->count() == 0) {
+        if ($social_works->isEmpty()) 
+        {
             return response()->json(['label' => 'No records found']);
         }
         

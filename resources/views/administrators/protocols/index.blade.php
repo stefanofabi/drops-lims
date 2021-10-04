@@ -8,7 +8,7 @@
 				<th> {{ trans('patients.patient') }} </th>
 				<th> {{ trans('protocols.completion_date') }} </th>
 				<th> {{ trans('protocols.type') }} </th>
-				<th class="text-right"> {{ trans('forms.actions') }} </th>
+				<th class="text-end"> {{ trans('forms.actions') }} </th>
 			</tr>
 
 			@foreach ($protocols as $protocol)
@@ -21,37 +21,28 @@
 				</td>
 
 				<td> {{ $protocol->patient }} </td>
-				<td> {{ $protocol->completion_date }} </td>
+				<td> @if ($protocol->completion_date) {{ date('d/m/Y', strtotime($protocol->completion_date)) }} @endif</td>
 				<td> 
 					@if ($protocol->type == 'our') 
-						<span class="badge badge-primary">Our</span>
+						<span class="badge bg-primary">Our</span>
 					@else 
-						<span class="badge badge-secondary">Derived</span>
+						<span class="badge bg-secondary">Derived</span>
 					@endif 
-				
 				</td>
 
-				<td class="text-right">
+				<td class="text-end">
 					@if ($protocol->type == 'our')
-						<a href="{{ route('administrators/protocols/our/show', [$protocol->id]) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.show_protocol') }}" > <i class="fas fa-eye fa-sm"></i> </a> 
+						<a href="{{ route('administrators/protocols/our/show', [$protocol->id]) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.show_protocol') }}" > <i class="fas fa-edit fa-sm"></i> </a> 
 					@else 
-						<a href="" class="btn btn-info btn-sm" title="{{ trans('protocols.show_protocol') }}" > <i class="fas fa-eye fa-sm"></i> </a> 
+						<a href="" class="btn btn-info btn-sm" title="{{ trans('protocols.show_protocol') }}" > <i class="fas fa-edit fa-sm"></i> </a> 
 					@endif
 
 					<a href="" class="btn btn-info btn-sm" title="{{ trans('protocols.destroy_protocol') }}"> <i class="fas fa-trash fa-sm"></i> </a>
 				</td>
 			</tr>
 			@endforeach
-
-
-			<tr>
-				<td colspan=7>
-					<span class="float-right">
-							{!! $paginate !!}
-					</span>
-				</td>
-			</tr>
-
 		</table>
 	</div>
+
+	{!! $paginate !!}
 @endsection

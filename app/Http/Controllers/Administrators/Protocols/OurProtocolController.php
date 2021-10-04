@@ -86,7 +86,7 @@ class OurProtocolController extends Controller
         $patient = $this->patientRepository->find($request->patient_id);
 
         $billing_periods = $this->billingPeriodRepository->getBillingPeriods();
-
+        
         $current_billing_period = $this->billingPeriodRepository->getCurrentBillingPeriod();
 
         return view('administrators/protocols/our/create')
@@ -185,28 +185,6 @@ class OurProtocolController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    /**
-     * Returns a list of filtered patients
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function load_patients(Request $request)
-    {
-        
-        return $this->patientRepository->loadPatients($request->filter);
-    }
-
-    /**
-     * Returns a list of filtered prescribers
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function load_prescribers(Request $request)
-    {
-        
-        return $this->prescriberRepository->loadPrescribers($request->filter);
     }
 
     /**

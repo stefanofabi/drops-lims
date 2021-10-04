@@ -55,8 +55,6 @@ class ProtocolController extends Controller
             ->with('data', $request->all())
             ->with('protocols', $protocols->skip($offset)->take(self::PER_PAGE))
             ->with('paginate', $paginate);
-
-        return view('administrators/protocols/index');
     }
 
     /**
@@ -76,7 +74,7 @@ class ProtocolController extends Controller
                 break;
             }
 
-            case 'our': 
+            case 'derived': 
                 {
                     break;
                 }

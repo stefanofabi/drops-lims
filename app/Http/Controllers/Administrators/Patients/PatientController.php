@@ -195,4 +195,15 @@ class PatientController extends Controller
 
         return view("administrators/patients/$patient_type/$view_type");
     }
+
+    /**
+     * Returns a list of filtered patients
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function loadPatients(Request $request)
+    {
+        
+        return $this->patientRepository->loadPatients($request->filter);
+    }
 }

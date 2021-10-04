@@ -52,7 +52,7 @@
 	<ul class="nav flex-column">
        @if(auth()->user()->can('crud_protocols'))
 	        <li class="nav-item">
-				<form id="create_protocol_form" action="{{ route('administrators/protocols/our/create') }}" method="post">
+				<form action="{{ route('administrators/protocols/our/create') }}" id="create_protocol_form">
 		        	@csrf
 		            <input type="hidden" name="patient_id" value="{{ $patient->id }}">
 		        </form>

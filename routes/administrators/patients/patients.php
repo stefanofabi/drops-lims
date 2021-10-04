@@ -45,5 +45,10 @@ Route::group([
         '\App\Http\Controllers\Administrators\Patients\SecurityCodeController',
         'store',
     ])->name('security_codes/store');
+
+    Route::post('load-patients', [
+        '\App\Http\Controllers\Administrators\Patients\PatientController',
+        'loadPatients',
+    ])->name('load_patients');
     
 });

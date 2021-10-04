@@ -68,7 +68,7 @@ final class PrescriberRepository implements PrescriberRepositoryInterface
     {
         // label column is required
    
-        return $this->model->select('full_name as label', 'id')
+        $prescribers = $this->model->select('full_name as label', 'id')
             ->where(function ($query) use ($filter) {
                 if (! empty($filter)) {
                     $query->orWhere("full_name", "like", "%$filter%")
@@ -76,7 +76,13 @@ final class PrescriberRepository implements PrescriberRepositoryInterface
                     ->orWhere("national_enrollment", "like", "$filter%");
                 }
             })
-            ->get()
-            ->toJson();
+            ->get();
+
+        if ($prescribers->isEmpty()) 
+        {
+            return response()->json(['label' => 'No records found']);
+        }
+
+        return $prescribers;
     }
 }

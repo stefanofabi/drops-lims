@@ -153,4 +153,15 @@ class PrescriberController extends Controller
         return view('administrators/prescribers/prescribers')
             ->with('success', [Lang::get('prescribers.success_destroy_message')]);
     }
+
+    /**
+     * Returns a list of filtered prescribers
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function loadPrescribers(Request $request)
+    {
+        
+        return $this->prescriberRepository->loadPrescribers($request->filter);
+    }
 }

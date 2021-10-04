@@ -133,7 +133,7 @@
                     <span class="input-group-text"> {{ trans('social_works.social_work') }} </span>
                 </div>
 
-                <input type="text" class="form-control" name="social_work_name" id="socialWorkAutoComplete" placeholder="{{ trans('forms.start_typing') }}" value="{{ old('social_work_name') }}" required>
+                <input type="text" class="form-control" name="social_work_name" id="socialWorkAutoComplete" placeholder="{{ trans('forms.start_typing') }}" value="{{ old('social_work_name') }}">
                 <input type="hidden" name="plan_id" id="plan" value="{{ @old('plan_id') }}">
             </div>
 

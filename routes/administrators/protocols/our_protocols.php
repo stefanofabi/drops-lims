@@ -5,16 +5,6 @@ Route::group([
         'as' => 'our/',
     ], function () {
 
-        Route::post('load_patients', [
-            '\App\Http\Controllers\Administrators\Protocols\OurProtocolController',
-            'load_patients',
-        ])->name('load_patients');
-
-        Route::post('load_prescribers', [
-            '\App\Http\Controllers\Administrators\Protocols\OurProtocolController',
-            'load_prescribers',
-        ])->name('load_prescribers');
-
         Route::get('add_practices/{id}', [
             '\App\Http\Controllers\Administrators\Protocols\OurProtocolController',
             'add_practices',

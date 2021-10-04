@@ -23,12 +23,5 @@ Route::group([
         'index',
     ])->name('index')
     ->middleware('permission:crud_protocols');
-    
-    /*
-    Route::get('create/{type}', [
-        '\App\Http\Controllers\Administrators\Protocols\ProtocolController',
-        'create',
-    ])->name('create')
-    ->where('type', 'our|derived');
-    */
+
 });

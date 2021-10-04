@@ -43,4 +43,9 @@ Route::group([
         'destroy',
     ])->name('destroy')->where('id', '[1-9][0-9]*');
     
+    Route::post('load-prescribers', [
+        '\App\Http\Controllers\Administrators\Prescribers\PrescriberController',
+        'loadPrescribers',
+    ])->name('load_prescribers');
+
 });
