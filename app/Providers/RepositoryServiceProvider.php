@@ -34,15 +34,6 @@ use App\Repositories\Eloquent\PaymentSocialWorkRepository;
 use App\Contracts\Repository\PlanRepositoryInterface;
 use App\Repositories\Eloquent\PlanRepository;
 
-use App\Contracts\Repository\AffiliateRepositoryInterface;
-use App\Repositories\Eloquent\AffiliateRepository;
-
-use App\Contracts\Repository\EmailRepositoryInterface;
-use App\Repositories\Eloquent\EmailRepository;
-
-use App\Contracts\Repository\PhoneRepositoryInterface;
-use App\Repositories\Eloquent\PhoneRepository;
-
 use App\Contracts\Repository\SecurityCodeRepositoryInterface;
 use App\Repositories\Eloquent\SecurityCodeRepository;
 
@@ -82,9 +73,6 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(ReportRepositoryInterface::class, ReportRepository::class);
         $this->app->bind(PaymentSocialWorkRepositoryInterface::class, PaymentSocialWorkRepository::class);
         $this->app->bind(PlanRepositoryInterface::class, PlanRepository::class);
-        $this->app->bind(AffiliateRepositoryInterface::class, AffiliateRepository::class);
-        $this->app->bind(EmailRepositoryInterface::class, EmailRepository::class);
-        $this->app->bind(PhoneRepositoryInterface::class, PhoneRepository::class);
         $this->app->bind(SecurityCodeRepositoryInterface::class, SecurityCodeRepository::class);
         $this->app->bind(PracticeRepositoryInterface::class, PracticeRepository::class);
         $this->app->bind(ResultRepositoryInterface::class, ResultRepository::class);
