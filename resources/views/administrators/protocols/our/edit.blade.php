@@ -8,42 +8,92 @@
 
 @section('js')
 <script type="text/javascript">
-	$(document).ready(function() {
+	$(document).ready(function() 
+	{
         // Select a plan from list
         $("#plan").val('{{ @old('plan_id') ?? $protocol->plan_id }}');
+		$("#billing_period").val('{{ @old('billing_period_id') ?? $protocol->billing_period_id }}');
 
         $('[data-toggle="tooltip"]').tooltip();
     });
 
-	$(function() {
-		$("#prescriber").autocomplete({
-			minLength: 2,
-			source: function(event, ui) {
-						var parameters = {
-							"filter" : $("#prescriber").val()
-						};
 
-						$.ajax({
-							data:  parameters,
-							url:   '{{ route("administrators/protocols/our/load_prescribers") }}',
-							type:  'post',
-							dataType: 'json',
-							beforeSend: function () {
-										//$("#resultados").html('<div class="spinner-border text-info"> </div> Procesando, espere por favor...');
-									},
-							success:  ui
-						});
+	$(function () {
+        $("#socialWorkAutoComplete").autocomplete({
+            minLength: 2,
+            source: function (event, ui) {
+                var parameters = {
+                    "filter": $("#socialWorkAutoComplete").val()
+                };
 
-						return ui;
-					},
-			select: function(event, ui) {
-						event.preventDefault();
-						$('#prescriber').val(ui.item.label);
-						$('#prescriber_id').val(ui.item.id);
-					}
-		});
-	});
+                $.ajax({
+                    data: parameters,
+                    url: '{{ route("administrators/settings/social_works/getSocialWorks") }}',
+                    type: 'post',
+                    dataType: 'json',
+                    success: ui
+                });
 
+                return ui;
+            },
+            select: function (event, ui) {
+                event.preventDefault();
+                $('#plan').val(ui.item.plan_id);
+                $('#socialWorkAutoComplete').val(ui.item.label);
+            }
+        });
+    });
+
+    $(function () {
+        $("#prescriberAutoComplete").autocomplete({
+            minLength: 2,
+            source: function (event, ui) {
+                var parameters = {
+                    "filter": $("#prescriberAutoComplete").val()
+                };
+
+                $.ajax({
+                    data: parameters,
+                    url: '{{ route("administrators/prescribers/load_prescribers") }}',
+                    type: 'post',
+                    dataType: 'json',
+                    beforeSend: function () {
+                        //$("#ajaxResults").html('<div class="spinner-border text-info"> </div> Procesando, espere por favor...');
+                    },
+                    success: ui
+                });
+
+                return ui;
+            },
+            select: function (event, ui) {
+                event.preventDefault();
+                $('#prescriberAutoComplete').val(ui.item.label);
+                $('#prescriber').val(ui.item.id);
+            }
+        });
+    });
+
+    function enableSubmitForm() 
+    {
+        $('#securityMessage').hide('slow');
+
+        $("input").removeAttr('readonly');
+        $("select").removeAttr('disabled');
+        $("textarea").removeAttr('readonly');
+
+        $("#submitButtonVisible").removeClass('disabled');
+
+        enableForm = true;
+    }
+
+    function submitForm() 
+    {
+        if (enableForm) 
+        {
+            let submitButton = $('#submit-button');
+            submitButton.click();
+        }
+    }
 </script>
 @endsection
 
@@ -60,18 +110,6 @@
 		</a>
 	</li>
 	@endcan
-
-    <li class="nav-item">
-        <a class="nav-link" href="#">
-            <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('billing_periods.edit_billing_period') }}
-        </a>
-    </li>
-
-	<li class="nav-item">
-		<a class="nav-link" href="{{ route('administrators/protocols/our/show', ['id' => $protocol->id]) }}">
-			<img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('forms.go_back') }}
-		</a>
-	</li>
 </ul>
 @endsection
 
@@ -81,94 +119,118 @@
 
 
 @section('content')
-
-<form method="post" action="{{ route('administrators/protocols/our/update', ['id' => $protocol->id]) }}">
-	@csrf
-	{{ method_field('PUT') }}
-
-	<div class="input-group mt-2 col-md-9 input-form">
-		<div class="input-group-prepend">
-			<span class="input-group-text"> {{ trans('patients.patient') }} </span>
-		</div>
-
-		<input type="text" class="form-control" value="{{ $protocol->patient->full_name }}" disabled>
-	</div>
-
-	<div class="input-group mt-2 col-md-9 input-form">
-		<div class="input-group-prepend">
-			<span class="input-group-text"> {{ trans('social_works.social_work') }} </span>
-		</div>
-
-		<select class="form-control input-sm" id="plan" name="plan_id">
-				<option value=""> {{ trans('forms.select_option') }}</option>
-					@foreach ($protocol->patient->affiliates as $affiliate)
-						<option value="{{ $affiliate->plan_id }}">
-
-							@if (!empty($affiliate->plan->social_work->expiration_date) && $affiliate->expiration_date < date('Y-m-d'))
-								** {{ trans('social_works.expired_card')}} **
-							@endif
-
-							{{ $affiliate->plan->social_work->name }}  {{ $affiliate->plan->name }}
-
-							@if (!empty($affiliate->affiliate_number))
-								[{{ $affiliate->affiliate_number }}]
-							@endif
-
-						</option>
-					@endforeach
-		</select>
-	</div>
-
-	<div class="input-group mt-2 col-md-9 input-form">
-		<div class="input-group-prepend">
-			<span class="input-group-text"> {{ trans('prescribers.prescriber') }} </span>
-		</div>
-
-		<input type="hidden" id="prescriber_id" name="prescriber_id" value="{{ @old('prescriber_id') ?? $protocol->prescriber->id }}">
-		<input type="text" class="form-control" id="prescriber" name="prescriber" value="{{ @old('prescriber') ?? $protocol->prescriber->full_name }}">
-	</div>
-
-	<div class="input-group mt-2 col-md-9 input-form">
-		<div class="input-group-prepend">
-			<span class="input-group-text"> {{ trans('protocols.completion_date') }} </span>
-		</div>
-
-		<input type="date" class="form-control" name="completion_date" value="{{ @old('completion_date') ?? $protocol->completion_date }}">
-	</div>
-
-	<div class="input-group mt-2 col-md-9 input-form">
-		<div class="input-group-prepend">
-			<span class="input-group-text"> {{ trans('protocols.quantity_orders') }} </span>
-		</div>
-
-		<input type="number" class="form-control" name="quantity_orders" value="{{ @old('quantity_orders') ?? $protocol->quantity_orders }}" min="0">
-	</div>
-
-	<div class="input-group mt-2 col-md-9 input-form">
-		<div class="input-group-prepend">
-			<span class="input-group-text"> {{ trans('protocols.diagnostic') }} </span>
-		</div>
-
-		<input type="text" class="form-control" name="diagnostic" value="{{ @old('diagnostic') ?? $protocol->diagnostic }}">
-	</div>
-
-	<div class="input-group mt-2 col-md-9 input-form">
-		<div class="input-group-prepend">
-			<span class="input-group-text"> {{ trans('protocols.observations') }} </span>
-		</div>
-
-		<textarea class="form-control" rows="3" name="observations"> {{ @old('observations') ?? $protocol->observations }} </textarea>
-	</div>
-
-	<div class="mt-3 float-right">
-		<button type="submit" class="btn btn-primary">
-			<span class="fas fa-save"></span> {{ trans('forms.save') }}
+@if (sizeof($errors) == 0)
+	<div id="securityMessage" class="alert alert-info fade show">
+		<button type="submit" onclick="enableSubmitForm()" class="btn btn-info btn-sm">
+			<i class="fas fa-lock-open"></i>
 		</button>
-	</div>
 
-</form>
+		{{ trans('prescribers.prescriber_blocked') }}
+	</div>
+@endif
+
+    <form method="post" action="{{ route('administrators/protocols/our/update', ['id' => $protocol->id]) }}">
+        @csrf
+        {{ method_field('PUT') }}
+        
+        <div class="col-10">
+            <div class="mt-3">
+                <h4><i class="fas fa-book"></i> {{ trans('protocols.medical_order_data') }} </h4>
+                <hr class="col-6">
+                
+                <div class="input-group mt-2">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> {{ trans('patients.patient') }} </span>
+                    </div>
+
+                    <input type="hidden" name="patient_id" value="{{ $protocol->patient_id }}">
+                    <input type="text" class="form-control" id="patientAutoComplete" placeholder="{{ trans('forms.start_typing') }}" value="{{ $protocol->patient->full_name }}" required disabled>
+                </div>
+
+                <div class="input-group mt-2">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> {{ trans('social_works.social_work') }} </span>
+                    </div>
+
+                    <input type="hidden" name="plan_id" id="plan" value="{{ old('plan_id') ?? $protocol->plan_id }}">
+                    <input type="text" class="form-control" name="social_work_name" id="socialWorkAutoComplete" placeholder="{{ trans('forms.start_typing') }}" value="{{ old('social_work_name') ?? $protocol->plan->social_work->name ?? '' }}" required readonly>
+                </div>
+
+                <div class="input-group mt-2">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> {{ trans('prescribers.prescriber') }} </span>
+                    </div>
+
+                    <input type="hidden" id="prescriber" name="prescriber_id" value="{{ old('prescriber_id') ?? $protocol->prescriber_id }}">
+                    <input type="text" class="form-control" name="prescriber_name" id="prescriberAutoComplete" placeholder="{{ trans('forms.start_typing') }}" value="{{ old('prescriber_name') ?? $protocol->prescriber->full_name ?? '' }}" readonly>
+                </div>
+
+                <div class="input-group mt-2">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> {{ trans('protocols.completion_date') }} </span>
+                    </div>
+
+                    <input type="date" class="form-control" name="completion_date" value="{{ old('completion_date') ?? $protocol->completion_date }}" readonly>
+                </div>
+
+                <div class="input-group mt-2">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> {{ trans('protocols.diagnostic') }} </span>
+                    </div>
+
+                    <input type="text" class="form-control" name="diagnostic" value="{{ old('diagnostic') ?? $protocol->diagnostic }}" readonly>
+                </div>
+            </div>
+            
+            <div class="mt-3">
+                <h4><i class="fas fa-file-invoice-dollar"></i> {{ trans('protocols.billing_data') }} </h4>
+                <hr class="col-6">
+
+                <div class="input-group mt-2">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> {{ trans('protocols.quantity_orders') }} </span>
+                    </div>
+
+                    <input type="number" class="form-control" name="quantity_orders" min="0" value="{{ old('quantity_orders') ?? $protocol->quantity_orders }}" required readonly>
+                </div>
+
+                <div class="input-group mt-2">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> {{ trans('billing_periods.billing_period') }} </span>
+                    </div>
+
+                    <select id="billing_period" class="form-select input-sm" name="billing_period_id" required disabled>
+                        <option value=""> {{ trans('forms.select_option') }}</option>
+
+                        @foreach ($billing_periods as $billing_period)
+                            <option value="{{ $billing_period->id }}">
+                                {{ $billing_period->name }} [{{ date('d/m/Y', strtotime($billing_period->start_date)) }} - {{ date('d/m/Y', strtotime($billing_period->end_date)) }}]
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+
+            <div class="mt-5">
+                <h4><i class="fas fa-file-invoice-dollar"></i> {{ trans('protocols.observations') }} </h4>
+                <hr class="col-6">
+
+                <textarea class="form-control" rows="3" name="observations" readonly>{{ old('observations') ?? $protocol->observations }}</textarea>
+            </div>
+        </div>
+
+        <input type="submit" class="d-none" id="submit-button">
+    </form>
 @endsection
 
+
+@section('content-footer')
+<div class="float-end">
+    <button type="submit" class="btn btn-primary disabled" id="submitButtonVisible" onclick="submitForm()">
+        <span class="fas fa-save"></span> {{ trans('forms.save') }}
+    </button>
+</div>
+@endsection
 
 @section('extra-content')
 @can('crud_practices')
@@ -185,7 +247,7 @@
 						<th> {{ trans('determinations.amount') }} </th>
 						<th> {{ trans('protocols.informed') }} </th>
 						<th> {{ trans('protocols.signed_off') }} </th>
-						<th class="text-right"> {{ trans('forms.actions') }}</th>
+						<th class="text-end"> {{ trans('forms.actions') }}</th>
 					</tr>
 
 					@php
@@ -217,7 +279,7 @@
 								    {{ trans('protocols.not_signed')}}
 								@endforelse
 							</td>
-							<td class="text-right">
+							<td class="text-end">
 									<a href="{{ route('administrators/protocols/practices/edit', ['id' => $practice->id]) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.edit_practice') }}"> <i class="fas fa-edit fa-sm"></i> </a>
 
 									<a href="{{ route('administrators/protocols/practices/destroy', ['id' => $practice->id]) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.destroy_practice') }}"> <i class="fas fa-trash fa-sm"></i> </a>
@@ -226,8 +288,8 @@
 					@endforeach
 
 					<tr>
-						<td colspan="6" class="text-right">
-							<h4> Total: $ {{ number_format($total_amount, 2, ",", ".") }} </h4>
+						<td colspan="6" class="text-end">
+							<h4> Total: ${{ number_format($total_amount, 2, ",", ".") }} </h4>
 						</td>
 					</tr>
 			</table>

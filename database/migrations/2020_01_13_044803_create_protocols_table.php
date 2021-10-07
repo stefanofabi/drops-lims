@@ -21,7 +21,7 @@ class CreateProtocolsTable extends Migration
 
             /*  ------- Our protocols -------   */
             $table->unsignedBigInteger('patient_id')->nullable();
-            $table->unsignedBigInteger('plan_id')->nullable();
+            $table->unsignedBigInteger('plan_id');
             $table->unsignedBigInteger('prescriber_id')->nullable();
             $table->date('withdrawal_date')->nullable();
             $table->unsignedInteger('quantity_orders')->default(0);

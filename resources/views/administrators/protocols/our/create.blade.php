@@ -166,8 +166,8 @@
                         <span class="input-group-text"> {{ trans('social_works.social_work') }} </span>
                     </div>
 
-                    <input type="hidden" name="plan_id" id="plan" value="{{ $patient->plan_id ?? '' }}">
-                    <input type="text" class="form-control" id="socialWorkAutoComplete" placeholder="{{ trans('forms.start_typing') }}" value="{{ $patient->plan->social_work->name ?? '' }}">
+                    <input type="hidden" name="plan_id" id="plan" value="{{ old('plan_id') ?? $patient->plan_id ?? '' }}">
+                    <input type="text" class="form-control" name="social_work_name" id="socialWorkAutoComplete" placeholder="{{ trans('forms.start_typing') }}" value="{{ old('social_work_name') ?? $patient->plan->social_work->name ?? '' }}" required>
                 </div>
 
                 <div class="input-group mt-2">
@@ -184,7 +184,7 @@
                         <span class="input-group-text"> {{ trans('protocols.completion_date') }} </span>
                     </div>
 
-                    <input type="date" class="form-control" name="completion_date" value="{{ date('Y-m-d') }}">
+                    <input type="date" class="form-control" name="completion_date" value="{{ old('completion_date') ?? date('Y-m-d') }}">
                 </div>
 
                 <div class="input-group mt-2">
@@ -192,7 +192,7 @@
                         <span class="input-group-text"> {{ trans('protocols.diagnostic') }} </span>
                     </div>
 
-                    <input type="text" class="form-control" name="diagnostic">
+                    <input type="text" class="form-control" name="diagnostic" value="{{ old('diagnostic') }}">
                 </div>
             </div>
             
@@ -205,7 +205,7 @@
                         <span class="input-group-text"> {{ trans('protocols.quantity_orders') }} </span>
                     </div>
 
-                    <input type="number" class="form-control" name="quantity_orders" min="0" value="0" required>
+                    <input type="number" class="form-control" name="quantity_orders" min="0" value="{{ old('quantity_orders') }}" required>
                 </div>
 
                 <div class="input-group mt-2">
@@ -213,7 +213,7 @@
                         <span class="input-group-text"> {{ trans('billing_periods.billing_period') }} </span>
                     </div>
 
-                    <select id="billing_period" class="form-control input-sm" name="billing_period_id" required>
+                    <select id="billing_period" class="form-select input-sm" name="billing_period_id" required>
                         <option value=""> {{ trans('forms.select_option') }}</option>
 
                         @foreach ($billing_periods as $billing_period)
@@ -225,12 +225,11 @@
                 </div>
             </div>
 
-            <div class="input-group mt-2">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"> {{ trans('protocols.observations') }} </span>
-                </div>
+            <div class="mt-5">
+                <h4><i class="fas fa-file-invoice-dollar"></i> {{ trans('protocols.observations') }} </h4>
+                <hr class="col-6">
 
-                <textarea class="form-control" rows="3" name="observations"></textarea>
+                <textarea class="form-control" rows="3" name="observations">{{ old('observations') }}</textarea>
             </div>
         </div>
         <input type="submit" style="display: none" id="submit-button">

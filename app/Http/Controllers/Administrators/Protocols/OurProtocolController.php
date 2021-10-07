@@ -130,10 +130,6 @@ class OurProtocolController extends Controller
     public function show($id)
     {
         //
-
-        $protocol = $this->protocolRepository->findOrFail($id);
-
-        return view('administrators/protocols/our/show')->with('protocol', $protocol);
     }
 
     /**
@@ -148,7 +144,11 @@ class OurProtocolController extends Controller
 
         $protocol = $this->protocolRepository->findOrFail($id);
 
-        return view('administrators/protocols/our/edit')->with('protocol', $protocol);
+        $billing_periods = $this->billingPeriodRepository->getBillingPeriods();
+
+        return view('administrators/protocols/our/edit')
+            ->with('protocol', $protocol)
+            ->with('billing_periods', $billing_periods);
     }
 
     /**

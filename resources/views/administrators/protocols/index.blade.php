@@ -33,9 +33,9 @@
 
 				<td class="text-end">
 					@if ($protocol->type == 'our')
-						<a href="{{ route('administrators/protocols/our/show', [$protocol->id]) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.show_protocol') }}" > <i class="fas fa-edit fa-sm"></i> </a> 
+						<a href="{{ route('administrators/protocols/our/edit', [$protocol->id]) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.edit_protocol') }}" > <i class="fas fa-edit fa-sm"></i> </a> 
 					@else 
-						<a href="" class="btn btn-info btn-sm" title="{{ trans('protocols.show_protocol') }}" > <i class="fas fa-edit fa-sm"></i> </a> 
+						<a href="" class="btn btn-info btn-sm" title="{{ trans('protocols.edit_protocol') }}" > <i class="fas fa-edit fa-sm"></i> </a> 
 					@endif
 
 					<a href="" class="btn btn-info btn-sm" title="{{ trans('protocols.destroy_protocol') }}"> <i class="fas fa-trash fa-sm"></i> </a>
