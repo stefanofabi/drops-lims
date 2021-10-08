@@ -103,12 +103,34 @@
 
 @section('menu')
 <ul class="nav flex-column">
-	@can('crud_practices')
+    @can('crud_practices')
 	<li class="nav-item">
 		<a class="nav-link" href="{{ route('administrators/protocols/our/add_practices', ['id' => $protocol->id]) }}">
 			<img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('protocols.add_practices') }}
 		</a>
 	</li>
+	@endcan
+
+    @can('print_worksheets')
+		<li class="nav-item">
+			<a class="nav-link" target="_blank" href="{{ route('administrators/protocols/our/print_worksheet', ['id' => $protocol->id]) }}">
+				<img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('protocols.print_worksheet') }}
+			</a>
+		</li>
+	@endcan
+
+	@can('print_protocols')
+		<li class="nav-item">
+			<a class="nav-link" target="_blank" href="{{ route('administrators/protocols/our/print', ['id' => $protocol->id]) }}">
+				<img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('protocols.print_report') }}
+			</a>
+		</li>
+	@endcan
+
+	@can('crud_patients')
+	    <li class="nav-item">
+	        <a class="nav-link" href="{{ route('administrators/patients/edit', ['id' => $protocol->patient_id]) }}"> <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('protocols.see_patient') }} </a>
+	    </li>
 	@endcan
 </ul>
 @endsection

@@ -50,7 +50,7 @@
 @section('menu')
 <p>
 	<ul class="nav flex-column">
-       @if(auth()->user()->can('crud_protocols'))
+       @can('crud_protocols')
 	        <li class="nav-item">
 				<form action="{{ route('administrators/protocols/our/create') }}" id="create_protocol_form">
 		        	@csrf
@@ -61,21 +61,7 @@
 					<img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('protocols.create_protocol')}} 
 				</a>
 			</li>
-			
-			<li class="nav-item">
-				<a class="nav-link" href="#"> <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('protocols.view_protocols') }} </a>
-			</li>
-		@else 
-			<li class="nav-item">
-				<a class="nav-link" href="#" onclick="alert('{{ trans('forms.no_permission') }}')"> 
-					<img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('protocols.create_protocol')}} 
-				</a>
-			</li>
-
-			<li class="nav-item">
-				<a class="nav-link" href="#"> <img src="{{ asset('images/drop.png') }}" width="25" height="25" onclick="alert('{{ trans('forms.no_permission') }}')"> {{ trans('protocols.view_protocols') }} </a>
-			</li>
-		@endif
+		@endcan
 
 		@if(auth()->user()->can('generate_security_codes'))
 			<li class="nav-item">
