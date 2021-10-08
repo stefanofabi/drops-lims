@@ -85,15 +85,16 @@
 </p>
 @endsection
 
-
 @section('content-title')
 <i class="fas fa-user-edit"></i> {{ trans('patients.edit_patient') }}
 @endsection
 
 @section('content-footer')
-<div class="float-end">
-    <button type="submit" class="btn btn-primary disabled" onclick="submitForm()" id="submitButtonVisible">
-        <span class="fas fa-save"></span> {{ trans('forms.save') }}
-    </button>
+<div class="card-footer">
+	<div class="float-end">
+		<button type="submit" class="btn btn-primary" onclick="submitForm()">
+			<span class="fas fa-save"></span> {{ trans('forms.save') }}
+		</button>
+	</div>
 </div>
 @endsection

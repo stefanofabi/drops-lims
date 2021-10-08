@@ -2,7 +2,8 @@
 
 @section('js')
     <script type="text/javascript">
-        function send() {
+        function submitForm() 
+        {
             let submitButton = $('#submit-button');
             submitButton.click();
         }
@@ -83,16 +84,17 @@
             @enderror
         </div>
 
-        <input id="submit-button" type="submit" style="display: none;">
+        <input type="submit" class="d-none" id="submit-button">
     </form>
 @endsection
 
-@section('more-content')
-    <div class="card-footer">
-        <div class="float-right">
-            <button type="submit" class="btn btn-primary" onclick="send();">
-                <span class="fas fa-save"></span> {{ trans('forms.save') }}
-            </button>
-        </div>
-    </div>
+@section('content-footer')
+<div class="card-footer">
+	<div class="float-end">
+		<button type="submit" class="btn btn-primary" onclick="submitForm()">
+			<span class="fas fa-save"></span> {{ trans('forms.save') }}
+		</button>
+	</div>
+</div>
 @endsection
+

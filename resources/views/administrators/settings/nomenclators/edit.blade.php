@@ -1,12 +1,13 @@
 @extends('administrators/settings/index')
 
 @section('js')
-    <script type="text/javascript">
-        function updateNomenclator() {
-            var form = document.getElementById('update_nomenclator');
-            form.submit();
-        }
-    </script>
+<script type="text/javascript">
+    function submitForm() 
+	{
+        let submitButton = $('#submit-button');
+        submitButton.click();
+    }
+</script>
 @endsection
 
 @section('title')
@@ -17,9 +18,7 @@
     <i class="fas fa-archive"> </i> {{ trans('nomenclators.update_nomenclator') }}
 @endsection
 
-
 @section('content')
-
     <form method="post" action="{{ route('administrators/settings/nomenclators/update', ['id' => $nomenclator->id]) }}" id="update_nomenclator">
         @csrf
         @method('PUT')
@@ -30,24 +29,18 @@
             </div>
 
             <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') ?? $nomenclator->name }}" required>
-
-            @error('name')
-            <span class="invalid-feedback" role="alert">
-            	<strong> {{ $message }} </strong>
-       		</span>
-            @enderror
         </div>
 
-        <input type="submit" style="display: none;">
+        <input type="submit" class="d-none" id="submit-button">
     </form>
 @endsection
 
-@section('more-content')
-    <div class="card-footer">
-        <div class="float-right">
-            <button type="submit" class="btn btn-primary" onclick="updateNomenclator();">
-                <span class="fas fa-save"></span> {{ trans('forms.save') }}
-            </button>
-        </div>
-    </div>
+@section('content-footer')
+<div class="card-footer">
+	<div class="float-end">
+		<button type="submit" class="btn btn-primary" onclick="submitForm()">
+			<span class="fas fa-save"></span> {{ trans('forms.save') }}
+		</button>
+	</div>
+</div>
 @endsection

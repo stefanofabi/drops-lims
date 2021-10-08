@@ -234,7 +234,7 @@
             </div>
 
             <div class="mt-5">
-                <h4><i class="fas fa-file-invoice-dollar"></i> {{ trans('protocols.observations') }} </h4>
+                <h4><i class="fas fa-notes-medical"></i> {{ trans('protocols.observations') }} </h4>
                 <hr class="col-6">
 
                 <textarea class="form-control" rows="3" name="observations" readonly>{{ old('observations') ?? $protocol->observations }}</textarea>
@@ -245,12 +245,13 @@
     </form>
 @endsection
 
-
 @section('content-footer')
-<div class="float-end">
-    <button type="submit" class="btn btn-primary disabled" id="submitButtonVisible" onclick="submitForm()">
-        <span class="fas fa-save"></span> {{ trans('forms.save') }}
-    </button>
+<div class="card-footer">
+	<div class="float-end">
+		<button type="submit" class="btn btn-primary" onclick="submitForm()">
+			<span class="fas fa-save"></span> {{ trans('forms.save') }}
+		</button>
+	</div>
 </div>
 @endsection
 

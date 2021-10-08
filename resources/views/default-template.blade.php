@@ -44,10 +44,8 @@
                         @show
                     </div>
 
-                    <div class="card-footer">
-                        @section('content-footer')
-                        @show
-                    </div>
+                    @section('content-footer')
+                    @show
                 </div>
 
                 @section('column-extra-content')

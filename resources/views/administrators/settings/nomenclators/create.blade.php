@@ -1,13 +1,13 @@
 @extends('administrators/settings/index')
 
 @section('js')
-    <script type="text/javascript">
-
-        function createNomenclator() {
-            var form = document.getElementById('create_nomenclator');
-            form.submit();
-        }
-    </script>
+<script type="text/javascript">
+    function submitForm() 
+	{
+        let submitButton = $('#submit-button');
+        submitButton.click();
+    }
+</script>
 @endsection
 
 @section('title')
@@ -31,21 +31,17 @@
 
             <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required>
 
-            @error('name')
-            <span class="invalid-feedback" role="alert">
-            	<strong> {{ $message }} </strong>
-       		</span>
-            @enderror
+            <input type="submit" class="d-none" id="submit-button">
         </div>
     </form>
 @endsection
 
-@section('more-content')
-    <div class="card-footer">
-        <div class="float-right">
-            <button type="submit" class="btn btn-primary" onclick="createNomenclator();">
-                <span class="fas fa-save"></span> {{ trans('forms.save') }}
-            </button>
-        </div>
-    </div>
+@section('content-footer')
+<div class="card-footer">
+	<div class="float-end">
+		<button type="submit" class="btn btn-primary" onclick="submitForm()">
+			<span class="fas fa-save"></span> {{ trans('forms.save') }}
+		</button>
+	</div>
+</div>
 @endsection

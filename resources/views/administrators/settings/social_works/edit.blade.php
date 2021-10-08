@@ -2,7 +2,8 @@
 
 @section('js')
     <script type="text/javascript">
-        function send() {
+        function submitForm() 
+        {
             let submitButton = $('#submit-button');
             submitButton.click();
         }
@@ -31,7 +32,6 @@
     <i class="fas fa-archive"> </i> {{ trans('social_works.update_social_work') }}
 @endsection
 
-
 @section('content')
 
     <form method="post" action="{{ route('administrators/settings/social_works/update', ['id' => $social_work->id]) }}">
@@ -43,30 +43,22 @@
                 <span class="input-group-text"> {{ trans('social_works.name') }} </span>
             </div>
 
-            <input type="text" class="form-control @error('name') is-invalid @enderror" name="name"
-                   value="{{ old('name') ?? $social_work->name }}" required>
-
-            @error('name')
-            <span class="invalid-feedback" role="alert">
-            	<strong> {{ $message }} </strong>
-       		</span>
-            @enderror
+            <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') ?? $social_work->name }}" required>
         </div>
 
-        <input id="submit-button" type="submit" style="display: none;">
+        <input type="submit" class="d-none" id="submit-button">
     </form>
 @endsection
 
-@section('more-content')
-    <div class="card-footer">
-        <div class="float-end">
-            <button type="submit" class="btn btn-primary" onclick="send();">
-                <span class="fas fa-save"></span> {{ trans('forms.save') }}
-            </button>
-        </div>
-    </div>
+@section('content-footer')
+<div class="card-footer">
+	<div class="float-end">
+		<button type="submit" class="btn btn-primary" onclick="submitForm()">
+			<span class="fas fa-save"></span> {{ trans('forms.save') }}
+		</button>
+	</div>
+</div>
 @endsection
-
 
 @section('column-extra-content')
     <div class="card mt-3">
