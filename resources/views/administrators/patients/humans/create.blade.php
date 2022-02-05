@@ -4,7 +4,6 @@
 @parent
 
 <script type="text/javascript">
-
     $(function () 
     {
         $("#socialWorkAutoComplete").autocomplete({
@@ -41,7 +40,7 @@
 
     <input type="hidden" name="type" value="human">
 
-    <div class="col-10">  
+    <div class="col-10 mt-3">  
         <h4><i class="fas fa-id-card"></i> {{ trans('patients.personal_data') }} </h4>
 		<hr class="col-6">
 
@@ -163,6 +162,6 @@
         </div>
     </div>
 
-    <input type="submit" class="d-none" id="submit-button">
+    <input type="submit" class="btn btn-lg btn-primary float-start mt-3" value="{{ trans('forms.save') }}">
 </form>
 @endsection

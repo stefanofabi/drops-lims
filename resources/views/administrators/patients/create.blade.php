@@ -16,13 +16,6 @@
         $('#sex').val("{{ @old('sex') }}");
 		$('#taxCondition').val("{{ @old('tax_condition_id') }}");
     });
-
-	function submitForm() 
-	{
-		let submitButton = $('#submit-button');
-        submitButton.click();
-
-    }
 </script>
 @endsection
 
@@ -48,14 +41,4 @@
 
 @section('content-title')
 <i class="fas fa-user-injured"></i> {{ trans('patients.create_patient') }}
-@endsection
-
-@section('content-footer')
-<div class="card-footer">
-	<div class="float-end">
-		<button type="submit" class="btn btn-primary" onclick="submitForm()">
-			<span class="fas fa-save"></span> {{ trans('forms.save') }}
-		</button>
-	</div>
-</div>
 @endsection

@@ -1,21 +1,13 @@
 @extends('administrators/patients/edit')
 
 @section('content')
-@if (sizeof($errors) == 0)
-	<div id="securityMessage" class="alert alert-info fade show">
-		<button type="submit" onclick="enableSubmitForm()" class="btn btn-info btn-sm">
-			<i class="fas fa-lock-open"></i>
-		</button>
-
-		{{ trans('patients.patient_blocked') }}
-	</div>
-@endif
+@parent
 
 <form method="post" action="{{ route('administrators/patients/update', $patient->id) }}">
     @csrf
     {{ method_field('PUT') }}
 
-    <div class="col-10">  
+    <div class="col-10 mt-3">  
         <h4><i class="fas fa-id-card"></i> {{ trans('patients.personal_data') }} </h4>
 		<hr class="col-6">
 
@@ -136,7 +128,7 @@
             </div>
         </div>
     </div>
-
-    <input type="submit" class="d-none" id="submit-button">
+    
+    <input type="submit" class="btn btn-lg btn-primary float-start mt-3" id="submitButton" value="{{ trans('forms.save') }}" disabled>
 </form>
 @endsection

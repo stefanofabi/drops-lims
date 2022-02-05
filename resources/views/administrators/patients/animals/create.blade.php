@@ -6,7 +6,7 @@
 
 	<input type="hidden" name="type" value="animal">
  
-	<div class="col-10">
+	<div class="col-10 mt-3">
 		<h4><i class="fas fa-id-card"></i> {{ trans('patients.animal_data') }} </h4>
 		<hr class="col-6">
 		
@@ -100,6 +100,6 @@
 		</div>
 	</div>
 
-	<input type="submit" style="display: none" id="submit-button">
+	<input type="submit" class="btn btn-lg btn-primary float-start mt-3" value="{{ trans('forms.save') }}">
 </form>
 @endsection

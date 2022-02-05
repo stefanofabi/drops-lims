@@ -2,8 +2,6 @@
 
 @section('js')
 <script type="text/javascript">
-	var enableForm = false;
-
 	$(document).ready(function() {
         // Select a option from list
         $('#sex').val("{{ @old('sex') ?? $patient->sex }}");
@@ -21,19 +19,8 @@
 		$("input").removeAttr('readonly');
 		$("select").removeAttr('disabled');
 
-		$("#submitButtonVisible").removeClass('disabled');
-
-		enableForm = true;
+		$("#submitButton").removeAttr('disabled');
 	}
-
-	function submitForm() 
-	{
-		if (enableForm) 
-		{
-			let submitButton = $('#submit-button');
-            submitButton.click();
-		}
-    }
 </script>
 @endsection
 
@@ -48,7 +35,7 @@
 @endsection
 
 @section('menu')
-<p>
+<nav class="navbar bg-light">
 	<ul class="nav flex-column">
        @can('crud_protocols')
 	        <li class="nav-item">
@@ -82,19 +69,21 @@
 			</li>		
 		@endif
 	</ul>
-</p>
+</nav>
 @endsection
 
 @section('content-title')
 <i class="fas fa-user-edit"></i> {{ trans('patients.edit_patient') }}
 @endsection
 
-@section('content-footer')
-<div class="card-footer">
-	<div class="float-end">
-		<button type="submit" class="btn btn-primary" onclick="submitForm()">
-			<span class="fas fa-save"></span> {{ trans('forms.save') }}
+@section('content')
+@if (sizeof($errors) == 0)
+	<div id="securityMessage" class="mt-2 alert alert-info fade show">
+		<button type="submit" onclick="enableSubmitForm()" class="btn btn-info btn-sm">
+			<i class="fas fa-lock-open"></i>
 		</button>
+
+		{{ trans('patients.patient_blocked') }}
 	</div>
-</div>
+@endif
 @endsection
