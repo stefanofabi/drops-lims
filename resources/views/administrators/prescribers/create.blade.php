@@ -1,15 +1,5 @@
 @extends('administrators/default-template')
 
-@section('js')
-    <script type="text/javascript">
-        function submitForm() 
-        {
-            let submitButton = $('#submit-button');
-            submitButton.click();
-        }
-    </script>
-@endsection
-
 @section('title')
     {{ trans('prescribers.create_prescriber') }}
 @endsection
@@ -36,7 +26,7 @@
 <form method="post" action="{{ route('administrators/prescribers/store') }}">
 	@csrf
 
-	<div class="col-10">
+	<div class="col-10 mt-3">
         <h4><i class="fas fa-book"></i> {{ trans('patients.personal_data') }} </h4>
 		<hr class="col-6">
 
@@ -77,16 +67,6 @@
         </div>
 	</div>
 
-	<input type="submit" style="display: none" id="submit-button">
+    <input type="submit" class="btn btn-lg btn-primary float-start mt-3" value="{{ trans('forms.save') }}">
 </form>
-@endsection
-
-@section('content-footer')
-<div class="card-footer">
-	<div class="float-end">
-		<button type="submit" class="btn btn-primary" onclick="submitForm()">
-			<span class="fas fa-save"></span> {{ trans('forms.save') }}
-		</button>
-	</div>
-</div>
 @endsection

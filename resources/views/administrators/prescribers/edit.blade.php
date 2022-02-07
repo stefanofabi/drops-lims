@@ -2,8 +2,6 @@
 
 @section('js')
 <script type="text/javascript">
-	var enableForm = false;
-
     $(document).ready(function() 
     {
 		@if (sizeof($errors) > 0)
@@ -18,19 +16,8 @@
 		$("input").removeAttr('readonly');
 		$("select").removeAttr('disabled');
 
-        $("#submitButtonVisible").removeClass('disabled');
-
-		enableForm = true;
+        $("#submitButton").removeAttr('disabled');
 	}
-
-	function submitForm() 
-	{
-		if (enableForm) 
-		{
-			let submitButton = $('#submit-button');
-            submitButton.click();
-		}
-    }
 </script>
 @endsection
 
@@ -59,7 +46,7 @@
 
 @section('content')
 @if (sizeof($errors) == 0)
-	<div id="securityMessage" class="alert alert-info fade show">
+	<div id="securityMessage" class="alert alert-info fade show mt-3">
 		<button type="submit" onclick="enableSubmitForm()" class="btn btn-info btn-sm">
 			<i class="fas fa-lock-open"></i>
 		</button>
@@ -73,7 +60,7 @@
 	{{ method_field('PUT') }}
 
 
-	<div class="col-10">
+	<div class="col-10 mt-3">
         <h4><i class="fas fa-book"></i> {{ trans('patients.personal_data') }} </h4>
 		<hr class="col-6">
 
@@ -114,16 +101,6 @@
         </div>
 	</div>
 
-	<input type="submit" style="display: none" id="submit-button">
+    <input type="submit" class="btn btn-lg btn-primary float-start mt-3" id="submitButton" value="{{ trans('forms.save') }}" disabled>
 </form>
-@endsection
-
-@section('content-footer')
-<div class="card-footer">
-	<div class="float-end">
-		<button type="submit" class="btn btn-primary" onclick="submitForm()">
-			<span class="fas fa-save"></span> {{ trans('forms.save') }}
-		</button>
-	</div>
-</div>
 @endsection
