@@ -1,15 +1,5 @@
 @extends('administrators/default-template')
 
-@section('js')
-<script type="text/javascript">
-    function submitForm() 
-	{
-        let submitButton = $('#submit-button');
-        submitButton.click();
-    }
-</script>
-@endsection
-
 @section('title')
 {{ trans('reports.create_report') }}
 @endsection 
@@ -34,7 +24,7 @@
 
 
 @section('content')
-<div class="alert alert-warning">
+<div class="alert alert-warning mt-3">
 	<strong>{{ trans('forms.warning') }}!</strong> {{ trans('reports.creation_notice') }}
 </div>
 
@@ -67,18 +57,8 @@
 		<textarea class="form-control" rows="10" name="report">{{ old('report') }}</textarea>
 	</div>
 
-	<input type="submit" class="d-none" id="submit-button">
+	<input type="submit" class="btn btn-lg btn-primary mt-3" value="{{ trans('forms.save') }}">
 </form>
 @endsection	
-
-@section('content-footer')
-<div class="card-footer">
-	<div class="float-end">
-		<button type="submit" class="btn btn-primary" onclick="submitForm()">
-			<span class="fas fa-save"></span> {{ trans('forms.save') }}
-		</button>
-	</div>
-</div>
-@endsection
 
 

@@ -2,18 +2,11 @@
 
 @section('js')
 <script type="text/javascript">
-    function submitForm() 
-	{
-        let submitButton = $('#submit-button');
-        submitButton.click();
-    }
-
 	$(document).ready(function() 
 	{
         // Select a nomenclator from list
         $("#nomenclator").val("{{ old('nomenclator_id') }}");
     });
-
 </script>
 @endsection
 
@@ -39,12 +32,11 @@
 <i class="fas fa-syringe"></i> {{ trans('determinations.create_determination') }}
 @endsection
 
-
 @section('content')
 <form method="post" action="{{ route('administrators/determinations/store') }}">
 	@csrf
 
-	<div class="col-10">
+	<div class="col-10 mt-3">
 		<h4><i class="fas fa-book-medical"></i> {{ trans('determinations.determination_data') }} </h4>
 		<hr class="col-6">
 
@@ -95,16 +87,6 @@
 		</div>
 	</div>
 
-    <input type="submit" class="d-none" id="submit-button">
+	<input type="submit" class="btn btn-lg btn-primary mt-3" value="{{ trans('forms.save') }}">
 </form>
-@endsection
-
-@section('content-footer')
-<div class="card-footer">
-	<div class="float-end">
-		<button type="submit" class="btn btn-primary" onclick="submitForm()">
-			<span class="fas fa-save"></span> {{ trans('forms.save') }}
-		</button>
-	</div>
-</div>
 @endsection

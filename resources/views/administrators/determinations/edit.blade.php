@@ -8,13 +8,11 @@
 
 @section('js')
 <script type="text/javascript">
-	var enableForm = false;
-
+	@if (sizeof($errors) > 0)
 	$(document).ready(function() {
-		@if (sizeof($errors) > 0)
 		enableSubmitForm();
-		@endif
     });
+	@endif
 
 	function enableSubmitForm() 
 	{
@@ -23,19 +21,8 @@
 		$("input").removeAttr('readonly');
 		$("select").removeAttr('disabled');
 
-		$("#submitButtonVisible").removeClass('disabled');
-
-		enableForm = true;
+		$("#submitButton").removeAttr('disabled');
 	}
-
-	function submitForm() 
-	{
-		if (enableForm) 
-		{
-			let submitButton = $('#submit-button');
-            submitButton.click();
-		}
-    }
 
     function destroy_report(form_id)
     {
@@ -69,7 +56,7 @@
 
 @section('content')
 @if (sizeof($errors) == 0)
-	<div id="securityMessage" class="alert alert-info fade show">
+	<div id="securityMessage" class="alert alert-info fade show mt-3">
 		<button type="submit" onclick="enableSubmitForm()" class="btn btn-info btn-sm">
 			<i class="fas fa-lock-open"></i>
 		</button>
@@ -82,7 +69,7 @@
     @csrf
      {{ method_field('PUT') }}
 
-    <div class="col-10">
+    <div class="col-10 mt-3">
 		<h4><i class="fas fa-book-medical"></i> {{ trans('determinations.determination_data') }} </h4>
 		<hr class="col-6">
 
@@ -127,52 +114,40 @@
 		</div>
 	</div>
     
-    <input id="submit-button" type="submit" style="display: none;">
+	<input type="submit" class="btn btn-lg btn-primary mt-3" id="submitButton" value="{{ trans('forms.save') }}" disabled>
 </form>
-@endsection
 
-@section('content-footer')
-<div class="card-footer">
-	<div class="float-end">
-		<button type="submit" class="btn btn-primary" onclick="submitForm()">
-			<span class="fas fa-save"></span> {{ trans('forms.save') }}
-		</button>
-	</div>
-</div>
-@endsection
 
-@section('extra-content')
-<div class="card margins-boxs-tb mb-3">
-	<div class="card-header">
-		<h4><span class="fas fa-file-alt"></span> {{ trans('reports.index_reports')}} </h4>
-	</div>
+<hr>
 
-	<div class="table-responsive">
-		<table class="table table-striped">
-			<tr class="info">
-				<th> {{ trans('reports.name') }} </th>
-				<th class="text-end"> {{ trans('forms.actions') }}</th>
-			</tr>
-			@foreach ($determination->reports as $report)
-			<tr>
-				<td> {{ $report->name }} </td>
-				<td class="text-end">
-					<a href="{{ route('administrators/determinations/reports/edit', ['id' => $report->id]) }}" class="btn btn-info btn-sm" title="{{ trans('reports.edit_report') }}"> 
-					    <i class="fas fa-edit fa-sm"></i> 
-					</a>
+<h4 class="mt-3"><span class="fas fa-file-alt"></span> {{ trans('reports.index_reports')}} </h4>
+	
+<div class="table-responsive">
+	<table class="table table-striped">
+		<tr class="info">
+			<th> {{ trans('reports.name') }} </th>
+			<th class="text-end"> {{ trans('forms.actions') }}</th>
+		</tr>
+		
+		@foreach ($determination->reports as $report)
+		<tr>
+			<td> {{ $report->name }} </td>
+			<td class="text-end">
+				<a href="{{ route('administrators/determinations/reports/edit', ['id' => $report->id]) }}" class="btn btn-info btn-sm" title="{{ trans('reports.edit_report') }}"> 
+					<i class="fas fa-edit fa-sm"></i> 
+				</a>
 
-					<a class="btn btn-info btn-sm" title="{{ trans('reports.destroy_report') }}" onclick="destroy_report('{{ $report->id }}')">
-					    <i class="fas fa-trash fa-sm"></i> 
-					</a>
+				<a class="btn btn-info btn-sm" title="{{ trans('reports.destroy_report') }}" onclick="destroy_report('{{ $report->id }}')">
+					<i class="fas fa-trash fa-sm"></i> 
+				</a>
                     
-					<form id="destroy_report_{{ $report->id }}" method="POST" action="{{ route('administrators/determinations/reports/destroy', ['id' => $report->id]) }}">
-						@csrf
-						@method('DELETE')
-					</form>
-				</td>
-			</tr>
-			@endforeach
-		</table>
-	</div>
+				<form id="destroy_report_{{ $report->id }}" method="POST" action="{{ route('administrators/determinations/reports/destroy', ['id' => $report->id]) }}">
+					@csrf
+					@method('DELETE')
+				</form>
+			</td>
+		</tr>
+		@endforeach
+	</table>
 </div>
 @endsection
