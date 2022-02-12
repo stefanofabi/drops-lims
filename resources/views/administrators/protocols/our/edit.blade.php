@@ -81,18 +81,7 @@
         $("select").removeAttr('disabled');
         $("textarea").removeAttr('readonly');
 
-        $("#submitButtonVisible").removeClass('disabled');
-
-        enableForm = true;
-    }
-
-    function submitForm() 
-    {
-        if (enableForm) 
-        {
-            let submitButton = $('#submit-button');
-            submitButton.click();
-        }
+        $("#submitButton").removeAttr('disabled');
     }
 </script>
 @endsection
@@ -139,15 +128,14 @@
 <i class="fas fa-file-medical"></i> {{ trans('protocols.edit_protocol') }} #{{ $protocol->id }}
 @endsection
 
-
 @section('content')
 @if (sizeof($errors) == 0)
-	<div id="securityMessage" class="alert alert-info fade show">
+	<div id="securityMessage" class="alert alert-info fade show mt-3">
 		<button type="submit" onclick="enableSubmitForm()" class="btn btn-info btn-sm">
 			<i class="fas fa-lock-open"></i>
 		</button>
 
-		{{ trans('prescribers.prescriber_blocked') }}
+		{{ trans('protocols.protocol_blocked') }}
 	</div>
 @endif
 
@@ -241,26 +229,13 @@
             </div>
         </div>
 
-        <input type="submit" class="d-none" id="submit-button">
+        <input type="submit" class="btn btn-lg btn-primary mt-3" id="submitButton" value="{{ trans('forms.save') }}" disabled>
     </form>
-@endsection
 
-@section('content-footer')
-<div class="card-footer">
-	<div class="float-end">
-		<button type="submit" class="btn btn-primary" onclick="submitForm()">
-			<span class="fas fa-save"></span> {{ trans('forms.save') }}
-		</button>
-	</div>
-</div>
-@endsection
+<hr>
 
-@section('extra-content')
 @can('crud_practices')
-	<div class="card mt-3 mb-4">
-		<div class="card-header">
-			<h4> <span class="fas fa-syringe" ></span> {{ trans('protocols.practices')}} </h4>
-	    </div>
+		<h4 class="mt-3 mb-3"> <span class="fas fa-syringe" ></span> {{ trans('protocols.practices')}} </h4>
 
 	    <div class="table-responsive">
 			<table class="table table-striped">
@@ -317,6 +292,6 @@
 					</tr>
 			</table>
 		</div>
-	</div>
 @endcan
+
 @endsection

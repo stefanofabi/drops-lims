@@ -128,12 +128,12 @@
 
 @section('content')
 
-    @if (!empty($patient) && empty($patient->social_work_id))
-        <div class="alert alert-warning">
+    @if (!empty($patient) && empty($patient->plan_id))
+        <div class="alert alert-warning mt-3">
             <strong>{{ trans('forms.warning') }}!</strong> {{ trans('protocols.unloaded_social_work') }}
         </div>
     @else
-        <div class="alert alert-info">
+        <div class="alert alert-info mt-3">
             <strong>{{ trans('forms.information') }}!</strong> {{ trans('protocols.create_notice') }}
         </div>
     @endif
@@ -232,7 +232,8 @@
                 <textarea class="form-control" rows="3" name="observations">{{ old('observations') }}</textarea>
             </div>
         </div>
-        <input type="submit" style="display: none" id="submit-button">
+        
+        <input type="submit" class="btn btn-lg btn-primary float-start mt-3" value="{{ trans('forms.save') }}">
     </form>
 @endsection
 
