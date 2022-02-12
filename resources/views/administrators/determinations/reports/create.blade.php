@@ -50,9 +50,7 @@
 	</div>
 
 	<div class="input-group mt-2">
-		<div class="input-group-prepend">
-			<span class="input-group-text"> {{ trans('reports.report') }} </span>
-		</div>
+		<span class="input-group-text"> {{ trans('reports.report') }} </span>
 
 		<textarea class="form-control" rows="10" name="report">{{ old('report') }}</textarea>
 	</div>

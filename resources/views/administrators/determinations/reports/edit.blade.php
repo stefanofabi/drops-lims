@@ -87,9 +87,7 @@
 	</div>
 
 	<div class="input-group mt-2 col-md-9 input-form">
-		<div class="input-group-prepend">
-			<span class="input-group-text"> {{ trans('reports.report') }} </span>
-		</div>
+		<span class="input-group-text"> {{ trans('reports.report') }} </span>
 
 		<textarea class="form-control" rows="10" name="report" style="font-size: 12px" readonly>{{ old('report') ?? $report->report }}</textarea>
 	</div>
