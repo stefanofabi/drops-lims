@@ -46,7 +46,7 @@
         </tr>
 
         <tr>
-            <td> {{trans('patients.dni') }}: {{ $protocol->patient->key }} </td>
+            <td> {{trans('patients.identification_number') }}: {{ $protocol->patient->identification_number }} </td>
 
             <td> {{ trans('protocols.completion_date') }}: @if ($protocol->completion_date) {{ date_format(new DateTime($protocol->completion_date), 'd/m/Y') }} @endif </td>
         </tr>
@@ -88,10 +88,10 @@
         <tr>
             <td> {{ trans('social_works.social_work') }}: {{ $protocol->plan->social_work->name }} </td>
             <td>
-                {{ trans('phones.phone') }}:
+                {{ trans('patients.phone') }}:
 
-                @if ($protocol->patient->phones->isNotEmpty())
-                     {{ $protocol->patient->phones->first()->phone }}
+                @if (! empty($protocol->patient->phone))
+                     {{ $protocol->patient->phone }}
                 @endif
             </td>
         </tr>
