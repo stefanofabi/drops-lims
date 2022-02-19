@@ -48,7 +48,7 @@
 
 
 @section('content')
-
+<div class="col-9">
     <div class="input-group mt-2 mb-1 col-md-9 input-form">
         <div class="input-group-prepend">
             <span class="input-group-text"> {{ trans('social_works.social_work') }} </span>
@@ -98,16 +98,7 @@
             @enderror
         </div>
 
-        <input id="submit-button" type="submit" style="display: none;">
+        <input type="submit" class="btn btn-lg btn-primary mt-3" value="{{ trans('forms.save') }}">
     </form>
-@endsection
-
-@section('more-content')
-    <div class="card-footer">
-        <div class="float-right">
-            <button type="submit" class="btn btn-primary" onclick="send();">
-                <span class="fas fa-save"></span> {{ trans('forms.save') }}
-            </button>
-        </div>
-    </div>
+</div>
 @endsection

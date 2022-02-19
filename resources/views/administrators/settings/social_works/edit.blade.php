@@ -33,7 +33,6 @@
 @endsection
 
 @section('content')
-
     <form method="post" action="{{ route('administrators/settings/social_works/update', ['id' => $social_work->id]) }}">
         @csrf
         @method('PUT')
