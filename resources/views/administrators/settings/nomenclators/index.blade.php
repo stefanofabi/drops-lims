@@ -53,7 +53,7 @@
 @endsection
 
 @section('content')
-    <div class="table-responsive mt-3 me-1">
+    <div class="table-responsive mt-3">
         <table class="table table-striped" id="myNomenclatorsTable">
             <thead>
             <tr>

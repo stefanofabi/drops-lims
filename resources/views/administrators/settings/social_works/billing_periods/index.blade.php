@@ -1,11 +1,11 @@
 @extends('administrators/settings/index')
 
 @section('title')
-    {{ trans('billing_periods.billing_periods') }}
+{{ trans('billing_periods.billing_periods') }}
 @endsection
 
 @section('content-title')
-    <i class="fas fa-layer-group"> </i> {{ trans('billing_periods.billing_periods') }}
+<i class="fas fa-layer-group"> </i> {{ trans('billing_periods.billing_periods') }}
 @endsection
 
 @section('js')
@@ -36,7 +36,7 @@
             });
         });
 
-        function destroy_billing_period(form_id){
+        function destroyBillingPeriod(form_id){
             if (confirm('{{ trans("forms.confirm") }}')) {
                 var form = document.getElementById('destroy_billing_period_'+form_id);
                 form.submit();
@@ -46,13 +46,14 @@
 @endsection
 
 @section('header-content')
-    <div class="btn-group float-end">
-        <a href="{{ route('administrators/settings/social_works/billing_periods/create') }}" class="btn btn-info"> <span class="fas fa-plus"></span> {{ trans('billing_periods.create_billing_period') }} </a>
+    <div class="btn-group float-end mt-3 me-3">
+        <a href="{{ route('administrators/settings/social_works/billing_periods/create') }}" class="btn btn-info">
+        <span class="fas fa-plus"></span> {{ trans('billing_periods.create_billing_period') }} </a>
     </div>
 @endsection
 
 @section('content')
-    <div class="table-responsive">
+    <div class="table-responsive mt-3">
         <table class="table table-striped" id="myBillingPeriodsTable">
             <thead>
                 <tr>
@@ -67,9 +68,7 @@
                 @foreach ($billing_periods as $billing_period)
                     <tr>
                         <td> {{ $billing_period->name }} </td>
-
                         <td> {{ $billing_period->start_date }} </td>
-
                         <td> {{ $billing_period->end_date }} </td>
 
                         <td class="text-end">
@@ -79,7 +78,7 @@
                             </a>
 
                             <a class="btn btn-info btn-sm" title="{{ trans('billing_periods.destroy_billing_period') }}"
-                               onclick="destroy_billing_period('{{ $billing_period->id }}')">
+                               onclick="destroyBillingPeriod('{{ $billing_period->id }}')">
                                 <i class="fas fa-trash fa-sm"></i>
                             </a>
 
