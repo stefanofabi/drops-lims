@@ -38,39 +38,24 @@
         @csrf
         @method('PUT')
 
-        <div class="input-group mt-2 mb-1 col-md-9 input-form">
-            <div class="input-group-prepend">
-                <span class="input-group-text"> {{ trans('social_works.name') }} </span>
-            </div>
+        <div class="col-9 mt-3">
+            <div class="input-group input-form">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> {{ trans('social_works.name') }} </span>
+                </div>
 
-            <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') ?? $social_work->name }}" required>
+                <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') ?? $social_work->name }}" required>
+            </div>
         </div>
 
-        <input type="submit" class="d-none" id="submit-button">
+        <input type="submit" class="btn btn-lg btn-primary mt-3" value="{{ trans('forms.save') }}">
     </form>
-@endsection
 
-@section('content-footer')
-<div class="card-footer">
-	<div class="float-end">
-		<button type="submit" class="btn btn-primary" onclick="submitForm()">
-			<span class="fas fa-save"></span> {{ trans('forms.save') }}
-		</button>
-	</div>
-</div>
-@endsection
+    <hr>
 
-@section('column-extra-content')
-    <div class="card mt-3">
-        <div class="card-header">
-            <div class="btn-group float-end">
-                <a href="{{ route('administrators/settings/social_works/plans/create', ['social_work_id' => $social_work->id]) }}"
-                   class="btn btn-info"><i class="fas fa-plus"></i> {{ trans('social_works.create_plan') }} </a>
-            </div>
-
-            <h4><i class="fas fa-sitemap"> </i> {{ trans('social_works.plans') }} </h4>
-        </div>
-
+    <div class="mt-3">
+        <h4> <i class="fas fa-sitemap"> </i> {{ trans('social_works.plans') }} </h4>
+      
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead>
@@ -118,20 +103,11 @@
             </table>
         </div>
     </div>
-@endsection
 
-@section('extra-content')
-    <div class="card mb-3">
 
-        <div class="card-header">
-            <div class="btn-group float-end">
-                <a href="{{ route('administrators/settings/social_works/payments/create', ['social_work_id' => $social_work->id]) }}"
-                   class="btn btn-info"><i class="fas fa-plus"></i> {{ trans('payment_social_works.create_payment') }} </a>
-            </div>
-
-            <h4><i class="fas fa-cash-register"> </i> {{ trans('payment_social_works.payments') }} </h4>
-        </div>
-
+    <div class="mt-3">
+        <h4><i class="fas fa-cash-register"> </i> {{ trans('payment_social_works.payments') }} </h4>
+     
         <div class="table-responsive">
             <table class="table table-striped">
                 <tr>

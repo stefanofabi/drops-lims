@@ -36,7 +36,7 @@
             });
         });
 
-        function destroy_social_work(form_id){
+        function destroySocialWork(form_id){
             if (confirm('{{ trans("forms.confirm") }}')) {
                 var form = document.getElementById('destroy_social_work_'+form_id);
                 form.submit();
@@ -46,19 +46,20 @@
 @endsection
 
 @section('header-content')
-    <div class="btn-group float-end">
-        <a href="{{ route('administrators/settings/social_works/create') }}" class="btn btn-info"> <span class="fas fa-plus"></span> {{ trans('social_works.create_social_work') }} </a>
-    </div>
+<div class="btn-group float-end mt-3 me-3">
+    <a href="{{ route('administrators/settings/social_works/create') }}" class="btn btn-info">
+    <span class="fas fa-plus"></span> {{ trans('social_works.create_social_work') }} </a>
+</div>
 @endsection
 
 @section('content')
-    <div class="table-responsive">
+    <div class="table-responsive mt-3">
         <table class="table table-striped" id="mySocialWorksTable">
             <thead>
-            <tr>
-                <th> {{ trans('social_works.name') }} </th>
-                <th class="text-end"> {{ trans('forms.actions') }} </th>
-            </tr>
+                <tr>
+                    <th> {{ trans('social_works.name') }} </th>
+                    <th class="text-end"> {{ trans('forms.actions') }} </th>
+                </tr>
             </thead>
 
             <tbody>
@@ -73,7 +74,7 @@
                         </a>
 
                         <a class="btn btn-info btn-sm" title="{{ trans('social_works.destroy_social_work') }}"
-                           onclick="destroy_social_work('{{ $social_work->id }}')">
+                           onclick="destroySocialWork('{{ $social_work->id }}')">
                             <i class="fas fa-trash fa-sm"></i>
                         </a>
 
