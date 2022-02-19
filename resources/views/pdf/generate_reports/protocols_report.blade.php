@@ -83,8 +83,8 @@
             <tr>
                 <td> {{ date('d/m/Y', strtotime($protocol->completion_date))  }} </td>
                 <td> {{ $protocol->id  }} </td>
-                <td> {{ $protocol->our_protocol->patient->full_name  }} </td>
-                <td> {{ $protocol->our_protocol->plan->social_work->acronym}} </td>
+                <td> {{ $protocol->patient->full_name  }} </td>
+                <td> {{ $protocol->plan->social_work->acronym}} </td>
                 <td>
                     @php $total_amount = 0; @endphp
 

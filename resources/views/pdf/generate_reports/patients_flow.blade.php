@@ -60,18 +60,18 @@
         <tr>
             <td style="width: 100px"><strong> {{ trans('pdf.date') }} </strong></td>
             <td style="width: 200px"><strong> {{ trans('patients.patient') }}</strong></td>
-            <td style="width: 100px"><strong> {{ trans('patients.dni') }}</strong></td>
-            <td style="width: 100px"><strong> {{ trans('phones.phone') }} </strong></td>
-            <td style="width: 200px"><strong> {{ trans('emails.email') }} </strong></td>
+            <td style="width: 100px"><strong> {{ trans('patients.identification_number') }}</strong></td>
+            <td style="width: 100px"><strong> {{ trans('patients.phone') }} </strong></td>
+            <td style="width: 200px"><strong> {{ trans('patients.email') }} </strong></td>
         </tr>
 
         @foreach ($protocols as $protocol)
             <tr>
                 <td> {{ date('d/m/Y', strtotime($protocol->completion_date))  }} </td>
-                <td> {{ $protocol->our_protocol->patient->full_name  }} </td>
-                <td> {{ $protocol->our_protocol->patient->key  }} </td>
-                <td>  @if ($protocol->our_protocol->patient->phones->first()){{ $protocol->our_protocol->patient->phones->first()->phone }} @endif</td>
-                <td> @if ($protocol->our_protocol->patient->emails->first()){{ $protocol->our_protocol->patient->emails->first()->email }} @endif </td>
+                <td> {{ $protocol->patient->full_name  }} </td>
+                <td> {{ $protocol->patient->key  }} </td>
+                <td> {{ $protocol->patient->phone }} </td>
+                <td> {{ $protocol->patient->email }} </td>
 
             </tr>
         @endforeach
