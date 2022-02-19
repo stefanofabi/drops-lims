@@ -36,7 +36,7 @@
             });
         });
 
-        function destroy_nomenclator(form_id){
+        function destroyNomenclator(form_id){
             if (confirm('{{ trans("forms.confirm") }}')) {
                 var form = document.getElementById('destroy_nomenclator_'+form_id);
                 form.submit();
@@ -46,13 +46,14 @@
 @endsection
 
 @section('header-content')
-    <div class="btn-group float-end">
-        <a href="{{ route('administrators/settings/nomenclators/create') }}" class="btn btn-info"> <span class="fas fa-plus"></span> {{ trans('nomenclators.create_nomenclator') }} </a>
+    <div class="btn-group float-end mt-3 me-3">
+        <a href="{{ route('administrators/settings/nomenclators/create') }}" class="btn btn-info"> 
+        <span class="fas fa-plus"></span> {{ trans('nomenclators.create_nomenclator') }} </a>
     </div>
 @endsection
 
 @section('content')
-    <div class="table-responsive">
+    <div class="table-responsive mt-3 me-1">
         <table class="table table-striped" id="myNomenclatorsTable">
             <thead>
             <tr>
@@ -72,7 +73,7 @@
                             <i class="fas fa-edit fa-sm"> </i>
                         </a>
                         <a class="btn btn-info btn-sm" title="{{ trans('nomenclators.destroy_nomenclator') }}"
-                           onclick="destroy_nomenclator('{{ $nomenclator->id }}')">
+                           onclick="destroyNomenclator('{{ $nomenclator->id }}')">
                             <i class="fas fa-trash fa-sm"></i>
                         </a>
 
