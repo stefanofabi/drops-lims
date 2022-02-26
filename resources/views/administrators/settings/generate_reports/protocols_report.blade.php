@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card mt-3">
     <div class="card-header"><h5> {{ trans('settings.protocols_report') }} </h5></div>
 
     <div class="card-body">
@@ -10,7 +10,7 @@
                     <span class="input-group-text"> {{ trans('statistics.initial_date') }} </span>
                 </div>
 
-                <input type="date" class="form-control" name="initial_date" value="{{ date('Y-m-d') }}" required>
+                <input type="date" class="form-control" name="initial_date" value="{{ date('Y-m-d', strtotime('now - 1 month')) }}" required>
             </div>
 
             <div class="input-group mt-2 col-md-6 input-form">

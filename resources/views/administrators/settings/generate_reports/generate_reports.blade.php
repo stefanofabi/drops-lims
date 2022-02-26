@@ -19,11 +19,19 @@
 @endsection
 
 @section('content')
+<div class="row">
+    <div class="col-xl-6">    
+        @include('administrators.settings.generate_reports.protocols_report')
+    </div>
 
-    @include('administrators.settings.generate_reports.protocols_report')
+    <div class="col-xl-6">  
+        @include('administrators.settings.generate_reports.patients_flow')
+    </div>
+</div>
 
-    @include('administrators.settings.generate_reports.patients_flow')
-
-    @include('administrators.settings.generate_reports.debt_social_works')
-
+<div class="row">
+    <div class="col-xl-6">  
+        @include('administrators.settings.generate_reports.debt_social_works')
+    </div>
+</div>
 @endsection
