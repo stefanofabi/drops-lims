@@ -27,10 +27,6 @@
 
 @section('active_prescribers', 'active')
 
-@section('menu-title')
-{{ trans('forms.menu') }}
-@endsection
-
 @section('menu')
 <ul class="nav flex-column">
 	<li class="nav-item">
@@ -42,7 +38,6 @@
 @section('content-title')
 <i class="fas fa-user-edit"></i> {{ trans('prescribers.edit_prescriber') }}
 @endsection
-
 
 @section('content')
 @if (sizeof($errors) == 0)

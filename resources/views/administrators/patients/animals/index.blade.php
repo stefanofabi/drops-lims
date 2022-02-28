@@ -4,8 +4,10 @@
 	@include('administrators/patients/filters_javascript_code')
 @append
 
-@section('results')
-<div class="table-responsive">
+@section('content')
+@parent 
+
+<div class="table-responsive mt-3">
 	<table class="table table-striped">
 		<tr>
 			<th> {{ trans('patients.patient') }} </th>
