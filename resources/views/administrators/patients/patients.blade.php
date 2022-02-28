@@ -29,7 +29,7 @@
 @endsection
 
 @section('content')
-<form id="select_page" action="@yield('action_page')">
+<form id="select_page">
     <!-- Patient type -->
     <div class="btn-group mt-3" role="group" aria-label="Patients filters">
         <input type="radio" class="btn-check" id="animalType" name="type" value="animal" required>
