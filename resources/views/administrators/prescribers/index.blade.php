@@ -4,10 +4,6 @@
 {{ trans('prescribers.prescribers') }}
 @endsection
 
-@section('content-title')
-<i class="fas fa-user-md"></i> {{ trans('prescribers.prescribers') }}
-@endsection
-
 @section('active_prescribers', 'active')
 
 @section('js')
@@ -40,6 +36,10 @@
         </li>
     </ul>
 </nav>
+@endsection
+
+@section('content-title')
+<i class="fas fa-user-md"></i> {{ trans('prescribers.prescribers') }}
 @endsection
 
 @section('content')

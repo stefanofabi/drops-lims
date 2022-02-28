@@ -1,9 +1,15 @@
-@extends('administrators/determinations/determinations')
+@extends('administrators/default-template')
+
+@section('active_determinations', 'active')
 
 @section('js')
-@parent
-
 <script type="text/javascript">
+    function load(page)
+    {
+        $("#page" ).val(page);
+        document.all["select_page"].submit();
+    }
+
     function destroy_determination(form_id) 
     {
         if (confirm('{{ trans("forms.confirm") }}')) 
@@ -12,11 +18,61 @@
             form.submit();
         }
     }
+
+    $(document).ready(function() {
+        // Select a nomenclator
+        $('#nomenclator').val("{{ $data['nomenclator_id'] ?? '' }}");
+
+        // Put the filter
+        $("#filter" ).val("{{ $data['filter'] ?? '' }}");
+    });
 </script>
 @endsection
 
-@section('results')
-<div class="table-responsive">
+@section('menu')
+<nav class="navbar bg-light">
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('administrators/determinations/create') }}"> {{ trans('determinations.create_determination') }} </a>
+        </li>
+    </ul>
+</nav>
+@endsection
+
+@section('content-title')
+<i class="fas fa-syringe"></i> {{ trans('determinations.determinations') }}
+@endsection
+
+@section('content')
+<form id="select_page">
+    <!-- Filter by keys -->
+    <div class="form-group row mt-3">
+        <div class="col-md-6">
+            <select class="form-select" name="nomenclator_id" id="nomenclator" required>
+                <option value=""> {{ trans('forms.select_option') }} </option>
+                
+                @foreach ($nomenclators as $nomenclator)
+                <option value="{{ $nomenclator->id }}"> {{ $nomenclator->name }} </option>
+                @endforeach
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="mt-2 col-md-6">
+            <input type="text" class="form-control" id="filter" name="filter" placeholder="{{ trans('forms.enter_filter') }}">
+        </div>
+
+        <div class="mt-2 col-md-6">
+            <button type="submit" class="btn btn-info">
+                <span class="fas fa-search" ></span> {{ trans('forms.search') }} </button>
+            </div>
+    </div>
+
+    <input type="hidden" id="page" name ="page" value="1">
+</form>
+
+<div class="table-responsive mt-3">
     <table class="table table-striped">
         <tr>
             <th> {{ trans('determinations.code') }} </th>
@@ -25,25 +81,25 @@
         </tr>
 
         @foreach ($determinations as $determination)
-            <tr>
-                <td> {{ $determination->code }} </td>
-                <td> {{ $determination->name }} </td>
+        <tr>
+            <td> {{ $determination->code }} </td>
+            <td> {{ $determination->name }} </td>
 
-                <td class="text-end">
-                    <a href="{{ route('administrators/determinations/edit', ['id' => $determination->id]) }}" class="btn btn-info btn-sm" title="{{ trans('determinations.edit_determination') }}">
-                        <i class="fas fa-edit fa-sm"></i> 
-                    </a>
+            <td class="text-end">
+                <a href="{{ route('administrators/determinations/edit', ['id' => $determination->id]) }}" class="btn btn-info btn-sm" title="{{ trans('determinations.edit_determination') }}">
+                    <i class="fas fa-edit fa-sm"></i> 
+                </a>
 
-                    <a class="btn btn-info btn-sm" title="{{ trans('determinations.destroy_determination') }}" onclick="destroy_determination('{{ $determination->id }}')"> 
-                        <i class="fas fa-trash fa-sm"></i> 
-                    </a>
+                <a class="btn btn-info btn-sm" title="{{ trans('determinations.destroy_determination') }}" onclick="destroy_determination('{{ $determination->id }}')"> 
+                    <i class="fas fa-trash fa-sm"></i> 
+                </a>
 
-                    <form id="destroy_determination_{{ $determination->id }}" method="POST" action="{{ route('administrators/determinations/destroy', ['id' => $determination->id]) }}">
-                        @csrf
-                        @method('DELETE')
-                    </form>
-                </td>
-            </tr>
+                <form id="destroy_determination_{{ $determination->id }}" method="POST" action="{{ route('administrators/determinations/destroy', ['id' => $determination->id]) }}">
+                    @csrf
+                    @method('DELETE')
+                </form>
+            </td>
+        </tr>
         @endforeach
     </table>
 </div>
