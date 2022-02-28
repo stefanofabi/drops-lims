@@ -14,7 +14,7 @@
 	    document.all["select_page"].submit();
 	}
 
-	function destroy_prescriber(form_id){
+	function destroyPrescriber(form_id){
 		if (confirm('{{ trans("forms.confirm") }}')) {
 		    var form = document.getElementById('destroy_prescriber_'+form_id);
 		    form.submit();
@@ -75,11 +75,21 @@
 				<td> {{ $prescriber->national_enrollment }} </td>
 
 				<td class="text-end">
-					<a href="{{ route('administrators/prescribers/edit', $prescriber->id) }}" class="btn btn-info btn-sm" title="{{ trans('prescribers.edit_prescriber') }}" > <i class="fas fa-user-edit fa-sm"></i> </a>
+					<div class="d-none d-lg-block">
+						<a href="{{ route('administrators/prescribers/edit', $prescriber->id) }}" class="btn btn-info btn-sm" title="{{ trans('prescribers.edit_prescriber') }}" > <i class="fas fa-user-edit fa-sm"></i> </a>
 
-					<a class="btn btn-info btn-sm" title="{{ trans('prescribers.destroy_prescriber') }}" onclick="destroy_prescriber('{{ $prescriber->id }}')" >
-						<i class="fas fa-user-slash fa-sm"></i>
-					</a>
+						<a class="btn btn-info btn-sm" title="{{ trans('prescribers.destroy_prescriber') }}" onclick="destroy_prescriber('{{ $prescriber->id }}')" >
+							<i class="fas fa-user-slash fa-sm"></i>
+						</a>
+					</div>
+
+					<div class="d-lg-none">
+						<a href="{{ route('administrators/prescribers/edit', $prescriber->id) }}" class="btn btn-info btn-sm mt-1" title="{{ trans('prescribers.edit_prescriber') }}" > <i class="fas fa-user-edit fa-sm"></i> </a>
+
+						<a class="btn btn-info btn-sm mt-1" title="{{ trans('prescribers.destroy_prescriber') }}" onclick="destroyPrescriber('{{ $prescriber->id }}')" >
+							<i class="fas fa-user-slash fa-sm"></i>
+						</a>
+					</div>
 
 					<form id="destroy_prescriber_{{ $prescriber->id }}" method="POST" action="{{ route('administrators/prescribers/destroy', $prescriber->id) }}">
 						@csrf

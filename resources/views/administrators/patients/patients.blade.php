@@ -4,6 +4,10 @@
 {{ trans('patients.patients') }}
 @endsection
 
+@section('js')
+@include('administrators/patients/filters_javascript_code')
+@append
+
 @section('content-title')
 <i class="fas fa-user-injured"></i> {{ trans('patients.patients') }}
 @endsection

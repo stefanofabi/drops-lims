@@ -1,9 +1,5 @@
 @extends('administrators/patients/patients')
 
-@section('js')
-	@include('administrators/patients/filters_javascript_code')
-@append
-
 @section('content')
 @parent 
 
@@ -25,10 +21,19 @@
 				<td> @if ($patient->birth_date) {{ date('d/m/Y', strtotime($patient->birth_date)) }} @endif </td>
 
 				<td class="text-end">
-					<a href="{{ route('administrators/patients/edit', $patient->id) }}" class="btn btn-info btn-sm" title="{{ trans('patients.edit_patient') }}" > <i class="fas fa-user-edit fa-sm"> </i> </a> 
+					<div class="d-none d-lg-block">
+						<a href="{{ route('administrators/patients/edit', $patient->id) }}" class="btn btn-info btn-sm" title="{{ trans('patients.edit_patient') }}" > <i class="fas fa-user-edit fa-sm"> </i> </a> 
 
-					<a class="btn btn-info btn-sm" title="{{ trans('patients.destroy_patient') }}" onclick="destroy_patient('{{ $patient->id }}')"> <i class="fas fa-user-slash fa-sm"> </i> </a>
-							
+						<a class="btn btn-info btn-sm" title="{{ trans('patients.destroy_patient') }}" onclick="destroy_patient('{{ $patient->id }}')"> <i class="fas fa-user-slash fa-sm"> </i> </a>
+					</div>
+					
+					<div class="d-lg-none">
+						<a href="{{ route('administrators/patients/edit', $patient->id) }}" class="btn btn-info btn-sm mt-1" title="{{ trans('patients.edit_patient') }}" > <i class="fas fa-user-edit fa-sm"> </i> </a> 
+
+						<a class="btn btn-info btn-sm mt-1" title="{{ trans('patients.destroy_patient') }}" onclick="destroy_patient('{{ $patient->id }}')"> <i class="fas fa-user-slash fa-sm"> </i> </a>
+					</div>
+					
+					
 					<form id="destroy_patient_{{ $patient->id }}" method="POST" action="{{ route('administrators/patients/destroy', $patient->id) }}">
 						@csrf
 						@method('DELETE')
