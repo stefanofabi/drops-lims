@@ -22,17 +22,9 @@
 
 
 			<td class="text-end">
-				<div class="d-none d-lg-block">
-					<a href="{{ route('administrators/patients/edit', $patient->id) }}" class="btn btn-info btn-sm" title="{{ trans('patients.edit_patient') }}" > <i class="fas fa-user-edit fa-sm"></i> </a> 
+				<a href="{{ route('administrators/patients/edit', $patient->id) }}" class="btn btn-info btn-sm" title="{{ trans('patients.edit_patient') }}" > <i class="fas fa-user-edit fa-sm"></i> </a> 
 
-					<a class="btn btn-info btn-sm" title="{{ trans('patients.destroy_patient') }}" onclick="destroy_patient('{{ $patient->id }}')"> <i class="fas fa-user-slash fa-sm"> </i> </a>
-				</div>
-				
-				<div class="d-lg-none">
-					<a href="{{ route('administrators/patients/edit', $patient->id) }}" class="btn btn-info btn-sm mt-1" title="{{ trans('patients.edit_patient') }}" > <i class="fas fa-user-edit fa-sm"></i> </a> 
-
-					<a class="btn btn-info btn-sm mt-1" title="{{ trans('patients.destroy_patient') }}" onclick="destroy_patient('{{ $patient->id }}')"> <i class="fas fa-user-slash fa-sm"> </i> </a>
-				</div>
+				<a class="btn btn-info btn-sm verticalButtons" title="{{ trans('patients.destroy_patient') }}" onclick="destroy_patient('{{ $patient->id }}')"> <i class="fas fa-user-slash fa-sm"> </i> </a>
 
 				<form id="destroy_patient_{{ $patient->id }}" method="POST" action="{{ route('administrators/patients/destroy', $patient->id) }}">
 					@csrf

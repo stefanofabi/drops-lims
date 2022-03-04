@@ -6,6 +6,16 @@
         @section('navbar')
         @show
 
+        @section('css')
+        <style>
+            @media (max-width: 600px) {
+                .verticalButtons {
+                    margin-top: 5px;
+                }
+            }
+        </style>
+        @show
+
         @section('js')
         @show
     </head>
