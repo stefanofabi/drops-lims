@@ -106,12 +106,11 @@
                         <th> {{ trans('determinations.determination') }} </th>
                         <th> {{ trans('determinations.amount') }} </th>
                         <th> {{ trans('protocols.informed') }} </th>
-                        <th class="text-right"> {{ trans('forms.actions') }}</th>
+                        <th class="text-end"> {{ trans('forms.actions') }}</th>
                     </tr>
 
                     @php
-                        use App\Http\Controllers\OurProtocolController;
-                        $total_amount = 0;
+                    $total_amount = 0;
                     @endphp
 
                     @foreach ($protocol->practices as $practice)
@@ -125,18 +124,20 @@
                             <td> ${{ number_format($practice->amount, 2, ",", ".") }} </td>
                             <td>
                                 @if ($practice->results->isEmpty())
-                                    <span class="badge badge-primary"> {{ trans('forms.no') }} </span>
+                                    <span class="badge bg-primary"> {{ trans('forms.no') }} </span>
                                 @else
-                                    <span class="badge badge-success"> {{ trans('forms.yes') }} </span>
+                                    <span class="badge bg-success"> {{ trans('forms.yes') }} </span>
                                 @endif
                             </td>
-                            <td class="text-right">
-                                <a href="{{ route('administrators/protocols/practices/edit', ['id' => $practice->id]) }}"
-                                   class="btn btn-info btn-sm" title="{{ trans('protocols.edit_practice') }}"> <i
-                                        class="fas fa-edit fa-sm"></i> </a>
-                                <a href="{{ route('administrators/protocols/practices/destroy', ['id' => $practice->id]) }}"
-                                   class="btn btn-info btn-sm" title="{{ trans('protocols.destroy_practice') }}"> <i
-                                        class="fas fa-trash fa-sm"></i> </a>
+                            
+                            <td class="text-end">
+                                <a href="{{ route('administrators/protocols/practices/edit', ['id' => $practice->id]) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.edit_practice') }}"> 
+                                    <i class="fas fa-edit fa-sm"></i> 
+                                </a>
+
+                                <a href="{{ route('administrators/protocols/practices/destroy', ['id' => $practice->id]) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.destroy_practice') }}"> 
+                                    <i class="fas fa-trash fa-sm"></i> 
+                                </a>
                             </td>
                         </tr>
                     @endforeach
