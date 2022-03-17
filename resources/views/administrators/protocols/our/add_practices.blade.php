@@ -8,7 +8,6 @@
 
 @section('js')
     <script type="text/javascript">
-
         $(function () {
             $("#practice").autocomplete({
                 minLength: 2,
@@ -36,12 +35,12 @@
             });
         });
 
-        function add_practice() {
+        function addPractice() 
+        {
             var parameters = {
                 "_token": "{{ csrf_token() }}",
                 "protocol_id": '{{ $protocol->id }}',
                 "report_id": $("#report_id").val(),
-                "type": 'our',
             };
 
             $.ajax({
@@ -55,7 +54,7 @@
                     $("#messages").html('<div class="alert alert-danger"> <strong> {{ trans("forms.danger") }}! </strong> {{ trans("forms.please_later")}}  </div> ');
                 },
                 success: function (response) {
-                    $("#messages").html('<div class="alert alert-success alert-dismissible fade show"> <button type="button" class="close" data-dismiss="alert">&times;</button> <strong> {{ trans("forms.well_done") }}! </strong> {{ trans("protocols.practice_loaded") }} </div>');
+                    $("#messages").html('<div class="alert alert-success alert-dismissible fade show mt-3" role="alert"> <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg> <strong> {{ trans("forms.well_done") }}! </strong> {{ trans("protocols.practice_loaded") }} </div>');
                     $("#practices").load(" #practices");
 
                     // delete data
@@ -66,63 +65,40 @@
 
             return false;
         }
-
     </script>
 @endsection
 
-@section('menu-title')
-    {{ trans('forms.menu') }}
-@endsection
-
 @section('menu')
-    <ul class="nav flex-column">
-        <li class="nav-item">
-            <a class="nav-link" href=""> <img src="{{ asset('images/drop.png') }}" width="25"
-                                              height="25"> {{ trans('forms.no_options') }} </a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('administrators/protocols/our/edit', ['id' => $protocol->id]) }}"> <img
-                    src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('forms.go_back') }} </a>
-        </li>
-    </ul>
+<ul class="nav flex-column">
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('administrators/protocols/our/edit', ['id' => $protocol->id]) }}"> {{ trans('forms.go_back') }} </a>
+    </li>
+</ul>
 @endsection
 
 @section('content-title')
-    <i class="fas fa-file-medical"></i> {{ trans('protocols.add_practices_for_protocol') }} #{{ $protocol->id }}
+<i class="fas fa-file-medical"></i> {{ trans('protocols.add_practices_for_protocol') }} #{{ $protocol->id }}
 @endsection
-
 
 @section('content')
+<div id="messages"></div>
 
-    <div id="messages"></div>
-
-    <div class="col-md-12">
-        <form onsubmit="return add_practice()">
-		        <span class="float-left mb-2 col-md-6">
-		        	<input type="hidden" id="report_id" value="0">
-					<input type="text" class="form-control input-sm" id="practice"
-                           placeholder="{{ trans('protocols.enter_practice') }}">
-		        </span>
-
-            <span class="col-md-3 float-left">
-			    	<button type="submit" class="btn btn-primary">
-						<span class="fas fa-plus"></span> {{ trans('protocols.add_practice') }}
-					</button>
-				</span>
-        </form>
-    </div>
-
-@endsection
-
-@section('more-content')
-
-    <div class="card mt-3 mb-4">
-        <div class="card-header">
-            <h4><span class="fas fa-syringe"></span> {{ trans('determinations.determinations')}} </h4>
+<form onsubmit="return addPractice()">
+    <div class="row mt-3">
+        <div class="col">
+            <input type="hidden" id="report_id" value="0">
+            <input type="text" class="form-control input-sm" id="practice" placeholder="{{ trans('protocols.enter_practice') }}">
         </div>
 
-        <div id="practices">
+        <div class="col">
+            <button type="submit" class="btn btn-primary">
+                <span class="fas fa-plus"></span> {{ trans('protocols.add_practice') }}
+            </button>
+        </div>
+    </div>
+</form>
+
+        <div id="practices" class="mt-3">
             <div class="table-responsive">
                 <table class="table table-striped">
                     <tr class="info">
