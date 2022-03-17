@@ -56,8 +56,6 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-3 mt-3">
-                    <h4> <i class="fas fa-home"></i> {{ trans('forms.menu') }} </h4>
-                    
                     @section('menu')
                     @show
                 </div>
