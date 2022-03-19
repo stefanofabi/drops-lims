@@ -39,11 +39,13 @@
 @endsection
 
 @section('menu')
-<ul class="nav flex-column">
-	<li class="nav-item">
-		<a class="nav-link" href="{{ route('administrators/determinations/edit', ['id' => $report->determination->id]) }}"> <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('forms.go_back') }} </a>
-	</li>
-</ul>
+<nav class="navbar">
+	<ul class="navbar-nav">
+		<li class="nav-item">
+			<a class="nav-link" href="{{ route('administrators/determinations/edit', ['id' => $report->determination->id]) }}"> {{ trans('forms.go_back') }} </a>
+		</li>
+	</ul>
+</nav>
 @endsection
 
 @section('content-title')

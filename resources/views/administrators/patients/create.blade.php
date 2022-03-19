@@ -24,19 +24,21 @@
 @endsection
 
 @section('menu')
-<ul class="nav flex-column">
-	<li class="nav-item">
-		<a class="nav-link" href="{{ route('administrators/patients/create', ['type' => 'animal']) }}"> <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('patients.create_animal') }} </a>
-	</li>
+<nav class="navbar">
+	<ul class="navbar-nav">
+		<li class="nav-item">
+			<a class="nav-link" href="{{ route('administrators/patients/create', ['type' => 'animal']) }}"> {{ trans('patients.create_animal') }} </a>
+		</li>
 
-	<li class="nav-item">
-		<a class="nav-link" href="{{ route('administrators/patients/create', ['type' => 'human']) }}"> <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('patients.create_human') }}</a>
-	</li>
+		<li class="nav-item">
+			<a class="nav-link" href="{{ route('administrators/patients/create', ['type' => 'human']) }}"> {{ trans('patients.create_human') }}</a>
+		</li>
 
-	<li class="nav-item">
-		<a class="nav-link" href="{{ route('administrators/patients/create', ['type' => 'industrial']) }}"> <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('patients.create_industrial') }}</a>
-	</li>
-</ul>
+		<li class="nav-item">
+			<a class="nav-link" href="{{ route('administrators/patients/create', ['type' => 'industrial']) }}"> {{ trans('patients.create_industrial') }}</a>
+		</li>
+	</ul>
+</nav>
 @endsection
 
 @section('content-title')

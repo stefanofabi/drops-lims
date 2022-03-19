@@ -27,14 +27,6 @@
 
 @section('active_prescribers', 'active')
 
-@section('menu')
-<ul class="nav flex-column">
-	<li class="nav-item">
-		<a class="nav-link" href="#"> <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('forms.no_options') }} </a>
-	</li>
-</ul>
-@endsection
-
 @section('content-title')
 <i class="fas fa-user-edit"></i> {{ trans('prescribers.edit_prescriber') }}
 @endsection

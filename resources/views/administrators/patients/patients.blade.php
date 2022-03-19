@@ -15,7 +15,7 @@
 @section('active_patients', 'active')
 
 @section('menu')
-<nav class="navbar bg-light">
+<nav class="navbar">
     <ul class="navbar-nav">
         <li class="nav-item">
             <a class="nav-link" href="{{ route('administrators/patients/create', ['type' => 'animal']) }}"> {{ trans('patients.create_animal') }} </a>

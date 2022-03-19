@@ -109,22 +109,9 @@
     </script>
 @endsection
 
-@section('menu-title')
-    {{ trans('forms.menu') }}
-@endsection
-
-@section('menu')
-    <ul class="nav flex-column">
-        <li class="nav-item">
-            <a class="nav-link" href="#"> <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('forms.no_options') }} </a>
-        </li>
-    </ul>
-@endsection
-
 @section('content-title')
     <i class="fas fa-file-medical"></i> {{ trans('protocols.create_protocol') }}
 @endsection
-
 
 @section('content')
 
@@ -235,14 +222,4 @@
         
         <input type="submit" class="btn btn-lg btn-primary float-start mt-3" value="{{ trans('forms.save') }}">
     </form>
-@endsection
-
-@section('content-footer')
-<div class="card-footer">
-	<div class="float-end">
-		<button type="submit" class="btn btn-primary" onclick="submitForm()">
-			<span class="fas fa-save"></span> {{ trans('forms.save') }}
-		</button>
-	</div>
-</div>
 @endsection

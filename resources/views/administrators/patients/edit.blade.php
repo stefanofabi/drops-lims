@@ -35,8 +35,8 @@
 @endsection
 
 @section('menu')
-<nav class="navbar bg-light">
-	<ul class="nav flex-column">
+<nav class="navbar">
+	<ul class="navbar-nav">
        @can('crud_protocols')
 	        <li class="nav-item">
 				<form action="{{ route('administrators/protocols/our/create') }}" id="create_protocol_form">
@@ -44,9 +44,7 @@
 		            <input type="hidden" name="patient_id" value="{{ $patient->id }}">
 		        </form>
 
-				<a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('create_protocol_form').submit();"> 
-					<img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('protocols.create_protocol')}} 
-				</a>
+				<a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('create_protocol_form').submit();"> {{ trans('protocols.create_protocol')}} </a>
 			</li>
 		@endcan
 
@@ -57,15 +55,11 @@
 					<input type="hidden" name="patient_id" value="{{ $patient->id }}">
 				</form>
 
-				<a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('security_code_form').submit();">
-					<img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('patients.get_security_code') }}
-				</a>
+				<a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('security_code_form').submit();"> {{ trans('patients.get_security_code') }} </a>
 			</li>
 		@else
 			<li class="nav-item">
-				<a class="nav-link" href="#" onclick="alert('{{ trans('forms.no_permission') }}')">
-					<img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('patients.get_security_code') }}
-				</a>	
+				<a class="nav-link" href="#" onclick="alert('{{ trans('forms.no_permission') }}')"> {{ trans('patients.get_security_code') }} </a>	
 			</li>		
 		@endif
 	</ul>

@@ -39,14 +39,15 @@
 @endsection
 
 @section('menu')
-    <ul class="nav flex-column">
+<nav class="navbar">
+    <ul class="navbar-nav">
         @can('crud_reports')
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('administrators/determinations/reports/create', ['determination_id' => $determination->id]) }}">
-                    <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('reports.create_report') }} </a>
+                <a class="nav-link" href="{{ route('administrators/determinations/reports/create', ['determination_id' => $determination->id]) }}"> {{ trans('reports.create_report') }} </a>
             </li>
         @endcan
     </ul>
+</nav>
 @endsection
 
 @section('content-title')
