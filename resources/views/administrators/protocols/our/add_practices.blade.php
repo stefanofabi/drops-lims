@@ -134,7 +134,7 @@
                             <td>
 								@forelse($practice->signs as $sign)
 								    <a style="text-decoration: none" href="#" data-toggle="tooltip" title="{{ $sign->user->name }}">
-										<img height="30px" width="30px" src="{{ asset('storage/avatars/'.$sign->user->avatar) }}" class="rounded-circle" alt="{{ $sign->user->name }}">
+										<img height="30px" width="30px" src="{{ Gravatar::get($sign->user->email) }}" class="rounded-circle" alt="{{ $sign->user->name }}">
 									</a>
 								@empty
 								    {{ trans('protocols.not_signed')}}
