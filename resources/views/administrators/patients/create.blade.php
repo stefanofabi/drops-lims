@@ -19,10 +19,6 @@
 </script>
 @endsection
 
-@section('menu-title')
-{{ trans('forms.menu') }}
-@endsection
-
 @section('menu')
 <nav class="navbar">
 	<ul class="navbar-nav">

@@ -6,10 +6,6 @@
 
 @section('active_determinations', 'active')
 
-@section('menu-title')
-{{ trans('forms.menu') }}
-@endsection
-
 @section('menu')
 <ul class="nav flex-column">
 	<li class="nav-item">
@@ -21,7 +17,6 @@
 @section('content-title')
 <i class="fas fa-file-alt"></i> {{ trans('reports.create_report') }}
 @endsection
-
 
 @section('content')
 <div class="alert alert-warning mt-3">

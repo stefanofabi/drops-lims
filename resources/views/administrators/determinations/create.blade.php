@@ -16,10 +16,6 @@
 
 @section('active_determinations', 'active')
 
-@section('menu-title')
-{{ trans('forms.menu') }}
-@endsection
-
 @section('menu')
 <ul class="nav flex-column">
 	<li class="nav-item">

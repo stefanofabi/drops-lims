@@ -6,10 +6,6 @@
 
 @section('active_prescribers', 'active')
 
-@section('menu-title')
-    {{ trans('forms.menu') }}
-@endsection
-
 @section('content-title')
     <i class="fas fa-user-md"></i> {{ trans('prescribers.create_prescriber') }}
 @endsection

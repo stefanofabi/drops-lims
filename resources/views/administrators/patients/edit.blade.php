@@ -30,10 +30,6 @@
 
 @section('active_patients', 'active')
 
-@section('menu-title')
-{{ trans('forms.menu') }}
-@endsection
-
 @section('menu')
 <nav class="navbar">
 	<ul class="navbar-nav">

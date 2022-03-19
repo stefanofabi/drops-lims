@@ -34,10 +34,6 @@
 </script>
 @endsection
 
-@section('menu-title')
-{{ trans('forms.menu') }}
-@endsection
-
 @section('menu')
 <nav class="navbar">
 	<ul class="navbar-nav">
@@ -51,7 +47,6 @@
 @section('content-title')
 <i class="fas fa-file-code"></i> {{ trans('reports.edit_report') }}
 @endsection
-
 
 @section('content')
 @if (sizeof($errors) == 0)
