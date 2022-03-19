@@ -106,6 +106,7 @@
                         <th> {{ trans('determinations.determination') }} </th>
                         <th> {{ trans('determinations.amount') }} </th>
                         <th> {{ trans('protocols.informed') }} </th>
+                        <th> {{ trans('protocols.signed_off') }} </th>
                         <th class="text-end"> {{ trans('forms.actions') }}</th>
                     </tr>
 
@@ -129,6 +130,16 @@
                                     <span class="badge bg-success"> {{ trans('forms.yes') }} </span>
                                 @endif
                             </td>
+
+                            <td>
+								@forelse($practice->signs as $sign)
+								    <a style="text-decoration: none" href="#" data-toggle="tooltip" title="{{ $sign->user->name }}">
+										<img height="30px" width="30px" src="{{ asset('storage/avatars/'.$sign->user->avatar) }}" class="rounded-circle" alt="{{ $sign->user->name }}">
+									</a>
+								@empty
+								    {{ trans('protocols.not_signed')}}
+								@endforelse
+							</td>
                             
                             <td class="text-end">
                                 <a href="{{ route('administrators/protocols/practices/edit', ['id' => $practice->id]) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.edit_practice') }}"> 
@@ -143,7 +154,7 @@
                     @endforeach
 
                     <tr>
-                        <td colspan="5" class="text-right">
+                        <td colspan="6" class="text-end">
                             <h4> Total: ${{ number_format($total_amount, 2, ",", ".") }} </h4>
                         </td>
                     </tr>

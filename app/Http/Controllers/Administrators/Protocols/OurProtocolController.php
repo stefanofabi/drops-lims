@@ -173,7 +173,7 @@ class OurProtocolController extends Controller
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
 
-        return redirect()->action([OurProtocolController::class, 'show'], ['id' => $id]);
+        return redirect()->action([OurProtocolController::class, 'edit'], ['id' => $id]);
     }
 
     /**
