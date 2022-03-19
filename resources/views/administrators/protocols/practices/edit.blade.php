@@ -23,10 +23,10 @@
                 url: '{{ route("administrators/protocols/practices/results") }}',
                 type: 'post',
                 beforeSend: function () {
-                    $("#messages").html('<div class="spinner-border text-info"> </div> {{ trans("forms.please_wait") }}');
+                    $("#messages").html('<div class="spinner-border text-info mt-3"> </div> {{ trans("forms.please_wait") }}');
                 },
                 success: function (response) {
-                    $("#messages").html('<div class="alert alert-warning alert-dismissible fade show"> <button type="button" class="close" data-dismiss="alert">&times;</button> <strong> {{ trans("forms.warning") }}!</strong> {{ trans("protocols.modified_practice")}} </div>');
+                    $("#messages").html('<div class="alert alert-warning alert-dismissible fade show mt-3" role="alert"> <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"> </button> <strong> {{ trans("forms.warning") }}!</strong> {{ trans("protocols.modified_practice")}} </div>');
                     var i = 0;
 
                     $('#report').find('input, select').each(function () {
@@ -35,7 +35,7 @@
                     });
                 }
             }).fail(function () {
-                $("#messages").html('<div class="alert alert-danger fade show"> <button type="button" class="close" data-dismiss="alert">&times;</button> <strong> {{ trans("forms.danger") }}! </strong> {{ trans("forms.failed_transaction") }} </div>');
+                $("#messages").html('<div class="alert alert-danger fade show mt-3" role="alert"> <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"> </button> <strong> {{ trans("forms.danger") }}! </strong> {{ trans("forms.failed_transaction") }} </div>');
             });
         }
 
@@ -105,14 +105,14 @@
                 type: 'put',
                 dataType: 'json',
                 beforeSend: function () {
-                    $("#messages").html('<div class="spinner-border text-info"> </div> {{ trans("forms.please_wait") }}');
+                    $("#messages").html('<div class="spinner-border text-info mt-3"> </div> {{ trans("forms.please_wait") }}');
                 },
                 success: function (response) {
-                    $("#messages").html('<div class="alert alert-success alert-dismissible fade show"> <button type="button" class="close" data-dismiss="alert">&times;</button> <strong> {{ trans("forms.well_done") }}! </strong> ' + response.message + ' </div> ');
+                    $("#messages").html('<div class="alert alert-success alert-dismissible fade show mt-3" role="alert"> <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"> </button> <strong> {{ trans("forms.well_done") }}! </strong> ' + response.message + ' </div> ');
                 }
             }).fail(function (response) {
                 var data = response.responseJSON;
-                $("#messages").html('<div class="alert alert-danger fade show"> <button type="button" class="close" data-dismiss="alert">&times;</button> <strong> {{ trans("forms.danger") }}! </strong> ' + data.message + ' </div>');
+                $("#messages").html('<div class="alert alert-danger fade show mt-3" role="alert"> <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"> </button> <strong> {{ trans("forms.danger") }}! </strong> ' + data.message + ' </div>');
             });
 
             return false;
@@ -122,34 +122,24 @@
     </script>
 @endsection
 
-@section('menu-title')
-    {{ trans('forms.menu') }}
-@endsection
-
 @section('menu')
-    <ul class="nav flex-column">
+<nav class="navbar">
+    <ul class="navbar-nav">
         <li class="nav-item">
-            <a class="nav-link" href=""> <img src="{{ asset('images/drop.png') }}" width="25"
-                                              height="25"> {{ trans('forms.no_options') }} </a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('administrators/protocols/our/edit', ['id' => $practice->protocol_id]) }}"> <img
-                    src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('forms.go_back') }} </a>
+            <a class="nav-link" href="{{ route('administrators/protocols/our/edit', ['id' => $practice->protocol_id]) }}"> {{ trans('forms.go_back') }} </a>
         </li>
     </ul>
+</nav>
 @endsection
 
 @section('content-title')
     <i class="fas fa-file-medical"></i> {{ trans('protocols.edit_protocol') }} #{{ $practice->id }}
 @endsection
 
-
 @section('content')
-
     <div id="messages"></div>
 
-    <div class="input-group mt-2 col-md-9 input-form">
+    <div class="input-group mt-3 col-md-9 input-form">
         <div class="input-group-prepend">
             <span class="input-group-text"> {{ trans('determinations.determination') }} </span>
         </div>
@@ -157,7 +147,7 @@
         <input type="text" class="form-control" value="{{ $practice->report->determination->name }}" disabled>
     </div>
 
-    <div class="input-group mt-2 col-md-9 input-form">
+    <div class="input-group mt-3 col-md-9 input-form">
         <div class="input-group-prepend">
             <span class="input-group-text"> {{ trans('reports.report') }} </span>
         </div>
