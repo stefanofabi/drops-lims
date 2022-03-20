@@ -34,7 +34,7 @@ class ModernStyleProtocolStrategy implements PrintProtocolStrategyInterface
             $practices = $practices->whereIn('id', $filter_practices);
         }
         
-        if (!$this->haveResults($practices)) {
+        if (! $this->practicesHaveSignatures($practices)) {
             return Lang::get('protocols.empty_protocol');
         }
 
@@ -52,17 +52,18 @@ class ModernStyleProtocolStrategy implements PrintProtocolStrategyInterface
         return $pdf->stream($protocol_name);
     }
 
-    public function haveResults($practices)
+    private function practicesHaveSignatures($practices)
     {
-        /* Returns true if there is at least one reported practice, false otherwise */
-        $have_results = false;
+        /* Returns true if all selected practices are signed, false otherwise */
+        $have_signatures = true;
 
         foreach ($practices as $practice) {
-            if ($practice->results->isNotEmpty()) {
-                $have_results = true;
+            if ($practice->signs->isEmpty()) {
+                $have_signatures = false;
+                break;
             }
         }
 
-        return $have_results;
+        return $have_signatures;
     }
 }
