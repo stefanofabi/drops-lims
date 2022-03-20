@@ -2,12 +2,6 @@
 
 @section('js')
 <script type="text/javascript">
-    function submitForm() 
-    {
-        let submitButton = $('#submit-button');
-        submitButton.click();
-    }
-
     $(document).ready(function () {
         // Select a nomenclator from list
         $("#nomenclator").val("{{ old('nomenclator_id') ?? $plan->nomenclator_id }}");
@@ -17,6 +11,16 @@
 
 @section('title')
     {{ trans('social_works.edit_plan') }}
+@endsection
+
+@section('menu')
+<nav class="navbar">
+	<ul class="navbar-nav">
+            <li class="nav-item">
+				<a class="nav-link" href="{{ route('administrators/settings/social_works/plans/index', ['social_work_id' => $plan->social_work->id]) }}"> {{ trans('forms.go_back')}} </a>
+			</li>
+	</ul>
+</nav>
 @endsection
 
 @section('content-title')

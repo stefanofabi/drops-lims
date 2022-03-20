@@ -44,9 +44,14 @@ class PlanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+
+        $social_work = $this->socialWorkRepository->findOrFail($request->social_work_id);
+
+        return view('administrators.settings.social_works.plans.index')
+            ->with('social_work', $social_work);
     }
 
     /**
@@ -86,7 +91,7 @@ class PlanController extends Controller
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
 
-        return redirect()->action([SocialWorkController::class, 'edit'], ['id' => $plan->social_work_id]);
+        return redirect()->action([PlanController::class, 'index'], ['social_work_id' => $plan->social_work_id]);
     }
 
     /**
@@ -141,7 +146,7 @@ class PlanController extends Controller
 
         $social_work_id = $this->planRepository->findOrFail($id)->social_work_id;
         
-        return redirect()->action([SocialWorkController::class, 'edit'], ['id' => $social_work_id]);
+        return redirect()->action([PlanController::class, 'index'], ['social_work_id' => $social_work_id]);
     }
 
     /**
@@ -160,6 +165,6 @@ class PlanController extends Controller
             return back()->withErrors(Lang::get('forms.failed_transaction'));
         }
 
-        return redirect()->action([SocialWorkController::class, 'edit'], ['id' => $social_work_id]);
+        return redirect()->action([PlanController::class, 'index'], ['social_work_id' => $social_work_id]);
     }
 }
