@@ -9,6 +9,7 @@ use App\Contracts\Repository\DeterminationRepositoryInterface;
 use App\Contracts\Repository\ReportRepositoryInterface;
 
 use Lang;
+use Session; 
 
 class ReportController extends Controller
 {
@@ -134,6 +135,8 @@ class ReportController extends Controller
         if (! $this->reportRepository->delete($id)) {
             return back()->withErrors(Lang::get('forms.failed_transaction'));
         }
+
+        Session::flash('success', [Lang::get('reports.success_destroy')]);
 
         return redirect()->action([DeterminationController::class, 'edit'], ['id' => $determination_id]);
     }

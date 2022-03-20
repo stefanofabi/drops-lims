@@ -29,17 +29,23 @@ final class ReportRepository implements ReportRepositoryInterface
 
     public function create(array $data)
     {
-        return $this->model->create($data);
+        $report = new Report($data);
+
+        return $report->save() ? $report : null;
     }
 
     public function update(array $data, $id)
     {
-        return $this->model->find($id)->update($data);
+        $report = $this->model->findOrFail($id);
+
+        return $report->update($data);
     }
 
     public function delete($id)
     {
-        return $this->model->destroy($id);
+        $report = $this->model->findOrFail($id);
+
+        return $report->delete();
     }
 
     public function find($id)

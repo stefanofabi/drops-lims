@@ -32,7 +32,9 @@ final class ResultRepository implements ResultRepositoryInterface
 
     public function create(array $data)
     {
-        return $this->model->create($data);
+        $result = new Result($data);
+
+        return $result->save() ? $result : null;
     }
 
     public function update(array $data, $id)

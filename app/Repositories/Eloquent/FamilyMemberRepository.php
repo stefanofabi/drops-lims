@@ -29,7 +29,9 @@ final class FamilyMemberRepository implements FamilyMemberRepositoryInterface
 
     public function create(array $data)
     {
-        return $this->model->create($data);
+        $family_member = new FamilyMember($data);
+
+        return $family_member->save() ? $family_member : null;
     }
 
     public function update(array $data, $id)
@@ -39,7 +41,9 @@ final class FamilyMemberRepository implements FamilyMemberRepositoryInterface
 
     public function delete($id)
     {
-        return $this->model->destroy($id);
+        $family_member = $this->model->findOrFail($id);
+
+        return $family_member->delete();
     }
 
     public function find($id)

@@ -29,17 +29,23 @@ final class ProtocolRepository implements ProtocolRepositoryInterface
 
     public function create(array $data)
     {
-        return $this->model->create($data);
+        $protocol = new Protocol($data);
+
+        return $protocol->save() ? $protocol : null;
     }
 
     public function update(array $data, $id)
     {
-        return $this->model->findOrFail($id)->update($data);
+        $protocol = $this->model->findOrFail($id);
+
+        return $protocol->update($data);
     }
 
     public function delete($id)
     {
-        return $this->model->destroy($id);
+        $protocol = $this->model->findOrFail($id);
+
+        return $protocol->delete();
     }
 
     public function find($id)

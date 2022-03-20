@@ -29,7 +29,9 @@ final class SignPracticeRepository implements SignPracticeRepositoryInterface
 
     public function create(array $data)
     {
-        return $this->model->create($data);
+        $sign = new SignPractice($data);
+
+        return $sign->save() ? $sign : null;
     }
 
     public function update(array $data, $id)
@@ -39,7 +41,9 @@ final class SignPracticeRepository implements SignPracticeRepositoryInterface
 
     public function delete($id)
     {
-        return $this->model->destroy($id);
+        $sign = $this->model->findOrFail($id);
+
+        return $sign->delete();
     }
 
     public function find($id)

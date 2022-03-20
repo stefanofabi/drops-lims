@@ -46,18 +46,19 @@ final class SecurityCodeRepository implements SecurityCodeRepositoryInterface
         $date_today = date("Y-m-d");
         $new_expiration_date = date("Y-m-d", strtotime($date_today."+ ".self::DAYS_TO_EXPIRATE_SECURITY_CODE." days"));
 
-        // It is included in a transaction to avoid that it can be used twice at the same time
         DB::beginTransaction();
         
         try {
+            $security_code = $this->model->where(['patient_id' => $data['patient_id']])->delete();
 
-            $this->model->updateOrCreate([
-                'patient_id' => $data['patient_id']
-            ], [    
+            $security_code = new SecurityCode([
+                'patient_id' => $data['patient_id'],
                 'security_code' => Hash::make($new_security_code),
                 'expiration_date' => $new_expiration_date,
                 'used_at' => null,
             ]);
+
+            $security_code->save();
 
             DB::commit();
         } catch (Throwable $throwable) {

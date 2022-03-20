@@ -29,17 +29,23 @@ final class PaymentSocialWorkRepository implements PaymentSocialWorkRepositoryIn
 
     public function create(array $data)
     {
-        return $this->model->create($data);
+        $payment = new PaymentSocialWork($data);
+
+        return $payment->save() ? $payment : null;
     }
 
     public function update(array $data, $id)
     {       
-        return $this->model->where('id', $id)->update($data);
+        $payment = $this->model->findOrFail($id);
+
+        return $payment->update($data);
     }
 
     public function delete($id)
     {
-        return $this->model->destroy($id);
+        $payment = $this->model->findOrFail($id);
+
+        return $payment->delete();
     }
 
     public function find($id)
