@@ -24,7 +24,7 @@ class CreateSecurityCodesTable extends Migration
             $table->unique(['patient_id']);
 
             // Foreign keys
-            $table->foreign('patient_id')->references('id')->on('patients')->onDelete('restrict')->onUpdate('cascade');
+            $table->foreign('patient_id')->references('id')->on('patients')->onDelete('cascade')->onUpdate('cascade');
 
             $table->timestamps();
 

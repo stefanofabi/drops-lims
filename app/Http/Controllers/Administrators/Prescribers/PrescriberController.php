@@ -9,6 +9,7 @@ use App\Traits\PaginationTrait;
 use App\Contracts\Repository\PrescriberRepositoryInterface;
 
 use Lang;
+use Session;
 
 class PrescriberController extends Controller
 {
@@ -150,8 +151,9 @@ class PrescriberController extends Controller
             return back()->withErrors(Lang::get('forms.failed_transaction'));
         }
 
-        return view('administrators/prescribers/prescribers')
-            ->with('success', [Lang::get('prescribers.success_destroy_message')]);
+        Session::flash('success', [Lang::get('prescribers.success_destroy_message')]);
+
+        return redirect()->action([PrescriberController::class, 'index'], ['page' => 1]);
     }
 
     /**

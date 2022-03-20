@@ -173,6 +173,14 @@ class PracticeController extends Controller
     public function destroy($id)
     {
         //
+        
+        $protocol = $this->practiceRepository->findOrFail($id)->protocol;
+
+        if (! $this->practiceRepository->delete($id)) {
+            return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
+        }
+
+        return redirect()->action([OurProtocolController::class, 'add_practices'], ['id' => $protocol->id]);
     }
 
     /**

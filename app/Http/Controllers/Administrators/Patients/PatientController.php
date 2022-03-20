@@ -11,6 +11,7 @@ use App\Contracts\Repository\SocialWorkRepositoryInterface;
 use App\Contracts\Repository\TaxConditionRepositoryInterface;
 
 use Lang;
+use Session;
 
 class PatientController extends Controller
 {
@@ -181,15 +182,18 @@ class PatientController extends Controller
     {
         //
 
-        if (!$this->patientRepository->delete($id)) {
+        $patient_type = $this->patientRepository->findOrFail($id)->type;
+        
+        if (! $this->patientRepository->delete($id)) {
             return back()->withErrors(Lang::get('forms.failed_transaction'));
         }
 
-        return view('administrators/patients/patients')
-            ->with('success', [Lang::get('patients.success_destroy_message')]);
+        Session::flash('success', [Lang::get('patients.success_destroy_message')]);
+
+        return redirect()->action([PatientController::class, 'index'], ['type' => $patient_type, 'page' => 1]);
     }
 
-    public function getView($patient_type, $view_type)
+    private function getView($patient_type, $view_type)
     {
         $patient_type .= "s";
 

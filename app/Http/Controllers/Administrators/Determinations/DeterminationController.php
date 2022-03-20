@@ -10,6 +10,7 @@ use App\Contracts\Repository\DeterminationRepositoryInterface;
 use App\Contracts\Repository\NomenclatorRepositoryInterface;
 
 use Lang;
+use Session;
 
 class DeterminationController extends Controller
 {
@@ -161,14 +162,14 @@ class DeterminationController extends Controller
     {
         //
 
+        $nomenclator_id = $this->determinationRepository->findOrFail($id)->nomenclator_id;
+
         if (! $this->determinationRepository->delete($id)) {
             return back()->withErrors(Lang::get('forms.failed_transaction'));
         }
-        
-        $nomenclators = $this->nomenclatorRepository->all();
 
-        return view('administrators/determinations/determinations')
-            ->with('success', [Lang::get('determinations.success_destroy_message')])
-            ->with('nomenclators', $nomenclators);
+        Session::flash('success', [Lang::get('determinations.success_destroy_message')]);
+
+        return redirect()->action([DeterminationController::class, 'index'], ['nomenclator_id' => $nomenclator_id, 'page' => 1]);
     }
 }

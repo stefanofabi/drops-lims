@@ -84,7 +84,7 @@
 				<a href="" class="btn btn-info btn-sm" title="{{ trans('protocols.edit_protocol') }}" > <i class="fas fa-edit fa-sm"></i> </a> 
 				@endif
 
-				<a href="" class="btn btn-info btn-sm verticalButtons" title="{{ trans('protocols.destroy_protocol') }}"> <i class="fas fa-trash fa-sm"></i> </a>
+				<a href="#" class="btn btn-info btn-sm verticalButtons" title="{{ trans('protocols.destroy_protocol') }}"> <i class="fas fa-trash fa-sm"></i> </a>
 			</td>
 		</tr>
 		@endforeach

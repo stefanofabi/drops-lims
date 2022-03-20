@@ -27,17 +27,23 @@ final class DeterminationRepository implements DeterminationRepositoryInterface
 
     public function create(array $data)
     {
-        return $this->model->create($data);
+        $determination = new Determination($data);
+
+        return $determination->save() ? $determination : null;
     }
 
     public function update(array $data, $id)
     {
-        return $this->model->find($id)->update($data);
+        $determination = $this->model->findOrFail($id);
+        
+        return $determination->update($data);
     }
 
     public function delete($id)
     {
-        return $this->model->destroy($id);
+        $determination = $this->model->findOrFail($id);
+
+        return $determination->delete();
     }
 
     public function find($id)

@@ -27,17 +27,23 @@ final class PatientRepository implements PatientRepositoryInterface
 
     public function create(array $data)
     {
-        return $this->model->create($data);
+        $patient = new Patient($data);
+
+        return $patient->save() ? $patient : null;
     }
 
     public function update(array $data, $id)
     {   
-        return $this->model->find($id)->update($data);
+        $patient = $this->model->findOrFail($id);
+        
+        return $patient->update($data);
     }
 
     public function delete($id)
     {
-        return $this->model->destroy($id);
+        $patient = $this->model->findOrFail($id);
+        
+        return $patient->delete();
     }
 
     public function find($id)

@@ -80,12 +80,12 @@
                         <p class="col-9"> Message </p>
                     </div>
                 
-                    @if(isset($success) && count($success) > 0)
+                    @if(session('success'))
                     <div class="alert alert-success mt-3">
                         <p> <strong> {{ trans('forms.successful_transaction') }} </strong> </p>
                         
                         <ul>
-                            @foreach ($success as $message)
+                            @foreach (Session::get('success') as $message)
                             <li>{{ $message }}</li>
                             @endforeach
                         </ul>

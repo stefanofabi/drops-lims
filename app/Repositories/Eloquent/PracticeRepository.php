@@ -29,17 +29,23 @@ final class PracticeRepository implements PracticeRepositoryInterface
 
     public function create(array $data)
     {
-        return $this->model->create($data);
+        $practice = new Practice($data);
+
+        return $practice->save();
     }
 
     public function update(array $data, $id)
     {
-        return $this->model->where('id', $id)->update($data);
+        $practice = $this->model->findOrFail($id);
+        
+        return $practice->update($data);
     }
 
     public function delete($id)
     {
-        return $this->model->destroy($id);
+        $practice = $this->model->findOrFail($id);
+
+        return $practice->delete();
     }
 
     public function find($id)

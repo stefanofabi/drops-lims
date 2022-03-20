@@ -77,7 +77,7 @@
 				<td class="text-end">
 					<a href="{{ route('administrators/prescribers/edit', $prescriber->id) }}" class="btn btn-info btn-sm" title="{{ trans('prescribers.edit_prescriber') }}" > <i class="fas fa-user-edit fa-sm"></i> </a>
 
-					<a class="btn btn-info btn-sm verticalButtons" title="{{ trans('prescribers.destroy_prescriber') }}" onclick="destroy_prescriber('{{ $prescriber->id }}')" > <i class="fas fa-user-slash fa-sm"></i> </a>
+					<a class="btn btn-info btn-sm verticalButtons" title="{{ trans('prescribers.destroy_prescriber') }}" onclick="destroyPrescriber('{{ $prescriber->id }}')" > <i class="fas fa-user-slash fa-sm"></i> </a>
 
 					<form id="destroy_prescriber_{{ $prescriber->id }}" method="POST" action="{{ route('administrators/prescribers/destroy', $prescriber->id) }}">
 						@csrf
