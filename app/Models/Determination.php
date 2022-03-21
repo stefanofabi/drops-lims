@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 
 class Determination extends Model
 {
@@ -14,9 +15,13 @@ class Determination extends Model
 
     use LogsActivity;
 
-	protected $fillable = ['nomenclator_id', 'code', 'name', 'position', 'biochemical_unit'];
-
-    protected static $logFillable = true;
+	protected $fillable = [
+        'nomenclator_id', 
+        'code', 
+        'name', 
+        'position', 
+        'biochemical_unit',
+    ];
 
     /**
      * Get the reports for the determination.
@@ -33,4 +38,10 @@ class Determination extends Model
     {
 		return $this->belongsTo(Nomenclator::class);
 	}
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(['*']);
+    }
 }

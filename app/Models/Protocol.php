@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 
 class Protocol extends Model
 {
@@ -34,8 +34,6 @@ class Protocol extends Model
         'derived_patient_id',
         'reference',
     ];
-
-    protected static $logFillable = true;
 
     /**
      * Get the plan associated with the our protocol.
@@ -77,4 +75,9 @@ class Protocol extends Model
         return $this->hasMany(Practice::class);
     }
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(['*']);
+    }
 }

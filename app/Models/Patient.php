@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 
 class Patient extends Model
 {
@@ -42,17 +43,6 @@ class Patient extends Model
 
         'type',
     ];
-
-    protected static $logAttributes = [
-        'full_name',
-        'identification_number', 
-        'phone',
-        'alternative_phone',
-        'email',
-        'alternative_email',
-        'owner', 
-        'business_name', 
-        'type'];
 
     /**
      * Get the plan associated with the affiliate.
@@ -93,5 +83,11 @@ class Patient extends Model
         }
 
         return $age;
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(['*']);
     }
 }
