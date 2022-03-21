@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 
 class Result extends Model
 {
@@ -13,6 +14,9 @@ class Result extends Model
 
     protected $fillable = ['practice_id', 'result'];
 
-    protected static $logFillable = true;
-
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(['*']);
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 use App\Traits\ConvertTrait;
 
 class Practice extends Model
@@ -15,8 +16,6 @@ class Practice extends Model
     use ConvertTrait; 
     
     protected $fillable = ['protocol_id', 'report_id', 'amount'];
-
-    protected static $logFillable = true;
 
     /**
      * Get the protocol associated with the practice.
@@ -53,5 +52,11 @@ class Practice extends Model
     public function print() {
  
         return $this->ConvertToPDF($this->report->report, $this->results);
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(['*']);
     }
 }

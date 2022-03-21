@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 
 class Report extends Model
 {
@@ -13,13 +14,17 @@ class Report extends Model
 
     protected $fillable = ['name', 'report', 'determination_id'];
 
-    protected static $logFillable = true;
-
     /**
      * Get the determination associated with the report.
      */
     public function determination()
     {
         return $this->belongsTo('App\Models\Determination');
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(['*']);
     }
 }

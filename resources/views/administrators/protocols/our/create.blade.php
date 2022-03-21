@@ -192,7 +192,7 @@
                         <span class="input-group-text"> {{ trans('protocols.quantity_orders') }} </span>
                     </div>
 
-                    <input type="number" class="form-control" name="quantity_orders" min="0" value="{{ old('quantity_orders') }}" required>
+                    <input type="number" class="form-control" name="quantity_orders" min="0" value="{{ old('quantity_orders') ?? '1' }}" required>
                 </div>
 
                 <div class="input-group mt-2">
@@ -200,7 +200,7 @@
                         <span class="input-group-text"> {{ trans('billing_periods.billing_period') }} </span>
                     </div>
 
-                    <select id="billing_period" class="form-select input-sm" name="billing_period_id" required>
+                    <select id="billing_period" class="form-select input-sm" name="billing_period_id">
                         <option value=""> {{ trans('forms.select_option') }}</option>
 
                         @foreach ($billing_periods as $billing_period)

@@ -107,10 +107,6 @@ class OurProtocolController extends Controller
 
         $request->validate([
             'completion_date' => 'required|date',
-            'patient_id' => 'required|numeric|min:1',
-            'plan_id' => 'required|numeric|min:1',
-            'prescriber_id' => 'required|numeric|min:1',
-            'billing_period_id' => 'required|numeric|min:1',
             'quantity_orders' => 'required|numeric|min:0',
         ]);
 
