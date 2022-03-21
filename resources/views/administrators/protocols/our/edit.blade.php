@@ -201,7 +201,7 @@
                         <span class="input-group-text"> {{ trans('billing_periods.billing_period') }} </span>
                     </div>
 
-                    <select id="billing_period" class="form-select input-sm" name="billing_period_id" required disabled>
+                    <select id="billing_period" class="form-select input-sm" name="billing_period_id" disabled>
                         <option value=""> {{ trans('forms.select_option') }}</option>
 
                         @foreach ($billing_periods as $billing_period)
