@@ -1,5 +1,9 @@
 @extends('administrators/default-template')
 
+@section('title')
+{{ trans('determinations.determinations') }}
+@endsection
+
 @section('active_determinations', 'active')
 
 @section('js')

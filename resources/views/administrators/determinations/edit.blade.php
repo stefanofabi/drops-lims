@@ -1,7 +1,7 @@
 @extends('administrators/default-template')
 
 @section('title')
-    {{ trans('determinations.edit_determination') }}
+{{ trans('determinations.edit_determination') }}
 @endsection
 
 @section('active_determinations', 'active')
