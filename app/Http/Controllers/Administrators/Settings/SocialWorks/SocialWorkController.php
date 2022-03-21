@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 use App\Contracts\Repository\SocialWorkRepositoryInterface;
-use App\Contracts\Repository\PaymentSocialWorkRepositoryInterface;
 
 use Lang;
 
@@ -21,15 +20,10 @@ class SocialWorkController extends Controller
     /** @var \App\Contracts\Repository\SocialWorkRepositoryInterface */
     private $socialWorkRepository;
 
-    /** @var \App\Contracts\Repository\PaymentSocialWorkRepositoryInterface */
-    private $paymentSocialWorkRepository;
-
     public function __construct(
-        SocialWorkRepositoryInterface $socialWorkRepository,
-        PaymentSocialWorkRepositoryInterface $paymentSocialWorkRepository
+        SocialWorkRepositoryInterface $socialWorkRepository
     ) {
         $this->socialWorkRepository = $socialWorkRepository;
-        $this->paymentSocialWorkRepository = $paymentSocialWorkRepository;
     }
 
     /**
@@ -43,7 +37,8 @@ class SocialWorkController extends Controller
 
         $social_works = $this->socialWorkRepository->all();
 
-        return view('administrators/settings/social_works/index')->with('social_works', $social_works);
+        return view('administrators/settings/social_works/index')
+            ->with('social_works', $social_works);
     }
 
     /**
@@ -102,11 +97,8 @@ class SocialWorkController extends Controller
 
         $social_work = $this->socialWorkRepository->findOrFail($id);
 
-        $payments = $this->paymentSocialWorkRepository->getPaymentsFromSocialWork($social_work->id);
-
         return view('administrators/settings/social_works/edit')
-            ->with('social_work', $social_work)
-            ->with('payments', $payments);
+            ->with('social_work', $social_work);
     }
 
     /**

@@ -1,55 +1,58 @@
 @extends('administrators/settings/index')
 
-@section('js')
-    <script type="text/javascript">
-        function send() {
-            let submitButton = $('#submit-button');
-            submitButton.click();
-        }
-
-        $(function () {
-            $("#billing_period").autocomplete({
-                minLength: 2,
-                source: function (event, ui) {
-                    var parameters = {
-                        "filter": $("#billing_period").val()
-                    };
-
-                    $.ajax({
-                        data: parameters,
-                        url: '{{ route("administrators/settings/social_works/billing_periods/load_billing_periods") }}',
-                        type: 'post',
-                        dataType: 'json',
-                        beforeSend: function () {
-                            //$("#resultados").html('<div class="spinner-border text-info"> </div> Procesando, espere por favor...');
-                        },
-                        success: ui
-                    });
-
-                    return ui;
-                },
-                select: function (event, ui) {
-                    event.preventDefault();
-                    $('#billing_period').val(ui.item.label);
-                    $('#billing_period_id').val(ui.item.id);
-                }
-            });
-        });
-    </script>
+@section('title')
+{{ trans('payment_social_works.create_payment') }}
 @endsection
 
-@section('title')
-    {{ trans('payment_social_works.create_payment') }}
+@section('js')
+<script type="text/javascript">
+    $(function () {
+        $("#billing_period").autocomplete({
+            minLength: 2,
+            source: function (event, ui) {
+                var parameters = {
+                    "filter": $("#billing_period").val()
+                };
+
+                $.ajax({
+                    data: parameters,
+                    url: '{{ route("administrators/settings/social_works/billing_periods/load_billing_periods") }}',
+                    type: 'post',
+                    dataType: 'json',
+                    beforeSend: function () {
+                        //$("#resultados").html('<div class="spinner-border text-info"> </div> Procesando, espere por favor...');
+                    },
+                    success: ui
+                });
+
+                return ui;
+            },
+            select: function (event, ui) {
+                event.preventDefault();
+                $('#billing_period').val(ui.item.label);
+                $('#billing_period_id').val(ui.item.id);
+            }
+        });
+    });
+</script>
+@endsection
+
+@section('menu')
+<nav class="navbar">
+	<ul class="navbar-nav">
+            <li class="nav-item">
+				<a class="nav-link" href="{{ route('administrators/settings/social_works/payments/index', ['social_work_id' => $social_work->id]) }}"> {{ trans('forms.go_back')}} </a>
+			</li>
+	</ul>
+</nav>
 @endsection
 
 @section('content-title')
-    <i class="fas fa-plus"> </i> {{ trans('payment_social_works.create_payment') }}
+<i class="fas fa-plus"> </i> {{ trans('payment_social_works.create_payment') }}
 @endsection
 
-
 @section('content')
-
-    <div class="input-group mt-2 mb-1 col-md-9 input-form">
+    <div class="input-group mt-3 col-md-9 input-form">
         <div class="input-group-prepend">
             <span class="input-group-text"> {{ trans('social_works.social_work') }} </span>
         </div>
@@ -62,7 +65,7 @@
 
         <input type="hidden" name="social_work_id" value="{{ $social_work->id }}">
 
-        <div class="input-group mt-2 mb-1 col-md-9 input-form">
+        <div class="input-group mt-2 col-md-9 input-form">
             <div class="input-group-prepend">
                 <span class="input-group-text"> {{ trans('payment_social_works.payment_date') }} </span>
             </div>
@@ -76,7 +79,7 @@
             @enderror
         </div>
 
-        <div class="input-group mt-2 mb-1 col-md-9 input-form">
+        <div class="input-group mt-2 col-md-9 input-form">
             <div class="input-group-prepend">
                 <span class="input-group-text"> {{ trans('billing_periods.billing_period') }} </span>
             </div>
@@ -85,7 +88,7 @@
             <input id="billing_period_id" type="hidden" name="billing_period_id" value="{{ old('billing_period_id') }}">
         </div>
 
-        <div class="input-group mt-2 mb-1 col-md-9 input-form">
+        <div class="input-group mt-2 col-md-9 input-form">
             <div class="input-group-prepend">
                 <span class="input-group-text"> {{ trans('payment_social_works.amount') }} </span>
             </div>
@@ -99,16 +102,6 @@
             @enderror
         </div>
 
-        <input id="submit-button" type="submit" style="display: none;">
+        <input type="submit" class="btn btn-lg btn-primary mt-3" value="{{ trans('forms.save') }}">
     </form>
-@endsection
-
-@section('more-content')
-    <div class="card-footer">
-        <div class="float-right">
-            <button type="submit" class="btn btn-primary" onclick="send();">
-                <span class="fas fa-save"></span> {{ trans('forms.save') }}
-            </button>
-        </div>
-    </div>
 @endsection

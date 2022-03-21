@@ -5,6 +5,11 @@ Route::group([
     'as' => 'payments/',
 ], function () {
 
+    Route::get('index', [
+        '\App\Http\Controllers\Administrators\Settings\SocialWorks\PaymentSocialWorkController',
+        'index',
+    ])->name('index');
+
     Route::get('create/{social_work_id}', [
         '\App\Http\Controllers\Administrators\Settings\SocialWorks\PaymentSocialWorkController',
         'create',

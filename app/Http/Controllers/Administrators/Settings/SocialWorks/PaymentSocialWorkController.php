@@ -35,9 +35,17 @@ class PaymentSocialWorkController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+
+        $social_work = $this->socialWorkRepository->findOrFail($request->social_work_id);
+        
+        $payments = $this->paymentSocialWorkRepository->getPaymentsFromSocialWork($social_work->id);
+
+        return view('administrators.settings.social_works.payments.index')
+            ->with('social_work', $social_work)
+            ->with('payments', $payments);
     }
 
     /**
@@ -51,7 +59,8 @@ class PaymentSocialWorkController extends Controller
 
         $social_work = $this->socialWorkRepository->findOrFail($social_work_id);
 
-        return view('administrators/settings/social_works/payments/create')->with('social_work', $social_work);
+        return view('administrators/settings/social_works/payments/create')
+            ->with('social_work', $social_work);
     }
 
     /**
@@ -74,7 +83,7 @@ class PaymentSocialWorkController extends Controller
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
    
-        return redirect()->action([SocialWorkController::class, 'edit'], ['id' => $request->social_work_id]);
+        return redirect()->action([PaymentSocialWorkController::class, 'index'], ['social_work_id' => $request->social_work_id]);
     }
 
     /**
@@ -100,7 +109,8 @@ class PaymentSocialWorkController extends Controller
 
         $payment = $this->paymentSocialWorkRepository->findOrFail($id);
 
-        return view('administrators/settings/social_works/payments/edit')->with('payment', $payment);
+        return view('administrators/settings/social_works/payments/edit')
+            ->with('payment', $payment);
     }
 
     /**
@@ -126,7 +136,7 @@ class PaymentSocialWorkController extends Controller
 
         $social_work_id = $this->paymentSocialWorkRepository->findOrFail($id)->social_work_id;
 
-        return redirect()->action([SocialWorkController::class, 'edit'], ['id' => $social_work_id]);
+        return redirect()->action([PaymentSocialWorkController::class, 'index'], ['social_work_id' => $social_work_id]);
     }
 
     /**
@@ -145,6 +155,6 @@ class PaymentSocialWorkController extends Controller
             return back()->withErrors(Lang::get('forms.failed_transaction'));
         }
 
-        return redirect()->action([SocialWorkController::class, 'edit'], ['id' => $social_work_id]);
+        return redirect()->action([PaymentSocialWorkController::class, 'index'], ['social_work_id' => $social_work_id]);
     }
 }

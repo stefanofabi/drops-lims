@@ -2,11 +2,6 @@
 
 @section('js')
     <script type="text/javascript">
-        function send() {
-            let submitButton = $('#submit-button');
-            submitButton.click();
-        }
-
         $(function () {
             $("#billing_period").autocomplete({
                 minLength: 2,
@@ -38,18 +33,28 @@
     </script>
 @endsection
 
+@section('menu')
+<nav class="navbar">
+	<ul class="navbar-nav">
+            <li class="nav-item">
+				<a class="nav-link" href="{{ route('administrators/settings/social_works/payments/index', ['social_work_id' => $payment->social_work->id]) }}"> {{ trans('forms.go_back')}} </a>
+			</li>
+	</ul>
+</nav>
+@endsection
+
 @section('title')
-    {{ trans('payment_social_works.edit_payment') }}
+{{ trans('payment_social_works.edit_payment') }}
 @endsection
 
 @section('content-title')
-    <i class="fas fa-plus"> </i> {{ trans('payment_social_works.edit_payment') }}
+<i class="fas fa-plus"> </i> {{ trans('payment_social_works.edit_payment') }}
 @endsection
 
 
 @section('content')
 <div class="col-9">
-    <div class="input-group mt-2 mb-1 col-md-9 input-form">
+    <div class="input-group mt-3 col-md-9 input-form">
         <div class="input-group-prepend">
             <span class="input-group-text"> {{ trans('social_works.social_work') }} </span>
         </div>
@@ -61,7 +66,7 @@
         @csrf
         @method('PUT')
 
-        <div class="input-group mt-2 mb-1 col-md-9 input-form">
+        <div class="input-group mt-2 col-md-9 input-form">
             <div class="input-group-prepend">
                 <span class="input-group-text"> {{ trans('payment_social_works.payment_date') }} </span>
             </div>
@@ -75,7 +80,7 @@
             @enderror
         </div>
 
-        <div class="input-group mt-2 mb-1 col-md-9 input-form">
+        <div class="input-group mt-2 col-md-9 input-form">
             <div class="input-group-prepend">
                 <span class="input-group-text"> {{ trans('billing_periods.billing_period') }} </span>
             </div>
@@ -84,7 +89,7 @@
             <input id="billing_period_id" type="hidden" name="billing_period_id" value="{{ old('billing_period_id') ?? $payment->billing_period->id }}">
         </div>
 
-        <div class="input-group mt-2 mb-1 col-md-9 input-form">
+        <div class="input-group mt-2 col-md-9 input-form">
             <div class="input-group-prepend">
                 <span class="input-group-text"> {{ trans('payment_social_works.amount') }} </span>
             </div>
