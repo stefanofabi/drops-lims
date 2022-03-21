@@ -55,4 +55,9 @@ final class SignPracticeRepository implements SignPracticeRepositoryInterface
     {
         return $this->model->findOrFail($id);
     }    
+
+    public function deleteAllSignatures($practice_id) 
+    {
+        return $this->model->where('practice_id', $practice_id)->delete();
+    }
 }

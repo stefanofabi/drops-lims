@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\DB;
 
 use App\Contracts\Repository\PracticeRepositoryInterface;
 use App\Contracts\Repository\ProtocolRepositoryInterface;
@@ -220,7 +221,20 @@ class PracticeController extends Controller
      */
     public function informResults(Request $request, $practice_id)
     {
-        if (!$this->resultRepository->informResults($practice_id, $request->data)) {
+
+        DB::beginTransaction();
+        
+        try {
+            $this->signPracticeRepository->deleteAllSignatures($practice_id);
+            
+            if (!$this->resultRepository->informResults($practice_id, $request->data)) {
+                return response()->json(['message' => Lang::get('forms.failed_transaction')], 500);
+            }
+
+            DB::commit();
+        } catch (Throwable $throwable) {
+            DB::rollBack();
+            
             return response()->json(['message' => Lang::get('forms.failed_transaction')], 500);
         }
 

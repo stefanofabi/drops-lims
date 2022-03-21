@@ -80,10 +80,10 @@
                 type: 'put',
                 dataType: 'json',
                 beforeSend: function () {
-                    $("#messages").html('<div class="spinner-border text-info"> </div> {{ trans("forms.please_wait") }}');
+                    $("#messages").html('<div class="spinner-border text-info mt-3"> </div> {{ trans("forms.please_wait") }}');
                 },
                 success: function () {
-                    $("#messages").html('<div class="alert alert-success alert-dismissible fade show"> <button type="button" class="close" data-dismiss="alert">&times;</button> <strong> {{ trans("forms.well_done") }}! </strong> {{ trans("protocols.result_loaded") }} </div> ');
+                    $("#messages").html('<div class="alert alert-success alert-dismissible fade show mt-3" role="alert"> <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"> </button> <strong> {{ trans("forms.well_done") }}! </strong> {{ trans("protocols.result_loaded") }} </div> ');
                 }
             }).fail(function () {
                 $("#messages").html('<div class="alert alert-danger fade show"> <button type="button" class="close" data-dismiss="alert">&times;</button> <strong> {{ trans("forms.danger") }}! </strong> {{ trans("forms.failed_transaction") }} </div>');
@@ -126,7 +126,7 @@
 <nav class="navbar">
     <ul class="navbar-nav">
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('administrators/protocols/our/edit', ['id' => $practice->protocol_id]) }}"> {{ trans('forms.go_back') }} </a>
+            <a class="nav-link" href="{{ route('administrators/protocols/our/add_practices', ['id' => $practice->protocol_id]) }}"> {{ trans('forms.go_back') }} </a>
         </li>
     </ul>
 </nav>
