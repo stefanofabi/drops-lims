@@ -21,7 +21,7 @@ class UserSeeder extends Seeder
         $user_administrator = new User(
             [
                 'name' => 'Admin',
-                'email' => 'admin@company',
+                'email' => 'admin@laboratory',
                 'password' => Hash::make('password'),
             ]
         );
@@ -33,7 +33,7 @@ class UserSeeder extends Seeder
         $user_patient = new User (
             [
                 'name' => 'User',
-                'email' => 'user@domain',                        
+                'email' => 'patient@domain',                        
                 'password' => Hash::make('password'),
             ]
         );
