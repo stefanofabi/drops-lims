@@ -56,5 +56,6 @@ return [
     'total_amount' => 'Total amount',
     'medical_order_data' => 'Medical order data',
     'billing_data' => 'Billing data',
+    'please_enter_practice' => 'Please enter a practice',
     
 ];

@@ -37,6 +37,16 @@
 
         function addPractice() 
         {
+            if (! $("#practice").val()) 
+            {
+                $("#practice").addClass('is-invalid');
+                alert("{{ trans('protocols.please_enter_practice') }}");
+
+                return false;
+            }
+
+            $("#practice").removeClass('is-invalid');
+            
             var parameters = {
                 "_token": "{{ csrf_token() }}",
                 "protocol_id": '{{ $protocol->id }}',
@@ -51,7 +61,7 @@
                     $("#messages").html('<div class="spinner-border text-info"> </div> {{ trans("forms.please_wait") }}');
                 },
                 error: function (xhr, status) {
-                    $("#messages").html('<div class="alert alert-danger"> <strong> {{ trans("forms.danger") }}! </strong> {{ trans("forms.please_later")}}  </div> ');
+                    $("#messages").html('<div class="alert alert-danger mt-3"> <strong> {{ trans("forms.danger") }}! </strong> {{ trans("forms.please_later")}}  </div> ');
                 },
                 success: function (response) {
                     $("#messages").html('<div class="alert alert-success alert-dismissible fade show mt-3" role="alert"> <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg> <strong> {{ trans("forms.well_done") }}! </strong> {{ trans("protocols.practice_loaded") }} </div>');
