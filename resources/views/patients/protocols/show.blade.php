@@ -29,7 +29,7 @@
 	</li>
 
 	<li class="nav-item">
-		<a class="nav-link" target="_blank" href="#" onclick="print_selection()"> {{ trans('protocols.print_selected') }} </a>
+		<a class="nav-link" href="#" onclick="print_selection()"> {{ trans('protocols.print_selected') }} </a>
 	</li>
 </ul>
 @endsection

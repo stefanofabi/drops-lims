@@ -151,22 +151,16 @@ final class ProtocolRepository implements ProtocolRepositoryInterface
     /*
     * Verify that all the practices belong to the same protocol, in some cases also check that the patient is linked to the user
     */
-    public function verifyPractices($filter_practices, $family_members = null) 
+    public function verifyPractices($filter_practices, $family_members) 
     {
-
-        $query =  $this->model->select('protocols.id as id');
-
-        if (! is_null($filter_practices)) 
-        {
-            $query->join('patients', 'protocols.patient_id', '=', 'patients.id')
-                ->whereIn('patients.id', $family_members);
-        }
-            
-        $query->join('practices', 'protocols.id', '=', 'practices.protocol_id')
+        $count = $this->model->select('protocols.id as id')
+            ->join('patients', 'protocols.patient_id', '=', 'patients.id')
+            ->whereIn('patients.id', $family_members)
+            ->join('practices', 'protocols.id', '=', 'practices.protocol_id')
             ->whereIn('practices.id', $filter_practices)
             ->groupBy('protocols.id')
-            ->get();
+            ->count();
 
-        return $query->count() == 1 ? true : false;      
+        return $count == 1 ? true : false;      
     }
 }

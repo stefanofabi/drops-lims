@@ -57,5 +57,6 @@ return [
     'medical_order_data' => 'Medical order data',
     'billing_data' => 'Billing data',
     'please_enter_practice' => 'Please enter a practice',
-    
+    'select_practices_to_print' => 'Select one or more practices to print',
+
 ];
