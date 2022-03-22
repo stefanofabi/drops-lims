@@ -32,6 +32,10 @@ class VerifySecurityCode
 
         $security_code = $this->securityCodeRepository->getSecurityCodeAssociate($request->patient_id);
 
+        if (! $security_code) {
+            return redirect()->back()->withInput($request->except('security_code'))->withErrors(Lang::get('errors.invalid_security_code'));
+        }
+
         if (! Hash::check($request->security_code, $security_code->security_code)) {
             // Security code not match
             return redirect()->back()->withInput($request->except('security_code'))->withErrors(Lang::get('errors.invalid_security_code'));

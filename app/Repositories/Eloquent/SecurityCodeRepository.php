@@ -95,6 +95,6 @@ final class SecurityCodeRepository implements SecurityCodeRepositoryInterface
 
     public function getSecurityCodeAssociate($patient_id) 
     {
-        return $this->model->where('patient_id', $patient_id)->firstOrFail();
+        return $this->model->where('patient_id', $patient_id)->first();
     }
 }

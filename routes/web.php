@@ -39,12 +39,8 @@ Route::group(['middleware' => ['permission:is_user', 'auth']], function () {
 
         Route::get('home', ['\App\Http\Controllers\HomeController', 'index'])->name('home');
 
-        Route::get('results', ['\App\Http\Controllers\Patients\UserPatientController', 'index'])->name('results');
-        
-        Route::post('get_protocols', [
-            '\App\Http\Controllers\Patients\UserPatientController',
-            'get_protocols',
-        ])->name('protocols/index')
+        Route::get('results', ['\App\Http\Controllers\Patients\UserPatientController', 'index'])
+        ->name('results')
         ->middleware('verify_family_member_relation');
 
         Route::get('protocols/show/{id}', [
@@ -76,7 +72,7 @@ Route::group(['middleware' => ['permission:is_user', 'auth']], function () {
 
         Route::post('protocols/practices/get_results', [
             '\App\Http\Controllers\Patients\PracticeController',
-            'get_results',
+            'getResults',
         ])->name('protocols/practices/get_results')
         ->middleware('verify_practice_access_relation');
 

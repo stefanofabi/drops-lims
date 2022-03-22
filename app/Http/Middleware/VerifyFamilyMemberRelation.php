@@ -28,7 +28,10 @@ class VerifyFamilyMemberRelation
      */
     public function handle(Request $request, Closure $next)
     {
-
+        if (! isset($request->patient_id)) {
+            return $next($request);
+        }
+        
         $this->familyMemberRepository->findFamilyMemberRelationOrFail(auth()->user()->id, $request->patient_id);
 
         return $next($request);

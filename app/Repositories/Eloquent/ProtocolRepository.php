@@ -90,16 +90,12 @@ final class ProtocolRepository implements ProtocolRepositoryInterface
     }
 
     /*
-    * Returns a list of protocols between two specified dates, in some cases for a particular patient
+    * Returns a list of protocols between two specified dates for a particular patient
     */
-    public function getProtocolsInDatesRange($initial_date, $ended_date, $patient_id = null) 
+    public function getProtocolsInDatesRange($initial_date, $ended_date, $patient_id) 
     {
         return $this->model
-            ->where(function ($query) use ($patient_id) {
-                if (! is_null($patient_id)) {
-                    $query->where("patient_id", $patient_id);
-                }
-            })
+            ->where('patient_id', $patient_id)
             ->whereBetween('completion_date', [$initial_date, $ended_date])
             ->orderBy('completion_date', 'ASC')
             ->where('protocols.type', 'our')

@@ -33,11 +33,12 @@ class VerifyPracticeAccessRelation
      */
     public function handle(Request $request, Closure $next)
     {
+        
         $practice = $this->practiceRepository->findOrFail($request->id);
        
         $patient = $practice->protocol->patient;
 
-        if (! $this->familyMemberRepository->verifyRelation(auth()->user()->id, $patient->id)) 
+        if (! $this->familyMemberRepository->findFamilyMemberRelationOrFail(auth()->user()->id, $patient->id)) 
         {
             return redirect()->back()->withErrors(Lang::get('errors.not_found'));
         }

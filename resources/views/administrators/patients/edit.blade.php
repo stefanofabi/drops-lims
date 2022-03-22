@@ -36,7 +36,6 @@
        @can('crud_protocols')
 	        <li class="nav-item">
 				<form action="{{ route('administrators/protocols/our/create') }}" id="create_protocol_form">
-		        	@csrf
 		            <input type="hidden" name="patient_id" value="{{ $patient->id }}">
 		        </form>
 

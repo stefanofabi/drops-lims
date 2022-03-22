@@ -90,8 +90,10 @@ class FamilyMemberController extends Controller
             DB::commit();
         } catch (Throwable $throwable) {
             DB::rollBack();
-
-            return redirect()->back()->withInput($request->except('security_code'))->withErrors(Lang::get('errors.error_processing_transaction'));
+         
+            return redirect()->back()
+                ->withInput($request->except('security_code'))
+                ->withErrors(Lang::get('errors.error_processing_transaction'));
         }
 
         return redirect()->action([FamilyMemberController::class, 'index']);

@@ -62,5 +62,6 @@ return [
     'alternative_phone' => 'Alternative phone',
     'personal_data' => 'Personal data',
     'tax_data' => 'Tax data',
+    'bonding_date' => 'Bonding date',
     
 ];

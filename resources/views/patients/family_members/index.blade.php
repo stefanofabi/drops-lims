@@ -1,65 +1,56 @@
-@extends('patients/default-filter')
+@extends('patients/default-template')
 
 @section('title')
-    {{ trans('home.family_members') }}
+{{ trans('home.family_members') }}
 @endsection
 
 @section('active_family_members', 'active')
 
-@section('main-title')
-    <i class="fas fa-users"></i> {{ trans('home.family_members') }}
+@section('menu')
+<nav class="navbar">
+	<ul class="navbar-nav">
+	    <li class="nav-item">
+			<a class="nav-link" href="{{ route('patients/family_members/create') }}"> <span class="fas fa-user-plus" ></span> {{ trans('patients.add_family_member') }} </a>
+		</li>
+	</ul>
+</nav>
 @endsection
 
-@section('create-href')
-    {{ route('patients/family_members/create') }}
+@section('content-title')
+<i class="fas fa-users"></i> {{ trans('home.family_members') }}
 @endsection
 
-@section('create-text')
-    <span class="fas fa-user-plus"></span> {{ trans('patients.add_family_member') }}
+@section('content-message')
+{{ trans('patients.related_patients') }}
 @endsection
 
-@section('card-filters')
-    <div class="mt-3 mb-3 ml-3"> {{ trans('patients.related_patients') }} </div>
-@endsection
+@section('content')
+<div class="mt-3">
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <tr>
+            <th> {{ trans('patients.bonding_date') }} </th>
+                <th> {{ trans('patients.patient') }} </th>
+                <th class="text-end"> {{ trans('forms.actions') }} </th>
+            </tr>
 
-@section('results')
+            @forelse ($family_members as $family_member)
+            <tr>
+                <td> {{ date('d/m/Y', strtotime($family_member->created_at)) }} </td>
+                <td> {{ $family_member->patient->full_name }} </td>
 
-    @if ($family_members->isEmpty())
-        <div class="col-md-12"> {{ trans('forms.no_results') }}</div>
-    @else
-
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <tr>
-                    <th> {{ trans('patients.patient') }} </th>
-                    <th class="text-end"> {{ trans('forms.actions') }} </th>
-                </tr>
-
-                @foreach ($family_members as $family_member)
-                    <tr>
-                        <td> {{ $family_member->patient->full_name }} </td>
-
-                        <td class="text-end">
-                            <a target="_blank" href="#" class="btn btn-info btn-sm"
-                               title="{{ trans('protocols.print_report') }}"> <i class="fas fa-trash fa-sm"></i> </a>
-                        </td>
-                    </tr>
-                @endforeach
-
-
-                <tr>
-                    <td colspan=7>
-					<span class="float-end">
-
-					</span>
-                    </td>
-                </tr>
-
-            </table>
-        </div>
-    @endif
-@endsection
-
-@section('action_page')
-    {{ route('patients/protocols/index') }}
+                <td class="text-end">
+                    <a target="_blank" href="#" class="btn btn-info btn-sm" title="{{ trans('protocols.print_report') }}"> <i class="fas fa-trash fa-sm"></i> </a>
+                </td>
+            </tr>
+            @empty
+            <tr>
+                <td colspan="3">
+                    {{ trans('forms.no_results') }}
+                </td>
+            </tr>
+            @endforelse
+        </table>
+    </div>
+</div>
 @endsection

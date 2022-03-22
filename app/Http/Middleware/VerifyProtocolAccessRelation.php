@@ -34,7 +34,7 @@ class VerifyProtocolAccessRelation
 
         $protocol = $this->protocolRepository->findOrFail($request->id);
 
-        if (! $this->familyMemberRepository->verifyRelation(auth()->user()->id, $protocol->patient->id)) 
+        if (! $this->familyMemberRepository->findFamilyMemberRelationOrFail(auth()->user()->id, $protocol->patient->id)) 
         {
             return redirect()->back()->withErrors(Lang::get('errors.no_access_protocol'));
         }

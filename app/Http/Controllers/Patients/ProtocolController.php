@@ -61,9 +61,9 @@ class ProtocolController extends Controller
         $protocol = $this->protocolRepository->findOrFail($id);
 
         $strategy = 'modern_style';
-        $strategyClass = PrintProtocolContext::STRATEGIES[$strategy];
+        $strategyClass = PrintOurProtocolContext::STRATEGIES[$strategy];
 
-        return (new $strategyClass)->print($id, []);
+        return (new $strategyClass)->printProtocol($id, []);
     }
 
     /**

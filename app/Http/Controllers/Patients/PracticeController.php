@@ -43,10 +43,10 @@ class PracticeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function get_results(Request $request)
+    public function getResults(Request $request)
     {
-
-        $practice = $this->practiceRepository->findOrFail($request->practice_id);
+        
+        $practice = $this->practiceRepository->find($request->id);
         
         return $practice->results->toJson();
     }
