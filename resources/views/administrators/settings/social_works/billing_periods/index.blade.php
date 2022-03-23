@@ -4,10 +4,6 @@
 {{ trans('billing_periods.billing_periods') }}
 @endsection
 
-@section('content-title')
-<i class="fas fa-layer-group"> </i> {{ trans('billing_periods.billing_periods') }}
-@endsection
-
 @section('js')
     <script>
         $(document).ready(function () {
@@ -45,11 +41,16 @@
     </script>
 @endsection
 
-@section('header-content')
-    <div class="btn-group float-end mt-3 me-3">
-        <a href="{{ route('administrators/settings/social_works/billing_periods/create') }}" class="btn btn-info">
-        <span class="fas fa-plus"></span> {{ trans('billing_periods.create_billing_period') }} </a>
-    </div>
+@section('content-title')
+<i class="fas fa-layer-group"> </i> {{ trans('billing_periods.billing_periods') }}
+@endsection
+
+@section('content-message')
+<p class="text-justify pe-5">
+    {{ trans('billing_periods.billing_periods_message') }}    
+
+    <a class="link-light" href="{{ route('administrators/settings/social_works/billing_periods/create') }}"> {{ trans('billing_periods.click_to_create_billing_period') }} </a>
+</p>
 @endsection
 
 @section('content')

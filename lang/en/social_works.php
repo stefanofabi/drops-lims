@@ -39,5 +39,7 @@ return [
     'year' => 'Year',
     'edit_social_work' => 'Edit social work',
     'destroy_social_work' => 'Destroy social work',
+    'social_works_message' => 'Social and prepaid works can have different coverage plans, which allows patients to have coverage for their care in the laboratory.',
+    'click_to_create_social_work' => 'Click here to create social work or prepaid',
 
 ];

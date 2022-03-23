@@ -4,10 +4,6 @@
     {{ trans('social_works.social_works') }}
 @endsection
 
-@section('content-title')
-    <i class="fas fa-heartbeat"> </i> {{ trans('social_works.social_works') }}
-@endsection
-
 @section('js')
     <script>
         $(document).ready(function () {
@@ -45,11 +41,16 @@
     </script>
 @endsection
 
-@section('header-content')
-<div class="btn-group float-end mt-3 me-3">
-    <a href="{{ route('administrators/settings/social_works/create') }}" class="btn btn-info">
-    <span class="fas fa-plus"></span> {{ trans('social_works.create_social_work') }} </a>
-</div>
+@section('content-title')
+    <i class="fas fa-heartbeat"> </i> {{ trans('social_works.social_works') }}
+@endsection
+
+@section('content-message')
+<p class="text-justify pe-5">
+    {{ trans('social_works.social_works_message') }}    
+
+    <a class="link-light" href="{{ route('administrators/settings/social_works/create') }}"> {{ trans('social_works.click_to_create_social_work') }} </a>
+</p>
 @endsection
 
 @section('content')
