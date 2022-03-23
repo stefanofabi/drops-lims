@@ -108,7 +108,7 @@
             </td>
 
             <td>
-                {!! DNS1D::getBarcodeHTML(strval($protocol->id), 'EAN13', 3, 50, 'black', 12) !!}
+                {!! DNS1D::getBarcodeHTML(str_pad($protocol->id, 12, "0", STR_PAD_LEFT), 'EAN13', 3, 50, 'black', 12) !!}
             </td>
         </tr>
     </table>
