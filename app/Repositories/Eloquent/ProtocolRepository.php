@@ -85,6 +85,7 @@ final class ProtocolRepository implements ProtocolRepositoryInterface
                         ->orWhere("derived_patients.key", "like", "$filter%");
                 }
             })
+            ->orderBy('completion_date', 'desc')
             ->orderBy('id', 'desc')
             ->get();
     }
