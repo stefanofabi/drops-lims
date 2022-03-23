@@ -97,12 +97,21 @@
         </tr>
     </table>
 
+    <table class="info">
+        <tr>
+            <td>
+            @if (!empty($protocol->diagnostic))
+                <div style="margin-bottom: 2%">
+                    {{ trans('protocols.diagnostic') }}: {{ $protocol->diagnostic }}
+                </div>
+            @endif
+            </td>
 
-    @if (!empty($protocol->diagnostic))
-        <div style="margin-bottom: 2%">
-            {{ trans('protocols.diagnostic') }}: {{ $protocol->diagnostic }}
-        </div>
-    @endif
+            <td>
+                {!! DNS1D::getBarcodeHTML(strval($protocol->id), 'EAN13', 3, 50, 'black', 12) !!}
+            </td>
+        </tr>
+    </table>
 
 @endsection
 
