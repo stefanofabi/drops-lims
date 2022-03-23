@@ -23,14 +23,6 @@
 
 		$("#submitButton").removeAttr('disabled');
 	}
-
-    function destroy_report(form_id)
-    {
-        if (confirm('{{ trans("forms.confirm") }}')) {
-            var form = document.getElementById('destroy_report_' + form_id);
-            form.submit();
-        }
-    }
 </script>
 @endsection
 
@@ -38,8 +30,8 @@
 <nav class="navbar">
     <ul class="navbar-nav">
         @can('crud_reports')
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('administrators/determinations/reports/create', ['determination_id' => $determination->id]) }}"> {{ trans('reports.create_report') }} </a>
+			<li class="nav-item">
+                <a class="nav-link" href="{{ route('administrators/determinations/reports/index', ['determination_id' => $determination->id]) }}"> {{ trans('reports.index_reports') }} </a>
             </li>
         @endcan
     </ul>
@@ -113,38 +105,4 @@
     
 	<input type="submit" class="btn btn-lg btn-primary mt-3" id="submitButton" value="{{ trans('forms.save') }}" disabled>
 </form>
-
-
-<hr>
-
-<h4 class="mt-3"><span class="fas fa-file-alt"></span> {{ trans('reports.index_reports')}} </h4>
-	
-<div class="table-responsive">
-	<table class="table table-striped">
-		<tr class="info">
-			<th> {{ trans('reports.name') }} </th>
-			<th class="text-end"> {{ trans('forms.actions') }}</th>
-		</tr>
-		
-		@foreach ($determination->reports as $report)
-		<tr>
-			<td> {{ $report->name }} </td>
-			<td class="text-end">
-				<a href="{{ route('administrators/determinations/reports/edit', ['id' => $report->id]) }}" class="btn btn-info btn-sm" title="{{ trans('reports.edit_report') }}"> 
-					<i class="fas fa-edit fa-sm"></i> 
-				</a>
-
-				<a class="btn btn-info btn-sm" title="{{ trans('reports.destroy_report') }}" onclick="destroy_report('{{ $report->id }}')">
-					<i class="fas fa-trash fa-sm"></i> 
-				</a>
-                    
-				<form id="destroy_report_{{ $report->id }}" method="POST" action="{{ route('administrators/determinations/reports/destroy', ['id' => $report->id]) }}">
-					@csrf
-					@method('DELETE')
-				</form>
-			</td>
-		</tr>
-		@endforeach
-	</table>
-</div>
 @endsection

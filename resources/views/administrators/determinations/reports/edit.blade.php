@@ -38,7 +38,7 @@
 <nav class="navbar">
 	<ul class="navbar-nav">
 		<li class="nav-item">
-			<a class="nav-link" href="{{ route('administrators/determinations/edit', ['id' => $report->determination->id]) }}"> {{ trans('forms.go_back') }} </a>
+			<a class="nav-link" href="{{ route('administrators/determinations/reports/index', ['determination_id' => $report->determination->id]) }}"> {{ trans('forms.go_back') }} </a>
 		</li>
 	</ul>
 </nav>

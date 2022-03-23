@@ -33,10 +33,17 @@ class ReportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
 
+        $determination = $this->determinationRepository->findOrFail($request->determination_id);
+
+        $reports = $determination->reports;
+
+        return view('administrators/determinations/reports/index')
+            ->with('determination', $determination)
+            ->with('reports', $reports);
     }
 
     /**
@@ -138,6 +145,6 @@ class ReportController extends Controller
 
         Session::flash('success', [Lang::get('reports.success_destroy')]);
 
-        return redirect()->action([DeterminationController::class, 'edit'], ['id' => $determination_id]);
+        return redirect()->action([ReportController::class, 'index'], ['determination_id' => $determination_id]);
     }
 }

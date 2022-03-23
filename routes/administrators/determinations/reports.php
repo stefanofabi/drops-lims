@@ -15,6 +15,11 @@ Route::group([
     'as' => 'reports/',
 ], function () {
 
+    Route::get('index', [
+        '\App\Http\Controllers\Administrators\Determinations\ReportController',
+        'index',
+    ])->name('index');
+
     Route::get('create/{determination_id}', [
         '\App\Http\Controllers\Administrators\Determinations\ReportController',
         'create',
