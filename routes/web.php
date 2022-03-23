@@ -40,10 +40,6 @@ Route::group(['middleware' => ['permission:is_user', 'auth']], function () {
         require('patients/family_members.php');
 
         Route::get('home', ['\App\Http\Controllers\HomeController', 'index'])->name('home');
-
-        Route::get('results', ['\App\Http\Controllers\Patients\UserPatientController', 'index'])
-        ->name('results')
-        ->middleware('verify_family_member_relation');
     });
 });
 

@@ -1,7 +1,10 @@
 @extends('layouts.app')
 
-@section('content')
+@section('title')
+{{ trans('home.dashboard') }}
+@endsection
 
+@section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -18,7 +21,7 @@
                     <div class="row">
                         <div class="col">
                             <div style="text-align: center;">
-                                <a class="nav-link" style="color: black" href="{{ route('patients/results') }}">
+                                <a class="nav-link" style="color: black" href="{{ route('patients/protocols/index') }}">
                                     <h1>
                                         <i style="font-size: 8vw" class="fas fa-file-medical"></i>
                                     </h1>

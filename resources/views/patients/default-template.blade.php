@@ -17,7 +17,7 @@
 			<!-- Left Side Of Navbar -->
 			<ul class="navbar-nav">
 				<li class="nav-item">
-					<a class="nav-link @yield('active_results')" href="{{ route('patients/results') }}"> {{ trans('home.results') }} </a>
+					<a class="nav-link @yield('active_results')" href="{{ route('patients/protocols/index') }}"> {{ trans('home.results') }} </a>
 				</li>
 
                 <li class="nav-item">

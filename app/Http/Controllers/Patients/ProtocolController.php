@@ -34,6 +34,37 @@ class ProtocolController extends Controller
         $this->practiceRepository = $practiceRepository;
     }
 
+    /**
+     * Displays a list of patient results
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request)
+    {
+        //
+
+        $request->validate([
+            'initial_date' => 'date|nullable',
+            'ended_date' => 'date|nullable',
+        ]);
+        
+        $initial_date = $request->initial_date;
+        $ended_date = $request->ended_date;
+
+        $protocols = $this->protocolRepository->getProtocolsInDatesRange($initial_date, $ended_date, $request->patient_id);
+
+        $user = auth()->user();
+
+        $family_members = $user->family_members;
+        
+        return view('patients/index')
+            ->with('family_members', $family_members)
+            ->with('initial_date', $initial_date)
+            ->with('ended_date', $ended_date)
+            ->with('protocols', $protocols)
+            ->with('patient', $request->patient_id);
+    }
+    
     //
     /**
      * Shows the protocol of a patient
@@ -73,11 +104,6 @@ class ProtocolController extends Controller
      */
     public function printPartialReport(Request $request)
     {
-        if (! is_array($request->to_print)) 
-        {
-            return Lang::get('errors.no_data');
-        }
-
         $protocol = $this->practiceRepository->findOrFail($request->to_print[0])->protocol;
 
         $strategy = 'modern_style';

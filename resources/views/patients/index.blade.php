@@ -33,12 +33,12 @@
 <form>
     <div class="col form-group col-md-6 mt-3">
         <span for="inputState">{{ trans('forms.initial_date') }}</span>
-        <input type="date" class="form-control" id="initial_date" name="initial_date" value="{{ $initial_date }}" required>
+        <input type="date" class="form-control" id="initial_date" name="initial_date" value="{{ $initial_date ?? date('Y-m-d', strtotime(date('Y-m-d').'- 30 days')) }}" required>
     </div>
 
     <div class="col form-group col-md-6 mt-1">
         <span for="inputState">{{ trans('forms.ended_date') }}</span>
-        <input type="date" class="form-control" id="ended_date" name="ended_date" value="{{ $ended_date }}" required>
+        <input type="date" class="form-control" id="ended_date" name="ended_date" value="{{ $ended_date ?? date('Y-m-d') }}" required>
     </div>
 
     <div class="col form-group col-md-6 mt-1">
