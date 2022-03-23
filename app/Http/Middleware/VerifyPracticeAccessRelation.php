@@ -38,10 +38,7 @@ class VerifyPracticeAccessRelation
        
         $patient = $practice->protocol->patient;
 
-        if (! $this->familyMemberRepository->findFamilyMemberRelationOrFail(auth()->user()->id, $patient->id)) 
-        {
-            return redirect()->back()->withErrors(Lang::get('errors.not_found'));
-        }
+        $this->familyMemberRepository->findFamilyMemberRelationOrFail(auth()->user()->id, $patient->id);
 
         return $next($request);
     }

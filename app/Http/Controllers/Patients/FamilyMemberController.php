@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Patients;
 
 use App\Http\Controllers\Controller;
 
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 

@@ -20,7 +20,6 @@ Route::group([
 ], function () {
 
     require('administrators/settings/settings.php');
-
     require('administrators/patients/patients.php');
     require('administrators/prescribers/prescribers.php');
     require('administrators/determinations/determinations.php');
@@ -37,60 +36,14 @@ Route::group(['middleware' => ['permission:is_user', 'auth']], function () {
         'as' => 'patients/',
     ], function () {
 
+        require('patients/protocols.php');
+        require('patients/family_members.php');
+
         Route::get('home', ['\App\Http\Controllers\HomeController', 'index'])->name('home');
 
         Route::get('results', ['\App\Http\Controllers\Patients\UserPatientController', 'index'])
         ->name('results')
         ->middleware('verify_family_member_relation');
-
-        Route::get('protocols/show/{id}', [
-            '\App\Http\Controllers\Patients\ProtocolController',
-            'show',
-        ])->name('protocols/show')
-        ->where('id', '[1-9][0-9]*')
-        ->middleware('verify_protocol_access_relation');
-
-        Route::get('protocols/print/{id}', [
-            '\App\Http\Controllers\Patients\ProtocolController',
-            'printProtocol',
-        ])->name('protocols/print')
-        ->where('id', '[1-9][0-9]*')
-        ->middleware('verify_protocol_access_relation');
-
-        Route::post('protocols/print_selection', [
-            '\App\Http\Controllers\Patients\ProtocolController',
-            'printPartialReport',
-        ])->name('protocols/print_selection')
-        ->middleware('verify_partial_report_relation');
-
-        Route::get('protocols/practices/{id}', [
-            '\App\Http\Controllers\Patients\PracticeController',
-            'show',
-        ])->name('protocols/practices/show')
-        ->where('id', '[1-9][0-9]*')
-        ->middleware('verify_practice_access_relation');
-
-        Route::post('protocols/practices/get_results', [
-            '\App\Http\Controllers\Patients\PracticeController',
-            'getResults',
-        ])->name('protocols/practices/get_results')
-        ->middleware('verify_practice_access_relation');
-
-        Route::get('family_members/index', [
-            '\App\Http\Controllers\Patients\FamilyMemberController',
-            'index',
-        ])->name('family_members/index');
-
-        Route::get('family_members/create', [
-            '\App\Http\Controllers\Patients\FamilyMemberController',
-            'create',
-        ])->name('family_members/create');
-
-        Route::post('family_members/store', [
-            '\App\Http\Controllers\Patients\FamilyMemberController',
-            'store',
-        ])->name('family_members/store')
-        ->middleware('verify_security_code');
     });
 });
 
