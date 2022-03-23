@@ -1,7 +1,7 @@
 @extends('administrators/default-template')
 
 @section('title')
-    {{ trans('settings.settings') }}
+{{ trans('settings.settings') }}
 @endsection
 
 @section('menu')
@@ -35,7 +35,7 @@
 @endsection
 
 @section('content-title')
-    <i class="fas fa-cogs"></i> {{ trans('settings.settings') }}
+<i class="fas fa-cogs"></i> {{ trans('settings.settings') }}
 @endsection
 
 @section('content')

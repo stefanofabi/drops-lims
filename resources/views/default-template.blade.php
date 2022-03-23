@@ -77,7 +77,7 @@
                 <div class="col-md-9 mt-3">
                     <div class="p-3 bg-primary text-white">
                         <h1> @section('content-title') @show </h1>
-                        <p class="col-9"> @section('content-message') &nbsp; @show </p>
+                        <p class="col-9 mt-3"> @section('content-message') &nbsp; @show </p>
                     </div>
                 
                     @if(session('success'))

@@ -1,25 +1,15 @@
 @extends('administrators/settings/index')
 
-@section('js')
-<script type="text/javascript">
-    function submitForm() 
-	{
-        let submitButton = $('#submit-button');
-        submitButton.click();
-    }
-</script>
-@endsection
-
 @section('title')
-{{ trans('nomenclators.update_nomenclator') }}
+{{ trans('nomenclators.edit_nomenclator') }}
 @endsection
 
 @section('content-title')
-<i class="fas fa-archive"> </i> {{ trans('nomenclators.update_nomenclator') }}
+<i class="fas fa-archive"> </i> {{ trans('nomenclators.edit_nomenclator') }}
 @endsection
 
 @section('content')
-<form method="post" action="{{ route('administrators/settings/nomenclators/update', ['id' => $nomenclator->id]) }}" id="update_nomenclator">
+<form method="post" action="{{ route('administrators/settings/nomenclators/update', ['id' => $nomenclator->id]) }}">
     @csrf
     @method('PUT')
 

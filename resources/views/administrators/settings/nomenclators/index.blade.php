@@ -4,10 +4,6 @@
     {{ trans('nomenclators.nomenclators') }}
 @endsection
 
-@section('content-title')
-    <i class="fas fa-book-medical"> </i> {{ trans('nomenclators.nomenclators') }}
-@endsection
-
 @section('js')
     <script>
         $(document).ready(function () {
@@ -45,11 +41,16 @@
     </script>
 @endsection
 
-@section('header-content')
-    <div class="btn-group float-end mt-3 me-3">
-        <a href="{{ route('administrators/settings/nomenclators/create') }}" class="btn btn-info"> 
-        <span class="fas fa-plus"></span> {{ trans('nomenclators.create_nomenclator') }} </a>
-    </div>
+@section('content-title')
+<i class="fas fa-book-medical"> </i> {{ trans('nomenclators.nomenclators') }}
+@endsection
+
+@section('content-message')
+<p class="text-justify pe-5">
+    {{ trans('nomenclators.nomenclators_message') }} 
+
+    <a class="link-light" href="{{ route('administrators/settings/nomenclators/create') }}"> {{ trans('nomenclators.click_to_create_nomenclator') }} </a>
+</p>
 @endsection
 
 @section('content')
