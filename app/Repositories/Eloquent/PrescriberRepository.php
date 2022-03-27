@@ -80,6 +80,8 @@ final class PrescriberRepository implements PrescriberRepositoryInterface
                     ->orWhere("national_enrollment", "like", "$filter%");
                 }
             })
+            ->take(15)
+            ->orderBy('full_name', 'ASC')
             ->get();
 
         if ($prescribers->isEmpty()) 

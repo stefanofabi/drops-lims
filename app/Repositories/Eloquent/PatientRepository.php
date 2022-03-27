@@ -80,6 +80,8 @@ final class PatientRepository implements PatientRepositoryInterface
                         ->orWhere("owner", "like", "%$filter%");
                 }
             })
+            ->take(15)
+            ->orderBy('full_name', 'ASC')
             ->get();
 
         if ($patients->isEmpty()) 

@@ -59,7 +59,7 @@ final class ReportRepository implements ReportRepositoryInterface
     }
     
     public function getReportsFromNomenclator($nomenclator_id, $filter) {
-        return $this->model
+        $reports = $this->model
             ->select('reports.id', DB::raw("CONCAT(determinations.name, ' - ', reports.name) as label"))
             ->join('determinations', 'determinations.id', '=', 'reports.determination_id')
             ->where('determinations.nomenclator_id', $nomenclator_id)
@@ -70,7 +70,17 @@ final class ReportRepository implements ReportRepositoryInterface
                         ->orWhere("reports.name", "like", "%$filter%");
                 }
             })
-            ->get()
-            ->toJson();
+            ->take(15)
+            ->orderBy('determinations.name', 'ASC')
+            ->orderBy('reports.name', 'ASC')
+            ->get();
+
+            
+        if ($reports->isEmpty()) 
+        {
+            return response()->json(['label' => 'No records found']);
+        }
+
+        return $reports;
     }
 }
