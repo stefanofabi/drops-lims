@@ -60,6 +60,7 @@ final class SocialWorkRepository implements SocialWorkRepositoryInterface
             ->where(function ($query) use ($filter_name) {
                 if (! empty($filter_name)) {
                     $query->orWhere("social_works.name", "like", "%$filter_name%")
+                        ->orWhere("social_works.acronym", "like", "$filter_name%")
                         ->orWhere("plans.name", "like", "$filter_name%");
                 }
             }) 

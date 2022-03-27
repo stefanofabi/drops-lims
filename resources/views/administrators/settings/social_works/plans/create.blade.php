@@ -65,7 +65,7 @@
 
     <div class="input-group mt-2 col-md-9 input-form">
         <div class="input-group-prepend">
-            <span class="input-group-text"> {{ trans('social_works.nbu_price') }} </span>
+            <span class="input-group-text"> {{ trans('plans.nbu_price') }} </span>
         </div>
 
         <input type="number" step="0.01" class="form-control @error('nbu_price') is-invalid @enderror" name="nbu_price" value="{{ old('nbu_price') }}" required>

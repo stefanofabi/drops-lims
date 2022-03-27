@@ -41,6 +41,16 @@
         </div>
     </div>
 
+    <div class="col-9 mt-3">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text"> {{ trans('social_works.acronym') }} </span>
+            </div>
+
+            <input type="text" class="form-control @error('acronym') is-invalid @enderror" name="acronym" value="{{ old('acronym') ?? $social_work->acronym }}" required>
+        </div>
+    </div>
+
     <input type="submit" class="btn btn-lg btn-primary mt-3" value="{{ trans('forms.save') }}">
 </form>
 @endsection

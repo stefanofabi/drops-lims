@@ -114,16 +114,21 @@
 @endsection
 
 @section('content')
-
-    @if (!empty($patient) && empty($patient->plan_id))
-        <div class="alert alert-warning mt-3">
-            <strong>{{ trans('forms.warning') }}!</strong> {{ trans('protocols.unloaded_social_work') }}
-        </div>
-    @else
-        <div class="alert alert-info mt-3">
-            <strong>{{ trans('forms.information') }}!</strong> {{ trans('protocols.create_notice') }}
-        </div>
+@if (!empty($patient))
+    @if (empty($patient->plan_id))
+    <div class="alert alert-warning mt-3">
+        <strong>{{ trans('forms.warning') }}!</strong> {{ trans('protocols.unloaded_social_work') }}
+    </div>
+    @elseif ($patient->expiration_date < date('Y-m-d'))
+    <div class="alert alert-warning mt-3">
+        <strong>{{ trans('forms.warning') }}!</strong> {{ trans('protocols.expired_social_work') }}
+    </div>
     @endif
+@else
+<div class="alert alert-info mt-3">
+    <strong>{{ trans('forms.information') }}!</strong> {{ trans('protocols.create_notice') }}
+</div>
+@endif
 
     <form action="{{ route('administrators/protocols/our/create') }}">
         <input type="hidden" name="patient_id" id="patient">

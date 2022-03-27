@@ -15,6 +15,7 @@ class SocialWork extends Model
      */
     protected $fillable = [
         'name',
+        'acronym',
     ];
 
     /**
