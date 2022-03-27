@@ -45,12 +45,17 @@ class StatisticsController extends Controller
 
     public function getAnnualCollectionSocialWork(Request $request)
     {
+        $request->validate([
+            'initial_date' => 'required|date',
+            'ended_date' => 'required|date',
+            'social_work' => 'required|numeric|min:1',
+        ]);
 
         $social_works = $this->socialWorkRepository->all();
 
         $anual_report = $this->protocolRepository->getCollectionSocialWork($request->social_work, $request->initial_date, $request->ended_date);
         
-        $new_array = $this->generate_array_per_month($anual_report, $request->initial_date, $request->ended_date);
+        $new_array = $this->generateArrayPerMonth($anual_report, $request->initial_date, $request->ended_date);
        
         return view('administrators.settings.statistics.annual_collection_social_work')
             ->with('social_works', $social_works)
@@ -62,12 +67,16 @@ class StatisticsController extends Controller
 
     public function getPatientFlowPerMonth(Request $request)
     {
+        $request->validate([
+            'initial_date' => 'required|date',
+            'ended_date' => 'required|date',
+        ]);
 
         $social_works = $this->socialWorkRepository->all();
 
         $patient_flow = $this->protocolRepository->getPatientFlow($request->initial_date, $request->ended_date);
 
-        $new_array = $this->generate_array_per_month($patient_flow, $request->initial_date, $request->ended_date);
+        $new_array = $this->generateArrayPerMonth($patient_flow, $request->initial_date, $request->ended_date);
 
         return view('administrators.settings.statistics.patient_flow_per_month')
             ->with('social_works', $social_works)
@@ -78,11 +87,16 @@ class StatisticsController extends Controller
 
     public function getTrackIncome(Request $request)
     {
+        $request->validate([
+            'initial_date' => 'required|date',
+            'ended_date' => 'required|date',
+        ]);
+
         $social_works = $this->socialWorkRepository->all();
 
         $track_income = $this->protocolRepository->getTrackIncome($request->initial_date, $request->ended_date);
 
-        $new_array = $this->generate_array_per_month($track_income, $request->initial_date, $request->ended_date);
+        $new_array = $this->generateArrayPerMonth($track_income, $request->initial_date, $request->ended_date);
 
         return view('administrators.settings.statistics.track_income')
             ->with('social_works', $social_works)
@@ -91,7 +105,7 @@ class StatisticsController extends Controller
             ->with('data', $new_array);
     }
 
-    private function generate_array_per_month($array, $start_date, $end_date)
+    private function generateArrayPerMonth($array, $start_date, $end_date)
     {
         /*
         It is the only solution I found without having to create a temporary table to be able to group all the months one by one

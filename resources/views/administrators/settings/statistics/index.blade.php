@@ -29,9 +29,7 @@
 @endsection
 
 @section('content')
-<form method="post" action="">
-	@csrf
-
+<form action="">
 	<div class="input-group mt-2 mb-3 col-md-6 input-form">
 		<div class="input-group-prepend">
 			<span class="input-group-text"> {{ trans('social_works.social_work') }} </span>
