@@ -2,14 +2,11 @@
 
 namespace App\Repositories\Eloquent;
 
-use Illuminate\Support\Facades\DB;
-
 use App\Contracts\Repository\ResultRepositoryInterface;
 
 use App\Models\Result; 
 
 use App\Exceptions\NotImplementedException;
-use Exception;
 
 final class ResultRepository implements ResultRepositoryInterface
 {
@@ -57,30 +54,8 @@ final class ResultRepository implements ResultRepositoryInterface
         throw new NotImplementedException('Not implemented');
     }
 
-    public function informResults($practice_id, $results) 
+    public function deleteAllResults($practice_id)
     {
-
-        DB::beginTransaction();
-
-        try {
-
-            $this->model->where('practice_id', $practice_id)->delete();
-
-            // AJAX dont send empty arrays
-            if (is_array($results)) {
-                foreach ($results as $result) {
-                    $this->create(['practice_id' => $practice_id, 'result' => $result]);
-                }
-            }
-
-            DB::commit();
-        } catch (Exception $exception) {
-            DB::rollBack();
-            dd($exception);
-            return false;
-        }
-
-        return true;
+        return $this->model->where('practice_id', $practice_id)->delete();
     }
-    
 }

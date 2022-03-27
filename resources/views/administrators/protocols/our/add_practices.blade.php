@@ -83,11 +83,13 @@
 @endsection
 
 @section('menu')
-<ul class="nav flex-column">
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('administrators/protocols/our/edit', ['id' => $protocol->id]) }}"> {{ trans('forms.go_back') }} </a>
-    </li>
-</ul>
+<nav class="navbar">
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('administrators/protocols/our/edit', ['id' => $protocol->id]) }}"> {{ trans('forms.go_back') }} </a>
+        </li>
+    </ul>
+</nav>
 @endsection
 
 @section('content-title')

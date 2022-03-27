@@ -49,13 +49,21 @@ class DeterminationController extends Controller
             'page' => 'required|numeric|min:1',
         ]);
 
-        $offset = ($request->page - 1) * self::PER_PAGE;
         $determinations = $this->determinationRepository->index($request->filter, $request->nomenclator_id);
 
         // Pagination
         $count_rows = $determinations->count();
         $total_pages = ceil($count_rows / self::PER_PAGE);
         $paginate = $this->paginate($request->page, $total_pages, self::ADJACENTS);
+
+        if ($total_pages < $request->page) 
+        {
+            $offset = 0;
+            $request->page = 1;
+        } else 
+        {
+            $offset = ($request->page - 1) * self::PER_PAGE;
+        }
 
         return view('administrators/determinations/index')
             ->with('data', $request->all())

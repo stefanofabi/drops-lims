@@ -35,17 +35,21 @@
 @endsection
 
 @section('content')
-<!-- Filter by keys -->
-<div class="form-group row mt-2">
-    <div class="mt-2 col-md-6">
-        <input type="text" class="form-control form-control" id="filter" name="filter" placeholder="{{ trans('forms.enter_filter') }}">
-    </div>
+<form id="select_page">
+	<!-- Filter by keys -->
+	<div class="form-group row mt-2">
+		<div class="mt-2 col-md-6">
+			<input type="text" class="form-control form-control" id="filter" name="filter" placeholder="{{ trans('forms.enter_filter') }}">
+		</div>
 
-    <div class="mt-2 col-md-6">
-        <button type="submit" class="btn btn-info">
-            <span class="fas fa-search" ></span> {{ trans('forms.search') }} </button>
-        </div>
-</div>
+		<div class="mt-2 col-md-6">
+			<button type="submit" class="btn btn-info" onclick="load(1)">
+				<span class="fas fa-search" ></span> {{ trans('forms.search') }} </button>
+			</div>
+	</div>
+
+	<input type="hidden" id="page" name="page" value="{{ $data['page'] }}">
+</form>
 
 <div class="table-responsive mt-3">
 	<table class="table table-striped">

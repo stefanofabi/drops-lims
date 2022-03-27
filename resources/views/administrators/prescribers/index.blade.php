@@ -8,7 +8,6 @@
 
 @section('js')
 <script type="text/javascript">
-
 	function load(page) {
 		$("#page" ).val(page);
 	    document.all["select_page"].submit();
@@ -51,12 +50,12 @@
 		</div>
 
 		<div class="mt-3 col-md-6">
-			<button type="submit" class="btn btn-info">
+			<button type="submit" class="btn btn-info" onclick="load(1)">
 				<span class="fas fa-search" ></span> {{ trans('forms.search') }} </button>
 			</div>
 	</div>
 	
-	<input type="hidden" id="page" name ="page" value="1">
+	<input type="hidden" id="page" name="page" value="{{ $data['page'] }}">
 </form>
 
 <div class="table-responsive mt-3">

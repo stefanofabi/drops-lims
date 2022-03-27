@@ -51,11 +51,11 @@ class ReportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($determination_id)
+    public function create(Request $request)
     {
         //
 
-        $determination = $this->determinationRepository->findOrFail($determination_id);
+        $determination = $this->determinationRepository->findOrFail($request->determination_id);
 
         return view('administrators/determinations/reports/create')->with('determination', $determination);
     }

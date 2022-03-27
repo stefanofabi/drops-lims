@@ -5,8 +5,29 @@
 @endsection
 
 @section('js')
-@include('administrators/patients/filters_javascript_code')
-@append
+<script type="text/javascript">
+
+    function destroyPatient(form_id){
+        if (confirm('{{ trans("forms.confirm") }}')) {
+            var form = document.getElementById('destroy_patient_'+form_id);
+            form.submit();
+        }
+    }
+
+    function load(page) {
+        $("#page" ).val(page);
+        document.all["select_page"].submit();
+    }
+
+    $(document).ready(function() {
+        // Put the filter
+        $("#filter" ).val("{{ $data['filter'] ?? '' }}");
+
+        // Check a type
+        $('input:radio[name="type"][value="{{ $data['type'] ?? '' }}"]').prop('checked', true);
+    });
+</script>
+@endsection
 
 @section('content-title')
 <i class="fas fa-user-injured"></i> {{ trans('patients.patients') }}
@@ -53,11 +74,11 @@
         </div>
 
         <div class="mt-3 col-md-6">
-            <button type="submit" class="btn btn-info">
+            <button type="submit" class="btn btn-info" onclick="load(1)">
                 <span class="fas fa-search" ></span> {{ trans('forms.search') }} </button>
             </div>
     </div>
 
-    <input type="hidden" id="page" name ="page" value="1">
+    <input type="hidden" id="page" name="page" value="{{ $data['page'] }}">
 </form>
 @endsection

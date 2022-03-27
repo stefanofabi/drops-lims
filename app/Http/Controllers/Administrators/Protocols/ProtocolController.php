@@ -38,19 +38,23 @@ class ProtocolController extends Controller
             'filter' => 'string|nullable',
             'page' => 'required|numeric|min:1',
         ]);
-
-        // Request
-        $filter = $request->filter;
-        $page = $request->page;
-
-        $offset = ($page - 1) * self::PER_PAGE;
-        $protocols = $this->protocolRepository->index($filter);
+        
+        $protocols = $this->protocolRepository->index($request->filter);
 
         // Pagination
         $count_rows = $protocols->count();
         $total_pages = ceil($count_rows / self::PER_PAGE);
-        $paginate = $this->paginate($page, $total_pages, self::ADJACENTS);
+        $paginate = $this->paginate($request->page, $total_pages, self::ADJACENTS);
         
+        if ($total_pages < $request->page) 
+        {
+            $offset = 0;
+            $request->page = 1;
+        } else 
+        {
+            $offset = ($request->page - 1) * self::PER_PAGE;
+        }
+
         return view('administrators/protocols/index')
             ->with('data', $request->all())
             ->with('protocols', $protocols->skip($offset)->take(self::PER_PAGE))

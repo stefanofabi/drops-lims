@@ -5,10 +5,10 @@ Route::group([
         'as' => 'our/',
     ], function () {
 
-        Route::get('add_practices/{id}', [
+        Route::get('add_practices', [
             '\App\Http\Controllers\Administrators\Protocols\OurProtocolController',
-            'add_practices',
-        ])->name('add_practices')->where('id', '[1-9][0-9]*');
+            'addPractices',
+        ])->name('add_practices');
 
         Route::get('create', [
             '\App\Http\Controllers\Administrators\Protocols\OurProtocolController',
@@ -19,11 +19,6 @@ Route::group([
             '\App\Http\Controllers\Administrators\Protocols\OurProtocolController',
             'store',
         ])->name('store');
-
-        Route::get('show/{id}', [
-            '\App\Http\Controllers\Administrators\Protocols\OurProtocolController',
-            'show',
-        ])->name('show')->where('id', '[1-9][0-9]*');
 
         Route::put('update/{id}', [
             '\App\Http\Controllers\Administrators\Protocols\OurProtocolController',
@@ -42,11 +37,11 @@ Route::group([
 
         Route::get('print_worksheet/{id}', [
             '\App\Http\Controllers\Administrators\Protocols\OurProtocolController',
-            'print_worksheet',
+            'printWorksheet',
         ])->name('print_worksheet')->where('id', '[1-9][0-9]*')->middleware('permission:print_worksheets');
 
         Route::get('print/{id}', [
             '\App\Http\Controllers\Administrators\Protocols\OurProtocolController',
-            'print_protocol',
+            'printProtocol',
         ])->name('print')->where('id', '[1-9][0-9]*')->middleware('permission:print_protocols');
     });

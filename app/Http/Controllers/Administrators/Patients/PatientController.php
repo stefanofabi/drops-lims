@@ -49,20 +49,28 @@ class PatientController extends Controller
     public function index(Request $request)
     {
         //
-
+        
         $request->validate([
             'type' => 'required|in:animal,human,industrial',
             'filter' => 'string|nullable',
             'page' => 'required|numeric|min:1',
         ]);
 
-        $offset = ($request->page - 1) * self::PER_PAGE;
         $patients = $this->patientRepository->index($request->filter, $request->type);
-
+   
         // Pagination
         $count_rows = $patients->count();
         $total_pages = ceil($count_rows / self::PER_PAGE);
         $paginate = $this->paginate($request->page, $total_pages, self::ADJACENTS);
+        
+        if ($total_pages < $request->page) 
+        {
+            $offset = 0;
+            $request->page = 1;
+        } else 
+        {
+            $offset = ($request->page - 1) * self::PER_PAGE;
+        }
         
         $view = $this->getView($request->type, "index");
 
@@ -107,7 +115,7 @@ class PatientController extends Controller
         ]);
 
         if (! $patient = $this->patientRepository->create($request->all())) {
-            return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));;
+            return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
 
         return redirect()->action([PatientController::class, 'edit'], ['id' => $patient->id]);
@@ -207,6 +215,9 @@ class PatientController extends Controller
      */
     public function loadPatients(Request $request)
     {
+        $request->validate([
+            'filter' => 'required|string'
+        ]);
         
         return $this->patientRepository->loadPatients($request->filter);
     }

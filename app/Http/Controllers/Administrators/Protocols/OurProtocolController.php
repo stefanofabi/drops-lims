@@ -17,19 +17,6 @@ use Lang;
 
 class OurProtocolController extends Controller
 {
-    private const ATTRIBUTES = [
-        'completion_date',
-        'observations',
-        'type',
-        'patient_id',
-        'plan_id',
-        'prescriber_id',
-        'withdrawal_date',
-        'quantity_orders',
-        'diagnostic',
-        'billing_period_id',
-    ];
-
     /** @var \App\Contracts\Repository\ProtocolRepositoryInterface */
     private $protocolRepository;
 
@@ -110,7 +97,7 @@ class OurProtocolController extends Controller
             'quantity_orders' => 'required|numeric|min:0',
         ]);
 
-        if (! $protocol = $this->protocolRepository->create($request->only(self::ATTRIBUTES))) {
+        if (! $protocol = $this->protocolRepository->create($request->all())) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
         
@@ -165,7 +152,7 @@ class OurProtocolController extends Controller
             'quantity_orders' => 'required|numeric|min:0',
         ]);
         
-        if (! $this->protocolRepository->update($request->only(self::ATTRIBUTES), $id)) {
+        if (! $this->protocolRepository->update($request->all(), $id)) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
 
@@ -188,21 +175,11 @@ class OurProtocolController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function add_practices($protocol_id)
+    public function addPractices(Request $request)
     {
-        $protocol = $this->protocolRepository->findOrFail($protocol_id);
+        $protocol = $this->protocolRepository->findOrFail($request->protocol_id);
 
         return view('administrators/protocols/our/add_practices')->with('protocol', $protocol);
-    }
-
-    /**
-     * Returns a list of practices for a protocol
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public static function get_practices($protocol_id)
-    {
-        return $this->protocolRepository->getPractices($protocol_id);
     }
 
     /**
@@ -210,7 +187,7 @@ class OurProtocolController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function print_protocol($protocol_id, $filter_practices = [])
+    public function printProtocol($protocol_id, $filter_practices = [])
     {
         $strategy = 'modern_style';
         $strategyClass = PrintOurProtocolContext::STRATEGIES[$strategy];
@@ -225,7 +202,7 @@ class OurProtocolController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function print_worksheet($protocol_id, $filter_practices = [])
+    public function printWorksheet($protocol_id, $filter_practices = [])
     {
         $strategy = 'simple_style';
         $strategyClass = PrintWorksheetContext::STRATEGIES[$strategy];

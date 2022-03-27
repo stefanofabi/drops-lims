@@ -20,10 +20,10 @@ Route::group([
         'index',
     ])->name('index');
 
-    Route::get('create/{determination_id}', [
+    Route::get('create', [
         '\App\Http\Controllers\Administrators\Determinations\ReportController',
         'create',
-    ])->name('create')->where('determination_id', '[1-9][0-9]*');
+    ])->name('create');
 
     Route::post('store', [
         '\App\Http\Controllers\Administrators\Determinations\ReportController',

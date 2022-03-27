@@ -21,7 +21,5 @@ Route::group([
     Route::get('protocols/index', [
         '\App\Http\Controllers\Administrators\Protocols\ProtocolController',
         'index',
-    ])->name('index')
-    ->middleware('permission:crud_protocols');
-
+    ])->name('index');
 });

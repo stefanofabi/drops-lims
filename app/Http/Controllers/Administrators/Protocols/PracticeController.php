@@ -16,6 +16,7 @@ use App\Contracts\Repository\ResultRepositoryInterface;
 use App\Contracts\Repository\SignPracticeRepositoryInterface;
 
 use Lang;
+use Throwable;
 
 class PracticeController extends Controller
 {
@@ -190,9 +191,14 @@ class PracticeController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function load_practices(Request $request)
+    public function loadPractices(Request $request)
     {
         //
+
+        $request->validate([
+            'nomenclator_id' => 'required|numeric|min:1',
+            'filter' => 'required|string',
+        ]);
 
         return $this->reportRepository->getReportsFromNomenclator($request->nomenclator_id, $request->filter);
     }
@@ -203,7 +209,7 @@ class PracticeController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function get_results(Request $request)
+    public function getResults(Request $request)
     {
         //
         
@@ -221,14 +227,19 @@ class PracticeController extends Controller
      */
     public function informResults(Request $request, $practice_id)
     {
-
+        
         DB::beginTransaction();
         
         try {
             $this->signPracticeRepository->deleteAllSignatures($practice_id);
             
-            if (!$this->resultRepository->informResults($practice_id, $request->data)) {
-                return response()->json(['message' => Lang::get('forms.failed_transaction')], 500);
+            $this->resultRepository->deleteAllResults($practice_id);
+
+            // AJAX dont send empty arrays
+            if (is_array($request->data)) {
+                foreach ($request->data as $result) {
+                    $this->resultRepository->create(['practice_id' => $practice_id, 'result' => $result]);
+                }
             }
 
             DB::commit();

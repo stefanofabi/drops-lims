@@ -14,7 +14,7 @@
         document.all["select_page"].submit();
     }
 
-    function destroy_determination(form_id) 
+    function destroyDetermination(form_id) 
     {
         if (confirm('{{ trans("forms.confirm") }}')) 
         {
@@ -68,12 +68,12 @@
         </div>
 
         <div class="mt-2 col-md-6">
-            <button type="submit" class="btn btn-info">
+            <button type="submit" class="btn btn-info" onclick="load(1)">
                 <span class="fas fa-search" ></span> {{ trans('forms.search') }} </button>
             </div>
     </div>
 
-    <input type="hidden" id="page" name ="page" value="1">
+    <input type="hidden" id="page" name="page" value="{{ $data['page'] }}">
 </form>
 
 <div class="table-responsive mt-3">
@@ -92,7 +92,7 @@
             <td class="text-end">
                 <a href="{{ route('administrators/determinations/edit', ['id' => $determination->id]) }}" class="btn btn-info btn-sm" title="{{ trans('determinations.edit_determination') }}"> <i class="fas fa-edit fa-sm"></i> </a>
 
-                <a class="btn btn-info btn-sm verticalButtons" title="{{ trans('determinations.destroy_determination') }}" onclick="destroy_determination('{{ $determination->id }}')"> <i class="fas fa-trash fa-sm"></i> </a>
+                <a class="btn btn-info btn-sm verticalButtons" title="{{ trans('determinations.destroy_determination') }}" onclick="destroyDetermination('{{ $determination->id }}')"> <i class="fas fa-trash fa-sm"></i> </a>
 
                 <form id="destroy_determination_{{ $determination->id }}" method="POST" action="{{ route('administrators/determinations/destroy', ['id' => $determination->id]) }}">
                     @csrf

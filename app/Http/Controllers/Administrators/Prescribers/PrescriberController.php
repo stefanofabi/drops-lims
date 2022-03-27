@@ -41,14 +41,23 @@ class PrescriberController extends Controller
             'page' => 'required|numeric|min:1',
         ]);
 
-        $offset = ($request->page - 1) * self::PER_PAGE;
-        $prescribers = $this->prescriberRepository->index($request->filter, $offset, self::PER_PAGE);
+        $prescribers = $this->prescriberRepository->index($request->filter);
 
         // Pagination
         $count_rows = $prescribers->count();
         $total_pages = ceil($count_rows / self::PER_PAGE);
         $paginate = $this->paginate($request->page, $total_pages, self::ADJACENTS);
         
+
+        if ($total_pages < $request->page) 
+        {
+            $offset = 0;
+            $request->page = 1;
+        } else 
+        {
+            $offset = ($request->page - 1) * self::PER_PAGE;
+        }
+
         return view('administrators/prescribers/index')
             ->with('data', $request->all())
             ->with('prescribers', $prescribers->skip($offset)->take(self::PER_PAGE))
@@ -163,7 +172,10 @@ class PrescriberController extends Controller
      */
     public function loadPrescribers(Request $request)
     {
-        
+        $request->validate([
+            'filter' => 'required|string'
+        ]);
+
         return $this->prescriberRepository->loadPrescribers($request->filter);
     }
 }
