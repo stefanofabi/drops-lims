@@ -21,7 +21,10 @@
         <meta name="author" content="Stefano Fabi" />
 
         <!-- Copyright -->
-        <meta name="copyright" content="SrLab" />
+        <meta name="copyright" content="Drops LIMS" />
+
+        <!-- Favicon -->
+        <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
 
         <!-- Used by ajax -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
