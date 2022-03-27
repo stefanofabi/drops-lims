@@ -10,7 +10,7 @@
 @endsection
 
 @section('title')
-    {{ trans('social_works.edit_plan') }}
+    {{ trans('plans.edit_plan') }}
 @endsection
 
 @section('menu')
@@ -24,7 +24,7 @@
 @endsection
 
 @section('content-title')
-    <i class="fas fa-archive"> </i> {{ trans('social_works.edit_plan') }}
+    <i class="fas fa-archive"> </i> {{ trans('plans.edit_plan') }}
 @endsection
 
 @section('content')

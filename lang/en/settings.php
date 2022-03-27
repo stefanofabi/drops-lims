@@ -20,5 +20,6 @@ return [
     'generate_reports' => 'Generate reports',
     'generate_report' => 'Generate report',
     'patients_flow' => 'Patients flow',
-
+    'statistics' => 'Statistics',
+    
 ];

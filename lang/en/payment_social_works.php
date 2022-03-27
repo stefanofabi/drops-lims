@@ -21,5 +21,8 @@ return [
     'amount' => 'Amount',
     'billing_period_required' => 'Billing period required',
     'payment_before_billing_period' => 'Payment cannot be made before the billing period',
+    'payment_created_succesfully' => 'Payment created sucessfully',
+    'payment_updated_succesfully' => 'Payment updated sucessfully',
+    'payment_deleted_succesfully' => 'Payment deleted sucessfully',
 
 ];

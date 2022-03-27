@@ -19,5 +19,8 @@ return [
     'nomenclator' => 'Nomenclator',
     'nomenclators_message' => 'The health nomenclators are a tool for use and permanent consultation for anyone linked to administrative management, specifically in the area of billing in health institutions.',
     'click_to_create_nomenclator' => 'Click here to create nomenclator',
-
+    'nomenclator_created_successfully' => 'Nomenclator created successfully',
+    'nomenclator_updated_successfully' => 'Nomenclator updated successfully',
+    'nomenclator_deleted_successfully' => 'Nomenclator deleted successfully',
+    
 ];

@@ -39,6 +39,6 @@ Route::group([
 
     Route::post('load_billing_periods', [
         '\App\Http\Controllers\Administrators\Settings\SocialWorks\BillingPeriodController',
-        'load_billing_periods',
+        'loadBillingPeriods',
     ])->name('load_billing_periods');
 });

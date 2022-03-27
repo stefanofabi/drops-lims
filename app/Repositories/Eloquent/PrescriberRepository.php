@@ -27,9 +27,7 @@ final class PrescriberRepository implements PrescriberRepositoryInterface
 
     public function create(array $data)
     {
-        $prescriber = new Prescriber($data);
-        
-        return $prescriber->save() ? $prescriber : null;
+        return $this->model->create($data);
     }
 
     public function update(array $data, $id)

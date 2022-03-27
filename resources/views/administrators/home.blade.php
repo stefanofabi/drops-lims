@@ -85,7 +85,7 @@
                             @can('see_statistics')
                                 <div class="col" style="text-align: center;">
                                     <a class="nav-link" style="color: black"
-                                       href="{{ route('administrators/statistics') }}">
+                                       href="{{ route('administrators/settings/statistics') }}">
                                         <h1>
                                             <i style="font-size: 8vw" class="fas fa-chart-bar"></i>
                                         </h1>

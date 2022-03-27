@@ -1,7 +1,7 @@
 @extends('administrators/settings/index')
 
 @section('title')
-{{ trans('social_works.plans') }}
+{{ trans('plans.plans') }}
 @endsection
 
 @section('js')
@@ -19,7 +19,7 @@
 <nav class="navbar">
 	<ul class="navbar-nav">
         <li class="nav-item">
-			<a class="nav-link" href="{{ route('administrators/settings/social_works/plans/create', ['social_work_id' => $social_work->id]) }}"> {{ trans('social_works.create_plan')}} </a>
+			<a class="nav-link" href="{{ route('administrators/settings/social_works/plans/create', ['social_work_id' => $social_work->id]) }}"> {{ trans('plans.create_plan')}} </a>
 		</li>
 
         <li class="nav-item">
@@ -30,7 +30,7 @@
 @endsection
 
 @section('content-title')
-<i class="fas fa-archive"> </i> {{ trans('social_works.plans') }}
+<i class="fas fa-archive"> </i> {{ trans('plans.plans') }}
 @endsection
 
 @section('content')
@@ -41,7 +41,7 @@
                 <tr>
                     <th> {{ trans('social_works.name') }} </th>
                     <th> {{ trans('nomenclators.nomenclator') }} </th>
-                    <th> {{ trans('social_works.nbu_price') }} </th>
+                    <th> {{ trans('plans.nbu_price') }} </th>
                     <th class="text-end"> {{ trans('forms.actions') }} </th>
                 </tr>
             </thead>
@@ -54,11 +54,11 @@
                     <td> ${{ $plan->nbu_price }} </td>
 
                     <td class="text-end">
-                        <a href="{{ route('administrators/settings/social_works/plans/edit', ['id' => $plan->id]) }}" class="btn btn-info btn-sm" title="{{ trans('social_works.edit_plan') }}">
+                        <a href="{{ route('administrators/settings/social_works/plans/edit', ['id' => $plan->id]) }}" class="btn btn-info btn-sm" title="{{ trans('plans.edit_plan') }}">
                             <i class="fas fa-edit fa-sm"> </i>
                         </a>
 
-                        <a class="btn btn-info btn-sm" title="{{ trans('social_works.destroy_plan') }}" onclick="destroyPlan('{{ $plan->id }}')">
+                        <a class="btn btn-info btn-sm" title="{{ trans('plans.destroy_plan') }}" onclick="destroyPlan('{{ $plan->id }}')">
                             <i class="fas fa-trash fa-sm"></i>
                         </a>
 

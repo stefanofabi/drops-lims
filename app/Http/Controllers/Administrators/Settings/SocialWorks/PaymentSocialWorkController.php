@@ -9,16 +9,10 @@ use App\Contracts\Repository\SocialWorkRepositoryInterface;
 use App\Contracts\Repository\PaymentSocialWorkRepositoryInterface;
 
 use Lang;
+use Session;
 
 class PaymentSocialWorkController extends Controller
 {
-    private const ATTRIBUTES = [
-        'payment_date',
-        'social_work_id',
-        'billing_period_id',
-        'amount',
-    ];
-
     /** @var \App\Contracts\Repository\SocialWorkRepositoryInterface */
     private $socialWorkRepository;
     
@@ -41,8 +35,8 @@ class PaymentSocialWorkController extends Controller
 
         $social_work = $this->socialWorkRepository->findOrFail($request->social_work_id);
         
-        $payments = $this->paymentSocialWorkRepository->getPaymentsFromSocialWork($social_work->id);
-
+        $payments = $social_work->payments;
+   
         return view('administrators.settings.social_works.payments.index')
             ->with('social_work', $social_work)
             ->with('payments', $payments);
@@ -79,9 +73,11 @@ class PaymentSocialWorkController extends Controller
             'billing_period_id' => 'required|numeric|min:1',
         ]);
 
-        if (! $this->paymentSocialWorkRepository->create($request->only(self::ATTRIBUTES))) {
+        if (! $this->paymentSocialWorkRepository->create($request->all())) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
+
+        Session::flash('success', [Lang::get('payment_social_works.payment_created_succesfully')]);
    
         return redirect()->action([PaymentSocialWorkController::class, 'index'], ['social_work_id' => $request->social_work_id]);
     }
@@ -130,10 +126,12 @@ class PaymentSocialWorkController extends Controller
             'billing_period_id' => 'required|numeric|min:1',
         ]);
 
-        if (! $this->paymentSocialWorkRepository->update($request->only(self::ATTRIBUTES), $id)) {
+        if (! $this->paymentSocialWorkRepository->update($request->all(), $id)) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
 
+        Session::flash('success', [Lang::get('payment_social_works.payment_updated_succesfully')]);
+   
         $social_work_id = $this->paymentSocialWorkRepository->findOrFail($id)->social_work_id;
 
         return redirect()->action([PaymentSocialWorkController::class, 'index'], ['social_work_id' => $social_work_id]);
@@ -154,6 +152,8 @@ class PaymentSocialWorkController extends Controller
         if (! $this->paymentSocialWorkRepository->delete($id)) {
             return back()->withErrors(Lang::get('forms.failed_transaction'));
         }
+
+        Session::flash('success', [Lang::get('payment_social_works.payment_deleted_succesfully')]);
 
         return redirect()->action([PaymentSocialWorkController::class, 'index'], ['social_work_id' => $social_work_id]);
     }

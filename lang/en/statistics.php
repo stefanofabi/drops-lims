@@ -20,5 +20,6 @@ return [
     'ended_date' => 'Ended date',
     'months' => 'Months',
     'subtitle_collection_from_month_to_month' => 'Collection from :initial_date to :ended_date',
-
+    'statistics_message' => 'Statistical charts are powerful data visualization tools that allow complex information to be represented in an accessible way.',
+        
 ];

@@ -8,14 +8,10 @@ use Illuminate\Http\Request;
 use App\Contracts\Repository\BillingPeriodRepositoryInterface;
 
 use Lang;
+use Session;
 
 class BillingPeriodController extends Controller
 {
-    private const ATTRIBUTES = [
-        'name',
-        'start_date',
-        'end_date',
-    ];
 
     /** @var \App\Contracts\Repository\BillingPeriodRepositoryInterface */
     private $billingPeriodRepository;
@@ -68,9 +64,11 @@ class BillingPeriodController extends Controller
             'end_date' => 'required|date',
         ]);
 
-        if (! $this->billingPeriodRepository->create($request->only(self::ATTRIBUTES))) {
+        if (! $billing_period = $this->billingPeriodRepository->create($request->all())) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
+
+        Session::flash('success', [Lang::get('billing_periods.billing_period_created_successfully')]);
 
         return redirect()->action([BillingPeriodController::class, 'index']);
     }
@@ -119,7 +117,7 @@ class BillingPeriodController extends Controller
             'end_date' => 'required|date',
         ]);
 
-        if (! $this->billingPeriodRepository->update($request->only(self::ATTRIBUTES), $id)) {
+        if (! $this->billingPeriodRepository->update($request->all(), $id)) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
  
@@ -139,6 +137,8 @@ class BillingPeriodController extends Controller
         if (!$this->billingPeriodRepository->delete($id)) {
             return back()->withErrors(Lang::get('forms.failed_transaction'));
         }
+
+        Session::flash('success', [Lang::get('billing_periods.billing_period_deleted_successfully')]);
  
         return redirect()->action([BillingPeriodController::class, 'index']);
     }
@@ -148,9 +148,13 @@ class BillingPeriodController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function load_billing_periods(Request $request)
+    public function loadBillingPeriods(Request $request)
     {
         //
+
+        $request->validate([
+            'filter' => 'required|string',
+        ]);
 
         return $this->billingPeriodRepository->loadBillingPeriods($request->filter);
     }

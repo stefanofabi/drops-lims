@@ -24,7 +24,6 @@ Route::group([
     require('administrators/prescribers/prescribers.php');
     require('administrators/determinations/determinations.php');
     require('administrators/protocols/protocols.php');
-    require('administrators/statistics/statistics.php');
 
     Route::get('home', ['\App\Http\Controllers\HomeController', 'adminHome'])->name('home');
 });

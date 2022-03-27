@@ -8,7 +8,7 @@
 <nav class="navbar">
 	<ul class="navbar-nav">
 	        <li class="nav-item">
-				<a class="nav-link" href="{{ route('administrators/settings/social_works/plans/index', ['social_work_id' => $social_work->id]) }}"> {{ trans('social_works.plans')}} </a>
+				<a class="nav-link" href="{{ route('administrators/settings/social_works/plans/index', ['social_work_id' => $social_work->id]) }}"> {{ trans('plans.plans')}} </a>
 			</li>
 
             <li class="nav-item">

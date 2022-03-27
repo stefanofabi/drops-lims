@@ -24,5 +24,7 @@ return [
     'start_date_after_end_date' => 'The start date cannot be after than the end date',
     'billing_periods_message' => 'The billing periods are comprised of a range of dates that help organize patient orders that are charged to social works and prepaids.',
     'click_to_create_billing_period' => 'Click here to create billing period',
+    'billing_period_created_successfully' => 'Billing period created successfully',
+    'billing_period_deleted_successfully' => 'Billing period deleted successfully',
     
 ];

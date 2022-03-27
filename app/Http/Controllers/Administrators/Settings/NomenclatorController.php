@@ -8,12 +8,10 @@ use Illuminate\Http\Request;
 use App\Contracts\Repository\NomenclatorRepositoryInterface;
 
 use Lang;
+use Session;
 
 class NomenclatorController extends Controller
 {
-    private const ATTRIBUTES = [
-        'name',
-    ];
 
     /** @var \App\Contracts\Repository\NomenclatorRepositoryInterface */
     private $nomenclatorRepository;
@@ -63,9 +61,11 @@ class NomenclatorController extends Controller
             'name' => 'required|string',
         ]);
 
-        if (! $this->nomenclatorRepository->create($request->only(self::ATTRIBUTES))) {
+        if (! $this->nomenclatorRepository->create($request->all())) {
                 return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
+
+        Session::flash('success', [Lang::get('nomenclators.nomenclator_created_successfully')]);
   
         return redirect()->action([NomenclatorController::class, 'index']);
     }
@@ -110,9 +110,11 @@ class NomenclatorController extends Controller
             'name' => 'required|string',
         ]);
         
-        if (! $this->nomenclatorRepository->update($request->only(self::ATTRIBUTES), $id)) {
+        if (! $this->nomenclatorRepository->update($request->all(), $id)) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
+  
+        Session::flash('success', [Lang::get('nomenclators.nomenclator_updated_successfully')]);
   
         return redirect()->action([NomenclatorController::class, 'index']);
     }
@@ -130,6 +132,8 @@ class NomenclatorController extends Controller
         if (! $this->nomenclatorRepository->delete($id)) {
             return back()->withErrors(Lang::get('forms.failed_transaction'));
         }
+        
+        Session::flash('success', [Lang::get('nomenclators.nomenclator_deleted_successfully')]);
       
         return redirect()->action([NomenclatorController::class, 'index']);
     }

@@ -46,7 +46,7 @@
 
             @forelse ($payments as $payment)
             <tr>
-                <td> {{ $payment->billing_period }} </td>
+                <td> {{ $payment->billing_period->name }} </td>
 
                 <td>
                     @if (!empty($payment->payment_date))

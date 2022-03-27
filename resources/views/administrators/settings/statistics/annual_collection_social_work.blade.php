@@ -1,4 +1,4 @@
-@extends('administrators/statistics/index')
+@extends('administrators/settings/statistics/index')
 
 @section('js')
 @parent

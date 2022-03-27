@@ -30,6 +30,6 @@ class SocialWork extends Model
      */
     public function payments()
     {
-        return $this->hasMany(PaymentSocialWork::class);
+        return $this->hasMany(PaymentSocialWork::class)->orderBy('payment_date', 'DESC');
     }
 }

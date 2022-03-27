@@ -10,16 +10,10 @@ use App\Contracts\Repository\NomenclatorRepositoryInterface;
 use App\Contracts\Repository\PlanRepositoryInterface;
 
 use Lang;
+use Session;
 
 class PlanController extends Controller
 {
-    private const ATTRIBUTES = [
-        'name',
-        'nbu_price',
-        'social_work_id',
-        'nomenclator_id',
-    ];
-
     /** @var \App\Contracts\Repository\SocialWorkRepositoryInterface */
     private $socialWorkRepository;
 
@@ -87,9 +81,11 @@ class PlanController extends Controller
             'nbu_price' => 'required|numeric',
         ]);
 
-        if (! $plan = $this->planRepository->create($request->only(self::ATTRIBUTES))) {
+        if (! $plan = $this->planRepository->create($request->all())) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
+
+        Session::flash('success', [Lang::get('plans.plan_created_successfully')]);
 
         return redirect()->action([PlanController::class, 'index'], ['social_work_id' => $plan->social_work_id]);
     }
@@ -140,11 +136,13 @@ class PlanController extends Controller
             'nbu_price' => 'required|numeric',
         ]);
     
-        if (! $this->planRepository->update($request->only(self::ATTRIBUTES), $id)) {
+        if (! $this->planRepository->update($request->all(), $id)) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
-
+  
         $social_work_id = $this->planRepository->findOrFail($id)->social_work_id;
+        
+        Session::flash('success', [Lang::get('plans.plan_updated_successfully')]);
         
         return redirect()->action([PlanController::class, 'index'], ['social_work_id' => $social_work_id]);
     }
@@ -164,6 +162,8 @@ class PlanController extends Controller
         if (! $this->planRepository->delete($id)) {
             return back()->withErrors(Lang::get('forms.failed_transaction'));
         }
+
+        Session::flash('success', [Lang::get('plans.plan_deleted_successfully')]);
 
         return redirect()->action([PlanController::class, 'index'], ['social_work_id' => $social_work_id]);
     }

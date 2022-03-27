@@ -9,13 +9,10 @@ use Illuminate\Http\Request;
 use App\Contracts\Repository\SocialWorkRepositoryInterface;
 
 use Lang;
+use Session;
 
 class SocialWorkController extends Controller
 {
-    private const ATTRIBUTES = [
-        'name',
-        'acronym',
-    ];
 
     /** @var \App\Contracts\Repository\SocialWorkRepositoryInterface */
     private $socialWorkRepository;
@@ -67,9 +64,11 @@ class SocialWorkController extends Controller
             'name' => 'required|string',
         ]);
         
-        if (! $this->socialWorkRepository->create($request->only(self::ATTRIBUTES))) {
+        if (! $this->socialWorkRepository->create($request->all())) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }      
+
+        Session::flash('success', [Lang::get('social_works.social_work_created_successfully')]);
 
         return redirect()->action([SocialWorkController::class, 'index']);
     }
@@ -116,9 +115,11 @@ class SocialWorkController extends Controller
             'name' => 'required|string',
         ]);
         
-        if (! $this->socialWorkRepository->update($request->only(self::ATTRIBUTES), $id)) {
+        if (! $this->socialWorkRepository->update($request->all(), $id)) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
+
+        Session::flash('success', [Lang::get('social_works.social_work_updated_successfully')]);
         
         return redirect()->action([SocialWorkController::class, 'index']);
     }
@@ -136,7 +137,9 @@ class SocialWorkController extends Controller
         if (! $this->socialWorkRepository->delete($id)) {
                 return back()->withErrors(Lang::get('forms.failed_transaction'));
         }
-    
+        
+        Session::flash('success', [Lang::get('social_works.social_work_deleted_successfully')]);
+
         return redirect()->action([SocialWorkController::class, 'index']);
     }
 
@@ -149,6 +152,10 @@ class SocialWorkController extends Controller
     public function getSocialWorks(Request $request)
     {
         //
+
+        $request->validate([
+            'filter' => 'required|string',
+        ]);
 
         return $this->socialWorkRepository->getSocialWorks($request->filter);
     }

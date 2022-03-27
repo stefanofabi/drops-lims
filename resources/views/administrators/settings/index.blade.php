@@ -8,7 +8,7 @@
 <nav class="navbar">
     <ul class="navbar-nav">
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('administrators/settings/nomenclators/index') }}"> {{ trans('social_works.nomenclators') }} </a>
+            <a class="nav-link" href="{{ route('administrators/settings/nomenclators/index') }}"> {{ trans('nomenclators.nomenclators') }} </a>
         </li>
 
         <li class="nav-item">
@@ -21,6 +21,10 @@
 
         <li class="nav-item">
             <a class="nav-link" href="{{ route('administrators/settings/generate_reports') }}"> {{ trans('settings.generate_reports') }} </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('administrators/settings/statistics') }}"> {{ trans('settings.statistics') }} </a>
         </li>
 
         <li class="nav-item">

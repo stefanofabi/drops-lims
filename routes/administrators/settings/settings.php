@@ -15,6 +15,7 @@ Route::group([
 ], function () {
 
     require('nomenclators.php');
+    require('statistics.php');
     require('social_works/social_works.php');
 
     Route::get('index', [
@@ -24,22 +25,22 @@ Route::group([
 
     Route::get('generate_reports', [
         '\App\Http\Controllers\Administrators\Settings\SettingController',
-        'generate_reports',
+        'getGenerateReportsView',
     ])->name('generate_reports');
 
     Route::post('protocols_report', [
         '\App\Http\Controllers\Administrators\Settings\SettingController',
-        'protocols_report',
+        'getProtocolsReport',
     ])->name('protocols_report');
 
     Route::post('patients_flow', [
         '\App\Http\Controllers\Administrators\Settings\SettingController',
-        'patients_flow',
+        'getPatientsFlow',
     ])->name('patients_flow');
 
     Route::post('debt_social_works', [
         '\App\Http\Controllers\Administrators\Settings\SettingController',
-        'debt_social_works',
+        'getDebtSocialWorks',
     ])->name('debt_social_works');
 
     Route::get('logs/system_logs', [

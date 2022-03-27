@@ -27,9 +27,7 @@ final class PatientRepository implements PatientRepositoryInterface
 
     public function create(array $data)
     {
-        $patient = new Patient($data);
-
-        return $patient->save() ? $patient : null;
+        return $this->model->create($data);
     }
 
     public function update(array $data, $id)
