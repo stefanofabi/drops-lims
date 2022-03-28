@@ -5,7 +5,7 @@
 @endsection
 
 @section('navbar')
-<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+<nav class="navbar navbar-expand-md navbar-light bg-white shadow rounded-3 mt-3 ms-2 me-2 ">
 		<div class="container-fluid">
             <a class="navbar-brand" href="@yield('home-href')"> <img src="{{ asset('images/small_logo.png') }}"> </a>
 

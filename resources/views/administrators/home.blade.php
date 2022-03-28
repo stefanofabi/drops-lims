@@ -47,14 +47,14 @@
             </div>  
 
             <div class="d-inline-block fs-1 ms-2">
-                @if ($debt_social_works->sum('amount') >= 1000000000)
-                {{ number_format($debt_social_works->sum('amount')/1000000000, 2, '.', ' ') }}B
-                @elseif ($debt_social_works->sum('amount') >= 1000000)
-                {{ number_format($debt_social_works->sum('amount')/1000000, 2, '.', ' ') }}M
-                @elseif ($debt_social_works->sum('amount') >= 1000)
-                {{ number_format($debt_social_works->sum('amount')/1000, 2, '.', ' ') }}K
+                @if ($debt_social_works >= 1000000000 || $debt_social_works <= -1000000000)
+                {{ number_format($debt_social_works/1000000000, 2, '.', '.') }}B
+                @elseif ($debt_social_works >= 1000000 || $debt_social_works <= -1000000)
+                {{ number_format($debt_social_works/1000000, 2, '.', '.') }}M
+                @elseif ($debt_social_works >= 1000 || $debt_social_works <= -1000)
+                {{ number_format($debt_social_works/1000, 2, '.', '.') }}K
                 @else
-                {{ number_format($debt_social_works->sum('amount'), 0, ',', ' ') }}
+                {{ number_format($debt_social_works, 0, ',', '.') }}
                 @endif
             </div>  
 

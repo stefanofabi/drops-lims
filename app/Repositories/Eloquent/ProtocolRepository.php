@@ -169,4 +169,20 @@ final class ProtocolRepository implements ProtocolRepositoryInterface
             ->where('closed', null)
             ->get();
     }
+
+    public function getSumOfAllSocialWorksProtocols() {
+        $practices = DB::table('practices')
+            ->select('protocol_id', DB::raw('SUM(amount) as total_amount'))
+            ->groupBy('protocol_id');
+      
+        return $this->model
+            ->select(DB::raw('SUM(practices.total_amount) as total_amount'))
+            ->joinSub($practices, 'practices', function ($join) {
+                $join->on('protocols.id', '=', 'practices.protocol_id');
+            })
+            ->whereNotNull('plan_id')
+            ->where('protocols.type', 'our')
+            ->get()
+            ->first();
+    }
 }

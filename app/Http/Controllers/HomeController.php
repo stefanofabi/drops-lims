@@ -56,9 +56,13 @@ class HomeController extends Controller
         $pending_protocols = $this->protocolRepository->getPendingProtocols();
 
         $practices_not_signed = $this->practiceRepository->getPracticesNotSigned();
+        
+ 
+        $protocols = $this->protocolRepository->getSumOfAllSocialWorksProtocols();
+        $payments = $this->paymentSocialWorkRepository->getSumOfAllPayments();
+        $debt_social_works = $protocols->total_amount - $payments->total_amount; 
     
-        $debt_social_works = $this->paymentSocialWorkRepository->getDebt();
-
+        
         return view('administrators/home')
             ->with('pending_protocols', $pending_protocols)
             ->with('practices_not_signed', $practices_not_signed)
