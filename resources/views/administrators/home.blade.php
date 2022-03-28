@@ -1,117 +1,66 @@
-@extends('layouts/app')
+@extends('administrators/default-template')
 
 @section('title')
-    {{ trans('home.dashboard') }}
+{{ trans('home.dashboard') }}
+@endsection
+
+@section('content-title')
+{{ trans('home.dashboard') }}
+@endsection
+
+@section('content-message')
+{{ trans('home.dashboard_message') }}
 @endsection
 
 @section('content')
+<div class="container">
+    <div class="row">
+        <div class="col bg-success ms-1 me-1 mt-3 rounded p-4">
+            <div class="d-inline-block fs-1">
+                <span class="fas fa-clock" ></span> 
+            </div>  
 
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header"> {{ trans('home.dashboard') }} </div>
+            <div class="d-inline-block fs-1 ms-2">
+                {{ $pending_protocols->count() }}
+            </div> 
+            
+            <br />
+            <span class="fs-6"> {{ trans('home.pending_protocols') }} </span>
+        </div>
 
-                    <div class="card-body">
-                        @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
-                            </div>
-                        @endif
+        <div class="col bg-danger ms-1 me-1 mt-3 rounded p-4">
+            <div class="d-inline-block fs-1">
+                <span class="fas fa-signature" ></span> 
+            </div>  
 
-                        <div class="row">
-                            @can('crud_patients')
-                                <div class="col" style="text-align: center;">
-                                    <a class="nav-link" style="color: black"
-                                       href="{{ route('administrators/patients/index', ['type' => 'human', 'page' => 1]) }}">
-                                        <h1>
-                                            <i style="font-size: 8vw" class="fas fa-user-injured"></i>
-                                        </h1>
+            <div class="d-inline-block fs-1 ms-2">
+                {{ $practices_not_signed->count() }}
+            </div>  
 
-                                        <br/>
-                                        {{ trans('patients.patients') }}
-                                    </a>
-                                </div>
-                            @endcan
+            <br />
+            <span class="fs-6"> {{ trans('home.practices_not_signed') }} </span>
+        </div>
 
-                            @can('crud_determinations')
-                                <div class="col" style="text-align: center;">
-                                    <a class="nav-link" style="color: black"
-                                       href="{{ route('administrators/determinations/index', ['page' => 1]) }}">
-                                        <h1>
-                                            <i style="font-size: 8vw" class="fas fa-syringe"></i>
-                                        </h1>
+        <div class="col bg-warning ms-1 me-1 mt-3 rounded p-4">
+            <div class="d-inline-block fs-1">
+                <span class="fas fa-dollar-sign" ></span> 
+            </div>  
 
-                                        <br/>
-                                        {{ trans('determinations.determinations') }}
-                                    </a>
-                                </div>
-                            @endcan
+            <div class="d-inline-block fs-1 ms-2">
+                @if ($debt_social_works->sum('amount') >= 1000000000)
+                {{ number_format($debt_social_works->sum('amount')/1000000000, 2, '.', ' ') }}B
+                @elseif ($debt_social_works->sum('amount') >= 1000000)
+                {{ number_format($debt_social_works->sum('amount')/1000000, 2, '.', ' ') }}M
+                @elseif ($debt_social_works->sum('amount') >= 1000)
+                {{ number_format($debt_social_works->sum('amount')/1000, 2, '.', ' ') }}K
+                @else
+                {{ number_format($debt_social_works->sum('amount'), 0, ',', ' ') }}
+                @endif
+            </div>  
 
-                            @can('crud_protocols')
-                                <div class="col" style="text-align: center;">
-                                    <a class="nav-link" style="color: black"
-                                       href="{{ route('administrators/protocols/index', ['page' => 1]) }}">
-                                        <h1>
-                                            <i style="font-size: 8vw" class="fas fa-file-medical"></i>
-                                        </h1>
-
-                                        <br/>
-                                        {{ trans('protocols.protocols') }}
-                                    </a>
-                                </div>
-
-                            @endcan
-                        </div>
-
-                        <div class="row mt-3">
-                            <div class="col">
-
-                                @can('crud_prescribers')
-                                    <div class="col" style="text-align: center;">
-                                        <a class="nav-link" style="color: black"
-                                           href="{{ route('administrators/prescribers/index', ['page' => 1]) }}">
-                                            <h1>
-                                                <i style="font-size: 8vw" class="fas fa-user-md"></i>
-                                            </h1>
-
-                                            <br/>
-                                            {{ trans('prescribers.prescribers') }}
-                                        </a>
-                                    </div>
-                                @endcan
-                            </div>
-
-                            @can('see_statistics')
-                                <div class="col" style="text-align: center;">
-                                    <a class="nav-link" style="color: black"
-                                       href="{{ route('administrators/settings/statistics') }}">
-                                        <h1>
-                                            <i style="font-size: 8vw" class="fas fa-chart-bar"></i>
-                                        </h1>
-
-                                        <br/>
-                                        {{ trans('home.statistics') }}
-                                    </a>
-                                </div>
-                            @endcan
-
-                            @can('settings')
-                                <div class="col" style="text-align: center;">
-                                    <a class="nav-link" style="color: black" href="{{ route('administrators/settings/index') }}">
-                                        <h1>
-                                            <i style="font-size: 8vw" class="fas fa-cogs"></i>
-                                        </h1>
-
-                                        <br/>
-                                        {{ trans('home.settings') }}
-                                    </a>
-                                </div>
-                            @endcan
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <br />
+            <span class="fs-6"> {{ trans('home.debt_social_works') }} </span>
         </div>
     </div>
+</div>
 @endsection

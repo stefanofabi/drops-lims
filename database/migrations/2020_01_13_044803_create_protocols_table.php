@@ -17,6 +17,7 @@ class CreateProtocolsTable extends Migration
             $table->id();
             $table->date('completion_date')->nullable();
             $table->string('observations')->nullable();
+            $table->timestamp('closed')->nullable();
             $table->enum('type', ['our', 'derived']);
 
             /*  ------- Our protocols -------   */

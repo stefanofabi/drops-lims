@@ -163,4 +163,10 @@ final class ProtocolRepository implements ProtocolRepositoryInterface
 
         return $count == 1 ? true : false;      
     }
+
+    public function getPendingProtocols() {
+        return $this->model
+            ->where('closed', null)
+            ->get();
+    }
 }

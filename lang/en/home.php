@@ -13,10 +13,9 @@ return [
     */
 
     'dashboard' => 'Dashboard',
-    'settings' => 'Settings',
-    'statistics' => 'Statistics',
-    'dashboard_admins' => 'Dashboard',
-    'results' => 'Results',
-    'reserve_shift' => 'Reserve shift',
-    'family_members' => 'Family members',
+    'pending_protocols' => 'pending protocols',
+    'practices_not_signed' => 'practices not signed',
+    'debt_social_works' => 'Debt social works',
+    'dashboard_message' => 'A dashboard is used to visually monitor, analyze and display some key indicators of your laboratory.',
+    
 ];

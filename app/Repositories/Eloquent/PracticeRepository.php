@@ -81,4 +81,12 @@ final class PracticeRepository implements PracticeRepositoryInterface
 
         return $amount;
     }
+
+    public function getPracticesNotSigned() 
+    {
+        return $this->model
+            ->leftJoin('sign_practices', 'practices.id', '=', 'sign_practices.practice_id')
+            ->where('sign_practices.practice_id', null)
+            ->get();
+    }
 }

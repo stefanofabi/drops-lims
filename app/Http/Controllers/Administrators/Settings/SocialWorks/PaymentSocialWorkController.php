@@ -15,6 +15,9 @@ class PaymentSocialWorkController extends Controller
 {
     /** @var \App\Contracts\Repository\SocialWorkRepositoryInterface */
     private $socialWorkRepository;
+
+    /** @var \App\Contracts\Repository\PaymentSocialWorkRepositoryInterface */
+    private $paymentSocialWorkRepository;
     
     public function __construct(
         SocialWorkRepositoryInterface $socialWorkRepository,
@@ -69,8 +72,7 @@ class PaymentSocialWorkController extends Controller
 
         $request->validate([
             'payment_date' => 'required|date',
-            'amount' => 'required|numeric',
-            'billing_period_id' => 'required|numeric|min:1',
+            'amount' => 'required|numeric|min:0.01',
         ]);
 
         if (! $this->paymentSocialWorkRepository->create($request->all())) {
@@ -122,8 +124,7 @@ class PaymentSocialWorkController extends Controller
 
         $request->validate([
             'payment_date' => 'required|date',
-            'amount' => 'required|numeric',
-            'billing_period_id' => 'required|numeric|min:1',
+            'amount' => 'required|numeric|min:0.01',
         ]);
 
         if (! $this->paymentSocialWorkRepository->update($request->all(), $id)) {

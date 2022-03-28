@@ -38,7 +38,7 @@ Route::group(['middleware' => ['permission:is_user', 'auth']], function () {
         require('patients/protocols.php');
         require('patients/family_members.php');
 
-        Route::get('home', ['\App\Http\Controllers\HomeController', 'index'])->name('home');
+        Route::get('home', ['\App\Http\Controllers\HomeController', 'patientHome'])->name('home');
     });
 });
 

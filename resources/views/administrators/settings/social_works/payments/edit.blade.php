@@ -94,7 +94,7 @@
                 <span class="input-group-text"> {{ trans('payment_social_works.amount') }} </span>
             </div>
 
-            <input type="number" step="0.01" class="form-control @error('amount') is-invalid @enderror" name="amount" value="{{ old('amount') ?? $payment->amount }}" required>
+            <input type="number" step="0.01" class="form-control @error('amount') is-invalid @enderror" name="amount" value="{{ old('amount') ?? $payment->amount }}" min="0" required>
 
             @error('amount')
             <span class="invalid-feedback" role="alert">

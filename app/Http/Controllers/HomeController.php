@@ -4,16 +4,36 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Contracts\Repository\ProtocolRepositoryInterface;
+use App\Contracts\Repository\PracticeRepositoryInterface;
+use App\Contracts\Repository\PaymentSocialWorkRepositoryInterface;
+
 class HomeController extends Controller
 {
+    /** @var \App\Contracts\Repository\ProtocolRepositoryInterface */
+    private $protocolRepository;
+
+    /** @var \App\Contracts\Repository\PracticeRepositoryInterface */
+    private $practiceRepository;
+
+    /** @var \App\Contracts\Repository\PaymentSocialWorkRepositoryInterface */
+    private $paymentSocialWorkRepository;
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct(
+        ProtocolRepositoryInterface $protocolRepository, 
+        PracticeRepositoryInterface $practiceRepository,
+        PaymentSocialWorkRepositoryInterface $paymentSocialWorkRepository,
+    ) {
         $this->middleware('auth');
+
+        $this->protocolRepository = $protocolRepository;
+        $this->practiceRepository = $practiceRepository;
+        $this->paymentSocialWorkRepository = $paymentSocialWorkRepository;
     }
 
     /**
@@ -21,7 +41,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function patientHome()
     {
         return view('patients/home');
     }
@@ -33,6 +53,15 @@ class HomeController extends Controller
      */
     public function adminHome()
     {
-        return view('administrators/home');
+        $pending_protocols = $this->protocolRepository->getPendingProtocols();
+
+        $practices_not_signed = $this->practiceRepository->getPracticesNotSigned();
+    
+        $debt_social_works = $this->paymentSocialWorkRepository->getDebt();
+
+        return view('administrators/home')
+            ->with('pending_protocols', $pending_protocols)
+            ->with('practices_not_signed', $practices_not_signed)
+            ->with('debt_social_works', $debt_social_works);
     }
 }

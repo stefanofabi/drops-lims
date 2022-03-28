@@ -57,4 +57,17 @@ final class PaymentSocialWorkRepository implements PaymentSocialWorkRepositoryIn
     {
         return $this->model->findOrFail($id);
     }
+
+    public function getDebt()
+    {
+        return $this->model
+            ->select('practices.id', 'practices.amount')
+            ->join('social_works', 'social_works.id', '=', 'payment_social_works.social_work_id')
+            ->join('plans', 'plans.social_work_id', '=', 'social_works.id')
+            ->join('protocols', 'protocols.plan_id', '=', 'plans.id')
+            ->join('practices', 'practices.protocol_id', '=', 'protocols.id')
+            ->where('protocols.type', 'our')
+            ->groupBy('practices.id', 'practices.amount')
+            ->get();
+    }
 }
