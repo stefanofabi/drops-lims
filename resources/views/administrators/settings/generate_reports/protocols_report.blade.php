@@ -2,10 +2,12 @@
     <div class="card-header"><h5> {{ trans('settings.protocols_report') }} </h5></div>
 
     <div class="card-body">
+        {{ trans('settings.protocols_report_message') }}
+
         <form method="post" target="_blank" action="{{ route('administrators/settings/protocols_report') }}">
             @csrf
 
-            <div class="input-group col-md-6 input-form">
+            <div class="input-group col-md-6 input-form mt-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text"> {{ trans('statistics.initial_date') }} </span>
                 </div>

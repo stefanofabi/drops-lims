@@ -29,5 +29,5 @@ return [
     'social_work_updated_successfully' => 'Social work updated successfully',
     'social_work_deleted_successfully' => 'Social work deleted successfully',
     'acronym' => 'Acronym',
-
+    
 ];

@@ -2,10 +2,12 @@
     <div class="card-header"><h5> {{ trans('settings.debt_social_works') }} </h5></div>
 
     <div class="card-body">
+        {{ trans('settings.debt_social_works_message') }}
+
         <form method="post" target="_blank" action="{{ route('administrators/settings/debt_social_works') }}">
             @csrf
 
-            <div class="input-group col-md-6 input-form">
+            <div class="input-group col-md-6 input-form mt-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text"> {{ trans('billing_periods.start_date') }} </span>
                 </div>
