@@ -7,7 +7,7 @@
 @section('navbar')
 <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
 		<div class="container-fluid">
-            <a class="navbar-brand" href="@yield('home-href')"> <img width="100" height="30" src="{{ asset('images/logo.png') }}"> </a>
+            <a class="navbar-brand" href="@yield('home-href')"> <img src="{{ asset('images/small_logo.png') }}"> </a>
 
 			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
 				<span class="navbar-toggler-icon"></span>
