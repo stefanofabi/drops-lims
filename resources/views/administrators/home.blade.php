@@ -13,7 +13,7 @@
 @endsection
 
 @section('content')
-<div class="container">
+<div class="ms-2 me-2">
     <div class="row">
         <div class="col bg-success ms-1 me-1 mt-3 rounded p-4">
             <div class="d-inline-block fs-1">

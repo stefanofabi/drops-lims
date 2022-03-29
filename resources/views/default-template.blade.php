@@ -68,9 +68,9 @@
     </head>
 
     <body class="bg-light">
-        <!-- Column from menu-->
         <div class="container-fluid">
             <div class="row">
+                <!-- Column from menu-->
                 <div class="col-md-3 mt-3">
                     @section('menu')
                     @show
