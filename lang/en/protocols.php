@@ -59,4 +59,10 @@ return [
     'please_enter_practice' => 'Please enter a practice',
     'select_practices_to_print' => 'Select one or more practices to print',
     'expired_social_work' => 'Expired social work. Request a new credential from the patient',
+    'close_protocol' => 'Close protocol',
+    'protocol_closed_successfully' => 'Protocol closed successfully',
+    'new' => 'New',
+    'closed' => 'Closed',
+    'protocol_closed_message' => 'The protocol has been closed and cannot be modified for any reason.',
+    
 ];

@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 class CreateProtocolsTable extends Migration
 {
@@ -15,7 +16,7 @@ class CreateProtocolsTable extends Migration
     {
         Schema::create('protocols', function (Blueprint $table) {
             $table->id();
-            $table->date('completion_date')->nullable();
+            $table->date('completion_date')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->string('observations')->nullable();
             $table->timestamp('closed')->nullable();
             $table->enum('type', ['our', 'derived']);
@@ -25,7 +26,7 @@ class CreateProtocolsTable extends Migration
             $table->unsignedBigInteger('plan_id')->nullable();
             $table->unsignedBigInteger('prescriber_id')->nullable();
             $table->date('withdrawal_date')->nullable();
-            $table->unsignedInteger('quantity_orders')->default(0);
+            $table->unsignedInteger('quantity_orders')->nullable();
             $table->string('diagnostic')->nullable();
             $table->unsignedBigInteger('billing_period_id')->nullable();
 

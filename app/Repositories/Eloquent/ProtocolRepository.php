@@ -69,7 +69,7 @@ final class ProtocolRepository implements ProtocolRepositoryInterface
     {
 
         return $this->model
-            ->select('protocols.id', 'protocols.completion_date', 'protocols.type', 
+            ->select('protocols.id', 'protocols.completion_date', 'protocols.type', 'protocols.closed',
                 DB::raw('COALESCE(patients.id, derived_patients.id) as patient_id'),
                 DB::raw('COALESCE(patients.full_name, derived_patients.full_name) as patient')
             )
@@ -184,5 +184,11 @@ final class ProtocolRepository implements ProtocolRepositoryInterface
             ->where('protocols.type', 'our')
             ->get()
             ->first();
+    }
+
+    public function closeProtocol($id) {
+        $protocol = $this->model->findOrFail($id);
+
+        return $protocol->update(['closed' => date('Y-m-d H:m:s')]);
     }
 }

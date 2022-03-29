@@ -66,25 +66,9 @@ class ProtocolController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($type_protocol)
+    public function create()
     {
         //
-
-        switch ($type_protocol) 
-        {
-            case 'our': 
-            {
-                $redirect = redirect()->action([OurProtocolController::class, 'create']);
-                break;
-            }
-
-            case 'derived': 
-                {
-                    break;
-                }
-        }
-
-        return $redirect; 
     }
 
     /**

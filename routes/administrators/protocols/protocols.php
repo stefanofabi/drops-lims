@@ -9,6 +9,8 @@
 |
 */
 
+use App\Http\Controllers\Administrators\Protocols\ProtocolController;
+
 Route::group([
     'middleware' => 'permission:crud_protocols',
     'prefix' => 'protocols',
@@ -18,8 +20,5 @@ Route::group([
     require('our_protocols.php');
     require('practices.php');
     
-    Route::get('protocols/index', [
-        '\App\Http\Controllers\Administrators\Protocols\ProtocolController',
-        'index',
-    ])->name('index');
+    Route::get('index', [ProtocolController::class, 'index'])->name('index');
 });

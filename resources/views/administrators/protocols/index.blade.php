@@ -66,8 +66,10 @@
 			<td> 
 				{{ $protocol->id }} 
 
-				@if (date('Y-m-d') == $protocol->completion_date) 
-				<span class="badge bg-success bg-sm">New</span>
+				@if (! empty($protocol->closed))
+				<span class="badge bg-warning bg-sm"> {{ trans('protocols.closed') }} </span>
+				@elseif (date('Y-m-d') == $protocol->completion_date) 
+				<span class="badge bg-success bg-sm"> {{ trans('protocols.new') }} </span>
 				@endif 
 			</td>
 

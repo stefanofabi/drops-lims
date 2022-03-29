@@ -14,6 +14,7 @@ use App\Laboratory\Prints\Worksheets\PrintWorksheetContext;
 use App\Laboratory\Prints\Protocols\Our\PrintOurProtocolContext;
 
 use Lang;
+use Session;
 
 class OurProtocolController extends Controller
 {
@@ -49,16 +50,6 @@ class OurProtocolController extends Controller
         $this->billingPeriodRepository = $billingPeriodRepository;
         $this->printWorksheetContext = $printWorksheetContext;
         $this->printOurProtocolContext = $printOurProtocolContext;
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
     }
 
     /**
@@ -147,8 +138,6 @@ class OurProtocolController extends Controller
         
         $request->validate([
             'completion_date' => 'required|date',
-            'plan_id' => 'required|numeric|min:1',
-            'prescriber_id' => 'required|numeric|min:1',
             'quantity_orders' => 'required|numeric|min:0',
         ]);
         
@@ -212,4 +201,15 @@ class OurProtocolController extends Controller
         return $this->printWorksheetContext->printWorksheet($protocol_id, $filter_practices);
     }
 
+    public function closeProtocol($id)
+    {
+        if (! $this->protocolRepository->closeProtocol($id))
+        {
+            return redirect()->back()->withErrors(Lang::get('forms.failed_transaction'));
+        }
+
+        Session::flash('success', [Lang::get('protocols.protocol_closed_successfully')]);
+
+        return redirect()->action([OurProtocolController::class, 'edit'], ['id' => $id]);
+    }
 }

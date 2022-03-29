@@ -83,12 +83,25 @@
 
         $("#submitButton").removeAttr('disabled');
     }
+    
+    @if (empty($protocol->closed))
+    function closeProtocol()
+    {
+        if (confirm("{{ trans('forms.confirm') }}")) 
+        {
+            $('#close_protocol').submit();
+        }
+
+        return false;
+    }
+    @endif
 </script>
 @endsection
 
 @section('menu')
 <nav class="navbar">
     <ul class="navbar-nav">
+        @if (empty($protocol->closed))
         @can('crud_practices')
         <li class="nav-item">
             <a class="nav-link" href="{{ route('administrators/protocols/our/add_practices', ['protocol_id' => $protocol->id]) }}"> {{ trans('protocols.add_practices') }} </a>
@@ -100,7 +113,8 @@
             <a class="nav-link" target="_blank" href="{{ route('administrators/protocols/our/print_worksheet', ['id' => $protocol->id]) }}"> {{ trans('protocols.print_worksheet') }} </a>
         </li>
         @endcan
-
+        @endif
+        
         @can('print_protocols')
         <li class="nav-item">
             <a class="nav-link" target="_blank" href="{{ route('administrators/protocols/our/print', ['id' => $protocol->id]) }}"> {{ trans('protocols.print_report') }} </a>
@@ -108,10 +122,22 @@
         @endcan
 
         @can('crud_patients')
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('administrators/patients/edit', ['id' => $protocol->patient_id]) }}"> {{ trans('protocols.see_patient') }} </a>
-            </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('administrators/patients/edit', ['id' => $protocol->patient_id]) }}"> {{ trans('protocols.see_patient') }} </a>
+        </li>
         @endcan
+
+        @if (empty($protocol->closed))
+        <li class="nav-item">
+            <a class="nav-link" href="#" onclick="closeProtocol()"> {{ trans('protocols.close_protocol') }} </a>
+
+            <form method="post" action="{{ route('administrators/protocols/our/close', ['id' => $protocol->id]) }}" id="close_protocol">
+                @csrf    
+                
+                <input class="d-none" type="submit">
+            </form>
+        </li>
+        @endif
     </ul>
 </nav>
 @endsection
@@ -122,6 +148,7 @@
 
 @section('content')
 @if (sizeof($errors) == 0)
+    @if (empty($protocol->closed))
 	<div id="securityMessage" class="alert alert-info fade show mt-3">
 		<button type="submit" onclick="enableSubmitForm()" class="btn btn-info btn-sm">
 			<i class="fas fa-lock-open"></i>
@@ -129,6 +156,11 @@
 
 		{{ trans('protocols.protocol_blocked') }}
 	</div>
+    @else
+    <div class="alert alert-warning fade show mt-3">
+		{{ trans('protocols.protocol_closed_message') }}
+	</div>    
+    @endif
 @endif
 
     <form method="post" action="{{ route('administrators/protocols/our/update', ['id' => $protocol->id]) }}">
@@ -155,7 +187,7 @@
                     </div>
 
                     <input type="hidden" name="plan_id" id="plan" value="{{ old('plan_id') ?? $protocol->plan_id }}">
-                    <input type="text" class="form-control" name="social_work_name" id="socialWorkAutoComplete" placeholder="{{ trans('forms.start_typing') }}" value="{{ old('social_work_name') ?? $protocol->plan->social_work->name ?? '' }}" required readonly>
+                    <input type="text" class="form-control" name="social_work_name" id="socialWorkAutoComplete" placeholder="{{ trans('forms.start_typing') }}" value="{{ old('social_work_name') ?? $protocol->plan->social_work->name ?? '' }}" readonly>
                 </div>
 
                 <div class="input-group mt-2">
@@ -221,6 +253,8 @@
             </div>
         </div>
 
+        @if (empty($protocol->closed))
         <input type="submit" class="btn btn-lg btn-primary mt-3" id="submitButton" value="{{ trans('forms.save') }}" disabled>
+        @endif
     </form>
 @endsection

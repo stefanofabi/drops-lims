@@ -20,6 +20,7 @@ class Protocol extends Model
     protected $fillable = [
         'completion_date', 
         'observations',
+        'closed',
         'type',
     
         // Our protocols
