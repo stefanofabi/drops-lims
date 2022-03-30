@@ -20,7 +20,8 @@ Route::controller(PracticeController::class)
 
     Route::get('edit/{id}', 'edit')
         ->name('edit')
-        ->where('id', '[1-9][0-9]*');
+        ->where('id', '[1-9][0-9]*')
+        ->middleware('verify_closed_protocol_practices');
 
     Route::post('store', 'store')
         ->name('store')
@@ -28,19 +29,22 @@ Route::controller(PracticeController::class)
     
     Route::get('destroy/{id}', 'destroy')
         ->name('destroy')
-        ->where('id', '[1-9][0-9]*');
+        ->where('id', '[1-9][0-9]*')
+        ->middleware('verify_closed_protocol_practices');
 
     Route::post('find', 'loadPractices')
         ->name('load_practices');
 
     Route::put('inform_results/{practice_id}', 'informResults')
         ->name('inform_results')
-        ->where('practice_id', '[1-9][0-9]*');
+        ->where('practice_id', '[1-9][0-9]*')
+        ->middleware('verify_closed_protocol_practices');
 
-    Route::put('sign/{practice_id}', 'sign',)
+    Route::put('sign/{practice_id}', 'sign')
         ->name('sign')
         ->where('practice_id', '[1-9][0-9]*')
-        ->middleware('permission:sign_practices');
+        ->middleware('permission:sign_practices')
+        ->middleware('verify_closed_protocol_practices');
 
     Route::post('results', 'getResults')
         ->name('results');
