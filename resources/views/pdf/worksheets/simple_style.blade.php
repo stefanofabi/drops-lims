@@ -65,7 +65,7 @@
          </tr>
 
         <tr>
-            <td> {{ trans('prescribers.prescriber') }}: {{ $protocol->prescriber->full_name }} </td>
+            <td> {{ trans('prescribers.prescriber') }}: {{ $protocol->prescriber->full_name ?? trans('social_works.particular') }} </td>
             <td>
 
                 {{ trans('patients.sex') }}:
@@ -86,7 +86,7 @@
         </tr>
 
         <tr>
-            <td> {{ trans('social_works.social_work') }}: {{ $protocol->plan->social_work->name }} </td>
+            <td> {{ trans('social_works.social_work') }}: {{ $protocol->plan->social_work->name ?? trans('social_works.particular') }} </td>
             <td>
                 {{ trans('patients.phone') }}:
 

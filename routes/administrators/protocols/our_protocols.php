@@ -39,9 +39,12 @@ Route::controller(OurProtocolController::class)
         Route::get('print/{id}', 'printProtocol')
             ->name('print')
             ->where('id', '[1-9][0-9]*')
-            ->middleware('permission:print_protocols');
+            ->middleware('permission:print_protocols')
+            ->middleware('verify_all_practices_signed_or_fail');
 
-        Route::post('close/{id}', 'closeProtocol')->name('close')
+        Route::post('close/{id}', 'closeProtocol')
+            ->name('close')
             ->where('id', '[1-9][0-9]*')
-            ->middleware('verify_closed_protocol');
+            ->middleware('verify_closed_protocol')
+            ->middleware('verify_all_practices_signed');
     });
