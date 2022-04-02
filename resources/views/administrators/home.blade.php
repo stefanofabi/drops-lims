@@ -15,7 +15,7 @@
 @section('content')
 <div class="ms-2 me-2">
     <div class="row">
-        <div class="col bg-success ms-1 me-1 mt-3 rounded p-4">
+        <div class="col-md bg-success ms-1 me-1 mt-3 rounded p-4">
             <div class="d-inline-block fs-1">
                 <span class="fas fa-clock" ></span> 
             </div>  
@@ -28,7 +28,7 @@
             <span class="fs-6"> {{ trans('home.pending_protocols') }} </span>
         </div>
 
-        <div class="col bg-danger ms-1 me-1 mt-3 rounded p-4">
+        <div class="col-md bg-danger ms-1 me-1 mt-3 rounded p-4">
             <div class="d-inline-block fs-1">
                 <span class="fas fa-signature" ></span> 
             </div>  
@@ -41,7 +41,7 @@
             <span class="fs-6"> {{ trans('home.practices_not_signed') }} </span>
         </div>
 
-        <div class="col bg-warning ms-1 me-1 mt-3 rounded p-4">
+        <div class="col-md bg-warning ms-1 me-1 mt-3 rounded p-4">
             <div class="d-inline-block fs-1">
                 <span class="fas fa-dollar-sign" ></span> 
             </div>  

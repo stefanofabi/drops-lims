@@ -1,7 +1,7 @@
 @extends('administrators/default-template')
 
 @section('title')
-    {{ trans('protocols.edit_protocol') }} #{{ $protocol->id }}
+    {{ trans('protocols.add_practices_for_protocol') }} #{{ $protocol->id }}
 @endsection
 
 @section('active_protocols', 'active')
