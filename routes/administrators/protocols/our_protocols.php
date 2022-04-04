@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\Administrators\Protocols\OurProtocolController;
 
-
 Route::controller(OurProtocolController::class)
     ->prefix('our')
     ->as('our/')

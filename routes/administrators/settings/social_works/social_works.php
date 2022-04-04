@@ -9,6 +9,8 @@
 |
 */
 
+use App\Http\Controllers\Administrators\Settings\SocialWorks\SocialWorkController;
+
 Route::group([
     'prefix' => 'social_works',
     'as' => 'social_works/',
@@ -18,39 +20,31 @@ Route::group([
     require('payments_social_works.php');
     require('billing_periods.php');
 
-    Route::get('index', [
-        '\App\Http\Controllers\Administrators\Settings\SocialWorks\SocialWorkController',
-        'index',
-    ])->name('index');
+    Route::controller(SocialWorkController::class)
+    ->group(function () {  
 
-    Route::get('create', [
-        '\App\Http\Controllers\Administrators\Settings\SocialWorks\SocialWorkController',
-        'create',
-    ])->name('create');
+        Route::get('index', 'index')
+            ->name('index');
 
-    Route::post('store', [
-        '\App\Http\Controllers\Administrators\Settings\SocialWorks\SocialWorkController',
-        'store',
-    ])->name('store');
+        Route::get('create', 'create')
+            ->name('create');
 
-    Route::get('edit/{id}', [
-        '\App\Http\Controllers\Administrators\Settings\SocialWorks\SocialWorkController',
-        'edit',
-    ])->name('edit')->where('id', '[1-9][0-9]*');
+        Route::post('store', 'store')
+            ->name('store');
 
-    Route::put('update/{id}', [
-        '\App\Http\Controllers\Administrators\Settings\SocialWorks\SocialWorkController',
-        'update',
-    ])->name('update')->where('id', '[1-9][0-9]*');
+        Route::get('edit/{id}', 'edit')
+            ->name('edit')
+            ->where('id', '[1-9][0-9]*');
 
-    Route::delete('destroy/{id}', [
-        '\App\Http\Controllers\Administrators\Settings\SocialWorks\SocialWorkController',
-        'destroy',
-    ])->name('destroy')->where('id', '[1-9][0-9]*');
+        Route::put('update/{id}', 'update')
+            ->name('update')
+            ->where('id', '[1-9][0-9]*');
 
-    Route::post('get-social-works', [
-        '\App\Http\Controllers\Administrators\Settings\SocialWorks\SocialWorkController',
-        'getSocialWorks',
-    ])->name('getSocialWorks');
+        Route::delete('destroy/{id}', 'destroy')
+            ->name('destroy')
+            ->where('id', '[1-9][0-9]*');
 
+        Route::post('get-social-works', 'getSocialWorks')
+            ->name('getSocialWorks');
+    });
 });

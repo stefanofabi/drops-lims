@@ -53,11 +53,11 @@ class PlanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($social_work_id)
+    public function create(Request $request)
     {
         //
 
-        $social_work =  $this->socialWorkRepository->findOrFail($social_work_id);
+        $social_work =  $this->socialWorkRepository->findOrFail($request->social_work_id);
         
         $nomenclators = $this->nomenclatorRepository->all();
 

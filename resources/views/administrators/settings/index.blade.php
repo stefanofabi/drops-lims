@@ -24,7 +24,7 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('administrators/settings/statistics') }}"> {{ trans('settings.statistics') }} </a>
+            <a class="nav-link" href="{{ route('administrators/settings/statistics/index') }}"> {{ trans('settings.statistics') }} </a>
         </li>
 
         <li class="nav-item">

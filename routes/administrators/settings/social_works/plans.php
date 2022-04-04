@@ -1,37 +1,30 @@
 <?php
 
-Route::group([
-    'prefix' => 'plans',
-    'as' => 'plans/',
-], function () {
+use App\Http\Controllers\Administrators\Settings\SocialWorks\PlanController;
 
-    Route::get('index', [
-        '\App\Http\Controllers\Administrators\Settings\SocialWorks\PlanController',
-        'index',
-    ])->name('index');
+Route::controller(PlanController::class)
+    ->prefix('plans')
+    ->as('plans/')
+    ->group(function () { 
 
-    Route::get('create/{social_work_id}', [
-        '\App\Http\Controllers\Administrators\Settings\SocialWorks\PlanController',
-        'create',
-    ])->name('create')->where('social_work_id', '[1-9][0-9]*');
+        Route::get('index', 'index')
+            ->name('index');
 
-    Route::post('store', [
-        '\App\Http\Controllers\Administrators\Settings\SocialWorks\PlanController',
-        'store',
-    ])->name('store');
+        Route::get('create', 'create')
+            ->name('create');
 
-    Route::get('edit/{id}', [
-        '\App\Http\Controllers\Administrators\Settings\SocialWorks\PlanController',
-        'edit',
-    ])->name('edit')->where('id', '[1-9][0-9]*');
+        Route::post('store', 'store')
+            ->name('store');
 
-    Route::put('update/{id}', [
-        '\App\Http\Controllers\Administrators\Settings\SocialWorks\PlanController',
-        'update',
-    ])->name('update')->where('id', '[1-9][0-9]*');
+        Route::get('edit/{id}', 'edit')
+            ->name('edit')
+            ->where('id', '[1-9][0-9]*');
 
-    Route::delete('destroy/{id}', [
-        '\App\Http\Controllers\Administrators\Settings\SocialWorks\PlanController',
-        'destroy',
-    ])->name('destroy')->where('id', '[1-9][0-9]*');
-});
+        Route::put('update/{id}', 'update')
+            ->name('update')
+            ->where('id', '[1-9][0-9]*');
+
+        Route::delete('destroy/{id}', 'destroy')
+            ->name('destroy')
+            ->where('id', '[1-9][0-9]*');
+    });

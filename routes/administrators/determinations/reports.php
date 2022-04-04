@@ -9,39 +9,32 @@
 |
 */
 
-Route::group([
-    'middleware' => 'permission:crud_reports',
-    'prefix' => 'reports',
-    'as' => 'reports/',
-], function () {
+use App\Http\Controllers\Administrators\Determinations\ReportController;
 
-    Route::get('index', [
-        '\App\Http\Controllers\Administrators\Determinations\ReportController',
-        'index',
-    ])->name('index');
+Route::controller(ReportController::class)
+    ->prefix('reports')
+    ->as('reports/')
+    ->middleware('permission:crud_reports')
+    ->group(function () {   
 
-    Route::get('create', [
-        '\App\Http\Controllers\Administrators\Determinations\ReportController',
-        'create',
-    ])->name('create');
+        Route::get('index', 'index')
+            ->name('index');
 
-    Route::post('store', [
-        '\App\Http\Controllers\Administrators\Determinations\ReportController',
-        'store',
-    ])->name('store');
+        Route::get('create', 'create')
+            ->name('create');
 
-    Route::get('edit/{id}', [
-        '\App\Http\Controllers\Administrators\Determinations\ReportController',
-        'edit',
-    ])->name('edit')->where('id', '[1-9][0-9]*');
+        Route::post('store', 'store')
+            ->name('store');
 
-    Route::put('update/{id}', [
-        '\App\Http\Controllers\Administrators\Determinations\ReportController',
-        'update',
-    ])->name('update')->where('id', '[1-9][0-9]*');
+        Route::get('edit/{id}', 'edit')
+            ->name('edit')
+            ->where('id', '[1-9][0-9]*');
 
-    Route::delete('destroy/{id}', [
-        '\App\Http\Controllers\Administrators\Determinations\ReportController',
-        'destroy',
-    ])->name('destroy')->where('id', '[1-9][0-9]*');
-});
+        Route::put('update/{id}', 'update')
+            ->name('update')
+            ->where('id', '[1-9][0-9]*');
+
+        Route::delete('destroy/{id}', 'destroy')
+            ->name('destroy')
+            ->where('id', '[1-9][0-9]*');
+    });

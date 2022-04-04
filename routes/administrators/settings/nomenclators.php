@@ -9,38 +9,31 @@
 |
 */
 
-Route::group([
-    'prefix' => 'nomenclators',
-    'as' => 'nomenclators/',
-], function () {
+use App\Http\Controllers\Administrators\Settings\NomenclatorController;
 
-    Route::get('index', [
-        '\App\Http\Controllers\Administrators\Settings\NomenclatorController',
-        'index',
-    ])->name('index');
+Route::controller(NomenclatorController::class)
+    ->prefix('nomenclators')
+    ->as('nomenclators/')
+    ->group(function () {   
 
-    Route::get('create', [
-        '\App\Http\Controllers\Administrators\Settings\NomenclatorController',
-        'create',
-    ])->name('create');
+        Route::get('index', 'index')
+            ->name('index');
 
-    Route::post('store', [
-        '\App\Http\Controllers\Administrators\Settings\NomenclatorController',
-        'store',
-    ])->name('store');
+        Route::get('create', 'create')
+            ->name('create');
 
-    Route::get('edit/{id}', [
-        '\App\Http\Controllers\Administrators\Settings\NomenclatorController',
-        'edit',
-    ])->name('edit')->where('id', '[1-9][0-9]*');
+        Route::post('store', 'store')
+            ->name('store');
 
-    Route::put('update/{id}', [
-        '\App\Http\Controllers\Administrators\Settings\NomenclatorController',
-        'update',
-    ])->name('update')->where('id', '[1-9][0-9]*');
+        Route::get('edit/{id}', 'edit')
+            ->name('edit')
+            ->where('id', '[1-9][0-9]*');
 
-    Route::delete('destroy/{id}', [
-        '\App\Http\Controllers\Administrators\Settings\NomenclatorController',
-        'destroy',
-    ])->name('destroy')->where('id', '[1-9][0-9]*');
-});
+        Route::put('update/{id}', 'update')
+            ->name('update')
+            ->where('id', '[1-9][0-9]*');
+
+        Route::delete('destroy/{id}', 'destroy')
+            ->name('destroy')
+            ->where('id', '[1-9][0-9]*');
+    });

@@ -9,43 +9,35 @@
 |
 */
 
-Route::group([
-    'middleware' => 'permission:crud_prescribers',
-    'prefix' => 'prescribers',
-    'as' => 'prescribers/',
-], function () {
+use App\Http\Controllers\Administrators\Prescribers\PrescriberController;
 
-    Route::get('index', ['\App\Http\Controllers\Administrators\Prescribers\PrescriberController', 'index'])
-    ->name('index');
+Route::controller(PrescriberController::class)
+    ->prefix('prescribers')
+    ->as('prescribers/')
+    ->middleware('permission:crud_prescribers')
+    ->group(function () {   
 
-    Route::get('create', [
-        '\App\Http\Controllers\Administrators\Prescribers\PrescriberController',
-        'create',
-    ])->name('create');
+        Route::get('index', 'index')
+            ->name('index');
 
-    Route::post('store', [
-        '\App\Http\Controllers\Administrators\Prescribers\PrescriberController',
-        'store',
-    ])->name('store');
+        Route::get('create', 'create')
+            ->name('create');
 
-    Route::get('edit/{id}', [
-        '\App\Http\Controllers\Administrators\Prescribers\PrescriberController',
-        'edit',
-    ])->name('edit')->where('id', '[1-9][0-9]*');
-    
-    Route::put('update/{id}', [
-        '\App\Http\Controllers\Administrators\Prescribers\PrescriberController',
-        'update',
-    ])->name('update')->where('id', '[1-9][0-9]*');
+        Route::post('store', 'store')
+            ->name('store');
 
-    Route::delete('destroy/{id}', [
-        '\App\Http\Controllers\Administrators\Prescribers\PrescriberController',
-        'destroy',
-    ])->name('destroy')->where('id', '[1-9][0-9]*');
-    
-    Route::post('load-prescribers', [
-        '\App\Http\Controllers\Administrators\Prescribers\PrescriberController',
-        'loadPrescribers',
-    ])->name('load_prescribers');
+        Route::get('edit/{id}', 'edit')
+            ->name('edit')
+            ->where('id', '[1-9][0-9]*');
+        
+        Route::put('update/{id}', 'update')
+            ->name('update')
+            ->where('id', '[1-9][0-9]*');
 
-});
+        Route::delete('destroy/{id}', 'destroy')
+            ->name('destroy')
+            ->where('id', '[1-9][0-9]*');
+        
+        Route::post('load-prescribers', 'loadPrescribers')
+            ->name('load_prescribers');
+    });

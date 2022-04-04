@@ -9,46 +9,46 @@
 |
 */
 
-Route::group([
-    'middleware' => 'permission:crud_patients',
-    'prefix' => 'patients',
-    'as' => 'patients/',
-], function () {
-    
-    Route::get('index', ['\App\Http\Controllers\Administrators\Patients\PatientController', 'index'])
-    ->name('index');
+use App\Http\Controllers\Administrators\Patients\PatientController;
+use App\Http\Controllers\Administrators\Patients\SecurityCodeController;
 
-    Route::get('create/{type}', [
-        '\App\Http\Controllers\Administrators\Patients\PatientController',
-        'create',
-    ])->name('create')
-    ->where('type', 'animal|human|industrial');
+Route::controller(PatientController::class)
+    ->prefix('patients')
+    ->as('patients/')
+    ->middleware('permission:crud_patients')
+    ->group(function () {   
 
-    Route::post('store', ['\App\Http\Controllers\Administrators\Patients\PatientController', 'store'])->name('store');
+        Route::get('index', 'index')
+            ->name('index');
 
-    Route::get('edit/{id}', [
-        '\App\Http\Controllers\Administrators\Patients\PatientController',
-        'edit',
-    ])->name('edit')->where('id', '[1-9][0-9]*');
+        Route::get('create/{type}', 'create')
+            ->name('create')
+            ->where('type', 'animal|human|industrial');
 
-    Route::put('update/{id}', [
-        '\App\Http\Controllers\Administrators\Patients\PatientController',
-        'update',
-    ])->name('update')->where('id', '[1-9][0-9]*');
+        Route::post('store', 'store')
+            ->name('store');
 
-    Route::delete('destroy/{id}', [
-        '\App\Http\Controllers\Administrators\Patients\PatientController',
-        'destroy',
-    ])->name('destroy')->where('id', '[1-9][0-9]*');
+        Route::get('edit/{id}', 'edit')
+            ->name('edit')
+            ->where('id', '[1-9][0-9]*');
 
-    Route::post('security_codes/store', [
-        '\App\Http\Controllers\Administrators\Patients\SecurityCodeController',
-        'store',
-    ])->name('security_codes/store');
+        Route::put('update/{id}', 'update')
+            ->name('update')
+            ->where('id', '[1-9][0-9]*');
 
-    Route::post('load-patients', [
-        '\App\Http\Controllers\Administrators\Patients\PatientController',
-        'loadPatients',
-    ])->name('load_patients');
-    
-});
+        Route::delete('destroy/{id}', 'destroy')
+            ->name('destroy')
+            ->where('id', '[1-9][0-9]*');
+
+        Route::post('load-patients', 'loadPatients')
+            ->name('load_patients');
+    });
+
+Route::controller(SecurityCodeController::class)
+    ->prefix('patients/security_codes')
+    ->as('patients/security_codes/')
+    ->middleware('permission:crud_patients')
+    ->group(function () {   
+        Route::post('store', 'store')
+            ->name('store');
+    });
