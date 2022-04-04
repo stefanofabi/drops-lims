@@ -28,7 +28,7 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('administrators/settings/activity_logs') }}"> {{ trans('settings.activity_logs') }} </a>
+            <a class="nav-link" href="{{ route('administrators/settings/activity_logs') }}" target="_blank"> {{ trans('settings.activity_logs') }} </a>
         </li>
 
         <li class="nav-item">

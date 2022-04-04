@@ -193,6 +193,7 @@
                             <th>Date</th>
                             <th>Causer</th>
                             <th>Affected model</th>
+                            <th>Event</th>
                             <th>Attributes affected</th>
                         </tr>
                     </thead>
@@ -216,23 +217,44 @@
                                 @endif
                             </td>
 
+                            <td>
+                                {{ $activity->event }}
+                            </td>
+
                             <td class="text">
-                                @foreach($activity->changes['attributes'] as $key => $val)
+                                @if ($activity->properties->has('attributes'))
+                                    @foreach($activity->changes['attributes'] as $key => $val)
 
-                                    @if (isset($activity->changes['old']) && $val == $activity->changes['old'][$key])
-                                        @continue
-                                    @endif
+                                        @if (isset($activity->changes['old']) && $val == $activity->changes['old'][$key])
+                                            @continue
+                                        @endif
 
-                                    <strong> {{"$key"}} </strong>
+                                        @if ($key == 'created_at' || $key == 'updated_at')
+                                            @continue
+                                        @endif
 
-                                    @if (isset($activity->changes['old']) && $val != $activity->changes['old'][$key])
-                                        from "{{ $activity->changes['old'][$key] }}"
-                                    @endif
+                                        <strong> {{"$key"}} </strong>
 
-                                    to "{{ $val}}"
+                                        @if (isset($activity->changes['old']) && $val != $activity->changes['old'][$key])
+                                            from "{{ $activity->changes['old'][$key] }}"
+                                        @endif
 
-                                    <br>
-                                @endforeach
+                                        to "{{ $val}}"
+
+                                        <br>
+                                    @endforeach
+                                @elseif ($activity->properties->has('old'))
+                                    @foreach($activity->changes['old'] as $key => $val)
+                                        @if ($key == 'created_at' || $key == 'updated_at')
+                                            @continue
+                                        @endif
+                                        <strong> {{"$key"}} </strong>
+
+                                        => "{{ $val}}"
+
+                                        <br>
+                                    @endforeach
+                                @endif
                             </td>
                         </tr>
                     @endforeach

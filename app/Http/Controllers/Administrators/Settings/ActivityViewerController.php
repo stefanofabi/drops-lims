@@ -18,8 +18,11 @@ class ActivityViewerController extends Controller
     {
         //
 
-        $activities = Activity::all();
+        $activities = Activity::orderBy('id', 'DESC')
+            ->take(50)
+            ->get();
 
-        return view('administrators/settings/logs/activity_logs')->with('activities', $activities);
+        return view('administrators/settings/activity_logs/index')
+            ->with('activities', $activities);
     }
 }
