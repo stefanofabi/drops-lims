@@ -21,7 +21,7 @@ class SecurityCode extends Model
      */
     protected $hidden = [
         'security_code',
-        'user_at',
+        'used_at',
     ];
 
     /**
