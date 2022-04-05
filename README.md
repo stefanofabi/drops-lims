@@ -66,11 +66,11 @@ What things do you need to install the project and how to do it
 6. Running the seeds will allow you to log in with some test users.
 ```
 - Administrator 
-Email: admin@company
+Email: admin@laboratory
 Password: password
 
 - Patient
-Email: user@domain
+Email: patient@domain
 Password: password
 ```
 

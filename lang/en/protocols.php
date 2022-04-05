@@ -64,7 +64,9 @@ return [
     'new' => 'New',
     'closed' => 'Closed',
     'protocol_closed_message' => 'The protocol has been closed and cannot be modified for any reason.',
+    'send_open_protocol_email_error' => 'The protocol is not closed and that is why it cannot be sent',
     'cannot_close_protocol_with_unsigned_practices' => 'Cannot close protocol with unsigned practices',
     'cannot_print_protocol_with_unsigned_practices' => 'Cannot print protocol with unsigned practices',
-    
+    'send_protocol_to_email' => 'Send protocol to email',
+
 ];

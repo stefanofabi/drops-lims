@@ -9,7 +9,7 @@ use App\Contracts\Repository\ProtocolRepositoryInterface;
 
 use Lang;
 
-class VerifyClosedProtocol
+class VerifyOpenProtocol
 {
     /** @var \App\Contracts\Repository\ProtocolRepositoryInterface */
     private $protocolRepository;
@@ -32,9 +32,15 @@ class VerifyClosedProtocol
     
         $protocol = $this->protocolRepository->findOrFail($id);
 
-        if (empty($protocol->closed)) 
+        if (! empty($protocol->closed)) 
         {
-            return redirect()->back()->withErrors(Lang::get('protocols.send_open_protocol_email_error'));
+            if ($request->ajax())
+            {
+                return response()->json(['message' => Lang::get('protocols.protocol_closed_message')], 500);
+            } else 
+            {
+                return redirect()->back()->withErrors(Lang::get('protocols.protocol_closed_message'));
+            }
         }
 
         return $next($request);

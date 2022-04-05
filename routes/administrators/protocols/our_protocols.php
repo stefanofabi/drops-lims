@@ -8,7 +8,7 @@ Route::controller(OurProtocolController::class)
     ->group(function () {
         Route::get('add_practices', 'addPractices')
             ->name('add_practices')
-            ->middleware('verify_closed_protocol');
+            ->middleware('verify_open_protocol');
 
         Route::get('create', 'create')
             ->name('create');
@@ -19,7 +19,7 @@ Route::controller(OurProtocolController::class)
         Route::put('update/{id}', 'update')
             ->name('update')
             ->where('id', '[1-9][0-9]*')
-            ->middleware('verify_closed_protocol');
+            ->middleware('verify_open_protocol');
 
         Route::get('edit/{id}', 'edit')
             ->name('edit')
@@ -28,7 +28,7 @@ Route::controller(OurProtocolController::class)
         Route::get('destroy/{id}', 'destroy')
             ->name('destroy')
             ->where('id', '[1-9][0-9]*')
-            ->middleware('verify_closed_protocol');
+            ->middleware('verify_open_protocol');
 
         Route::get('print_worksheet/{id}', 'printWorksheet')
             ->name('print_worksheet')
@@ -43,6 +43,12 @@ Route::controller(OurProtocolController::class)
 
         Route::post('close/{id}', 'closeProtocol')
             ->name('close')
+            ->where('id', '[1-9][0-9]*')
+            ->middleware('verify_open_protocol')
+            ->middleware('verify_all_practices_signed');
+
+        Route::post('sendProtocolToEmail/{id}', 'sendProtocolToEmail')
+            ->name('send_protocol_to_email')
             ->where('id', '[1-9][0-9]*')
             ->middleware('verify_closed_protocol')
             ->middleware('verify_all_practices_signed');

@@ -17,7 +17,7 @@
         $('[data-toggle="tooltip"]').tooltip();
     });
 
-
+    @if (empty($protocol->closed))
 	$(function () {
         $("#socialWorkAutoComplete").autocomplete({
             minLength: 2,
@@ -84,7 +84,6 @@
         $("#submitButton").removeAttr('disabled');
     }
     
-    @if (empty($protocol->closed))
     function closeProtocol()
     {
         if (confirm("{{ trans('forms.confirm') }}")) 
@@ -94,6 +93,11 @@
 
         return false;
     }
+    @else 
+    function sendEmailProtocol() 
+    {
+        $('#send_email_protocol').submit();
+    }
     @endif
 </script>
 @endsection
@@ -102,24 +106,34 @@
 <nav class="navbar">
     <ul class="navbar-nav">
         @if (empty($protocol->closed))
-        @can('crud_practices')
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('administrators/protocols/our/add_practices', ['protocol_id' => $protocol->id]) }}"> {{ trans('protocols.add_practices') }} </a>
-        </li>
-        @endcan
+            @can('crud_practices')
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('administrators/protocols/our/add_practices', ['protocol_id' => $protocol->id]) }}"> {{ trans('protocols.add_practices') }} </a>
+            </li>
+            @endcan
 
-        @can('print_worksheets')
-        <li class="nav-item">
-            <a class="nav-link" target="_blank" href="{{ route('administrators/protocols/our/print_worksheet', ['id' => $protocol->id]) }}"> {{ trans('protocols.print_worksheet') }} </a>
-        </li>
-        @endcan
+            @can('print_worksheets')
+            <li class="nav-item">
+                <a class="nav-link" target="_blank" href="{{ route('administrators/protocols/our/print_worksheet', ['id' => $protocol->id]) }}"> {{ trans('protocols.print_worksheet') }} </a>
+            </li>
+            @endcan
+        @else
+            @can('print_protocols')
+            <li class="nav-item">
+                <a class="nav-link" target="_blank" href="{{ route('administrators/protocols/our/print', ['id' => $protocol->id]) }}"> {{ trans('protocols.print_report') }} </a>
+            </li>
+            @endcan
+
+            <li class="nav-item">
+                <a class="nav-link" href="#" onclick="sendEmailProtocol()"> {{ trans('protocols.send_protocol_to_email') }} </a>
+
+                <form method="post" action="{{ route('administrators/protocols/our/send_protocol_to_email', ['id' => $protocol->id]) }}" id="send_email_protocol">
+                    @csrf
+
+                    <input type="submit" class="d-none">
+                </form>
+            </li>
         @endif
-        
-        @can('print_protocols')
-        <li class="nav-item">
-            <a class="nav-link" target="_blank" href="{{ route('administrators/protocols/our/print', ['id' => $protocol->id]) }}"> {{ trans('protocols.print_report') }} </a>
-        </li>
-        @endcan
 
         @can('crud_patients')
         <li class="nav-item">

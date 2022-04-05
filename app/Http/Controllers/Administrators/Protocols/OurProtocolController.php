@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Administrators\Protocols;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 use App\Contracts\Repository\PatientRepositoryInterface;
 use App\Contracts\Repository\ProtocolRepositoryInterface;
@@ -12,6 +13,8 @@ use App\Contracts\Repository\BillingPeriodRepositoryInterface;
 
 use App\Laboratory\Prints\Worksheets\PrintWorksheetContext;
 use App\Laboratory\Prints\Protocols\Our\PrintOurProtocolContext;
+
+use App\Mail\ProtocolSent;
 
 use Lang;
 use Session;
@@ -209,6 +212,19 @@ class OurProtocolController extends Controller
         }
 
         Session::flash('success', [Lang::get('protocols.protocol_closed_successfully')]);
+
+        return redirect()->action([OurProtocolController::class, 'edit'], ['id' => $id]);
+    }
+
+    public function sendProtocolToEmail($id)
+    {
+        $protocol = $this->protocolRepository->findOrFail($id);
+
+        $this->printProtocol($protocol->id);
+
+        Mail::to($protocol->patient->email)->send(new ProtocolSent($protocol));
+
+        Session::flash('success', [Lang::get('protocols.send_protocol_email_successfully')]);
 
         return redirect()->action([OurProtocolController::class, 'edit'], ['id' => $id]);
     }

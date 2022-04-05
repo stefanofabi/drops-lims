@@ -49,6 +49,9 @@ class ModernStyleProtocolStrategy implements PrintProtocolStrategyInterface
             $protocol_name = 'partial_'.$protocol_name;
         }
 
+        $protocol_path = storage_path("app/protocols/protocol_$protocol->id.pdf");
+        $pdf->save($protocol_path);
+        
         return $pdf->stream($protocol_name);
     }
 

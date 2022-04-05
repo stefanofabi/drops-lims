@@ -16,21 +16,21 @@ Route::controller(PracticeController::class)
     ->as('practices/')
     ->group(function () {
         Route::get('create', 'create')->name('create')
-            ->middleware('verify_closed_protocol');
+            ->middleware('verify_open_protocol');
 
         Route::get('edit/{id}', 'edit')
             ->name('edit')
             ->where('id', '[1-9][0-9]*')
-            ->middleware('verify_closed_protocol_practices');
+            ->middleware('verify_open_protocol');
 
         Route::post('store', 'store')
             ->name('store')
-            ->middleware('verify_closed_protocol');
+            ->middleware('verify_open_protocol');
         
         Route::get('destroy/{id}', 'destroy')
             ->name('destroy')
             ->where('id', '[1-9][0-9]*')
-            ->middleware('verify_closed_protocol_practices');
+            ->middleware('verify_open_protocol');
 
         Route::post('find', 'loadPractices')
             ->name('load_practices');
@@ -38,13 +38,13 @@ Route::controller(PracticeController::class)
         Route::put('inform_results/{practice_id}', 'informResults')
             ->name('inform_results')
             ->where('practice_id', '[1-9][0-9]*')
-            ->middleware('verify_closed_protocol_practices');
+            ->middleware('verify_open_protocol');
 
         Route::put('sign/{practice_id}', 'sign')
             ->name('sign')
             ->where('practice_id', '[1-9][0-9]*')
             ->middleware('permission:sign_practices')
-            ->middleware('verify_closed_protocol_practices');
+            ->middleware('verify_open_protocol');
 
         Route::post('results', 'getResults')
             ->name('results');

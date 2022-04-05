@@ -73,6 +73,7 @@ class Kernel extends HttpKernel
         'verify_billing_period_dates' => \App\Http\Middleware\VerifyBillingPeriodDates::class,
         'verify_payment_date_social_work' => \App\Http\Middleware\VerifyPaymentDateSocialWork::class,
         'verify_closed_protocol' => \App\Http\Middleware\VerifyClosedProtocol::class,
+        'verify_open_protocol' => \App\Http\Middleware\VerifyOpenProtocol::class,
         'verify_closed_protocol_practices' => \App\Http\Middleware\VerifyClosedProtocolPractices::class,
         'verify_all_practices_signed' => \App\Http\Middleware\VerifyAllPracticesSigned::class,
         'verify_all_practices_signed_or_fail' => \App\Http\Middleware\VerifyAllPracticesSignedOrFail::class,

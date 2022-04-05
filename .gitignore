@@ -191,4 +191,7 @@ public/mix-manifest.json
 # Visual Studio Code
 .vs
 
+# Drops lims 
+storage/app/protocols
+
 # End of https://www.gitignore.io/api/node,linux,laravel,windows,composer

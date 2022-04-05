@@ -1,6 +1,5 @@
 @extends('pdf/base')
 
-
 @section('title')
     {{ trans('pdf.social_work_debt_report_from_to', ['start_date' => date('d/m/Y', strtotime($start_date)), 'end_date' => date('d/m/Y', strtotime($end_date))]) }}
 @endsection
