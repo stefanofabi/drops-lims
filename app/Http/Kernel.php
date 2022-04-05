@@ -77,7 +77,7 @@ class Kernel extends HttpKernel
         'verify_closed_protocol_practices' => \App\Http\Middleware\VerifyClosedProtocolPractices::class,
         'verify_all_practices_signed' => \App\Http\Middleware\VerifyAllPracticesSigned::class,
         'verify_all_practices_signed_or_fail' => \App\Http\Middleware\VerifyAllPracticesSignedOrFail::class,
-        
+       
     ];
 
     /**

@@ -89,6 +89,7 @@ class OurProtocolController extends Controller
         $request->validate([
             'completion_date' => 'required|date',
             'quantity_orders' => 'required|numeric|min:0',
+            'patient_id' => 'required|numeric|min:1',
         ]);
 
         if (! $protocol = $this->protocolRepository->create($request->all())) {
@@ -142,6 +143,7 @@ class OurProtocolController extends Controller
         $request->validate([
             'completion_date' => 'required|date',
             'quantity_orders' => 'required|numeric|min:0',
+            'patient_id' => 'required|numeric|min:1',
         ]);
         
         if (! $this->protocolRepository->update($request->all(), $id)) {

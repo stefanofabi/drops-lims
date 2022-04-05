@@ -159,7 +159,7 @@
                     </div>
 
                     <input type="hidden" name="plan_id" id="plan" value="{{ old('plan_id') ?? $patient->plan_id ?? '' }}">
-                    <input type="text" class="form-control" name="social_work_name" id="socialWorkAutoComplete" placeholder="{{ trans('forms.start_typing') }}" value="{{ old('social_work_name') ?? $patient->plan->social_work->name ?? '' }}" required>
+                    <input type="text" class="form-control" name="social_work_name" id="socialWorkAutoComplete" placeholder="{{ trans('forms.start_typing') }}" value="{{ old('social_work_name') ?? $patient->plan->social_work->name ?? '' }}">
                 </div>
 
                 <div class="input-group mt-2">
