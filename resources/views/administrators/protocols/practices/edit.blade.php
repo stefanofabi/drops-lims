@@ -1,7 +1,7 @@
 @extends('administrators/default-template')
 
 @section('title')
-    {{ trans('protocols.edit_practice') }}
+    {{ trans('practices.edit_practice') }}
 @endsection
 
 @section('active_protocols', 'active')
@@ -26,7 +26,7 @@
                     $("#messages").html('<div class="spinner-border text-info mt-3"> </div> {{ trans("forms.please_wait") }}');
                 },
                 success: function (response) {
-                    $("#messages").html('<div class="alert alert-warning alert-dismissible fade show mt-3" role="alert"> <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"> </button> <strong> {{ trans("forms.warning") }}!</strong> {{ trans("protocols.modified_practice")}} </div>');
+                    $("#messages").html('<div class="alert alert-warning alert-dismissible fade show mt-3" role="alert"> <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"> </button> <strong> {{ trans("forms.warning") }}!</strong> {{ trans("practices.modified_practice")}} </div>');
                     var i = 0;
 
                     $('#report').find('input, select').each(function () {
@@ -83,7 +83,7 @@
                     $("#messages").html('<div class="spinner-border text-info mt-3"> </div> {{ trans("forms.please_wait") }}');
                 },
                 success: function () {
-                    $("#messages").html('<div class="alert alert-success alert-dismissible fade show mt-3" role="alert"> <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"> </button> <strong> {{ trans("forms.well_done") }}! </strong> {{ trans("protocols.result_loaded") }} </div> ');
+                    $("#messages").html('<div class="alert alert-success alert-dismissible fade show mt-3" role="alert"> <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"> </button> <strong> {{ trans("forms.well_done") }}! </strong> {{ trans("practices.result_loaded") }} </div> ');
                 }
             }).fail(function () {
                 $("#messages").html('<div class="alert alert-danger alert-dismissible fade show mt-3" role="alert"> <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"> </button> <strong> {{ trans("forms.danger") }}! </strong> {{ trans("forms.failed_transaction") }} </div>');
@@ -133,7 +133,7 @@
 @endsection
 
 @section('content-title')
-    <i class="fas fa-file-medical"></i> {{ trans('protocols.edit_protocol') }} #{{ $practice->id }}
+    <i class="fas fa-file-medical"></i> {{ trans('practices.edit_practice') }} #{{ $practice->id }}
 @endsection
 
 @section('content')
@@ -161,7 +161,7 @@
 
         <div class="card mt-3">
             <div class="card-header">
-                <i class="fas fa-poll-h"></i> {{ trans('protocols.result') }}
+                <i class="fas fa-poll-h"></i> {{ trans('practices.result') }}
             </div>
 
             <div id="report" class="card-body">

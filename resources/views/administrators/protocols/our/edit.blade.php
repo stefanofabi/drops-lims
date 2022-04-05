@@ -108,7 +108,7 @@
         @if (empty($protocol->closed))
             @can('crud_practices')
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('administrators/protocols/our/add_practices', ['protocol_id' => $protocol->id]) }}"> {{ trans('protocols.add_practices') }} </a>
+                <a class="nav-link" href="{{ route('administrators/protocols/our/add_practices', ['protocol_id' => $protocol->id]) }}"> {{ trans('practices.add_practices') }} </a>
             </li>
             @endcan
 

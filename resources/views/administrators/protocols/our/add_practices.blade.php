@@ -1,7 +1,7 @@
 @extends('administrators/default-template')
 
 @section('title')
-    {{ trans('protocols.add_practices_for_protocol') }} #{{ $protocol->id }}
+    {{ trans('practices.add_practices_for_protocol') }} #{{ $protocol->id }}
 @endsection
 
 @section('active_protocols', 'active')
@@ -44,7 +44,7 @@
             if (! $("#practice").val()) 
             {
                 $("#practice").addClass('is-invalid');
-                alert("{{ trans('protocols.please_enter_practice') }}");
+                alert("{{ trans('practices.please_enter_practice') }}");
 
                 return false;
             }
@@ -68,7 +68,7 @@
                     $("#messages").html('<div class="alert alert-danger mt-3"> <strong> {{ trans("forms.danger") }}! </strong> {{ trans("forms.please_later")}}  </div> ');
                 },
                 success: function (response) {
-                    $("#messages").html('<div class="alert alert-success alert-dismissible fade show mt-3" role="alert"> <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg> <strong> {{ trans("forms.well_done") }}! </strong> {{ trans("protocols.practice_loaded") }} </div>');
+                    $("#messages").html('<div class="alert alert-success alert-dismissible fade show mt-3" role="alert"> <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg> <strong> {{ trans("forms.well_done") }}! </strong> {{ trans("practices.practice_loaded") }} </div>');
                     $("#practices").load(" #practices");
 
                     // delete data
@@ -93,7 +93,7 @@
 @endsection
 
 @section('content-title')
-<i class="fas fa-file-medical"></i> {{ trans('protocols.add_practices_for_protocol') }} #{{ $protocol->id }}
+<i class="fas fa-file-medical"></i> {{ trans('practices.add_practices_for_protocol') }} #{{ $protocol->id }}
 @endsection
 
 @section('content')
@@ -103,12 +103,12 @@
     <div class="row mt-3">
         <div class="col">
             <input type="hidden" id="report_id" value="0">
-            <input type="text" class="form-control input-sm" id="practice" placeholder="{{ trans('protocols.enter_practice') }}">
+            <input type="text" class="form-control input-sm" id="practice" placeholder="{{ trans('practices.enter_practice') }}">
         </div>
 
         <div class="col">
             <button type="submit" class="btn btn-primary">
-                <span class="fas fa-plus"></span> {{ trans('protocols.add_practice') }}
+                <span class="fas fa-plus"></span> {{ trans('practices.add_practice') }}
             </button>
         </div>
     </div>
@@ -121,8 +121,8 @@
                         <th> {{ trans('determinations.code') }} </th>
                         <th> {{ trans('determinations.determination') }} </th>
                         <th> {{ trans('determinations.amount') }} </th>
-                        <th> {{ trans('protocols.informed') }} </th>
-                        <th> {{ trans('protocols.signed_off') }} </th>
+                        <th> {{ trans('practices.informed') }} </th>
+                        <th> {{ trans('practices.signed_off') }} </th>
                         <th class="text-end"> {{ trans('forms.actions') }}</th>
                     </tr>
 
@@ -153,16 +153,16 @@
 										<img height="30px" width="30px" src="{{ Gravatar::get($sign->user->email) }}" class="rounded-circle" alt="{{ $sign->user->name }}">
 									</a>
 								@empty
-								    {{ trans('protocols.not_signed')}}
+								    {{ trans('practices.not_signed')}}
 								@endforelse
 							</td>
                             
                             <td class="text-end">
-                                <a href="{{ route('administrators/protocols/practices/edit', ['id' => $practice->id]) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.edit_practice') }}"> 
+                                <a href="{{ route('administrators/protocols/practices/edit', ['id' => $practice->id]) }}" class="btn btn-info btn-sm" title="{{ trans('practices.edit_practice') }}"> 
                                     <i class="fas fa-edit fa-sm"></i> 
                                 </a>
 
-                                <a href="{{ route('administrators/protocols/practices/destroy', ['id' => $practice->id]) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.destroy_practice') }}"> 
+                                <a href="{{ route('administrators/protocols/practices/destroy', ['id' => $practice->id]) }}" class="btn btn-info btn-sm" title="{{ trans('practices.destroy_practice') }}"> 
                                     <i class="fas fa-trash fa-sm"></i> 
                                 </a>
                             </td>
