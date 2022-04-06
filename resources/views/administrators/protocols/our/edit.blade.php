@@ -180,6 +180,8 @@
     <form method="post" action="{{ route('administrators/protocols/our/update', ['id' => $protocol->id]) }}">
         @csrf
         {{ method_field('PUT') }}
+
+        <input type="hidden" name="type" value="our">
         
         <div class="col-10">
             <div class="mt-3">

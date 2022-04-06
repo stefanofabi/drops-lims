@@ -91,6 +91,7 @@ class OurProtocolController extends Controller
             'quantity_orders' => 'required|numeric|min:0',
             'patient_id' => 'required|numeric|min:1',
             'plan_id' => 'required|numeric|min:1',
+            'type' => 'required|in:our',
         ]);
 
         if (! $protocol = $this->protocolRepository->create($request->all())) {
@@ -146,6 +147,7 @@ class OurProtocolController extends Controller
             'quantity_orders' => 'required|numeric|min:0',
             'patient_id' => 'required|numeric|min:1',
             'plan_id' => 'required|numeric|min:1',
+            'type' => 'required|in:our',
         ]);
         
         if (! $this->protocolRepository->update($request->all(), $id)) {

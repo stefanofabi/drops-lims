@@ -139,6 +139,8 @@
     <form method="post" action="{{ route('administrators/protocols/our/store') }}">
         @csrf
         
+        <input type="hidden" name="type" value="our">
+
         <div class="col-10">
             <div class="mt-3">
                 <h4><i class="fas fa-book"></i> {{ trans('protocols.medical_order_data') }} </h4>
