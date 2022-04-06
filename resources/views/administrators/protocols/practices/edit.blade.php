@@ -126,7 +126,7 @@
 <nav class="navbar">
     <ul class="navbar-nav">
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('administrators/protocols/our/add_practices', ['protocol_id' => $practice->protocol_id]) }}"> {{ trans('forms.go_back') }} </a>
+            <a class="nav-link" href="{{ route('administrators/protocols/practices/index', ['protocol_id' => $practice->protocol_id]) }}"> {{ trans('forms.go_back') }} </a>
         </li>
     </ul>
 </nav>

@@ -53,11 +53,32 @@ class PracticeController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+
+        $protocol = $this->protocolRepository->findOrFail($request->protocol_id);
+
+        switch ($protocol->type)
+        {
+            case 'our': {
+                $view = view('administrators/protocols/our/add_practices')
+                    ->with('protocol', $protocol);
+
+                break;
+            }
+
+            case 'derived': {
+                new \Exception("Path for derived protocols not implemented");
+
+                break;
+            }
+        }
+
+        return $view;
     }
 
     /**

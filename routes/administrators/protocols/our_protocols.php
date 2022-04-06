@@ -6,10 +6,6 @@ Route::controller(OurProtocolController::class)
     ->prefix('our')
     ->as('our/')
     ->group(function () {
-        Route::get('add_practices', 'addPractices')
-            ->name('add_practices')
-            ->middleware('verify_open_protocol');
-
         Route::get('create', 'create')
             ->name('create');
         
@@ -33,13 +29,14 @@ Route::controller(OurProtocolController::class)
         Route::get('print_worksheet/{id}', 'printWorksheet')
             ->name('print_worksheet')
             ->where('id', '[1-9][0-9]*')
-            ->middleware('permission:print_worksheets');
+            ->middleware('permission:print_worksheets')
+            ->middleware('verify_open_protocol');
 
         Route::get('print/{id}', 'printProtocol')
             ->name('print')
             ->where('id', '[1-9][0-9]*')
             ->middleware('permission:print_protocols')
-            ->middleware('verify_all_practices_signed_or_fail');
+            ->middleware('verify_closed_protocol');
 
         Route::post('close/{id}', 'closeProtocol')
             ->name('close')
@@ -50,6 +47,5 @@ Route::controller(OurProtocolController::class)
         Route::post('sendProtocolToEmail/{id}', 'sendProtocolToEmail')
             ->name('send_protocol_to_email')
             ->where('id', '[1-9][0-9]*')
-            ->middleware('verify_closed_protocol')
-            ->middleware('verify_all_practices_signed');
+            ->middleware('verify_closed_protocol');
     });

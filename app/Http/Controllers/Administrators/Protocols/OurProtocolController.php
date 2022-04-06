@@ -90,6 +90,7 @@ class OurProtocolController extends Controller
             'completion_date' => 'required|date',
             'quantity_orders' => 'required|numeric|min:0',
             'patient_id' => 'required|numeric|min:1',
+            'plan_id' => 'required|numeric|min:1',
         ]);
 
         if (! $protocol = $this->protocolRepository->create($request->all())) {
@@ -144,6 +145,7 @@ class OurProtocolController extends Controller
             'completion_date' => 'required|date',
             'quantity_orders' => 'required|numeric|min:0',
             'patient_id' => 'required|numeric|min:1',
+            'plan_id' => 'required|numeric|min:1',
         ]);
         
         if (! $this->protocolRepository->update($request->all(), $id)) {
@@ -162,18 +164,6 @@ class OurProtocolController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    /**
-     * Returns a view for add practices
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function addPractices(Request $request)
-    {
-        $protocol = $this->protocolRepository->findOrFail($request->protocol_id);
-
-        return view('administrators/protocols/our/add_practices')->with('protocol', $protocol);
     }
 
     /**

@@ -15,13 +15,12 @@ Route::controller(PracticeController::class)
     ->prefix('practices')
     ->as('practices/')
     ->group(function () {
-        Route::get('create', 'create')->name('create')
-            ->middleware('verify_open_protocol');
+        Route::get('index', 'index')
+            ->name('index');
 
         Route::get('edit/{id}', 'edit')
             ->name('edit')
-            ->where('id', '[1-9][0-9]*')
-            ->middleware('verify_open_protocol');
+            ->where('id', '[1-9][0-9]*');
 
         Route::post('store', 'store')
             ->name('store')

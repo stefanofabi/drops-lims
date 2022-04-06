@@ -108,7 +108,7 @@
         @if (empty($protocol->closed))
             @can('crud_practices')
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('administrators/protocols/our/add_practices', ['protocol_id' => $protocol->id]) }}"> {{ trans('practices.add_practices') }} </a>
+                <a class="nav-link" href="{{ route('administrators/protocols/practices/index', ['protocol_id' => $protocol->id]) }}"> {{ trans('practices.practices') }} </a>
             </li>
             @endcan
 
@@ -201,7 +201,7 @@
                     </div>
 
                     <input type="hidden" name="plan_id" id="plan" value="{{ old('plan_id') ?? $protocol->plan_id }}">
-                    <input type="text" class="form-control" name="social_work_name" id="socialWorkAutoComplete" placeholder="{{ trans('forms.start_typing') }}" value="{{ old('social_work_name') ?? $protocol->plan->social_work->name ?? '' }}" readonly>
+                    <input type="text" class="form-control" name="social_work_name" id="socialWorkAutoComplete" placeholder="{{ trans('forms.start_typing') }}" value="{{ old('social_work_name') ?? $protocol->plan->social_work->name }}" required readonly>
                 </div>
 
                 <div class="input-group mt-2">
