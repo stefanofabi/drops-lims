@@ -219,7 +219,7 @@ class PracticeController extends Controller
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
 
-        return redirect()->action([OurProtocolController::class, 'addPractices'], ['protocol_id' => $protocol->id]);
+        return redirect()->action([PracticeController::class, 'index'], ['protocol_id' => $protocol->id]);
     }
 
     /**
