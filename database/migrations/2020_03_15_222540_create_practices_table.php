@@ -17,7 +17,7 @@ class CreatePracticesTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('protocol_id');
             $table->unsignedBigInteger('report_id');
-            $table->double('amount')->default(0.0);
+            $table->double('amount');
 
             // Foreign keys
             $table->foreign('protocol_id')->references('id')->on('protocols')->onDelete('restrict')->onUpdate('cascade');
