@@ -36,7 +36,8 @@ Route::controller(OurProtocolController::class)
             ->name('print')
             ->where('id', '[1-9][0-9]*')
             ->middleware('permission:print_protocols')
-            ->middleware('verify_closed_protocol');
+            ->middleware('verify_closed_protocol')
+            ->middleware('check_practice_to_print');
 
         Route::post('close/{id}', 'closeProtocol')
             ->name('close')
@@ -45,7 +46,6 @@ Route::controller(OurProtocolController::class)
             ->middleware('check_if_exists_loaded_practices')
             ->middleware('verify_all_practices_signed');
             
-
         Route::post('sendProtocolToEmail/{id}', 'sendProtocolToEmail')
             ->name('send_protocol_to_email')
             ->where('id', '[1-9][0-9]*')

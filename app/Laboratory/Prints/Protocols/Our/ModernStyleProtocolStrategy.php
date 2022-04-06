@@ -3,20 +3,22 @@
 namespace App\Laboratory\Prints\Protocols\Our;
 
 use App\Laboratory\Prints\Protocols\PrintProtocolStrategyInterface;
-use App\Repositories\Eloquent\ProtocolRepository;
+use App\Models\Protocol;
 
 use PDF;
-use Lang;
 
 class ModernStyleProtocolStrategy implements PrintProtocolStrategyInterface
 {
 
-    /** @var \App\Laboratory\Repositories\Protocols\ProtocolRepository */
-    private $protocolRepository;    
+    /** @var \App\Models\Protocol */
+    private $protocol;    
     
-    public function __construct () 
+    private $filter_practices;
+
+    public function __construct (Protocol $protocol, array $filter_practices = []) 
     {
-        $this->protocolRepository = resolve(ProtocolRepository::class);
+        $this->protocol = $protocol;
+        $this->filter_practices = $filter_practices;
     }   
 
     /**
@@ -24,49 +26,24 @@ class ModernStyleProtocolStrategy implements PrintProtocolStrategyInterface
      *
      * @return \Illuminate\Http\Response
      */
-    public function printProtocol($protocol_id, $filter_practices = [])
+    public function print()
     {
-        $protocol = $this->protocolRepository->findOrFail($protocol_id);
 
-        $practices = $protocol->practices;
+        $practices = $this->protocol->practices;
 
-        if (! empty($filter_practices)) {
-            $practices = $practices->whereIn('id', $filter_practices);
-        }
-        
-        if (! $this->practicesHaveSignatures($practices)) {
-            return Lang::get('protocols.empty_protocol');
+        if (! empty($this->filter_practices)) {
+            $practices = $practices->whereIn('id', $this->filter_practices);
         }
 
         $pdf = PDF::loadView('pdf/protocols/modern_style', [
-            'protocol' => $protocol,
+            'protocol' => $this->protocol,
             'practices' => $practices,
         ]);
 
-        $protocol_name = "protocol_$protocol->id";
-
-        if ($protocol->practices->count() != $practices->count()) {
-            $protocol_name = 'partial_'.$protocol_name;
-        }
-
-        $protocol_path = storage_path("app/protocols/protocol_$protocol->id.pdf");
+        $protocol_name = 'protocol_'.$this->protocol->id.'.pdf';
+        $protocol_path = storage_path("app/protocols/$protocol_name");
         $pdf->save($protocol_path);
         
         return $pdf->stream($protocol_name);
-    }
-
-    private function practicesHaveSignatures($practices)
-    {
-        /* Returns true if all selected practices are signed, false otherwise */
-        $have_signatures = true;
-
-        foreach ($practices as $practice) {
-            if ($practice->signs->isEmpty()) {
-                $have_signatures = false;
-                break;
-            }
-        }
-
-        return $have_signatures;
     }
 }

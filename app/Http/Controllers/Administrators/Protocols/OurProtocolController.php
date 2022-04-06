@@ -171,16 +171,20 @@ class OurProtocolController extends Controller
     /**
      * Returns a protocol in pdf
      *
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function printProtocol($protocol_id, $filter_practices = [])
+    public function printProtocol(Request $request, $id)
     {
+        $protocol = $this->protocolRepository->findOrFail($id);
+
         $strategy = 'modern_style';
         $strategyClass = PrintOurProtocolContext::STRATEGIES[$strategy];
 
-        $this->printOurProtocolContext->setStrategy(new $strategyClass);
+        $this->printOurProtocolContext->setStrategy(new $strategyClass($protocol, $request->filter_practices));
 
-        return $this->printOurProtocolContext->printProtocol($protocol_id, $filter_practices);
+        return $this->printOurProtocolContext->print();
     }
 
     /**

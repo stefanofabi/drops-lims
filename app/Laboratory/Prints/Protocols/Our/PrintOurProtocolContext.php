@@ -16,13 +16,13 @@ final class PrintOurProtocolContext
     /**
      * Call strategy print() method.
      */
-    public function printProtocol($protocol_id, $filter_practices = [])
+    public function print()
     {
         if (is_null($this->strategy)) {
             throw new RuntimeException('Missing strategy');    
         }
 
-        return $this->strategy->printProtocol($protocol_id, $filter_practices);
+        return $this->strategy->print();
     }
 
     public function setStrategy(PrintProtocolStrategyInterface $strategy) 

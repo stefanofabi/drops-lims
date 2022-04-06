@@ -7,9 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Contracts\Repository\ProtocolRepositoryInterface;
 
-use Lang;
-
-class VerifyClosedProtocol
+class CheckPracticeToPrint
 {
     /** @var \App\Contracts\Repository\ProtocolRepositoryInterface */
     private $protocolRepository;
@@ -28,14 +26,23 @@ class VerifyClosedProtocol
      */
     public function handle(Request $request, Closure $next)
     {
-        $id = isset($request->id) ? $request->id : $request->protocol_id;
-    
-        $protocol = $this->protocolRepository->findOrFail($id);
+        if (isset($request->filter_practices) && is_array($request->filter_practices)) {
+            $protocol = $this->protocolRepository->findOrFail($request->id);
+         
+            foreach ($request->filter_practices as $practice) 
+            {
+                if (! in_array($practice, $protocol->practices->toArray())) {
+                    // Practice that does not belong to the protocol was detected
 
-        if (empty($protocol->closed)) 
-        {
-            return redirect()->back()->withErrors(Lang::get('protocols.verify_closed_protocol'));
+                    return redirect()->back()->withErrors(Lang::get('protocols.not_loaded_practices')); 
+                }
+            }
+        } else {
+            // Not filtered by practices
+
+            $request->filter_practices = array();
         }
+
 
         return $next($request);
     }
