@@ -45,17 +45,14 @@
 
 		@if(auth()->user()->can('generate_security_codes'))
 			<li class="nav-item">
-				<form id="security_code_form" target="_blank" action="{{ route('administrators/patients/security_codes/store') }}" method="post">
+				<form id="security_code_form" action="{{ route('administrators/patients/security_codes/store') }}" method="post">
 					@csrf
+
 					<input type="hidden" name="patient_id" value="{{ $patient->id }}">
 				</form>
 
 				<a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('security_code_form').submit();"> {{ trans('patients.get_security_code') }} </a>
 			</li>
-		@else
-			<li class="nav-item">
-				<a class="nav-link" href="#" onclick="alert('{{ trans('forms.no_permission') }}')"> {{ trans('patients.get_security_code') }} </a>	
-			</li>		
 		@endif
 	</ul>
 </nav>

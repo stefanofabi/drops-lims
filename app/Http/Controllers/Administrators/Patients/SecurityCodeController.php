@@ -4,11 +4,18 @@ namespace App\Http\Controllers\Administrators\Patients;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
-use App\Laboratory\Prints\SecurityCodes\PrintSecurityCodeContext;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 use App\Contracts\Repository\SecurityCodeRepositoryInterface;
-use App\Contracts\Repository\PatientRepositoryInterface;
+
+use App\Mail\SecurityCodeSent;
+
+use Throwable;
+use Lang;
+use Session;
 
 class SecurityCodeController extends Controller
 {
@@ -16,23 +23,14 @@ class SecurityCodeController extends Controller
         'patient_id'
     ];
 
+    private const SECURITY_CODE_LENGTH = 10;
+    private const DAYS_TO_EXPIRATE_SECURITY_CODE = 10;
+
     /** @var \App\Contracts\Repository\SecurityCodeRepositoryInterface */
     private $securityCodeRepository;
 
-    /** @var \App\Laboratory\Prints\SecurityCodes\PrintSecurityCodeContext */
-    private $printSecurityCodeContext;
-
-    /** @var \App\Contracts\Repository\PatientRepositoryInterface */
-    private $patientRepository;
-
-    public function __construct(
-        SecurityCodeRepositoryInterface $securityCodeRepository, 
-        PrintSecurityCodeContext $printSecurityCodeContext,
-        PatientRepositoryInterface $patientRepository
-    ) {
+    public function __construct(SecurityCodeRepositoryInterface $securityCodeRepository) {
         $this->securityCodeRepository = $securityCodeRepository;
-        $this->printSecurityCodeContext = $printSecurityCodeContext;
-        $this->patientRepository = $patientRepository;
     }
 
     /**
@@ -64,18 +62,38 @@ class SecurityCodeController extends Controller
     public function store(Request $request)
     {
         //
-          
-        $security_code = $this->securityCodeRepository->create($request->only(self::ATTRIBUTES));
-            
-        $strategy = 'modern_style';
-        $strategyClass = PrintSecurityCodeContext::STRATEGIES[$strategy];
-        $this->printSecurityCodeContext->setStrategy(new $strategyClass);
-            
-        return $this->printSecurityCodeContext->print_security_code(
-            $this->patientRepository->findOrFail($request->patient_id),
-            $security_code['security_code'],
-            $security_code['expiration_date']
-        );
+   
+        $new_security_code = Str::random(self::SECURITY_CODE_LENGTH);
+
+        $date_today = date("Y-m-d");
+        $new_expiration_date = date("Y-m-d", strtotime($date_today."+ ".self::DAYS_TO_EXPIRATE_SECURITY_CODE." days"));
+
+        DB::beginTransaction();
+        
+        try {
+            $this->securityCodeRepository->deletePatientSecurityCode($request->patient_id);
+
+            $security_code = $this->securityCodeRepository->create([
+                'patient_id' => $request->patient_id,
+                'security_code' => Hash::make($new_security_code),
+                'expiration_date' => $new_expiration_date,
+                'used_at' => null,
+            ]);
+
+            DB::commit();
+        } catch (Throwable $throwable) {
+            DB::rollBack();
+
+            return redirect()->back()->withErrors(Lang::get('forms.failed_transaction'));
+        }
+
+        $patient = $security_code->patient;
+        
+        Mail::to($patient->email)->send(new SecurityCodeSent($patient, $new_security_code, $new_expiration_date));
+        
+        Session::flash('success', [Lang::get('patients.send_security_code_successfully')]);
+
+        return redirect()->action([PatientController::class, 'edit'], ['id' => $patient->id]);
     }
 
     /**

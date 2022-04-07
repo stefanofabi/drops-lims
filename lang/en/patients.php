@@ -63,5 +63,6 @@ return [
     'personal_data' => 'Personal data',
     'tax_data' => 'Tax data',
     'bonding_date' => 'Bonding date',
+    'send_security_code_successfully' => 'Send security code successfully',
     
 ];

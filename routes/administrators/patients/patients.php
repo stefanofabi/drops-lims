@@ -47,7 +47,7 @@ Route::controller(PatientController::class)
 Route::controller(SecurityCodeController::class)
     ->prefix('patients/security_codes')
     ->as('patients/security_codes/')
-    ->middleware('permission:crud_patients')
+    ->middleware('permission:generate_security_codes')
     ->group(function () {   
         Route::post('store', 'store')
             ->name('store');
