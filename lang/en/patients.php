@@ -64,5 +64,6 @@ return [
     'tax_data' => 'Tax data',
     'bonding_date' => 'Bonding date',
     'send_security_code_successfully' => 'Send security code successfully',
-    
+    'patient_have_not_email' => 'Patient have not email loaded',
+
 ];

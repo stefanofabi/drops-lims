@@ -77,7 +77,9 @@ class Kernel extends HttpKernel
         'verify_all_practices_signed' => \App\Http\Middleware\VerifyAllPracticesSigned::class,
         'check_if_exists_loaded_practices' => \App\Http\Middleware\CheckIfExistsLoadedPractices::class,
         'check_practice_to_print' => \App\Http\Middleware\CheckPracticeToPrint::class,
-        
+        'check_protocol_can_sent_by_email' => \App\Http\Middleware\CheckProtocolCanSentByEmail::class,
+        'check_if_loaded_patient_email' => \App\Http\Middleware\CheckIfLoadedPatientEmail::class,
+
     ];
 
     /**

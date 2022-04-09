@@ -49,5 +49,6 @@ Route::controller(OurProtocolController::class)
         Route::post('sendProtocolToEmail/{id}', 'sendProtocolToEmail')
             ->name('send_protocol_to_email')
             ->where('id', '[1-9][0-9]*')
-            ->middleware('verify_closed_protocol');
+            ->middleware('verify_closed_protocol')
+            ->middleware('check_protocol_can_sent_by_email');
     });

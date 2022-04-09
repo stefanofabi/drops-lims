@@ -50,5 +50,6 @@ Route::controller(SecurityCodeController::class)
     ->middleware('permission:generate_security_codes')
     ->group(function () {   
         Route::post('store', 'store')
-            ->name('store');
+            ->name('store')
+            ->middleware('check_if_loaded_patient_email');
     });

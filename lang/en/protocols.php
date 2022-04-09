@@ -51,5 +51,5 @@ return [
     'send_protocol_to_email' => 'Send protocol to email',
     'send_protocol_email_successfully' => 'Send protocol email successfully',
     'not_loaded_practices' => 'To close a protocol there must be at least one practice loaded',
-
+    
 ];
