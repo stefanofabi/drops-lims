@@ -36,8 +36,11 @@ Route::controller(OurProtocolController::class)
             ->name('print')
             ->where('id', '[1-9][0-9]*')
             ->middleware('permission:print_protocols')
-            ->middleware('verify_closed_protocol')
-            ->middleware('check_practice_to_print');
+            ->middleware('verify_closed_protocol');
+
+        Route::post('print_selection', 'printPartialReport')
+            ->name('print_selection')
+            ->middleware('check_filtered_practices_to_print');
 
         Route::post('close/{id}', 'closeProtocol')
             ->name('close')

@@ -51,7 +51,7 @@
 					<input type="hidden" name="patient_id" value="{{ $patient->id }}">
 				</form>
 
-				<a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('security_code_form').submit();"> {{ trans('patients.get_security_code') }} </a>
+				<a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('security_code_form').submit();"> {{ trans('patients.send_security_code') }} </a>
 			</li>
 		@endif
 	</ul>

@@ -26,5 +26,6 @@ Route::controller(ProtocolController::class)
 
     Route::post('print_selection', 'printPartialReport')
         ->name('print_selection')
-        ->middleware('verify_partial_report_relation');
+        ->middleware('verify_protocol_access_relation')
+        ->middleware('check_filtered_practices_to_print');
 });

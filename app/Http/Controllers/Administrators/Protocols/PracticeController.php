@@ -53,10 +53,22 @@ class PracticeController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        //
+
+        
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function create(Request $request)
     {
         //
 
@@ -65,7 +77,7 @@ class PracticeController extends Controller
         switch ($protocol->type)
         {
             case 'our': {
-                $view = view('administrators/protocols/our/practices/index')
+                $view = view('administrators/protocols/our/practices/create')
                     ->with('protocol', $protocol);
 
                 break;
@@ -79,16 +91,6 @@ class PracticeController extends Controller
         }
 
         return $view;
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**

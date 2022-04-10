@@ -26,13 +26,13 @@ class ProtocolController extends Controller
 
     public function __construct (
         ProtocolRepositoryInterface $protocolRepository,
-        FamilyMemberRepositoryInterface $familyMemberRepository,
         PracticeRepositoryInterface $practiceRepository,
+        FamilyMemberRepositoryInterface $familyMemberRepository,
         PrintOurProtocolContext $printOurProtocolContext
     ) {
         $this->protocolRepository = $protocolRepository;
-        $this->familyMemberRepository = $familyMemberRepository;
         $this->practiceRepository = $practiceRepository;
+        $this->familyMemberRepository = $familyMemberRepository;
         $this->printOurProtocolContext = $printOurProtocolContext;
     }
 
@@ -109,12 +109,12 @@ class ProtocolController extends Controller
      */
     public function printPartialReport(Request $request)
     {
-        $protocol = $this->practiceRepository->findOrFail($request->to_print[0])->protocol;
+        $protocol = $this->protocolRepository->findOrFail($request->id);
 
         $strategy = 'modern_style';
         $strategyClass = PrintOurProtocolContext::STRATEGIES[$strategy];
 
-        $this->printOurProtocolContext->setStrategy(new $strategyClass($protocol, $request->to_print));
+        $this->printOurProtocolContext->setStrategy(new $strategyClass($protocol, $request->filter_practices));
 
         return $this->printOurProtocolContext->print();
     }

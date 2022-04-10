@@ -161,22 +161,6 @@ final class ProtocolRepository implements ProtocolRepositoryInterface
             ->get();
     }
 
-    /*
-    * Verify that all the practices belong to the same protocol, in some cases also check that the patient is linked to the user
-    */
-    public function verifyPractices($filter_practices, $family_members) 
-    {
-        $count = $this->model->select('protocols.id as id')
-            ->join('patients', 'protocols.patient_id', '=', 'patients.id')
-            ->whereIn('patients.id', $family_members)
-            ->join('practices', 'protocols.id', '=', 'practices.protocol_id')
-            ->whereIn('practices.id', $filter_practices)
-            ->groupBy('protocols.id')
-            ->count();
-
-        return $count == 1 ? true : false;      
-    }
-
     public function getPendingProtocols() {
         return $this->model
             ->where('closed', null)

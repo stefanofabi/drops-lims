@@ -1,13 +1,13 @@
 @extends('administrators/default-template')
 
 @section('title')
-    {{ trans('practices.add_practices_for_protocol') }} #{{ $protocol->id }}
+{{ trans('practices.add_practices_for_protocol') }} #{{ $protocol->id }}
 @endsection
 
 @section('active_protocols', 'active')
 
 @section('js')
-    <script type="text/javascript">
+<script type="text/javascript">
         $(document).ready(function() {
             $('[data-toggle="tooltip"]').tooltip();
         });
@@ -79,12 +79,23 @@
 
             return false;
         }
-    </script>
+
+    function printSelection() 
+    {
+        $('#print_selection').submit();
+    }
+</script>
 @endsection
 
 @section('menu')
 <nav class="navbar">
     <ul class="navbar-nav">
+        @can('print_protocols')
+        <li class="nav-item">
+			<a class="nav-link" href="#" onclick="printSelection()"> {{ trans('protocols.print_selected') }} </a>
+		</li>
+        @endcan
+
         <li class="nav-item">
             <a class="nav-link" href="{{ route('administrators/protocols/our/edit', ['id' => $protocol->id]) }}"> {{ trans('forms.go_back') }} </a>
         </li>
@@ -114,69 +125,77 @@
     </div>
 </form>
 
-        <div id="practices" class="mt-3">
-            <div class="table-responsive">
-                <table class="table table-striped">
-                    <tr class="info">
-                        <th> {{ trans('determinations.code') }} </th>
-                        <th> {{ trans('determinations.determination') }} </th>
-                        <th> {{ trans('determinations.amount') }} </th>
-                        <th> {{ trans('practices.informed') }} </th>
-                        <th> {{ trans('practices.signed_off') }} </th>
-                        <th class="text-end"> {{ trans('forms.actions') }}</th>
-                    </tr>
+<div id="practices" class="mt-3">
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <tr class="info">
+                <th> </th>
+                <th> {{ trans('determinations.code') }} </th>
+                <th> {{ trans('determinations.determination') }} </th>
+                <th> {{ trans('determinations.amount') }} </th>
+                <th> {{ trans('practices.informed') }} </th>
+                <th> {{ trans('practices.signed_off') }} </th>
+                <th class="text-end"> {{ trans('forms.actions') }}</th>
+            </tr>
 
-                    @php
-                    $total_amount = 0;
-                    @endphp
+            @php
+            $total_amount = 0;
+            @endphp
 
-                    @foreach ($protocol->practices as $practice)
+            <form id="print_selection" action="{{ route('administrators/protocols/our/print_selection') }}" method="post" target="_blank">
+                @csrf
 
-                        @php
-                            $total_amount += $practice->amount;
-                        @endphp
-                        <tr>
-                            <td> {{ $practice->report->determination->code }} </td>
-                            <td> {{ $practice->report->determination->name }} </td>
-                            <td> ${{ number_format($practice->amount, 2, ",", ".") }} </td>
-                            <td>
-                                @if ($practice->results->isEmpty())
-                                    <span class="badge bg-primary"> {{ trans('forms.no') }} </span>
-                                @else
-                                    <span class="badge bg-success"> {{ trans('forms.yes') }} </span>
-                                @endif
-                            </td>
+                <input type="hidden" name="id" value="{{ $protocol->id }}">
 
-                            <td>
-								@forelse($practice->signs as $sign)
-								    <a style="text-decoration: none" href="#" data-toggle="tooltip" title="{{ $sign->user->name }}">
-										<img height="30px" width="30px" src="{{ Gravatar::get($sign->user->email) }}" class="rounded-circle" alt="{{ $sign->user->name }}">
-									</a>
-								@empty
-								    {{ trans('practices.not_signed')}}
-								@endforelse
-							</td>
-                            
-                            <td class="text-end">
-                                <a href="{{ route('administrators/protocols/practices/edit', ['id' => $practice->id]) }}" class="btn btn-info btn-sm" title="{{ trans('practices.edit_practice') }}"> 
-                                    <i class="fas fa-edit fa-sm"></i> 
-                                </a>
+                @foreach ($protocol->practices as $practice)
 
-                                <a href="{{ route('administrators/protocols/practices/destroy', ['id' => $practice->id]) }}" class="btn btn-info btn-sm" title="{{ trans('practices.destroy_practice') }}"> 
-                                    <i class="fas fa-trash fa-sm"></i> 
-                                </a>
-                            </td>
-                        </tr>
-                    @endforeach
+                @php
+                $total_amount += $practice->amount;
+                @endphp
+                
+                <tr>
+                    <td style="width: 50px"> <input type="checkbox" name="filter_practices[]" value="{{ $practice->id }}"> </td>
+                    <td> {{ $practice->report->determination->code }} </td>
+                    <td> {{ $practice->report->determination->name }} </td>
+                    <td> ${{ number_format($practice->amount, 2, ",", ".") }} </td>
+                    <td>
+                        @if ($practice->results->isEmpty())
+                        <span class="badge bg-primary"> {{ trans('forms.no') }} </span>
+                        @else
+                        <span class="badge bg-success"> {{ trans('forms.yes') }} </span>
+                        @endif
+                    </td>
 
-                    <tr>
-                        <td colspan="6" class="text-end">
-                            <h4> Total: ${{ number_format($total_amount, 2, ",", ".") }} </h4>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>
+                    <td>
+                        @forelse($practice->signs as $sign)
+                        <a style="text-decoration: none" href="#" data-toggle="tooltip" title="{{ $sign->user->name }}">
+                            <img height="30px" width="30px" src="{{ Gravatar::get($sign->user->email) }}" class="rounded-circle" alt="{{ $sign->user->name }}">
+                        </a>
+                        @empty
+                        {{ trans('practices.not_signed')}}
+                        @endforelse
+                    </td>
+                                
+                    <td class="text-end">
+                        <a href="{{ route('administrators/protocols/practices/edit', ['id' => $practice->id]) }}" class="btn btn-info btn-sm" title="{{ trans('practices.edit_practice') }}"> 
+                            <i class="fas fa-edit fa-sm"></i> 
+                        </a>
+
+                        <a href="{{ route('administrators/protocols/practices/destroy', ['id' => $practice->id]) }}" class="btn btn-info btn-sm" title="{{ trans('practices.destroy_practice') }}"> 
+                            <i class="fas fa-trash fa-sm"></i> 
+                        </a>
+                    </td>
+                </tr>
+                @endforeach
+            </form>
+
+            <tr>
+                <td colspan="7" class="text-end">
+                    <h4> Total: ${{ number_format($total_amount, 2, ",", ".") }} </h4>
+                </td>
+            </tr>
+        </table>
     </div>
+</div>
 @endsection
 

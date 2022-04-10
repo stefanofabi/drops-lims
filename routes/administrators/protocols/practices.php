@@ -15,8 +15,8 @@ Route::controller(PracticeController::class)
     ->prefix('practices')
     ->as('practices/')
     ->group(function () {
-        Route::get('index', 'index')
-            ->name('index');
+        Route::get('create', 'create')
+            ->name('create');
 
         Route::get('edit/{id}', 'edit')
             ->name('edit')

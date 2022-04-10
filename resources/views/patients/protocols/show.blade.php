@@ -98,6 +98,8 @@
         <form id="print_selection" action="{{ route('patients/protocols/print_selection') }}" method="post" target="_blank">
             @csrf
 
+			<input type="hidden" name="id" value="{{ $protocol->id }}">
+			
             @foreach ($protocol->practices as $practice)
             <tr>
                 <td style="width: 50px"> <input type="checkbox" name="filter_practices[]" value="{{ $practice->id }}"> </td>

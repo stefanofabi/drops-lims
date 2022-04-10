@@ -10,6 +10,7 @@ use App\Contracts\Repository\PatientRepositoryInterface;
 use App\Contracts\Repository\ProtocolRepositoryInterface;
 use App\Contracts\Repository\PrescriberRepositoryInterface;
 use App\Contracts\Repository\BillingPeriodRepositoryInterface;
+use App\Contracts\Repository\PracticeRepositoryInterface;
 
 use App\Laboratory\Prints\Worksheets\PrintWorksheetContext;
 use App\Laboratory\Prints\Protocols\Our\PrintOurProtocolContext;
@@ -23,6 +24,9 @@ class OurProtocolController extends Controller
 {
     /** @var \App\Contracts\Repository\ProtocolRepositoryInterface */
     private $protocolRepository;
+
+    /** @var \App\Contracts\Repository\PracticeRepositoryInterface */
+    private $practiceRepository;
 
     /** @var \App\Contracts\Repository\PatientRepositoryInterface */
     private $patientRepository;
@@ -40,7 +44,8 @@ class OurProtocolController extends Controller
     private $printOurProtocolContext;
 
     public function __construct (
-        ProtocolRepositoryInterface $protocolRepository, 
+        ProtocolRepositoryInterface $protocolRepository,
+        PracticeRepositoryInterface $practiceRepository, 
         PatientRepositoryInterface $patientRepository, 
         PrescriberRepositoryInterface $prescriberRepository,
         BillingPeriodRepositoryInterface $billingPeriodRepository,
@@ -48,6 +53,7 @@ class OurProtocolController extends Controller
         PrintOurProtocolContext $printOurProtocolContext
     ) {
         $this->protocolRepository = $protocolRepository;
+        $this->practiceRepository = $practiceRepository;
         $this->patientRepository = $patientRepository;
         $this->prescriberRepository = $prescriberRepository;
         $this->billingPeriodRepository = $billingPeriodRepository;
@@ -180,6 +186,23 @@ class OurProtocolController extends Controller
     public function printProtocol(Request $request, $id)
     {
         $protocol = $this->protocolRepository->findOrFail($id);
+
+        $strategy = 'modern_style';
+        $strategyClass = PrintOurProtocolContext::STRATEGIES[$strategy];
+
+        $this->printOurProtocolContext->setStrategy(new $strategyClass($protocol, $request->filter_practices));
+
+        return $this->printOurProtocolContext->print();
+    }
+
+    /**
+     * Returns a protocol partially in pdf format
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function printPartialReport(Request $request)
+    {
+        $protocol = $this->practiceRepository->findOrFail($request->id)->protocol;
 
         $strategy = 'modern_style';
         $strategyClass = PrintOurProtocolContext::STRATEGIES[$strategy];

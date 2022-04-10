@@ -52,5 +52,6 @@ return [
     'send_protocol_email_successfully' => 'Send protocol email successfully',
     'not_loaded_practices' => 'To close a protocol there must be at least one practice loaded',
     'select_practices_to_print' => 'Select practices to print',
+    'practice_detected_not_belong_protocol' => 'A practice was detected that does not belong to the protocol'
     
 ];
