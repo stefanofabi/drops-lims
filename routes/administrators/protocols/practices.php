@@ -29,7 +29,7 @@ Route::controller(PracticeController::class)
         Route::get('destroy/{id}', 'destroy')
             ->name('destroy')
             ->where('id', '[1-9][0-9]*')
-            ->middleware('verify_open_protocol');
+            ->middleware('verify_open_practice');
 
         Route::post('find', 'loadPractices')
             ->name('load_practices');
@@ -37,13 +37,13 @@ Route::controller(PracticeController::class)
         Route::put('inform_results/{practice_id}', 'informResults')
             ->name('inform_results')
             ->where('practice_id', '[1-9][0-9]*')
-            ->middleware('verify_open_protocol');
+            ->middleware('verify_open_practice');
 
         Route::put('sign/{practice_id}', 'sign')
             ->name('sign')
             ->where('practice_id', '[1-9][0-9]*')
             ->middleware('permission:sign_practices')
-            ->middleware('verify_open_protocol');
+            ->middleware('verify_open_practice');
 
         Route::post('results', 'getResults')
             ->name('results');

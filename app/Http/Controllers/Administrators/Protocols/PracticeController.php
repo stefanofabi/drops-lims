@@ -191,7 +191,7 @@ class PracticeController extends Controller
     public function sign(Request $request, $id)
     {
         //
-
+        
         try {
             if (! $this->signPracticeRepository->create(['practice_id' => $id, 'user_id' => auth()->user()->id])) {
                 return response()->json(['message' => Lang::get('forms.failed_transaction')], 500);
@@ -199,10 +199,10 @@ class PracticeController extends Controller
         } catch (QueryException $exception) {
             // the user had already signed the practice
 
-            return response()->json(['message' => Lang::get('protocols.already_signed')], 200);
+            return response()->json(['message' => Lang::get('practices.already_signed')], 200);
         }
 
-        return response()->json(['message' => Lang::get('protocols.success_signed')], 200);
+        return response()->json(['message' => Lang::get('practices.success_signed')], 200);
     }
 
     /**

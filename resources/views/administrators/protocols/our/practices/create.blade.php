@@ -12,6 +12,7 @@
             $('[data-toggle="tooltip"]').tooltip();
         });
 
+        @if (empty($protocol->closed))
         $(function () {
             $("#practice").autocomplete({
                 minLength: 2,
@@ -79,7 +80,7 @@
 
             return false;
         }
-
+        @endif
     function printSelection() 
     {
         $('#print_selection').submit();
@@ -114,11 +115,11 @@
     <div class="row mt-3">
         <div class="col">
             <input type="hidden" id="report_id" value="0">
-            <input type="text" class="form-control input-sm" id="practice" placeholder="{{ trans('practices.enter_practice') }}">
+            <input type="text" class="form-control input-sm" id="practice" placeholder="{{ trans('practices.enter_practice') }}" @if (! empty($protocol->closed)) readonly @endif>
         </div>
 
         <div class="col">
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" class="btn btn-primary @if (! empty($protocol->closed)) disabled @endif">
                 <span class="fas fa-plus"></span> {{ trans('practices.add_practice') }}
             </button>
         </div>
@@ -177,11 +178,17 @@
                     </td>
                                 
                     <td class="text-end">
+                        @if (empty($protocol->closed))
                         <a href="{{ route('administrators/protocols/practices/edit', ['id' => $practice->id]) }}" class="btn btn-info btn-sm" title="{{ trans('practices.edit_practice') }}"> 
                             <i class="fas fa-edit fa-sm"></i> 
                         </a>
+                        @else 
+                        <a href="{{ route('administrators/protocols/practices/edit', ['id' => $practice->id]) }}" class="btn btn-info btn-sm" title="{{ trans('practices.show_practice') }}"> 
+                            <i class="fas fa-show fa-eye"></i> 
+                        </a>
+                        @endif
 
-                        <a href="{{ route('administrators/protocols/practices/destroy', ['id' => $practice->id]) }}" class="btn btn-info btn-sm" title="{{ trans('practices.destroy_practice') }}"> 
+                        <a href="{{ route('administrators/protocols/practices/destroy', ['id' => $practice->id]) }}" class="btn btn-info btn-sm @if (! empty($protocol->closed)) disabled @endif" title="{{ trans('practices.destroy_practice') }}"> 
                             <i class="fas fa-trash fa-sm"></i> 
                         </a>
                     </td>

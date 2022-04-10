@@ -79,7 +79,8 @@ class Kernel extends HttpKernel
         'check_protocol_can_sent_by_email' => \App\Http\Middleware\CheckProtocolCanSentByEmail::class,
         'check_if_loaded_patient_email' => \App\Http\Middleware\CheckIfLoadedPatientEmail::class,
         'redirect_if_practice_not_signed' => \App\Http\Middleware\Patients\RedirectIfPracticeNotSigned::class,
-        
+        'verify_open_practice' => \App\Http\Middleware\VerifyOpenPractice::class,
+
     ];
 
     /**

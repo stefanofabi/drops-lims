@@ -121,10 +121,6 @@
         <li class="nav-item">
             <a class="nav-link @if (empty($protocol->closed)) disabled @endif" target="_blank" href="{{ route('administrators/protocols/our/print', ['id' => $protocol->id]) }}"> {{ trans('protocols.print_report') }} </a>
         </li>
-
-        <li class="nav-item">
-			<a class="nav-link" href="#" onclick="printSelection()"> {{ trans('protocols.print_selected') }} </a>
-		</li>
         @endcan
 
         <li class="nav-item">

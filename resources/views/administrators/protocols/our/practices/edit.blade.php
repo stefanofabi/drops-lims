@@ -1,7 +1,7 @@
 @extends('administrators/default-template')
 
 @section('title')
-    {{ trans('practices.edit_practice') }}
+{{ trans('practices.edit_practice') }}
 @endsection
 
 @section('active_protocols', 'active')
@@ -10,10 +10,10 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
-            load_results();
+            loadResults();
         });
 
-        function load_results() {
+        function loadResults() {
             var parameters = {
                 "practice_id": '{{ $practice->id }}'
             };
@@ -26,7 +26,11 @@
                     $("#messages").html('<div class="spinner-border text-info mt-3"> </div> {{ trans("forms.please_wait") }}');
                 },
                 success: function (response) {
+                    @if (empty($practice->protocol->closed)) 
                     $("#messages").html('<div class="alert alert-warning alert-dismissible fade show mt-3" role="alert"> <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"> </button> <strong> {{ trans("forms.warning") }}!</strong> {{ trans("practices.modified_practice")}} </div>');
+                    @else
+                    $("#messages").html('');
+                    @endif
                     var i = 0;
 
                     $('#report').find('input, select').each(function () {
@@ -39,27 +43,10 @@
             });
         }
 
-        function confirm_result(type) {
-            if (confirm('{{ trans("forms.confirm") }}')) {
-                switch (type) {
-                    case 'update': {
-                        update_practice();
-                        break;
-                    }
+        @if (empty($practice->protocol->closed)) 
+        function updatePractice() {
 
-                    @can('sign_practices')
-                    case 'sign': {
-                        sign_practice();
-                        break;
-                    }
-                    @endcan
-                }
-            }
-
-            return false;
-        }
-
-        function update_practice() {
+            if (! confirm("{{ Lang::get('forms.confirm')}}")) return false;
 
             var array = [];
 
@@ -93,7 +80,9 @@
         }
 
         @can('sign_practices')
-        function sign_practice() {
+        function signPractice() {
+
+            if (! confirm("{{ Lang::get('forms.confirm')}}")) return false;
 
             var parameters = {
                 "_token": '{{ csrf_token() }}',
@@ -117,6 +106,7 @@
 
             return false;
         }
+        @endcan
         @endif
 
     </script>
@@ -126,7 +116,7 @@
 <nav class="navbar">
     <ul class="navbar-nav">
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('administrators/protocols/practices/index', ['protocol_id' => $practice->protocol_id]) }}"> {{ trans('forms.go_back') }} </a>
+            <a class="nav-link" href="{{ route('administrators/protocols/practices/create', ['protocol_id' => $practice->protocol_id]) }}"> {{ trans('forms.go_back') }} </a>
         </li>
     </ul>
 </nav>
@@ -170,14 +160,14 @@
 
             <div class="card-header">
                 <div class="mt-3 float-right">
-                    <button type="submit" class="btn btn-primary" onclick="return confirm_result('update')">
+                    <button type="submit" class="btn btn-primary @if (! empty($practice->protocol->closed)) disabled @endif" onclick="return updatePractice()">
                         <span class="fas fa-save"> </span> {{ trans('forms.save') }}
                     </button>
 
                     @can('sign_practices')
-                        <button type="submit" class="btn btn-primary" onclick="return confirm_result('sign')">
-                            <span class="fas fa-signature"> </span> {{ trans('forms.sign') }}
-                        </button>
+                    <button type="submit" class="btn btn-primary @if (! empty($practice->protocol->closed)) disabled @endif" onclick="return signPractice()">
+                        <span class="fas fa-signature"> </span> {{ trans('forms.sign') }}
+                    </button>
                     @endcan
                 </div>
             </div>
