@@ -65,5 +65,7 @@ return [
     'bonding_date' => 'Bonding date',
     'send_security_code_successfully' => 'Send security code successfully',
     'patient_have_not_email' => 'Patient have not email loaded',
-
+    'family_members' => 'Family members',
+    'reserve_shift' => 'Reserve shift',
+    
 ];

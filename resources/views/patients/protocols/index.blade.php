@@ -1,7 +1,7 @@
 @extends('patients/default-template')
 
 @section('title')
-{{ trans('home.results') }}
+{{ trans('protocols.protocols') }}
 @endsection
 
 @section('js')
@@ -13,7 +13,7 @@
     </script>
 @endsection
 
-@section('active_results', 'active')
+@section('active_protocols', 'active')
 
 @section('menu')
 <nav class="navbar">
@@ -26,7 +26,7 @@
 @endsection
 
 @section('content-title')
-<i class="fas fa-file-medical"></i> {{ trans('home.results') }}
+<i class="fas fa-file-medical"></i> {{ trans('protocols.protocols') }}
 @endsection
 
 @section('content')
@@ -74,7 +74,7 @@
         @forelse ($protocols as $protocol)
             <tr>
                 <td> {{ $protocol->id }} </td>
-                <td> {{ date('d-m-Y', strtotime($protocol->completion_date)) }} </td>
+                <td> {{ date('d/m/Y', strtotime($protocol->completion_date)) }} </td>
                 <td> {{ $protocol->prescriber->full_name }} </td>
 
                 <td class="text-end">

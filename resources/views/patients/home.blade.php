@@ -28,7 +28,7 @@
 
                                     <br />
 
-                                    {{ trans('home.results') }}
+                                    {{ trans('protocols.protocols') }}
                                 </a>
                             </div>
                         </div>
@@ -40,7 +40,7 @@
                                 </h1>
 
                                 <br />
-                                {{ trans('home.reserve_shift') }}
+                                {{ trans('patients.reserve_shift') }}
                             </a>
                         </div>
                     </div>
@@ -55,7 +55,7 @@
 
                                     <br />
 
-                                    {{ trans('home.family_members') }}
+                                    {{ trans('patients.family_members') }}
                                 </a>
                             </div>
                         </div>

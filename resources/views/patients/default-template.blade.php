@@ -17,11 +17,11 @@
 			<!-- Left Side Of Navbar -->
 			<ul class="navbar-nav">
 				<li class="nav-item">
-					<a class="nav-link @yield('active_results')" href="{{ route('patients/protocols/index') }}"> {{ trans('home.results') }} </a>
+					<a class="nav-link @yield('active_protocols')" href="{{ route('patients/protocols/index') }}"> {{ trans('protocols.protocols') }} </a>
 				</li>
 
                 <li class="nav-item">
-					<a class="nav-link @yield('active_family_members')" href="{{ route('patients/family_members/index') }}"> {{ trans('home.family_members') }} </a>
+					<a class="nav-link @yield('active_family_members')" href="{{ route('patients/family_members/index') }}"> {{ trans('patients.family_members') }} </a>
 				</li>
 			</ul>
 

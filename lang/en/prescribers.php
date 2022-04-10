@@ -27,5 +27,6 @@ return [
     'destroy_prescriber' => 'Destroy prescriber',
     'full_name' => 'Full name',
     'success_destroy_message' => 'Well done! Prescriber was successfully removed',
-
+    'particular' => 'Particular',
+    
 ];

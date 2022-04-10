@@ -91,6 +91,7 @@ class OurProtocolController extends Controller
             'quantity_orders' => 'required|numeric|min:0',
             'patient_id' => 'required|numeric|min:1',
             'plan_id' => 'required|numeric|min:1',
+            'prescriber_id' => 'required|numeric|min:1',
             'type' => 'required|in:our',
         ]);
 
@@ -147,6 +148,7 @@ class OurProtocolController extends Controller
             'quantity_orders' => 'required|numeric|min:0',
             'patient_id' => 'required|numeric|min:1',
             'plan_id' => 'required|numeric|min:1',
+            'prescriber_id' => 'required|numeric|min:1',
             'type' => 'required|in:our',
         ]);
         

@@ -27,11 +27,13 @@ class ProtocolController extends Controller
     public function __construct (
         ProtocolRepositoryInterface $protocolRepository,
         FamilyMemberRepositoryInterface $familyMemberRepository,
-        PracticeRepositoryInterface $practiceRepository
+        PracticeRepositoryInterface $practiceRepository,
+        PrintOurProtocolContext $printOurProtocolContext
     ) {
         $this->protocolRepository = $protocolRepository;
         $this->familyMemberRepository = $familyMemberRepository;
         $this->practiceRepository = $practiceRepository;
+        $this->printOurProtocolContext = $printOurProtocolContext;
     }
 
     /**
@@ -46,18 +48,19 @@ class ProtocolController extends Controller
         $request->validate([
             'initial_date' => 'date|nullable',
             'ended_date' => 'date|nullable',
+            'patient_id' => 'numeric|min:1|nullable',
         ]);
         
         $initial_date = $request->initial_date;
         $ended_date = $request->ended_date;
 
-        $protocols = $this->protocolRepository->getProtocolsInDatesRange($initial_date, $ended_date, $request->patient_id);
+        $protocols = $this->protocolRepository->getProtocolsForPatient($initial_date, $ended_date, $request->patient_id);
 
         $user = auth()->user();
 
         $family_members = $user->family_members;
         
-        return view('patients/index')
+        return view('patients/protocols/index')
             ->with('family_members', $family_members)
             ->with('initial_date', $initial_date)
             ->with('ended_date', $ended_date)
@@ -94,7 +97,9 @@ class ProtocolController extends Controller
         $strategy = 'modern_style';
         $strategyClass = PrintOurProtocolContext::STRATEGIES[$strategy];
 
-        return (new $strategyClass)->printProtocol($id, []);
+        $this->printOurProtocolContext->setStrategy(new $strategyClass($protocol, []));
+
+        return $this->printOurProtocolContext->print();
     }
 
     /**
@@ -108,7 +113,9 @@ class ProtocolController extends Controller
 
         $strategy = 'modern_style';
         $strategyClass = PrintOurProtocolContext::STRATEGIES[$strategy];
-      
-        return (new $strategyClass)->printProtocol($protocol->id, $request->to_print);
+
+        $this->printOurProtocolContext->setStrategy(new $strategyClass($protocol, $request->to_print));
+
+        return $this->printOurProtocolContext->print();
     }
 }

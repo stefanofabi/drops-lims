@@ -23,15 +23,17 @@
 @endsection
 
 @section('menu')
-<ul class="nav flex-column">
-	<li class="nav-item">
-		<a class="nav-link" target="_blank" href="{{ route('patients/protocols/print', $protocol->id) }}"> {{ trans('protocols.print_report') }} </a>
-	</li>
+<nav class="navbar">
+    <ul class="navbar-nav">
+		<li class="nav-item">
+			<a class="nav-link" target="_blank" href="{{ route('patients/protocols/print', $protocol->id) }}"> {{ trans('protocols.print_report') }} </a>
+		</li>
 
-	<li class="nav-item">
-		<a class="nav-link" href="#" onclick="print_selection()"> {{ trans('protocols.print_selected') }} </a>
-	</li>
-</ul>
+		<li class="nav-item">
+			<a class="nav-link" href="#" onclick="print_selection()"> {{ trans('protocols.print_selected') }} </a>
+		</li>
+	</ul>
+</nav>
 @endsection
 
 @section('content-title')
@@ -79,15 +81,15 @@
 	<input type="text" class="form-control" value="{{ $protocol->diagnostic }}" disabled>
 </div>
 
-<h4 class="mt-3"> <span class="fas fa-syringe" ></span> {{ trans('determinations.determinations')}} </h4>
+<h4 class="mt-3"> <span class="fas fa-syringe" ></span> {{ trans('practices.practices')}} </h4>
     
 
 <div class="table-responsive">
 	<table class="table table-striped">
 		<tr class="info">
             <th>  </th>
-			<th> {{ trans('determinations.determination') }} </th>
-			<th> {{ trans('protocols.informed') }} </th>
+			<th> {{ trans('practices.practice') }} </th>
+			<th> {{ trans('practices.informed') }} </th>
 			<th class="text-end"> {{ trans('forms.actions') }}</th>
 		</tr>
 
@@ -105,12 +107,12 @@
                         <img height="30px" width="30px" src="{{ Gravatar::get($sign->user->email) }}" class="rounded-circle" alt="{{ $sign->user->name }}">
                     </a>
                     @empty
-                    {{ trans('protocols.not_signed')}}
+                    {{ trans('practices.not_signed')}}
                     @endforelse
                 </td>
                 
 				<td class="text-end">
-                    <a href="{{ route('patients/protocols/practices/show', ['id' => $practice->id]) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.show_practice') }}"> <i class="fas fa-eye fa-sm"></i> </a>
+                    <a href="{{ route('patients/protocols/practices/show', ['id' => $practice->id]) }}" class="btn btn-info btn-sm" title="{{ trans('practices.show_practice') }}"> <i class="fas fa-eye fa-sm"></i> </a>
                 </td>
             </tr>
             @endforeach

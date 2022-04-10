@@ -91,7 +91,7 @@ final class ProtocolRepository implements ProtocolRepositoryInterface
     }
 
     /*
-    * Returns a list of protocols between two specified dates for a particular patient
+    * Returns a list of protocols between two specified dates
     */
     public function getProtocolsInDatesRange($initial_date, $ended_date) 
     {
@@ -102,6 +102,19 @@ final class ProtocolRepository implements ProtocolRepositoryInterface
             ->get();
     }
 
+/*
+    * Returns a list of protocols between two specified dates for a particular patient
+    */
+    public function getProtocolsForPatient($initial_date, $ended_date, $patient_id) 
+    {
+        return $this->model
+            ->whereBetween('completion_date', [$initial_date, $ended_date])
+            ->orderBy('completion_date', 'ASC')
+            ->where('patient_id', $patient_id)
+            ->where('protocols.type', 'our')
+            ->get();
+    }
+    
     /*
     * Returns a list with the monthly collection of each social work on the specified dates
     */

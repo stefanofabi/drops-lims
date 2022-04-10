@@ -1,7 +1,7 @@
 @extends('patients/default-template')
 
 @section('title')
-{{ trans('protocols.result') }}
+{{ trans('practices.result') }}
 @endsection
 
 @section('active_results', 'active')
@@ -40,15 +40,17 @@
 @endsection
 
 @section('menu')
-<ul class="nav flex-column">
-	<li class="nav-item">
-		<a class="nav-link" href="{{ route('patients/protocols/show', ['id' => $practice->protocol->id]) }}"> <img src="{{ asset('images/drop.png') }}" width="25" height="25"> {{ trans('forms.go_back') }} </a>
-	</li>
-</ul>
+<nav class="navbar">
+    <ul class="navbar-nav">
+		<li class="nav-item">
+			<a class="nav-link" href="{{ route('patients/protocols/show', ['id' => $practice->protocol->id]) }}"> {{ trans('forms.go_back') }} </a>
+		</li>
+    </ul>
+</nav>
 @endsection
 
 @section('content-title')
-<i class="fas fa-file-medical"></i> {{ trans('protocols.result') }}
+<i class="fas fa-file-medical"></i> {{ trans('practices.result') }}
 @endsection
 
 @section('content')

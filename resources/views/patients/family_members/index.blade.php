@@ -1,7 +1,7 @@
 @extends('patients/default-template')
 
 @section('title')
-{{ trans('home.family_members') }}
+{{ trans('patients.family_members') }}
 @endsection
 
 @section('active_family_members', 'active')
@@ -17,7 +17,7 @@
 @endsection
 
 @section('content-title')
-<i class="fas fa-users"></i> {{ trans('home.family_members') }}
+<i class="fas fa-users"></i> {{ trans('patients.family_members') }}
 @endsection
 
 @section('content-message')

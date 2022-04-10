@@ -48,9 +48,8 @@ Route::group(['middleware' => ['web']], function () {
         session(['lang' => $lang]);
 
         return \Redirect::back();
-    })->where([
-        'lang' => 'en|es',
-    ]);
+    })->name('lang')
+    ->where(['lang' => 'en|es']);
 });
 
 // For guests
