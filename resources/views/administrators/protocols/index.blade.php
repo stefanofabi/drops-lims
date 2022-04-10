@@ -85,7 +85,11 @@
 
 			<td class="text-end">
 				@if ($protocol->type == 'our')
-				<a href="{{ route('administrators/protocols/our/edit', [$protocol->id]) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.edit_protocol') }}" > <i class="fas fa-edit fa-sm"></i> </a> 
+					@if (empty($protocol->closed))
+					<a href="{{ route('administrators/protocols/our/edit', [$protocol->id]) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.edit_protocol') }}" > <i class="fas fa-edit fa-sm"></i> </a> 
+					@else
+					<a href="{{ route('administrators/protocols/our/edit', [$protocol->id]) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.show_protocol') }}" > <i class="fas fa-eye fa-sm"></i> </a> 
+					@endif
 				@else 
 				<a href="" class="btn btn-info btn-sm" title="{{ trans('protocols.edit_protocol') }}" > <i class="fas fa-edit fa-sm"></i> </a> 
 				@endif
