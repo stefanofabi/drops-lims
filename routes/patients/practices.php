@@ -1,16 +1,20 @@
 <?php
 
-Route::group([
-    'prefix' => 'practices',
-    'as' => 'practices/',
-], function () {
+use App\Http\Controllers\Patients\PracticeController;
 
-    Route::get('show/{id}', ['\App\Http\Controllers\Patients\PracticeController', 'show',])
-    ->name('show')
-    ->where('id', '[1-9][0-9]*')
-    ->middleware('verify_practice_access_relation');
+Route::controller(PracticeController::class)
+->prefix('practices')
+->as('practices/')
+->group(function () {
 
-    Route::post('get_results', ['\App\Http\Controllers\Patients\PracticeController', 'getResults',])
-    ->name('get_results')
-    ->middleware('verify_practice_access_relation');
+    Route::get('show/{id}', 'show')
+        ->name('show')
+        ->where('id', '[1-9][0-9]*')
+        ->middleware('verify_practice_access_relation')
+        ->middleware('redirect_if_practice_not_signed');
+
+    Route::post('get_results', 'getResults')
+        ->name('get_results')
+        ->middleware('verify_practice_access_relation')
+        ->middleware('redirect_if_practice_not_signed');
 });

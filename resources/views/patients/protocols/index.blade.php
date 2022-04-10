@@ -73,7 +73,13 @@
 
         @forelse ($protocols as $protocol)
             <tr>
-                <td> {{ $protocol->id }} </td>
+                <td> 
+                    {{ $protocol->id }} 
+
+                    @if (! empty($protocol->closed))
+                    <span class="badge bg-success bg-sm"> {{ trans('protocols.closed') }} </span>
+                    @endif
+                </td>
                 <td> {{ date('d/m/Y', strtotime($protocol->completion_date)) }} </td>
                 <td> {{ $protocol->prescriber->full_name }} </td>
 
@@ -82,7 +88,7 @@
                         <i class="fas fa-eye fa-sm"></i> 
                     </a>
 
-                    <a target="_blank" href="{{ route('patients/protocols/print', $protocol->id) }}" class="btn btn-info btn-sm verticalButtons" title="{{ trans('protocols.print_report') }}"> 
+                    <a target="_blank" href="{{ route('patients/protocols/print', $protocol->id) }}" class="btn btn-info btn-sm verticalButtons @if (empty($protocol->closed)) disabled @endif" title="{{ trans('protocols.print_report') }}"> 
                         <i class="fas fa-print fa-sm"></i> 
                     </a>
                 </td>

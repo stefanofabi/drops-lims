@@ -4,7 +4,7 @@
 {{ trans('protocols.show_protocol') }} #{{ $protocol->id }}
 @endsection
 
-@section('active_results', 'active')
+@section('active_protocols', 'active')
 
 @section('menu-title')
 {{ trans('forms.menu') }}
@@ -16,7 +16,7 @@
         $('[data-toggle="tooltip"]').tooltip();
     });
 
-    function print_selection() {
+    function printSelection() {
         $('#print_selection').submit();
     }
 </script>
@@ -26,11 +26,11 @@
 <nav class="navbar">
     <ul class="navbar-nav">
 		<li class="nav-item">
-			<a class="nav-link" target="_blank" href="{{ route('patients/protocols/print', $protocol->id) }}"> {{ trans('protocols.print_report') }} </a>
+			<a class="nav-link @if (empty($protocol->closed)) disabled @endif" target="_blank" href="{{ route('patients/protocols/print', $protocol->id) }}"> {{ trans('protocols.print_report') }} </a>
 		</li>
 
 		<li class="nav-item">
-			<a class="nav-link" href="#" onclick="print_selection()"> {{ trans('protocols.print_selected') }} </a>
+			<a class="nav-link" href="#" onclick="printSelection()"> {{ trans('protocols.print_selected') }} </a>
 		</li>
 	</ul>
 </nav>
@@ -41,44 +41,46 @@
 @endsection
 
 @section('content')
-<div class="input-group mt-3 w-50 input-form">
-	<div class="input-group-prepend">
-		<span class="input-group-text"> {{ trans('patients.patient') }} </span>
+<div class="col-10">
+	<div class="input-group mt-3 input-form">
+		<div class="input-group-prepend">
+			<span class="input-group-text"> {{ trans('patients.patient') }} </span>
+		</div>
+
+		<input type="text" class="form-control" value="{{ $protocol->patient->full_name }}" disabled>
 	</div>
 
-	<input type="text" class="form-control" value="{{ $protocol->patient->full_name }}" disabled>
-</div>
+	<div class="input-group mt-2 input-form">
+		<div class="input-group-prepend">
+			<span class="input-group-text"> {{ trans('social_works.social_work') }} </span>
+		</div>
 
-<div class="input-group mt-2 w-50 input-form">
-	<div class="input-group-prepend">
-		<span class="input-group-text"> {{ trans('social_works.social_work') }} </span>
+		<input type="text" class="form-control" value="{{ $protocol->plan->social_work->name }} {{ $protocol->plan->name }}" disabled>
 	</div>
 
-	<input type="text" class="form-control" value="{{ $protocol->plan->social_work->name }} {{ $protocol->plan->name }}" disabled>
-</div>
+	<div class="input-group mt-2 input-form">
+		<div class="input-group-prepend">
+			<span class="input-group-text"> {{ trans('prescribers.prescriber') }} </span>
+		</div>
 
-<div class="input-group mt-2 w-50 input-form">
-	<div class="input-group-prepend">
-		<span class="input-group-text"> {{ trans('prescribers.prescriber') }} </span>
+		<input type="text" class="form-control" value="{{ $protocol->prescriber->full_name }}" disabled>
 	</div>
 
-	<input type="text" class="form-control" value="{{ $protocol->prescriber->full_name }}" disabled>
-</div>
+	<div class="input-group mt-2 input-form">
+		<div class="input-group-prepend">
+			<span class="input-group-text"> {{ trans('protocols.completion_date') }} </span>
+		</div>
 
-<div class="input-group mt-2 w-50 input-form">
-	<div class="input-group-prepend">
-		<span class="input-group-text"> {{ trans('protocols.completion_date') }} </span>
+		<input type="date" class="form-control" value="{{ $protocol->completion_date }}" disabled>
 	</div>
 
-	<input type="date" class="form-control" value="{{ $protocol->completion_date }}" disabled>
-</div>
+	<div class="input-group mt-2 input-form">
+		<div class="input-group-prepend">
+			<span class="input-group-text"> {{ trans('protocols.diagnostic') }} </span>
+		</div>
 
-<div class="input-group mt-2 w-50 input-form">
-	<div class="input-group-prepend">
-		<span class="input-group-text"> {{ trans('protocols.diagnostic') }} </span>
+		<input type="text" class="form-control" value="{{ $protocol->diagnostic }}" disabled>
 	</div>
-
-	<input type="text" class="form-control" value="{{ $protocol->diagnostic }}" disabled>
 </div>
 
 <h4 class="mt-3"> <span class="fas fa-syringe" ></span> {{ trans('practices.practices')}} </h4>
@@ -98,7 +100,7 @@
 
             @foreach ($protocol->practices as $practice)
             <tr>
-                <td style="width: 50px"> <input type="checkbox" name="to_print[]" value="{{ $practice->id }}"> </td>
+                <td style="width: 50px"> <input type="checkbox" name="filter_practices[]" value="{{ $practice->id }}"> </td>
                 <td> {{ $practice->report->determination->name }} </td>
 
                 <td>
@@ -112,7 +114,7 @@
                 </td>
                 
 				<td class="text-end">
-                    <a href="{{ route('patients/protocols/practices/show', ['id' => $practice->id]) }}" class="btn btn-info btn-sm" title="{{ trans('practices.show_practice') }}"> <i class="fas fa-eye fa-sm"></i> </a>
+                    <a href="{{ route('patients/protocols/practices/show', ['id' => $practice->id]) }}" class="btn btn-info btn-sm @if ($practice->signs->isEmpty()) disabled @endif" title="{{ trans('practices.show_practice') }}"> <i class="fas fa-eye fa-sm"></i> </a>
                 </td>
             </tr>
             @endforeach
@@ -120,4 +122,3 @@
 	</table>
 </div>
 @endsection
-

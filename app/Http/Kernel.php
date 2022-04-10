@@ -65,11 +65,11 @@ class Kernel extends HttpKernel
         'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
         'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
         'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,
-        'verify_family_member_relation' => \App\Http\Middleware\VerifyFamilyMemberRelation::class,
-        'verify_security_code' => \App\Http\Middleware\VerifySecurityCode::class,
-        'verify_protocol_access_relation' => \App\Http\Middleware\VerifyProtocolAccessRelation::class,
-        'verify_partial_report_relation' => \App\Http\Middleware\VerifyPartialReportRelation::class,
-        'verify_practice_access_relation' => \App\Http\Middleware\VerifyPracticeAccessRelation::class,
+        'verify_family_member_relation' => \App\Http\Middleware\Patients\VerifyFamilyMemberRelation::class,
+        'verify_security_code' => \App\Http\Middleware\Patients\VerifySecurityCode::class,
+        'verify_protocol_access_relation' => \App\Http\Middleware\Patients\VerifyProtocolAccessRelation::class,
+        'verify_partial_report_relation' => \App\Http\Middleware\Patients\VerifyPartialReportRelation::class,
+        'verify_practice_access_relation' => \App\Http\Middleware\Patients\VerifyPracticeAccessRelation::class,
         'verify_billing_period_dates' => \App\Http\Middleware\VerifyBillingPeriodDates::class,
         'verify_payment_date_social_work' => \App\Http\Middleware\VerifyPaymentDateSocialWork::class,
         'verify_closed_protocol' => \App\Http\Middleware\VerifyClosedProtocol::class,
@@ -79,7 +79,8 @@ class Kernel extends HttpKernel
         'check_practice_to_print' => \App\Http\Middleware\CheckPracticeToPrint::class,
         'check_protocol_can_sent_by_email' => \App\Http\Middleware\CheckProtocolCanSentByEmail::class,
         'check_if_loaded_patient_email' => \App\Http\Middleware\CheckIfLoadedPatientEmail::class,
-
+        'redirect_if_practice_not_signed' => \App\Http\Middleware\Patients\RedirectIfPracticeNotSigned::class,
+        
     ];
 
     /**

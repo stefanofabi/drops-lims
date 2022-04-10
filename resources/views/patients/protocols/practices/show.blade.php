@@ -4,7 +4,7 @@
 {{ trans('practices.result') }}
 @endsection
 
-@section('active_results', 'active')
+@section('active_protocols', 'active')
 
 @section('js')
 <script type="text/javascript">

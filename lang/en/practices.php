@@ -33,5 +33,6 @@ return [
     'results' => 'Results',
     'practice' => 'Practice',
     'show_practice' => 'Show practice',
+    'practice_not_signed' => 'Practice not signed',
     
 ];

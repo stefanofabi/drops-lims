@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace App\Http\Middleware\Patients;
 
 use Closure;
 use Illuminate\Http\Request;
@@ -36,7 +36,7 @@ class VerifyPartialReportRelation
     public function handle(Request $request, Closure $next)
     {
         $user_id = auth()->user()->id;
-        $filter_practices = $request->to_print;
+        $filter_practices = $request->filter_practices;
 
         if (! is_array($filter_practices))
         {
