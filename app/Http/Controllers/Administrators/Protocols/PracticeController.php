@@ -74,23 +74,8 @@ class PracticeController extends Controller
 
         $protocol = $this->protocolRepository->findOrFail($request->protocol_id);
 
-        switch ($protocol->type)
-        {
-            case 'our': {
-                $view = view('administrators/protocols/our/practices/create')
-                    ->with('protocol', $protocol);
-
-                break;
-            }
-
-            case 'derived': {
-                new \Exception("Path for derived protocols not implemented");
-
-                break;
-            }
-        }
-
-        return $view;
+        return view('administrators/protocols/practices/create')
+            ->with('protocol', $protocol);;
     }
 
     /**
@@ -150,22 +135,7 @@ class PracticeController extends Controller
 
         $practice = $this->practiceRepository->findOrFail($id);
 
-        switch ($practice->protocol->type)
-        {
-            case 'our': {
-                $view = view('administrators/protocols/our/practices/edit');
-
-                break;
-            }
-
-            case 'derived': {
-                new \Exception("Path for derived protocols not implemented");
-
-                break;
-            }
-        }
-
-        return $view
+        return view('administrators/protocols/practices/edit')
             ->with('practice', $practice);
     }
 

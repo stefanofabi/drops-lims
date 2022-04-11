@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Laboratory\Prints\Protocols\Our;
+namespace App\Laboratory\Prints\Protocols;
 
 use App\Laboratory\Prints\Protocols\PrintProtocolStrategyInterface;
-use App\Laboratory\Prints\Protocols\Our\ModernStyleProtocolStrategy;
+use App\Laboratory\Prints\Protocols\ModernStyleProtocolStrategy;
 
 use RuntimeException;
 
-final class PrintOurProtocolContext
+final class PrintProtocolContext implements PrintProtocolStrategyInterface
 {
     const STRATEGIES = [
         'modern_style' => ModernStyleProtocolStrategy::class,

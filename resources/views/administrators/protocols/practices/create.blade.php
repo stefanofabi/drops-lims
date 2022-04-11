@@ -8,82 +8,122 @@
 
 @section('js')
 <script type="text/javascript">
-        $(document).ready(function() {
-            $('[data-toggle="tooltip"]').tooltip();
-        });
+    $(document).ready(function() {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
 
-        @if (empty($protocol->closed))
-        $(function () {
-            $("#practice").autocomplete({
-                minLength: 2,
-                source: function (event, ui) {
-                    var parameters = {
-                        "nomenclator_id": '{{ $protocol->plan->nomenclator->id }}',
-                        "filter": $("#practice").val()
-                    };
+    @if (empty($protocol->closed))
+    $(function () {
+        $("#practice").autocomplete({
+            minLength: 2,
+            source: function (event, ui) {
+                var parameters = {
+                    "nomenclator_id": '{{ $protocol->plan->nomenclator->id }}',
+                    "filter": $("#practice").val()
+                };
 
-                    $.ajax({
-                        data: parameters,
-                        url: '{{ route("administrators/protocols/practices/load_practices") }}',
-                        type: 'post',
-                        dataType: 'json',
-                        success: ui
-                    });
+                $.ajax({
+                    data: parameters,
+                    url: '{{ route("administrators/protocols/practices/load_practices") }}',
+                    type: 'post',
+                    dataType: 'json',
+                    success: ui
+                });
 
-                    return ui;
-                },
-                select: function (event, ui) {
-                    event.preventDefault();
-                    $('#practice').val(ui.item.label);
-                    $('#report_id').val(ui.item.id);
-                }
-            });
-        });
-
-        function addPractice() 
-        {
-            if (! $("#practice").val()) 
-            {
-                $("#practice").addClass('is-invalid');
-                alert("{{ trans('practices.please_enter_practice') }}");
-
-                return false;
+                return ui;
+            },
+            select: function (event, ui) {
+                event.preventDefault();
+                $('#practice').val(ui.item.label);
+                $('#report_id').val(ui.item.id);
             }
+        });
+    });
 
-            $("#practice").removeClass('is-invalid');
-            
-            var parameters = {
-                "_token": "{{ csrf_token() }}",
-                "protocol_id": '{{ $protocol->id }}',
-                "report_id": $("#report_id").val(),
-            };
-
-            $.ajax({
-                data: parameters,
-                url: "{{ route('administrators/protocols/practices/store') }}",
-                type: 'post',
-                beforeSend: function () {
-                    $("#messages").html('<div class="spinner-border text-info"> </div> {{ trans("forms.please_wait") }}');
-                },
-                error: function (xhr, status) {
-                    $("#messages").html('<div class="alert alert-danger mt-3"> <strong> {{ trans("forms.danger") }}! </strong> {{ trans("forms.please_later")}}  </div> ');
-                },
-                success: function (response) {
-                    $("#messages").html('<div class="alert alert-success alert-dismissible fade show mt-3" role="alert"> <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg> <strong> {{ trans("forms.well_done") }}! </strong> {{ trans("practices.practice_loaded") }} </div>');
-                    $("#practices").load(" #practices");
-
-                    // delete data
-                    $('#practice').val('');
-                    $('#report_id').val('');
-                }
-            });
+    function addPractice() 
+    {
+        if (! $("#practice").val()) 
+        {
+            $("#practice").addClass('is-invalid');
+            alert("{{ trans('practices.please_enter_practice') }}");
 
             return false;
         }
-        @endif
-    function printSelection() 
+
+        $("#practice").removeClass('is-invalid');
+            
+        var parameters = {
+            "_token": "{{ csrf_token() }}",
+            "protocol_id": '{{ $protocol->id }}',
+            "report_id": $("#report_id").val(),
+        };
+
+        $.ajax({
+            data: parameters,
+            url: "{{ route('administrators/protocols/practices/store') }}",
+            type: 'post',
+            beforeSend: function () {
+                $("#messages").html('<div class="spinner-border text-info"> </div> {{ trans("forms.please_wait") }}');
+            },
+            error: function (xhr, status) {
+                $("#messages").html('<div class="alert alert-danger mt-3"> <strong> {{ trans("forms.danger") }}! </strong> {{ trans("forms.please_later")}}  </div> ');
+            },
+            success: function (response) {
+                $("#messages").html('<div class="alert alert-success alert-dismissible fade show mt-3" role="alert"> <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg> <strong> {{ trans("forms.well_done") }}! </strong> {{ trans("practices.practice_loaded") }} </div>');
+                $("#practices").load(" #practices");
+
+                // delete data
+                $('#practice').val('');
+                $('#report_id').val('');
+            }
+        });
+
+        return false;
+    }
+    @endif
+
+    function submitPracticesSelectForm(action) 
     {
-        $('#print_selection').submit();
+        var checked = false;
+
+        switch (action)
+        {
+            case 'print':
+                { 
+                    $("#practices_select_form").attr("action", "{{ route('administrators/protocols/print', ['id' => $protocol->id]) }}"); 
+                    $("#practices_select_form").attr("method", "get");
+                    $("#practices_select_form").attr("target", "blank");    
+                    $('#csrf_token').attr('name', ''); 
+                    break; 
+                }
+
+            case 'send': 
+                { 
+                    $("#practices_select_form").attr("action", "{{ route('administrators/protocols/send_protocol_to_email', ['id' => $protocol->id]) }}"); 
+                    $("#practices_select_form").attr("method", "post");
+                    $("#practices_select_form").attr("target", "");
+                    $('#csrf_token').attr('name', '_token'); 
+                    $('#csrf_token').val($('meta[name="csrf-token"]').attr('content'));   
+                    
+                    break; 
+                }
+        }
+
+        $("input[name='filter_practices[]']:checkbox:checked").each(function() {
+            checked = true;
+
+            return false;
+        });
+
+        if (checked) 
+        {
+            $('#practices_select_form').submit();
+        } else 
+        {
+            alert("{{ trans('protocols.not_selected_practices') }}");
+        }
+        
+        return false;
     }
 </script>
 @endsection
@@ -93,12 +133,16 @@
     <ul class="navbar-nav">
         @can('print_protocols')
         <li class="nav-item">
-			<a class="nav-link" href="#" onclick="printSelection()"> {{ trans('protocols.print_selected') }} </a>
+			<a class="nav-link" href="#" onclick="submitPracticesSelectForm('print')"> {{ trans('protocols.print_selected') }} </a>
 		</li>
         @endcan
 
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('administrators/protocols/our/edit', ['id' => $protocol->id]) }}"> {{ trans('forms.go_back') }} </a>
+            <a class="nav-link" href="#" onclick="submitPracticesSelectForm('send')"> {{ trans('protocols.send_selected_practices_by_email') }} </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('administrators/protocols/edit', ['id' => $protocol->id]) }}"> {{ trans('forms.go_back') }} </a>
         </li>
     </ul>
 </nav>
@@ -143,10 +187,8 @@
             $total_amount = 0;
             @endphp
 
-            <form id="print_selection" action="{{ route('administrators/protocols/our/print_selection') }}" method="post" target="_blank">
-                @csrf
-
-                <input type="hidden" name="id" value="{{ $protocol->id }}">
+            <form id="practices_select_form" action="" target="">
+                <input type="hidden" id="csrf_token">
 
                 @foreach ($protocol->practices as $practice)
 

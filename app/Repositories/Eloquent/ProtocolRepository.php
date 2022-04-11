@@ -69,20 +69,14 @@ final class ProtocolRepository implements ProtocolRepositoryInterface
     {
 
         return $this->model
-            ->select('protocols.id', 'protocols.completion_date', 'protocols.type', 'protocols.closed',
-                DB::raw('COALESCE(patients.id, derived_patients.id) as patient_id'),
-                DB::raw('COALESCE(patients.full_name, derived_patients.full_name) as patient')
-            )
-            ->leftJoin('patients', 'protocols.patient_id', '=', 'patients.id')
-            ->leftJoin('derived_patients', 'protocols.derived_patient_id', '=', 'derived_patients.id')
+            ->select('protocols.id', 'protocols.completion_date', 'protocols.closed', 'protocols.patient_id', 'patients.full_name as patient')
+            ->join('patients', 'protocols.patient_id', '=', 'patients.id')
             ->where(function ($query) use ($filter) {
                 if (! empty($filter)) {
                     $query->orWhere("protocols.id", "like", "$filter%")
                         ->orWhere("patients.full_name", "like", "%$filter%")
                         ->orWhere("patients.identification_number", "like", "$filter%")
-                        ->orWhere("patients.owner", "like", "%$filter%")
-                        ->orWhere("derived_patients.full_name", "like", "%$filter%")
-                        ->orWhere("derived_patients.key", "like", "$filter%");
+                        ->orWhere("patients.owner", "like", "%$filter%");
                 }
             })
             ->orderBy('completion_date', 'desc')

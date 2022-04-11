@@ -28,7 +28,6 @@ class VerifyAllPracticesSigned
      */
     public function handle(Request $request, Closure $next)
     {
-
         $protocol = $this->protocolRepository->findOrFail($request->id);
 
         foreach ($protocol->practices as $practice) 

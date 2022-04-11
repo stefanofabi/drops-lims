@@ -19,12 +19,11 @@ class CreateProtocolsTable extends Migration
             $table->date('completion_date')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->string('observations')->nullable();
             $table->timestamp('closed')->nullable();
-            $table->enum('type', ['our', 'derived']);
 
             /*  ------- Our protocols -------   */
-            $table->unsignedBigInteger('patient_id')->nullable();
-            $table->unsignedBigInteger('plan_id')->nullable();
-            $table->unsignedBigInteger('prescriber_id')->nullable();
+            $table->unsignedBigInteger('patient_id');
+            $table->unsignedBigInteger('plan_id');
+            $table->unsignedBigInteger('prescriber_id');
             $table->date('withdrawal_date')->nullable();
             $table->unsignedInteger('quantity_orders')->nullable();
             $table->string('diagnostic')->nullable();
@@ -35,14 +34,6 @@ class CreateProtocolsTable extends Migration
             $table->foreign('prescriber_id')->references('id')->on('prescribers')->onDelete('restrict')->onUpdate('cascade');
             $table->foreign('plan_id')->references('id')->on('plans')->onDelete('restrict')->onUpdate('cascade');
             $table->foreign('billing_period_id')->references('id')->on('billing_periods')->onDelete('restrict')->onUpdate('cascade');
-
-            /*  ------- Derived protocols -------   */
-            $table->unsignedBigInteger('derived_patient_id')->nullable();
-            $table->string('reference')->nullable();
-
-            // Foreign keys
-            $table->foreign('derived_patient_id')->references('id')->on('derived_patients')->onDelete('restrict')->onUpdate('cascade');
-
 
             $table->timestamps();
 

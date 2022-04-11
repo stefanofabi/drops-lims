@@ -35,7 +35,7 @@
 	<ul class="navbar-nav">
        @can('crud_protocols')
 	        <li class="nav-item">
-				<form action="{{ route('administrators/protocols/our/create') }}" id="create_protocol_form">
+				<form action="{{ route('administrators/protocols/create') }}" id="create_protocol_form">
 		            <input type="hidden" name="patient_id" value="{{ $patient->id }}">
 		        </form>
 

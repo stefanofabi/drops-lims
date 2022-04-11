@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Laboratory\Prints\Protocols\Our;
+namespace App\Laboratory\Prints\Protocols;
 
 use App\Laboratory\Prints\Protocols\PrintProtocolStrategyInterface;
 use App\Models\Protocol;
@@ -28,7 +28,6 @@ class ModernStyleProtocolStrategy implements PrintProtocolStrategyInterface
      */
     public function print()
     {
-
         $practices = $this->protocol->practices;
 
         if (! empty($this->filter_practices)) {

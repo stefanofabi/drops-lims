@@ -37,16 +37,18 @@ class CheckFilteredPracticesToPrint
      */
     public function handle(Request $request, Closure $next)
     {
-        if (! isset($request->filter_practices) || ! is_array($request->filter_practices) || empty($request->filter_practices)) {
-            die(Lang::get('forms.failed_transaction'));
-        }
-
         $protocol = $this->protocolRepository->findOrFail($request->id);
         $protocol_practices = $this->getPracticesIdForProtocol($protocol);
+        $need_verify_filter = true;
+
+        if (! isset($request->filter_practices) || ! is_array($request->filter_practices) || empty($request->filter_practices)) {
+            $need_verify_filter = false;
+            $request->filter_practices = $protocol_practices;
+        }
         
         foreach ($request->filter_practices as $practice) 
         {
-            if (! in_array($practice, $protocol_practices)) 
+            if ($need_verify_filter && ! in_array($practice, $protocol_practices)) 
             {
                 // Practice that does not belong to the protocol was detected
 
@@ -58,6 +60,8 @@ class CheckFilteredPracticesToPrint
                 die(Lang::get('practices.practice_not_signed')); 
             }
         }
+
+        if (! $need_verify_filter) $request->filter_practices = array();
 
         return $next($request);
     }

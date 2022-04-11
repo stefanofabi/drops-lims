@@ -24,7 +24,7 @@
 <nav class="navbar bg-light">
     <ul class="navbar-nav">
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('administrators/protocols/our/create') }}"> {{ trans('protocols.create_protocol') }} </a>
+            <a class="nav-link" href="{{ route('administrators/protocols/create') }}"> {{ trans('protocols.create_protocol') }} </a>
         </li>
     </ul>
 </nav>
@@ -57,7 +57,6 @@
 			<th> {{ trans('protocols.protocol_number') }} </th>
 			<th> {{ trans('patients.patient') }} </th>
 			<th> {{ trans('protocols.completion_date') }} </th>
-			<th> {{ trans('protocols.type') }} </th>
 			<th class="text-end"> {{ trans('forms.actions') }} </th>
 		</tr>
 
@@ -75,26 +74,17 @@
 
 			<td> {{ $protocol->patient }} </td>
 			<td> @if ($protocol->completion_date) {{ date('d/m/Y', strtotime($protocol->completion_date)) }} @endif</td>
-			<td> 
-				@if ($protocol->type == 'our') 
-				<span class="badge bg-primary">Our</span>
-				@else 
-				<span class="badge bg-secondary">Derived</span>
-				@endif 
-			</td>
 
 			<td class="text-end">
-				@if ($protocol->type == 'our')
-					@if (empty($protocol->closed))
-					<a href="{{ route('administrators/protocols/our/edit', [$protocol->id]) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.edit_protocol') }}" > <i class="fas fa-edit fa-sm"></i> </a> 
-					@else
-					<a href="{{ route('administrators/protocols/our/edit', [$protocol->id]) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.show_protocol') }}" > <i class="fas fa-eye fa-sm"></i> </a> 
-					@endif
-				@else 
-				<a href="" class="btn btn-info btn-sm" title="{{ trans('protocols.edit_protocol') }}" > <i class="fas fa-edit fa-sm"></i> </a> 
+				@if (empty($protocol->closed))
+				<a href="{{ route('administrators/protocols/edit', [$protocol->id]) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.edit_protocol') }}" > <i class="fas fa-edit fa-sm"></i> </a>
+				<a href="#" class="btn btn-info btn-sm verticalButtons" title="{{ trans('protocols.destroy_protocol') }}"> <i class="fas fa-trash fa-sm"></i> </a> 
+				@else
+				<a href="{{ route('administrators/protocols/edit', [$protocol->id]) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.show_protocol') }}" > <i class="fas fa-eye fa-sm"></i> </a> 
+				<a href="#" class="btn btn-info btn-sm verticalButtons disabled" title="{{ trans('protocols.destroy_protocol') }}"> <i class="fas fa-trash fa-sm"></i> </a>
 				@endif
-
-				<a href="#" class="btn btn-info btn-sm verticalButtons" title="{{ trans('protocols.destroy_protocol') }}"> <i class="fas fa-trash fa-sm"></i> </a>
+				
+				
 			</td>
 		</tr>
 		@endforeach

@@ -113,20 +113,20 @@
 
         @can('print_worksheets')
         <li class="nav-item">
-            <a class="nav-link @if (! empty($protocol->closed)) disabled @endif" target="_blank" href="{{ route('administrators/protocols/our/print_worksheet', ['id' => $protocol->id]) }}"> {{ trans('protocols.print_worksheet') }} </a>
+            <a class="nav-link @if (! empty($protocol->closed)) disabled @endif" target="blank" href="{{ route('administrators/protocols/print_worksheet', ['id' => $protocol->id]) }}"> {{ trans('protocols.print_worksheet') }} </a>
         </li>
         @endcan
         
         @can('print_protocols')
         <li class="nav-item">
-            <a class="nav-link @if (empty($protocol->closed)) disabled @endif" target="_blank" href="{{ route('administrators/protocols/our/print', ['id' => $protocol->id]) }}"> {{ trans('protocols.print_report') }} </a>
+            <a class="nav-link @if (empty($protocol->closed)) disabled @endif" target="blank" href="{{ route('administrators/protocols/print', ['id' => $protocol->id]) }}"> {{ trans('protocols.print_report') }} </a>
         </li>
         @endcan
 
         <li class="nav-item">
             <a class="nav-link @if (empty($protocol->closed)) disabled @endif" href="#" onclick="sendEmailProtocol()"> {{ trans('protocols.send_protocol_to_email') }} </a>
 
-            <form method="post" action="{{ route('administrators/protocols/our/send_protocol_to_email', ['id' => $protocol->id]) }}" id="send_email_protocol">
+            <form method="post" action="{{ route('administrators/protocols/send_protocol_to_email', ['id' => $protocol->id]) }}" id="send_email_protocol">
                 @csrf
 
                 <input type="submit" class="d-none">
@@ -143,7 +143,7 @@
         <li class="nav-item">
             <a class="nav-link" href="#" onclick="closeProtocol()"> {{ trans('protocols.close_protocol') }} </a>
 
-            <form method="post" action="{{ route('administrators/protocols/our/close', ['id' => $protocol->id]) }}" id="close_protocol">
+            <form method="post" action="{{ route('administrators/protocols/close', ['id' => $protocol->id]) }}" id="close_protocol">
                 @csrf    
                 
                 <input class="d-none" type="submit">
@@ -175,7 +175,7 @@
     @endif
 @endif
 
-    <form method="post" action="{{ route('administrators/protocols/our/update', ['id' => $protocol->id]) }}">
+    <form method="post" action="{{ route('administrators/protocols/update', ['id' => $protocol->id]) }}">
         @csrf
         {{ method_field('PUT') }}
 

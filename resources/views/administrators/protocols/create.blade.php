@@ -130,13 +130,13 @@
 </div>
 @endif
 
-    <form action="{{ route('administrators/protocols/our/create') }}">
+    <form action="{{ route('administrators/protocols/create') }}">
         <input type="hidden" name="patient_id" id="patient">
 
         <input type="submit" class="d-none" id="submitPatient">
     </form>
 
-    <form method="post" action="{{ route('administrators/protocols/our/store') }}">
+    <form method="post" action="{{ route('administrators/protocols/store') }}">
         @csrf
         
         <input type="hidden" name="type" value="our">
