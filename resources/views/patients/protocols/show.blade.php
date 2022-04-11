@@ -102,7 +102,7 @@
 			
             @foreach ($protocol->practices as $practice)
             <tr>
-                <td style="width: 50px"> <input type="checkbox" name="filter_practices[]" value="{{ $practice->id }}"> </td>
+				<td style="width: 50px"> <input type="checkbox" class="form-check-input" name="filter_practices[]" value="{{ $practice->id }}" @if ($practice->signs->isEmpty()) disabled @endif> </td>
                 <td> {{ $practice->report->determination->name }} </td>
 
                 <td>
