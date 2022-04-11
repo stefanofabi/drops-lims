@@ -9,7 +9,7 @@ use App\Contracts\Repository\ProtocolRepositoryInterface;
 use App\Contracts\Repository\FamilyMemberRepositoryInterface;
 use App\Contracts\Repository\PracticeRepositoryInterface;
 
-use App\Laboratory\Prints\Protocols\Our\PrintOurProtocolContext;
+use App\Laboratory\Prints\Protocols\PrintProtocolContext;
 
 use Lang;
 
@@ -24,16 +24,19 @@ class ProtocolController extends Controller
     /** @var \App\Contracts\Repository\PracticeRepositoryInterface */
     private $practiceRepository;
 
+    /** @var \App\Laboratory\Prints\Protocols\PrintProtocolContext */
+    private $printProtocolContext;
+
     public function __construct (
         ProtocolRepositoryInterface $protocolRepository,
         PracticeRepositoryInterface $practiceRepository,
         FamilyMemberRepositoryInterface $familyMemberRepository,
-        PrintOurProtocolContext $printOurProtocolContext
+        PrintProtocolContext $printProtocolContext
     ) {
         $this->protocolRepository = $protocolRepository;
         $this->practiceRepository = $practiceRepository;
         $this->familyMemberRepository = $familyMemberRepository;
-        $this->printOurProtocolContext = $printOurProtocolContext;
+        $this->printProtocolContext = $printProtocolContext;
     }
 
     /**
@@ -95,11 +98,11 @@ class ProtocolController extends Controller
         $protocol = $this->protocolRepository->findOrFail($id);
 
         $strategy = 'modern_style';
-        $strategyClass = PrintOurProtocolContext::STRATEGIES[$strategy];
+        $strategyClass = PrintProtocolContext::STRATEGIES[$strategy];
 
-        $this->printOurProtocolContext->setStrategy(new $strategyClass($protocol, []));
+        $this->printProtocolContext->setStrategy(new $strategyClass($protocol, []));
 
-        return $this->printOurProtocolContext->print();
+        return $this->printProtocolContext->print();
     }
 
     /**
@@ -112,10 +115,10 @@ class ProtocolController extends Controller
         $protocol = $this->protocolRepository->findOrFail($request->id);
 
         $strategy = 'modern_style';
-        $strategyClass = PrintOurProtocolContext::STRATEGIES[$strategy];
+        $strategyClass = PrintProtocolContext::STRATEGIES[$strategy];
 
-        $this->printOurProtocolContext->setStrategy(new $strategyClass($protocol, $request->filter_practices));
+        $this->printProtocolContext->setStrategy(new $strategyClass($protocol, $request->filter_practices));
 
-        return $this->printOurProtocolContext->print();
+        return $this->printProtocolContext->print();
     }
 }

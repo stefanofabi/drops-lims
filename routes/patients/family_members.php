@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Patients\FamilyMemberController;
 
-Route::controller(ProtocolController::class)
+Route::controller(FamilyMemberController::class)
 ->prefix('family_members')
 ->as('family_members/')
 ->group(function () {

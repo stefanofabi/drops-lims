@@ -26,7 +26,7 @@
 <nav class="navbar">
     <ul class="navbar-nav">
 		<li class="nav-item">
-			<a class="nav-link @if (empty($protocol->closed)) disabled @endif" target="_blank" href="{{ route('patients/protocols/print', $protocol->id) }}"> {{ trans('protocols.print_report') }} </a>
+			<a class="nav-link @if (empty($protocol->closed)) disabled @endif" target="blank" href="{{ route('patients/protocols/print', $protocol->id) }}"> {{ trans('protocols.print_report') }} </a>
 		</li>
 
 		<li class="nav-item">
@@ -95,7 +95,7 @@
 			<th class="text-end"> {{ trans('forms.actions') }}</th>
 		</tr>
 
-        <form id="print_selection" action="{{ route('patients/protocols/print_selection') }}" method="post" target="_blank">
+        <form id="print_selection" action="{{ route('patients/protocols/print_selection') }}" method="post" target="blank">
             @csrf
 
 			<input type="hidden" name="id" value="{{ $protocol->id }}">
