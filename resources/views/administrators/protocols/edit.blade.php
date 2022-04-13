@@ -113,13 +113,13 @@
 
         @can('print_worksheets')
         <li class="nav-item">
-            <a class="nav-link @if (! empty($protocol->closed)) disabled @endif" target="blank" href="{{ route('administrators/protocols/print_worksheet', ['id' => $protocol->id]) }}"> {{ trans('protocols.print_worksheet') }} </a>
+            <a class="nav-link @if (! empty($protocol->closed)) disabled @endif" target="blank" href="{{ route('administrators/protocols/generate_worksheet', ['id' => $protocol->id]) }}"> {{ trans('protocols.generate_worksheet') }} </a>
         </li>
         @endcan
         
         @can('print_protocols')
         <li class="nav-item">
-            <a class="nav-link @if (empty($protocol->closed)) disabled @endif" target="blank" href="{{ route('administrators/protocols/print', ['id' => $protocol->id]) }}"> {{ trans('protocols.print_report') }} </a>
+            <a class="nav-link @if (empty($protocol->closed)) disabled @endif" target="blank" href="{{ route('administrators/protocols/generate_protocol', ['id' => $protocol->id]) }}"> {{ trans('protocols.generate_protocol') }} </a>
         </li>
         @endcan
 

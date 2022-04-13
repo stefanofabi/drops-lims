@@ -13,13 +13,11 @@ use App\Contracts\Repository\PrescriberRepositoryInterface;
 use App\Contracts\Repository\BillingPeriodRepositoryInterface;
 use App\Contracts\Repository\PracticeRepositoryInterface;
 
-use App\Laboratory\Prints\Worksheets\PrintWorksheetContext;
-use App\Laboratory\Prints\Protocols\PrintProtocolContext;
-
 use App\Mail\ProtocolSent;
 
 use Lang;
 use Session;
+use PDF;
 
 class ProtocolController extends Controller
 {
@@ -44,28 +42,18 @@ class ProtocolController extends Controller
     /** @var \App\Contracts\Repository\BillingPeriodRepositoryInterface */
     private $billingPeriodRepository;
 
-    /** @var \App\Laboratory\Prints\Worksheets\PrintWorksheetContext */
-    private $printWorksheetContext;
-
-    /** @var \App\Laboratory\Prints\Protocols\Our\PrintProtocolContext */
-    private $printProtocolContext;
-
     public function __construct (
         ProtocolRepositoryInterface $protocolRepository,
         PracticeRepositoryInterface $practiceRepository, 
         PatientRepositoryInterface $patientRepository, 
         PrescriberRepositoryInterface $prescriberRepository,
-        BillingPeriodRepositoryInterface $billingPeriodRepository,
-        PrintWorksheetContext $printWorksheetContext,
-        PrintProtocolContext $printProtocolContext
+        BillingPeriodRepositoryInterface $billingPeriodRepository
     ) {
         $this->protocolRepository = $protocolRepository;
         $this->practiceRepository = $practiceRepository;
         $this->patientRepository = $patientRepository;
         $this->prescriberRepository = $prescriberRepository;
         $this->billingPeriodRepository = $billingPeriodRepository;
-        $this->printWorksheetContext = $printWorksheetContext;
-        $this->printProtocolContext = $printProtocolContext;
     }
 
     /**
@@ -226,16 +214,26 @@ class ProtocolController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function printProtocol(Request $request, $id)
+    public function generateProtocol(Request $request, $id)
     {
         $protocol = $this->protocolRepository->findOrFail($id);
 
-        $strategy = 'modern_style';
-        $strategyClass = PrintProtocolContext::STRATEGIES[$strategy];
+        $practices = $protocol->practices;
 
-        $this->printProtocolContext->setStrategy(new $strategyClass($protocol, $request->filter_practices));
+        if (! empty($request->filter_practices)) {
+            $practices = $practices->whereIn('id', $request->filter_practices);
+        }
 
-        return $this->printProtocolContext->print();
+        $pdf = PDF::loadView('pdf/protocols/modern_style', [
+            'protocol' => $protocol,
+            'practices' => $practices,
+        ]);
+
+        $protocol_name = 'protocol_'.$protocol->id.'.pdf';
+        $protocol_path = storage_path("app/protocols/$protocol_name");
+        $pdf->save($protocol_path);
+        
+        return $pdf->stream($protocol_name);
     }
 
     /**
@@ -243,14 +241,18 @@ class ProtocolController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function printWorksheet($protocol_id, $filter_practices = [])
+    public function generateWorksheet($id)
     {
-        $strategy = 'simple_style';
-        $strategyClass = PrintWorksheetContext::STRATEGIES[$strategy];
+        $protocol = $this->protocolRepository->findOrFail($id);
 
-        $this->printWorksheetContext->setStrategy(new $strategyClass);
-        
-        return $this->printWorksheetContext->printWorksheet($protocol_id, $filter_practices);
+        $practices = $protocol->practices;
+
+        $pdf = PDF::loadView('pdf/worksheets/simple_style', [
+            'protocol' => $protocol,
+            'practices' => $practices,
+        ]);
+
+        return $pdf->stream('worksheet_'.$protocol->id.'.pdf');
     }
 
     public function closeProtocol($id)
@@ -269,14 +271,18 @@ class ProtocolController extends Controller
     {
         $protocol = $this->protocolRepository->findOrFail($id);
 
-        $strategy = 'modern_style';
-        $strategyClass = PrintProtocolContext::STRATEGIES[$strategy];
+        $practices = $protocol->practices;
 
-        $this->printProtocolContext->setStrategy(new $strategyClass($protocol));
+        $pdf = PDF::loadView('pdf/protocols/modern_style', [
+            'protocol' => $this->protocol,
+            'practices' => $practices,
+        ]);
 
-        $this->printProtocolContext->print();
+        $protocol_name = 'protocol_'.$this->protocol->id.'.pdf';
+        $protocol_path = storage_path("app/protocols/$protocol_name");
+        $pdf->save($protocol_path);
 
-        Mail::to($protocol->patient->email)->send(new ProtocolSent($protocol, $request->filter_practices));
+        Mail::to($protocol->patient->email)->send(new ProtocolSent($protocol));
 
         Session::flash('success', [Lang::get('protocols.send_protocol_email_successfully')]);
 

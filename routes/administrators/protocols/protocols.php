@@ -41,14 +41,14 @@ Route::controller(ProtocolController::class)
             ->where('id', '[1-9][0-9]*')
             ->middleware('verify_open_protocol');
 
-        Route::get('print_worksheet/{id}', 'printWorksheet')
-            ->name('print_worksheet')
+        Route::get('generate_worksheet/{id}', 'generateWorksheet')
+            ->name('generate_worksheet')
             ->where('id', '[1-9][0-9]*')
             ->middleware('permission:print_worksheets')
             ->middleware('verify_open_protocol');
 
-        Route::get('print/{id}', 'printProtocol')
-            ->name('print')
+        Route::get('generate_protocol/{id}', 'generateProtocol')
+            ->name('generate_protocol')
             ->where('id', '[1-9][0-9]*')
             ->middleware('permission:print_protocols')
             ->middleware('check_filtered_practices_to_print');
@@ -60,9 +60,10 @@ Route::controller(ProtocolController::class)
             ->middleware('check_if_exists_loaded_practices')
             ->middleware('verify_all_practices_signed');
                 
-        Route::post('sendProtocolToEmail/{id}', 'sendProtocolToEmail')
+        Route::post('send_protocol_to_email/{id}', 'sendProtocolToEmail')
             ->name('send_protocol_to_email')
             ->where('id', '[1-9][0-9]*')
+            ->middleware('permission:print_protocols')
             ->middleware('check_filtered_practices_to_print')
             ->middleware('check_protocol_can_sent_by_email');
     });

@@ -88,12 +88,13 @@
 
         switch (action)
         {
-            case 'print':
+            case 'generate_protocol':
                 { 
-                    $("#practices_select_form").attr("action", "{{ route('administrators/protocols/print', ['id' => $protocol->id]) }}"); 
+                    $("#practices_select_form").attr("action", "{{ route('administrators/protocols/generate_protocol', ['id' => $protocol->id]) }}"); 
                     $("#practices_select_form").attr("method", "get");
                     $("#practices_select_form").attr("target", "blank");    
                     $('#csrf_token').attr('name', ''); 
+
                     break; 
                 }
 
@@ -133,7 +134,7 @@
     <ul class="navbar-nav">
         @can('print_protocols')
         <li class="nav-item">
-			<a class="nav-link" href="#" onclick="submitPracticesSelectForm('print')"> {{ trans('protocols.print_selected') }} </a>
+			<a class="nav-link" href="#" onclick="submitPracticesSelectForm('generate_protocol')"> {{ trans('protocols.generate_protocol_for_selected_practices') }} </a>
 		</li>
         @endcan
 
