@@ -12,7 +12,12 @@ class SecurityCode extends Model
 
     use LogsActivity;
 
-    protected $fillable = ['patient_id', 'security_code', 'expiration_date', 'used_at'];
+    protected $fillable = [
+        'internal_patient_id', 
+        'security_code', 
+        'expiration_date', 
+        'used_at'
+    ];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -27,9 +32,9 @@ class SecurityCode extends Model
     /**
      * Get the plan associated with the affiliate.
      */
-    public function patient()
+    public function internalPatient()
     {
-        return $this->belongsTo(Patient::class);
+        return $this->belongsTo(InternalPatient::class);
     }
 
     public function getActivitylogOptions(): LogOptions

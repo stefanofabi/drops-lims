@@ -20,7 +20,7 @@ use Session;
 class SecurityCodeController extends Controller
 {
     private const ATTRIBUTES = [
-        'patient_id'
+        'internal_patient_id'
     ];
 
     private const SECURITY_CODE_LENGTH = 10;
@@ -74,7 +74,7 @@ class SecurityCodeController extends Controller
             $this->securityCodeRepository->deletePatientSecurityCode($request->patient_id);
 
             $security_code = $this->securityCodeRepository->create([
-                'patient_id' => $request->patient_id,
+                'internal_patient_id' => $request->patient_id,
                 'security_code' => Hash::make($new_security_code),
                 'expiration_date' => $new_expiration_date,
                 'used_at' => null,
@@ -83,17 +83,17 @@ class SecurityCodeController extends Controller
             DB::commit();
         } catch (Throwable $throwable) {
             DB::rollBack();
-
+            
             return redirect()->back()->withErrors(Lang::get('forms.failed_transaction'));
         }
 
-        $patient = $security_code->patient;
+        $patient = $security_code->internalPatient;
         
         Mail::to($patient->email)->send(new SecurityCodeSent($patient, $new_security_code, $new_expiration_date));
         
         Session::flash('success', [Lang::get('patients.send_security_code_successfully')]);
 
-        return redirect()->action([PatientController::class, 'edit'], ['id' => $patient->id]);
+        return redirect()->action([InternalPatientController::class, 'edit'], ['id' => $patient->id]);
     }
 
     /**

@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-use App\Models\Patient;
+use App\Models\InternalPatient;
 
 class SecurityCodeSent extends Mailable
 {
@@ -16,7 +16,7 @@ class SecurityCodeSent extends Mailable
     /**
      * The protocol instance.
      *
-     * @var \App\Models\Patient
+     * @var \App\Models\InternalPatient
      */
     public $patient; 
     
@@ -29,7 +29,7 @@ class SecurityCodeSent extends Mailable
      *
      * @return void
      */
-    public function __construct(Patient $patient, $security_code, $expiration_date)
+    public function __construct(InternalPatient $patient, $security_code, $expiration_date)
     {
         //
 
@@ -45,6 +45,6 @@ class SecurityCodeSent extends Mailable
      */
     public function build()
     {
-        return $this->view('emails/patients/security_code_sent');
+        return $this->view('emails/internal_patients/security_code_sent');
     }
 }

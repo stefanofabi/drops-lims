@@ -54,11 +54,11 @@ final class SecurityCodeRepository implements SecurityCodeRepositoryInterface
 
     public function getSecurityCodeAssociate($patient_id) 
     {
-        return $this->model->where('patient_id', $patient_id)->first();
+        return $this->model->where('internal_patient_id', $patient_id)->first();
     }
 
     public function deletePatientSecurityCode($patient_id) 
     {
-        return $this->model->where(['patient_id' => $patient_id])->delete();
+        return $this->model->where(['internal_patient_id' => $patient_id])->delete();
     }
 }
