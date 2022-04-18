@@ -179,7 +179,7 @@ return [
         App\Providers\RepositoryServiceProvider::class,
         Creativeorange\Gravatar\GravatarServiceProvider::class,
         Milon\Barcode\BarcodeServiceProvider::class,
-
+        
     ],
 
     /*

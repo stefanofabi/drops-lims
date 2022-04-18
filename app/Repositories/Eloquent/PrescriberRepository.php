@@ -59,9 +59,9 @@ final class PrescriberRepository implements PrescriberRepositoryInterface
         return $this->model
             ->where(function ($query) use ($filter) {
                 if (! empty($filter)) {
-                    $query->orWhere("full_name", "like", "%$filter%")
-                        ->orWhere("provincial_enrollment", "like", "$filter%")
-                        ->orWhere("national_enrollment", "like", "$filter%");
+                    $query->orWhere("full_name", "ilike", "%$filter%")
+                        ->orWhere("provincial_enrollment", "ilike", "$filter%")
+                        ->orWhere("national_enrollment", "ilike", "$filter%");
                 }
             })
             ->orderBy('full_name', 'asc')
@@ -75,9 +75,9 @@ final class PrescriberRepository implements PrescriberRepositoryInterface
         $prescribers = $this->model->select('full_name as label', 'id')
             ->where(function ($query) use ($filter) {
                 if (! empty($filter)) {
-                    $query->orWhere("full_name", "like", "%$filter%")
-                    ->orWhere("provincial_enrollment", "like", "$filter%")
-                    ->orWhere("national_enrollment", "like", "$filter%");
+                    $query->orWhere("full_name", "ilike", "%$filter%")
+                    ->orWhere("provincial_enrollment", "ilike", "$filter%")
+                    ->orWhere("national_enrollment", "ilike", "$filter%");
                 }
             })
             ->take(15)

@@ -41,26 +41,26 @@
 @section('header')
     <table class="info">
         <tr>
-            <td> {{ trans('patients.patient') }}: {{ $protocol->patient->full_name }} </td>
+            <td> {{ trans('patients.patient') }}: {{ $protocol->internalPatient->last_name }} {{ $protocol->internalPatient->name }} </td>
             <td> {{ trans('protocols.protocol_number') }}: #{{ $protocol->id }} </td>
         </tr>
 
         <tr>
-            <td> {{trans('patients.identification_number') }}: {{ $protocol->patient->identification_number }} </td>
+            <td> {{trans('patients.identification_number') }}: {{ $protocol->internalPatient->identification_number }} </td>
 
             <td> {{ trans('protocols.completion_date') }}: @if ($protocol->completion_date) {{ date_format(new DateTime($protocol->completion_date), 'd/m/Y') }} @endif </td>
         </tr>
 
         <tr>
-            <td> {{ trans('patients.home_address') }}: {{ $protocol->patient->address }} </td>
+            <td> {{ trans('patients.home_address') }}: {{ $protocol->internalPatient->address }} </td>
 
             <td>
                 @php
-                    $age = $protocol->patient->age();
+                    $age = $protocol->internalPatient->age();
                     $format_type = $age != null && $age['year'] > 0;
                 @endphp
 
-                {{ trans('patients.age') }}: @if ($age != null) {{ trans_choice('patients.calculate_age', true ? 1 : 0 , $protocol->patient->age()) }} @endif
+                {{ trans('patients.age') }}: @if ($age != null) {{ trans_choice('patients.calculate_age', true ? 1 : 0 , $protocol->internalPatient->age()) }} @endif
             </td>
          </tr>
 
@@ -69,7 +69,7 @@
             <td>
 
                 {{ trans('patients.sex') }}:
-                @switch ($protocol->patient->sex)
+                @switch ($protocol->internalPatient->sex)
                     @case('M')
                         {{ trans('patients.male') }}
                         @break
@@ -90,8 +90,8 @@
             <td>
                 {{ trans('patients.phone') }}:
 
-                @if (! empty($protocol->patient->phone))
-                     {{ $protocol->patient->phone }}
+                @if (! empty($protocol->internalPatient->phone))
+                     {{ $protocol->internalPatient->phone }}
                 @endif
             </td>
         </tr>
@@ -116,9 +116,9 @@
 @endsection
 
 @section('body')
-    @foreach ($practices as $practice)
+    @foreach ($protocol->internalPractices as $practice)
             <div class="page-break-inside">
-                {{ $practice->report->determination->name }} - {{ $practice->report->name }} <br />
+                {{ $practice->determination->name }} <br />
                 ============================================ <br />
             </div>
     @endforeach

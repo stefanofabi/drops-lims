@@ -92,7 +92,6 @@ final class ProtocolRepository implements ProtocolRepositoryInterface
         return $this->model
             ->whereBetween('completion_date', [$initial_date, $ended_date])
             ->orderBy('completion_date', 'ASC')
-            ->where('protocols.type', 'our')
             ->get();
     }
 
@@ -105,7 +104,6 @@ final class ProtocolRepository implements ProtocolRepositoryInterface
             ->whereBetween('completion_date', [$initial_date, $ended_date])
             ->orderBy('completion_date', 'ASC')
             ->where('patient_id', $patient_id)
-            ->where('protocols.type', 'our')
             ->get();
     }
     
@@ -120,7 +118,6 @@ final class ProtocolRepository implements ProtocolRepositoryInterface
             ->join('social_works', 'plans.social_work_id', '=', 'social_works.id')
             ->join('practices', 'protocols.id', '=', 'practices.protocol_id')
             ->where('social_works.id', $social_work_id)
-            ->where('protocols.type', 'our')
             ->whereBetween('protocols.completion_date', [$start_date, $end_date])
             ->groupBy(DB::raw("MONTH(protocols.completion_date)"), DB::raw("YEAR(protocols.completion_date)"))
             ->orderBy('protocols.completion_date', 'asc')
@@ -134,7 +131,6 @@ final class ProtocolRepository implements ProtocolRepositoryInterface
     {
         return $this->model
             ->select(DB::raw('MONTH(protocols.completion_date) as month'), DB::raw('YEAR(protocols.completion_date) as year'), DB::raw('COUNT(*) as total'))
-            ->where('protocols.type', 'our')
             ->whereBetween('protocols.completion_date', [$start_date, $end_date])
             ->groupBy(DB::raw('MONTH(protocols.completion_date)'), DB::raw('YEAR(protocols.completion_date)'))
             ->orderBy('protocols.completion_date', 'asc')
@@ -169,10 +165,9 @@ final class ProtocolRepository implements ProtocolRepositoryInterface
         return $this->model
             ->select(DB::raw('SUM(practices.total_amount) as total_amount'))
             ->joinSub($practices, 'practices', function ($join) {
-                $join->on('protocols.id', '=', 'practices.protocol_id');
+                $join->on('internal_protocols.id', '=', 'practices.protocol_id');
             })
-            ->whereNotNull('plan_id')
-            ->where('protocols.type', 'our')
+            ->whereNotNull('internal_protocols.plan_id')
             ->get()
             ->first();
     }

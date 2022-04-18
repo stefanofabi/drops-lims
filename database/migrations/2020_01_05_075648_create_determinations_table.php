@@ -17,8 +17,9 @@ class CreateDeterminationsTable extends Migration
         	$table->bigIncrements('id');
         	$table->unsignedBigInteger('nomenclator_id');
             $table->bigInteger('code')->unsigned();
-            $table->string('name')->nullable();
+            $table->string('name');
             $table->integer('position')->unsigned();
+            $table->string('report')->nullable();
             $table->double('biochemical_unit', 8, 2)->unsigned();
             
             // Foreign keys

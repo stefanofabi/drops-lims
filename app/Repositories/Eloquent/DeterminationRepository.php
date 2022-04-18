@@ -6,6 +6,8 @@ use App\Contracts\Repository\DeterminationRepositoryInterface;
 
 use App\Models\Determination; 
 
+use DB;
+
 final class DeterminationRepository implements DeterminationRepositoryInterface
 {
     protected $model;
@@ -70,4 +72,27 @@ final class DeterminationRepository implements DeterminationRepositoryInterface
             ->orderBy('name', 'asc')
             ->get();
 	}
+
+    public function getDeterminationsFromNomenclator($nomenclator_id, $filter) {
+        $determinations = $this->model
+            ->select('determinations.id', DB::raw("CONCAT(determinations.code, ' - ', determinations.name) as label"))
+            ->where('determinations.nomenclator_id', $nomenclator_id)
+            ->where(function ($query) use ($filter) {
+                if (! empty($filter)) {
+                    $query->orWhere("determinations.name", "ilike", "%$filter%")
+                        ->orWhere("determinations.code", "ilike", "$filter%");
+                }
+            })
+            ->take(15)
+            ->orderBy('determinations.name', 'ASC')
+            ->get();
+
+            
+        if ($determinations->isEmpty()) 
+        {
+            return response()->json(['label' => 'No records found']);
+        }
+
+        return $determinations;
+    }
 }

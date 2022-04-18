@@ -16,8 +16,6 @@ Route::controller(DeterminationController::class)
     ->as('determinations/')
     ->middleware('permission:crud_determinations')
     ->group(function () {   
-        require('reports.php');
-
         Route::get('index', 'index')
             ->name('index');
 

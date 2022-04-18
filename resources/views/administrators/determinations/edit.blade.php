@@ -20,22 +20,11 @@
 
 		$("input").removeAttr('readonly');
 		$("select").removeAttr('disabled');
+		$("textarea").removeAttr('readonly');
 
 		$("#submitButton").removeAttr('disabled');
 	}
 </script>
-@endsection
-
-@section('menu')
-<nav class="navbar">
-    <ul class="navbar-nav">
-        @can('crud_reports')
-			<li class="nav-item">
-                <a class="nav-link" href="{{ route('administrators/determinations/reports/index', ['determination_id' => $determination->id]) }}"> {{ trans('reports.index_reports') }} </a>
-            </li>
-        @endcan
-    </ul>
-</nav>
 @endsection
 
 @section('content-title')
@@ -100,6 +89,12 @@
 			</div>
 
 			<input type="number" class="form-control @error('biochemical_unit') is-invalid @enderror" name="biochemical_unit" min="0" step="0.01" value="{{ old('biochemical_unit') ?? $determination->biochemical_unit }}" required readonly>
+		</div>
+
+		<div class="input-group mt-2">
+			<span class="input-group-text"> {{ trans('reports.report') }} </span>
+
+			<textarea class="form-control" rows="10" name="report" readonly>{{ old('report') ?? $determination->report }}</textarea>
 		</div>
 	</div>
     

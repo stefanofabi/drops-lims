@@ -23,7 +23,7 @@ trait ConvertTrait {
 
 					// put the result
 					if ($i_result < sizeof($results)) {
-						$new_html = $new_html."".$results[$i_result]->result;
+						$new_html = $new_html."".$results[$i_result];
 						$i_result++;
 					}
 

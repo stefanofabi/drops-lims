@@ -73,6 +73,12 @@
 
 			<input type="number" class="form-control @error('biochemical_unit') is-invalid @enderror" name="biochemical_unit" min="0" step="0.01" value="{{ old('biochemical_unit') }}" required>
 		</div>
+
+		<div class="input-group mt-2">
+			<span class="input-group-text"> {{ trans('reports.report') }} </span>
+
+			<textarea class="form-control" rows="10" name="report">{{ old('report') }}</textarea>
+		</div>
 	</div>
 
 	<input type="submit" class="btn btn-lg btn-primary mt-3" value="{{ trans('forms.save') }}">

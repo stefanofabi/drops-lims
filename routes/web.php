@@ -20,10 +20,10 @@ Route::group([
 ], function () {
 
     require('administrators/settings/settings.php');
-    require('administrators/patients/patients.php');
+    require('administrators/internal_patients/internal_patients.php');
     require('administrators/prescribers/prescribers.php');
     require('administrators/determinations/determinations.php');
-    require('administrators/protocols/protocols.php');
+    require('administrators/internal_protocols/internal_protocols.php');
 
     Route::get('home', ['\App\Http\Controllers\HomeController', 'adminHome'])->name('home');
 });

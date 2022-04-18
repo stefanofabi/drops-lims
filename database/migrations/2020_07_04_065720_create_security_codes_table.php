@@ -15,16 +15,16 @@ class CreateSecurityCodesTable extends Migration
     {
         Schema::create('security_codes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('patient_id');
+            $table->unsignedBigInteger('internal_patient_id');
             $table->string('security_code');
             $table->date('expiration_date');
             $table->timestamp('used_at')->nullable();
 
             // Unique keys
-            $table->unique(['patient_id']);
+            $table->unique(['internal_patient_id']);
 
             // Foreign keys
-            $table->foreign('patient_id')->references('id')->on('patients')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('internal_patient_id')->references('id')->on('internal_patients')->onDelete('cascade')->onUpdate('cascade');
 
             $table->timestamps();
 

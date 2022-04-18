@@ -20,16 +20,9 @@ class Determination extends Model
         'code', 
         'name', 
         'position', 
+        'report',
         'biochemical_unit',
     ];
-
-    /**
-     * Get the reports for the determination.
-     */
-    public function reports()
-    {
-        return $this->hasMany(Report::class);
-    }
 
     /**
      * Get the nomenclator associated with the determination.
