@@ -15,11 +15,16 @@ class InternalPractice extends Model
     
     use ConvertTrait; 
     
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
         'internal_protocol_id', 
         'determination_id', 
         'result',
-        'amount'
+        'price'
     ];
 
     /**

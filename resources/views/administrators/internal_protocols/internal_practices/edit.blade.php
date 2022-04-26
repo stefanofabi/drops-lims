@@ -10,17 +10,17 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
-            loadResults();
+            loadResult();
         });
 
-        function loadResults() {
+        function loadResult() {
             var parameters = {
-                "practice_id": '{{ $practice->id }}'
+                "id": '{{ $practice->id }}'
             };
 
             $.ajax({
                 data: parameters,
-                url: '{{ route("administrators/protocols/practices/results") }}',
+                url: '{{ route("administrators/protocols/practices/get_result", ["id" => $practice->id]) }}',
                 type: 'post',
                 beforeSend: function () {
                     $("#messages").html('<div class="spinner-border text-info mt-3"> </div> {{ trans("forms.please_wait") }}');
@@ -64,7 +64,7 @@
 
             $.ajax({
                 data: parameters,
-                url: "{{ route('administrators/protocols/practices/inform_results', ['practice_id' => $practice->id]) }}",
+                url: "{{ route('administrators/protocols/practices/inform_result', ['id' => $practice->id]) }}",
                 type: 'put',
                 dataType: 'json',
                 beforeSend: function () {
@@ -91,7 +91,7 @@
 
             $.ajax({
                 data: parameters,
-                url: "{{ route('administrators/protocols/practices/sign', ['practice_id' => $practice->id]) }}",
+                url: "{{ route('administrators/protocols/practices/sign', ['id' => $practice->id]) }}",
                 type: 'put',
                 dataType: 'json',
                 beforeSend: function () {
@@ -117,7 +117,7 @@
 <nav class="navbar">
     <ul class="navbar-nav">
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('administrators/protocols/practices/create', ['protocol_id' => $practice->internal_protocol_id]) }}"> {{ trans('forms.go_back') }} </a>
+            <a class="nav-link" href="{{ route('administrators/protocols/practices/create', ['internal_protocol_id' => $practice->internal_protocol_id]) }}"> {{ trans('forms.go_back') }} </a>
         </li>
     </ul>
 </nav>

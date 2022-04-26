@@ -28,7 +28,7 @@ class CheckIfLoadedPatientEmail
      */
     public function handle(Request $request, Closure $next)
     {
-        $id = (isset($request->id)) ? $request->id : $request->patient_id;
+        $id = (isset($request->id)) ? $request->id : $request->internal_patient_id;
 
         $patient = $this->internalPatientRepository->findOrFail($id);
 

@@ -107,7 +107,7 @@
     <ul class="navbar-nav">
         @can('crud_practices')
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('administrators/protocols/practices/create', ['protocol_id' => $protocol->id]) }}"> {{ trans('practices.practices') }} </a>
+            <a class="nav-link" href="{{ route('administrators/protocols/practices/create', ['internal_protocol_id' => $protocol->id]) }}"> {{ trans('practices.practices') }} </a>
         </li>
         @endcan
 

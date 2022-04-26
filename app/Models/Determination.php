@@ -15,6 +15,11 @@ class Determination extends Model
 
     use LogsActivity;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
 	protected $fillable = [
         'nomenclator_id', 
         'code', 
@@ -31,6 +36,11 @@ class Determination extends Model
     {
 		return $this->belongsTo(Nomenclator::class);
 	}
+
+    public function getPrice($nbu_price) 
+    {
+        return $this->biochemical_unit * $nbu_price;
+    }
 
     public function getActivitylogOptions(): LogOptions
     {

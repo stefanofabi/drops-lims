@@ -32,13 +32,13 @@ class InternalPracticeController extends Controller
     private $determinationRepository;
 
     public function __construct (
-        InternalPracticeRepositoryInterface $practiceRepository,
-        InternalProtocolRepositoryInterface $protocolRepository,
+        InternalPracticeRepositoryInterface $internalPracticeRepository,
+        InternalProtocolRepositoryInterface $internalProtocolRepository,
         SignInternalPracticeRepositoryInterface $signInternalPracticeRepository,
         DeterminationRepositoryInterface $determinationRepository
     ) {
-        $this->internalPracticeRepository = $practiceRepository;
-        $this->internalProtocolRepository = $protocolRepository;
+        $this->internalPracticeRepository = $internalPracticeRepository;
+        $this->internalProtocolRepository = $internalProtocolRepository;
         $this->signInternalPracticeRepository = $signInternalPracticeRepository;
         $this->determinationRepository = $determinationRepository;
     }
@@ -65,10 +65,10 @@ class InternalPracticeController extends Controller
     {
         //
 
-        $protocol = $this->internalProtocolRepository->findOrFail($request->protocol_id);
+        $protocol = $this->internalProtocolRepository->findOrFail($request->internal_protocol_id);
         
         return view('administrators.internal_protocols.internal_practices.create')
-            ->with('protocol', $protocol);;
+            ->with('protocol', $protocol);
     }
 
     /**
@@ -83,19 +83,14 @@ class InternalPracticeController extends Controller
 
         try  {
 
-            $protocol = $this->internalProtocolRepository->findOrFail($request->protocol_id);
+            $protocol = $this->internalProtocolRepository->findOrFail($request->internal_protocol_id);
 
             $determination = $this->determinationRepository->findOrFail($request->determination_id);
             
-            $biochemical_unit = $determination->biochemical_unit;
-            $plan = $protocol->plan;
-            $nbu_price = $plan->nbu_price;
-            $amount = $nbu_price * $biochemical_unit;
-
             if (! $this->internalPracticeRepository->create([
                 'determination_id' => $determination->id,
                 'internal_protocol_id' => $protocol->id,
-                'amount' => $amount,
+                'price' => $determination->getPrice($protocol->plan->nbu_price),
             ])) {
                 return response()->json(['message' => Lang::get('forms.failed_transaction')], 500);
             }
@@ -187,13 +182,13 @@ class InternalPracticeController extends Controller
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
 
-        return redirect()->action([InternalPracticeController::class, 'create'], ['protocol_id' => $protocol->id]);
+        return redirect()->action([InternalPracticeController::class, 'create'], ['internal_protocol_id' => $protocol->id]);
     }
 
     /**
-     * Returns a list of practice reports available according to the nomenclator of social work
+     * Returns a list of determinations according to the nomenclator of social work
      *
-     * @param int $id
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function loadPractices(Request $request)
@@ -202,7 +197,7 @@ class InternalPracticeController extends Controller
 
         $request->validate([
             'nomenclator_id' => 'required|numeric|min:1',
-            'filter' => 'required|string',
+            'filter' => 'required|string|min:2',
         ]);
 
         return $this->determinationRepository->getDeterminationsFromNomenclator($request->nomenclator_id, $request->filter);
@@ -214,11 +209,11 @@ class InternalPracticeController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function getResults(Request $request)
+    public function getResult($id)
     {
         //
         
-        $practice = $this->internalPracticeRepository->findOrFail($request->practice_id);
+        $practice = $this->internalPracticeRepository->findOrFail($id);
        
         return $practice->result;
     }
@@ -227,19 +222,19 @@ class InternalPracticeController extends Controller
      * Inform the results of a practice
      *
      * @param \Illuminate\Http\Request $request
-     * @param int $practice_id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function informResults(Request $request, $practice_id)
+    public function informResult(Request $request, $id)
     {
         DB::beginTransaction();
         
         try {
-            $this->signInternalPracticeRepository->deleteAllSignatures($practice_id);
+            $this->signInternalPracticeRepository->deleteAllSignatures($id);
             
             // AJAX dont send empty arrays
             if (is_array($request->data)) {
-                $this->internalPracticeRepository->update(['result' => json_encode($request->data)], $practice_id);
+                $this->internalPracticeRepository->update(['result' => json_encode($request->data)], $id);
             }
 
             DB::commit();

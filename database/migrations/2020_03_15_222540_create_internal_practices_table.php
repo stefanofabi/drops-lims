@@ -18,7 +18,7 @@ class CreateInternalPracticesTable extends Migration
             $table->unsignedBigInteger('internal_protocol_id');
             $table->unsignedBigInteger('determination_id');
             $table->json('result')->default('[]');
-            $table->double('amount');
+            $table->double('price');
 
             // Foreign keys
             $table->foreign('internal_protocol_id')->references('id')->on('internal_protocols')->onDelete('restrict')->onUpdate('cascade');

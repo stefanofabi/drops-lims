@@ -5,7 +5,7 @@
 | Web Routes
 |--------------------------------------------------------------------------
 |
-| Here are all the routes related to the protocols
+| Here are all the routes related to the internal protocols
 |
 */
 

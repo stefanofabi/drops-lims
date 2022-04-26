@@ -5,7 +5,7 @@
 | Web Routes
 |--------------------------------------------------------------------------
 |
-| Here are all the routes related to patients
+| Here are all the routes related to internal patients
 |
 */
 

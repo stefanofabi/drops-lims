@@ -38,6 +38,7 @@ class InternalPatientController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
@@ -134,8 +135,7 @@ class InternalPatientController extends Controller
         $social_works = $this->socialWorkRepository->all();
 
         return view('administrators.internal_patients.edit')
-            ->with('patient', $patient)
-            ->with('social_works', $social_works);
+            ->with('patient', $patient);
     }
 
     /**
@@ -187,12 +187,13 @@ class InternalPatientController extends Controller
     /**
      * Returns a list of filtered patients
      *
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function loadPatients(Request $request)
     {
         $request->validate([
-            'filter' => 'required|string'
+            'filter' => 'required|string|min:2'
         ]);
         
         return $this->internalPatientRepository->loadPatients($request->filter);

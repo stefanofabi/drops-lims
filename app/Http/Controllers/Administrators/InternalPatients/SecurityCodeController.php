@@ -19,10 +19,6 @@ use Session;
 
 class SecurityCodeController extends Controller
 {
-    private const ATTRIBUTES = [
-        'internal_patient_id'
-    ];
-
     private const SECURITY_CODE_LENGTH = 10;
     private const DAYS_TO_EXPIRATE_SECURITY_CODE = 10;
 
@@ -71,10 +67,10 @@ class SecurityCodeController extends Controller
         DB::beginTransaction();
         
         try {
-            $this->securityCodeRepository->deletePatientSecurityCode($request->patient_id);
+            $this->securityCodeRepository->deletePatientSecurityCode($request->internal_patient_id);
 
             $security_code = $this->securityCodeRepository->create([
-                'internal_patient_id' => $request->patient_id,
+                'internal_patient_id' => $request->internal_patient_id,
                 'security_code' => Hash::make($new_security_code),
                 'expiration_date' => $new_expiration_date,
                 'used_at' => null,

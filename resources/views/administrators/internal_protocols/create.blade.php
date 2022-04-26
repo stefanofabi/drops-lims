@@ -168,7 +168,7 @@
                     </div>
 
                     <input type="hidden" id="prescriber" name="prescriber_id" value="{{ old('prescriber_id') }}">
-                    <input type="text" class="form-control" name="prescriber_name" id="prescriberAutoComplete" placeholder="{{ trans('forms.start_typing') }}" value="{{ old('prescriber_name') }}">
+                    <input type="text" class="form-control" name="prescriber_name" id="prescriberAutoComplete" placeholder="{{ trans('forms.start_typing') }}" value="{{ old('prescriber_name') }}" required>
                 </div>
 
                 <div class="input-group mt-2">

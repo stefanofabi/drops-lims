@@ -63,7 +63,7 @@
        @can('crud_protocols')
 	        <li class="nav-item">
 				<form action="{{ route('administrators/protocols/create') }}" id="create_protocol_form">
-		            <input type="hidden" name="patient_id" value="{{ $patient->id }}">
+		            <input type="hidden" name="internal_patient_id" value="{{ $patient->id }}">
 		        </form>
 
 				<a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('create_protocol_form').submit();"> {{ trans('protocols.create_protocol')}} </a>
@@ -75,7 +75,7 @@
 				<form id="security_code_form" action="{{ route('administrators/patients/security_codes/store') }}" method="post">
 					@csrf
 
-					<input type="hidden" name="patient_id" value="{{ $patient->id }}">
+					<input type="hidden" name="internal_patient_id" value="{{ $patient->id }}">
 				</form>
 
 				<a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('security_code_form').submit();"> {{ trans('patients.send_security_code') }} </a>

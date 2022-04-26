@@ -54,7 +54,7 @@
             
         var parameters = {
             "_token": "{{ csrf_token() }}",
-            "protocol_id": '{{ $protocol->id }}',
+            "internal_protocol_id": '{{ $protocol->id }}',
             "determination_id": $("#determination_id").val(),
         };
 

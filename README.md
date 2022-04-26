@@ -23,7 +23,7 @@ What things do you need to install the project and how to do it
 - Composer
 - NPM
 - PHP 8.x with php-mbstring/gd extension
-- Relational database (MySQL, MariaDB, etc.)
+- PostgreSQL
 ```
 
 ### Installation 🔧
@@ -52,7 +52,6 @@ What things do you need to install the project and how to do it
 4. Create a link to the storage folder that contains everything related to the application and create the application key that will protect user sessions and other data.
 
 ```
-# php artisan storage:link
 # php artisan key:generate
 ```
 
@@ -85,9 +84,9 @@ Thank you for considering contributing to the Drops app! You can do it in:
 
 ## Security Vulnerabilities
 
-To report a vulnerability you can do so directly to the creator's email stefanofabi96@gmail.com . If it is something very punctual, please create a new issue to give it a better follow-up.
+To report a vulnerability please create a new thread for better tracking.
 
-The estimated time to fix such vulnerability if it exists will depend exclusively on its severity and the help of the community.
+The estimated time to fix such vulnerability, if any, will depend solely on its severity and community support.
 
 ## License
 

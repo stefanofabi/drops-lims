@@ -30,6 +30,7 @@ class PrescriberController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
@@ -120,7 +121,8 @@ class PrescriberController extends Controller
         //
         $prescriber = $this->prescriberRepository->findOrFail($id);
 
-        return view('administrators/prescribers/edit')->with('prescriber', $prescriber);
+        return view('administrators/prescribers/edit')
+            ->with('prescriber', $prescriber);
     }
 
     /**
@@ -168,12 +170,13 @@ class PrescriberController extends Controller
     /**
      * Returns a list of filtered prescribers
      *
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function loadPrescribers(Request $request)
     {
         $request->validate([
-            'filter' => 'required|string'
+            'filter' => 'required|string|min:2'
         ]);
 
         return $this->prescriberRepository->loadPrescribers($request->filter);

@@ -27,6 +27,8 @@ class InternalProtocolController extends Controller
 
     private const ADJACENTS = 4;
 
+    private const INTERNAL_PROTOCOLS_DIRECTORY = "app/internal_protocols/";
+
     /** @var \App\Contracts\Repository\InternalProtocolRepositoryInterface */
     private $internalProtocolRepository;
 
@@ -59,6 +61,7 @@ class InternalProtocolController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
@@ -95,6 +98,7 @@ class InternalProtocolController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function create(Request $request)
@@ -221,11 +225,10 @@ class InternalProtocolController extends Controller
             'practices' => $practices,
         ]);
         
-        $protocol_name = 'protocol_'.$protocol->id.'.pdf';
-        $protocol_path = storage_path("app/internal_protocols/$protocol_name");
+        $protocol_path = storage_path(self::INTERNAL_PROTOCOLS_DIRECTORY."protocol_$protocol->id.pdf");
         $pdf->save($protocol_path);
        
-        return $pdf->stream($protocol_name);
+        return $pdf->stream("protocol_$protocol->id");
     }
 
     /**
@@ -244,6 +247,12 @@ class InternalProtocolController extends Controller
         return $pdf->stream('worksheet_'.$protocol->id.'.pdf');
     }
 
+    /**
+     * Close a protocol so that it is never modified
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
     public function closeProtocol($id)
     {
         if (! $this->internalProtocolRepository->closeProtocol($id))
@@ -256,6 +265,13 @@ class InternalProtocolController extends Controller
         return redirect()->action([InternalProtocolController::class, 'edit'], ['id' => $id]);
     }
 
+    /**
+     * Send a pdf protocol to email patient
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
     public function sendProtocolToEmail(Request $request, $id)
     {
         $protocol = $this->internalProtocolRepository->findOrFail($id);
@@ -267,8 +283,7 @@ class InternalProtocolController extends Controller
             'practices' => $practices,
         ]);
 
-        $protocol_name = 'protocol_'.$protocol->id.'.pdf';
-        $protocol_path = storage_path("app/internal_protocols/$protocol_name");
+        $protocol_path = storage_path(self::INTERNAL_PROTOCOLS_DIRECTORY."protocol_$protocol->id.pdf");
         $pdf->save($protocol_path);
 
         Mail::to($protocol->internalPatient->email)->send(new InternalProtocolSent($protocol));

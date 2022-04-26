@@ -28,7 +28,7 @@ class VerifyClosedProtocol
      */
     public function handle(Request $request, Closure $next)
     {
-        $id = isset($request->id) ? $request->id : $request->protocol_id;
+        $id = isset($request->id) ? $request->id : $request->internal_protocol_id;
     
         $protocol = $this->internalProtocolRepository->findOrFail($id);
 
