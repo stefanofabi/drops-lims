@@ -31,5 +31,6 @@ return [
     'error_updating_determination' => 'The determination could not be updated. Please, try again later.',
     'success_destroy_message' => 'Well done! Determination was successfully removed',
     'determination_data' => 'Determination data',
+    'determinations_message' => 'Here are listed all the determinations performed in his laboratory. They are grouped by nomenclatures, which are then usually associated with different social or prepaid works according to the agreement made.',
     
 ];

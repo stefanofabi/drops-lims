@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Contracts\Repository\SocialWorkRepositoryInterface;
-use App\Contracts\Repository\ProtocolRepositoryInterface;
+use App\Contracts\Repository\InternalProtocolRepositoryInterface;
 
 use Lang;
 use DateTime;
@@ -19,16 +19,16 @@ class StatisticsController extends Controller
     /** @var \App\Contracts\Repository\SocialWorkRepositoryInterface */
     private $socialWorkRepository;
 
-    /** @var \App\Contracts\Repository\ProtocolRepositoryInterface */
-    private $protocolRepository;
+    /** @var \App\Contracts\Repository\InternalProtocolRepositoryInterface */
+    private $internalProtocolRepository;
 
     public function __construct(
         SocialWorkRepositoryInterface $socialWorkRepository,
-        ProtocolRepositoryInterface $protocolRepository
+        InternalProtocolRepositoryInterface $internalProtocolRepository
 
     ) {
         $this->socialWorkRepository = $socialWorkRepository;
-        $this->protocolRepository = $protocolRepository;
+        $this->internalProtocolRepository = $internalProtocolRepository;
     }
 
     public function index()
@@ -45,6 +45,7 @@ class StatisticsController extends Controller
 
     public function getAnnualCollectionSocialWork(Request $request)
     {
+        
         $request->validate([
             'initial_date' => 'required|date',
             'ended_date' => 'required|date',
@@ -53,8 +54,8 @@ class StatisticsController extends Controller
 
         $social_works = $this->socialWorkRepository->all();
 
-        $anual_report = $this->protocolRepository->getCollectionSocialWork($request->social_work, $request->initial_date, $request->ended_date);
-        
+        $anual_report = $this->internalProtocolRepository->getCollectionSocialWork($request->social_work, $request->initial_date, $request->ended_date);
+       
         $new_array = $this->generateArrayPerMonth($anual_report, $request->initial_date, $request->ended_date);
        
         return view('administrators.settings.statistics.annual_collection_social_work')
@@ -74,7 +75,7 @@ class StatisticsController extends Controller
 
         $social_works = $this->socialWorkRepository->all();
 
-        $patient_flow = $this->protocolRepository->getPatientFlow($request->initial_date, $request->ended_date);
+        $patient_flow = $this->internalProtocolRepository->getPatientFlow($request->initial_date, $request->ended_date);
 
         $new_array = $this->generateArrayPerMonth($patient_flow, $request->initial_date, $request->ended_date);
 
@@ -94,7 +95,7 @@ class StatisticsController extends Controller
 
         $social_works = $this->socialWorkRepository->all();
 
-        $track_income = $this->protocolRepository->getTrackIncome($request->initial_date, $request->ended_date);
+        $track_income = $this->internalProtocolRepository->getTrackIncome($request->initial_date, $request->ended_date);
 
         $new_array = $this->generateArrayPerMonth($track_income, $request->initial_date, $request->ended_date);
 

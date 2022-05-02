@@ -56,7 +56,7 @@ class HomeController extends Controller
         $pending_protocols = $this->internalProtocolRepository->getPendingProtocols();
         
         $practices_not_signed = $this->internalPracticeRepository->getPracticesNotSigned();
-    
+        
         $protocols = $this->internalProtocolRepository->getSumOfAllSocialWorksProtocols();
         $payments = $this->paymentSocialWorkRepository->getSumOfAllPayments();
         $debt_social_works = $protocols->total_amount - $payments->total_amount; 

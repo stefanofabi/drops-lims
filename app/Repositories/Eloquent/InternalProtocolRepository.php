@@ -113,14 +113,15 @@ final class InternalProtocolRepository implements InternalProtocolRepositoryInte
     public function getCollectionSocialWork($social_work_id, $start_date, $end_date) 
     {
         return $this->model
-            ->select(DB::raw('MONTH(protocols.completion_date) as month'), DB::raw('YEAR(protocols.completion_date) as year'), DB::raw('SUM(practices.amount) as total'))
-            ->join('plans', 'protocols.plan_id', '=', 'plans.id')
+            ->select(DB::raw('EXTRACT(MONTH FROM internal_protocols.completion_date) as month'), DB::raw('EXTRACT(YEAR FROM internal_protocols.completion_date) as year'), DB::raw('SUM(internal_practices.price) as total'))
+            ->join('plans', 'internal_protocols.plan_id', '=', 'plans.id')
             ->join('social_works', 'plans.social_work_id', '=', 'social_works.id')
-            ->join('practices', 'protocols.id', '=', 'practices.protocol_id')
+            ->join('internal_practices', 'internal_protocols.id', '=', 'internal_practices.internal_protocol_id')
             ->where('social_works.id', $social_work_id)
-            ->whereBetween('protocols.completion_date', [$start_date, $end_date])
-            ->groupBy(DB::raw("MONTH(protocols.completion_date)"), DB::raw("YEAR(protocols.completion_date)"))
-            ->orderBy('protocols.completion_date', 'asc')
+            ->whereBetween('internal_protocols.completion_date', [$start_date, $end_date])
+            ->groupBy(DB::raw("EXTRACT(MONTH FROM internal_protocols.completion_date)"), DB::raw("EXTRACT(YEAR FROM internal_protocols.completion_date)"))
+            ->orderBy(DB::raw("EXTRACT(YEAR FROM internal_protocols.completion_date)"), 'ASC')
+            ->orderBy(DB::raw("EXTRACT(MONTH FROM internal_protocols.completion_date)"), 'ASC')
             ->get();
     }
 
@@ -130,10 +131,11 @@ final class InternalProtocolRepository implements InternalProtocolRepositoryInte
     public function getPatientFlow($start_date, $end_date) 
     {
         return $this->model
-            ->select(DB::raw('MONTH(protocols.completion_date) as month'), DB::raw('YEAR(protocols.completion_date) as year'), DB::raw('COUNT(*) as total'))
-            ->whereBetween('protocols.completion_date', [$start_date, $end_date])
-            ->groupBy(DB::raw('MONTH(protocols.completion_date)'), DB::raw('YEAR(protocols.completion_date)'))
-            ->orderBy('protocols.completion_date', 'asc')
+            ->select(DB::raw('EXTRACT(MONTH FROM internal_protocols.completion_date) as month'), DB::raw('EXTRACT(YEAR FROM internal_protocols.completion_date) as year'), DB::raw('COUNT(*) as total'))
+            ->whereBetween('internal_protocols.completion_date', [$start_date, $end_date])
+            ->groupBy(DB::raw('EXTRACT(MONTH FROM internal_protocols.completion_date)'), DB::raw('EXTRACT(YEAR FROM internal_protocols.completion_date)'))
+            ->orderBy(DB::raw("EXTRACT(YEAR FROM internal_protocols.completion_date)"), 'ASC')
+            ->orderBy(DB::raw("EXTRACT(MONTH FROM internal_protocols.completion_date)"), 'ASC')
             ->get();
     }
 
@@ -143,11 +145,12 @@ final class InternalProtocolRepository implements InternalProtocolRepositoryInte
     public function getTrackIncome($start_date, $end_date) 
     {
         return $this->model
-            ->select(DB::raw("MONTH(protocols.completion_date) as month"), DB::raw("YEAR(protocols.completion_date) as year"), DB::raw('SUM(practices.amount) as total'))
-            ->join('practices', 'protocols.id', '=', 'practices.protocol_id')
-            ->whereBetween('protocols.completion_date', [$start_date, $end_date])
-            ->groupBy(DB::raw('MONTH(protocols.completion_date)'), DB::raw('YEAR(protocols.completion_date)'), 'practices.amount')
-            ->orderBy('protocols.completion_date', 'asc')
+            ->select(DB::raw("EXTRACT(MONTH FROM internal_protocols.completion_date) as month"), DB::raw("EXTRACT(YEAR FROM internal_protocols.completion_date) as year"), DB::raw('SUM(internal_practices.price) as total'))
+            ->join('internal_practices', 'internal_protocols.id', '=', 'internal_practices.internal_protocol_id')
+            ->whereBetween('internal_protocols.completion_date', [$start_date, $end_date])
+            ->groupBy(DB::raw('EXTRACT(MONTH FROM internal_protocols.completion_date)'), DB::raw('EXTRACT(YEAR FROM internal_protocols.completion_date)'))
+            ->orderBy(DB::raw("EXTRACT(YEAR FROM internal_protocols.completion_date)"), 'ASC')
+            ->orderBy(DB::raw("EXTRACT(MONTH FROM internal_protocols.completion_date)"), 'ASC')
             ->get();
     }
 
@@ -159,7 +162,7 @@ final class InternalProtocolRepository implements InternalProtocolRepositoryInte
 
     public function getSumOfAllSocialWorksProtocols() {
         $practices = DB::table('internal_practices')
-            ->select('internal_protocol_id', DB::raw('SUM(amount) as total_amount'))
+            ->select('internal_protocol_id', DB::raw('SUM(price) as total_amount'))
             ->groupBy('internal_protocol_id');
       
         return $this->model

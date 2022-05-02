@@ -41,6 +41,12 @@
 <i class="fas fa-user-md"></i> {{ trans('prescribers.prescribers') }}
 @endsection
 
+@section('content-message')
+<p class="text-justify pe-5">
+    {{ trans('prescribers.prescribers_message') }}
+</p>
+@endsection
+
 @section('content')
 <form id="select_page">
 	<!-- Filter by keys -->

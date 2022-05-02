@@ -47,6 +47,12 @@
 <i class="fas fa-syringe"></i> {{ trans('determinations.determinations') }}
 @endsection
 
+@section('content-message')
+<p class="text-justify pe-5">
+    {{ trans('determinations.determinations_message') }}
+</p>
+@endsection
+
 @section('content')
 <form id="select_page">
     <!-- Filter by keys -->

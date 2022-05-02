@@ -53,5 +53,6 @@ return [
     'patient_have_not_email' => 'Patient have not email loaded',
     'family_members' => 'Family members',
     'reserve_shift' => 'Reserve shift',
+    'patients_message' => 'Here are all the patients loaded in the system that can be treated in your laboratory. Remember that it is important to verify and keep your data up to date.',
     
 ];

@@ -34,6 +34,12 @@
 <span class="fas fa-file-medical" ></span> {{ trans('protocols.protocols') }}
 @endsection
 
+@section('content-message')
+<p class="text-justify pe-5">
+    {{ trans('protocols.protocols_message') }}
+</p>
+@endsection
+
 @section('content')
 <form id="select_page">
 	<!-- Filter by keys -->

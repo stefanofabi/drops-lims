@@ -17,10 +17,8 @@ class SocialWorkSeeder extends Seeder
     {
         //
         SocialWork::insert([
-            ['name' => 'Social work #1'],
-            ['name' => 'Social work #2'],
-            ['name' => 'Social work #3'],
-            ['name' => 'Social work #4'],
+            ['name' => 'Social work #1', 'acronym' => 'SW1'],
+            ['name' => 'Social work #2', 'acronym' => 'SW2'],
         ]);
     }
 }
