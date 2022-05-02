@@ -49,7 +49,7 @@
 		</div>
 
 		<div class="mt-2 col-md-6">
-			<button type="submit" class="btn btn-info" onclick="load(1)">
+			<button type="submit" class="btn btn-primary" onclick="load(1)">
 				<span class="fas fa-search" ></span> {{ trans('forms.search') }} </button>
 			</div>
 	</div>
