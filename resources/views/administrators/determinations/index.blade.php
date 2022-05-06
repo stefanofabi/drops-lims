@@ -96,9 +96,9 @@
             <td> {{ $determination->name }} </td>
 
             <td class="text-end">
-                <a href="{{ route('administrators/determinations/edit', ['id' => $determination->id]) }}" class="btn btn-info btn-sm" title="{{ trans('determinations.edit_determination') }}"> <i class="fas fa-edit fa-sm"></i> </a>
+                <a href="{{ route('administrators/determinations/edit', ['id' => $determination->id]) }}" class="btn btn-primary btn-sm" title="{{ trans('determinations.edit_determination') }}"> <i class="fas fa-edit fa-sm"></i> </a>
 
-                <a class="btn btn-info btn-sm verticalButtons" title="{{ trans('determinations.destroy_determination') }}" onclick="destroyDetermination('{{ $determination->id }}')"> <i class="fas fa-trash fa-sm"></i> </a>
+                <a class="btn btn-primary btn-sm verticalButtons" title="{{ trans('determinations.destroy_determination') }}" onclick="destroyDetermination('{{ $determination->id }}')"> <i class="fas fa-trash fa-sm"></i> </a>
 
                 <form id="destroy_determination_{{ $determination->id }}" method="POST" action="{{ route('administrators/determinations/destroy', ['id' => $determination->id]) }}">
                     @csrf

@@ -83,11 +83,11 @@
 
 			<td class="text-end">
 				@if (empty($protocol->closed))
-				<a href="{{ route('administrators/protocols/edit', [$protocol->id]) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.edit_protocol') }}" > <i class="fas fa-edit fa-sm"></i> </a>
-				<a href="#" class="btn btn-info btn-sm verticalButtons" title="{{ trans('protocols.destroy_protocol') }}"> <i class="fas fa-trash fa-sm"></i> </a> 
+				<a href="{{ route('administrators/protocols/edit', [$protocol->id]) }}" class="btn btn-primary btn-sm" title="{{ trans('protocols.edit_protocol') }}" > <i class="fas fa-edit fa-sm"></i> </a>
+				<a href="#" class="btn btn-primary btn-sm verticalButtons" title="{{ trans('protocols.destroy_protocol') }}"> <i class="fas fa-trash fa-sm"></i> </a> 
 				@else
-				<a href="{{ route('administrators/protocols/edit', [$protocol->id]) }}" class="btn btn-info btn-sm" title="{{ trans('protocols.show_protocol') }}" > <i class="fas fa-eye fa-sm"></i> </a> 
-				<a href="#" class="btn btn-info btn-sm verticalButtons disabled" title="{{ trans('protocols.destroy_protocol') }}"> <i class="fas fa-trash fa-sm"></i> </a>
+				<a href="{{ route('administrators/protocols/edit', [$protocol->id]) }}" class="btn btn-primary btn-sm" title="{{ trans('protocols.show_protocol') }}" > <i class="fas fa-eye fa-sm"></i> </a> 
+				<a href="#" class="btn btn-primary btn-sm verticalButtons disabled" title="{{ trans('protocols.destroy_protocol') }}"> <i class="fas fa-trash fa-sm"></i> </a>
 				@endif
 				
 				

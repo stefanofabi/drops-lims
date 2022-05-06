@@ -92,7 +92,7 @@
 @section('content')
 @if (sizeof($errors) == 0)
 	<div id="securityMessage" class="mt-3 alert alert-info fade show">
-		<button type="submit" onclick="enableSubmitForm()" class="btn btn-info btn-sm">
+		<button type="submit" onclick="enableSubmitForm()" class="btn btn-primary btn-sm">
 			<i class="fas fa-lock-open"></i>
 		</button>
 

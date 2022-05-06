@@ -222,16 +222,16 @@
                                 
                     <td class="text-end">
                         @if (empty($protocol->closed))
-                        <a href="{{ route('administrators/protocols/practices/edit', ['id' => $practice->id]) }}" class="btn btn-info btn-sm" title="{{ trans('practices.edit_practice') }}"> 
+                        <a href="{{ route('administrators/protocols/practices/edit', ['id' => $practice->id]) }}" class="btn btn-primary btn-sm" title="{{ trans('practices.edit_practice') }}"> 
                             <i class="fas fa-edit fa-sm"></i> 
                         </a>
                         @else 
-                        <a href="{{ route('administrators/protocols/practices/edit', ['id' => $practice->id]) }}" class="btn btn-info btn-sm" title="{{ trans('practices.show_practice') }}"> 
+                        <a href="{{ route('administrators/protocols/practices/edit', ['id' => $practice->id]) }}" class="btn btn-primary btn-sm" title="{{ trans('practices.show_practice') }}"> 
                             <i class="fas fa-show fa-eye"></i> 
                         </a>
                         @endif
 
-                        <a href="{{ route('administrators/protocols/practices/destroy', ['id' => $practice->id]) }}" class="btn btn-info btn-sm @if (! empty($protocol->closed)) disabled @endif" title="{{ trans('practices.destroy_practice') }}"> 
+                        <a href="{{ route('administrators/protocols/practices/destroy', ['id' => $practice->id]) }}" class="btn btn-primary btn-sm @if (! empty($protocol->closed)) disabled @endif" title="{{ trans('practices.destroy_practice') }}"> 
                             <i class="fas fa-trash fa-sm"></i> 
                         </a>
                     </td>
