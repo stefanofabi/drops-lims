@@ -12,13 +12,16 @@ class FamilyMember extends Model
 
     use LogsActivity;
 
-    protected $fillable = ['user_id', 'patient_id'];
+    protected $fillable = [
+        'user_id', 
+        'internal_patient_id'
+    ];
 
     /**
      * Get the patient associated with the family member.
      */
-    public function patient() {
-        return $this->belongsTo(Patient::class);
+    public function internalPatient() {
+        return $this->belongsTo(InternalPatient::class);
     }
 
     public function getActivitylogOptions(): LogOptions

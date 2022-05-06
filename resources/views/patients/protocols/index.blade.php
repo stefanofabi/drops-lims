@@ -19,7 +19,7 @@
 <nav class="navbar">
 	<ul class="navbar-nav">
 	    <li class="nav-item">
-			<a class="nav-link" href="{{ route('patients/family_members/create') }}"> <span class="fas fa-user-plus" ></span> {{ trans('patients.add_family_member') }} </a>
+			<a class="nav-link" href="{{ route('patients/family_members/create') }}"> {{ trans('patients.add_family_member') }} </a>
 		</li>
 	</ul>
 </nav>
@@ -44,10 +44,10 @@
     <div class="col form-group col-md-6 mt-1">
         <span for="inputState">{{ trans('patients.patient') }}</span>
         
-        <select class="form-select" id="patient" name="patient_id" required>
+        <select class="form-select" id="patient" name="internal_patient_id" required>
             <option value="">{{ trans('forms.select_option') }}</option>
             @foreach ($family_members as $family_member)
-            <option value="{{ $family_member->patient->id }}"> {{ $family_member->patient->full_name }}</option>
+            <option value="{{ $family_member->internalPatient->id }}"> {{ $family_member->internalPatient->last_name }} {{ $family_member->internalPatient->name }}</option>
             @endforeach
         </select>
     </div>
@@ -55,7 +55,7 @@
     <!-- Filter by keys -->
     <div class="form-group mt-3">
         <div class="col-md-6">
-            <button type="submit" class="btn btn-info">
+            <button type="submit" class="btn btn-primary">
                 <span class="fas fa-search" ></span> {{ trans('forms.search') }} 
             </button>
         </div>
@@ -84,11 +84,11 @@
                 <td> {{ $protocol->prescriber->full_name }} </td>
 
                 <td class="text-end">
-                    <a href="{{ route('patients/protocols/show', $protocol->id) }}" class="btn btn-info btn-sm verticalButtons" title="{{ trans('protocols.show_protocol') }}" >
+                    <a href="{{ route('patients/protocols/show', $protocol->id) }}" class="btn btn-primary btn-sm verticalButtons" title="{{ trans('protocols.show_protocol') }}" >
                         <i class="fas fa-eye fa-sm"></i> 
                     </a>
 
-                    <a target="_blank" href="{{ route('patients/protocols/print', $protocol->id) }}" class="btn btn-info btn-sm verticalButtons @if (empty($protocol->closed)) disabled @endif" title="{{ trans('protocols.print_report') }}"> 
+                    <a target="_blank" href="{{ route('patients/protocols/generate_protocol', ['id' => $protocol->id]) }}" class="btn btn-primary btn-sm verticalButtons @if (empty($protocol->closed)) disabled @endif" title="{{ trans('protocols.generate_protocol') }}"> 
                         <i class="fas fa-print fa-sm"></i> 
                     </a>
                 </td>

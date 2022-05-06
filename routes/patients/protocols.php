@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\Patients\ProtocolController;
+use App\Http\Controllers\Patients\InternalProtocolController;
 
-Route::controller(ProtocolController::class)
+Route::controller(InternalProtocolController::class)
 ->prefix('protocols')
 ->as('protocols/')
 ->group(function () {
@@ -18,14 +18,9 @@ Route::controller(ProtocolController::class)
         ->where('id', '[1-9][0-9]*')
         ->middleware('verify_protocol_access_relation');
 
-    Route::get('print/{id}', 'printProtocol')
-        ->name('print')
+    Route::get('generate_protocol/{id}', 'generateProtocol')
+        ->name('generate_protocol')
         ->where('id', '[1-9][0-9]*')
-        ->middleware('verify_protocol_access_relation')
-        ->middleware('verify_closed_protocol');
-
-    Route::post('print_selection', 'printPartialReport')
-        ->name('print_selection')
         ->middleware('verify_protocol_access_relation')
         ->middleware('check_filtered_practices_to_print');
 });

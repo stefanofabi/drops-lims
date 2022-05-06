@@ -5,22 +5,22 @@ namespace App\Http\Controllers\Patients;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Contracts\Repository\PracticeRepositoryInterface;
+use App\Contracts\Repository\InternalPracticeRepositoryInterface;
 use App\Contracts\Repository\FamilyMemberRepositoryInterface;
 
-class PracticeController extends Controller
+class InternalPracticeController extends Controller
 {
-    /** @var \App\Contracts\Repository\PracticeRepositoryInterface */
-    private $practiceRepository;
+    /** @var \App\Contracts\Repository\InternalPracticeRepositoryInterface */
+    private $internalPracticeRepository;
     
     /** @var \App\Contracts\Repository\FamilyMemberRepositoryInterface */
     private $familyMemberRepository;
     
     public function __construct (
-        PracticeRepositoryInterface $practiceRepository,
+        InternalPracticeRepositoryInterface $internalPracticeRepository,
         FamilyMemberRepositoryInterface $familyMemberRepository
     ) {
-        $this->practiceRepository = $practiceRepository;
+        $this->internalPracticeRepository = $internalPracticeRepository;
         $this->familyMemberRepository = $familyMemberRepository;
     }
 
@@ -33,9 +33,10 @@ class PracticeController extends Controller
     public function show($id)
     {
 
-        $practice = $this->practiceRepository->findOrFail($id);
+        $practice = $this->internalPracticeRepository->findOrFail($id);
         
-        return view('patients/protocols/practices/show')->with('practice', $practice);
+        return view('patients.protocols.practices.show')
+            ->with('practice', $practice);
     }
 
     /**
@@ -46,8 +47,8 @@ class PracticeController extends Controller
     public function getResults(Request $request)
     {
         
-        $practice = $this->practiceRepository->find($request->id);
+        $practice = $this->internalPracticeRepository->find($request->id);
         
-        return $practice->results->toJson();
+        return $practice->result;
     }
 }

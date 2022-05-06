@@ -60,14 +60,14 @@ final class FamilyMemberRepository implements FamilyMemberRepositoryInterface
     {
         return $this->model
             ->where('user_id', $user_id)
-            ->where('patient_id', $patient_id)
+            ->where('internal_patient_id', $patient_id)
             ->firstOrFail();
     }
 
     public function getFamilyMembers($user_id) 
     {
         return $this->model
-            ->select('patient_id')
+            ->select('internal_patient_id')
             ->where('user_id', $user_id)
             ->get();
     }

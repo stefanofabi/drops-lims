@@ -42,7 +42,7 @@ class FamilyMemberController extends Controller
         $user = auth()->user();
         $family_members = $user->family_members;
 
-        return view('patients/family_members/index')
+        return view('patients.family_members.index')
             ->with('family_members', $family_members);
     }
 
@@ -55,7 +55,7 @@ class FamilyMemberController extends Controller
     {
         //
 
-        return view('patients/family_members/create');
+        return view('patients.family_members.create');
     }
 
     /**
@@ -69,7 +69,7 @@ class FamilyMemberController extends Controller
         //
 
         $request->validate([
-            'patient_id' => 'required|numeric|min:1',
+            'internal_patient_id' => 'required|numeric|min:1',
             'security_code' => 'required|string',
         ]);
 
@@ -79,10 +79,10 @@ class FamilyMemberController extends Controller
 
             $family_member = $this->familyMemberRepository->create([
                 'user_id' => auth()->user()->id, 
-                'patient_id' => $request->patient_id
+                'internal_patient_id' => $request->internal_patient_id
             ]);
 
-            $security_code = $this->securityCodeRepository->getSecurityCodeAssociate($request->patient_id);
+            $security_code = $this->securityCodeRepository->getSecurityCodeAssociate($request->internal_patient_id);
             $this->securityCodeRepository->update(['used_at' => now()], $security_code->id);
 
             DB::commit();

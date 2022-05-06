@@ -30,7 +30,7 @@ class VerifySecurityCode
     public function handle(Request $request, Closure $next)
     {
 
-        $security_code = $this->securityCodeRepository->getSecurityCodeAssociate($request->patient_id);
+        $security_code = $this->securityCodeRepository->getSecurityCodeAssociate($request->internal_patient_id);
 
         if (! $security_code) {
             return redirect()->back()->withInput($request->except('security_code'))->withErrors(Lang::get('errors.invalid_security_code'));

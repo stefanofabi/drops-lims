@@ -23,9 +23,9 @@
             <span class="input-group-text"> {{ trans('patients.unique_identifier') }} </span>
         </div>
 
-        <input type="number" class="form-control @error('patient_id') is-invalid @enderror" name="patient_id" min="1" value="{{ old('patient_id') }}" required>
+        <input type="number" class="form-control @error('internal_patient_id') is-invalid @enderror" name="internal_patient_id" min="1" value="{{ old('internal_patient_id') }}" required>
 
-        @error('patient_id')
+        @error('internal_patient_id')
         <span class="invalid-feedback" role="alert">
             <strong> {{ $message }} </strong>
         </span>

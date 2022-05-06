@@ -10,7 +10,7 @@
 <nav class="navbar">
 	<ul class="navbar-nav">
 	    <li class="nav-item">
-			<a class="nav-link" href="{{ route('patients/family_members/create') }}"> <span class="fas fa-user-plus" ></span> {{ trans('patients.add_family_member') }} </a>
+			<a class="nav-link" href="{{ route('patients/family_members/create') }}"> {{ trans('patients.add_family_member') }} </a>
 		</li>
 	</ul>
 </nav>
@@ -37,7 +37,7 @@
             @forelse ($family_members as $family_member)
             <tr>
                 <td> {{ date('d/m/Y', strtotime($family_member->created_at)) }} </td>
-                <td> {{ $family_member->patient->full_name }} </td>
+                <td> {{ $family_member->internalPatient->last_name }} {{ $family_member->internalPatient->name }} </td>
 
                 <td class="text-end">
                     <a target="_blank" href="#" class="btn btn-info btn-sm" title="{{ trans('protocols.print_report') }}"> <i class="fas fa-trash fa-sm"></i> </a>

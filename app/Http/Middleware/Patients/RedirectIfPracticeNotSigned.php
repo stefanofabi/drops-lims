@@ -5,18 +5,18 @@ namespace App\Http\Middleware\Patients;
 use Closure;
 use Illuminate\Http\Request;
 
-use App\Contracts\Repository\PracticeRepositoryInterface;
+use App\Contracts\Repository\InternalPracticeRepositoryInterface;
 
 use Lang;
 
 class RedirectIfPracticeNotSigned
 {
-    /** @var \App\Contracts\Repository\PracticeRepositoryInterface */
-    private $practiceRepository;
+    /** @var \App\Contracts\Repository\InternalPracticeRepositoryInterface */
+    private $internalPracticeRepository;
     
-    public function __construct (PracticeRepositoryInterface $practiceRepository) 
+    public function __construct (InternalPracticeRepositoryInterface $internalPracticeRepository) 
     {
-        $this->practiceRepository = $practiceRepository;
+        $this->internalPracticeRepository = $internalPracticeRepository;
     }
 
     /**
@@ -28,9 +28,9 @@ class RedirectIfPracticeNotSigned
      */
     public function handle(Request $request, Closure $next)
     {
-        $practice = $this->practiceRepository->findOrFail($request->id);
+        $practice = $this->internalPracticeRepository->findOrFail($request->id);
 
-        if ($practice->signs->isEmpty())
+        if ($practice->signInternalPractices->isEmpty())
         {
             if ($request->ajax())
             {

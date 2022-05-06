@@ -5,20 +5,20 @@ namespace App\Http\Middleware\Patients;
 use Closure;
 use Illuminate\Http\Request;
 
-use App\Contracts\Repository\ProtocolRepositoryInterface;
+use App\Contracts\Repository\InternalProtocolRepositoryInterface;
 use App\Contracts\Repository\FamilyMemberRepositoryInterface;
 
 class VerifyProtocolAccessRelation
 {
-    /** @var \App\Contracts\Repository\ProtocolRepositoryInterface */
-    private $protocolRepository;
+    /** @var \App\Contracts\Repository\InternalProtocolRepositoryInterface */
+    private $internalProtocolRepository;
 
     /** @var \App\Contracts\Repository\FamilyMemberRepositoryInterface */
     private $familyMemberRepository;
 
-    public function __construct (ProtocolRepositoryInterface $protocolRepository, FamilyMemberRepositoryInterface $familyMemberRepository)
+    public function __construct (InternalProtocolRepositoryInterface $internalProtocolRepository, FamilyMemberRepositoryInterface $familyMemberRepository)
     {
-        $this->protocolRepository = $protocolRepository;
+        $this->internalProtocolRepository = $internalProtocolRepository;
         $this->familyMemberRepository = $familyMemberRepository;
     }
 
@@ -32,9 +32,9 @@ class VerifyProtocolAccessRelation
     public function handle(Request $request, Closure $next)
     {
 
-        $protocol = $this->protocolRepository->findOrFail($request->id);
+        $protocol = $this->internalProtocolRepository->findOrFail($request->id);
 
-        $this->familyMemberRepository->findFamilyMemberRelationOrFail(auth()->user()->id, $protocol->patient->id);
+        $this->familyMemberRepository->findFamilyMemberRelationOrFail(auth()->user()->id, $protocol->internal_patient_id);
 
         return $next($request);
     }

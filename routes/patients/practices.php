@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\Patients\PracticeController;
+use App\Http\Controllers\Patients\InternalPracticeController;
 
-Route::controller(PracticeController::class)
+Route::controller(InternalPracticeController::class)
 ->prefix('practices')
 ->as('practices/')
 ->group(function () {

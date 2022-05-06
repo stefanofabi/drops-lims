@@ -28,11 +28,11 @@ class VerifyFamilyMemberRelation
      */
     public function handle(Request $request, Closure $next)
     {
-        if (! isset($request->patient_id)) {
+        if (! isset($request->internal_patient_id)) {
             return $next($request);
         }
         
-        $this->familyMemberRepository->findFamilyMemberRelationOrFail(auth()->user()->id, $request->patient_id);
+        $this->familyMemberRepository->findFamilyMemberRelationOrFail(auth()->user()->id, $request->internal_patient_id);
 
         return $next($request);
     }

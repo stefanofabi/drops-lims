@@ -43,7 +43,7 @@
 <nav class="navbar">
     <ul class="navbar-nav">
 		<li class="nav-item">
-			<a class="nav-link" href="{{ route('patients/protocols/show', ['id' => $practice->protocol->id]) }}"> {{ trans('forms.go_back') }} </a>
+			<a class="nav-link" href="{{ route('patients/protocols/show', ['id' => $practice->internalProtocol->id]) }}"> {{ trans('forms.go_back') }} </a>
 		</li>
     </ul>
 </nav>
@@ -57,6 +57,6 @@
 <div id="messages" class="mt-3"> </div>
 
 <div id="report" class="mt-3">
-	{!! $practice->report->report !!}
+	{!! $practice->print() !!}
 </div>
 @endsection

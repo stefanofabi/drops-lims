@@ -26,11 +26,11 @@
 <nav class="navbar">
     <ul class="navbar-nav">
 		<li class="nav-item">
-			<a class="nav-link @if (empty($protocol->closed)) disabled @endif" target="blank" href="{{ route('patients/protocols/print', $protocol->id) }}"> {{ trans('protocols.print_report') }} </a>
+			<a class="nav-link @if (empty($protocol->closed)) disabled @endif" target="blank" href="{{ route('patients/protocols/generate_protocol', ['id' => $protocol->id]) }}"> {{ trans('protocols.generate_protocol') }} </a>
 		</li>
 
 		<li class="nav-item">
-			<a class="nav-link" href="#" onclick="printSelection()"> {{ trans('protocols.print_selected') }} </a>
+			<a class="nav-link" href="#" onclick="printSelection()"> {{ trans('protocols.generate_protocol_for_selected_practices') }} </a>
 		</li>
 	</ul>
 </nav>
@@ -47,7 +47,7 @@
 			<span class="input-group-text"> {{ trans('patients.patient') }} </span>
 		</div>
 
-		<input type="text" class="form-control" value="{{ $protocol->patient->full_name }}" disabled>
+		<input type="text" class="form-control" value="{{ $protocol->internalPatient->last_name }} {{ $protocol->internalPatient->name }}" disabled>
 	</div>
 
 	<div class="input-group mt-2 input-form">
@@ -90,23 +90,32 @@
 	<table class="table table-striped">
 		<tr class="info">
             <th>  </th>
-			<th> {{ trans('practices.practice') }} </th>
+			<th> {{ trans('determinations.determination') }} </th>
 			<th> {{ trans('practices.informed') }} </th>
+			<th> {{ trans('practices.signed_off') }} </th>
 			<th class="text-end"> {{ trans('forms.actions') }}</th>
 		</tr>
 
-        <form id="print_selection" action="{{ route('patients/protocols/print_selection') }}" method="post" target="blank">
+        <form id="print_selection" action="{{ route('patients/protocols/generate_protocol', ['id' => $protocol->id]) }}" target="blank">
             @csrf
 
 			<input type="hidden" name="id" value="{{ $protocol->id }}">
 			
-            @foreach ($protocol->practices as $practice)
+            @foreach ($protocol->internalPractices as $practice)
             <tr>
-				<td style="width: 50px"> <input type="checkbox" class="form-check-input" name="filter_practices[]" value="{{ $practice->id }}" @if ($practice->signs->isEmpty()) disabled @endif> </td>
-                <td> {{ $practice->report->determination->name }} </td>
+				<td style="width: 50px"> <input type="checkbox" class="form-check-input" name="filter_practices[]" value="{{ $practice->id }}" @if ($practice->signInternalPractices->isEmpty()) disabled @endif> </td>
+                <td> {{ $practice->determination->name }} </td>
+				
+				<td>
+                    @if (empty($practice->result))
+                    <span class="badge bg-primary"> {{ trans('forms.no') }} </span>
+                    @else
+                    <span class="badge bg-success"> {{ trans('forms.yes') }} </span>
+                	@endif
+                </td>
 
                 <td>
-                    @forelse($practice->signs as $sign)
+                    @forelse($practice->signInternalPractices as $sign)
                     <a style="text-decoration: none" href="#" data-toggle="tooltip" title="{{ $sign->user->name }}">
                         <img height="30px" width="30px" src="{{ Gravatar::get($sign->user->email) }}" class="rounded-circle" alt="{{ $sign->user->name }}">
                     </a>
@@ -116,7 +125,7 @@
                 </td>
                 
 				<td class="text-end">
-                    <a href="{{ route('patients/protocols/practices/show', ['id' => $practice->id]) }}" class="btn btn-info btn-sm @if ($practice->signs->isEmpty()) disabled @endif" title="{{ trans('practices.show_practice') }}"> <i class="fas fa-eye fa-sm"></i> </a>
+                    <a href="{{ route('patients/protocols/practices/show', ['id' => $practice->id]) }}" class="btn btn-primary btn-sm @if ($practice->signInternalPractices->isEmpty()) disabled @endif" title="{{ trans('practices.show_practice') }}"> <i class="fas fa-eye fa-sm"></i> </a>
                 </td>
             </tr>
             @endforeach
