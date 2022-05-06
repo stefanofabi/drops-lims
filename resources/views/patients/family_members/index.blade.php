@@ -40,7 +40,7 @@
                 <td> {{ $family_member->internalPatient->last_name }} {{ $family_member->internalPatient->name }} </td>
 
                 <td class="text-end">
-                    <a target="_blank" href="#" class="btn btn-info btn-sm" title="{{ trans('protocols.print_report') }}"> <i class="fas fa-trash fa-sm"></i> </a>
+                    <a target="_blank" href="#" class="btn btn-primary btn-sm" title="{{ trans('protocols.print_report') }}"> <i class="fas fa-trash fa-sm"></i> </a>
                 </td>
             </tr>
             @empty
