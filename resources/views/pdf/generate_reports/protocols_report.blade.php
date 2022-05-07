@@ -1,7 +1,7 @@
 @extends('pdf/base')
 
 @section('title')
-    {{ trans('pdf.protocols_report_from_to', ['initial_date' => date('d/m/Y', strtotime($initial_date)), 'ended_date' => date('d/m/Y', strtotime($ended_date))]) }}
+{{ trans('pdf.protocols_report_from_to', ['initial_date' => date('d/m/Y', strtotime($initial_date)), 'ended_date' => date('d/m/Y', strtotime($ended_date))]) }}
 @endsection
 
 @section('style')
@@ -35,12 +35,16 @@
         .large {
             width: 80mm;
         }
+
+        .text-center {
+            text-align: center;
+        }
     </style>
 @endsection
 
 @section('header')
     <div id="first_column">
-        <img width="80" height="80" src="{{ asset('images/logo.png') }}">
+        <img style="margin-top: 20px" src="{{ asset('images/small_logo.png') }}">
     </div>
 
     <div id="second_column">
@@ -70,26 +74,26 @@
     <table style="margin-top: 3%" border="1" cellspacing="0">
         <caption> {{ trans('pdf.total_records') }}: {{ $protocols->count() }} </caption>
         <tr>
-            <td class="small"> <strong> {{ trans('pdf.date') }} </strong></td>
-            <td class="small"> <strong> {{ trans('protocols.protocol_number') }} </strong></td>
+            <td class="small text-center"> <strong> {{ trans('pdf.date') }} </strong></td>
+            <td class="small text-center"> <strong> {{ trans('protocols.protocol_number') }} </strong></td>
             <td class="large"><strong> {{ trans('patients.patient') }}</strong></td>
-            <td class="medium"><strong> {{ trans('social_works.social_work') }}</strong></td>
-            <td class="medium"><strong> {{ trans('protocols.total_amount') }} </strong></td>
+            <td class="medium text-center"><strong> {{ trans('social_works.social_work') }}</strong></td>
+            <td class="medium text-center"><strong> {{ trans('protocols.total_amount') }} </strong></td>
         </tr>
 
         @php $total_collection = 0; @endphp
 
         @foreach ($protocols as $protocol)
             <tr>
-                <td> {{ date('d/m/Y', strtotime($protocol->completion_date))  }} </td>
-                <td> {{ $protocol->id  }} </td>
-                <td> {{ $protocol->patient->full_name  }} </td>
-                <td> {{ $protocol->plan->social_work->acronym}} </td>
-                <td>
+                <td class="text-center"> {{ date('d/m/Y', strtotime($protocol->completion_date))  }} </td>
+                <td class="text-center"> {{ $protocol->id  }} </td>
+                <td> {{ $protocol->internalPatient->last_name  }} {{ $protocol->internalPatient->name  }} </td>
+                <td class="text-center"> {{ $protocol->plan->social_work->acronym}} </td>
+                <td class="text-center">
                     @php $total_amount = 0; @endphp
 
-                    @foreach ($protocol->practices as $practice)
-                        @php $total_amount += $practice->amount; @endphp
+                    @foreach ($protocol->internalPractices as $practice)
+                        @php $total_amount += $practice->price; @endphp
                     @endforeach
 
                     @php $total_collection += $total_amount; @endphp
@@ -105,7 +109,7 @@
             <td> </td>
             <td> </td>
             <td>  </td>
-            <td> ${{ $total_collection }} </td>
+            <td class="text-center"> ${{ $total_collection }} </td>
 
         </tr>
     </table>

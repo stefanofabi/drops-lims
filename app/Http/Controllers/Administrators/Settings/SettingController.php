@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Administrators\Settings;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Contracts\Repository\ProtocolRepositoryInterface;
+use App\Contracts\Repository\InternalProtocolRepositoryInterface;
 use App\Contracts\Repository\BillingPeriodRepositoryInterface;
 
 use Lang;
@@ -13,17 +13,17 @@ use PDF;
 
 class SettingController extends Controller
 {
-    /** @var \App\Contracts\Repository\ProtocolRepositoryInterface */
-    private $protocolRepository;
+    /** @var \App\Contracts\Repository\InternalProtocolRepositoryInterface */
+    private $internalProtocolRepository;
 
     /** @var \App\Contracts\Repository\BillingPeriodRepositoryInterface */
     private $billingPeriodRepository;
 
     public function __construct (
-        ProtocolRepositoryInterface $protocolRepository,
+        InternalProtocolRepositoryInterface $internalProtocolRepository,
         BillingPeriodRepositoryInterface $billingPeriodRepository
     ) {
-        $this->protocolRepository = $protocolRepository;
+        $this->internalProtocolRepository = $internalProtocolRepository;
         $this->billingPeriodRepository = $billingPeriodRepository;
     }
 
@@ -37,7 +37,7 @@ class SettingController extends Controller
     {
         //
 
-        return view('administrators/settings/index');
+        return view('administrators.settings.index');
     }
 
     /**
@@ -49,7 +49,7 @@ class SettingController extends Controller
     {
         //
 
-        return view('administrators/settings/generate_reports/generate_reports');
+        return view('administrators.settings.generate_reports.generate_reports');
     }
 
     /**
@@ -67,7 +67,7 @@ class SettingController extends Controller
             'ended_date' => 'required|date',
         ]);
 
-        $protocols = $this->protocolRepository->getProtocolsInDatesRange($request->initial_date, $request->ended_date);
+        $protocols = $this->internalProtocolRepository->getProtocolsInDatesRange($request->initial_date, $request->ended_date);
 
         $pdf = PDF::loadView('pdf/generate_reports/protocols_report', [
             'protocols' => $protocols,
@@ -93,7 +93,7 @@ class SettingController extends Controller
             'ended_date' => 'required|date',
         ]);
         
-        $protocols = $this->protocolRepository->getProtocolsInDatesRange($request->initial_date, $request->ended_date);
+        $protocols = $this->internalProtocolRepository->getProtocolsInDatesRange($request->initial_date, $request->ended_date);
 
         $pdf = PDF::loadView('pdf/generate_reports/patients_flow', [
             'protocols' => $protocols,
@@ -118,7 +118,7 @@ class SettingController extends Controller
             'start_date' => 'required|date',
             'end_date' => 'required|date',
         ]);
-
+        
         $billing_periods = $this->billingPeriodRepository->getAmountBilledByPeriod($request->start_date, $request->end_date);
 
         $pdf = PDF::loadView('pdf/generate_reports/debt_social_works', [

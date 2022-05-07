@@ -44,7 +44,7 @@
 
 @section('header')
     <div id="first_column">
-        <img width="80" height="80" src="{{ asset('images/logo.png') }}">
+        <img style="margin-top: 20px" src="{{ asset('images/small_logo.png') }}">
     </div>
 
     <div id="second_column">
