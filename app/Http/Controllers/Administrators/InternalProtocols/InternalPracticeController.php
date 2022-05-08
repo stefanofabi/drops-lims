@@ -143,30 +143,6 @@ class InternalPracticeController extends Controller
     }
 
     /**
-     * Sign the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function sign(Request $request, $id)
-    {
-        //
-        
-        try {
-            if (! $this->signInternalPracticeRepository->create(['internal_practice_id' => $id, 'user_id' => auth()->user()->id])) {
-                return response()->json(['message' => Lang::get('forms.failed_transaction')], 500);
-            }
-        } catch (QueryException $exception) {
-            // the user had already signed the practice
-
-            return response()->json(['message' => Lang::get('practices.already_signed')], 200);
-        }
-
-        return response()->json(['message' => Lang::get('practices.success_signed')], 200);
-    }
-
-    /**
      * Remove the specified resource from storage.
      *
      * @param int $id
@@ -215,7 +191,7 @@ class InternalPracticeController extends Controller
         
         $practice = $this->internalPracticeRepository->findOrFail($id);
        
-        return $practice->result;
+        return response()->json($practice->result, 200);
     }
 
     /**
@@ -233,7 +209,8 @@ class InternalPracticeController extends Controller
             $this->signInternalPracticeRepository->deleteAllSignatures($id);
             
             // AJAX dont send empty arrays
-            if (is_array($request->data)) {
+            if (is_array($request->data)) 
+            {
                 $this->internalPracticeRepository->update(['result' => json_encode($request->data)], $id);
             }
 
@@ -245,5 +222,29 @@ class InternalPracticeController extends Controller
         }
 
         return response()->json(['message' => Lang::get('forms.successful_transaction')], 200);
+    }
+
+    /**
+     * Sign the specified resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function sign(Request $request, $id)
+    {
+        //
+        
+        try {
+            if (! $this->signInternalPracticeRepository->create(['internal_practice_id' => $id, 'user_id' => auth()->user()->id])) {
+                return response()->json(['message' => Lang::get('forms.failed_transaction')], 500);
+            }
+        } catch (QueryException $exception) {
+            // the user had already signed the practice
+
+            return response()->json(['message' => Lang::get('practices.already_signed')], 200);
+        }
+
+        return response()->json(['message' => Lang::get('practices.success_signed')], 200);
     }
 }

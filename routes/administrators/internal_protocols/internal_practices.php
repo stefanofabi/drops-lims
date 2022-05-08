@@ -43,7 +43,8 @@ Route::controller(InternalPracticeController::class)
             ->name('sign')
             ->where('id', '[1-9][0-9]*')
             ->middleware('permission:sign_practices')
-            ->middleware('verify_open_practice');
+            ->middleware('verify_open_practice')
+            ->middleware('verify_practice_has_result');
 
         Route::post('get-results/{id}', 'getResult')
             ->where('id', '[1-9][0-9]*')

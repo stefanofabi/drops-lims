@@ -203,7 +203,7 @@
                     <td> {{ $practice->determination->name }} </td>
                     <td> ${{ number_format($practice->amount, 2, ",", ".") }} </td>
                     <td>
-                        @if (empty($practice->result))
+                        @if (is_null($practice->result))
                         <span class="badge bg-primary"> {{ trans('forms.no') }} </span>
                         @else
                         <span class="badge bg-success"> {{ trans('forms.yes') }} </span>
