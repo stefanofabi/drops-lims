@@ -236,10 +236,18 @@
                                         <strong> {{"$key"}} </strong>
 
                                         @if (isset($activity->changes['old']) && $val != $activity->changes['old'][$key])
-                                            from "{{ $activity->changes['old'][$key] }}"
+                                            @if (is_array($activity->changes['old'][$key]))
+                                                @if (empty($activity->changes['old'][$key])) from [] @else from {{ implode(',', $activity->changes['old'][$key]) }} @endif
+                                            @else
+                                                from "{{ $activity->changes['old'][$key] }}"
+                                            @endif
                                         @endif
 
-                                        to "{{ $val}}"
+                                        @if (is_array($val))
+                                            @if (empty($val)) to [] @else {{ implode(',', $val) }} @endif
+                                        @else 
+                                            to "{{ $val }}"
+                                        @endif
 
                                         <br>
                                     @endforeach
