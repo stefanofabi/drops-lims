@@ -107,7 +107,7 @@ class DeterminationController extends Controller
         if (! $determination = $this->determinationRepository->create($request->all())) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
-        
+       
         return redirect()->action([DeterminationController::class, 'edit'], ['id' => $determination->id]);
     }
 
@@ -154,7 +154,7 @@ class DeterminationController extends Controller
             'position' => 'required|numeric|min:1',
             'biochemical_unit' => 'required|numeric|min:0',
         ]);
-
+        
         if (! $this->determinationRepository->update($request->all(), $id)) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }

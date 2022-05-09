@@ -190,8 +190,8 @@ class InternalPracticeController extends Controller
         //
         
         $practice = $this->internalPracticeRepository->findOrFail($id);
-       
-        return response()->json($practice->result, 200);
+        
+        return response()->json(json_decode($practice->result), 200);
     }
 
     /**
