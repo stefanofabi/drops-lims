@@ -100,7 +100,8 @@ class DeterminationController extends Controller
             'code' => 'required|numeric|min:0',
             'name' => 'required|string',
             'position' => 'required|numeric|min:1',
-            'report' => 'string|nullable',
+            'javascript' => 'string|nullable|max:1000',
+            'report' => 'string|nullable|max:2000',
             'biochemical_unit' => 'required|numeric|min:0',
         ]);
 
@@ -152,6 +153,8 @@ class DeterminationController extends Controller
             'code' => 'required|numeric|min:0',
             'name' => 'required|string',
             'position' => 'required|numeric|min:1',
+            'javascript' => 'string|nullable|max:1000',
+            'report' => 'string|nullable|max:2000',
             'biochemical_unit' => 'required|numeric|min:0',
         ]);
         

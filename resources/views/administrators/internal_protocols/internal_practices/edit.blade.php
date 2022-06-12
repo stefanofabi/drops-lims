@@ -111,6 +111,9 @@
         @endif
 
     </script>
+
+    <!-- Practice Javascript code -->
+    {!! $practice->determination->javascript !!}
 @endsection
 
 @section('menu')

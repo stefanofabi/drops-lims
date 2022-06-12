@@ -24,7 +24,8 @@ class Determination extends Model
         'nomenclator_id', 
         'code', 
         'name', 
-        'position', 
+        'position',
+        'javascript', 
         'report',
         'biochemical_unit',
     ];

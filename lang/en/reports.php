@@ -13,6 +13,7 @@ return [
     */
 
     'create_report' => 'Create report',
+    'javascript' => 'Javascript',
     'report' => 'Report',
     'show_report' => 'Show report',
     'report_blocked' => 'Report blocked for security reasons. To make changes click on the lock',

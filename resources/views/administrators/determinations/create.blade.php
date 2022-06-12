@@ -75,9 +75,15 @@
 		</div>
 
 		<div class="input-group mt-2">
+			<span class="input-group-text"> {{ trans('reports.javascript') }} </span>
+
+			<textarea maxlength="1000" class="form-control" rows="10" name="javascript">{{ old('javascript') }}</textarea>
+		</div>
+
+		<div class="input-group mt-2">
 			<span class="input-group-text"> {{ trans('reports.report') }} </span>
 
-			<textarea class="form-control" rows="10" name="report">{{ old('report') }}</textarea>
+			<textarea maxlength="2000" class="form-control" rows="10" name="report">{{ old('report') }}</textarea>
 		</div>
 	</div>
 

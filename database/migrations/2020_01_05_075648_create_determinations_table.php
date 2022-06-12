@@ -19,7 +19,8 @@ class CreateDeterminationsTable extends Migration
             $table->bigInteger('code')->unsigned();
             $table->string('name');
             $table->integer('position')->unsigned();
-            $table->string('report', "1000")->nullable();
+            $table->string('javascript', "1000")->nullable();
+            $table->string('report', "2000")->nullable();
             $table->double('biochemical_unit', 8, 2)->unsigned();
             
             // Foreign keys
