@@ -32,7 +32,7 @@ class VerifyPracticeHasResult
 
         if (is_null($practice->result))
         {
-            return response()->json(['message' => Lang::get('practices.practice_not_informed')], 500);
+            return redirect()->back()->withErrors(Lang::get('practices.practice_not_informed'));
         }    
 
         return $next($request);

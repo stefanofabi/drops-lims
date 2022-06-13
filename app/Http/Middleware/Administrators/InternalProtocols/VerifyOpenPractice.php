@@ -35,13 +35,7 @@ class VerifyOpenPractice
 
         if (! empty($practice->internalProtocol->closed)) 
         {
-            if ($request->ajax())
-            {
-                return response()->json(['message' => Lang::get('protocols.protocol_closed_message')], 500);
-            } else 
-            {
-                return redirect()->back()->withErrors(Lang::get('protocols.protocol_closed_message'));
-            }
+            return redirect()->back()->withErrors(Lang::get('protocols.protocol_closed_message'));
         }
 
         return $next($request);

@@ -15,6 +15,7 @@ use App\Contracts\Repository\DeterminationRepositoryInterface;
 
 use Lang;
 use Throwable;
+use Session;
 
 class InternalPracticeController extends Controller
 {
@@ -203,25 +204,31 @@ class InternalPracticeController extends Controller
      */
     public function informResult(Request $request, $id)
     {
+
         DB::beginTransaction();
         
         try {
             $this->signInternalPracticeRepository->deleteAllSignatures($id);
             
             // AJAX dont send empty arrays
-            if (is_array($request->data)) 
+            if (is_array($request->result)) 
             {
-                $this->internalPracticeRepository->update(['result' => json_encode($request->data)], $id);
+                $this->internalPracticeRepository->update(['result' => json_encode($request->result)], $id);
             }
 
             DB::commit();
         } catch (Throwable $throwable) {
             DB::rollBack();
 
-            return response()->json(['message' => Lang::get('forms.failed_transaction')], 500);
+            return redirect()->back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
 
-        return response()->json(['message' => Lang::get('forms.successful_transaction')], 200);
+        Session::flash('success', [Lang::get('forms.successful_transaction')]);
+
+        $practice = $this->internalPracticeRepository->findOrFail($id);
+        $protocol = $practice->internalProtocol;
+
+        return redirect()->action([InternalPracticeController::class, 'create'], ['internal_protocol_id' => $protocol->id]);
     }
 
     /**
@@ -234,17 +241,23 @@ class InternalPracticeController extends Controller
     public function sign(Request $request, $id)
     {
         //
-        
+
+        $practice = $this->internalPracticeRepository->findOrFail($id);
+
         try {
-            if (! $this->signInternalPracticeRepository->create(['internal_practice_id' => $id, 'user_id' => auth()->user()->id])) {
-                return response()->json(['message' => Lang::get('forms.failed_transaction')], 500);
+            if (! $this->signInternalPracticeRepository->create(['internal_practice_id' => $practice->id, 'user_id' => auth()->user()->id])) {
+                return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
             }
         } catch (QueryException $exception) {
             // the user had already signed the practice
 
-            return response()->json(['message' => Lang::get('practices.already_signed')], 200);
+            return redirect()->back()->withErrors(Lang::get('practices.already_signed'));
         }
 
-        return response()->json(['message' => Lang::get('practices.success_signed')], 200);
+        Session::flash('success', [Lang::get('practices.success_signed')]);
+
+        $protocol = $practice->internalProtocol;
+
+        return redirect()->action([InternalPracticeController::class, 'create'], ['internal_protocol_id' => $protocol->id]);   
     }
 }
