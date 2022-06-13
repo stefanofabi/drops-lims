@@ -10,6 +10,14 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
+            $('#report').find('input').each(function () {
+                $(this).addClass("form-control");
+            });
+
+            $('#report').find('select').each(function () {
+                $(this).addClass("form-select");
+            });
+
             loadResult();
         });
 
@@ -32,12 +40,19 @@
                     @else
                     $("#messages").html('');
                     @endif
-                    var i = 0;  
-                 
-                    $('#report').find('input, select').each(function () {
-                        $(this).val(response[i]);
-                        i++;
-                    });
+
+                    // If there are default values in the template it does not overwrite them
+                    if (response.length) 
+                    {
+                        var i = 0;  
+                        
+                        $('#report').find('input, select').each(function () {
+                            
+                                $(this).val(response[i]);
+                                i++;
+                            
+                        });
+                    }
                 }
             }).fail(function () {
                 $("#messages").html('<div class="alert alert-danger fade show mt-3" role="alert"> <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"> </button> <strong> {{ trans("forms.danger") }}! </strong> {{ trans("forms.failed_transaction") }} </div>');
@@ -47,8 +62,8 @@
         function updatePractice() {
             if (! confirm("{{ Lang::get('forms.confirm')}}")) return false;
 
-            let practice_update_form = $("#practice_update_form")
-            practice_update_form.submit();
+            let submit_practice_update = $("#submit_practice_update")
+            submit_practice_update.click();
         }
 
         @if (empty($practice->internalProtocol->closed))
@@ -109,13 +124,15 @@
     </div>
 
     <div class="card-body">
-        <form method="post" action="{{ route('administrators/protocols/practices/inform_result', ['id' => $practice->id]) }}" id="practice_update_form">
+        <form method="post" action="{{ route('administrators/protocols/practices/inform_result', ['id' => $practice->id]) }}">
             @csrf
             {{ method_field('PUT') }}  
 
             <div id="report">
                 {!! $practice->determination->report !!}
             </div>
+
+            <input type="submit" class="d-none" id="submit_practice_update">
         </form>
     </div>
 
