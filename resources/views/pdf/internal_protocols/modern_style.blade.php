@@ -113,9 +113,8 @@
 @section('body')
     @foreach ($practices as $practice)
         @if (!empty($practice->determination->report))
-            <div class="page-break-inside">
+            <div class="page-break-inside" style="margin-bottom: 15px">
                 {!! $practice->print() !!}
-                <hr>
             </div>
         @endif
     @endforeach
