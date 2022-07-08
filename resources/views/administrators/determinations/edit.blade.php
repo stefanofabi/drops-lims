@@ -27,6 +27,16 @@
 </script>
 @endsection
 
+@section('menu')
+<nav class="navbar">
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('administrators/determinations/edit/report', ['id' => $determination->id]) }}"> {{ trans('determinations.edit_report') }} </a>
+        </li>
+    </ul>
+</nav>
+@endsection
+
 @section('content-title')
     <i class="fas fa-edit"></i> {{ trans('determinations.edit_determination') }}
 @endsection
@@ -89,18 +99,6 @@
 			</div>
 
 			<input type="number" class="form-control @error('biochemical_unit') is-invalid @enderror" name="biochemical_unit" min="0" step="0.01" value="{{ old('biochemical_unit') ?? $determination->biochemical_unit }}" required readonly>
-		</div>
-
-		<div class="input-group mt-2">
-			<span class="input-group-text"> {{ trans('reports.javascript') }} </span>
-
-			<textarea maxlength="1000" class="form-control" rows="10" name="javascript" readonly>{{ old('javascript') ?? $determination->javascript }}</textarea>
-		</div>
-
-		<div class="input-group mt-2">
-			<span class="input-group-text"> {{ trans('reports.report') }} </span>
-
-			<textarea maxlength="2000" class="form-control" rows="10" name="report" readonly>{{ old('report') ?? $determination->report }}</textarea>
 		</div>
 	</div>
     

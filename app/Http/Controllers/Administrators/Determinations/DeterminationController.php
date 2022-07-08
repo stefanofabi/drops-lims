@@ -135,7 +135,24 @@ class DeterminationController extends Controller
         
         $determination = $this->determinationRepository->findOrFail($id);
 
-        return view('administrators/determinations/edit')->with('determination', $determination);
+        return view('administrators/determinations/edit')
+            ->with('determination', $determination);
+    }
+
+    /**
+     * Show the form for editing report the specified resource.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function editReport($id)
+    {
+        //
+        
+        $determination = $this->determinationRepository->findOrFail($id);
+
+        return view('administrators/determinations/edit_report')
+            ->with('determination', $determination);
     }
 
     /**

@@ -32,5 +32,7 @@ return [
     'success_destroy_message' => 'Well done! Determination was successfully removed',
     'determination_data' => 'Determination data',
     'determinations_message' => 'Here are listed all the determinations performed in his laboratory. They are grouped by nomenclatures, which are then usually associated with different social or prepaid works according to the agreement made.',
-    
+    'edit_report' => 'Edit report',
+    'edit_report_notice' => 'By editing a report mask you are making the same changes to all protocols that use this mask. If you are removing or adding new fields, we recommend that you generate a new determination.',
+
 ];

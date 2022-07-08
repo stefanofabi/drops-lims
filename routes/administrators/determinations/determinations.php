@@ -29,6 +29,10 @@ Route::controller(DeterminationController::class)
             ->name('edit')
             ->where('id', '[1-9][0-9]*');
 
+        Route::get('edit/report/{id}', 'editReport')
+            ->name('edit/report')
+            ->where('id', '[1-9][0-9]*');
+
         Route::put('update/{id}', 'update')
             ->name('update')
             ->where('id', '[1-9][0-9]*');
