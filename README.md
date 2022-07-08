@@ -22,7 +22,7 @@ What things do you need to install the project and how to do it
 ```
 - Composer
 - NPM
-- PHP 8.x with php-mbstring/gd extension
+- PHP 8.x with mbstring, gd and pdo_pgsql extension
 - PostgreSQL
 ```
 
