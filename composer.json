@@ -9,7 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.0",
-        "barryvdh/laravel-dompdf": "^1.0.0",
+        "barryvdh/laravel-dompdf": "^2.0.0",
         "creativeorange/gravatar": "^1.0",
         "laravel/framework": "^9.0",
         "laravel/tinker": "^2.0",
