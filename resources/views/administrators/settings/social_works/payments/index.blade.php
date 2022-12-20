@@ -26,11 +26,17 @@
 @endsection
 
 @section('title')
-{{ trans('payment_social_works.edit_payment') }}
+{{ trans('payment_social_works.payments') }}
 @endsection
 
 @section('content-title')
-<i class="fas fa-plus"> </i> {{ trans('payment_social_works.edit_payment') }}
+<i class="fas fa-dollar-sign"> </i> {{ trans('payment_social_works.payments') }}
+@endsection
+
+@section('content-message')
+<p class="text-justify pe-5">
+    Here are detailed all the payments made by a social work
+</p>
 @endsection
 
 @section('content')
@@ -57,11 +63,11 @@
                 <td> ${{ $payment->amount }} </td>
 
                 <td class="text-end">
-                    <a href="{{ route('administrators/settings/social_works/payments/edit', ['id' => $payment->id]) }}" class="btn btn-info btn-sm" title="{{ trans('payment_social_works.edit_payment') }}">
+                    <a href="{{ route('administrators/settings/social_works/payments/edit', ['id' => $payment->id]) }}" class="btn btn-primary btn-sm" title="{{ trans('payment_social_works.edit_payment') }}">
                         <i class="fas fa-edit fa-sm"> </i>
                     </a>
 
-                    <a class="btn btn-info btn-sm" title="{{ trans('payment_social_works.destroy_payment') }}" onclick="destroyPayment('{{ $payment->id }}')">
+                    <a class="btn btn-primary btn-sm" title="{{ trans('payment_social_works.destroy_payment') }}" onclick="destroyPayment('{{ $payment->id }}')">
                         <i class="fas fa-trash fa-sm"></i>
                     </a>
 

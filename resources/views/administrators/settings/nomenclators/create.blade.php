@@ -8,17 +8,22 @@
 <i class="fas fa-archive"> </i> {{ trans('nomenclators.create_nomenclator') }}
 @endsection
 
+@section('content-message')
+<p class="text-justify pe-5">
+ The Nomenclature is a document that enables order, savings and simplification in the medical billing process.
+</p>
+@endsection
+
 @section('content')
 <form method="post" action="{{ route('administrators/settings/nomenclators/store') }}">
     @csrf
 
-    <div class="col-9 mt-3">
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <span class="input-group-text"> {{ trans('nomenclators.name') }} </span>
-            </div>
-
-            <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required>
+    <div class="col-md-6 mt-3">
+        <div class="form-group">
+            <label for="name"> {{ trans('nomenclators.name') }} </label>
+            <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" value="{{ old('name') }}" aria-describedby="nameHelp" required>
+                    
+            <small id="nameHelp" class="form-text text-muted"> This name is used to identify a nomenclator </small>
         </div>
     </div>
 

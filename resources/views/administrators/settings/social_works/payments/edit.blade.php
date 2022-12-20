@@ -37,7 +37,7 @@
 <nav class="navbar">
 	<ul class="navbar-nav">
             <li class="nav-item">
-				<a class="nav-link" href="{{ route('administrators/settings/social_works/payments/index', ['social_work_id' => $payment->social_work->id]) }}"> {{ trans('forms.go_back')}} </a>
+				<a class="nav-link" href="{{ route('administrators/settings/social_works/payments/index', ['social_work_id' => $payment->social_work_id]) }}"> {{ trans('forms.go_back')}} </a>
 			</li>
 	</ul>
 </nav>
@@ -48,59 +48,50 @@
 @endsection
 
 @section('content-title')
-<i class="fas fa-plus"> </i> {{ trans('payment_social_works.edit_payment') }}
+<i class="fas fa-plus"></i> {{ trans('payment_social_works.edit_payment') }}
 @endsection
 
+@section('content-message')
+<p class="text-justify pe-5">
+    Leave records of the payments made by a social work to be able to keep a historical control
+</p>
+@endsection
 
 @section('content')
-<div class="col-9">
-    <div class="input-group mt-3 col-md-9 input-form">
-        <div class="input-group-prepend">
-            <span class="input-group-text"> {{ trans('social_works.social_work') }} </span>
-        </div>
-
-        <input type="text" class="form-control" value="{{ $payment->social_work->name }}" readonly>
+<div class="col-md-6">
+    <div class="form-group mt-2">
+        <label for="socialWork"> {{ trans('social_works.social_work') }} </label>
+        <input type="text" class="form-control" value="{{ $payment->social_work->name }}" id="socialWork" aria-describedby="socialWorkHelp" disabled>
+                        
+        <small id="socialWorkHelp" class="form-text text-muted"> The social work to which the payment will be charged </small>
     </div>
 
     <form method="post" action="{{ route('administrators/settings/social_works/payments/update', ['id' => $payment->id]) }}">
         @csrf
         @method('PUT')
 
-        <div class="input-group mt-2 col-md-9 input-form">
-            <div class="input-group-prepend">
-                <span class="input-group-text"> {{ trans('payment_social_works.payment_date') }} </span>
-            </div>
+        <input type="hidden" name="social_work_id" value="{{ $payment->social_work_id}}">
 
-            <input type="date" class="form-control @error('payment_date') is-invalid @enderror" name="payment_date" value="{{ old('payment_date') ?? $payment->payment_date }}" required>
-
-            @error('payment_date')
-            <span class="invalid-feedback" role="alert">
-            	<strong> {{ $message }} </strong>
-       		</span>
-            @enderror
+        <div class="form-group mt-2">
+            <label for="payment_date"> {{ trans('payment_social_works.payment_date') }} </label>
+            <input type="date" class="form-control @error('payment_date') is-invalid @enderror" name="payment_date" id="payment_date" value="{{ old('payment_date') ?? $payment->payment_date }}" aria-describedby="paymentDateHelp" required>
+        
+            <small id="paymentDateHelp" class="form-text text-muted"> The payment date on which the social work made the payment </small>
         </div>
 
-        <div class="input-group mt-2 col-md-9 input-form">
-            <div class="input-group-prepend">
-                <span class="input-group-text"> {{ trans('billing_periods.billing_period') }} </span>
-            </div>
-
-            <input id ="billing_period" type="text" name="billing_period" class="form-control @error('billing_period_id') is-invalid @enderror" placeholder="{{ trans('forms.start_typing') }}" value="{{ old('billing_period') ?? $payment->billing_period->name }}" required>
+        <div class="form-group mt-2">
+            <label for="billing_period"> {{ trans('billing_periods.billing_period') }} </label>
+            <input id ="billing_period" type="text" name="billing_period" class="form-control @error('billing_period') is-invalid @enderror" placeholder="{{ trans('forms.start_typing') }}" value="{{ old('billing_period') ?? $payment->billing_period->name }}" aria-describedby="billingPeriodHelp" required>
             <input id="billing_period_id" type="hidden" name="billing_period_id" value="{{ old('billing_period_id') ?? $payment->billing_period->id }}">
+
+            <small id="billingPeriodHelp" class="form-text text-muted"> The period to which the payment made by the social work corresponds </small>
         </div>
 
-        <div class="input-group mt-2 col-md-9 input-form">
-            <div class="input-group-prepend">
-                <span class="input-group-text"> {{ trans('payment_social_works.amount') }} </span>
-            </div>
+        <div class="form-group mt-2">
+            <label for="amount"> {{ trans('payment_social_works.amount') }} </label>
+            <input type="number" step="0.01" class="form-control @error('amount') is-invalid @enderror" name="amount" id="amount" value="{{ old('amount') ?? $payment->amount }}" min="0" aria-describedby="amountHelp" required>
 
-            <input type="number" step="0.01" class="form-control @error('amount') is-invalid @enderror" name="amount" value="{{ old('amount') ?? $payment->amount }}" min="0" required>
-
-            @error('amount')
-            <span class="invalid-feedback" role="alert">
-            	<strong> {{ $message }} </strong>
-       		</span>
-            @enderror
+            <small id="amountHelp" class="form-text text-muted"> The amount of payment received for the social work. It can be different from the total billed in the period </small>
         </div>
 
         <input type="submit" class="btn btn-lg btn-primary mt-3" value="{{ trans('forms.save') }}">

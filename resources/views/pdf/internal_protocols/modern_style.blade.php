@@ -82,7 +82,7 @@
 
     <table class="info">
         <tr>
-            <td> {{ trans('patients.patient') }}: {{ $protocol->internalPatient->last_name  }} {{ $protocol->internalPatient->name  }} </td>
+            <td> {{ trans('patients.patient') }}: {{ $protocol->internalPatient->full_name  }} </td>
             <td> {{ trans('protocols.protocol_number') }}: #{{ $protocol->id }} </td>
         </tr>
 

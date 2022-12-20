@@ -74,11 +74,11 @@
 
                         <td class="text-end">
                             <a href="{{ route('administrators/settings/social_works/billing_periods/edit', ['id' => $billing_period->id]) }}"
-                               class="btn btn-info btn-sm" title="{{ trans('billing_periods.edit_billing_period') }}">
+                               class="btn btn-primary btn-sm" title="{{ trans('billing_periods.edit_billing_period') }}">
                                 <i class="fas fa-edit fa-sm"> </i>
                             </a>
 
-                            <a class="btn btn-info btn-sm" title="{{ trans('billing_periods.destroy_billing_period') }}"
+                            <a class="btn btn-primary btn-sm" title="{{ trans('billing_periods.destroy_billing_period') }}"
                                onclick="destroyBillingPeriod('{{ $billing_period->id }}')">
                                 <i class="fas fa-trash fa-sm"></i>
                             </a>

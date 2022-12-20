@@ -70,10 +70,10 @@
 
                     <td class="text-end">
                         <a href="{{ route('administrators/settings/nomenclators/edit', ['id' => $nomenclator->id]) }}"
-                           class="btn btn-info btn-sm" title="{{ trans('determinations.show_determination') }}">
+                           class="btn btn-primary btn-sm" title="{{ trans('determinations.show_determination') }}">
                             <i class="fas fa-edit fa-sm"> </i>
                         </a>
-                        <a class="btn btn-info btn-sm" title="{{ trans('nomenclators.destroy_nomenclator') }}"
+                        <a class="btn btn-primary btn-sm" title="{{ trans('nomenclators.destroy_nomenclator') }}"
                            onclick="destroyNomenclator('{{ $nomenclator->id }}')">
                             <i class="fas fa-trash fa-sm"></i>
                         </a>

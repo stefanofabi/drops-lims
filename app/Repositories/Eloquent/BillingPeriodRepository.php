@@ -98,7 +98,7 @@ final class BillingPeriodRepository implements BillingPeriodRepositoryInterface
         $billing_periods = $this->model
             // label column is required
             ->select('id', 'name as label', 'start_date', 'end_date')
-            ->where('name', 'like', "%$filter%")
+            ->where('name', 'ilike', "%$filter%")
             ->take(15)
             ->orderBy('name', 'ASC')
             ->get();

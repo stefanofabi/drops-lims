@@ -33,6 +33,12 @@
 <i class="fas fa-archive"> </i> {{ trans('plans.plans') }}
 @endsection
 
+@section('content-message')
+<p class="text-justify pe-5">
+    The social works plans tell us how the prepaid are going to insure their affiliates and how much they will pay for each practice carried out   
+</p>
+@endsection
+
 @section('content')
 <div class="mt-3">
     <div class="table-responsive">
@@ -54,11 +60,11 @@
                     <td> ${{ $plan->nbu_price }} </td>
 
                     <td class="text-end">
-                        <a href="{{ route('administrators/settings/social_works/plans/edit', ['id' => $plan->id]) }}" class="btn btn-info btn-sm" title="{{ trans('plans.edit_plan') }}">
+                        <a href="{{ route('administrators/settings/social_works/plans/edit', ['id' => $plan->id]) }}" class="btn btn-primary btn-sm" title="{{ trans('plans.edit_plan') }}">
                             <i class="fas fa-edit fa-sm"> </i>
                         </a>
 
-                        <a class="btn btn-info btn-sm" title="{{ trans('plans.destroy_plan') }}" onclick="destroyPlan('{{ $plan->id }}')">
+                        <a class="btn btn-primary btn-sm" title="{{ trans('plans.destroy_plan') }}" onclick="destroyPlan('{{ $plan->id }}')">
                             <i class="fas fa-trash fa-sm"></i>
                         </a>
 
