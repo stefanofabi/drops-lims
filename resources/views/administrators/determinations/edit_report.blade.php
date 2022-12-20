@@ -17,12 +17,8 @@
 	function enableSubmitForm() 
 	{
 		$('#securityMessage').hide('slow');
-
-		$("input").removeAttr('readonly');
-		$("select").removeAttr('disabled');
-		$("textarea").removeAttr('readonly');
-
-		$("#submitButton").removeAttr('disabled');
+		$("input").removeAttr('disabled');
+		$("textarea").removeAttr('disabled');
 	}
 </script>
 @endsection
@@ -41,6 +37,12 @@
     <i class="fas fa-edit"></i> {{ trans('determinations.edit_report') }}
 @endsection
 
+@section('content-message')
+<p class="text-justify pe-5">
+	This section is very important and with restricted access. Please use extreme caution and attention when making a modification here.
+</p>
+@endsection
+
 @section('content')
 @if (sizeof($errors) == 0)
 	<div id="securityMessage" class="alert alert-warning fade show mt-3">
@@ -52,29 +54,24 @@
 	</div>
 @endif
 
-<form method="post" action="{{ route('administrators/determinations/update', $determination->id) }}">
+<form method="post" action="{{ route('administrators/determinations/update/report', $determination->id) }}">
     @csrf
     {{ method_field('PUT') }}
 
-	<input type="hidden" name="code" value="{{ $determination->code }}">
-	<input type="hidden" name="name" value="{{ $determination->name }}">
-	<input type="hidden" name="position" value="{{ $determination->position }}">
-	<input type="hidden" name="biochemical_unit" value="{{ $determination->biochemical_unit }}">
-
-    <div class="mt-3">
-		<div class="input-group mt-2">
-			<span class="input-group-text"> {{ trans('reports.javascript') }} </span>
-
-			<textarea maxlength="1000" class="form-control" rows="10" name="javascript" readonly>{{ old('javascript') ?? $determination->javascript }}</textarea>
-		</div>
-
-		<div class="input-group mt-2">
-			<span class="input-group-text"> {{ trans('reports.report') }} </span>
-
-			<textarea maxlength="2000" class="form-control" rows="10" name="report" readonly>{{ old('report') ?? $determination->report }}</textarea>
-		</div>
+	<div class="form-group mt-2">
+		<label for="javascript"> {{ trans('reports.javascript') }} </label>
+		<textarea maxlength="1000" class="form-control" rows="10" name="javascript" id="javascript" aria-describedby="javascriptHelp" placeholder='<script> $(document).ready(function() {  your code }); </script>' disabled>{{ old('javascript') ?? $determination->javascript }}</textarea>
+		
+		<small id="javascriptHelp" class="form-text text-muted"> Write javascript code to interact with the report. You can for example show warnings, validate fields, etc. </small>
 	</div>
-    
-	<input type="submit" class="btn btn-lg btn-primary mt-3" id="submitButton" value="{{ trans('forms.save') }}" disabled>
+
+	<div class="form-group mt-2">
+		<label for="report"> {{ trans('reports.report') }} </label>
+		<textarea maxlength="2000" class="form-control" rows="10" name="report" id="report" aria-describedby="reportHelp" placeholder='<b> Determination name </b> <br /> <input type="number" name="result[]">' disabled>{{ old('report') ?? $determination->report }}</textarea>
+		
+		<small id="reportHelp" class="form-text text-muted"> Write HTML code that will be displayed when reporting a practice or when generating a pdf protocol. <br /> In the input fields you must set the attribute name="result[]" so that the results are loaded into the system. </small>
+	</div>
+
+	<input type="submit" class="btn btn-lg btn-primary mt-3" value="{{ trans('forms.save') }}" disabled>
 </form>
 @endsection

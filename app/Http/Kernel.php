@@ -81,6 +81,7 @@ class Kernel extends HttpKernel
         'redirect_if_practice_not_signed' => \App\Http\Middleware\Patients\RedirectIfPracticeNotSigned::class,
         'verify_open_practice' => \App\Http\Middleware\Administrators\InternalProtocols\VerifyOpenPractice::class,
         'verify_practice_has_result' => \App\Http\Middleware\Administrators\InternalProtocols\VerifyPracticeHasResult::class,
+        'set_internal_practice_price' => \App\Http\Middleware\Administrators\InternalProtocols\SetInternalPracticePrice::class,
 
     ];
 

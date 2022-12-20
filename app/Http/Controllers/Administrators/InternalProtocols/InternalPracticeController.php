@@ -49,11 +49,14 @@ class InternalPracticeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
 
+        $protocol = $this->internalProtocolRepository->findOrFail($request->internal_protocol_id);
         
+        return view('administrators.internal_protocols.internal_practices.index')
+            ->with('protocol', $protocol);
     }
 
     /**
@@ -62,14 +65,9 @@ class InternalPracticeController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
         //
-
-        $protocol = $this->internalProtocolRepository->findOrFail($request->internal_protocol_id);
-        
-        return view('administrators.internal_protocols.internal_practices.create')
-            ->with('protocol', $protocol);
     }
 
     /**
@@ -82,23 +80,31 @@ class InternalPracticeController extends Controller
     {
         //
 
+        $request->validate([
+            'price' => 'required|numeric',
+        ]);
+
+        DB::beginTransaction();
+
         try  {
-
-            $protocol = $this->internalProtocolRepository->findOrFail($request->internal_protocol_id);
-
-            $determination = $this->determinationRepository->findOrFail($request->determination_id);
             
-            if (! $this->internalPracticeRepository->create([
-                'determination_id' => $determination->id,
-                'internal_protocol_id' => $protocol->id,
-                'price' => $determination->getPrice($protocol->plan->nbu_price),
-            ])) {
-                return response()->json(['message' => Lang::get('forms.failed_transaction')], 500);
-            }
+            $this->internalPracticeRepository->create($request->all());
+
+            $this->internalProtocolRepository->increment($request->internal_protocol_id, 'total_price', $request->price);
+
+            DB::commit();
         } catch (ModelNotFoundException $exception) {
+            DB::rollBack();
+
             return response()->json(['message' => Lang::get('errors.not_found')], 404);
         } catch (QueryException $exception) {
+            DB::rollBack();
+
             return response()->json(['message' => Lang::get('errors.error_processing_transaction')], 500);
+        } catch (Throwrable $throwable) {
+            DB::rollBack();
+
+            return response()->json(['message' => Lang::get('forms.failed_transaction')], 500);
         }
         
         return response()->json(['message' => Lang::get('forms.successful_transaction')], 200);
@@ -152,14 +158,32 @@ class InternalPracticeController extends Controller
     public function destroy($id)
     {
         //
-        
-        $protocol = $this->internalPracticeRepository->findOrFail($id)->internalProtocol;
 
-        if (! $this->internalPracticeRepository->delete($id)) {
-            return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
+        DB::beginTransaction();
+
+        try {
+            $practice = $this->internalPracticeRepository->findOrFail($id);
+
+            $this->internalPracticeRepository->delete($id);
+
+            $this->internalProtocolRepository->decrement($practice->internal_protocol_id, 'total_price', $practice->price);
+
+            DB::commit();
+        } catch (ModelNotFoundException $exception) {
+            DB::rollBack();
+
+            return response()->json(['message' => Lang::get('errors.not_found')], 404);
+        } catch (QueryException $exception) {
+            DB::rollBack();
+
+            return response()->json(['message' => Lang::get('errors.error_processing_transaction')], 500);
+        } catch (Throwable $throwable) {
+            DB::rollBack();
+            
+            return response()->json(['message' => Lang::get('forms.failed_transaction')], 500);
         }
 
-        return redirect()->action([InternalPracticeController::class, 'create'], ['internal_protocol_id' => $protocol->id]);
+        return redirect()->action([InternalPracticeController::class, 'index'], ['internal_protocol_id' => $practice->internal_protocol_id]);
     }
 
     /**
@@ -192,7 +216,7 @@ class InternalPracticeController extends Controller
         
         $practice = $this->internalPracticeRepository->findOrFail($id);
         
-        return response()->json(json_decode($practice->result), 200);
+        return response()->json($practice->result, 200);
     }
 
     /**
@@ -208,12 +232,14 @@ class InternalPracticeController extends Controller
         DB::beginTransaction();
         
         try {
+            $practice = $this->internalPracticeRepository->findOrFail($id);
+
             $this->signInternalPracticeRepository->deleteAllSignatures($id);
             
             // AJAX dont send empty arrays
             if (is_array($request->result)) 
             {
-                $this->internalPracticeRepository->update(['result' => json_encode($request->result)], $id);
+                $this->internalPracticeRepository->saveResult($request->result, $id);
             }
 
             DB::commit();
@@ -224,11 +250,8 @@ class InternalPracticeController extends Controller
         }
 
         Session::flash('success', [Lang::get('forms.successful_transaction')]);
-
-        $practice = $this->internalPracticeRepository->findOrFail($id);
-        $protocol = $practice->internalProtocol;
-
-        return redirect()->action([InternalPracticeController::class, 'create'], ['internal_protocol_id' => $protocol->id]);
+        
+        return redirect()->action([InternalPracticeController::class, 'index'], ['internal_protocol_id' => $practice->internal_protocol_id]);
     }
 
     /**
@@ -256,8 +279,6 @@ class InternalPracticeController extends Controller
 
         Session::flash('success', [Lang::get('practices.success_signed')]);
 
-        $protocol = $practice->internalProtocol;
-
-        return redirect()->action([InternalPracticeController::class, 'create'], ['internal_protocol_id' => $protocol->id]);   
+        return redirect()->action([InternalPracticeController::class, 'index'], ['internal_protocol_id' => $practice->internal_protocol_id]);   
     }
 }

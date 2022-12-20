@@ -14,7 +14,6 @@ use Session;
 
 class DeterminationController extends Controller
 {
-
     use PaginationTrait;
 
     private const PER_PAGE = 15;
@@ -140,22 +139,6 @@ class DeterminationController extends Controller
     }
 
     /**
-     * Show the form for editing report the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function editReport($id)
-    {
-        //
-        
-        $determination = $this->determinationRepository->findOrFail($id);
-
-        return view('administrators/determinations/edit_report')
-            ->with('determination', $determination);
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request $request
@@ -170,15 +153,13 @@ class DeterminationController extends Controller
             'code' => 'required|numeric|min:0',
             'name' => 'required|string',
             'position' => 'required|numeric|min:1',
-            'javascript' => 'string|nullable|max:1000',
-            'report' => 'string|nullable|max:2000',
             'biochemical_unit' => 'required|numeric|min:0',
         ]);
         
         if (! $this->determinationRepository->update($request->all(), $id)) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
-
+        
         return redirect()->action([DeterminationController::class, 'edit'], ['id' => $id]);
     }
 
@@ -201,5 +182,44 @@ class DeterminationController extends Controller
         Session::flash('success', [Lang::get('determinations.success_destroy_message')]);
 
         return redirect()->action([DeterminationController::class, 'index'], ['nomenclator_id' => $nomenclator_id, 'page' => 1]);
+    }
+
+    /**
+     * Show the form for editing report the specified resource.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function editReport($id)
+    {
+        //
+        
+        $determination = $this->determinationRepository->findOrFail($id);
+
+        return view('administrators/determinations/edit_report')
+            ->with('determination', $determination);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateReport(Request $request, $id)
+    {
+        //
+        
+        $request->validate([
+            'javascript' => 'present|max:1000',
+            'report' => 'present|max:2000',
+        ]);
+        
+        if (! $this->determinationRepository->updateReport($request->all(), $id)) {
+            return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
+        }
+        
+        return redirect()->action([DeterminationController::class, 'edit'], ['id' => $id]);
     }
 }

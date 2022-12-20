@@ -17,12 +17,8 @@
 	function enableSubmitForm() 
 	{
 		$('#securityMessage').hide('slow');
-
-		$("input").removeAttr('readonly');
-		$("select").removeAttr('disabled');
-		$("textarea").removeAttr('readonly');
-
-		$("#submitButton").removeAttr('disabled');
+		$("input").removeAttr('disabled');
+		$("#nomenclator").attr('disabled', true);
 	}
 </script>
 @endsection
@@ -41,6 +37,11 @@
     <i class="fas fa-edit"></i> {{ trans('determinations.edit_determination') }}
 @endsection
 
+@section('content-message')
+<p class="text-justify pe-5">
+	Here you can modify different values of a determination, although you should not do it very frequently.
+</p>
+@endsection
 
 @section('content')
 @if (sizeof($errors) == 0)
@@ -61,47 +62,42 @@
 		<h4><i class="fas fa-book-medical"></i> {{ trans('determinations.determination_data') }} </h4>
 		<hr class="col-6">
 
-		<div class="input-group mt-2">
-			<div class="input-group-prepend">
-				<span class="input-group-text"> {{ trans('determinations.nbu') }} </span>
-			</div>
+		<div class="form-group mt-2">
+			<label for="nomenclator"> {{ trans('determinations.nbu') }} </label>
+			<input type="text" class="form-control" id="nomenclator" value="{{ $determination->nomenclator->name }}" aria-describedby="nomenclatorHelp" disabled>
 
-			<input type="text" class="form-control" value="{{ $determination->nomenclator->name }}" disabled>
+			<small id="nomenclatorHelp" class="form-text text-muted"> A Nomenclador consists of a catalog which details the medical determinations used for the treatment of a patient </small>
 		</div>
 
-		<div class="input-group mt-2">
-			<div class="input-group-prepend">
-				<span class="input-group-text"> {{ trans('determinations.code') }} </span>
-			</div>
+		<div class="form-group mt-2">
+			<label for="code"> {{ trans('determinations.code') }} </label>
+			<input type="number" class="form-control @error('code') is-invalid @enderror" name="code" id="code" min="0" value="{{ old('code') ?? $determination->code }}" aria-describedby="codeHelp" required disabled>
 
-			<input type="number" class="form-control @error('code') is-invalid @enderror" name="code" min="0" value="{{ old('code') ?? $determination->code }}" required readonly>
+			<small id="codeHelp" class="form-text text-muted"> Code that quickly identifies a determination </small>
 		</div>
 
-		<div class="input-group mt-2">
-			<div class="input-group-prepend">
-				<span class="input-group-text"> {{ trans('determinations.name') }} </span>
-			</div>
+		<div class="form-group mt-2">
+			<label for="name"> {{ trans('determinations.name') }} </label>
+			<input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" value="{{ old('name') ?? $determination->name }}" aria-describedby="nameHelp" required disabled>
 
-			<input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') ?? $determination->name }}" required readonly>
+			<small id="nameHelp" class="form-text text-muted"> A descriptive name to quickly look up a determination </small>
 		</div>
 
-		<div class="input-group mt-2">
-			<div class="input-group-prepend">
-				<span class="input-group-text"> {{ trans('determinations.position') }} </span>
-			</div>
+		<div class="form-group mt-2">
+			<label for="position"> {{ trans('determinations.position') }} </label>
+			<input type="number" class="form-control @error('position') is-invalid @enderror" name="position" id="position" min="1" value="{{ old('position') ?? $determination->position }}" aria-describedby="positionHelp" required disabled> 
 
-			<input type="number" class="form-control @error('position') is-invalid @enderror" name="position" min="1" value="{{ old('position') ?? $determination->position }}" required readonly> 
+			<small id="positionHelp" class="form-text text-muted"> The position in which it appears when a protocol is generated in pdf </small>
 		</div>
 
-		<div class="input-group mt-2">
-			<div class="input-group-prepend">
-				<span class="input-group-text"> {{ trans('determinations.biochemical_unit') }} </span>
-			</div>
+		<div class="form-group mt-2">
+			<label for="biochemical_unit"> {{ trans('determinations.biochemical_unit') }} </label>
+			<input type="number" class="form-control @error('biochemical_unit') is-invalid @enderror" name="biochemical_unit" id="biochemical_unit" min="0" step="0.01" value="{{ old('biochemical_unit') ?? $determination->biochemical_unit }}" aria-describedby="biochemicalUnitHelp" required disabled>
 
-			<input type="number" class="form-control @error('biochemical_unit') is-invalid @enderror" name="biochemical_unit" min="0" step="0.01" value="{{ old('biochemical_unit') ?? $determination->biochemical_unit }}" required readonly>
+			<small id="biochemicalUnitHelp" class="form-text text-muted"> This number is then multiplied by the value that a social work pays to obtain the price of the practice. </small>
 		</div>
 	</div>
     
-	<input type="submit" class="btn btn-lg btn-primary mt-3" id="submitButton" value="{{ trans('forms.save') }}" disabled>
+	<input type="submit" class="btn btn-lg btn-primary mt-3" value="{{ trans('forms.save') }}" disabled>
 </form>
 @endsection

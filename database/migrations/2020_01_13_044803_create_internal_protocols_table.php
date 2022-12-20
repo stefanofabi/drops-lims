@@ -28,6 +28,7 @@ class CreateInternalProtocolsTable extends Migration
             $table->date('withdrawal_date')->nullable();
             $table->unsignedInteger('quantity_orders')->nullable();
             $table->string('diagnostic')->nullable();
+            $table->unsignedDouble('total_price')->default(0.0);
             
             // Foreign keys
             $table->foreign('internal_patient_id')->references('id')->on('internal_patients')->onDelete('restrict')->onUpdate('cascade');

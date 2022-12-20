@@ -15,11 +15,13 @@ class CreatePrescribersTable extends Migration
     {
         Schema::create('prescribers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('full_name')->nullable();
+            $table->string('full_name');
+            $table->string('name');
+            $table->string('last_name');
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
-            $table->string('provincial_enrollment')->nullable();
-            $table->string('national_enrollment')->nullable();
+            $table->string('primary_enrollment')->nullable();
+            $table->string('secondary_enrollment')->nullable();
 
             $table->timestamps();
 

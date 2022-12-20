@@ -25,8 +25,6 @@ class Determination extends Model
         'code', 
         'name', 
         'position',
-        'javascript', 
-        'report',
         'biochemical_unit',
     ];
 

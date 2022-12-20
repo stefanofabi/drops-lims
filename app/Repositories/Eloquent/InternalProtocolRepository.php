@@ -24,28 +24,24 @@ final class InternalProtocolRepository implements InternalProtocolRepositoryInte
 
     public function all()
     {
-        return $this->model->all();
+        return $this->model->orderBy('completion_date', 'DESC')->get();
     }
 
     public function create(array $data)
     {
-        $protocol = new InternalProtocol($data);
-
-        return $protocol->save() ? $protocol : null;
+        return $this->model->create($data);
     }
 
     public function update(array $data, $id)
     {
-        $protocol = $this->model->findOrFail($id);
-
-        return $protocol->update($data);
+        // eloquent will modify only the $fillable fields declared in the model
+        
+        return $this->model->findOrFail($id)->update($data);
     }
 
     public function delete($id)
     {
-        $protocol = $this->model->findOrFail($id);
-
-        return $protocol->delete();
+        return $this->model->where('id', $id)->delete();
     }
 
     public function find($id)
@@ -69,14 +65,14 @@ final class InternalProtocolRepository implements InternalProtocolRepositoryInte
     {
 
         return $this->model
-            ->select('internal_protocols.id', 'internal_protocols.completion_date', 'internal_protocols.closed', 'internal_protocols.internal_patient_id', DB::raw("CONCAT(internal_patients.last_name, ' ', internal_patients.name) as patient"))
+            ->select('internal_protocols.id', 'internal_protocols.completion_date', 'internal_protocols.closed', 'internal_protocols.internal_patient_id', 'internal_patients.full_name as patient', 'prescribers.full_name as prescriber')
             ->join('internal_patients', 'internal_protocols.internal_patient_id', '=', 'internal_patients.id')
+            ->join('prescribers', 'internal_protocols.prescriber_id', '=', 'prescribers.id')
             ->where(function ($query) use ($filter) {
                 if (! empty($filter)) {
-                    $query->orWhere("internal_protocols.id", "ilike", "$filter%")
-                        ->orWhere("internal_patients.last_name", "ilike", "%$filter%")
-                        ->orWhere("internal_patients.name", "ilike", "%$filter%")
-                        ->orWhere("internal_patients.identification_number", "ilike", "$filter%");
+                    $query->orWhere("internal_protocols.id", "like", "$filter%")
+                        ->orWhere("internal_patients.full_name", "ilike", "%$filter%")
+                        ->orWhere("internal_patients.identification_number", "like", "$filter%");
                 }
             })
             ->orderBy('completion_date', 'desc')
@@ -95,7 +91,7 @@ final class InternalProtocolRepository implements InternalProtocolRepositoryInte
             ->get();
     }
 
-/*
+    /*
     * Returns a list of protocols between two specified dates for a particular patient
     */
     public function getProtocolsForPatient($initial_date, $ended_date, $patient_id) 
@@ -154,13 +150,15 @@ final class InternalProtocolRepository implements InternalProtocolRepositoryInte
             ->get();
     }
 
-    public function getPendingProtocols() {
+    public function getPendingProtocols() 
+    {
         return $this->model
             ->where('closed', null)
             ->get();
     }
 
-    public function getSumOfAllSocialWorksProtocols() {
+    public function getSumOfAllSocialWorksProtocols() 
+    {
         $practices = DB::table('internal_practices')
             ->select('internal_protocol_id', DB::raw('SUM(price) as total_amount'))
             ->groupBy('internal_protocol_id');
@@ -175,9 +173,25 @@ final class InternalProtocolRepository implements InternalProtocolRepositoryInte
             ->first();
     }
 
-    public function closeProtocol($id) {
-        $protocol = $this->model->findOrFail($id);
+    public function increment($id, $attribute, $value)
+    {
+        $this->model->where('id', $id)->increment($attribute, $value);
+    }
 
-        return $protocol->update(['closed' => date('Y-m-d H:m:s')]);
+    public function decrement($id, $attribute, $value)
+    {
+        $this->model->where('id', $id)->decrement($attribute, $value);
+    }
+    
+    /*
+    * Returns true if it was able to close the protocol, false otherwise
+    */
+    public function close($id) 
+    {
+        // closed field is protected by the eloquent model
+        $protocol = $this->model->findOrFail($id);
+        $protocol->closed = date('Y-m-d H:m:s');
+
+        return $protocol->save();
     }
 }

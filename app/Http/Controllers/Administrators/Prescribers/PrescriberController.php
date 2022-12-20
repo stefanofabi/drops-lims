@@ -88,7 +88,8 @@ class PrescriberController extends Controller
         //
         
         $request->validate([
-            'full_name' => 'required|string',
+            'name' => 'required|string',
+            'last_name' => 'required|string',
             'email' => 'email|nullable',
         ]);
 
@@ -137,7 +138,8 @@ class PrescriberController extends Controller
         //
 
         $request->validate([
-            'full_name' => 'required|string',
+            'name' => 'required|string',
+            'last_name' => 'required|string',
             'email' => 'email|nullable',
         ]);
         

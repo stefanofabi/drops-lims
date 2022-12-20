@@ -71,16 +71,23 @@
 			<th> {{ trans('patients.patient') }} </th>
 			<th> {{ trans('patients.identification_number') }} </th>
 			<th> {{ trans('patients.city') }} </th>
-			<th> {{ trans('patients.birthdate') }} </th>
+			<th> {{ trans('patients.age') }} </th>
 			<th class="text-end"> {{ trans('forms.actions') }} </th>
 		</tr>
 
 		@foreach ($patients as $patient)
 		<tr>
-			<td> {{ $patient->last_name }} {{ $patient->name }}</td>
+			<td> {{ $patient->full_name }} </td>
 			<td> {{ $patient->identification_number }} </td>
 			<td> {{ $patient->city }} </td>
-			<td> @if ($patient->birthdate) {{ date('d/m/Y', strtotime($patient->birthdate)) }} @endif </td>
+			<td>
+                @php
+                    $age = $patient->age();
+                    $format_type = $age != null && $age['year'] > 0;
+                @endphp
+
+                @if ($age != null) {{ trans_choice('patients.calculate_age', $format_type ? 1 : 0 , $age) }} @endif
+            </td>
 
 			<td class="text-end">
 				<a href="{{ route('administrators/patients/edit', $patient->id) }}" class="btn btn-primary btn-sm verticalButtons" title="{{ trans('patients.show_patient') }}" > <i class="fas fa-user-edit fa-sm"></i> </a>

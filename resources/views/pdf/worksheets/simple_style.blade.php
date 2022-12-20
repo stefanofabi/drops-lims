@@ -60,7 +60,7 @@
                     $format_type = $age != null && $age['year'] > 0;
                 @endphp
 
-                {{ trans('patients.age') }}: @if ($age != null) {{ trans_choice('patients.calculate_age', true ? 1 : 0 , $protocol->internalPatient->age()) }} @endif
+                {{ trans('patients.age') }}: @if ($age != null) {{ trans_choice('patients.calculate_age', $format_type ? 1 : 0 , $protocol->internalPatient->age()) }} @endif
             </td>
          </tr>
 

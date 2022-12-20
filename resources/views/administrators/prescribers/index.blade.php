@@ -68,16 +68,16 @@
 	<table class="table table-striped">
 		<tr>
 			<th> {{ trans('prescribers.prescriber') }} </th>
-			<th> {{ trans('prescribers.provincial_enrollment') }} </th>
-			<th> {{ trans('prescribers.national_enrollment') }} </th>
+			<th> {{ trans('prescribers.primary_enrollment') }} </th>
+			<th> {{ trans('prescribers.secondary_enrollment') }} </th>
 			<th class="text-end"> {{ trans('forms.actions') }} </th>
 		</tr>
 
 		@foreach ($prescribers as $prescriber)
 			<tr>
 				<td> {{ $prescriber->full_name }} </td>
-				<td> {{ $prescriber->provincial_enrollment }} </td>
-				<td> {{ $prescriber->national_enrollment }} </td>
+				<td> {{ $prescriber->primary_enrollment }} </td>
+				<td> {{ $prescriber->secondary_enrollment }} </td>
 
 				<td class="text-end">
 					<a href="{{ route('administrators/prescribers/edit', $prescriber->id) }}" class="btn btn-primary btn-sm" title="{{ trans('prescribers.edit_prescriber') }}" > <i class="fas fa-user-edit fa-sm"></i> </a>

@@ -63,6 +63,7 @@
 			<th> {{ trans('protocols.protocol_number') }} </th>
 			<th> {{ trans('patients.patient') }} </th>
 			<th> {{ trans('protocols.completion_date') }} </th>
+			<th> {{ trans('prescribers.prescriber') }} </th>
 			<th class="text-end"> {{ trans('forms.actions') }} </th>
 		</tr>
 
@@ -71,7 +72,7 @@
 			<td> 
 				{{ $protocol->id }} 
 
-				@if (! empty($protocol->closed))
+				@if ($protocol->isClosed())
 				<span class="badge bg-warning bg-sm"> {{ trans('protocols.closed') }} </span>
 				@elseif (date('Y-m-d') == $protocol->completion_date) 
 				<span class="badge bg-success bg-sm"> {{ trans('protocols.new') }} </span>
@@ -80,17 +81,16 @@
 
 			<td> {{ $protocol->patient }} </td>
 			<td> @if ($protocol->completion_date) {{ date('d/m/Y', strtotime($protocol->completion_date)) }} @endif</td>
+			<td> {{ $protocol->prescriber }} </td>
 
 			<td class="text-end">
-				@if (empty($protocol->closed))
+				@if ($protocol->isOpen())
 				<a href="{{ route('administrators/protocols/edit', [$protocol->id]) }}" class="btn btn-primary btn-sm" title="{{ trans('protocols.edit_protocol') }}" > <i class="fas fa-edit fa-sm"></i> </a>
 				<a href="#" class="btn btn-primary btn-sm verticalButtons" title="{{ trans('protocols.destroy_protocol') }}"> <i class="fas fa-trash fa-sm"></i> </a> 
 				@else
 				<a href="{{ route('administrators/protocols/edit', [$protocol->id]) }}" class="btn btn-primary btn-sm" title="{{ trans('protocols.show_protocol') }}" > <i class="fas fa-eye fa-sm"></i> </a> 
 				<a href="#" class="btn btn-primary btn-sm verticalButtons disabled" title="{{ trans('protocols.destroy_protocol') }}"> <i class="fas fa-trash fa-sm"></i> </a>
 				@endif
-				
-				
 			</td>
 		</tr>
 		@endforeach

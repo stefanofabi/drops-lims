@@ -47,10 +47,8 @@
                         var i = 0;  
                         
                         $('#report').find('input, select').each(function () {
-                            
                                 $(this).val(response[i]);
                                 i++;
-                            
                         });
                     }
                 }
@@ -59,23 +57,14 @@
             });
         }
 
-        function updatePractice() {
+        @can('sign_practices')
+        function signPractice() {
             if (! confirm("{{ Lang::get('forms.confirm')}}")) return false;
 
-            let submit_practice_update = $("#submit_practice_update")
-            submit_practice_update.click();
+            let practice_signature_form = $("#practice_signature_form")
+            practice_signature_form.submit();
         }
-
-        @if (empty($practice->internalProtocol->closed))
-            @can('sign_practices')
-            function signPractice() {
-                if (! confirm("{{ Lang::get('forms.confirm')}}")) return false;
-
-                let practice_signature_form = $("#practice_signature_form")
-                practice_signature_form.submit();
-            }
-            @endcan
-        @endif
+        @endcan
     </script>
 
     <!-- Practice Javascript code -->
@@ -87,7 +76,7 @@
     <ul class="navbar-nav">
         @can('sign_practices')
         <li class="nav-item">
-            <a class="nav-link @if (! empty($practice->internalProtocol->closed)) disabled @endif" href="#" onclick="return signPractice();"> {{ trans('practices.sign_practice') }} </a>
+            <a class="nav-link @if ($practice->internalProtocol->isClosed()) disabled @endif" href="#" onclick="return signPractice();"> {{ trans('practices.sign_practice') }} </a>
         </li>
 
         <form method="post" action="{{ route('administrators/protocols/practices/sign', ['id' => $practice->id]) }}" id="practice_signature_form">
@@ -97,34 +86,38 @@
         @endcan
 
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('administrators/protocols/practices/create', ['internal_protocol_id' => $practice->internal_protocol_id]) }}"> {{ trans('forms.go_back') }} </a>
+            <a class="nav-link" href="{{ route('administrators/protocols/practices/index', ['internal_protocol_id' => $practice->internal_protocol_id]) }}"> {{ trans('forms.go_back') }} </a>
         </li>
     </ul>
 </nav>
 @endsection
 
 @section('content-title')
-    <i class="fas fa-file-medical"></i> {{ trans('practices.edit_practice') }} #{{ $practice->id }}
+    <i class="fas fa-file-medical"></i> {{ trans('practices.edit_practice') }}
+@endsection
+
+@section('content-message')
+<p class="text-justify pe-5">
+    Report carefully and carefully the results. Once informed, the signature of a professional is required to be printed.
+</p>
 @endsection
 
 @section('content')
 <div id="messages"></div>
 
-<div class="input-group mt-3 col-md-9 input-form">
-    <div class="input-group-prepend">
-        <span class="input-group-text"> {{ trans('determinations.determination') }} </span>
-    </div>
 
-    <input type="text" class="form-control" value="{{ $practice->determination->name }}" disabled>
+<div class="form-group mt-3 col-md-6">
+    <label class="fs-4" for="determination"> {{ trans('determinations.determination') }} </label>
+    <input type="text" class="form-control" id="determination" value="{{ $practice->determination->name }}" disabled>
+</div>
+
+<div class="form-group mt-3">
+    <label class="fs-4" for="determination"> {{ trans('practices.result') }} </label>
 </div>
 
 <div class="card mt-3">
-    <div class="card-header">
-        <i class="fas fa-poll-h"></i> {{ trans('practices.result') }}
-    </div>
-
     <div class="card-body">
-        <form method="post" action="{{ route('administrators/protocols/practices/inform_result', ['id' => $practice->id]) }}">
+        <form method="post" action="{{ route('administrators/protocols/practices/inform_result', ['id' => $practice->id]) }}" onsubmit="return confirm('{{ Lang::get('forms.confirm') }}')">
             @csrf
             {{ method_field('PUT') }}  
 
@@ -132,14 +125,8 @@
                 {!! $practice->determination->report !!}
             </div>
 
-            <input type="submit" class="d-none" id="submit_practice_update">
+            <input type="submit" class="btn btn-primary mt-3 @if (! empty($practice->internalProtocol->closed)) disabled @endif" value="{{ trans('forms.save') }}">
         </form>
-    </div>
-
-    <div class="card-header">
-        <button type="submit" class="btn btn-primary @if (! empty($practice->internalProtocol->closed)) disabled @endif" onclick="return updatePractice()">
-            <span class="fas fa-save"> </span> {{ trans('forms.save') }}
-        </button>
     </div>
 </div>
 @endsection

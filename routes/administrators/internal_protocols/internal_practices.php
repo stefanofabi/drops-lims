@@ -15,8 +15,8 @@ Route::controller(InternalPracticeController::class)
     ->prefix('internal_practices')
     ->as('practices/')
     ->group(function () {
-        Route::get('create', 'create')
-            ->name('create');
+        Route::get('index', 'index')
+            ->name('index');
 
         Route::get('edit/{id}', 'edit')
             ->name('edit')
@@ -24,7 +24,8 @@ Route::controller(InternalPracticeController::class)
 
         Route::post('store', 'store')
             ->name('store')
-            ->middleware('verify_open_protocol');
+            ->middleware('verify_open_protocol')
+            ->middleware('set_internal_practice_price');
         
         Route::get('destroy/{id}', 'destroy')
             ->name('destroy')

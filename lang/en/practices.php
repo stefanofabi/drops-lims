@@ -36,5 +36,6 @@ return [
     'practice_not_signed' => 'Practice not signed',
     'practice_not_informed' => 'You cannot sign a practice that is not informed',
     'sign_practice' => 'Sign practice',
+    'price' => 'Price',
     
 ];

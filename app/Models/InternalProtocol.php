@@ -19,7 +19,6 @@ class InternalProtocol extends Model
         'completion_date', 
         'observations',
         'private_notes',
-        'closed',
         'internal_patient_id',
         'plan_id',
         'prescriber_id',
@@ -66,6 +65,22 @@ class InternalProtocol extends Model
     public function billingPeriod()
     {
         return $this->belongsTo(BillingPeriod::class);
+    }
+    
+    /**
+     * Returns true if the protocol is open, false otherwise.
+     */
+    public function isOpen() 
+    {
+        return (empty($this->closed)) ? true : false;
+    }
+
+    /**
+     * Returns true if the protocol is closed, false otherwise.
+     */
+    public function isClosed() 
+    {
+        return (! empty($this->closed)) ? true : false;
     }
 
     public function getActivitylogOptions(): LogOptions

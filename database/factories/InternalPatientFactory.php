@@ -24,8 +24,8 @@ class InternalPatientFactory extends Factory {
     public function definition()
     {
 		return [
-			'last_name' => $this->faker->lastName(),
 			'name' => $this->faker->name(),
+			'last_name' => $this->faker->lastName(),
 			'identification_number' => $this->faker->numberBetween(0, 1) ? $this->faker->randomNumber(8) : null,
 			'sex' => $this->faker->randomElement($array = array('F', 'M')),
 			'birthdate' => $this->faker->numberBetween(0, 1) ? $this->faker->date($format = 'Y-m-d', $max = 'now') : null,

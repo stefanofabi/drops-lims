@@ -12,7 +12,7 @@
         $('[data-toggle="tooltip"]').tooltip();
     });
 
-    @if (empty($protocol->closed))
+    @if ($protocol->isOpen())
     $(function () {
         $("#practice").autocomplete({
             minLength: 2,
@@ -153,6 +153,12 @@
 <i class="fas fa-file-medical"></i> {{ trans('practices.add_practices_for_protocol') }} #{{ $protocol->id }}
 @endsection
 
+@section('content-message')
+<p class="text-justify pe-5">
+    Add all the practices that the patient needs to perform. They will be automatically sorted according to the printing order
+</p>
+@endsection
+
 @section('content')
 <div id="messages"></div>
 
@@ -160,11 +166,11 @@
     <div class="row mt-3">
         <div class="col">
             <input type="hidden" id="determination_id" value="0">
-            <input type="text" class="form-control input-sm" id="practice" placeholder="{{ trans('practices.enter_practice') }}" @if (! empty($protocol->closed)) readonly @endif>
+            <input type="text" class="form-control input-sm" id="practice" placeholder="{{ trans('practices.enter_practice') }}" @if (! $protocol->isOpen()) readonly @endif>
         </div>
 
         <div class="col">
-            <button type="submit" class="btn btn-primary @if (! empty($protocol->closed)) disabled @endif">
+            <button type="submit" class="btn btn-primary @if (! $protocol->isOpen()) disabled @endif">
                 <span class="fas fa-plus"></span> {{ trans('practices.add_practice') }}
             </button>
         </div>
@@ -178,30 +184,21 @@
                 <th> </th>
                 <th> {{ trans('determinations.code') }} </th>
                 <th> {{ trans('determinations.determination') }} </th>
-                <th> {{ trans('determinations.amount') }} </th>
+                <th> {{ trans('practices.price') }} </th>
                 <th> {{ trans('practices.informed') }} </th>
                 <th> {{ trans('practices.signed_off') }} </th>
                 <th class="text-end"> {{ trans('forms.actions') }}</th>
             </tr>
 
-            @php
-            $total_amount = 0;
-            @endphp
-
             <form id="practices_select_form" action="" target="">
                 <input type="hidden" id="csrf_token">
 
-                @foreach ($protocol->internalPractices as $practice)
-
-                @php
-                $total_amount += $practice->amount;
-                @endphp
-                
+                @foreach ($protocol->internalPractices as $practice)                
                 <tr>
                     <td style="width: 50px"> <input type="checkbox" class="form-check-input" name="filter_practices[]" value="{{ $practice->id }}" @if ($practice->signInternalPractices->isEmpty()) disabled @endif> </td>
                     <td> {{ $practice->determination->code }} </td>
                     <td> {{ $practice->determination->name }} </td>
-                    <td> ${{ number_format($practice->amount, 2, ",", ".") }} </td>
+                    <td> ${{ number_format($practice->price, 2, ",", ".") }} </td>
                     <td>
                         @if (is_null($practice->result))
                         <span class="badge bg-primary"> {{ trans('forms.no') }} </span>
@@ -221,7 +218,7 @@
                     </td>
                                 
                     <td class="text-end">
-                        @if (empty($protocol->closed))
+                        @if ($protocol->isOpen())
                         <a href="{{ route('administrators/protocols/practices/edit', ['id' => $practice->id]) }}" class="btn btn-primary btn-sm verticalButtons" title="{{ trans('practices.edit_practice') }}"> 
                             <i class="fas fa-edit fa-sm"></i> 
                         </a>
@@ -231,7 +228,7 @@
                         </a>
                         @endif
 
-                        <a href="{{ route('administrators/protocols/practices/destroy', ['id' => $practice->id]) }}" class="btn btn-primary btn-sm verticalButtons @if (! empty($protocol->closed)) disabled @endif" title="{{ trans('practices.destroy_practice') }}"> 
+                        <a href="{{ route('administrators/protocols/practices/destroy', ['id' => $practice->id]) }}" class="btn btn-primary btn-sm verticalButtons @if (! $protocol->isOpen()) disabled @endif" title="{{ trans('practices.destroy_practice') }}"> 
                             <i class="fas fa-trash fa-sm"></i> 
                         </a>
                     </td>
@@ -241,11 +238,10 @@
 
             <tr>
                 <td colspan="7" class="text-end">
-                    <h4> Total: ${{ number_format($total_amount, 2, ",", ".") }} </h4>
+                    <h4> Total: ${{ number_format($protocol->total_price, 2, ",", ".") }} </h4>
                 </td>
             </tr>
         </table>
     </div>
 </div>
 @endsection
-

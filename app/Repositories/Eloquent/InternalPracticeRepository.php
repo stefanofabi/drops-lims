@@ -24,29 +24,28 @@ final class InternalPracticeRepository implements InternalPracticeRepositoryInte
 
     public function all()
     {
-        return $this->model->all();
+        throw NotImplementedException("InternalPractice::all() not implemented");
     }
 
     public function create(array $data)
     {
-        return $this->model->create($data);
-        $practice = new Practice($data);
+        $this->model->determination_id = $data['determination_id'];
+        $this->model->internal_protocol_id = $data['internal_protocol_id'];
 
-        return $practice->save();
+        // the price field is protected from mass assignment
+        $this->model->price = $data['price'];
+
+        return $this->model->save();
     }
 
     public function update(array $data, $id)
     {
-        $practice = $this->model->findOrFail($id);
-        
-        return $practice->update($data);
+        throw NotImplementedException("InternalPractice::update($data, $id) not implemented");
     }
 
     public function delete($id)
     {
-        $practice = $this->model->findOrFail($id);
-
-        return $practice->delete();
+        return $this->model->where('id', $id)->delete();
     }
 
     public function find($id)
@@ -65,5 +64,14 @@ final class InternalPracticeRepository implements InternalPracticeRepositoryInte
             ->leftJoin('sign_internal_practices', 'internal_practices.id', '=', 'sign_internal_practices.internal_practice_id')
             ->where('sign_internal_practices.internal_practice_id', null)
             ->get();
+    }
+
+    public function saveResult(array $data, $id)
+    {
+        // the result field is protected by $fillable in the eloquent model
+        $practice = $this->model->findOrFail($id);
+        $practice->result = $data;
+        
+        return $practice->save();
     }
 }

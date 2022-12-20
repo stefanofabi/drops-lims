@@ -16,8 +16,8 @@ class InternalPatient extends Model
     use LogsActivity;
 
     protected $fillable = [
-        'last_name',
         'name',
+        'last_name',
         'identification_number',
         'sex',
         'birthdate',
@@ -54,7 +54,7 @@ class InternalPatient extends Model
 
         $age = null;
 
-        $date = $this->birth_date;
+        $date = $this->birthdate;
 
         if (! empty($date)) {
             $birth_date = new \DateTime(date('Y/m/d', strtotime($date)));

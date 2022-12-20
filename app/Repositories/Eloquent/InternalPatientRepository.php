@@ -2,8 +2,6 @@
 
 namespace App\Repositories\Eloquent;
 
-use Illuminate\Support\Facades\DB;
-
 use App\Contracts\Repository\InternalPatientRepositoryInterface;
 
 use App\Models\InternalPatient;
@@ -34,16 +32,14 @@ final class InternalPatientRepository implements InternalPatientRepositoryInterf
 
     public function update(array $data, $id)
     {   
-        $patient = $this->model->findOrFail($id);
-        
-        return $patient->update($data);
+        // use find to trigger model events
+
+        return $this->model->findOrFail($id)->update($data);
     }
 
     public function delete($id)
     {
-        $patient = $this->model->findOrFail($id);
-        
-        return $patient->delete();
+        return $this->model->where('id', $id)->delete();
     }
 
     public function find($id)
@@ -61,30 +57,26 @@ final class InternalPatientRepository implements InternalPatientRepositoryInterf
         return $this->model
             ->where(function ($query) use ($filter) {
                 if (! empty($filter)) {
-                    $query->orWhere("last_name", "ilike", "%$filter%")
-                        ->orWhere("name", "ilike", "%$filter%")
-                        ->orWhere("identification_number", "ilike", "$filter%");
+                    $query->orWhere("full_name", "ilike", "%$filter%")
+                        ->orWhere("identification_number", "like", "$filter%");
                 }
             })
-            ->orderBy('last_name', 'asc')
-            ->orderBy('name', 'asc')
+            ->orderBy('full_name', 'asc')
             ->get();
     }
 
     public function loadPatients($filter) {
         // label column is required
         
-        $patients = $this->model->select(DB::raw("CONCAT(last_name, ' ', name) as label"), 'id') 
+        $patients = $this->model->select('full_name as label', 'id') 
             ->where(function ($query) use ($filter) {
                 if (! empty($filter)) {
-                    $query->orWhere("last_name", "ilike", "%$filter%")
-                        ->orWhere("name", "ilike", "%$filter%")
-                        ->orWhere("identification_number", "ilike", "$filter%");
+                    $query->orWhere("full_name", "ilike", "%$filter%")
+                        ->orWhere("identification_number", "like", "$filter%");
                 }
             })
             ->take(15)
-            ->orderBy('last_name', 'ASC')
-            ->orderBy('name', 'ASC')
+            ->orderBy('full_name', 'ASC')
             ->get();
 
         if ($patients->isEmpty()) 

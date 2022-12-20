@@ -8,9 +8,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Traits\PaginationTrait;
 
 use App\Contracts\Repository\InternalProtocolRepositoryInterface;
-use App\Contracts\Repository\InternalPracticeRepositoryInterface;
 use App\Contracts\Repository\InternalPatientRepositoryInterface;
-use App\Contracts\Repository\PrescriberRepositoryInterface;
 use App\Contracts\Repository\BillingPeriodRepositoryInterface;
 
 use App\Mail\InternalProtocolSent;
@@ -32,29 +30,19 @@ class InternalProtocolController extends Controller
     /** @var \App\Contracts\Repository\InternalProtocolRepositoryInterface */
     private $internalProtocolRepository;
 
-    /** @var \App\Contracts\Repository\InternalPracticeRepositoryInterface */
-    private $internalPracticeRepository;
-
     /** @var \App\Contracts\Repository\InternalPatientRepositoryInterface */
     private $internalPatientRepository;
-
-    /** @var \App\Contracts\Repository\PrescriberRepositoryInterface */
-    private $prescriberRepository;
 
     /** @var \App\Contracts\Repository\BillingPeriodRepositoryInterface */
     private $billingPeriodRepository;
 
     public function __construct (
         InternalProtocolRepositoryInterface $internalProtocolRepository,
-        InternalPracticeRepositoryInterface $internalPracticeRepository, 
         InternalPatientRepositoryInterface $internalPatientRepository, 
-        PrescriberRepositoryInterface $prescriberRepository,
         BillingPeriodRepositoryInterface $billingPeriodRepository
     ) {
         $this->internalProtocolRepository = $internalProtocolRepository;
-        $this->internalPracticeRepository = $internalPracticeRepository;
         $this->internalPatientRepository = $internalPatientRepository;
-        $this->prescriberRepository = $prescriberRepository;
         $this->billingPeriodRepository = $billingPeriodRepository;
     }
 
@@ -188,7 +176,7 @@ class InternalProtocolController extends Controller
         if (! $this->internalProtocolRepository->update($request->all(), $id)) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
-
+        
         return redirect()->action([InternalProtocolController::class, 'edit'], ['id' => $id]);
     }
 
@@ -255,7 +243,7 @@ class InternalProtocolController extends Controller
      */
     public function closeProtocol($id)
     {
-        if (! $this->internalProtocolRepository->closeProtocol($id))
+        if (! $this->internalProtocolRepository->close($id))
         {
             return redirect()->back()->withErrors(Lang::get('forms.failed_transaction'));
         }

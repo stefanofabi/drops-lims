@@ -22,9 +22,7 @@ class InternalPractice extends Model
      */
     protected $fillable = [
         'internal_protocol_id', 
-        'determination_id', 
-        'result',
-        'price'
+        'determination_id',
     ];
 
     /**
@@ -60,9 +58,10 @@ class InternalPractice extends Model
         return $this->hasMany(SignInternalPractice::class);
     }
 
-    public function print() {
+    public function print() 
+    {
  
-        return $this->ConvertToPDF($this->determination->report,  json_decode($this->result));
+        return $this->ConvertToPDF($this->determination->report,  $this->result);
     }
 
     public function getActivitylogOptions(): LogOptions

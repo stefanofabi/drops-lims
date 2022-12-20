@@ -10,14 +10,10 @@
 <script type="text/javascript">
 	$(document).ready(function() 
 	{
-        // Select a plan from list
-        $("#plan").val('{{ @old('plan_id') ?? $protocol->plan_id }}');
 		$("#billing_period").val('{{ @old('billing_period_id') ?? $protocol->billing_period_id }}');
-
-        $('[data-toggle="tooltip"]').tooltip();
     });
 
-    @if (empty($protocol->closed))
+    @if ($protocol->isOpen())
 	$(function () {
         $("#socialWorkAutoComplete").autocomplete({
             minLength: 2,
@@ -77,11 +73,11 @@
     {
         $('#securityMessage').hide('slow');
 
-        $("input").removeAttr('readonly');
+        $("input").removeAttr('disabled');
         $("select").removeAttr('disabled');
-        $("textarea").removeAttr('readonly');
+        $("textarea").removeAttr('disabled');
 
-        $("#submitButton").removeAttr('disabled');
+        $("#patientAutoComplete").attr('disabled', true);
     }
     
     function closeProtocol()
@@ -107,24 +103,24 @@
     <ul class="navbar-nav">
         @can('crud_practices')
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('administrators/protocols/practices/create', ['internal_protocol_id' => $protocol->id]) }}"> {{ trans('practices.practices') }} </a>
+            <a class="nav-link" href="{{ route('administrators/protocols/practices/index', ['internal_protocol_id' => $protocol->id]) }}"> {{ trans('practices.practices') }} </a>
         </li>
         @endcan
 
         @can('print_worksheets')
         <li class="nav-item">
-            <a class="nav-link @if (! empty($protocol->closed)) disabled @endif" target="_blank" href="{{ route('administrators/protocols/generate_worksheet', ['id' => $protocol->id]) }}"> {{ trans('protocols.generate_worksheet') }} </a>
+            <a class="nav-link @if (! $protocol->isOpen()) disabled @endif" target="_blank" href="{{ route('administrators/protocols/generate_worksheet', ['id' => $protocol->id]) }}"> {{ trans('protocols.generate_worksheet') }} </a>
         </li>
         @endcan
         
         @can('print_protocols')
         <li class="nav-item">
-            <a class="nav-link @if (empty($protocol->closed)) disabled @endif" target="_blank" href="{{ route('administrators/protocols/generate_protocol', ['id' => $protocol->id]) }}"> {{ trans('protocols.generate_protocol') }} </a>
+            <a class="nav-link @if ($protocol->isOpen()) disabled @endif" target="_blank" href="{{ route('administrators/protocols/generate_protocol', ['id' => $protocol->id]) }}"> {{ trans('protocols.generate_protocol') }} </a>
         </li>
         @endcan
 
         <li class="nav-item">
-            <a class="nav-link @if (empty($protocol->closed)) disabled @endif" href="#" onclick="sendEmailProtocol()"> {{ trans('protocols.send_protocol_to_email') }} </a>
+            <a class="nav-link @if ($protocol->isOpen()) disabled @endif" href="#" onclick="sendEmailProtocol()"> {{ trans('protocols.send_protocol_to_email') }} </a>
 
             <form method="post" action="{{ route('administrators/protocols/send_protocol_to_email', ['id' => $protocol->id]) }}" id="send_email_protocol">
                 @csrf
@@ -139,7 +135,7 @@
         </li>
         @endcan
 
-        @if (empty($protocol->closed))
+        @if ($protocol->isOpen())
         <li class="nav-item">
             <a class="nav-link" href="#" onclick="closeProtocol()"> {{ trans('protocols.close_protocol') }} </a>
 
@@ -158,9 +154,15 @@
 <i class="fas fa-file-medical"></i> {{ trans('protocols.edit_protocol') }} #{{ $protocol->id }}
 @endsection
 
+@section('content-message')
+<p class="text-justify pe-5">
+    Most of our work is done in this document. Try to fill in as many fields as possible to leave a clear clinical history. Once the protocol is closed, you can generate a pdf and it cannot be modified again for any reason.
+</p>
+@endsection
+
 @section('content')
 @if (sizeof($errors) == 0)
-    @if (empty($protocol->closed))
+    @if ($protocol->isOpen())
 	<div id="securityMessage" class="alert alert-info fade show mt-3">
 		<button type="submit" onclick="enableSubmitForm()" class="btn btn-primary btn-sm">
 			<i class="fas fa-lock-open"></i>
@@ -175,100 +177,114 @@
     @endif
 @endif
 
-    <form method="post" action="{{ route('administrators/protocols/update', ['id' => $protocol->id]) }}">
-        @csrf
-        {{ method_field('PUT') }}
+<form method="post" action="{{ route('administrators/protocols/update', ['id' => $protocol->id]) }}">
+    @csrf
+    {{ method_field('PUT') }}
 
-        <input type="hidden" name="type" value="our">
-        
-        <div class="col-10">
-            <div class="mt-3">
-                <h4><i class="fas fa-book"></i> {{ trans('protocols.medical_order_data') }} </h4>
-                <hr class="col-6">
-                
-                <div class="input-group mt-2">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"> {{ trans('patients.patient') }} </span>
-                    </div>
+    <div class="mt-3">
+        <h4><i class="fas fa-book"></i> {{ trans('protocols.medical_order_data') }} </h4>
+        <hr class="col-6">
+    </div>
 
-                    <input type="hidden" name="internal_patient_id" value="{{ $protocol->internal_patient_id }}">
-                    <input type="text" class="form-control" id="patientAutoComplete" placeholder="{{ trans('forms.start_typing') }}" value="{{ $protocol->internalPatient->last_name }} {{ $protocol->internalPatient->name }}" required disabled>
-                </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group mt-2">
+                <label for="patientAutoComplete"> {{ trans('patients.patient') }} </label>
+                <input type="text" class="form-control" id="patientAutoComplete" value="{{ $protocol->internalPatient->full_name }}" aria-describedby="patientHelp" disabled>
 
-                <div class="input-group mt-2">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"> {{ trans('social_works.social_work') }} </span>
-                    </div>
-
-                    <input type="hidden" name="plan_id" id="plan" value="{{ old('plan_id') ?? $protocol->plan_id }}">
-                    <input type="text" class="form-control" name="social_work_name" id="socialWorkAutoComplete" placeholder="{{ trans('forms.start_typing') }}" value="{{ old('social_work_name') ?? $protocol->plan->social_work->name }}" required readonly>
-                </div>
-
-                <div class="input-group mt-2">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"> {{ trans('prescribers.prescriber') }} </span>
-                    </div>
-
-                    <input type="hidden" id="prescriber" name="prescriber_id" value="{{ old('prescriber_id') ?? $protocol->prescriber_id }}">
-                    <input type="text" class="form-control" name="prescriber_name" id="prescriberAutoComplete" placeholder="{{ trans('forms.start_typing') }}" value="{{ old('prescriber_name') ?? $protocol->prescriber->full_name ?? '' }}" readonly>
-                </div>
-
-                <div class="input-group mt-2">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"> {{ trans('protocols.completion_date') }} </span>
-                    </div>
-
-                    <input type="date" class="form-control" name="completion_date" value="{{ old('completion_date') ?? $protocol->completion_date }}" readonly>
-                </div>
-
-                <div class="input-group mt-2">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"> {{ trans('protocols.diagnostic') }} </span>
-                    </div>
-
-                    <input type="text" class="form-control" name="diagnostic" value="{{ old('diagnostic') ?? $protocol->diagnostic }}" readonly>
-                </div>
-            </div>
-            
-            <div class="mt-3">
-                <h4><i class="fas fa-file-invoice-dollar"></i> {{ trans('protocols.billing_data') }} </h4>
-                <hr class="col-6">
-
-                <div class="input-group mt-2">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"> {{ trans('protocols.quantity_orders') }} </span>
-                    </div>
-
-                    <input type="number" class="form-control" name="quantity_orders" min="0" value="{{ old('quantity_orders') ?? $protocol->quantity_orders }}" required readonly>
-                </div>
-
-                <div class="input-group mt-2">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"> {{ trans('billing_periods.billing_period') }} </span>
-                    </div>
-
-                    <select id="billing_period" class="form-select input-sm" name="billing_period_id" disabled>
-                        <option value=""> {{ trans('forms.select_option') }}</option>
-
-                        @foreach ($billing_periods as $billing_period)
-                            <option value="{{ $billing_period->id }}">
-                                {{ $billing_period->name }} [{{ date('d/m/Y', strtotime($billing_period->start_date)) }} - {{ date('d/m/Y', strtotime($billing_period->end_date)) }}]
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-
-            <div class="mt-5">
-                <h4><i class="fas fa-notes-medical"></i> {{ trans('protocols.observations') }} </h4>
-                <hr class="col-6">
-
-                <textarea class="form-control" rows="3" name="observations" readonly>{{ old('observations') ?? $protocol->observations }}</textarea>
+                <small id="patientHelp" class="form-text text-muted"> You cannot change the patient of a protocol once it has already been loaded </small>
             </div>
         </div>
 
-        @if (empty($protocol->closed))
-        <input type="submit" class="btn btn-lg btn-primary mt-3" id="submitButton" value="{{ trans('forms.save') }}" disabled>
-        @endif
-    </form>
+        <div class="col-md-6">
+            <div class="form-group mt-2">
+                <label for="socialWorkAutoComplete"> {{ trans('social_works.social_work') }} </label>
+                <input type="text" class="form-control" name="social_work_name" id="socialWorkAutoComplete" placeholder="{{ trans('forms.start_typing') }}" value="@if (old('social_work_name')) {{ old('social_work_name') }} @else {{ $protocol->plan->social_work->name }} - {{ $protocol->plan->name }} @endif" aria-describedby="socialWorkHelp" required disabled>
+                <input type="hidden" name="plan_id" id="plan" value="{{ old('plan_id') ?? $protocol->plan_id }}">
+
+                <small id="socialWorkHelp" class="form-text text-muted"> You can charge any social work even if it is not the one that the patient has charged </small>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group mt-2">
+                <label for="prescriberAutoComplete"> {{ trans('prescribers.prescriber') }} </label>
+                <input type="text" class="form-control" name="prescriber_name" id="prescriberAutoComplete" placeholder="{{ trans('forms.start_typing') }}" value="{{ old('prescriber_name') ?? $protocol->prescriber->full_name }}" aria-describedby="prescriberHelp" required disabled>
+                <input type="hidden" id="prescriber" name="prescriber_id" value="{{ old('prescriber_id') ?? $protocol->prescriber_id }}">
+
+                <small id="prescriberHelp" class="form-text text-muted"> Associate a prescriber to the protocol to continue </small>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group mt-2">
+                <label for="completion_date"> {{ trans('protocols.completion_date') }} </label>
+                <input type="date" class="form-control" name="completion_date" id="completion_date" value="{{ old('completion_date') ?? $protocol->completion_date }}" aria-describedby="completionDateHelp" disabled>
+                
+                <small id="completionDateHelp" class="form-text text-muted"> Indicates the date on which the practices were carried out. By this date the protocols are ordered </small>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group mt-2">
+                <label for="diagnostic"> {{ trans('protocols.diagnostic') }} </label>
+                <input type="text" class="form-control" name="diagnostic" id="diagnostic" value="{{ old('diagnostic') ?? $protocol->diagnostic }}" aria-describedby="diagnosticHelp" disabled>
+                
+                <small id="diagnosticHelp" class="form-text text-muted"> Indicates the date on which the practices were carried out. By this date the protocols are ordered </small>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-3">
+        <h4><i class="fas fa-file-invoice-dollar"></i> {{ trans('protocols.billing_data') }} </h4>
+        <hr class="col-6">
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group mt-2">
+                <label for="billing_period"> {{ trans('billing_periods.billing_period') }} </label>
+                <select id="billing_period" class="form-select input-sm" name="billing_period_id" id="billing_period" aria-describedby="billingPeriodHelp" disabled>
+                    <option value=""> {{ trans('forms.select_option') }}</option>
+
+                    @foreach ($billing_periods as $billing_period)
+                    <option value="{{ $billing_period->id }}">
+                        {{ $billing_period->name }} [{{ date('d/m/Y', strtotime($billing_period->start_date)) }} - {{ date('d/m/Y', strtotime($billing_period->end_date)) }}]
+                    </option>
+                    @endforeach
+                </select>
+
+                <small id="billingPeriodHelp" class="form-text text-muted"> This field helps you to later perform the billing cut </small>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group mt-2">
+                <label for="quantity_orders"> {{ trans('protocols.quantity_orders') }} </label>
+                <input type="number" class="form-control" name="quantity_orders" id="quantity_orders" min="0" value="{{ old('quantity_orders') ?? $protocol->quantity_orders }}" aria-describedby="quantityOrdersHelp" required disabled>
+
+                <small id="quantityOrdersHelp" class="form-text text-muted"> This field helps you to later perform the billing cut </small>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-5">
+        <div class="form-group mt-2">
+            <h4><i class="fas fa-notes-medical"></i> <label for="observations"> {{ trans('protocols.observations') }} </label> </h4>
+            <hr class="col-6">
+
+            <textarea class="form-control" rows="3" name="observations" id="observations" aria-describedby="observationsHelp" disabled>{{ old('observations') ?? $protocol->observations }}</textarea>
+
+            <small id="observationsHelp" class="form-text text-muted"> Any details about the process or the results of the analysis. These observations are public. </small>
+        </div>
+    </div>
+
+    @if ($protocol->isOpen())
+    <input type="submit" class="btn btn-lg btn-primary mt-3" value="{{ trans('forms.save') }}" disabled>
+    @endif
+</form>
 @endsection

@@ -24,11 +24,12 @@ class PrescriberFactory extends Factory {
     {
 	    return [
 	        //
-	        'full_name' => $this->faker->lastName().' '.$this->faker->name(),
+	        'name' => $this->faker->name(),
+            'last_name' => $this->faker->lastName(),
 	        'phone' => $this->faker->randomNumber(8),
 	        'email' => $this->faker->safeEmail,
-	        'provincial_enrollment' => $this->faker->randomNumber(4),
-	        'national_enrollment' => $this->faker->randomNumber(4),
+	        'primary_enrollment' => $this->faker->randomNumber(4),
+	        'secondary_enrollment' => $this->faker->randomNumber(4),
 	    ];
     }
 }

@@ -32,16 +32,14 @@ final class PrescriberRepository implements PrescriberRepositoryInterface
 
     public function update(array $data, $id)
     {
-        $prescriber = $this->model->findOrFail($id);
+        // use find to trigger model events
 
-        return $prescriber->update($data);
+        return $this->model->findOrFail($id)->update($data);
     }
 
     public function delete($id)
     {
-        $prescriber = $this->model->findOrFail($id);
-
-        return $prescriber->delete();
+        return $this->model->where('id', $id)->delete();
     }
 
     public function find($id)
@@ -60,8 +58,8 @@ final class PrescriberRepository implements PrescriberRepositoryInterface
             ->where(function ($query) use ($filter) {
                 if (! empty($filter)) {
                     $query->orWhere("full_name", "ilike", "%$filter%")
-                        ->orWhere("provincial_enrollment", "ilike", "$filter%")
-                        ->orWhere("national_enrollment", "ilike", "$filter%");
+                        ->orWhere("primary_enrollment", "like", "$filter%")
+                        ->orWhere("secondary_enrollment", "like", "$filter%");
                 }
             })
             ->orderBy('full_name', 'asc')
@@ -76,8 +74,8 @@ final class PrescriberRepository implements PrescriberRepositoryInterface
             ->where(function ($query) use ($filter) {
                 if (! empty($filter)) {
                     $query->orWhere("full_name", "ilike", "%$filter%")
-                    ->orWhere("provincial_enrollment", "ilike", "$filter%")
-                    ->orWhere("national_enrollment", "ilike", "$filter%");
+                    ->orWhere("primary_enrollment", "like", "$filter%")
+                    ->orWhere("secondary_enrollment", "like", "$filter%");
                 }
             })
             ->take(15)

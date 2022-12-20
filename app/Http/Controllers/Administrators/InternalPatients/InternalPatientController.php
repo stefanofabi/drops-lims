@@ -14,7 +14,6 @@ use Session;
 
 class InternalPatientController extends Controller
 {
-
     use PaginationTrait;
 
     private const PER_PAGE = 15;
@@ -157,7 +156,7 @@ class InternalPatientController extends Controller
             'email' => 'email|nullable',
             'alternative_email' => 'email|nullable',
         ]);
-
+        
         if (! $this->internalPatientRepository->update($request->all(), $id)) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }

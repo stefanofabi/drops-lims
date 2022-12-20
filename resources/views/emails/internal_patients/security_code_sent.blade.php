@@ -83,7 +83,7 @@
 
 @section('body')
     <div style="margin-left: 5%; margin-top: 2%">
-        {{ trans('patients.patient') }}: {{ $patient->last_name }} {{ $patient->name }} <br />
+        {{ trans('patients.patient') }}: {{ $patient->full_name }} <br />
         {{ trans('patients.unique_identifier') }}: {{ $patient->id }} <br />
         <br />
         {{ trans('patients.expiration_notice', ['date' => date('d/m/Y', strtotime($expiration_date))]) }} <br />

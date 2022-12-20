@@ -24,28 +24,22 @@ final class DeterminationRepository implements DeterminationRepositoryInterface
 
     public function all()
     {
-        return $this->model->all();
+        return $this->model->orderBy('code', 'ASC');
     }
 
     public function create(array $data)
     {
-        $determination = new Determination($data);
-
-        return $determination->save() ? $determination : null;
+        return $this->model->create($data);
     }
 
     public function update(array $data, $id)
     {
-        $determination = $this->model->findOrFail($id);
-        
-        return $determination->update($data);
+        return $this->model->findOrFail($id)->update($data);
     }
 
     public function delete($id)
     {
-        $determination = $this->model->findOrFail($id);
-
-        return $determination->delete();
+        return $this->where('id', $id)->delete();
     }
 
     public function find($id)
@@ -64,7 +58,7 @@ final class DeterminationRepository implements DeterminationRepositoryInterface
             ->where('nomenclator_id', '=', $nomenclator_id)
             ->where(function ($query) use ($filter) {
                 if (! empty($filter)) {
-                    $query->orWhere("name", "like", "%$filter%")
+                    $query->orWhere("name", "ilike", "%$filter%")
                         ->orWhere("code", "like", "$filter%");
                 }
             })
@@ -80,7 +74,7 @@ final class DeterminationRepository implements DeterminationRepositoryInterface
             ->where(function ($query) use ($filter) {
                 if (! empty($filter)) {
                     $query->orWhere("determinations.name", "ilike", "%$filter%")
-                        ->orWhere("determinations.code", "ilike", "$filter%");
+                        ->orWhere("determinations.code", "like", "$filter%");
                 }
             })
             ->take(15)
@@ -94,5 +88,14 @@ final class DeterminationRepository implements DeterminationRepositoryInterface
         }
 
         return $determinations;
+    }
+
+    public function updateReport(array $data, $id)
+    {
+        $determination = $this->model->findOrFail($id);
+        $determination->javascript = $data['javascript'];
+        $determination->report = $data['report'];
+
+        return $determination->save();
     }
 }

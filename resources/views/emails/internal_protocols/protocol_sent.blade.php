@@ -12,9 +12,9 @@
 <p> 
     <b> {{ trans('protocols.protocol_number') }}: </b> #{{ $protocol->id }} <br />
     <b> {{ trans('protocols.completion_date') }}: </b> {{ date('d/m/Y', strtotime($protocol->completion_date)) }} <br />
-    <b> {{ trans('patients.patient') }}: </b> {{ $protocol->internalPatient->last_name }} {{ $protocol->internalPatient->name }}<br /> 
-    <b> {{ trans('social_works.social_work') }}: </b> {{ $protocol->plan->social_work->name ?? trans('social_works.particular') }} <br /> 
-    <b> {{ trans('prescribers.prescriber') }}: </b> {{ $protocol->prescriber->name ?? trans('social_works.particular') }} 
+    <b> {{ trans('patients.patient') }}: </b> {{ $protocol->internalPatient->full_name }} <br /> 
+    <b> {{ trans('social_works.social_work') }}: </b> {{ $protocol->plan->social_work->name }} <br /> 
+    <b> {{ trans('prescribers.prescriber') }}: </b> {{ $protocol->prescriber->full_name }} 
 </p>
 
 <p>
