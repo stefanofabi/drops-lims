@@ -34,7 +34,7 @@ What things do you need to install the project and how to do it
 # git clone https://github.com/stefanofabi/drops-lims.git
 ```
 
-2. Create a copy of the .env.example file and rename it to .env. Inside it we will edit the environment variables to establish the connection to the database.
+2. Create a copy of the .env.example file and rename it .env. Inside it we will edit the environment variables to establish the connection with the database and mail server
 
 ```
 # cd drops-lims
