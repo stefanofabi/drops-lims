@@ -52,25 +52,19 @@ final class SocialWorkRepository implements SocialWorkRepositoryInterface
         return $this->model->findOrFail($id);
     }
 
-    public function getSocialWorks($filter_name)
+    public function getSocialWorks($filter)
     {
-        $social_works = $this->model
-            ->select('plans.id as plan_id', DB::raw("CONCAT(social_works.name, ' - ', plans.name) as label"))
+        return $this->model
+            ->select('plans.id as plan_id', "social_works.name as social_work", "plans.name as plan", "social_works.acronym")
             ->join('plans', 'social_works.id', '=', 'plans.social_work_id')
-            ->where(function ($query) use ($filter_name) {
-                if (! empty($filter_name)) {
-                    $query->orWhere("social_works.name", "ilike", "%$filter_name%")
-                        ->orWhere("social_works.acronym", "ilike", "$filter_name%")
-                        ->orWhere("plans.name", "ilike", "$filter_name%");
+            ->where(function ($query) use ($filter) {
+                if (! empty($filter)) {
+                    $query->orWhere('social_works.name', 'ilike', "%$filter%")
+                        ->orWhere('social_works.acronym', 'ilike', "$filter%")
+                        ->orWhere('plans.name', 'ilike', "%$filter%");
                 }
-            }) 
+            })
+            ->orderBy('social_works.name', 'ASC')
             ->get();
-
-        if ($social_works->isEmpty()) 
-        {
-            return response()->json(['label' => 'No records found']);
-        }
-        
-        return $social_works;
     }
 }

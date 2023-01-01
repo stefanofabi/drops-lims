@@ -32,7 +32,7 @@ Route::controller(InternalPracticeController::class)
             ->where('id', '[1-9][0-9]*')
             ->middleware('verify_open_practice');
 
-        Route::post('find', 'loadPractices')
+        Route::post('load-practices', 'loadPractices')
             ->name('load_practices');
 
         Route::put('inform-result/{id}', 'informResult')

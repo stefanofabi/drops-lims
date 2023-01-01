@@ -10,18 +10,11 @@
     <title> @yield('title') - Drops </title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
-    <!-- Icons -->
-    <link href="{{ asset('fontawesome/css/fontawesome.css') }}" rel="stylesheet">
-    <link href="{{ asset('fontawesome/css/solid.css') }}" rel="stylesheet">
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">

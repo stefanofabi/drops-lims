@@ -198,9 +198,9 @@ class InternalPracticeController extends Controller
 
         $request->validate([
             'nomenclator_id' => 'required|numeric|min:1',
-            'filter' => 'required|string|min:2',
+            'filter' => 'required|string|min:2'
         ]);
-
+        
         return $this->determinationRepository->getDeterminationsFromNomenclator($request->nomenclator_id, $request->filter);
     }
 

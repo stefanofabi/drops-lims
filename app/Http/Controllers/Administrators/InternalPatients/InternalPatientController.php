@@ -94,8 +94,8 @@ class InternalPatientController extends Controller
         //
 
         $request->validate([
-            'last_name' => 'required|string',
-            'name' => 'required|string',
+            'last_name' => 'required|string|min:2',
+            'name' => 'required|string|min:2',
             'sex' => 'in:F,M',
             'birthdate' => 'date|nullable',
             'email' => 'email|nullable',
@@ -149,8 +149,8 @@ class InternalPatientController extends Controller
         //
 
         $request->validate([
-            'last_name' => 'required|string',
-            'name' => 'required|string',
+            'last_name' => 'required|string|min:2',
+            'name' => 'required|string|min:2',
             'sex' => 'in:F,M',
             'birthdate' => 'date|nullable',
             'email' => 'email|nullable',
@@ -191,6 +191,7 @@ class InternalPatientController extends Controller
      */
     public function loadPatients(Request $request)
     {
+        
         $request->validate([
             'filter' => 'required|string|min:2'
         ]);

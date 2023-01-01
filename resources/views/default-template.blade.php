@@ -7,9 +7,8 @@
 
         <meta name="viewport" content="width=device-width, user-scalable=no">
 
-        <!-- Laravel mix -->
-        <script src="{{ asset('js/app.js') }}"></script>
-        <link type="text/css" rel="stylesheet" href="{{ asset('css/app.css') }}">
+        <!-- Scripts -->
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
 
         <!-- Description that will be taken into account by web search engines  -->
         <meta name="description" content="Online results system designed for doctors who trust us with their patients"/>
@@ -29,7 +28,7 @@
         <!-- Used by ajax -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <script type="text/javascript">
+        <script type="module">
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

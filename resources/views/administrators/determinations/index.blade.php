@@ -22,7 +22,9 @@
             form.submit();
         }
     }
+</script>
 
+<script type="module">
     $(document).ready(function() {
         // Select a nomenclator
         $('#nomenclator').val("{{ $data['nomenclator_id'] ?? '' }}");

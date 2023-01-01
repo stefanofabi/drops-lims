@@ -19,7 +19,9 @@
 		    form.submit();
 		}
 	}
+</script>
 
+<script type="module">
     $(document).ready(function() {
         // Put the filter
         $("#filter" ).val('{{ $data['filter'] ?? '' }}');

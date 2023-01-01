@@ -88,8 +88,8 @@ class PrescriberController extends Controller
         //
         
         $request->validate([
-            'name' => 'required|string',
-            'last_name' => 'required|string',
+            'name' => 'required|string|min:2',
+            'last_name' => 'required|string|min:2',
             'email' => 'email|nullable',
         ]);
 
@@ -138,8 +138,8 @@ class PrescriberController extends Controller
         //
 
         $request->validate([
-            'name' => 'required|string',
-            'last_name' => 'required|string',
+            'name' => 'required|string|min:2',
+            'last_name' => 'required|string|min:2',
             'email' => 'email|nullable',
         ]);
         
@@ -177,10 +177,11 @@ class PrescriberController extends Controller
      */
     public function loadPrescribers(Request $request)
     {
+        
         $request->validate([
             'filter' => 'required|string|min:2'
         ]);
 
-        return $this->prescriberRepository->loadPrescribers($request->filter);
+    return $this->prescriberRepository->loadPrescribers($request->filter);
     }
 }

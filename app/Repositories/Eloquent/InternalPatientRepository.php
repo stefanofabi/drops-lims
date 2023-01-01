@@ -61,29 +61,20 @@ final class InternalPatientRepository implements InternalPatientRepositoryInterf
                         ->orWhere("identification_number", "like", "$filter%");
                 }
             })
-            ->orderBy('full_name', 'asc')
+            ->orderBy('full_name', 'ASC')
             ->get();
     }
 
     public function loadPatients($filter) {
-        // label column is required
         
-        $patients = $this->model->select('full_name as label', 'id') 
+        return $this->model->select('id', 'full_name', 'identification_number') 
             ->where(function ($query) use ($filter) {
                 if (! empty($filter)) {
-                    $query->orWhere("full_name", "ilike", "%$filter%")
-                        ->orWhere("identification_number", "like", "$filter%");
+                    $query->orWhere('full_name', 'ilike', "%$filter%")
+                        ->orWhere('identification_number', 'like', "$filter%");
                 }
             })
-            ->take(15)
             ->orderBy('full_name', 'ASC')
             ->get();
-
-        if ($patients->isEmpty()) 
-        {
-            return response()->json(['label' => 'No records found']);
-        }
-
-        return $patients;
     }
 }

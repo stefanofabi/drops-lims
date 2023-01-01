@@ -1,7 +1,7 @@
 @extends('administrators/settings/index')
 
 @section('js')
-<script type="text/javascript">
+<script type="module">
     $(document).ready(function () 
     {
         // Select a nomenclator from list

@@ -7,13 +7,15 @@
 @section('active_determinations', 'active')
 
 @section('js')
-<script type="text/javascript">
+<script type="module">
 	@if (sizeof($errors) > 0)
 	$(document).ready(function() {
 		enableSubmitForm();
     });
 	@endif
+</script>
 
+<script type="text/javascript">
 	function enableSubmitForm() 
 	{
 		$('#securityMessage').hide('slow');

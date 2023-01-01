@@ -7,39 +7,99 @@
 @section('active_protocols', 'active')
 
 @section('js')
-<script type="text/javascript">
+<script type="module">
     $(document).ready(function() {
-        $('[data-toggle="tooltip"]').tooltip();
+        //$('[data-toggle="tooltip"]').tooltip();
     });
 
-    @if ($protocol->isOpen())
-    $(function () {
-        $("#practice").autocomplete({
-            minLength: 2,
-            source: function (event, ui) {
-                var parameters = {
-                    "nomenclator_id": '{{ $protocol->plan->nomenclator->id }}',
-                    "filter": $("#practice").val()
-                };
+    const practiceAutoComplete = new autoComplete({
+        selector: "#practice",
+        data: {
+            src: async (query) => {
+                try {
+                    // Fetch Data from external Source
+                    const source = await fetch(`{{ route("administrators/protocols/practices/load_practices") }}`, { 
+                        method: 'POST', 
+                        body: JSON.stringify({ "nomenclator_id": '{{ $protocol->plan->nomenclator_id }}', filter: $("#practice").val() }),
+                        headers: { 
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                            "Content-Type" : "application/json",
+                        }
+                    });
+                    
+                    // Data should be an array of `Objects` or `Strings`
+                    const data = await source.json();
 
-                $.ajax({
-                    data: parameters,
-                    url: '{{ route("administrators/protocols/practices/load_practices") }}',
-                    type: 'post',
-                    dataType: 'json',
-                    success: ui
-                });
-
-                return ui;
+                return data;
+                } catch (error) {
+                    return error;
+                }
             },
-            select: function (event, ui) {
-                event.preventDefault();
-                $('#practice').val(ui.item.label);
-                $('#determination_id').val(ui.item.id);
-            }
-        });
+            // Data source 'Object' key to be searched
+            keys: ["name"],
+            cache: false,
+        },
+        searchEngine: function (q, r) { return r; },
+        events: {
+            input: {
+                focus() {
+                    practiceAutoComplete.start();
+                },
+            },
+        },
+        resultItem: {
+            element: (item, data) => {
+                var price = data.value.biochemical_unit * {{ $protocol->plan->nbu_price }};
+                // Modify Results Item Style
+                item.style = "display: flex; justify-content: space-between;";
+                // Modify Results Item Content
+                item.innerHTML = `<span style="display: none"> {data.value.code} </span>
+                <span style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
+                ${data.match}
+                </span>
+                <span style="display: flex; align-items: center; font-size: 13px; font-weight: 100; text-transform: uppercase; color: rgba(0,0,0,.2);">
+                $`+price+`
+                </span>`;
+            },
+            highlight: true
+        },
+        threshold: 2,
+        resultsList: {
+            element: (list, data) => {
+                if (data.results.length > 0) {
+                    const info = document.createElement("div");
+                    info.setAttribute("class", "centerAutoComplete");
+                    info.innerHTML = `Displaying <strong>${data.results.length}</strong> out of <strong>${data.matches.length}</strong> results`;
+                    list.prepend(info);
+                } else {
+                    // Create "No Results" message list element
+                    const message = document.createElement("div");
+                    message.setAttribute("class", "no_result");
+                    // Add message text content
+                    message.innerHTML = `<span>Found No Results for "${data.query}"</span>`;
+                    // Add message list element to the list
+                    list.appendChild(message);
+                }
+            },
+            noResults: true,
+            maxResults: 25,
+        },
     });
 
+    practiceAutoComplete.input.addEventListener("selection", function (event) 
+    {
+        const feedback = event.detail;
+        const selected = feedback.selection.value;
+
+        $('#determination_id').val(selected.id);
+        
+        practiceAutoComplete.input.value = selected.name;
+
+        addPractice();
+    }); 
+</script>
+
+<script type="text/javascript">
     function addPractice() 
     {
         if (! $("#practice").val()) 
@@ -80,7 +140,6 @@
 
         return false;
     }
-    @endif
 
     function submitPracticesSelectForm(action) 
     {

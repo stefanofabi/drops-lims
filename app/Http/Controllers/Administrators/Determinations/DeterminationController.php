@@ -97,7 +97,7 @@ class DeterminationController extends Controller
 
         $request->validate([
             'code' => 'required|numeric|min:0',
-            'name' => 'required|string',
+            'name' => 'required|string|min:2',
             'position' => 'required|numeric|min:1',
             'javascript' => 'string|nullable|max:1000',
             'report' => 'string|nullable|max:2000',
@@ -151,7 +151,7 @@ class DeterminationController extends Controller
 
         $request->validate([
             'code' => 'required|numeric|min:0',
-            'name' => 'required|string',
+            'name' => 'required|string|min:2',
             'position' => 'required|numeric|min:1',
             'biochemical_unit' => 'required|numeric|min:0',
         ]);

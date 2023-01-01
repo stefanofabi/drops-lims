@@ -6,7 +6,6 @@
 
 @section('js')
 <script type="text/javascript">
-
     function destroyPatient(form_id){
         if (confirm('{{ trans("forms.confirm") }}')) {
             var form = document.getElementById('destroy_patient_'+form_id);
@@ -18,7 +17,9 @@
         $("#page" ).val(page);
         document.all["select_page"].submit();
     }
+</script>
 
+<script type="module">
     $(document).ready(function() {
         // Put the filter
         $("#filter" ).val("{{ $data['filter'] ?? '' }}");

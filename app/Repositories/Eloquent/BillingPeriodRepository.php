@@ -95,20 +95,11 @@ final class BillingPeriodRepository implements BillingPeriodRepositoryInterface
      * @return \Illuminate\Http\Response
      */
     public function loadBillingPeriods($filter) {
-        $billing_periods = $this->model
-            // label column is required
-            ->select('id', 'name as label', 'start_date', 'end_date')
+        return $this->model
+            ->select('id', 'name', 'start_date', 'end_date')
             ->where('name', 'ilike', "%$filter%")
-            ->take(15)
-            ->orderBy('name', 'ASC')
+            ->orderBy('start_date', 'DESC')
             ->get();
-
-        if ($billing_periods->isEmpty()) 
-        {
-            return response()->json(['label' => 'No records found']);
-        }
-
-        return $billing_periods;
     }
 
     public function getAmountBilledByPeriod($start_date, $end_date) 

@@ -68,25 +68,16 @@ final class PrescriberRepository implements PrescriberRepositoryInterface
 
     public function loadPrescribers($filter)
     {
-        // label column is required
-   
-        $prescribers = $this->model->select('full_name as label', 'id')
+
+        return $this->model->select('id', 'full_name', 'primary_enrollment', 'secondary_enrollment')
             ->where(function ($query) use ($filter) {
                 if (! empty($filter)) {
-                    $query->orWhere("full_name", "ilike", "%$filter%")
-                    ->orWhere("primary_enrollment", "like", "$filter%")
-                    ->orWhere("secondary_enrollment", "like", "$filter%");
+                    $query->orWhere('full_name', 'ilike', "%$filter%")
+                    ->orWhere('primary_enrollment', 'like', "$filter%")
+                    ->orWhere('secondary_enrollment', 'like', "$filter%");
                 }
             })
-            ->take(15)
             ->orderBy('full_name', 'ASC')
             ->get();
-
-        if ($prescribers->isEmpty()) 
-        {
-            return response()->json(['label' => 'No records found']);
-        }
-
-        return $prescribers;
     }
 }

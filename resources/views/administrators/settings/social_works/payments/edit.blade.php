@@ -1,36 +1,91 @@
 @extends('administrators/settings/index')
 
 @section('js')
-    <script type="text/javascript">
-        $(function () {
-            $("#billing_period").autocomplete({
-                minLength: 2,
-                source: function (event, ui) {
-                    var parameters = {
-                        "filter": $("#billing_period").val()
-                    };
-
-                    $.ajax({
-                        data: parameters,
-                        url: '{{ route("administrators/settings/social_works/billing_periods/load_billing_periods") }}',
-                        type: 'post',
-                        dataType: 'json',
-                        beforeSend: function () {
-                            //$("#resultados").html('<div class="spinner-border text-info"> </div> Procesando, espere por favor...');
-                        },
-                        success: ui
+<script type="module">
+    const autoCompleteJS = new autoComplete({
+        selector: "#billing_period",
+        data: {
+            src: async (query) => {
+                try {
+                    // Fetch Data from external Source
+                    const source = await fetch(`{{ route("administrators/settings/social_works/billing_periods/load_billing_periods") }}`, { 
+                        method: 'POST', 
+                        body: JSON.stringify({ filter: $("#billing_period").val() }),
+                        headers: { 
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                            "Content-Type" : "application/json",
+                        }
                     });
+                    
+                    // Data should be an array of `Objects` or `Strings`
+                    const data = await source.json();
 
-                    return ui;
-                },
-                select: function (event, ui) {
-                    event.preventDefault();
-                    $('#billing_period').val(ui.item.label);
-                    $('#billing_period_id').val(ui.item.id);
+                return data;
+                } catch (error) {
+                    return error;
                 }
-            });
-        });
-    </script>
+            },
+            // Data source 'Object' key to be searched
+            keys: ["name"],
+            cache: false,
+        },
+        searchEngine: function (q, r) { return r; },
+        events: {
+            input: {
+                focus() {
+                    autoCompleteJS.start();
+                },
+            },
+        },
+        resultItem: {
+            element: (item, data) => {
+                // Modify Results Item Style
+                item.style = "display: flex; justify-content: space-between;";
+                // Modify Results Item Content
+                item.innerHTML = `
+                <span style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
+                ${data.match}
+                </span>
+                <span style="display: flex; align-items: center; font-size: 13px; font-weight: 100; text-transform: uppercase; color: rgba(0,0,0,.2);">
+                [${data.value.start_date}, ${data.value.end_date}]
+                </span>`;
+            },
+            highlight: true
+        },
+        threshold: 2,
+        resultsList: {
+            element: (list, data) => {
+                if (data.results.length > 0) {
+                    const info = document.createElement("div");
+                    info.setAttribute("class", "centerAutoComplete");
+                    info.innerHTML = `Displaying <strong>${data.results.length}</strong> out of <strong>${data.matches.length}</strong> results`;
+                    list.prepend(info);
+                } else {
+                    // Create "No Results" message list element
+                    const message = document.createElement("div");
+                    message.setAttribute("class", "no_result");
+                    // Add message text content
+                    message.innerHTML = `<span>Found No Results for "${data.query}"</span>`;
+                    // Add message list element to the list
+                    list.appendChild(message);
+                }
+            },
+            noResults: true,
+            maxResults: undefined,
+        },
+    });
+
+    autoCompleteJS.input.addEventListener("selection", function (event) {
+        const feedback = event.detail;
+        autoCompleteJS.input.blur();
+
+        const selected = feedback.selection.value;
+
+        $('#billing_period_id').val(selected.id);
+    
+        autoCompleteJS.input.value = selected.name;
+    });
+</script>
 @endsection
 
 @section('menu')
@@ -80,18 +135,19 @@
         </div>
 
         <div class="form-group mt-2">
-            <label for="billing_period"> {{ trans('billing_periods.billing_period') }} </label>
-            <input id ="billing_period" type="text" name="billing_period" class="form-control @error('billing_period') is-invalid @enderror" placeholder="{{ trans('forms.start_typing') }}" value="{{ old('billing_period') ?? $payment->billing_period->name }}" aria-describedby="billingPeriodHelp" required>
-            <input id="billing_period_id" type="hidden" name="billing_period_id" value="{{ old('billing_period_id') ?? $payment->billing_period->id }}">
-
-            <small id="billingPeriodHelp" class="form-text text-muted"> The period to which the payment made by the social work corresponds </small>
-        </div>
-
-        <div class="form-group mt-2">
             <label for="amount"> {{ trans('payment_social_works.amount') }} </label>
             <input type="number" step="0.01" class="form-control @error('amount') is-invalid @enderror" name="amount" id="amount" value="{{ old('amount') ?? $payment->amount }}" min="0" aria-describedby="amountHelp" required>
 
             <small id="amountHelp" class="form-text text-muted"> The amount of payment received for the social work. It can be different from the total billed in the period </small>
+        </div>
+
+        <div class="form-group mt-3">
+            <input id ="billing_period" type="text" name="billing_period" class="form-control @error('billing_period') is-invalid @enderror" placeholder="{{ trans('forms.start_typing') }}" value="{{ old('billing_period') ?? $payment->billing_period->name }}" aria-describedby="billingPeriodHelp" required>
+            <input id="billing_period_id" type="hidden" name="billing_period_id" value="{{ old('billing_period_id') ?? $payment->billing_period->id }}">
+
+            <div>
+                <small id="billingPeriodHelp" class="form-text text-muted"> The period to which the payment made by the social work corresponds </small>
+            </div>
         </div>
 
         <input type="submit" class="btn btn-lg btn-primary mt-3" value="{{ trans('forms.save') }}">

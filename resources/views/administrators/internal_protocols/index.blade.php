@@ -7,17 +7,21 @@
 @section('active_protocols', 'active')
 
 @section('js')
-    <script type="text/javascript">
-	    $(document).ready(function() {
-	        // Put the filter
-	        $("#filter" ).val('{{ $data['filter'] ?? '' }}');
-	    });
+<script type="module">
+	$(document).ready(function() 
+	{
+	    // Put the filter
+	    $("#filter" ).val('{{ $data['filter'] ?? '' }}');
+	});
+</script>
 
-	    function load(page) {
-	        $("#page" ).val(page);
-	    	document.all["select_page"].submit();
-	    }
-    </script>
+<script type="text/javascript">
+	function load(page) 
+	{
+	    $("#page" ).val(page);
+	    document.all["select_page"].submit();
+	}
+</script>
 @endsection
 
 @section('menu')

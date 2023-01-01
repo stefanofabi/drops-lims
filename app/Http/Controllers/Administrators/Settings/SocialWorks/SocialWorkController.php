@@ -152,11 +152,7 @@ class SocialWorkController extends Controller
     public function getSocialWorks(Request $request)
     {
         //
-
-        $request->validate([
-            'filter' => 'required|string',
-        ]);
-
+        
         return $this->socialWorkRepository->getSocialWorks($request->filter);
     }
 }

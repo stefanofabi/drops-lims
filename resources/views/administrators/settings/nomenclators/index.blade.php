@@ -5,40 +5,40 @@
 @endsection
 
 @section('js')
-    <script>
-        $(document).ready(function () {
-            $('#myNomenclatorsTable').DataTable({
-                "language": {
-                    "info": '{{ trans('datatables.info') }}',
-                    "infoEmpty": '{{ trans('datatables.info_empty') }}',
-                    "infoFiltered": '{{ trans('datatables.info_filtered') }}',
-                    "search": '{{ trans('datatables.search') }}',
-                    "paginate": {
-                        "first": '{{ trans('datatables.first') }}',
-                        "last": '{{ trans('datatables.last') }}',
-                        "previous": '{{ trans('datatables.previous') }}',
-                        "next": '{{ trans('datatables.next') }}',
-                    },
-                    "lengthMenu": '{{ trans('datatables.show') }} '+
-                        '<select class="form-control form-control-sm">'+
-                        '<option value="10"> 10 </option>'+
-                        '<option value="20"> 20 </option>'+
-                        '<option value="30"> 30 </option>'+
-                        '<option value="-1"> {{ trans('datatables.all') }} </option>'+
-                        '</select> {{ trans('datatables.records') }}',
-                    "emptyTable": '{{ trans('datatables.no_data') }}',
-                    "zeroRecords": '{{ trans('datatables.no_match_records') }}',
-                }
-            });
-        });
-
-        function destroyNomenclator(form_id){
-            if (confirm('{{ trans("forms.confirm") }}')) {
-                var form = document.getElementById('destroy_nomenclator_'+form_id);
-                form.submit();
-            }
+<script type="module">
+    $('#myNomenclatorsTable').DataTable({
+        "language": {
+            "info": '{{ trans('datatables.info') }}',
+            "infoEmpty": '{{ trans('datatables.info_empty') }}',
+            "infoFiltered": '{{ trans('datatables.info_filtered') }}',
+            "search": '{{ trans('datatables.search') }}',
+            "paginate": {
+                "first": '{{ trans('datatables.first') }}',
+                "last": '{{ trans('datatables.last') }}',
+                "previous": '{{ trans('datatables.previous') }}',
+                "next": '{{ trans('datatables.next') }}',
+            },
+            "lengthMenu": '{{ trans('datatables.show') }} '+
+                '<select class="form-control form-control-sm">'+
+                '<option value="10"> 10 </option>'+
+                '<option value="20"> 20 </option>'+
+                '<option value="30"> 30 </option>'+
+                '<option value="-1"> {{ trans('datatables.all') }} </option>'+
+                '</select> {{ trans('datatables.records') }}',
+            "emptyTable": '{{ trans('datatables.no_data') }}',
+            "zeroRecords": '{{ trans('datatables.no_match_records') }}',
         }
-    </script>
+    });
+</script>
+    
+<script type="text/javascript">
+    function destroyNomenclator(form_id){
+        if (confirm('{{ trans("forms.confirm") }}')) {
+            var form = document.getElementById('destroy_nomenclator_'+form_id);
+            form.submit();
+        }
+    }
+</script>
 @endsection
 
 @section('content-title')

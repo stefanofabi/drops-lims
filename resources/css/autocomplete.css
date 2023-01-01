@@ -1,0 +1,27 @@
+.centerAutoComplete {
+	text-align: center;
+}
+
+.no_result {
+    margin: 0.3rem;
+    padding: 0.3rem 0.5rem;
+    list-style: none;
+    text-align: left;
+    font-size: 1rem;
+    color: #212121;
+    transition: all 0.1s ease-in-out;
+    border-radius: 0.35rem;
+    background-color: rgba(255, 255, 255, 1);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: all 0.2s ease;
+    outline: none;
+}
+	
+.no_result > span {
+    display: flex;
+    align-items: center;
+    font-weight: 100;
+    color: rgba(0, 0, 0, .2);
+}

@@ -7,68 +7,186 @@
 @section('active_protocols', 'active')
 
 @section('js')
-<script type="text/javascript">
+<script type="module">
 	$(document).ready(function() 
 	{
 		$("#billing_period").val('{{ @old('billing_period_id') ?? $protocol->billing_period_id }}');
     });
 
-    @if ($protocol->isOpen())
-	$(function () {
-        $("#socialWorkAutoComplete").autocomplete({
-            minLength: 2,
-            source: function (event, ui) {
-                var parameters = {
-                    "filter": $("#socialWorkAutoComplete").val()
-                };
+    const prescriberAutoComplete = new autoComplete({
+        selector: "#prescriberAutoComplete",
+        data: {
+            src: async (query) => {
+                try {
+                    // Fetch Data from external Source
+                    const source = await fetch(`{{ route("administrators/prescribers/load_prescribers") }}`, { 
+                        method: 'POST', 
+                        body: JSON.stringify({ filter: $("#prescriberAutoComplete").val() }),
+                        headers: { 
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                            "Content-Type" : "application/json",
+                        }
+                    });
+                    
+                    // Data should be an array of `Objects` or `Strings`
+                    const data = await source.json();
 
-                $.ajax({
-                    data: parameters,
-                    url: '{{ route("administrators/settings/social_works/getSocialWorks") }}',
-                    type: 'post',
-                    dataType: 'json',
-                    success: ui
-                });
-
-                return ui;
+                return data;
+                } catch (error) {
+                    return error;
+                }
             },
-            select: function (event, ui) {
-                event.preventDefault();
-                $('#plan').val(ui.item.plan_id);
-                $('#socialWorkAutoComplete').val(ui.item.label);
-            }
-        });
+            // Data source 'Object' key to be searched
+            keys: ["full_name"],
+            cache: false,
+        },
+        searchEngine: function (q, r) { return r; },
+        events: {
+            input: {
+                focus() {
+                    prescriberAutoComplete.start();
+                },
+            },
+        },
+        resultItem: {
+            element: (item, data) => {
+                // Modify Results Item Style
+                item.style = "display: flex; justify-content: space-between;";
+                // Modify Results Item Content
+                item.innerHTML = `
+                <span style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
+                ${data.match}
+                </span>
+                <span style="display: flex; align-items: center; font-size: 13px; font-weight: 100; text-transform: uppercase; color: rgba(0,0,0,.2);">
+                PE-${data.value.primary_enrollment} SE-${data.value.secondary_enrollment}
+                </span>`;
+            },
+            highlight: true
+        },
+        threshold: 2,
+        resultsList: {
+            element: (list, data) => {
+                if (data.results.length > 0) {
+                    const info = document.createElement("div");
+                    info.setAttribute("class", "centerAutoComplete");
+                    info.innerHTML = `Displaying <strong>${data.results.length}</strong> out of <strong>${data.matches.length}</strong> results`;
+                    list.prepend(info);
+                } else {
+                    // Create "No Results" message list element
+                    const message = document.createElement("div");
+                    message.setAttribute("class", "no_result");
+                    // Add message text content
+                    message.innerHTML = `<span>Found No Results for "${data.query}"</span>`;
+                    // Add message list element to the list
+                    list.appendChild(message);
+                }
+            },
+            noResults: true,
+            maxResults: 25,
+        },
     });
 
-    $(function () {
-        $("#prescriberAutoComplete").autocomplete({
-            minLength: 2,
-            source: function (event, ui) {
-                var parameters = {
-                    "filter": $("#prescriberAutoComplete").val()
-                };
+    prescriberAutoComplete.input.addEventListener("selection", function (event) 
+    {
+        const feedback = event.detail;
+        prescriberAutoComplete.input.blur();
 
-                $.ajax({
-                    data: parameters,
-                    url: '{{ route("administrators/prescribers/load_prescribers") }}',
-                    type: 'post',
-                    dataType: 'json',
-                    beforeSend: function () {
-                        //$("#ajaxResults").html('<div class="spinner-border text-info"> </div> Procesando, espere por favor...');
-                    },
-                    success: ui
-                });
-
-                return ui;
-            },
-            select: function (event, ui) {
-                event.preventDefault();
-                $('#prescriberAutoComplete').val(ui.item.label);
-                $('#prescriber').val(ui.item.id);
-            }
-        });
+        const selected = feedback.selection.value;
+        
+        $('#prescriber').val(selected.id);
+        
+        prescriberAutoComplete.input.value = selected.full_name;
     });
 
+    const socialWorkAutoComplete = new autoComplete({
+        selector: "#socialWorkAutoComplete",
+        data: {
+            src: async (query) => {
+                try {
+                    // Fetch Data from external Source
+                    const source = await fetch(`{{ route("administrators/settings/social_works/getSocialWorks") }}`, { 
+                        method: 'POST', 
+                        body: JSON.stringify({ filter: $("#socialWorkAutoComplete").val() }),
+                        headers: { 
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                            "Content-Type" : "application/json",
+                        }
+                    });
+                    
+                    // Data should be an array of `Objects` or `Strings`
+                    const data = await source.json();
+
+                return data;
+                } catch (error) {
+                    return error;
+                }
+            },
+            // Data source 'Object' key to be searched
+            keys: ["social_work"],
+            cache: false,
+        },
+        searchEngine: function (q, r) { return r; },
+        events: {
+            input: {
+                focus() {
+                    socialWorkAutoComplete.start();
+                },
+            },
+        },
+        resultItem: {
+            element: (item, data) => {
+                // Modify Results Item Style
+                item.style = "display: flex; justify-content: space-between;";
+                // Modify Results Item Content
+                item.innerHTML = `
+                <span style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
+                ${data.match}
+                </span>
+                <span style="display: flex; align-items: center; font-size: 13px; font-weight: 100; text-transform: uppercase; color: rgba(0,0,0,.2);">
+                ${data.value.plan}
+                </span>`;
+            },
+            highlight: true
+        },
+        threshold: 2,
+        resultsList: {
+            element: (list, data) => {
+                if (data.results.length > 0) {
+                    const info = document.createElement("div");
+                    info.setAttribute("class", "centerAutoComplete");
+                    info.innerHTML = `Displaying <strong>${data.results.length}</strong> out of <strong>${data.matches.length}</strong> results`;
+                    list.prepend(info);
+                } else {
+                    // Create "No Results" message list element
+                    const message = document.createElement("div");
+                    message.setAttribute("class", "no_result");
+                    // Add message text content
+                    message.innerHTML = `<span>Found No Results for "${data.query}"</span>`;
+                    // Add message list element to the list
+                    list.appendChild(message);
+                }
+            },
+            noResults: true,
+            maxResults: 25,
+        },
+    });
+
+    socialWorkAutoComplete.input.addEventListener("selection", function (event) 
+    {
+        const feedback = event.detail;
+        socialWorkAutoComplete.input.blur();
+
+        const selected = feedback.selection.value;
+
+        $('#planAutoComplete').val(selected.plan);
+        $('#plan').val(selected.plan_id);
+        
+        socialWorkAutoComplete.input.value = selected.social_work;
+    }); 
+</script>
+
+
+<script type="text/javascript">
     function enableSubmitForm() 
     {
         $('#securityMessage').hide('slow');
@@ -78,6 +196,8 @@
         $("textarea").removeAttr('disabled');
 
         $("#patientAutoComplete").attr('disabled', true);
+        $("#planAutoComplete").attr('disabled', true);
+        
     }
     
     function closeProtocol()
@@ -89,35 +209,28 @@
 
         return false;
     }
-    @else 
+
     function sendEmailProtocol() 
     {
         $('#send_email_protocol').submit();
     }
-    @endif
 </script>
 @endsection
 
 @section('menu')
 <nav class="navbar">
     <ul class="navbar-nav">
-        @can('crud_practices')
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('administrators/protocols/practices/index', ['internal_protocol_id' => $protocol->id]) }}"> {{ trans('practices.practices') }} </a>
+            <a class="nav-link @cannot('crud_practices') disabled @endcannot" href="{{ route('administrators/protocols/practices/index', ['internal_protocol_id' => $protocol->id]) }}"> {{ trans('practices.practices') }} </a>
         </li>
-        @endcan
-
-        @can('print_worksheets')
-        <li class="nav-item">
-            <a class="nav-link @if (! $protocol->isOpen()) disabled @endif" target="_blank" href="{{ route('administrators/protocols/generate_worksheet', ['id' => $protocol->id]) }}"> {{ trans('protocols.generate_worksheet') }} </a>
-        </li>
-        @endcan
         
-        @can('print_protocols')
         <li class="nav-item">
-            <a class="nav-link @if ($protocol->isOpen()) disabled @endif" target="_blank" href="{{ route('administrators/protocols/generate_protocol', ['id' => $protocol->id]) }}"> {{ trans('protocols.generate_protocol') }} </a>
+            <a class="nav-link @if ($protocol->isClosed()) disabled @elseif (! auth()->user()->can('print_worksheets')) disabled @endif" target="_blank" href="{{ route('administrators/protocols/generate_worksheet', ['id' => $protocol->id]) }}"> {{ trans('protocols.generate_worksheet') }} </a>
         </li>
-        @endcan
+        
+        <li class="nav-item">
+            <a class="nav-link @if ($protocol->isOpen()) disabled @elseif (! auth()->user()->can('print_protocols')) disabled @endif" target="_blank" href="{{ route('administrators/protocols/generate_protocol', ['id' => $protocol->id]) }}"> {{ trans('protocols.generate_protocol') }} </a>
+        </li>
 
         <li class="nav-item">
             <a class="nav-link @if ($protocol->isOpen()) disabled @endif" href="#" onclick="sendEmailProtocol()"> {{ trans('protocols.send_protocol_to_email') }} </a>
@@ -129,14 +242,11 @@
             </form>
         </li>
 
-        @can('crud_patients')
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('administrators/patients/edit', ['id' => $protocol->internal_patient_id]) }}"> {{ trans('protocols.see_patient') }} </a>
+            <a class="nav-link @if (! auth()->user()->can('crud_patients')) disabled @endif" href="{{ route('administrators/patients/edit', ['id' => $protocol->internal_patient_id]) }}"> {{ trans('protocols.see_patient') }} </a>
         </li>
-        @endcan
 
-        @if ($protocol->isOpen())
-        <li class="nav-item">
+        <li class="nav-item @if ($protocol->isOpen()) disabled @endif">
             <a class="nav-link" href="#" onclick="closeProtocol()"> {{ trans('protocols.close_protocol') }} </a>
 
             <form method="post" action="{{ route('administrators/protocols/close', ['id' => $protocol->id]) }}" id="close_protocol">
@@ -145,7 +255,6 @@
                 <input class="d-none" type="submit">
             </form>
         </li>
-        @endif
     </ul>
 </nav>
 @endsection
@@ -187,8 +296,8 @@
     </div>
 
     <div class="row">
-        <div class="col-md-6">
-            <div class="form-group mt-2">
+        <div class="col-lg-6">
+            <div class="form-group">
                 <label for="patientAutoComplete"> {{ trans('patients.patient') }} </label>
                 <input type="text" class="form-control" id="patientAutoComplete" value="{{ $protocol->internalPatient->full_name }}" aria-describedby="patientHelp" disabled>
 
@@ -196,41 +305,50 @@
             </div>
         </div>
 
-        <div class="col-md-6">
-            <div class="form-group mt-2">
-                <label for="socialWorkAutoComplete"> {{ trans('social_works.social_work') }} </label>
-                <input type="text" class="form-control" name="social_work_name" id="socialWorkAutoComplete" placeholder="{{ trans('forms.start_typing') }}" value="@if (old('social_work_name')) {{ old('social_work_name') }} @else {{ $protocol->plan->social_work->name }} - {{ $protocol->plan->name }} @endif" aria-describedby="socialWorkHelp" required disabled>
-                <input type="hidden" name="plan_id" id="plan" value="{{ old('plan_id') ?? $protocol->plan_id }}">
-
-                <small id="socialWorkHelp" class="form-text text-muted"> You can charge any social work even if it is not the one that the patient has charged </small>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group mt-2">
-                <label for="prescriberAutoComplete"> {{ trans('prescribers.prescriber') }} </label>
+        <div class="col-lg-6">
+            <div class="form-group mt-3">
                 <input type="text" class="form-control" name="prescriber_name" id="prescriberAutoComplete" placeholder="{{ trans('forms.start_typing') }}" value="{{ old('prescriber_name') ?? $protocol->prescriber->full_name }}" aria-describedby="prescriberHelp" required disabled>
-                <input type="hidden" id="prescriber" name="prescriber_id" value="{{ old('prescriber_id') ?? $protocol->prescriber_id }}">
-
-                <small id="prescriberHelp" class="form-text text-muted"> Associate a prescriber to the protocol to continue </small>
+                <input type="hidden" id="prescriber" name="prescriber_id" value="{{ old('prescriber_id') ?? $protocol->prescriber_id }}"> 
+                
+                <div>
+                    <small id="prescriberHelp" class="form-text text-muted"> Associate a prescriber to the protocol to continue </small>
+                </div>
             </div>
         </div>
 
-        <div class="col-md-6">
-            <div class="form-group mt-2">
+        <div class="col-lg-6 mt-2">
+            <div class="form-group mt-3">
+                <input type="text" class="form-control" name="social_work_name" id="socialWorkAutoComplete" placeholder="{{ trans('forms.start_typing') }}" value="{{ old('social_work_name') ?? $protocol->plan->social_work->name }}" aria-describedby="socialWorkHelp" required disabled>
+
+                <div>
+                    <small id="socialWorkHelp" class="form-text text-muted"> You can charge any social work even if it is not the one that the patient has charged </small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 mt-2">
+            <div class="form-group">
+                <label for="expiration_date"> {{ trans('plans.plan') }} </label>
+                <input type="text" class="form-control" name="plan_name" id="planAutoComplete" value="{{ old('plan_name') ?? $protocol->plan->name }}" aria-describedby="planHelp" disabled>
+                <input type="hidden" name="plan_id" id="plan" value="{{ old('plan_id') ?? $protocol->plan_id }}">
+                
+                <div>
+                    <small id="planHelp" class="form-text text-muted"> The plan will be loaded automatically when you select a social work </small>
+                </div>
+		    </div>
+        </div>
+
+        <div class="col-md-6 mt-2">
+            <div class="form-group">
                 <label for="completion_date"> {{ trans('protocols.completion_date') }} </label>
                 <input type="date" class="form-control" name="completion_date" id="completion_date" value="{{ old('completion_date') ?? $protocol->completion_date }}" aria-describedby="completionDateHelp" disabled>
                 
                 <small id="completionDateHelp" class="form-text text-muted"> Indicates the date on which the practices were carried out. By this date the protocols are ordered </small>
             </div>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group mt-2">
+        <div class="col-md-6 mt-2">
+            <div class="form-group">
                 <label for="diagnostic"> {{ trans('protocols.diagnostic') }} </label>
                 <input type="text" class="form-control" name="diagnostic" id="diagnostic" value="{{ old('diagnostic') ?? $protocol->diagnostic }}" aria-describedby="diagnosticHelp" disabled>
                 
@@ -246,7 +364,7 @@
 
     <div class="row">
         <div class="col-md-6">
-            <div class="form-group mt-2">
+            <div class="form-group">
                 <label for="billing_period"> {{ trans('billing_periods.billing_period') }} </label>
                 <select id="billing_period" class="form-select input-sm" name="billing_period_id" id="billing_period" aria-describedby="billingPeriodHelp" disabled>
                     <option value=""> {{ trans('forms.select_option') }}</option>
@@ -263,7 +381,7 @@
         </div>
 
         <div class="col-md-6">
-            <div class="form-group mt-2">
+            <div class="form-group">
                 <label for="quantity_orders"> {{ trans('protocols.quantity_orders') }} </label>
                 <input type="number" class="form-control" name="quantity_orders" id="quantity_orders" min="0" value="{{ old('quantity_orders') ?? $protocol->quantity_orders }}" aria-describedby="quantityOrdersHelp" required disabled>
 
@@ -273,7 +391,7 @@
     </div>
 
     <div class="mt-5">
-        <div class="form-group mt-2">
+        <div class="form-group">
             <h4><i class="fas fa-notes-medical"></i> <label for="observations"> {{ trans('protocols.observations') }} </label> </h4>
             <hr class="col-6">
 

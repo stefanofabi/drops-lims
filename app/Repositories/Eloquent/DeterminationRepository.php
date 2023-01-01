@@ -6,8 +6,6 @@ use App\Contracts\Repository\DeterminationRepositoryInterface;
 
 use App\Models\Determination; 
 
-use DB;
-
 final class DeterminationRepository implements DeterminationRepositoryInterface
 {
     protected $model;
@@ -68,26 +66,18 @@ final class DeterminationRepository implements DeterminationRepositoryInterface
 	}
 
     public function getDeterminationsFromNomenclator($nomenclator_id, $filter) {
-        $determinations = $this->model
-            ->select('determinations.id', DB::raw("CONCAT(determinations.code, ' - ', determinations.name) as label"))
-            ->where('determinations.nomenclator_id', $nomenclator_id)
+        return $this->model
+            ->select('id', 'code', 'name', 'biochemical_unit')
+            ->selectRaw("CONCAT(code, ' - ', name) as label")
+            ->where('nomenclator_id', $nomenclator_id)
             ->where(function ($query) use ($filter) {
                 if (! empty($filter)) {
-                    $query->orWhere("determinations.name", "ilike", "%$filter%")
-                        ->orWhere("determinations.code", "like", "$filter%");
+                    $query->orWhere('name', 'ilike', "%$filter%")
+                        ->orWhere('code', 'like', "$filter%");
                 }
             })
-            ->take(15)
             ->orderBy('determinations.name', 'ASC')
             ->get();
-
-            
-        if ($determinations->isEmpty()) 
-        {
-            return response()->json(['label' => 'No records found']);
-        }
-
-        return $determinations;
     }
 
     public function updateReport(array $data, $id)

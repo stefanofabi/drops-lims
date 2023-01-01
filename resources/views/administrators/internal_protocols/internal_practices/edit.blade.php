@@ -7,8 +7,7 @@
 @section('active_protocols', 'active')
 
 @section('js')
-    <script type="text/javascript">
-
+    <script type="module">
         $(document).ready(function () {
             $('#report').find('input').each(function () {
                 $(this).addClass("form-control");
@@ -20,7 +19,9 @@
 
             loadResult();
         });
-
+    </script>
+    
+    <script type="text/javascript">
         function loadResult() {
             var parameters = {
                 "id": '{{ $practice->id }}'
@@ -56,15 +57,13 @@
                 $("#messages").html('<div class="alert alert-danger fade show mt-3" role="alert"> <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"> </button> <strong> {{ trans("forms.danger") }}! </strong> {{ trans("forms.failed_transaction") }} </div>');
             });
         }
-
-        @can('sign_practices')
+        
         function signPractice() {
             if (! confirm("{{ Lang::get('forms.confirm')}}")) return false;
 
             let practice_signature_form = $("#practice_signature_form")
             practice_signature_form.submit();
         }
-        @endcan
     </script>
 
     <!-- Practice Javascript code -->

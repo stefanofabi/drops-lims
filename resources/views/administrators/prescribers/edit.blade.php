@@ -1,14 +1,16 @@
 @extends('administrators/default-template')
 
 @section('js')
-<script type="text/javascript">
+<script type="module">
     $(document).ready(function() 
     {
 		@if (sizeof($errors) > 0)
 		enableSubmitForm();
 		@endif
     });
+</script>
 
+<script type="text/javascript">
     function enableSubmitForm() 
 	{
 		$('#securityMessage').hide('slow');

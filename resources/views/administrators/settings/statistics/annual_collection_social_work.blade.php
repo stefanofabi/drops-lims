@@ -4,14 +4,15 @@
 @parent
 
 
-<script type="text/javascript">
+<script type="module">
 	$(document).ready(function() {
     	$("#social_work").val('{{ $social_work }}') ;	    
 	});
 </script>
 
  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
+    
+<script type="text/javascript">
 
       google.charts.load('current', {'packages':['bar']});
       google.charts.setOnLoadCallback(drawChart);
@@ -35,7 +36,7 @@
 
         chart.draw(data, google.charts.Bar.convertOptions(options));
       }
-    </script>
+</script>
 @endsection
 
 @section('graphs')

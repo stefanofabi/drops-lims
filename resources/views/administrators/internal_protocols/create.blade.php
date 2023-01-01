@@ -7,94 +7,271 @@
 @section('active_protocols', 'active')
 
 @section('js')
-    <script type="text/javascript">
-        $(function () {
-            $("#patientAutoComplete").autocomplete({
-                minLength: 2,
-                source: function (event, ui) {
-                    var parameters = {
-                        "filter": $("#patientAutoComplete").val()
-                    };
+<script type="module">
+    $(document).ready(function () 
+    {
+        // Select a billing period from list
+        $("#billing_period").val("{{ $current_billing_period->id ?? '' }}");
+    });
 
-                    $.ajax({
-                        data: parameters,
-                        url: '{{ route("administrators/patients/load_patients") }}',
-                        type: 'post',
-                        dataType: 'json',
-                        success: ui
+    const patientAutoComplete = new autoComplete({
+        selector: "#patientAutoComplete",
+        data: {
+            src: async (query) => {
+                try {
+                    // Fetch Data from external Source
+                    const source = await fetch(`{{ route("administrators/patients/load_patients") }}`, { 
+                        method: 'POST', 
+                        body: JSON.stringify({ filter: $("#patientAutoComplete").val() }),
+                        headers: { 
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                            "Content-Type" : "application/json",
+                        }
                     });
-
-                    return ui;
-                },
-                select: function (event, ui) {
-                    event.preventDefault();
-                    $('#patient').val(ui.item.id);
-
-                    $('#submitPatient').click();
-                }
-            });
-        });
-
-        $(function () 
-        {
-            $("#socialWorkAutoComplete").autocomplete({
-                minLength: 2,
-                source: function (event, ui) {
-                    var parameters = {
-                        "filter": $("#socialWorkAutoComplete").val()
-                    };
-
-                    $.ajax({
-                        data: parameters,
-                        url: '{{ route("administrators/settings/social_works/getSocialWorks") }}',
-                        type: 'post',
-                        dataType: 'json',
-                        success: ui
-                    });
-
-                    return ui;
-                },
-                select: function (event, ui) {
-                    event.preventDefault();
-                    $('#plan').val(ui.item.plan_id);
-                    $('#socialWorkAutoComplete').val(ui.item.label);
                     
+                    // Data should be an array of `Objects` or `Strings`
+                    const data = await source.json();
+
+                return data;
+                } catch (error) {
+                    return error;
                 }
-            });
-        });
-
-        $(function () {
-            $("#prescriberAutoComplete").autocomplete({
-                minLength: 2,
-                source: function (event, ui) {
-                    var parameters = {
-                        "filter": $("#prescriberAutoComplete").val()
-                    };
-
-                    $.ajax({
-                        data: parameters,
-                        url: '{{ route("administrators/prescribers/load_prescribers") }}',
-                        type: 'post',
-                        dataType: 'json',
-                        success: ui
-                    });
-
-                    return ui;
+            },
+            // Data source 'Object' key to be searched
+            keys: ["full_name"],
+            cache: false,
+        },
+        searchEngine: function (q, r) { return r; },
+        events: {
+            input: {
+                focus() {
+                    patientAutoComplete.start();
                 },
-                select: function (event, ui) {
-                    event.preventDefault();
-                    $('#prescriberAutoComplete').val(ui.item.label);
-                    $('#prescriber').val(ui.item.id);
+            },
+        },
+        resultItem: {
+            element: (item, data) => {
+                // Modify Results Item Style
+                item.style = "display: flex; justify-content: space-between;";
+                // Modify Results Item Content
+                item.innerHTML = `
+                <span style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
+                ${data.match}
+                </span>
+                <span style="display: flex; align-items: center; font-size: 13px; font-weight: 100; text-transform: uppercase; color: rgba(0,0,0,.2);">
+                ${data.value.identification_number}
+                </span>`;
+            },
+            highlight: true
+        },
+        threshold: 2,
+        resultsList: {
+            element: (list, data) => {
+                if (data.results.length > 0) {
+                    const info = document.createElement("div");
+                    info.setAttribute("class", "centerAutoComplete");
+                    info.innerHTML = `Displaying <strong>${data.results.length}</strong> out of <strong>${data.matches.length}</strong> results`;
+                    list.prepend(info);
+                } else {
+                    // Create "No Results" message list element
+                    const message = document.createElement("div");
+                    message.setAttribute("class", "no_result");
+                    // Add message text content
+                    message.innerHTML = `<span>Found No Results for "${data.query}"</span>`;
+                    // Add message list element to the list
+                    list.appendChild(message);
                 }
-            });
-        });
+            },
+            noResults: true,
+            maxResults: 25,
+        },
+    });
 
-        $(document).ready(function () 
-        {
-            // Select a billing period from list
-            $("#billing_period").val("{{ $current_billing_period->id ?? '' }}");
-        });
-    </script>
+    patientAutoComplete.input.addEventListener("selection", function (event) 
+    {
+        const feedback = event.detail;
+        patientAutoComplete.input.blur();
+
+        const selected = feedback.selection.value;
+
+        $('#patient').val(selected.id);
+    
+        patientAutoComplete.input.value = selected.full_name;
+
+        $('#submitPatient').click();
+    });
+
+    const prescriberAutoComplete = new autoComplete({
+        selector: "#prescriberAutoComplete",
+        data: {
+            src: async (query) => {
+                try {
+                    // Fetch Data from external Source
+                    const source = await fetch(`{{ route("administrators/prescribers/load_prescribers") }}`, { 
+                        method: 'POST', 
+                        body: JSON.stringify({ filter: $("#prescriberAutoComplete").val() }),
+                        headers: { 
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                            "Content-Type" : "application/json",
+                        }
+                    });
+                    
+                    // Data should be an array of `Objects` or `Strings`
+                    const data = await source.json();
+
+                return data;
+                } catch (error) {
+                    return error;
+                }
+            },
+            // Data source 'Object' key to be searched
+            keys: ["full_name"],
+            cache: false,
+        },
+        searchEngine: function (q, r) { return r; },
+        events: {
+            input: {
+                focus() {
+                    prescriberAutoComplete.start();
+                },
+            },
+        },
+        resultItem: {
+            element: (item, data) => {
+                // Modify Results Item Style
+                item.style = "display: flex; justify-content: space-between;";
+                // Modify Results Item Content
+                item.innerHTML = `
+                <span style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
+                ${data.match}
+                </span>
+                <span style="display: flex; align-items: center; font-size: 13px; font-weight: 100; text-transform: uppercase; color: rgba(0,0,0,.2);">
+                PE-${data.value.primary_enrollment} SE-${data.value.secondary_enrollment}
+                </span>`;
+            },
+            highlight: true
+        },
+        threshold: 2,
+        resultsList: {
+            element: (list, data) => {
+                if (data.results.length > 0) {
+                    const info = document.createElement("div");
+                    info.setAttribute("class", "centerAutoComplete");
+                    info.innerHTML = `Displaying <strong>${data.results.length}</strong> out of <strong>${data.matches.length}</strong> results`;
+                    list.prepend(info);
+                } else {
+                    // Create "No Results" message list element
+                    const message = document.createElement("div");
+                    message.setAttribute("class", "no_result");
+                    // Add message text content
+                    message.innerHTML = `<span>Found No Results for "${data.query}"</span>`;
+                    // Add message list element to the list
+                    list.appendChild(message);
+                }
+            },
+            noResults: true,
+            maxResults: 25,
+        },
+    });
+
+    prescriberAutoComplete.input.addEventListener("selection", function (event) 
+    {
+        const feedback = event.detail;
+        prescriberAutoComplete.input.blur();
+
+        const selected = feedback.selection.value;
+        
+        $('#prescriber').val(selected.id);
+        
+        prescriberAutoComplete.input.value = selected.full_name;
+    });
+    
+    const socialWorkAutoComplete = new autoComplete({
+        selector: "#socialWorkAutoComplete",
+        data: {
+            src: async (query) => {
+                try {
+                    // Fetch Data from external Source
+                    const source = await fetch(`{{ route("administrators/settings/social_works/getSocialWorks") }}`, { 
+                        method: 'POST', 
+                        body: JSON.stringify({ filter: $("#socialWorkAutoComplete").val() }),
+                        headers: { 
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                            "Content-Type" : "application/json",
+                        }
+                    });
+                    
+                    // Data should be an array of `Objects` or `Strings`
+                    const data = await source.json();
+
+                return data;
+                } catch (error) {
+                    return error;
+                }
+            },
+            // Data source 'Object' key to be searched
+            keys: ["social_work"],
+            cache: false,
+        },
+        searchEngine: function (q, r) { return r; },
+        events: {
+            input: {
+                focus() {
+                    socialWorkAutoComplete.start();
+                },
+            },
+        },
+        resultItem: {
+            element: (item, data) => {
+                // Modify Results Item Style
+                item.style = "display: flex; justify-content: space-between;";
+                // Modify Results Item Content
+                item.innerHTML = `
+                <span style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
+                ${data.match}
+                </span>
+                <span style="display: flex; align-items: center; font-size: 13px; font-weight: 100; text-transform: uppercase; color: rgba(0,0,0,.2);">
+                ${data.value.plan}
+                </span>`;
+            },
+            highlight: true
+        },
+        threshold: 2,
+        resultsList: {
+            element: (list, data) => {
+                if (data.results.length > 0) {
+                    const info = document.createElement("div");
+                    info.setAttribute("class", "centerAutoComplete");
+                    info.innerHTML = `Displaying <strong>${data.results.length}</strong> out of <strong>${data.matches.length}</strong> results`;
+                    list.prepend(info);
+                } else {
+                    // Create "No Results" message list element
+                    const message = document.createElement("div");
+                    message.setAttribute("class", "no_result");
+                    // Add message text content
+                    message.innerHTML = `<span>Found No Results for "${data.query}"</span>`;
+                    // Add message list element to the list
+                    list.appendChild(message);
+                }
+            },
+            noResults: true,
+            maxResults: 25,
+        },
+    });
+
+    socialWorkAutoComplete.input.addEventListener("selection", function (event) 
+    {
+        const feedback = event.detail;
+        socialWorkAutoComplete.input.blur();
+
+        const selected = feedback.selection.value;
+
+        $('#planAutoComplete').val(selected.plan);
+        $('#plan').val(selected.plan_id);
+        
+        socialWorkAutoComplete.input.value = selected.social_work;
+    }); 
+</script>
 @endsection
 
 @section('content-title')
@@ -138,40 +315,54 @@ To create a protocol you have to select at least the patient, the social work an
         <hr class="col-6">
     </div>
 
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group mt-2">
-                <label for="patientAutoComplete"> {{ trans('patients.patient') }} </label>
-                <input type="text" class="form-control" id="patientAutoComplete" placeholder="{{ trans('forms.start_typing') }}" value="@if ($patient) {{ $patient->last_name ?? '' }} {{ $patient->name ?? '' }} @endif" aria-describedby="patientHelp" required>
-                <input type="hidden" name="internal_patient_id" value="{{ $patient->id ?? '' }}">
-
-                <small id="patientHelp" class="form-text text-muted"> When selecting a patient we will automatically load their social work </small>
+    <div class="row mt-2">
+        <div class="col-lg-6">
+            <div class="form-group">
+                <input type="text" class="form-control" id="patientAutoComplete" placeholder="{{ trans('forms.start_typing') }}" value="{{ $patient->full_name ?? '' }}" aria-describedby="patientHelp" required>
+                <input type="hidden" name="internal_patient_id" value="{{ $patient->id ?? '' }}"> 
+                
+                <div>
+                    <small id="patientHelp" class="form-text text-muted"> When selecting a patient we will automatically load their social work </small>
+                </div>
             </div>
         </div>
 
-        <div class="col-md-6">
-            <div class="form-group mt-2">
-                <label for="socialWorkAutoComplete"> {{ trans('social_works.social_work') }} </label>
-                <input type="text" class="form-control" name="social_work_name" id="socialWorkAutoComplete" placeholder="{{ trans('forms.start_typing') }}" value="{{ old('social_work_name') ?? $patient->plan->social_work->name ?? '' }}" aria-describedby="socialWorkHelp" required>
-                <input type="hidden" name="plan_id" id="plan" value="{{ old('plan_id') ?? $patient->plan_id ?? '' }}">
-
-                <small id="socialWorkHelp" class="form-text text-muted"> You can charge any social work even if it is not the one that the patient has charged </small>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group mt-2">
-                <label for="prescriberAutoComplete"> {{ trans('prescribers.prescriber') }} </label>
+        <div class="col-lg-6">
+            <div class="form-group">
                 <input type="text" class="form-control" name="prescriber_name" id="prescriberAutoComplete" placeholder="{{ trans('forms.start_typing') }}" value="{{ old('prescriber_name') }}" aria-describedby="prescriberHelp" required>
-                <input type="hidden" id="prescriber" name="prescriber_id" value="{{ old('prescriber_id') }}">
-
-                <small id="prescriberHelp" class="form-text text-muted"> Associate a prescriber to the protocol to continue </small>
+                <input type="hidden" id="prescriber" name="prescriber_id" value="{{ old('prescriber_id') }}"> 
+                
+                <div>
+                    <small id="prescriberHelp" class="form-text text-muted"> Associate a prescriber to the protocol to continue </small>
+                </div>
+            </div>
+        </div>
+   
+        <div class="col-lg-6 mt-2">
+            <div class="form-group mt-3">
+                <input type="text" class="form-control" name="social_work_name" id="socialWorkAutoComplete" placeholder="{{ trans('forms.start_typing') }}" value="{{ old('social_work_name') ?? $patient->plan->social_work->name ?? '' }}" aria-describedby="socialWorkHelp" required>
+                
+                <div>
+                    <small id="socialWorkHelp" class="form-text text-muted"> You can charge any social work even if it is not the one that the patient has charged </small>
+                </div>
             </div>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-lg-6 mt-2">
+            <div class="form-group">
+                <label for="expiration_date"> {{ trans('plans.plan') }} </label>
+                <input type="text" class="form-control" name="plan_name" id="planAutoComplete" value="{{ old('plan_name') ?? $patient->plan->name ?? '' }}" aria-describedby="planHelp" disabled>
+                <input type="hidden" name="plan_id" id="plan" value="{{ old('plan_id') ?? $patient->plan_id ?? '' }}">
+                
+                <div>
+                    <small id="planHelp" class="form-text text-muted"> The plan will be loaded automatically when you select a social work </small>
+                </div>
+		    </div>
+        </div>
+  
+
+   
+        <div class="col-lg-6">
             <div class="form-group mt-2">
                 <label for="completion_date"> {{ trans('protocols.completion_date') }} </label>
                 <input type="date" class="form-control" name="completion_date" id="completion_date" value="{{ old('completion_date') ?? date('Y-m-d') }}" aria-describedby="completionDateHelp">
@@ -179,9 +370,7 @@ To create a protocol you have to select at least the patient, the social work an
                 <small id="completionDateHelp" class="form-text text-muted"> Indicates the date on which the practices were carried out. By this date the protocols are ordered </small>
             </div>
         </div>
-    </div>
 
-    <div class="row">
         <div class="col-md-6">
             <div class="form-group mt-2">
                 <label for="diagnostic"> {{ trans('protocols.diagnostic') }} </label>
@@ -192,14 +381,14 @@ To create a protocol you have to select at least the patient, the social work an
         </div>
     </div>
 
-    <div class="mt-3">
+    <div class="mt-4">
         <h4><i class="fas fa-file-invoice-dollar"></i> {{ trans('protocols.billing_data') }} </h4>
         <hr class="col-6">
     </div>
 
     <div class="row">
         <div class="col-md-6">
-            <div class="form-group mt-2">
+            <div class="form-group">
                 <label for="quantity_orders"> {{ trans('billing_periods.billing_period') }} </label>
                 <select id="billing_period" class="form-select input-sm" name="billing_period_id">
                     <option value=""> {{ trans('forms.select_option') }}</option>
@@ -216,7 +405,7 @@ To create a protocol you have to select at least the patient, the social work an
         </div>
 
         <div class="col-md-6">
-            <div class="form-group mt-2">
+            <div class="form-group">
                 <label for="quantity_orders"> {{ trans('protocols.quantity_orders') }} </label>
                 <input type="number" class="form-control" name="quantity_orders" id="quantity_orders" min="0" value="{{ old('quantity_orders') ?? '1' }}" aria-describedby="quantityOrdersHelp" required>
 
