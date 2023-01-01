@@ -12,7 +12,6 @@
             form.submit();
         }
     }
-
     function load(page) {
         $("#page" ).val(page);
         document.all["select_page"].submit();
@@ -91,10 +90,9 @@
             </td>
 
 			<td class="text-end">
-				<a href="{{ route('administrators/patients/edit', $patient->id) }}" class="btn btn-primary btn-sm verticalButtons" title="{{ trans('patients.show_patient') }}" > <i class="fas fa-user-edit fa-sm"></i> </a>
+				<a href="{{ route('administrators/patients/edit', $patient->id) }}" class="btn btn-primary btn-sm verticalButtons" title="{{ trans('patients.edit_patient') }}" > <i class="fas fa-user-edit fa-sm"></i> </a>
 
 				<a class="btn btn-primary btn-sm verticalButtons" title="{{ trans('patients.destroy_patient') }}" onclick="destroyPatient('{{ $patient->id }}')"> <i class="fas fa-user-slash fa-sm"> </i> </a>
-			
 
 				<form id="destroy_patient_{{ $patient->id }}" method="POST" action="{{ route('administrators/patients/destroy', $patient->id) }}">
 					@csrf

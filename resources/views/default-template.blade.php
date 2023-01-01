@@ -39,16 +39,6 @@
         @section('navbar')
         @show
 
-        @section('css')
-        <style>
-            @media (max-width: 768px) {
-                .verticalButtons {
-                    margin-top: 5px;
-                }
-            }
-        </style>
-        @show
-
         @section('js')
         @show
         
