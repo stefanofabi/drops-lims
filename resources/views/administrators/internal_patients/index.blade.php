@@ -65,7 +65,7 @@
     <input type="hidden" id="page" name="page" value="{{ $data['page'] }}">
 </form>
 
-<div class="table-responsive-sm mt-3">
+<div class="table-responsive mt-3">
 	<table class="table table-striped">
 		<tr>
 			<th> {{ trans('patients.patient') }} </th>
@@ -82,8 +82,8 @@
 			<td> {{ $patient->city }} </td>
 			<td>
                 @php
-                    $age = $patient->age();
-                    $format_type = $age != null && $age['year'] > 0;
+                $age = $patient->age();
+                $format_type = $age != null && $age['year'] > 0;
                 @endphp
 
                 @if ($age != null) {{ trans_choice('patients.calculate_age', $format_type ? 1 : 0 , $age) }} @endif

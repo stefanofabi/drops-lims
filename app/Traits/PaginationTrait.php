@@ -39,7 +39,7 @@ trait PaginationTrait {
 			}else if($i==1) {
 				$out.= "<li class='page-item'><a class='page-link' href='javascript:void(0);' onclick='load(1)'>$i</a></li>";
 			}else {
-				$out.= "<li class='page-item'><a class='page-link' href='javascript:void(0);' onclick='load(".$i.")'>$i</a></li>";
+				$out.= "<li class='page-item' style='overflow: hidden'><a class='page-link' href='javascript:void(0);' onclick='load(".$i.")'>$i</a></li>";
 			}
 		}
 

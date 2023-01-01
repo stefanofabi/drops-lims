@@ -66,10 +66,12 @@ class DeterminationController extends Controller
         }
 
         return view('administrators/determinations/index')
-            ->with('data', $request->all())
+            ->with('nomenclator', $request->nomenclator_id)
+            ->with('filter', $request->filter)
             ->with('determinations', $determinations->skip($offset)->take(self::PER_PAGE))
             ->with('nomenclators', $this->nomenclatorRepository->all())
-            ->with('paginate', $paginate);
+            ->with('paginate', $paginate)
+            ->with('page', $request->page);
     }
 
     /**

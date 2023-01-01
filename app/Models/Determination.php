@@ -21,7 +21,6 @@ class Determination extends Model
      * @var array
      */
 	protected $fillable = [
-        'nomenclator_id', 
         'code', 
         'name', 
         'position',

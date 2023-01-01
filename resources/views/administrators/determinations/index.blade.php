@@ -27,10 +27,10 @@
 <script type="module">
     $(document).ready(function() {
         // Select a nomenclator
-        $('#nomenclator').val("{{ $data['nomenclator_id'] ?? '' }}");
+        $('#nomenclator').val("{{ $nomenclator }}");
 
         // Put the filter
-        $("#filter" ).val("{{ $data['filter'] ?? '' }}");
+        $("#filter" ).val("{{ $filter }}");
     });
 </script>
 @endsection
@@ -77,11 +77,12 @@
 
         <div class="mt-2 col-md-6">
             <button type="submit" class="btn btn-primary" onclick="load(1)">
-                <span class="fas fa-search" ></span> {{ trans('forms.search') }} </button>
-            </div>
+                <span class="fas fa-search" ></span> {{ trans('forms.search') }} 
+            </button>
+        </div>
     </div>
 
-    <input type="hidden" id="page" name="page" value="{{ $data['page'] }}">
+    <input type="hidden" id="page" name="page" value="{{ $page }}">
 </form>
 
 <div class="table-responsive mt-3">
