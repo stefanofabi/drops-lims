@@ -128,27 +128,24 @@
 @section('menu')
 <nav class="navbar">
 	<ul class="navbar-nav">
-       @can('crud_protocols')
-	        <li class="nav-item">
-				<form action="{{ route('administrators/protocols/create') }}" id="create_protocol_form">
-		            <input type="hidden" name="internal_patient_id" value="{{ $patient->id }}">
-		        </form>
+	    <li class="nav-item">
+			<form action="{{ route('administrators/protocols/create') }}" id="create_protocol_form">
+		        <input type="hidden" name="internal_patient_id" value="{{ $patient->id }}">
+		    </form>
 
-				<a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('create_protocol_form').submit();"> {{ trans('protocols.create_protocol')}} </a>
-			</li>
-		@endcan
+			<a class="nav-link @cannot('crud_protocols') disabled @endcannot" href="#" onclick="event.preventDefault(); document.getElementById('create_protocol_form').submit();"> {{ trans('protocols.create_protocol')}} </a>
+		</li>
 
-		@if(auth()->user()->can('generate_security_codes'))
-			<li class="nav-item">
-				<form id="security_code_form" action="{{ route('administrators/patients/security_codes/store') }}" method="post">
-					@csrf
+	
+		<li class="nav-item">
+			<form id="security_code_form" action="{{ route('administrators/patients/security_codes/store') }}" method="post">
+				@csrf
 
-					<input type="hidden" name="internal_patient_id" value="{{ $patient->id }}">
-				</form>
+				<input type="hidden" name="internal_patient_id" value="{{ $patient->id }}">
+			</form>
 
-				<a class="nav-link" href="#" onclick="generateNewSecurityCode()"> {{ trans('patients.send_security_code') }} </a>
-			</li>
-		@endif
+			<a class="nav-link @cannot('generate_security_codes') disabled @endcannot" href="#" onclick="generateNewSecurityCode()"> {{ trans('patients.send_security_code') }} </a>
+		</li>
 	</ul>
 </nav>
 @endsection
@@ -201,9 +198,7 @@
                 <small id="lastNameHelp" class="form-text text-muted"> This last name is the one that appears when you generate a pdf protocol </small>
             </div>
         </div>
-    </div>
 
-    <div class="row">
         <div class="col-md-6">
             <div class="form-group mt-2">
                 <label for="identification_number"> {{ trans('patients.identification_number') }} </label>
@@ -225,9 +220,7 @@
                 <small id="sexHelp" class="form-text text-muted"> Some determinations may only be for one sex </small>
             </div>
         </div>
-    </div>
 
-    <div class="row">
         <div class="col-md-6">
             <div class="form-group mt-2">
                 <label for="home_address"> {{ trans('patients.home_address') }} </label>
@@ -245,9 +238,8 @@
                 <small id="cityHelp" class="form-text text-muted"> City where the patient resides </small>
             </div>
         </div>
-    </div>
+    
 
-    <div class="row">
         <div class="col-md-6">
             <div class="form-group mt-2">
                 <label for="birthdate"> {{ trans('patients.birthdate') }} </label>
@@ -257,7 +249,6 @@
             </div>
         </div>
     </div>
-
 
     <div class="mt-3">
         <h4><i class="fas fa-phone"></i> {{ trans('forms.contact_information') }} </h4>
@@ -282,9 +273,7 @@
                 <small id="alternativePhoneHelp" class="form-text text-muted"> Secondary cell phone number where we can contact the patient </small>
 		    </div>
         </div>
-    </div>
 
-    <div class="row">
         <div class="col-md-6">
             <div class="form-group mt-2">
                 <label for="email"> {{ trans('patients.email') }} </label>
@@ -310,16 +299,18 @@
     </div>
 
     <div class="row">
-        <div class="col-lg-6 mt-3">
-            <div class="form-group mt-2">
+        <div class="col-lg-6">
+            <div class="form-group mt-3">
                 <input type="text" class="form-control" name="social_work_name" id="socialWorkAutoComplete" placeholder="{{ trans('forms.start_typing') }}" value="{{ old('social_work_name') ?? $patient->plan->social_work->name  ?? '' }}" aria-describedby="socialWorkHelp" disabled>
-                <br />
-                <small id="socialWorkHelp" class="form-text text-muted"> The social or prepaid work that will cover the patient's practices </small>
+                
+                <div>
+                    <small id="socialWorkHelp" class="form-text text-muted"> The social or prepaid work that will cover the patient's practices </small>
+                </div>
             </div>
         </div>
 
         <div class="col-md-6">
-            <div class="form-group mt-2">
+            <div class="form-group">
                 <label for="expiration_date"> {{ trans('plans.plan') }} </label>
                 <input type="text" class="form-control" name="plan_name" id="planAutoComplete" value="{{ old('plan_name') ?? $patient->plan->name ?? '' }}" aria-describedby="planHelp" disabled>
                 <input type="hidden" name="plan_id" id="plan" value="{{ old('plan_id') ?? $patient->plan_id }}"> 
@@ -327,9 +318,7 @@
                 <small id="planHelp" class="form-text text-muted"> The plan will be loaded automatically when you select a social work </small>
 		    </div>
         </div>
-    </div>
 
-    <div class="row">
       <div class="col-md-6">
             <div class="form-group mt-2">
                 <label for="affiliate_number"> {{ trans('social_works.affiliate_number') }} </label>
@@ -347,9 +336,7 @@
                 <small id="securityCodeHelp" class="form-text text-muted"> The security code that appears on the back of the affiliate card </small>
 		    </div>
       </div>
-    </div>
 
-    <div class="row">
         <div class="col-md-6">
             <div class="form-group mt-2">
                 <label for="expiration_date"> {{ trans('social_works.expiration_date') }} </label>

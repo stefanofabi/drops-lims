@@ -45,24 +45,26 @@ class PrescriberController extends Controller
         $prescribers = $this->prescriberRepository->index($request->filter);
 
         // Pagination
+        $page = $request->page;
         $count_rows = $prescribers->count();
         $total_pages = ceil($count_rows / self::PER_PAGE);
-        $paginate = $this->paginate($request->page, $total_pages, self::ADJACENTS);
+        $paginate = $this->paginate($page, $total_pages, self::ADJACENTS);
         
 
-        if ($total_pages < $request->page) 
+        if ($total_pages < $page) 
         {
             $offset = 0;
-            $request->page = 1;
+            $page = 1;
         } else 
         {
-            $offset = ($request->page - 1) * self::PER_PAGE;
+            $offset = ($page - 1) * self::PER_PAGE;
         }
 
         return view('administrators/prescribers/index')
-            ->with('data', $request->all())
+            ->with('filter', $request->filter)
             ->with('prescribers', $prescribers->skip($offset)->take(self::PER_PAGE))
-            ->with('paginate', $paginate);
+            ->with('paginate', $paginate)
+            ->with('page', $page);
     }
 
     /**

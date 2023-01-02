@@ -112,12 +112,9 @@ class PlanController extends Controller
         //
         
         $plan = $this->planRepository->findOrFail($id);
-        
-        $nomenclators = $this->nomenclatorRepository->all();
 
         return view('administrators/settings/social_works/plans/edit')
-            ->with('plan', $plan)
-            ->with('nomenclators', $nomenclators);
+            ->with('plan', $plan);
     }
 
     /**

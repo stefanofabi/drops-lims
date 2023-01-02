@@ -52,17 +52,18 @@ class DeterminationController extends Controller
         $determinations = $this->determinationRepository->index($request->filter, $request->nomenclator_id);
 
         // Pagination
+        $page = $request->page;
         $count_rows = $determinations->count();
         $total_pages = ceil($count_rows / self::PER_PAGE);
-        $paginate = $this->paginate($request->page, $total_pages, self::ADJACENTS);
+        $paginate = $this->paginate($page, $total_pages, self::ADJACENTS);
 
-        if ($total_pages < $request->page) 
+        if ($total_pages < $page) 
         {
             $offset = 0;
-            $request->page = 1;
+            $page = 1;
         } else 
         {
-            $offset = ($request->page - 1) * self::PER_PAGE;
+            $offset = ($page - 1) * self::PER_PAGE;
         }
 
         return view('administrators/determinations/index')
@@ -71,7 +72,7 @@ class DeterminationController extends Controller
             ->with('determinations', $determinations->skip($offset)->take(self::PER_PAGE))
             ->with('nomenclators', $this->nomenclatorRepository->all())
             ->with('paginate', $paginate)
-            ->with('page', $request->page);
+            ->with('page', $page);
     }
 
     /**

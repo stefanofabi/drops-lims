@@ -138,9 +138,7 @@
                 <small id="lastNameHelp" class="form-text text-muted"> This last name is the one that appears when you generate a pdf protocol </small>
             </div>
         </div>
-    </div>
 
-    <div class="row">
         <div class="col-md-6">
             <div class="form-group mt-2">
                 <label for="identification_number"> {{ trans('patients.identification_number') }} </label>
@@ -162,9 +160,7 @@
                 <small id="sexHelp" class="form-text text-muted"> Some determinations may only be for one sex </small>
             </div>
         </div>
-    </div>
 
-    <div class="row">
         <div class="col-md-6">
             <div class="form-group mt-2">
                 <label for="home_address"> {{ trans('patients.home_address') }} </label>
@@ -182,9 +178,7 @@
                 <small id="cityHelp" class="form-text text-muted"> City where the patient resides </small>
             </div>
         </div>
-    </div>
 
-    <div class="row">
         <div class="col-md-6">
             <div class="form-group mt-2">
                 <label for="birthdate"> {{ trans('patients.birthdate') }} </label>
@@ -218,9 +212,7 @@
                 <small id="alternativePhoneHelp" class="form-text text-muted"> Secondary cell phone number where we can contact the patient </small>
 		    </div>
         </div>
-    </div>
 
-    <div class="row">
         <div class="col-md-6">
             <div class="form-group mt-2">
                 <label for="email"> {{ trans('patients.email') }} </label>
@@ -263,29 +255,25 @@
                 <small id="planHelp" class="form-text text-muted"> The plan will be loaded automatically when you select a social work </small>
 		    </div>
         </div>
-    </div>
 
-    <div class="row">
-      <div class="col-md-6">
+        <div class="col-md-6">
             <div class="form-group mt-2">
                 <label for="affiliate_number"> {{ trans('social_works.affiliate_number') }} </label>
                 <input type="text" class="form-control @error('affiliate_number') is-invalid @enderror" name="affiliate_number" id="affiliate_number" value="{{ old('affiliate_number') }}" placeholder="12 345678 9 01" aria-describedby="affiliateNumberHelp">
 
                 <small id="affiliateNumberHelp" class="form-text text-muted"> Affiliate number as it appears on the affiliate card </small>
             </div>
-      </div>
+        </div>
 
-      <div class="col-md-6">
+        <div class="col-md-6">
             <div class="form-group mt-2">
                 <label for="security_code"> {{ trans('social_works.security_code') }} </label>
                 <input type="number" class="form-control @error('security_code') is-invalid @enderror" name="security_code" min="100" max="999" value="{{ old('security_code') }}" placeholder="123" aria-describedby="securityCodeHelp">
 
                 <small id="securityCodeHelp" class="form-text text-muted"> The security code that appears on the back of the affiliate card </small>
 		    </div>
-      </div>
-    </div>
-
-    <div class="row">
+        </div>
+ 
         <div class="col-md-6">
             <div class="form-group mt-2">
                 <label for="expiration_date"> {{ trans('social_works.expiration_date') }} </label>

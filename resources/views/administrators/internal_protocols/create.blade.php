@@ -359,8 +359,6 @@ To create a protocol you have to select at least the patient, the social work an
                 </div>
 		    </div>
         </div>
-  
-
    
         <div class="col-lg-6">
             <div class="form-group mt-2">

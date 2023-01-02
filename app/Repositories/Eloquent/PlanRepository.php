@@ -31,7 +31,14 @@ final class PlanRepository implements PlanRepositoryInterface
 
     public function create(array $data)
     {
-        return $this->model->create($data);
+        $this->model->name = $data['name'];
+        $this->model->nbu_price = $data['nbu_price'];
+        $this->model->social_work_id = $data['social_work_id'];
+        $this->model->nomenclator_id = $data['nomenclator_id'];
+
+        $this->model->save();
+
+        return $this->model;
     }
 
     public function update(array $data, $id)

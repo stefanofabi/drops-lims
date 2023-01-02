@@ -21,7 +21,7 @@
 <script type="module">
     $(document).ready(function() {
         // Put the filter
-        $("#filter" ).val("{{ $data['filter'] ?? '' }}");
+        $("#filter" ).val("{{ $filter }}");
     });
 </script>
 @endsection
@@ -62,7 +62,7 @@
             </div>
     </div>
 
-    <input type="hidden" id="page" name="page" value="{{ $data['page'] }}">
+    <input type="hidden" id="page" name="page" value="{{ $page }}">
 </form>
 
 <div class="table-responsive mt-3">

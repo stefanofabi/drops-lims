@@ -17,7 +17,6 @@ class Plan extends Model
         'name',
         'nbu_price',
         'social_work_id',
-        'nomenclator_id',
     ];
 
     /**

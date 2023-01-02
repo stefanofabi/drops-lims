@@ -29,7 +29,18 @@ final class InternalProtocolRepository implements InternalProtocolRepositoryInte
 
     public function create(array $data)
     {
-        return $this->model->create($data);
+        // plan id is protected against mass allocation
+        $this->model->completion_date = $data['completion_date'] ?? '';
+        $this->model->internal_patient_id = $data['internal_patient_id'];
+        $this->model->plan_id = $data['plan_id'];
+        $this->model->prescriber_id = $data['prescriber_id'];
+        $this->model->quantity_orders = $data['quantity_orders'];
+        $this->model->diagnostic = $data['diagnostic'] ?? '';
+        $this->model->billing_period_id = $data['billing_period_id'] ?? '';
+
+        $this->model->save();
+
+        return $this->model;
     }
 
     public function update(array $data, $id)

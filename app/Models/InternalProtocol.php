@@ -20,7 +20,6 @@ class InternalProtocol extends Model
         'observations',
         'private_notes',
         'internal_patient_id',
-        'plan_id',
         'prescriber_id',
         'quantity_orders',
         'diagnostic',

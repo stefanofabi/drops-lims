@@ -28,16 +28,15 @@ final class DeterminationRepository implements DeterminationRepositoryInterface
     public function create(array $data)
     {
         // nomenclator id is protected against mass allocation
-        $determination = new Determination;
-        $determination->nomenclator_id = $data['nomenclator_id'];
-        $determination->code = $data['code'];
-        $determination->name = $data['name'];
-        $determination->position = $data['position'];
-        $determination->biochemical_unit = $data['biochemical_unit'];
+        $this->model->nomenclator_id = $data['nomenclator_id'];
+        $this->model->code = $data['code'];
+        $this->model->name = $data['name'];
+        $this->model->position = $data['position'];
+        $this->model->biochemical_unit = $data['biochemical_unit'];
 
-        $determination->save();
+        $this->model->save();
 
-        return $determination;
+        return $this->model;
     }
 
     public function update(array $data, $id)
