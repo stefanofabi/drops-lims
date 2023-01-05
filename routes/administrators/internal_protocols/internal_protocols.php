@@ -14,7 +14,7 @@ use App\Http\Controllers\Administrators\InternalProtocols\InternalProtocolContro
 Route::controller(InternalProtocolController::class)
     ->prefix('internal_protocols')
     ->as('protocols/')
-    ->middleware('permission:crud_protocols')
+    ->middleware('permission:manage protocols')
     ->group(function () {
         require('internal_practices.php');
         
@@ -44,13 +44,13 @@ Route::controller(InternalProtocolController::class)
         Route::get('generate_worksheet/{id}', 'generateWorksheet')
             ->name('generate_worksheet')
             ->where('id', '[1-9][0-9]*')
-            ->middleware('permission:print_worksheets')
+            ->middleware('permission:print worksheets')
             ->middleware('verify_open_protocol');
 
         Route::get('generate_protocol/{id}', 'generateProtocol')
             ->name('generate_protocol')
             ->where('id', '[1-9][0-9]*')
-            ->middleware('permission:print_protocols')
+            ->middleware('permission:print protocols')
             ->middleware('check_filtered_practices_to_print');
 
         Route::post('close/{id}', 'closeProtocol')
@@ -63,7 +63,7 @@ Route::controller(InternalProtocolController::class)
         Route::post('send_protocol_to_email/{id}', 'sendProtocolToEmail')
             ->name('send_protocol_to_email')
             ->where('id', '[1-9][0-9]*')
-            ->middleware('permission:print_protocols')
+            ->middleware('permission:print protocols')
             ->middleware('check_filtered_practices_to_print')
             ->middleware('check_protocol_can_sent_by_email');
     });

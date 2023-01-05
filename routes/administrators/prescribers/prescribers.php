@@ -14,7 +14,7 @@ use App\Http\Controllers\Administrators\Prescribers\PrescriberController;
 Route::controller(PrescriberController::class)
     ->prefix('prescribers')
     ->as('prescribers/')
-    ->middleware('permission:crud_prescribers')
+    ->middleware('permission:manage prescribers')
     ->group(function () {   
 
         Route::get('index', 'index')

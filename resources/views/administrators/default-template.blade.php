@@ -7,7 +7,7 @@
 @section('navbar')
 <nav class="navbar navbar-expand-md navbar-light bg-white shadow rounded-3 mt-3 ms-2 me-2">
 	<div class="container-fluid">
-        <a class="navbar-brand" href="@yield('home-href')"> <img src="{{ asset('images/small_logo.png') }}"> </a>
+        <a class="navbar-brand" href="@yield('home-href')"> <img src="{{ asset('images/small_logo.png') }}" title="Drops Lims" alt="Drops logo that simulates a drop"> </a>
 
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
 			<span class="navbar-toggler-icon"></span>
@@ -17,21 +17,21 @@
 			<!-- Left Side Of Navbar -->
 			<ul class="navbar-nav">
 				<li class="nav-item">
-					<a class="nav-link @yield('active_patients') @cannot('crud_patients') disabled @endcannot" href="{{ route('administrators/patients/index', ['page' => 1]) }}"> {{ trans('patients.patients') }} </a>
+					<a class="nav-link @yield('active_patients') @cannot('manage patients') disabled @endcannot" href="{{ route('administrators/patients/index', ['page' => 1]) }}"> {{ trans('patients.patients') }} </a>
 				</li>
 
 					
 				<li class="nav-item">
-					<a class="nav-link @yield('active_prescribers') @cannot('crud_prescribers') disabled @endcannot" href="{{ route('administrators/prescribers/index', ['page' => 1]) }}"> {{ trans('prescribers.prescribers') }}</a>
+					<a class="nav-link @yield('active_prescribers') @cannot('manage prescribers') disabled @endcannot" href="{{ route('administrators/prescribers/index', ['page' => 1]) }}"> {{ trans('prescribers.prescribers') }}</a>
 				</li>
 
 					
 				<li class="nav-item">
-					<a class="nav-link @yield('active_determinations') @cannot('crud_determinations') disabled @endcannot" href="{{ route('administrators/determinations/index', ['page' => 1]) }}"> {{ trans('determinations.determinations') }} </a>
+					<a class="nav-link @yield('active_determinations') @cannot('manage determinations') disabled @endcannot" href="{{ route('administrators/determinations/index', ['page' => 1]) }}"> {{ trans('determinations.determinations') }} </a>
 				</li>
 					
 				<li class="nav-item">
-					<a class="nav-link @yield('active_protocols') @cannot('crud_protocols') disabled @endcannot" href="{{ route('administrators/protocols/index', ['page' => 1]) }}"> {{ trans('protocols.protocols') }} </a>
+					<a class="nav-link @yield('active_protocols') @cannot('manage protocols') disabled @endcannot" href="{{ route('administrators/protocols/index', ['page' => 1]) }}"> {{ trans('protocols.protocols') }} </a>
 				</li>
 			</ul>
 
@@ -54,13 +54,11 @@
 
 							<div role="none" class="dropdown-divider"> </div>
 
-							@can('is_admin')
 							<li>
-								<a class="dropdown-item" href="{{ route('administrators/settings/index') }}">
+								<a class="dropdown-item @cannot('manage settings') disabled @endcannot" href="{{ route('administrators/settings/index') }}">
 									{{ trans('settings.settings') }}
 								</a>
 							</li>
-							@endcan
 
 							<li>
 								<a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -75,13 +73,11 @@
 			<!-- Show when screen is narrow -->
 			<div class="d-lg-none">
 				<ul class="navbar-nav">
-					@can('is_admin')
 					<li class="nav-item">
-						<a class="nav-link" href="{{ route('administrators/settings/index') }}">
+						<a class="nav-link @cannot('manage settings') disabled @endcannot" href="{{ route('administrators/settings/index') }}">
 							{{ trans('settings.settings') }}
 						</a>
 					</li>
-					@endcan
 
 					<li class="nav-item">
 						<a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

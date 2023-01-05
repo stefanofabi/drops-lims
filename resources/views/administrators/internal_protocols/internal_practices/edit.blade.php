@@ -73,16 +73,15 @@
 @section('menu')
 <nav class="navbar">
     <ul class="navbar-nav">
-        @can('sign_practices')
+        
         <li class="nav-item">
-            <a class="nav-link @if ($practice->internalProtocol->isClosed()) disabled @endif" href="#" onclick="return signPractice();"> {{ trans('practices.sign_practice') }} </a>
+            <a class="nav-link @if ($practice->internalProtocol->isClosed() || ! auth()->user()->can('sign practices')) disabled @endif" href="#" onclick="return signPractice();"> {{ trans('practices.sign_practice') }} </a>
         </li>
 
         <form method="post" action="{{ route('administrators/protocols/practices/sign', ['id' => $practice->id]) }}" id="practice_signature_form">
             @csrf
             {{ method_field('PUT') }}
         </form>
-        @endcan
 
         <li class="nav-item">
             <a class="nav-link" href="{{ route('administrators/protocols/practices/index', ['internal_protocol_id' => $practice->internal_protocol_id]) }}"> {{ trans('forms.go_back') }} </a>

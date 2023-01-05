@@ -14,7 +14,7 @@ use App\Http\Controllers\Administrators\Settings\StatisticsController;
 Route::controller(StatisticsController::class)
     ->prefix('statistics')
     ->as('statistics/')
-    ->middleware('permission:see_statistics')
+    ->middleware('permission:view statistics')
     ->group(function () {   
 
         Route::get('statistics', 'index')

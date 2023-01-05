@@ -133,7 +133,7 @@
 		        <input type="hidden" name="internal_patient_id" value="{{ $patient->id }}">
 		    </form>
 
-			<a class="nav-link @cannot('crud_protocols') disabled @endcannot" href="#" onclick="event.preventDefault(); document.getElementById('create_protocol_form').submit();"> {{ trans('protocols.create_protocol')}} </a>
+			<a class="nav-link @cannot('manage protocols') disabled @endcannot" href="#" onclick="event.preventDefault(); document.getElementById('create_protocol_form').submit();"> {{ trans('protocols.create_protocol')}} </a>
 		</li>
 
 	
@@ -144,7 +144,7 @@
 				<input type="hidden" name="internal_patient_id" value="{{ $patient->id }}">
 			</form>
 
-			<a class="nav-link @cannot('generate_security_codes') disabled @endcannot" href="#" onclick="generateNewSecurityCode()"> {{ trans('patients.send_security_code') }} </a>
+			<a class="nav-link @cannot('generate security codes') disabled @endcannot" href="#" onclick="generateNewSecurityCode()"> {{ trans('patients.send_security_code') }} </a>
 		</li>
 	</ul>
 </nav>

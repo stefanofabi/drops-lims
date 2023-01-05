@@ -18,7 +18,6 @@ class InternalProtocol extends Model
     protected $fillable = [
         'completion_date', 
         'observations',
-        'private_notes',
         'internal_patient_id',
         'prescriber_id',
         'quantity_orders',

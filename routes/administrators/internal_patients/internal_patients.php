@@ -15,7 +15,7 @@ use App\Http\Controllers\Administrators\InternalPatients\SecurityCodeController;
 Route::controller(InternalPatientController::class)
     ->prefix('internal_patients')
     ->as('patients/')
-    ->middleware('permission:crud_patients')
+    ->middleware('permission:manage patients')
     ->group(function () {   
 
         Route::get('index', 'index')
@@ -41,14 +41,16 @@ Route::controller(InternalPatientController::class)
 
         Route::post('load-patients', 'loadPatients')
             ->name('load_patients');
-    });
 
-Route::controller(SecurityCodeController::class)
-    ->prefix('patients/security_codes')
-    ->as('patients/security_codes/')
-    ->middleware('permission:generate_security_codes')
-    ->group(function () {   
-        Route::post('store', 'store')
-            ->name('store')
-            ->middleware('check_if_loaded_patient_email');
+        Route::controller(SecurityCodeController::class)
+        ->prefix('security_codes')
+        ->as('security_codes/')
+        ->middleware('permission:generate security codes')
+        ->group(function () {   
+
+            Route::post('store', 'store')
+                ->name('store')
+                ->middleware('check_if_loaded_patient_email');
+        });
+
     });

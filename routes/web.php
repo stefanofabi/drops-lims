@@ -14,21 +14,21 @@
 Auth::routes();
 
 Route::group([
-    'middleware' => ['permission:is_admin', 'auth'],
+    'middleware' => ['permission:is lab staff', 'auth'],
     'prefix' => 'administrators',
     'as' => 'administrators/',
 ], function () {
-
-    require('administrators/settings/settings.php');
+   
     require('administrators/internal_patients/internal_patients.php');
     require('administrators/prescribers/prescribers.php');
     require('administrators/determinations/determinations.php');
     require('administrators/internal_protocols/internal_protocols.php');
+    require('administrators/settings/settings.php');
 
     Route::get('home', ['\App\Http\Controllers\HomeController', 'adminHome'])->name('home');
 });
 
-Route::group(['middleware' => ['permission:is_user', 'auth']], function () {
+Route::group(['middleware' => ['permission:is user', 'auth']], function () {
 
     Route::group([
         'prefix' => 'patients',
@@ -57,7 +57,7 @@ Route::get('/', function () {
     //
     $user = auth()->user();
     if ($user) {
-        if ($user->hasPermissionTo('is_admin')) {
+        if ($user->hasPermissionTo('is lab staff')) {
             return redirect()->route('administrators/home');
         } else {
             return redirect()->route('patients/home');

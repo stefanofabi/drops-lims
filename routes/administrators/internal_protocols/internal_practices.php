@@ -14,6 +14,7 @@ use App\Http\Controllers\Administrators\InternalProtocols\InternalPracticeContro
 Route::controller(InternalPracticeController::class)
     ->prefix('internal_practices')
     ->as('practices/')
+    ->middleware('permission:manage practices')
     ->group(function () {
         Route::get('index', 'index')
             ->name('index');
@@ -43,7 +44,7 @@ Route::controller(InternalPracticeController::class)
         Route::put('sign/{id}', 'sign')
             ->name('sign')
             ->where('id', '[1-9][0-9]*')
-            ->middleware('permission:sign_practices')
+            ->middleware('permission:sign practices')
             ->middleware('verify_open_practice')
             ->middleware('verify_practice_has_result');
 

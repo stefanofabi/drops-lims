@@ -221,15 +221,15 @@
 <nav class="navbar">
     <ul class="navbar-nav">
         <li class="nav-item">
-            <a class="nav-link @cannot('crud_practices') disabled @endcannot" href="{{ route('administrators/protocols/practices/index', ['internal_protocol_id' => $protocol->id]) }}"> {{ trans('practices.practices') }} </a>
+            <a class="nav-link @cannot('manage practices') disabled @endcannot" href="{{ route('administrators/protocols/practices/index', ['internal_protocol_id' => $protocol->id]) }}"> {{ trans('practices.practices') }} </a>
         </li>
         
         <li class="nav-item">
-            <a class="nav-link @if ($protocol->isClosed()) disabled @elseif (! auth()->user()->can('print_worksheets')) disabled @endif" target="_blank" href="{{ route('administrators/protocols/generate_worksheet', ['id' => $protocol->id]) }}"> {{ trans('protocols.generate_worksheet') }} </a>
+            <a class="nav-link @if ($protocol->isClosed() || ! auth()->user()->can('print worksheets')) disabled @endif" target="_blank" href="{{ route('administrators/protocols/generate_worksheet', ['id' => $protocol->id]) }}"> {{ trans('protocols.generate_worksheet') }} </a>
         </li>
         
         <li class="nav-item">
-            <a class="nav-link @if ($protocol->isOpen()) disabled @elseif (! auth()->user()->can('print_protocols')) disabled @endif" target="_blank" href="{{ route('administrators/protocols/generate_protocol', ['id' => $protocol->id]) }}"> {{ trans('protocols.generate_protocol') }} </a>
+            <a class="nav-link @if ($protocol->isOpen() || ! auth()->user()->can('print protocols')) disabled @endif" target="_blank" href="{{ route('administrators/protocols/generate_protocol', ['id' => $protocol->id]) }}"> {{ trans('protocols.generate_protocol') }} </a>
         </li>
 
         <li class="nav-item">
@@ -243,7 +243,7 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link @if (! auth()->user()->can('crud_patients')) disabled @endif" href="{{ route('administrators/patients/edit', ['id' => $protocol->internal_patient_id]) }}"> {{ trans('protocols.see_patient') }} </a>
+            <a class="nav-link @if (! auth()->user()->can('manage patients')) disabled @endif" href="{{ route('administrators/patients/edit', ['id' => $protocol->internal_patient_id]) }}"> {{ trans('protocols.see_patient') }} </a>
         </li>
 
         <li class="nav-item @if ($protocol->isOpen()) disabled @endif">

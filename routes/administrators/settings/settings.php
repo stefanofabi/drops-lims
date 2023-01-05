@@ -15,6 +15,7 @@ use App\Http\Controllers\Administrators\Settings\ActivityViewerController;
 Route::group([
     'prefix' => 'settings',
     'as' => 'settings/',
+    'middleware' => 'permission:manage settings',
 ], function () {
 
     require('nomenclators.php');
@@ -41,9 +42,9 @@ Route::group([
 
     Route::get('logs/system_logs', ['\Rap2hpoutre\LaravelLogViewer\LogViewerController', 'index'])
         ->name('system_logs')
-        ->middleware('permission:system_logs');
+        ->middleware('permission:view system logs');
 
     Route::get('logs/activity_logs', [ActivityViewerController::class, 'index'])
         ->name('activity_logs')
-        ->middleware('permission:activity_logs');
+        ->middleware('permission:view activity logs');
 });

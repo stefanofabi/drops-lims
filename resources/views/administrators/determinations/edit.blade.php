@@ -29,7 +29,7 @@
 <nav class="navbar">
     <ul class="navbar-nav">
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('administrators/determinations/edit/report', ['id' => $determination->id]) }}"> {{ trans('determinations.edit_report') }} </a>
+            <a class="nav-link @cannot('manage reports') disabled @endcannot" href="{{ route('administrators/determinations/edit/report', ['id' => $determination->id]) }}"> {{ trans('determinations.edit_report') }} </a>
         </li>
     </ul>
 </nav>

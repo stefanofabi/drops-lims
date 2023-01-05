@@ -27,52 +27,53 @@ class RoleSeeder extends Seeder
 
         $role_administrator->givePermissionTo(
         	[
-        		'is_admin',
-        		'crud_patients',
-        		'crud_prescribers',
-        		'crud_determinations',
-        		'crud_protocols',
-                'print_worksheets',
-                'print_protocols',
-        		'crud_practices',
-        		'sign_practices',
-        		'see_statistics',
-        		'generate_security_codes',
-        		'settings',
-                'system_logs',
-                'activity_logs',
+        		'is lab staff',
+        		'manage patients',
+        		'manage prescribers',
+        		'manage determinations',
+                'manage reports',
+        		'manage protocols',
+                'print worksheets',
+                'print protocols',
+        		'manage practices',
+        		'sign practices',
+        		'view statistics',
+        		'generate security codes',
+        		'manage settings',
+                'view system logs',
+                'view activity logs',
         	]
         );
 
         $role_secretary->givePermissionTo(
         	[
-        		'is_admin',
-        		'crud_patients',
-        		'crud_prescribers',
-        		'crud_determinations',
-        		'crud_protocols',
-                'print_worksheets',
-                'print_protocols',
-        		'crud_practices',
-        		'generate_security_codes',
+        		'is lab staff',
+        		'manage patients',
+        		'manage prescribers',
+        		'manage determinations',
+        		'manage protocols',
+                'print worksheets',
+                'print protocols',
+        		'manage practices',
+        		'generate security codes',
         	]
         );
 
         $role_biochemical->givePermissionTo(
         	[
-        		'is_admin',
-        		'crud_determinations',
-        		'crud_protocols',
-                'print_worksheets',
-                'print_protocols',
-        		'crud_practices',
-        		'sign_practices',
+        		'is lab staff',
+        		'manage determinations',
+        		'manage protocols',
+                'print worksheets',
+                'print protocols',
+        		'manage practices',
+        		'sign practices',
         	]
         );
 
         $role_patient->givePermissionTo(
             [
-                'is_user'
+                'is user'
             ]
         );
 

@@ -20,23 +20,24 @@ class PermissionSeeder extends Seeder
         // Reset cached roles and permissions
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
-        Permission::create(['name' => 'is_admin']);
-    	Permission::create(['name' => 'crud_patients']);
-    	Permission::create(['name' => 'crud_prescribers']);
-    	Permission::create(['name' => 'crud_determinations']);
-    	Permission::create(['name' => 'crud_protocols']);
-        Permission::create(['name' => 'print_worksheets']);
-    	Permission::create(['name' => 'print_protocols']);
-    	Permission::create(['name' => 'crud_practices']);
-    	Permission::create(['name' => 'sign_practices']);
-    	Permission::create(['name' => 'see_statistics']);
-    	Permission::create(['name' => 'generate_security_codes']);
-    	Permission::create(['name' => 'settings']);
-        Permission::create(['name' => 'system_logs']);
-        Permission::create(['name' => 'activity_logs']);
+        Permission::create(['name' => 'is lab staff']);
+    	Permission::create(['name' => 'manage patients']);
+    	Permission::create(['name' => 'manage prescribers']);
+    	Permission::create(['name' => 'manage determinations']);
+        Permission::create(['name' => 'manage reports']);
+    	Permission::create(['name' => 'manage protocols']);
+        Permission::create(['name' => 'print worksheets']);
+    	Permission::create(['name' => 'print protocols']);
+    	Permission::create(['name' => 'manage practices']);
+    	Permission::create(['name' => 'sign practices']);
+    	Permission::create(['name' => 'view statistics']);
+    	Permission::create(['name' => 'generate security codes']);
+    	Permission::create(['name' => 'manage settings']);
+        Permission::create(['name' => 'view system logs']);
+        Permission::create(['name' => 'view activity logs']);
 
 
-        Permission::create(['name' => 'is_user']);
+        Permission::create(['name' => 'is user']);
 
     }
 }

@@ -14,7 +14,7 @@ use App\Http\Controllers\Administrators\Determinations\DeterminationController;
 Route::controller(DeterminationController::class)
     ->prefix('determinations')
     ->as('determinations/')
-    ->middleware('permission:crud_determinations')
+    ->middleware('permission:manage determinations')
     ->group(function () {   
         Route::get('index', 'index')
             ->name('index');
@@ -39,9 +39,11 @@ Route::controller(DeterminationController::class)
 
         Route::get('edit/report/{id}', 'editReport')
             ->name('edit/report')
-            ->where('id', '[1-9][0-9]*');
+            ->where('id', '[1-9][0-9]*')
+            ->middleware('permission:manage reports');
 
         Route::put('update/report/{id}', 'updateReport')
             ->name('update/report')
-            ->where('id', '[1-9][0-9]*');
+            ->where('id', '[1-9][0-9]*')
+            ->middleware('permission:manage reports');
     });
