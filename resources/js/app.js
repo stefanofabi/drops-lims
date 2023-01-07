@@ -11,4 +11,7 @@ import "~datatables.net-bs5";
 
 import '~@tarekraafat/autocomplete.js/dist/autoComplete.js';
 
+import { GoogleCharts } from '~google-charts';
+window.GoogleCharts = GoogleCharts;
+
 import '../sass/app.scss'
