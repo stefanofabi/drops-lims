@@ -26,16 +26,6 @@
 </script>
 @endsection
 
-@section('content-title')
-<i class="fas fa-user-injured"></i> {{ trans('patients.patients') }}
-@endsection
-
-@section('content-message')
-<p class="text-justify pe-5">
-    {{ trans('patients.patients_message') }}
-</p>
-@endsection
-
 @section('active_patients', 'active')
 
 @section('menu')
@@ -46,6 +36,16 @@
         </li>
     </ul>
 </nav>
+@endsection
+
+@section('content-title')
+<i class="fas fa-user-injured"></i> {{ trans('patients.patients') }}
+@endsection
+
+@section('content-message')
+<p class="text-justify pe-5">
+    {{ trans('patients.patients_message') }}
+</p>
 @endsection
 
 @section('content')

@@ -60,7 +60,7 @@ Route::get('/', function () {
     $user = auth()->user();
     if ($user) {
         if ($user->hasPermissionTo('is lab staff')) {
-            return redirect()->route('administrators/home');
+            return redirect()->route('administrators/dashboard');
         } else {
             return redirect()->route('patients/home');
         }

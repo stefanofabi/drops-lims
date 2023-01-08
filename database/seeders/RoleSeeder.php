@@ -39,6 +39,7 @@ class RoleSeeder extends Seeder
         		'sign practices',
         		'view statistics',
         		'generate security codes',
+                'generate summaries',
         		'manage settings',
                 'view system logs',
                 'view activity logs',
@@ -56,6 +57,7 @@ class RoleSeeder extends Seeder
                 'print protocols',
         		'manage practices',
         		'generate security codes',
+                'generate summaries',
         	]
         );
 

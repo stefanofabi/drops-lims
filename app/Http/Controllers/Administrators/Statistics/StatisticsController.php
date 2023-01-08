@@ -33,19 +33,19 @@ class StatisticsController extends Controller
 
     public function index()
     {
-        $social_works = $this->socialWorkRepository->all();
-        $initial_date = date('Y-m-d', strtotime(date('Y-m-d')."- 30 days"));
-        $ended_date = date('Y-m-d');
+        return view('administrators.statistics.index');
+    }
 
-        return view('administrators.statistics.index')
-            ->with('social_works', $social_works)
-            ->with('initial_date', $initial_date)
-            ->with('ended_date', $ended_date);
+    public function getViewAnnualCollectionSocialWork()
+    {
+        $social_works = $this->socialWorkRepository->all();
+
+        return view('administrators.statistics.annual_collection_social_work')
+            ->with('social_works', $social_works);
     }
 
     public function getAnnualCollectionSocialWork(Request $request)
     {
-        
         $request->validate([
             'initial_date' => 'required|date',
             'ended_date' => 'required|date',
@@ -66,6 +66,11 @@ class StatisticsController extends Controller
             ->with('data', $new_array);
     }
 
+    public function getViewPatientFlowPerMonth()
+    {
+        return view('administrators.statistics.patient_flow_per_month');
+    }
+
     public function getPatientFlowPerMonth(Request $request)
     {
         $request->validate([
@@ -73,17 +78,19 @@ class StatisticsController extends Controller
             'ended_date' => 'required|date',
         ]);
 
-        $social_works = $this->socialWorkRepository->all();
-
         $patient_flow = $this->internalProtocolRepository->getPatientFlow($request->initial_date, $request->ended_date);
-
+       
         $new_array = $this->generateArrayPerMonth($patient_flow, $request->initial_date, $request->ended_date);
-
+        
         return view('administrators.statistics.patient_flow_per_month')
-            ->with('social_works', $social_works)
             ->with('initial_date', $request->initial_date)
             ->with('ended_date', $request->ended_date)
             ->with('data', $new_array);
+    }
+
+    public function getViewTrackIncome()
+    {
+        return view('administrators.statistics.track_income');
     }
 
     public function getTrackIncome(Request $request)
@@ -93,14 +100,11 @@ class StatisticsController extends Controller
             'ended_date' => 'required|date',
         ]);
 
-        $social_works = $this->socialWorkRepository->all();
-
         $track_income = $this->internalProtocolRepository->getTrackIncome($request->initial_date, $request->ended_date);
 
         $new_array = $this->generateArrayPerMonth($track_income, $request->initial_date, $request->ended_date);
 
         return view('administrators.statistics.track_income')
-            ->with('social_works', $social_works)
             ->with('initial_date', $request->initial_date)
             ->with('ended_date', $request->ended_date)
             ->with('data', $new_array);
@@ -172,6 +176,6 @@ class StatisticsController extends Controller
 
         ];
 
-        return $months[$month];
+        return $months[$month-1];
     }
 }

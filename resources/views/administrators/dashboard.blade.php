@@ -69,7 +69,7 @@
 
             {{ trans('statistics.statistics') }}
             
-            <a href="{{ route('administrators/statistics/index') }}" class="text-dark"> 
+            <a href="@if (auth()->user()->can('view statistics')) {{ route('administrators/statistics/index') }} @else # @endif" class="text-dark"> 
                 <i class="fa-solid fa-arrow-right float-end mt-2"></i> 
             </a>
         </div>
@@ -79,7 +79,7 @@
 
             {{ trans('summaries.summaries') }}
             
-            <a href="{{ route('administrators/summaries/index') }}" class="text-dark"> 
+            <a href="@if (auth()->user()->can('generate summaries')) {{ route('administrators/summaries/index') }} @else # @endif" class="text-dark"> 
                 <i class="fa-solid fa-arrow-right float-end mt-2"></i> 
             </a>
         </div>

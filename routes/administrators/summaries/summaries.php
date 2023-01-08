@@ -21,9 +21,9 @@ Route::controller(SummaryController::class)
     Route::post('protocols-summary', 'getProtocolsSummary')
         ->name('protocols_summary');
 
-    Route::post('patients_flow', 'getPatientsFlow')
+    Route::post('patients-flow', 'getPatientsFlow')
         ->name('patients_flow');
 
-    Route::post('debt_social_works', 'getDebtSocialWorks')
+    Route::post('debt-social-works', 'getDebtSocialWorks')
         ->name('debt_social_works');
 });
