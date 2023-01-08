@@ -1,7 +1,7 @@
 @extends('pdf/base')
 
 @section('title')
-{{ trans('pdf.protocols_report_from_to', ['initial_date' => date('d/m/Y', strtotime($initial_date)), 'ended_date' => date('d/m/Y', strtotime($ended_date))]) }}
+{{ trans('pdf.protocols_report_from_to', ['start_date' => date('d/m/Y', strtotime($start_date)), 'end_date' => date('d/m/Y', strtotime($end_date))]) }}
 @endsection
 
 @section('style')
@@ -50,7 +50,7 @@
     <div id="second_column">
         <table class="cover">
             <tr>
-                <td class="title"> {{ trans('pdf.protocols_report_from_to', ['initial_date' => date('d/m/Y', strtotime($initial_date)), 'ended_date' => date('d/m/Y', strtotime($ended_date))]) }}
+                <td class="title"> {{ trans('pdf.protocols_report_from_to', ['start_date' => date('d/m/Y', strtotime($start_date)), 'end_date' => date('d/m/Y', strtotime($end_date))]) }}
                 </td>
             </tr>
         </table>

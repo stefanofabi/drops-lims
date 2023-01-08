@@ -54,16 +54,16 @@ class SummaryController extends Controller
         //
 
         $request->validate([
-            'initial_date' => 'required|date',
-            'ended_date' => 'required|date',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date',
         ]);
 
-        $protocols = $this->internalProtocolRepository->getProtocolsInDatesRange($request->initial_date, $request->ended_date);
+        $protocols = $this->internalProtocolRepository->getProtocolsInDatesRange($request->start_date, $request->end_date);
 
-        $pdf = PDF::loadView('pdf/generate_reports/protocols_report', [
+        $pdf = PDF::loadView('pdf/summaries/protocols_summary', [
             'protocols' => $protocols,
-            'initial_date' => $request->initial_date,
-            'ended_date' => $request->ended_date, 
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date, 
         ]);
 
         return $pdf->stream('protocols_report');
@@ -85,16 +85,16 @@ class SummaryController extends Controller
         //
 
         $request->validate([
-            'initial_date' => 'required|date',
-            'ended_date' => 'required|date',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date',
         ]);
         
-        $protocols = $this->internalProtocolRepository->getProtocolsInDatesRange($request->initial_date, $request->ended_date);
+        $protocols = $this->internalProtocolRepository->getProtocolsInDatesRange($request->start_date, $request->end_date);
 
-        $pdf = PDF::loadView('pdf/generate_reports/patients_flow', [
+        $pdf = PDF::loadView('pdf/summaries/patients_flow', [
             'protocols' => $protocols,
-            'initial_date' => $request->initial_date,
-            'ended_date' => $request->ended_date,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
         ]);
 
         return $pdf->stream('patient_flow');
@@ -122,7 +122,7 @@ class SummaryController extends Controller
         
         $billing_periods = $this->billingPeriodRepository->getAmountBilledByPeriod($request->start_date, $request->end_date);
 
-        $pdf = PDF::loadView('pdf/generate_reports/debt_social_works', [
+        $pdf = PDF::loadView('pdf/summaries/debt_social_works', [
             'billing_periods' => $billing_periods,
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
