@@ -51,7 +51,7 @@
     </div>
   </div>
 
-  <input type="submit" class="btn btn-primary mt-3" value="{{ trans('statistics.generate_summary') }}">
+  <input type="submit" class="btn btn-primary mt-3" value="{{ trans('statistics.generate_graph') }}">
 </form>
 
 @if (isset($data))

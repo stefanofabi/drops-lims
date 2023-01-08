@@ -21,6 +21,5 @@ return [
     'month' => 'Month',
     'year' => 'Year',
     'social_work_debt_report_from_to' => 'Social works debt report from :start_date to :end_date',
-    'generate_reports_message' => 'Reports are a tool for anyone linked to administrative management and decision making.',
     
 ];

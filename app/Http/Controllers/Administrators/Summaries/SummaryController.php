@@ -38,6 +38,11 @@ class SummaryController extends Controller
         return view('administrators.summaries.index');
     }
 
+    public function getProtocolsSummaryView() 
+    {
+        return view('administrators.summaries.protocols_summary');
+    }
+
     /**
      * Generate a summary on the created protocols
      *
@@ -64,6 +69,11 @@ class SummaryController extends Controller
         return $pdf->stream('protocols_report');
     }
 
+    public function getPatientsFlowView()
+    {
+        return view('administrators.summaries.patients_flow');
+    }
+
     /**
      * Generate a summary on the patients flow
      *
@@ -88,6 +98,11 @@ class SummaryController extends Controller
         ]);
 
         return $pdf->stream('patient_flow');
+    }
+
+    public function getDebtSocialWorksView()
+    {
+        return view('administrators.summaries.debt_social_works');
     }
 
     /**

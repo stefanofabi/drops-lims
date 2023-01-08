@@ -4,38 +4,34 @@
 {{ trans('summaries.summaries') }}
 @endsection
 
-@section('js')
-    <script type="text/javascript">
-        function send(submit_button_id) {
-            let submitButton = $('#'+submit_button_id);
-            submitButton.click();
-        }
-    </script>
+@section('menu')
+<nav class="navbar">
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('administrators/summaries/debt_social_works') }}"> {{ trans('summaries.debt_social_works') }} </a>
+        </li>
 
+		<li class="nav-item">
+            <a class="nav-link" href="{{ route('administrators/summaries/patients_flow') }}"> {{ trans('summaries.patients_flow') }} </a>
+        </li>
+
+		<li class="nav-item">
+            <a class="nav-link" href="{{ route('administrators/summaries/protocols_summary') }}"> {{ trans('summaries.protocols_summary') }} </a>
+        </li>
+    </ul>
+</nav>
 @endsection
 
 @section('content-title')
-<i class="fas fa-archive"> </i> {{ trans('summaries.summaries') }}
+<i class="fa-solid fa-file-pdf"> </i> {{ trans('summaries.summaries') }}
 @endsection
 
 @section('content-message')
 <p class="text-justify pe-5">
-    {{ trans('pdf.generate_reports_message') }} 
+    {{ trans('summaries.generate_summaries_message') }} 
 </p>
 @endsection
 
 @section('content')
-<div class="row">
-    <div class="col-xl-6">    
-        @include('administrators.summaries.protocols_summary')
-    </div>
-
-    <div class="col-xl-6">  
-        @include('administrators.summaries.patients_flow')
-    </div>
-
-    <div class="col-xl-6">  
-        @include('administrators.summaries.debt_social_works')
-    </div>
-</div>
+<p class="mt-3"> Select one of the menu options to continue </p>
 @endsection

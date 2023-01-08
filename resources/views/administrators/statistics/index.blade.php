@@ -23,7 +23,7 @@
 @endsection
 
 @section('content-title')
-<i class="fas fa-chart-bar"></i> {{ trans('statistics.statistics') }}
+<i class="fa-solid fa-chart-simple"></i> {{ trans('statistics.statistics') }}
 @endsection
 
 @section('content-message')

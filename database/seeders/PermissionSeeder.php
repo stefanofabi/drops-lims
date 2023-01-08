@@ -32,6 +32,7 @@ class PermissionSeeder extends Seeder
     	Permission::create(['name' => 'sign practices']);
     	Permission::create(['name' => 'view statistics']);
     	Permission::create(['name' => 'generate security codes']);
+        Permission::create(['name' => 'generate summaries']);
     	Permission::create(['name' => 'manage settings']);
         Permission::create(['name' => 'view system logs']);
         Permission::create(['name' => 'view activity logs']);
