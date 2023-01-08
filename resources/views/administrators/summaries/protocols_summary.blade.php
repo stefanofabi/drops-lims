@@ -1,10 +1,10 @@
 <div class="card mt-3">
-    <div class="card-header"><h5> {{ trans('settings.protocols_report') }} </h5></div>
+    <div class="card-header"><h5> {{ trans('summaries.protocols_summary') }} </h5></div>
 
     <div class="card-body">
-        {{ trans('settings.protocols_report_message') }}
+        {{ trans('summaries.protocols_summary_message') }}
 
-        <form method="post" target="_blank" action="{{ route('administrators/settings/protocols_report') }}">
+        <form method="post" target="_blank" action="{{ route('administrators/summaries/protocols_summary') }}">
             @csrf
 
             <div class="input-group col-md-6 input-form mt-3">
@@ -30,7 +30,7 @@
     <div class="card-footer">
         <div class="text-right">
             <button onclick="send('generate_protocols_report');" class="btn btn-primary">
-                <span class="fas fa-file-pdf"></span> {{ trans('settings.generate_report') }}
+                <span class="fas fa-file-pdf"></span> {{ trans('summaries.generate_summary') }}
             </button>
         </div>
     </div>

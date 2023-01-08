@@ -19,25 +19,13 @@ Route::group([
 ], function () {
 
     require('nomenclators.php');
-    require('statistics.php');
     require('social_works/social_works.php');
 
     Route::controller(SettingController::class)
     ->group(function () {   
         Route::get('index', 'index')
             ->name('index');
-    
-        Route::get('generate_reports', 'getGenerateReportsView')
-            ->name('generate_reports');
-    
-        Route::post('protocols_report', 'getProtocolsReport')
-            ->name('protocols_report');
-    
-        Route::post('patients_flow', 'getPatientsFlow')
-            ->name('patients_flow');
-    
-        Route::post('debt_social_works', 'getDebtSocialWorks')
-            ->name('debt_social_works');
+            
     });
 
     Route::get('logs/system_logs', ['\Rap2hpoutre\LaravelLogViewer\LogViewerController', 'index'])

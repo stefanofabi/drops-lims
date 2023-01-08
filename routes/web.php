@@ -24,8 +24,10 @@ Route::group([
     require('administrators/determinations/determinations.php');
     require('administrators/internal_protocols/internal_protocols.php');
     require('administrators/settings/settings.php');
-
-    Route::get('home', ['\App\Http\Controllers\HomeController', 'adminHome'])->name('home');
+    require('administrators/statistics/statistics.php');
+    require('administrators/summaries/summaries.php');
+    
+    Route::get('dashboard', ['\App\Http\Controllers\HomeController', 'adminHome'])->name('dashboard');
 });
 
 Route::group(['middleware' => ['permission:is user', 'auth']], function () {

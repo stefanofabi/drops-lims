@@ -59,8 +59,32 @@
             </div>  
 
             <br />
-            <span class="fs-6"> {{ trans('home.debt_social_works') }} </span>
+            <span class="fs-6"> {{ trans('home.debt_social_works') }} 
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md bg-secondary rounded fs-2 p-4 ms-1 me-1 mt-3">
+            <i class="fa-solid fa-chart-simple"></i>
+
+            {{ trans('statistics.statistics') }}
+            
+            <a href="{{ route('administrators/statistics/index') }}" class="text-dark"> 
+                <i class="fa-solid fa-arrow-right float-end mt-2"></i> 
+            </a>
+        </div>
+
+        <div class="col-md bg-secondary rounded fs-2 p-4 ms-1 me-1 mt-3">
+            <i class="fa-solid fa-file-pdf"></i>
+
+            {{ trans('summaries.summaries') }}
+            
+            <a href="{{ route('administrators/summaries/index') }}" class="text-dark"> 
+                <i class="fa-solid fa-arrow-right float-end mt-2"></i> 
+            </a>
         </div>
     </div>
 </div>
+
+
 @endsection

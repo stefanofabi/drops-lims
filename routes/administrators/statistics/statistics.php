@@ -9,7 +9,7 @@
 |
 */
 
-use App\Http\Controllers\Administrators\Settings\StatisticsController;
+use App\Http\Controllers\Administrators\Statistics\StatisticsController;
 
 Route::controller(StatisticsController::class)
     ->prefix('statistics')

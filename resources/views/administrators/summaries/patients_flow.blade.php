@@ -1,10 +1,10 @@
 <div class="card mt-3">
-    <div class="card-header"><h5> {{ trans('settings.patients_flow') }} </h5></div>
+    <div class="card-header"><h5> {{ trans('summaries.patients_flow') }} </h5></div>
 
     <div class="card-body">
-        {{ trans('settings.patient_flow_message') }}
+        {{ trans('summaries.patient_flow_message') }}
 
-        <form method="post" target="_blank" action="{{ route('administrators/settings/patients_flow') }}">
+        <form method="post" target="_blank" action="{{ route('administrators/summaries/patients_flow') }}">
             @csrf
 
             <div class="input-group col-md-6 input-form mt-3">
@@ -30,7 +30,7 @@
     <div class="card-footer">
         <div class="text-right">
             <button onclick="send('submit_patients_flow');" class="btn btn-primary">
-                <span class="fas fa-file-pdf"></span> {{ trans('settings.generate_report') }}
+                <span class="fas fa-file-pdf"></span> {{ trans('summaries.generate_summary') }}
             </button>
         </div>
     </div>

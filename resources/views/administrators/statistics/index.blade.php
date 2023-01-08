@@ -1,4 +1,4 @@
-@extends('administrators/settings/index')
+@extends('administrators/default-template')
 
 @section('js')
 <script type="module">
@@ -59,11 +59,11 @@
 		<input type="date" class="form-control" name="ended_date" value="{{ $ended_date ?? date('Y-m-d') }}">
 	</div>
 
-	<input type="submit" class="btn btn-success mt-3" value="{{ trans('statistics.annual_collection_social_work') }}" dir="{{ route('administrators/settings/statistics/annual_collection_social_work') }}" />
+	<input type="submit" class="btn btn-success mt-3" value="{{ trans('statistics.annual_collection_social_work') }}" dir="{{ route('administrators/statistics/annual_collection_social_work') }}" />
 
-	<input type="submit" class="btn btn-success mt-3" value="{{ trans('statistics.patient_flow') }}" dir="{{ route('administrators/settings/statistics/patient_flow_per_month') }}" />
+	<input type="submit" class="btn btn-success mt-3" value="{{ trans('statistics.patient_flow') }}" dir="{{ route('administrators/statistics/patient_flow_per_month') }}" />
 
-	<input type="submit" class="btn btn-success mt-3" value="{{ trans('statistics.track_income') }}" dir="{{ route('administrators/settings/statistics/track_income') }}" />
+	<input type="submit" class="btn btn-success mt-3" value="{{ trans('statistics.track_income') }}" dir="{{ route('administrators/statistics/track_income') }}" />
 
 	</button>
 </form>

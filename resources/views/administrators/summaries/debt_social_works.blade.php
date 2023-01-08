@@ -1,10 +1,10 @@
 <div class="card mt-3">
-    <div class="card-header"><h5> {{ trans('settings.debt_social_works') }} </h5></div>
+    <div class="card-header"><h5> {{ trans('summaries.debt_social_works') }} </h5></div>
 
     <div class="card-body">
-        {{ trans('settings.debt_social_works_message') }}
+        {{ trans('summaries.debt_social_works_message') }}
 
-        <form method="post" target="_blank" action="{{ route('administrators/settings/debt_social_works') }}">
+        <form method="post" target="_blank" action="{{ route('administrators/summaries/debt_social_works') }}">
             @csrf
 
             <div class="input-group col-md-6 input-form mt-3">
@@ -30,7 +30,7 @@
     <div class="card-footer">
         <div class="text-right">
             <button onclick="send('submit_debt_social_works');" class="btn btn-primary">
-                <span class="fas fa-file-pdf"></span> {{ trans('settings.generate_report') }}
+                <span class="fas fa-file-pdf"></span> {{ trans('summaries.generate_summary') }}
             </button>
         </div>
     </div>

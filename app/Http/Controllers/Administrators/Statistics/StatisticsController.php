@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Administrators\Settings;
+namespace App\Http\Controllers\Administrators\Statistics;
 
 use App\Http\Controllers\Controller;
 
@@ -37,7 +37,7 @@ class StatisticsController extends Controller
         $initial_date = date('Y-m-d', strtotime(date('Y-m-d')."- 30 days"));
         $ended_date = date('Y-m-d');
 
-        return view('administrators.settings.statistics.index')
+        return view('administrators.statistics.index')
             ->with('social_works', $social_works)
             ->with('initial_date', $initial_date)
             ->with('ended_date', $ended_date);
@@ -58,7 +58,7 @@ class StatisticsController extends Controller
        
         $new_array = $this->generateArrayPerMonth($anual_report, $request->initial_date, $request->ended_date);
        
-        return view('administrators.settings.statistics.annual_collection_social_work')
+        return view('administrators.statistics.annual_collection_social_work')
             ->with('social_works', $social_works)
             ->with('social_work', $request->social_work)
             ->with('initial_date', $request->initial_date)
@@ -79,7 +79,7 @@ class StatisticsController extends Controller
 
         $new_array = $this->generateArrayPerMonth($patient_flow, $request->initial_date, $request->ended_date);
 
-        return view('administrators.settings.statistics.patient_flow_per_month')
+        return view('administrators.statistics.patient_flow_per_month')
             ->with('social_works', $social_works)
             ->with('initial_date', $request->initial_date)
             ->with('ended_date', $request->ended_date)
@@ -99,7 +99,7 @@ class StatisticsController extends Controller
 
         $new_array = $this->generateArrayPerMonth($track_income, $request->initial_date, $request->ended_date);
 
-        return view('administrators.settings.statistics.track_income')
+        return view('administrators.statistics.track_income')
             ->with('social_works', $social_works)
             ->with('initial_date', $request->initial_date)
             ->with('ended_date', $request->ended_date)
@@ -155,86 +155,23 @@ class StatisticsController extends Controller
     private function getMonth($month)
     {
 
-        switch ($month) {
-            case 1:
-            {
-                $month_value = Lang::get('months.january');
-                break;
-            }
+        $months = [
+            Lang::get('months.january'),
+            Lang::get('months.february'),
+            Lang::get('months.march'),
+            Lang::get('months.april'),
+            Lang::get('months.may'),
+            Lang::get('months.june'),
+            Lang::get('months.july'),
+            Lang::get('months.august'),
+            Lang::get('months.september'),
+            Lang::get('months.october'),
+            Lang::get('months.november'),
+            Lang::get('months.december'),
+            Lang::get('months.march')
 
-            case 2:
-            {
-                $month_value = Lang::get('months.february');
-                break;
-            }
+        ];
 
-            case 3:
-            {
-                $month_value = Lang::get('months.march');
-                break;
-            }
-
-            case 4:
-            {
-                $month_value = Lang::get('months.april');
-                break;
-            }
-
-            case 5:
-            {
-                $month_value = Lang::get('months.may');
-                break;
-            }
-
-            case 6:
-            {
-                $month_value = Lang::get('months.june');
-                break;
-            }
-
-            case 7:
-            {
-                $month_value = Lang::get('months.july');
-                break;
-            }
-
-            case 8:
-            {
-                $month_value = Lang::get('months.august');
-                break;
-            }
-
-            case 9:
-            {
-                $month_value = Lang::get('months.september');
-                break;
-            }
-
-            case 10:
-            {
-                $month_value = Lang::get('months.october');
-                break;
-            }
-
-            case 11:
-            {
-                $month_value = Lang::get('months.november');
-                break;
-            }
-
-            case 12:
-            {
-                $month_value = Lang::get('months.december');
-                break;
-            }
-
-            default:
-            {
-                $month_value = "Error";
-                break;
-            }
-        }
-
-        return $month_value;
+        return $months[$month];
     }
 }

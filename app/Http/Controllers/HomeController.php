@@ -61,7 +61,7 @@ class HomeController extends Controller
         $payments = $this->paymentSocialWorkRepository->getSumOfAllPayments();
         $debt_social_works = $protocols->total_amount - $payments->total_amount; 
 
-        return view('administrators/home')
+        return view('administrators/dashboard')
             ->with('pending_protocols', $pending_protocols)
             ->with('practices_not_signed', $practices_not_signed)
             ->with('debt_social_works', $debt_social_works);

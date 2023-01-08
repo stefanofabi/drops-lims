@@ -16,7 +16,7 @@
         "vite": "^4.0.3"
     },
     "dependencies": {
-        "@fortawesome/fontawesome-free": "^5.15.3",
+        "@fortawesome/fontawesome-free": "^6.2.1",
         "@tarekraafat/autocomplete.js": "^10.2.7",
         "bootstrap": "^5.0.1",
         "datatables.net-bs5": "^1.13.1",

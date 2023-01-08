@@ -1,7 +1,7 @@
-@extends('administrators.settings.index')
+@extends('administrators.default-template')
 
 @section('title')
-{{ trans('settings.generate_reports') }}
+{{ trans('summaries.summaries') }}
 @endsection
 
 @section('js')
@@ -15,7 +15,7 @@
 @endsection
 
 @section('content-title')
-<i class="fas fa-archive"> </i> {{ trans('settings.generate_reports') }}
+<i class="fas fa-archive"> </i> {{ trans('summaries.summaries') }}
 @endsection
 
 @section('content-message')
@@ -27,17 +27,15 @@
 @section('content')
 <div class="row">
     <div class="col-xl-6">    
-        @include('administrators.settings.generate_reports.protocols_report')
+        @include('administrators.summaries.protocols_summary')
     </div>
 
     <div class="col-xl-6">  
-        @include('administrators.settings.generate_reports.patients_flow')
+        @include('administrators.summaries.patients_flow')
     </div>
-</div>
 
-<div class="row">
     <div class="col-xl-6">  
-        @include('administrators.settings.generate_reports.debt_social_works')
+        @include('administrators.summaries.debt_social_works')
     </div>
 </div>
 @endsection

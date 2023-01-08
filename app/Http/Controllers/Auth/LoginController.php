@@ -54,7 +54,7 @@ class LoginController extends Controller
 
         if(auth()->attempt(array('email' => $request->email, 'password' => $request->password))) {
             if (auth()->user()->hasPermissionTo('is lab staff')) {
-                $redirect = redirect()->route('administrators/home');
+                $redirect = redirect()->route('administrators/dashboard');
             } else {
                 $redirect = redirect()->route('patients/home');
             }

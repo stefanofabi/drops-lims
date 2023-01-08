@@ -20,14 +20,6 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('administrators/settings/generate_reports') }}"> {{ trans('settings.generate_reports') }} </a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('administrators/settings/statistics/index') }}"> {{ trans('settings.statistics') }} </a>
-        </li>
-
-        <li class="nav-item">
             <a class="nav-link" href="{{ route('administrators/settings/activity_logs') }}" target="_blank"> {{ trans('settings.activity_logs') }} </a>
         </li>
 

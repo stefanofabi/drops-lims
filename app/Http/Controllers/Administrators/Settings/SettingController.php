@@ -5,31 +5,11 @@ namespace App\Http\Controllers\Administrators\Settings;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Contracts\Repository\InternalProtocolRepositoryInterface;
-use App\Contracts\Repository\BillingPeriodRepositoryInterface;
-
-use Lang;
-use PDF;
-
 class SettingController extends Controller
 {
-    /** @var \App\Contracts\Repository\InternalProtocolRepositoryInterface */
-    private $internalProtocolRepository;
 
-    /** @var \App\Contracts\Repository\BillingPeriodRepositoryInterface */
-    private $billingPeriodRepository;
-
-    public function __construct (
-        InternalProtocolRepositoryInterface $internalProtocolRepository,
-        BillingPeriodRepositoryInterface $billingPeriodRepository
-    ) {
-        $this->internalProtocolRepository = $internalProtocolRepository;
-        $this->billingPeriodRepository = $billingPeriodRepository;
-    }
-
-    //
     /**
-     * Display a listing of the resource.
+     * Display a listing of the settings.
      *
      * @return \Illuminate\Http\Response
      */
@@ -38,95 +18,5 @@ class SettingController extends Controller
         //
 
         return view('administrators.settings.index');
-    }
-
-    /**
-     * Display a generate reports view
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function getGenerateReportsView()
-    {
-        //
-
-        return view('administrators.settings.generate_reports.generate_reports');
-    }
-
-    /**
-     * Generate a report on the created protocols
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function getProtocolsReport(Request $request)
-    {
-        //
-
-        $request->validate([
-            'initial_date' => 'required|date',
-            'ended_date' => 'required|date',
-        ]);
-
-        $protocols = $this->internalProtocolRepository->getProtocolsInDatesRange($request->initial_date, $request->ended_date);
-
-        $pdf = PDF::loadView('pdf/generate_reports/protocols_report', [
-            'protocols' => $protocols,
-            'initial_date' => $request->initial_date,
-            'ended_date' => $request->ended_date, 
-        ]);
-
-        return $pdf->stream('protocols_report');
-    }
-
-    /**
-     * Generate a report on the patients flow
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function getPatientsFlow(Request $request)
-    {
-        //
-
-        $request->validate([
-            'initial_date' => 'required|date',
-            'ended_date' => 'required|date',
-        ]);
-        
-        $protocols = $this->internalProtocolRepository->getProtocolsInDatesRange($request->initial_date, $request->ended_date);
-
-        $pdf = PDF::loadView('pdf/generate_reports/patients_flow', [
-            'protocols' => $protocols,
-            'initial_date' => $request->initial_date,
-            'ended_date' => $request->ended_date,
-        ]);
-
-        return $pdf->stream('patient_flow');
-    }
-
-    /**
-     * Generate a report on the debt of social works
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function getDebtSocialWorks(Request $request)
-    {
-        //
-
-        $request->validate([
-            'start_date' => 'required|date',
-            'end_date' => 'required|date',
-        ]);
-        
-        $billing_periods = $this->billingPeriodRepository->getAmountBilledByPeriod($request->start_date, $request->end_date);
-
-        $pdf = PDF::loadView('pdf/generate_reports/debt_social_works', [
-            'billing_periods' => $billing_periods,
-            'start_date' => $request->start_date,
-            'end_date' => $request->end_date,
-        ]);
-
-        return $pdf->stream('debt_social_works');
     }
 }

@@ -1,13 +1,9 @@
 @extends('default-template')
 
-@section('home-href')
-{{ route('administrators/home') }}
-@endsection
-
 @section('navbar')
 <nav class="navbar navbar-expand-md navbar-light bg-white shadow rounded-3 mt-3 ms-2 me-2">
 	<div class="container-fluid">
-        <a class="navbar-brand" href="@yield('home-href')"> <img src="{{ asset('images/small_logo.png') }}" title="Drops Lims" alt="Drops logo that simulates a drop"> </a>
+        <a class="navbar-brand" href="{{ route('administrators/dashboard') }}"> <img src="{{ asset('images/small_logo.png') }}" title="Drops Lims" alt="Drops logo that simulates a drop"> </a>
 
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
 			<span class="navbar-toggler-icon"></span>
