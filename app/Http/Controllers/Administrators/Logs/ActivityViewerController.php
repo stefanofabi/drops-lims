@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Administrators\Settings;
+namespace App\Http\Controllers\Administrators\Logs;
 
 use App\Http\Controllers\Controller;
 use \Spatie\Activitylog\Models\Activity;

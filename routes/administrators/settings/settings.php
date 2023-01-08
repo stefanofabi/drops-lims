@@ -10,7 +10,6 @@
 */
 
 use App\Http\Controllers\Administrators\Settings\SettingController;
-use App\Http\Controllers\Administrators\Settings\ActivityViewerController;
 
 Route::group([
     'prefix' => 'settings',
@@ -27,12 +26,4 @@ Route::group([
             ->name('index');
             
     });
-
-    Route::get('logs/system_logs', ['\Rap2hpoutre\LaravelLogViewer\LogViewerController', 'index'])
-        ->name('system_logs')
-        ->middleware('permission:view system logs');
-
-    Route::get('logs/activity_logs', [ActivityViewerController::class, 'index'])
-        ->name('activity_logs')
-        ->middleware('permission:view activity logs');
 });

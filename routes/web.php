@@ -11,6 +11,8 @@
 |
 */
 
+use App\Http\Controllers\Administrators\Logs\ActivityViewerController;
+
 Auth::routes();
 
 Route::group([
@@ -28,6 +30,14 @@ Route::group([
     require('administrators/summaries/summaries.php');
     
     Route::get('dashboard', ['\App\Http\Controllers\HomeController', 'adminHome'])->name('dashboard');
+
+    Route::get('logs/activity_logs', [ActivityViewerController::class, 'index'])
+    ->name('logs/activity_logs')
+    ->middleware('permission:view logs');
+
+    Route::get('logs/system_logs', ['\Rap2hpoutre\LaravelLogViewer\LogViewerController', 'index'])
+    ->name('logs/system_logs')
+    ->middleware('permission:view logs');
 });
 
 Route::group(['middleware' => ['permission:is user', 'auth']], function () {

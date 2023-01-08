@@ -57,6 +57,14 @@
 							</li>
 
 							<li>
+								<a class="dropdown-item @cannot('view logs') disabled @endcannot" href="{{ route('administrators/logs/activity_logs') }}" target="_blank"> {{ trans('settings.activity_logs') }} </a>
+							</li>
+
+							<li>
+								<a class="dropdown-item @cannot('view logs') disabled @endcannot" href="{{ route('administrators/logs/system_logs') }}" target="_blank"> {{ trans('settings.system_logs') }} </a>
+							</li>
+
+							<li>
 								<a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
 									{{ __('Logout') }}
 								</a>
@@ -73,6 +81,14 @@
 						<a class="nav-link @cannot('manage settings') disabled @endcannot" href="{{ route('administrators/settings/index') }}">
 							{{ trans('settings.settings') }}
 						</a>
+					</li>
+
+					<li class="nav-item">
+						<a class="nav-link @cannot('view logs') disabled @endcannot" href="{{ route('administrators/logs/activity_logs') }}" target="_blank"> {{ trans('settings.activity_logs') }} </a>
+					</li>
+
+					<li class="nav-item">
+						<a class="nav-link @cannot('view logs') disabled @endcannot" href="{{ route('administrators/logs/system_logs') }}" target="_blank"> {{ trans('settings.system_logs') }} </a>
 					</li>
 
 					<li class="nav-item">
