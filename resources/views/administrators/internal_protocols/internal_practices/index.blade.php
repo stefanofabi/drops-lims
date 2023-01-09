@@ -9,7 +9,8 @@
 @section('js')
 <script type="module">
     $(document).ready(function() {
-        //$('[data-toggle="tooltip"]').tooltip();
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
     });
 
     const practiceAutoComplete = new autoComplete({
@@ -268,7 +269,7 @@
 
                     <td>
                         @forelse($practice->signInternalPractices as $sign)
-                        <a style="text-decoration: none" href="#" data-toggle="tooltip" title="{{ $sign->user->name }}">
+                        <a style="text-decoration: none" href="#" data-bs-toggle="tooltip" data-bs-title="{{ $sign->user->name }}">
                             <img height="30px" width="30px" src="{{ Gravatar::get($sign->user->email) }}" class="rounded-circle" alt="{{ $sign->user->name }}">
                         </a>
                         @empty
