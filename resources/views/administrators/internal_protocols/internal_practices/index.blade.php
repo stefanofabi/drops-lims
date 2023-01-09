@@ -252,7 +252,7 @@
             <form id="practices_select_form" action="" target="">
                 <input type="hidden" id="csrf_token">
 
-                @foreach ($protocol->internalPractices as $practice)                
+                @foreach ($protocol->internalPractices->sortBy(['determination.position', 'ASC']) as $practice)                
                 <tr>
                     <td style="width: 50px"> <input type="checkbox" class="form-check-input" name="filter_practices[]" value="{{ $practice->id }}" @if ($practice->signInternalPractices->isEmpty()) disabled @endif> </td>
                     <td> {{ $practice->determination->code }} </td>
