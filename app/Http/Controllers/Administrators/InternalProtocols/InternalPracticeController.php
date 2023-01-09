@@ -250,7 +250,11 @@ class InternalPracticeController extends Controller
         }
 
         Session::flash('success', [Lang::get('forms.successful_transaction')]);
-        
+
+        if ($request->boolean('stay_on_this_page')) {
+            return redirect()->action([InternalPracticeController::class, 'edit'], ['id' => $practice->id]); 
+        }
+
         return redirect()->action([InternalPracticeController::class, 'index'], ['internal_protocol_id' => $practice->internal_protocol_id]);
     }
 
