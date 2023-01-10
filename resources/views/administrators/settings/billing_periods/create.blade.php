@@ -15,7 +15,7 @@
 @endsection
 
 @section('content')
-<form method="post" action="{{ route('administrators/settings/social_works/billing_periods/store') }}">
+<form method="post" action="{{ route('administrators/settings/billing_periods/store') }}">
     @csrf
 
     <div class="col-md-6">

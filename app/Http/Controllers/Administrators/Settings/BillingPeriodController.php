@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Administrators\Settings\SocialWorks;
+namespace App\Http\Controllers\Administrators\Settings;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -32,7 +32,7 @@ class BillingPeriodController extends Controller
 
         $billing_periods = $this->billingPeriodRepository->all();
 
-        return view('administrators/settings/social_works/billing_periods/index')
+        return view('administrators/settings/billing_periods/index')
             ->with('billing_periods', $billing_periods);
     }
 
@@ -45,7 +45,7 @@ class BillingPeriodController extends Controller
     {
         //
 
-        return view('administrators/settings/social_works/billing_periods/create');
+        return view('administrators/settings/billing_periods/create');
     }
 
     /**
@@ -96,7 +96,7 @@ class BillingPeriodController extends Controller
 
         $billing_period = $this->billingPeriodRepository->findOrFail($id);
 
-        return view('administrators/settings/social_works/billing_periods/edit')
+        return view('administrators/settings/billing_periods/edit')
             ->with('billing_period', $billing_period);
     }
 

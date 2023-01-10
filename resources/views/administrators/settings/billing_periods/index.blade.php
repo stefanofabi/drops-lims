@@ -51,7 +51,7 @@
 <p class="text-justify pe-5">
     {{ trans('billing_periods.billing_periods_message') }}    
 
-    <a class="link-light" href="{{ route('administrators/settings/social_works/billing_periods/create') }}"> {{ trans('billing_periods.click_to_create_billing_period') }} </a>
+    <a class="link-light" href="{{ route('administrators/settings/billing_periods/create') }}"> {{ trans('billing_periods.click_to_create_billing_period') }} </a>
 </p>
 @endsection
 
@@ -75,7 +75,7 @@
                         <td> {{ $billing_period->end_date }} </td>
 
                         <td class="text-end">
-                            <a href="{{ route('administrators/settings/social_works/billing_periods/edit', ['id' => $billing_period->id]) }}"
+                            <a href="{{ route('administrators/settings/billing_periods/edit', ['id' => $billing_period->id]) }}"
                                class="btn btn-primary btn-sm" title="{{ trans('billing_periods.edit_billing_period') }}">
                                 <i class="fas fa-edit fa-sm"> </i>
                             </a>
@@ -86,7 +86,7 @@
                             </a>
 
                             <form id="destroy_billing_period_{{ $billing_period->id }}" method="POST"
-                                  action="{{ route('administrators/settings/social_works/billing_periods/destroy', ['id' => $billing_period->id]) }}">
+                                  action="{{ route('administrators/settings/billing_periods/destroy', ['id' => $billing_period->id]) }}">
                                 @csrf
                                 @method('DELETE')
                             </form>

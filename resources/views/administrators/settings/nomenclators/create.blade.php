@@ -4,6 +4,16 @@
 {{ trans('nomenclators.create_nomenclator') }}
 @endsection
 
+@section('menu')
+<nav class="navbar">
+	<ul class="navbar-nav">
+            <li class="nav-item">
+				<a class="nav-link" href="{{ route('administrators/settings/nomenclators/index') }}"> {{ trans('forms.go_back')}} </a>
+			</li>
+	</ul>
+</nav>
+@endsection
+
 @section('content-title')
 <i class="fas fa-archive"> </i> {{ trans('nomenclators.create_nomenclator') }}
 @endsection

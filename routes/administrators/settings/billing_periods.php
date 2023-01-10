@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Administrators\Settings\SocialWorks\BillingPeriodController;
+use App\Http\Controllers\Administrators\Settings\BillingPeriodController;
 
 
 Route::controller(BillingPeriodController::class)

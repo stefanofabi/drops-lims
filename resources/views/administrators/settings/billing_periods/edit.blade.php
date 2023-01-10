@@ -1,15 +1,5 @@
 @extends('administrators/settings/index')
 
-@section('js')
-<script type="text/javascript">
-    function submitForm() 
-	{
-        let submitButton = $('#submit-button');
-        submitButton.click();
-    }
-</script>
-@endsection
-
 @section('title')
     {{ trans('billing_periods.edit_billing_period') }}
 @endsection
@@ -25,7 +15,7 @@
 @endsection
 
 @section('content')
-<form method="post" action="{{ route('administrators/settings/social_works/billing_periods/update', ['id' => $billing_period->id]) }}">
+<form method="post" action="{{ route('administrators/settings/billing_periods/update', ['id' => $billing_period->id]) }}">
     @csrf
     @method('PUT')
 

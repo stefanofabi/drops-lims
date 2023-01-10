@@ -22,7 +22,7 @@ class ActivityViewerController extends Controller
             ->take(50)
             ->get();
 
-        return view('administrators/settings/activity_logs/index')
+        return view('administrators/activity_logs/index')
             ->with('activities', $activities);
     }
 }

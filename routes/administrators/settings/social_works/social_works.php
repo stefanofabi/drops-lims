@@ -18,7 +18,6 @@ Route::group([
 
     require('plans.php');
     require('payments_social_works.php');
-    require('billing_periods.php');
 
     Route::controller(SocialWorkController::class)
     ->group(function () {  

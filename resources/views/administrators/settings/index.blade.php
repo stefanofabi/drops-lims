@@ -12,7 +12,7 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('administrators/settings/social_works/billing_periods/index') }}"> {{ trans('billing_periods.billing_periods') }} </a>
+            <a class="nav-link" href="{{ route('administrators/settings/billing_periods/index') }}"> {{ trans('billing_periods.billing_periods') }} </a>
         </li>
 
         <li class="nav-item">

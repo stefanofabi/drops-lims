@@ -17,6 +17,7 @@ Route::group([
     'middleware' => 'permission:manage settings',
 ], function () {
 
+    require('billing_periods.php');
     require('nomenclators.php');
     require('social_works/social_works.php');
 
