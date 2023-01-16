@@ -20,7 +20,7 @@ class CreateInternalProtocolsTable extends Migration
             $table->string('observations')->nullable();
             $table->string('private_notes')->nullable();
             $table->timestamp('closed')->nullable();
-
+            
             $table->unsignedBigInteger('internal_patient_id');
             $table->unsignedBigInteger('prescriber_id');
             $table->unsignedBigInteger('plan_id');

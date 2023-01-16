@@ -1,7 +1,7 @@
 @extends('pdf/base')
 
 @section('title')
-{{ trans('pdf.protocols_report_from_to', ['start_date' => date('d/m/Y', strtotime($start_date)), 'end_date' => date('d/m/Y', strtotime($end_date))]) }}
+{{ trans('pdf.protocols_report_from_to', ['start_date' => $start_date, 'end_date' => $end_date]) }}
 @endsection
 
 @section('style')
@@ -50,7 +50,7 @@
     <div id="second_column">
         <table class="cover">
             <tr>
-                <td class="title"> {{ trans('pdf.protocols_report_from_to', ['start_date' => date('d/m/Y', strtotime($start_date)), 'end_date' => date('d/m/Y', strtotime($end_date))]) }}
+                <td class="title"> {{ trans('pdf.protocols_report_from_to', ['start_date' => $start_date, 'end_date' => $end_date]) }}
                 </td>
             </tr>
         </table>
@@ -59,7 +59,7 @@
 
         <table class="cover">
             <tr>
-                <td> Date: {{ date('d/m/Y') }}  </td>
+                <td> Date: {{ date('Y-m-d') }}  </td>
             </tr>
 
             <tr>
@@ -85,22 +85,15 @@
 
         @foreach ($protocols as $protocol)
             <tr>
-                <td class="text-center"> {{ date('d/m/Y', strtotime($protocol->completion_date))  }} </td>
+                <td class="text-center"> {{ $protocol->completion_date }} </td>
                 <td class="text-center"> {{ $protocol->id  }} </td>
-                <td> {{ $protocol->internalPatient->last_name  }} {{ $protocol->internalPatient->name  }} </td>
+                <td> {{ $protocol->internalPatient->full_name }} </td>
                 <td class="text-center"> {{ $protocol->plan->social_work->acronym}} </td>
                 <td class="text-center">
-                    @php $total_amount = 0; @endphp
+                    @php $total_collection += $protocol->total_price; @endphp
 
-                    @foreach ($protocol->internalPractices as $practice)
-                        @php $total_amount += $practice->price; @endphp
-                    @endforeach
-
-                    @php $total_collection += $total_amount; @endphp
-
-                    ${{ $total_amount }}
+                    ${{ $protocol->total_price }}
                 </td>
-
             </tr>
         @endforeach
 
@@ -110,11 +103,8 @@
             <td> </td>
             <td>  </td>
             <td class="text-center"> ${{ $total_collection }} </td>
-
         </tr>
     </table>
-
-
 @endsection
 
 

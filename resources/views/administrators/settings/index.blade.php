@@ -27,5 +27,5 @@
 @endsection
 
 @section('content')
-
+<p class="mt-2"> Select a menu option to continue </p>
 @endsection

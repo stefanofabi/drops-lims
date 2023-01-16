@@ -20,6 +20,7 @@ class CreateProtocolsTable extends Migration
             $table->string('observations')->nullable();
             $table->string('private_notes')->nullable();
             $table->timestamp('closed')->nullable();
+            $table->unsignedDouble('total_price')->default(0.0);
 
             $table->timestamps();
 

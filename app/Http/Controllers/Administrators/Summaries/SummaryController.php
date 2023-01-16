@@ -53,17 +53,15 @@ class SummaryController extends Controller
     {
         //
 
-        $request->validate([
-            'start_date' => 'required|date',
-            'end_date' => 'required|date',
-        ]);
+        $start_billing_period = $this->billingPeriodRepository->findOrFail($request->start_billing_period_id);
+        $end_billing_period = $this->billingPeriodRepository->findOrFail($request->end_billing_period_id);
 
-        $protocols = $this->internalProtocolRepository->getProtocolsInDatesRange($request->start_date, $request->end_date);
+        $protocols = $this->internalProtocolRepository->getProtocolsInDatesRange($start_billing_period->start_date, $end_billing_period->end_date);
 
         $pdf = PDF::loadView('pdf/summaries/protocols_summary', [
             'protocols' => $protocols,
-            'start_date' => $request->start_date,
-            'end_date' => $request->end_date, 
+            'start_date' => $start_billing_period->start_date,
+            'end_date' => $end_billing_period->end_date, 
         ]);
 
         return $pdf->stream('protocols_report');
@@ -84,17 +82,15 @@ class SummaryController extends Controller
     {
         //
 
-        $request->validate([
-            'start_date' => 'required|date',
-            'end_date' => 'required|date',
-        ]);
-        
-        $protocols = $this->internalProtocolRepository->getProtocolsInDatesRange($request->start_date, $request->end_date);
+        $start_billing_period = $this->billingPeriodRepository->findOrFail($request->start_billing_period_id);
+        $end_billing_period = $this->billingPeriodRepository->findOrFail($request->end_billing_period_id);
+
+        $protocols = $this->internalProtocolRepository->getProtocolsInDatesRange($start_billing_period->start_date, $end_billing_period->end_date);
 
         $pdf = PDF::loadView('pdf/summaries/patients_flow', [
             'protocols' => $protocols,
-            'start_date' => $request->start_date,
-            'end_date' => $request->end_date,
+            'start_date' => $start_billing_period->start_date,
+            'end_date' => $end_billing_period->end_date,
         ]);
 
         return $pdf->stream('patient_flow');
@@ -115,17 +111,15 @@ class SummaryController extends Controller
     {
         //
 
-        $request->validate([
-            'start_date' => 'required|date',
-            'end_date' => 'required|date',
-        ]);
-        
-        $billing_periods = $this->billingPeriodRepository->getAmountBilledByPeriod($request->start_date, $request->end_date);
+        $start_billing_period = $this->billingPeriodRepository->findOrFail($request->start_billing_period_id);
+        $end_billing_period = $this->billingPeriodRepository->findOrFail($request->end_billing_period_id);
+
+        $billing_periods = $this->billingPeriodRepository->getAmountBilledByPeriod($start_billing_period->start_date, $end_billing_period->end_date);
 
         $pdf = PDF::loadView('pdf/summaries/debt_social_works', [
             'billing_periods' => $billing_periods,
-            'start_date' => $request->start_date,
-            'end_date' => $request->end_date,
+            'start_date' => $start_billing_period->start_date,
+            'end_date' => $end_billing_period->end_date,
         ]);
 
         return $pdf->stream('debt_social_works');

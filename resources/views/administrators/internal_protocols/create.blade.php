@@ -297,7 +297,7 @@
         events: {
             input: {
                 focus() {
-                    patientAutoComplete.start();
+                    billingPeriodAutoComplete.start();
                 },
             },
         },
