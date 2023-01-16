@@ -8,11 +8,6 @@
 
 @section('js')
 <script type="module">
-	$(document).ready(function() 
-	{
-		$("#billing_period").val('{{ @old('billing_period_id') ?? $protocol->billing_period_id }}');
-    });
-
     const prescriberAutoComplete = new autoComplete({
         selector: "#prescriberAutoComplete",
         data: {
@@ -183,6 +178,91 @@
         
         socialWorkAutoComplete.input.value = selected.social_work;
     }); 
+
+    const billingPeriodAutoComplete = new autoComplete({
+        selector: "#billingPeriodAutoComplete",
+        data: {
+            src: async (query) => {
+                try {
+                    // Fetch Data from external Source
+                    const source = await fetch(`{{ route("administrators/settings/billing_periods/load_billing_periods") }}`, { 
+                        method: 'POST', 
+                        body: JSON.stringify({ filter: $("#billingPeriodAutoComplete").val() }),
+                        headers: { 
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                            "Content-Type" : "application/json",
+                        }
+                    });
+                    
+                    // Data should be an array of `Objects` or `Strings`
+                    const data = await source.json();
+
+                return data;
+                } catch (error) {
+                    return error;
+                }
+            },
+            // Data source 'Object' key to be searched
+            keys: ["name"],
+            cache: false,
+        },
+        searchEngine: function (q, r) { return r; },
+        events: {
+            input: {
+                focus() {
+                    patientAutoComplete.start();
+                },
+            },
+        },
+        resultItem: {
+            element: (item, data) => {
+                // Modify Results Item Style
+                item.style = "display: flex; justify-content: space-between;";
+                // Modify Results Item Content
+                item.innerHTML = `
+                <span style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
+                ${data.match}
+                </span>
+                <span style="display: flex; align-items: center; font-size: 13px; font-weight: 100; text-transform: uppercase; color: rgba(0,0,0,.2);">
+                [${data.value.start_date} - ${data.value.end_date}]
+                </span>`;
+            },
+            highlight: true
+        },
+        threshold: 2,
+        resultsList: {
+            element: (list, data) => {
+                if (data.results.length > 0) {
+                    const info = document.createElement("div");
+                    info.setAttribute("class", "centerAutoComplete");
+                    info.innerHTML = `Displaying <strong>${data.results.length}</strong> out of <strong>${data.matches.length}</strong> results`;
+                    list.prepend(info);
+                } else {
+                    // Create "No Results" message list element
+                    const message = document.createElement("div");
+                    message.setAttribute("class", "no_result");
+                    // Add message text content
+                    message.innerHTML = `<span>Found No Results for "${data.query}"</span>`;
+                    // Add message list element to the list
+                    list.appendChild(message);
+                }
+            },
+            noResults: true,
+            maxResults: 25,
+        },
+    });
+
+    billingPeriodAutoComplete.input.addEventListener("selection", function (event) 
+    {
+        const feedback = event.detail;
+        billingPeriodAutoComplete.input.blur();
+
+        const selected = feedback.selection.value;
+
+        $('#billing_period_id').val(selected.id);
+    
+        billingPeriodAutoComplete.input.value = selected.name;
+    });
 </script>
 
 
@@ -363,20 +443,14 @@
     </div>
 
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-lg-6 mt-3">
             <div class="form-group">
-                <label for="billing_period"> {{ trans('billing_periods.billing_period') }} </label>
-                <select id="billing_period" class="form-select input-sm" name="billing_period_id" id="billing_period" aria-describedby="billingPeriodHelp" disabled>
-                    <option value=""> {{ trans('forms.select_option') }}</option>
-
-                    @foreach ($billing_periods as $billing_period)
-                    <option value="{{ $billing_period->id }}">
-                        {{ $billing_period->name }} [{{ date('d/m/Y', strtotime($billing_period->start_date)) }} - {{ date('d/m/Y', strtotime($billing_period->end_date)) }}]
-                    </option>
-                    @endforeach
-                </select>
-
-                <small id="billingPeriodHelp" class="form-text text-muted"> This field helps you to later perform the billing cut </small>
+                <input type="text" class="form-control" id="billingPeriodAutoComplete" placeholder="{{ trans('forms.start_typing') }}" value="{{ $protocol->billingPeriod->name }}" aria-describedby="billingPeriodHelp" disabled>
+                <input type="hidden" name="billing_period_id" value="{{ old('billing_period_id') ?? $protocol->billing_period_id }}"> 
+                
+                <div>
+                    <small id="billingPeriodHelp" class="form-text text-muted"> This field helps you to later perform the billing cut </small>
+                </div>
             </div>
         </div>
 

@@ -153,7 +153,7 @@ class BillingPeriodController extends Controller
         //
 
         $request->validate([
-            'filter' => 'required|string',
+            'filter' => 'required|string|min:2',
         ]);
 
         return $this->billingPeriodRepository->loadBillingPeriods($request->filter);

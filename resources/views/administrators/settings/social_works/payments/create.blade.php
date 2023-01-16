@@ -12,7 +12,7 @@
             src: async (query) => {
                 try {
                     // Fetch Data from external Source
-                    const source = await fetch(`{{ route("administrators/settings/social_works/billing_periods/load_billing_periods") }}`, { 
+                    const source = await fetch(`{{ route("administrators/settings/billing_periods/load_billing_periods") }}`, { 
                         method: 'POST', 
                         body: JSON.stringify({ filter: $("#billing_period").val() }),
                         headers: { 

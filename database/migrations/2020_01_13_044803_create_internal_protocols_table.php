@@ -24,7 +24,7 @@ class CreateInternalProtocolsTable extends Migration
             $table->unsignedBigInteger('internal_patient_id');
             $table->unsignedBigInteger('prescriber_id');
             $table->unsignedBigInteger('plan_id');
-            $table->unsignedBigInteger('billing_period_id')->nullable();
+            $table->unsignedBigInteger('billing_period_id');
             $table->date('withdrawal_date')->nullable();
             $table->unsignedInteger('quantity_orders')->nullable();
             $table->string('diagnostic')->nullable();
