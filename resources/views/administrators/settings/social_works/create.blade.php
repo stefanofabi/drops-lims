@@ -4,6 +4,16 @@
 {{ trans('social_works.create_social_work') }}
 @endsection
 
+@section('menu')
+<nav class="navbar">
+	<ul class="navbar-nav">
+            <li class="nav-item">
+				<a class="nav-link" href="{{ route('administrators/settings/social_works/index') }}"> {{ trans('forms.go_back')}} </a>
+			</li>
+	</ul>
+</nav>
+@endsection
+
 @section('content-title')
 <i class="fas fa-archive"> </i> {{ trans('social_works.create_social_work') }}
 @endsection

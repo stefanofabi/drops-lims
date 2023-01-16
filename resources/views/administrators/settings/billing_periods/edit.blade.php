@@ -4,6 +4,16 @@
     {{ trans('billing_periods.edit_billing_period') }}
 @endsection
 
+@section('menu')
+<nav class="navbar">
+	<ul class="navbar-nav">
+            <li class="nav-item">
+				<a class="nav-link" href="{{ route('administrators/settings/billing_periods/index') }}"> {{ trans('forms.go_back')}} </a>
+			</li>
+	</ul>
+</nav>
+@endsection
+
 @section('content-title')
     <i class="fas fa-plus"> </i> {{ trans('billing_periods.edit_billing_period') }}
 @endsection
