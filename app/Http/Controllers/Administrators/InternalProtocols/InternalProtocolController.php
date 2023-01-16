@@ -96,14 +96,11 @@ class InternalProtocolController extends Controller
         //
 
         $patient = $this->internalPatientRepository->find($request->internal_patient_id);
-
-        $billing_periods = $this->billingPeriodRepository->getBillingPeriods();
         
         $current_billing_period = $this->billingPeriodRepository->getCurrentBillingPeriod();
 
         return view('administrators.internal_protocols.create')
             ->with('patient', $patient)
-            ->with('billing_periods', $billing_periods)
             ->with('current_billing_period', $current_billing_period);
     }
 
@@ -151,12 +148,9 @@ class InternalProtocolController extends Controller
         //
 
         $protocol = $this->internalProtocolRepository->findOrFail($id);
-        
-        $billing_periods = $this->billingPeriodRepository->getBillingPeriods();
 
         return view('administrators.internal_protocols.edit')
-            ->with('protocol', $protocol)
-            ->with('billing_periods', $billing_periods);
+            ->with('protocol', $protocol);
     }
 
     /**
