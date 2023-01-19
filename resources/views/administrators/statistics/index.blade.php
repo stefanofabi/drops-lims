@@ -8,15 +8,15 @@
 <nav class="navbar">
     <ul class="navbar-nav">
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('administrators/statistics/annual_collection_social_work') }}"> {{ trans('statistics.annual_collection_social_work') }} </a>
+            <a class="nav-link" href="{{ route('administrators/statistics/collection_social_work/index') }}"> {{ trans('statistics.collection_social_work') }} </a>
         </li>
 
 		<li class="nav-item">
-            <a class="nav-link" href="{{ route('administrators/statistics/patient_flow_per_month') }}"> {{ trans('statistics.patient_flow') }} </a>
+            <a class="nav-link" href="{{ route('administrators/statistics/patient_flow/index') }}"> {{ trans('statistics.patient_flow') }} </a>
         </li>
 
 		<li class="nav-item">
-            <a class="nav-link" href="{{ route('administrators/statistics/track_income') }}"> {{ trans('statistics.track_income') }} </a>
+            <a class="nav-link" href="{{ route('administrators/statistics/track_income/index') }}"> {{ trans('statistics.track_income') }} </a>
         </li>
     </ul>
 </nav>

@@ -31,7 +31,7 @@ class BillingPeriodController extends Controller
         //
 
         $billing_periods = $this->billingPeriodRepository->all();
-
+        
         return view('administrators/settings/billing_periods/index')
             ->with('billing_periods', $billing_periods);
     }

@@ -13,13 +13,14 @@ return [
     */
 
     'statistics' => 'Statistics',
-    'annual_collection_social_work' => 'Annual collection for social work',
-    'patient_flow' => 'Patient flow per month',
+    'collection_social_work' => 'Collection for social work',
+    'collection_social_work_message' => 'Generating a column chart that visually shows the collection of a social work by billing period helps us to know the current status of a social work',
+    'patient_flow' => 'Patient flow',
+    'patient_flow_message' => 'Generating an area graph that visually shows the number of patients that have elapsed per billing period helps us identify the times of greatest demand for your laboratory',
     'track_income' => 'Track income',
-    'initial_date' => 'Initial date',
-    'ended_date' => 'Ended date',
-    'months' => 'Months',
-    'subtitle_collection_from_month_to_month' => 'Collection from :initial_date to :ended_date',
+    'track_income_message' => 'Generating a column chart that shows the amount collected per billing period helps us understand the financial health for your laboratory',
+    'subtitle_collection' => 'Collection from :start to :end',
+    'subtitle_income' => 'Income from :start to :end',
     'statistics_message' => 'Statistical charts are powerful data visualization tools that allow complex information to be represented in an accessible way.',
     'generate_graph' => 'Generate graph',
     

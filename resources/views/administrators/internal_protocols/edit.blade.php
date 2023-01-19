@@ -446,7 +446,7 @@
         <div class="col-lg-6 mt-3">
             <div class="form-group">
                 <input type="text" class="form-control" id="billingPeriodAutoComplete" placeholder="{{ trans('forms.start_typing') }}" value="{{ $protocol->billingPeriod->name }}" aria-describedby="billingPeriodHelp" disabled>
-                <input type="hidden" name="billing_period_id" value="{{ old('billing_period_id') ?? $protocol->billing_period_id }}"> 
+                <input type="hidden" name="billing_period_id" id="billing_period_id" value="{{ old('billing_period_id') ?? $protocol->billing_period_id }}"> 
                 
                 <div>
                     <small id="billingPeriodHelp" class="form-text text-muted"> This field helps you to later perform the billing cut </small>

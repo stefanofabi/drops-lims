@@ -1,24 +1,196 @@
 @extends('administrators.statistics.index')
 
 @section('js')
-@if (isset($data))
+<script type="module">
+    const startBillingPeriodAutoComplete = new autoComplete({
+        selector: "#startBillingPeriodAutoComplete",
+        data: {
+            src: async (query) => {
+                try {
+                    // Fetch Data from external Source
+                    const source = await fetch(`{{ route("administrators/settings/billing_periods/load_billing_periods") }}`, { 
+                        method: 'POST', 
+                        body: JSON.stringify({ filter: $("#startBillingPeriodAutoComplete").val() }),
+                        headers: { 
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                            "Content-Type" : "application/json",
+                        }
+                    });
+                    
+                    // Data should be an array of `Objects` or `Strings`
+                    const data = await source.json();
+
+                return data;
+                } catch (error) {
+                    return error;
+                }
+            },
+            // Data source 'Object' key to be searched
+            keys: ["name"],
+            cache: false,
+        },
+        searchEngine: function (q, r) { return r; },
+        events: {
+            input: {
+                focus() {
+                    startBillingPeriodAutoComplete.start();
+                },
+            },
+        },
+        resultItem: {
+            element: (item, data) => {
+                // Modify Results Item Style
+                item.style = "display: flex; justify-content: space-between;";
+                // Modify Results Item Content
+                item.innerHTML = `
+                <span style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
+                ${data.match}
+                </span>
+                <span style="display: flex; align-items: center; font-size: 13px; font-weight: 100; text-transform: uppercase; color: rgba(0,0,0,.2);">
+                [${data.value.start_date} - ${data.value.end_date}]
+                </span>`;
+            },
+            highlight: true
+        },
+        threshold: 2,
+        resultsList: {
+            element: (list, data) => {
+                if (data.results.length > 0) {
+                    const info = document.createElement("div");
+                    info.setAttribute("class", "centerAutoComplete");
+                    info.innerHTML = `Displaying <strong>${data.results.length}</strong> out of <strong>${data.matches.length}</strong> results`;
+                    list.prepend(info);
+                } else {
+                    // Create "No Results" message list element
+                    const message = document.createElement("div");
+                    message.setAttribute("class", "no_result");
+                    // Add message text content
+                    message.innerHTML = `<span>Found No Results for "${data.query}"</span>`;
+                    // Add message list element to the list
+                    list.appendChild(message);
+                }
+            },
+            noResults: true,
+            maxResults: 25,
+        },
+    });
+
+    startBillingPeriodAutoComplete.input.addEventListener("selection", function (event) 
+    {
+        const feedback = event.detail;
+        startBillingPeriodAutoComplete.input.blur();
+
+        const selected = feedback.selection.value;
+
+        $('#start_billing_period_id').val(selected.id);
+    
+        startBillingPeriodAutoComplete.input.value = selected.name;
+    });
+
+    const endBillingPeriodAutoComplete = new autoComplete({
+        selector: "#endBillingPeriodAutoComplete",
+        data: {
+            src: async (query) => {
+                try {
+                    // Fetch Data from external Source
+                    const source = await fetch(`{{ route("administrators/settings/billing_periods/load_billing_periods") }}`, { 
+                        method: 'POST', 
+                        body: JSON.stringify({ filter: $("#endBillingPeriodAutoComplete").val() }),
+                        headers: { 
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                            "Content-Type" : "application/json",
+                        }
+                    });
+                    
+                    // Data should be an array of `Objects` or `Strings`
+                    const data = await source.json();
+
+                return data;
+                } catch (error) {
+                    return error;
+                }
+            },
+            // Data source 'Object' key to be searched
+            keys: ["name"],
+            cache: false,
+        },
+        searchEngine: function (q, r) { return r; },
+        events: {
+            input: {
+                focus() {
+                    endBillingPeriodAutoComplete.start();
+                },
+            },
+        },
+        resultItem: {
+            element: (item, data) => {
+                // Modify Results Item Style
+                item.style = "display: flex; justify-content: space-between;";
+                // Modify Results Item Content
+                item.innerHTML = `
+                <span style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
+                ${data.match}
+                </span>
+                <span style="display: flex; align-items: center; font-size: 13px; font-weight: 100; text-transform: uppercase; color: rgba(0,0,0,.2);">
+                [${data.value.start_date} - ${data.value.end_date}]
+                </span>`;
+            },
+            highlight: true
+        },
+        threshold: 2,
+        resultsList: {
+            element: (list, data) => {
+                if (data.results.length > 0) {
+                    const info = document.createElement("div");
+                    info.setAttribute("class", "centerAutoComplete");
+                    info.innerHTML = `Displaying <strong>${data.results.length}</strong> out of <strong>${data.matches.length}</strong> results`;
+                    list.prepend(info);
+                } else {
+                    // Create "No Results" message list element
+                    const message = document.createElement("div");
+                    message.setAttribute("class", "no_result");
+                    // Add message text content
+                    message.innerHTML = `<span>Found No Results for "${data.query}"</span>`;
+                    // Add message list element to the list
+                    list.appendChild(message);
+                }
+            },
+            noResults: true,
+            maxResults: 25,
+        },
+    });
+
+    endBillingPeriodAutoComplete.input.addEventListener("selection", function (event) 
+    {
+        const feedback = event.detail;
+        endBillingPeriodAutoComplete.input.blur();
+
+        const selected = feedback.selection.value;
+
+        $('#end_billing_period_id').val(selected.id);
+    
+        endBillingPeriodAutoComplete.input.value = selected.name;
+    });
+</script>
+
+@if (isset($track_income))
 <script type="module">
   GoogleCharts.load(drawChart);
 
   function drawChart() 
   {
     const data = GoogleCharts.api.visualization.arrayToDataTable([
-      ['Months', 'Collection'],
+      ['Billing Periods', 'Income'],
       
-      @foreach ($data as $month)
-      ['{{ $month['value'] }}', {{ $month['total'] }}], 	
+      @foreach ($track_income as $billing_period)
+      ['{{ $billing_period->name }}', {{ $billing_period->total }}], 	
       @endforeach
     ]);
 
     var options = {
       chart: {
         title: '{{ trans("statistics.track_income") }}',
-        subtitle: '{{ trans("statistics.subtitle_collection_from_month_to_month", ['initial_date' => $initial_date, 'ended_date' => $ended_date ]) }}',
+        subtitle: '{{ trans("statistics.subtitle_income", ['start' => $start_billing_period->name, 'end' => $end_billing_period->name ]) }}',
       }
     };
 
@@ -30,32 +202,44 @@
 @endsection
 
 @section('content')
-<form action="{{ route('administrators/statistics/get_track_income') }}" method="post">
-  @csrf
+<div class="mt-3"> 
+    <h2> {{ trans('statistics.track_income') }} </h2> 
+    <hr class="col-6">
+    <p class="col-9"> {{ trans('statistics.track_income_message') }} </p>
+</div>
 
-  <div class="col-md-6">
-    <div class="form-group mt-2">
-      <label for="initialDate"> {{ trans('statistics.initial_date') }} </label>
-      <input type="date" class="form-control @error('initial_date') is-invalid @enderror" name="initial_date" id="initialDate" value="{{ $initial_date ?? date('Y-m-d') }}" aria-describedby="initialDateHelp" required>
+<form action="{{ route('administrators/statistics/track_income/generate_graph') }}" method="post">
+    @csrf
 
-      <small id="initialDateHelp" class="form-text text-muted"> The date on which the collection begins to be counted </small>
+    <div class="row">
+        <div class="col-lg-6 mt-3">
+            <div class="form-group">
+                <input type="text" class="form-control" id="startBillingPeriodAutoComplete" placeholder="{{ trans('forms.start_typing') }}" value="{{ $start_billing_period->name ?? '' }}" aria-describedby="startBillingPeriodHelp" required>
+                <input type="hidden" name="start_billing_period_id" id="start_billing_period_id" value="{{ $start_billing_period->id ?? '' }}"> 
+                        
+                <div>
+                    <small id="startBillingPeriodHelp" class="form-text text-muted"> The billing period you start filtering </small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 mt-3">
+            <div class="form-group">
+                <input type="text" class="form-control" id="endBillingPeriodAutoComplete" placeholder="{{ trans('forms.start_typing') }}" value="{{ $end_billing_period->name ?? '' }}" aria-describedby="endBillingPeriodHelp" required>
+                <input type="hidden" name="end_billing_period_id" id="end_billing_period_id" value="{{ $end_billing_period->id ?? '' }}"> 
+                        
+                <div>
+                <small id="endBillingPeriodHelp" class="form-text text-muted"> The billing period you end filtering </small>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <div class="col-md-6">
-    <div class="form-group mt-2">
-      <label for="endedDate"> {{ trans('statistics.ended_date') }} </label>
-      <input type="date" class="form-control @error('ended_date') is-invalid @enderror" name="ended_date" id="endedDate" value="{{ $ended_date ?? date('Y-m-d') }}" aria-describedby="endedDateHelp" required>
-
-      <small id="endedDateHelp" class="form-text text-muted"> The date on which the collection ends </small>
-    </div>
-  </div>
-
-  <input type="submit" class="btn btn-primary mt-3" value="{{ trans('statistics.generate_graph') }}">
+    <input type="submit" class="btn btn-primary mt-3" value="{{ trans('statistics.generate_graph') }}">
 </form>
 
-@if (isset($data))
-<div class="mt-3" id="columnchart_material" style="width: 800px; height: 500px;"></div>
+@if (isset($track_income))
+<div class="mt-5" id="columnchart_material" style="width: 800px; height: 500px;"></div>
 @endif
 @endsection
 

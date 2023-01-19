@@ -10,31 +10,58 @@
 */
 
 use App\Http\Controllers\Administrators\Statistics\StatisticsController;
+use App\Http\Controllers\Administrators\Statistics\CollectionSocialWorkController;
+use App\Http\Controllers\Administrators\Statistics\PatientFlowController;
+use App\Http\Controllers\Administrators\Statistics\TrackIncomeController;
 
-Route::controller(StatisticsController::class)
-    ->prefix('statistics')
-    ->as('statistics/')
-    ->middleware('permission:view statistics')
-    ->group(function () {   
+Route::group([
+    'prefix' => 'statistics', 
+    'as' => 'statistics/', 
+    'middleware' => 'permission:view statistics'
+], function() {
+
+    Route::controller(StatisticsController::class)
+    ->group(function () {
 
         Route::get('statistics', 'index')
-            ->name('index');
-
-        Route::get('annual-collection-social-work', 'getViewAnnualCollectionSocialWork')
-            ->name('annual_collection_social_work');
-
-        Route::post('get-annual-collection-social-work', 'getAnnualCollectionSocialWork')
-            ->name('get_annual_collection_social_work');
-
-        Route::get('patient-flow_per-month', 'getViewPatientFlowPerMonth')
-            ->name('patient_flow_per_month');
-            
-        Route::post('get-patient-flow_per-month', 'getPatientFlowPerMonth')
-            ->name('get_patient_flow_per_month');
-
-        Route::get('track-income', 'getViewTrackIncome')
-            ->name('track_income');
-        
-        Route::post('get-track-income', 'getTrackIncome')
-            ->name('get_track_income');
+        ->name('index');
     });
+
+    Route::controller(CollectionSocialWorkController::class)
+    ->prefix('collection-social-work')
+    ->as('collection_social_work/')
+    ->group(function () {   
+    
+        Route::get('index', 'index')
+            ->name('index');
+    
+        Route::post('generate-graph', 'generateGraph')
+            ->name('generate_graph');
+    });
+
+    Route::controller(PatientFlowController::class)
+    ->prefix('patient-flow')
+    ->as('patient_flow/')
+    ->group(function () {   
+    
+        Route::get('index', 'index')
+            ->name('index');
+    
+        Route::post('generate-graph', 'generateGraph')
+            ->name('generate_graph');
+    });
+    
+    Route::controller(TrackIncomeController::class)
+    ->prefix('track-income')
+    ->as('track_income/')
+    ->group(function () {   
+    
+        Route::get('index', 'index')
+            ->name('index');
+    
+        Route::post('generate-graph', 'generateGraph')
+            ->name('generate_graph');
+    });
+});
+
+

@@ -177,7 +177,8 @@
 @section('content')
 <div class="mt-3"> 
     <h2> {{ trans('summaries.protocols_summary') }} </h2> 
-    {{ trans('summaries.protocols_summary_message') }}
+    <hr class="col-6">
+    <p class="col-9"> {{ trans('summaries.protocols_summary_message') }} </p>
 </div>
 
 <form method="post" target="_blank" action="{{ route('administrators/summaries/get_protocols_summary') }}">

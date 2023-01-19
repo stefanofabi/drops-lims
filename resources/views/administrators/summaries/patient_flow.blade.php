@@ -176,12 +176,12 @@
 
 @section('content')
 <div class="mt-3"> 
-    <h2> {{ trans('summaries.debt_social_works') }} </h2> 
+    <h2> {{ trans('summaries.patients_flow') }} </h2> 
     <hr class="col-6">
-    <p class="col-9"> {{ trans('summaries.debt_social_works_message') }} </p>
+    <p class="col-9"> {{ trans('summaries.patient_flow_message') }} </p>
 </div>
 
-<form method="post" target="_blank" action="{{ route('administrators/summaries/get_debt_social_works') }}">
+<form method="post" target="_blank" action="{{ route('administrators/summaries/get_patients_flow') }}">
     @csrf
 
     <div class="row">
@@ -208,6 +208,6 @@
         </div>
     </div>
 
-  <input type="submit" class="btn btn-primary mt-3" value="{{ trans('summaries.generate_summary') }}">
+    <input type="submit" class="btn btn-primary mt-3" value="{{ trans('summaries.generate_summary') }}">
 </form>
 @endsection

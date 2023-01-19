@@ -69,7 +69,7 @@ class SummaryController extends Controller
 
     public function getPatientsFlowView()
     {
-        return view('administrators.summaries.patients_flow');
+        return view('administrators.summaries.patient_flow');
     }
 
     /**
@@ -87,7 +87,7 @@ class SummaryController extends Controller
 
         $protocols = $this->internalProtocolRepository->getProtocolsInDatesRange($start_billing_period->start_date, $end_billing_period->end_date);
 
-        $pdf = PDF::loadView('pdf/summaries/patients_flow', [
+        $pdf = PDF::loadView('pdf/summaries/patient_flow', [
             'protocols' => $protocols,
             'start_date' => $start_billing_period->start_date,
             'end_date' => $end_billing_period->end_date,

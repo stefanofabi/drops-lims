@@ -8,8 +8,6 @@ use App\Contracts\Repository\BillingPeriodRepositoryInterface;
 
 use App\Models\BillingPeriod; 
 
-use Lang;
-
 final class BillingPeriodRepository implements BillingPeriodRepositoryInterface
 {
     protected $model;
@@ -26,7 +24,7 @@ final class BillingPeriodRepository implements BillingPeriodRepositoryInterface
 
     public function all()
     {
-        return $this->model->orderBy('start_date', 'DESC')->orderBy('end_date', 'DESC')->get();
+        return $this->model->orderBy('start_date', 'DESC')->get();
     }
 
     public function create(array $data)
@@ -116,6 +114,78 @@ final class BillingPeriodRepository implements BillingPeriodRepositoryInterface
             ->orderBy('billing_periods.start_date', 'ASC')
             ->orderBy('billing_periods.end_date', 'ASC')
             ->orderBy('social_works.name', 'ASC')
+            ->get();
+    }
+
+    /*
+    * Returns a list with the collection of a social work in the specified billing periods
+    */
+    public function getCollectionSocialWork($social_work_id, $start_date, $end_date) 
+    {
+        $collected_periods = DB::table('internal_protocols')
+            ->select('internal_protocols.billing_period_id')
+            ->selectRaw('SUM(internal_protocols.total_price) as total')
+            ->join('plans', 'internal_protocols.plan_id', '=', 'plans.id')
+            ->join('social_works', 'plans.social_work_id', '=', 'social_works.id')
+            ->where('social_works.id', $social_work_id)
+            ->groupBy('internal_protocols.billing_period_id');
+
+        return $this->model
+            ->select('billing_periods.id', 'billing_periods.name')
+            ->selectRaw('COALESCE(collected_periods.total, 0) as total')
+            ->leftJoinSub($collected_periods, 'collected_periods', function ($join) {
+                $join->on('billing_periods.id', '=', 'collected_periods.billing_period_id');
+            })
+            ->where('billing_periods.start_date', '>=', $start_date)
+            ->where('billing_periods.end_date', '<=', $end_date)
+            ->groupBy('billing_periods.id', 'billing_periods.name', 'collected_periods.total')
+            ->orderBy('billing_periods.start_date', 'ASC')
+            ->get();
+    }
+
+    /*
+    * Returns a list with the flow of patients in the specified billing periods
+    */
+    public function getPatientFlow($start_date, $end_date) 
+    {
+        $total_patients = DB::table('internal_protocols')
+            ->select('internal_protocols.billing_period_id')
+            ->selectRaw('COUNT(*) as total')
+            ->groupBy('internal_protocols.billing_period_id');
+
+        return $this->model
+            ->select('billing_periods.id', 'billing_periods.name')
+            ->selectRaw('COALESCE(total_patients.total, 0) as total')
+            ->leftJoinSub($total_patients, 'total_patients', function ($join) {
+                $join->on('billing_periods.id', '=', 'total_patients.billing_period_id');
+            })
+            ->where('billing_periods.start_date', '>=', $start_date)
+            ->where('billing_periods.end_date', '<=', $end_date)
+            ->groupBy('billing_periods.id', 'billing_periods.name', 'total_patients.total')
+            ->orderBy('billing_periods.start_date', 'ASC')
+            ->get();
+    }
+
+    /*
+    * Returns a list of the lab's revenue for the specified billing periods
+    */
+    public function getTrackIncome($start_date, $end_date) 
+    {
+        $total_income = DB::table('internal_protocols')
+            ->select('internal_protocols.billing_period_id')
+            ->selectRaw('SUM(internal_protocols.total_price) as total')
+            ->groupBy('internal_protocols.billing_period_id');
+
+        return $this->model
+            ->select('billing_periods.id', 'billing_periods.name')
+            ->selectRaw('COALESCE(total_income.total, 0) as total')
+            ->leftJoinSub($total_income, 'total_income', function ($join) {
+                $join->on('billing_periods.id', '=', 'total_income.billing_period_id');
+            })
+            ->where('billing_periods.start_date', '>=', $start_date)
+            ->where('billing_periods.end_date', '<=', $end_date)
+            ->groupBy('billing_periods.id', 'billing_periods.name', 'total_income.total')
+            ->orderBy('billing_periods.start_date', 'ASC')
             ->get();
     }
 }

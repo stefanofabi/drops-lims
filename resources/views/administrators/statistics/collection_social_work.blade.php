@@ -1,4 +1,4 @@
-@extends('administrators.summaries.index')
+@extends('administrators.statistics.index')
 
 @section('js')
 <script type="module">
@@ -172,24 +172,71 @@
         endBillingPeriodAutoComplete.input.value = selected.name;
     });
 </script>
+
+<script type="module">
+	$(document).ready(function() 
+  {
+    	$("#socialWork").val('{{ $social_work ?? '' }}') ;	    
+	});
+
+  @if (isset($collect_social_work))
+  GoogleCharts.load(drawChart);
+
+  function drawChart() 
+  {
+    const data = GoogleCharts.api.visualization.arrayToDataTable([
+      ['Billing Periods', 'Collection'],
+
+      @foreach ($collect_social_work as $billing_period)
+      ['{{ $billing_period->name }}', {{ $billing_period->total }}], 	
+      @endforeach
+    ]);
+
+    var options = {
+      chart: {
+        title: '{{ trans("statistics.collection_social_work") }}',
+        subtitle: '{{ trans("statistics.subtitle_collection", ['start' => $start_billing_period->name, 'end' => $end_billing_period->name ]) }}',
+      }
+    };
+
+    var chart = new GoogleCharts.api.visualization.ColumnChart(document.getElementById('columnchart_material'));
+    chart.draw(data, options);
+  }
+@endif
+</script>
 @endsection
 
 @section('content')
 <div class="mt-3"> 
-    <h2> {{ trans('summaries.debt_social_works') }} </h2> 
+    <h2> {{ trans('statistics.collection_social_work') }} </h2> 
     <hr class="col-6">
-    <p class="col-9"> {{ trans('summaries.debt_social_works_message') }} </p>
+    <p class="col-9"> {{ trans('statistics.collection_social_work_message') }} </p>
 </div>
 
-<form method="post" target="_blank" action="{{ route('administrators/summaries/get_debt_social_works') }}">
+<form action="{{ route('administrators/statistics/collection_social_work/generate_graph') }}" method="post">
     @csrf
+
+    <div class="col-md-6">
+        <div class="form-group mt-2">
+        <label for="socialWork"> {{ trans('social_works.social_work') }} </label>
+        <select class="form-select" name="social_work" id="socialWork" aria-describedby="socialWorkHelp" required>
+            <option value=""> {{ trans('forms.select_option') }}</option>
+
+            @foreach ($social_works as $social_work)
+            <option value="{{ $social_work->id }}"> {{ $social_work->name }} </option>
+            @endforeach
+            </select>
+
+        <small id="socialWorkHelp" class="form-text text-muted"> The social work to which the amount collected will be counted </small>
+        </div>
+    </div>
 
     <div class="row">
         <div class="col-lg-6 mt-3">
             <div class="form-group">
-                <input type="text" class="form-control" id="startBillingPeriodAutoComplete" placeholder="{{ trans('forms.start_typing') }}" aria-describedby="startBillingPeriodHelp" required>
-                <input type="hidden" name="start_billing_period_id" id="start_billing_period_id"> 
-                
+                <input type="text" class="form-control" id="startBillingPeriodAutoComplete" placeholder="{{ trans('forms.start_typing') }}" value="{{ $start_billing_period->name ?? '' }}" aria-describedby="startBillingPeriodHelp" required>
+                <input type="hidden" name="start_billing_period_id" id="start_billing_period_id" value="{{ $start_billing_period->id ?? '' }}"> 
+                        
                 <div>
                     <small id="startBillingPeriodHelp" class="form-text text-muted"> The billing period you start filtering </small>
                 </div>
@@ -198,16 +245,20 @@
 
         <div class="col-lg-6 mt-3">
             <div class="form-group">
-                <input type="text" class="form-control" id="endBillingPeriodAutoComplete" placeholder="{{ trans('forms.start_typing') }}" aria-describedby="endBillingPeriodHelp" required>
-                <input type="hidden" name="end_billing_period_id" id="end_billing_period_id"> 
-                
+                <input type="text" class="form-control" id="endBillingPeriodAutoComplete" placeholder="{{ trans('forms.start_typing') }}" value="{{ $end_billing_period->name ?? '' }}" aria-describedby="endBillingPeriodHelp" required>
+                <input type="hidden" name="end_billing_period_id" id="end_billing_period_id" value="{{ $end_billing_period->id ?? '' }}"> 
+                        
                 <div>
-                    <small id="endBillingPeriodHelp" class="form-text text-muted"> The billing period you end filtering </small>
+                <small id="endBillingPeriodHelp" class="form-text text-muted"> The billing period you end filtering </small>
                 </div>
             </div>
         </div>
     </div>
 
-  <input type="submit" class="btn btn-primary mt-3" value="{{ trans('summaries.generate_summary') }}">
+    <input type="submit" class="btn btn-primary mt-3" value="{{ trans('statistics.generate_graph') }}">
 </form>
+
+@if (isset($collect_social_work))
+<div class="mt-5" id="columnchart_material" style="width: 800px; height: 500px;"></div>
+@endif
 @endsection
