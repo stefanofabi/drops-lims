@@ -189,9 +189,9 @@
     ]);
 
     var options = {
-      title: '{{ trans("statistics.patient_flow") }}',
-      hAxis: {title: '{{ trans("billing_periods.billing_periods") }}',  titleTextStyle: {color: '#333'}},
-      vAxis: {minValue: 0}
+        title: '{{ trans("statistics.patient_flow") }}',
+        hAxis: {title: '{{ trans("billing_periods.billing_periods") }}',  titleTextStyle: {color: '#333'}},
+        vAxis: {minValue: 0}
     };
 
     var chart = new GoogleCharts.api.visualization.AreaChart(document.getElementById('chart_div'));

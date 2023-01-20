@@ -55,7 +55,7 @@ final class SocialWorkRepository implements SocialWorkRepositoryInterface
     public function getSocialWorks($filter)
     {
         return $this->model
-            ->select('plans.id as plan_id', "social_works.name as social_work", "plans.name as plan", "social_works.acronym")
+            ->select('social_works.name as social_work', 'social_works.acronym', 'plans.id as plan_id', 'plans.name as plan')
             ->join('plans', 'social_works.id', '=', 'plans.social_work_id')
             ->where(function ($query) use ($filter) {
                 if (! empty($filter)) {

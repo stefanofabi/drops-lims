@@ -176,7 +176,7 @@
 <script type="module">
 	$(document).ready(function() 
   {
-    	$("#socialWork").val('{{ $social_work ?? '' }}') ;	    
+    	$("#socialWork").val('{{ $social_work->id ?? '' }}') ;	    
 	});
 
   @if (isset($collect_social_work))
@@ -185,18 +185,19 @@
   function drawChart() 
   {
     const data = GoogleCharts.api.visualization.arrayToDataTable([
-      ['Billing Periods', 'Collection'],
+      ['Billing Periods', 'Collection', 'Paid'],
 
       @foreach ($collect_social_work as $billing_period)
-      ['{{ $billing_period->name }}', {{ $billing_period->total }}], 	
+      ['{{ $billing_period->name }}', {{ $billing_period->total_collection }}, {{ $billing_period->total_paid }}], 	
       @endforeach
     ]);
 
     var options = {
-      chart: {
-        title: '{{ trans("statistics.collection_social_work") }}',
-        subtitle: '{{ trans("statistics.subtitle_collection", ['start' => $start_billing_period->name, 'end' => $end_billing_period->name ]) }}',
-      }
+        title: 'Collection of the social work {{ $social_work->name }}',
+        chart: {
+            title: '{{ trans("statistics.collection_social_work") }}',
+            subtitle: '{{ trans("statistics.subtitle_collection", ['start' => $start_billing_period->name, 'end' => $end_billing_period->name ]) }}',
+        }
     };
 
     var chart = new GoogleCharts.api.visualization.ColumnChart(document.getElementById('columnchart_material'));

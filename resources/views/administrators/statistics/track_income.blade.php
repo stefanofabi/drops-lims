@@ -180,21 +180,22 @@
   function drawChart() 
   {
     const data = GoogleCharts.api.visualization.arrayToDataTable([
-      ['Billing Periods', 'Income'],
+      ['Billing Periods', 'Income', 'Paid'],
       
       @foreach ($track_income as $billing_period)
-      ['{{ $billing_period->name }}', {{ $billing_period->total }}], 	
+      ['{{ $billing_period->name }}', {{ $billing_period->total_income }}, {{ $billing_period->total_paid }}], 	
       @endforeach
     ]);
 
     var options = {
-      chart: {
-        title: '{{ trans("statistics.track_income") }}',
-        subtitle: '{{ trans("statistics.subtitle_income", ['start' => $start_billing_period->name, 'end' => $end_billing_period->name ]) }}',
-      }
+        title: 'Income vs Paid income',
+        chart: {
+            title: '{{ trans("statistics.track_income") }}',
+            subtitle: '{{ trans("statistics.subtitle_income", ['start' => $start_billing_period->name, 'end' => $end_billing_period->name ]) }}',
+        }
     };
 
-    var chart = new GoogleCharts.api.visualization.ColumnChart(document.getElementById('columnchart_material'));
+    var chart = new GoogleCharts.api.visualization.AreaChart(document.getElementById('chart_div'));
     chart.draw(data, options);
   }
 </script>
@@ -239,7 +240,7 @@
 </form>
 
 @if (isset($track_income))
-<div class="mt-5" id="columnchart_material" style="width: 800px; height: 500px;"></div>
+<div class="mt-5" id="chart_div" style="width: 800px; height: 500px;"></div>
 @endif
 @endsection
 
