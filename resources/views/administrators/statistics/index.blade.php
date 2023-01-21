@@ -18,6 +18,10 @@
 		<li class="nav-item">
             <a class="nav-link" href="{{ route('administrators/statistics/track_income/index') }}"> {{ trans('statistics.track_income') }} </a>
         </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('administrators/statistics/social_work_composition/index') }}"> {{ trans('statistics.social_work_composition') }} </a>
+        </li>
     </ul>
 </nav>
 @endsection

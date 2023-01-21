@@ -13,6 +13,7 @@ use App\Http\Controllers\Administrators\Statistics\StatisticsController;
 use App\Http\Controllers\Administrators\Statistics\CollectionSocialWorkController;
 use App\Http\Controllers\Administrators\Statistics\PatientFlowController;
 use App\Http\Controllers\Administrators\Statistics\TrackIncomeController;
+use App\Http\Controllers\Administrators\Statistics\SocialWorkCompositionController;
 
 Route::group([
     'prefix' => 'statistics', 
@@ -54,6 +55,18 @@ Route::group([
     Route::controller(TrackIncomeController::class)
     ->prefix('track-income')
     ->as('track_income/')
+    ->group(function () {   
+    
+        Route::get('index', 'index')
+            ->name('index');
+    
+        Route::post('generate-chart', 'generateChart')
+            ->name('generate_chart');
+    });
+
+    Route::controller(SocialWorkCompositionController::class)
+    ->prefix('social-work-composition')
+    ->as('social_work_composition/')
     ->group(function () {   
     
         Route::get('index', 'index')

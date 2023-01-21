@@ -23,5 +23,7 @@ return [
     'subtitle_income' => 'Income from :start to :end',
     'statistics_message' => 'Statistical charts are powerful data visualization tools that allow complex information to be represented in an accessible way.',
     'generate_chart' => 'Generate chart',
-    
+    'social_work_composition' => 'Social work composition',
+    'social_work_composition_message' => 'This graph will help you to know which social works receive more frequently and based on this, perform other analyzes',
+
 ];

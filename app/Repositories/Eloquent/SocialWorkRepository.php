@@ -67,4 +67,15 @@ final class SocialWorkRepository implements SocialWorkRepositoryInterface
             ->orderBy('social_works.name', 'ASC')
             ->get();
     }
+
+    public function getSocialWorkComposition ()
+    {
+        return $this->model
+            ->select('social_works.id', 'social_works.name')
+            ->selectRaw('COUNT(*) as total_orders')
+            ->join('plans', 'social_works.id', '=', 'plans.social_work_id')
+            ->join('internal_protocols', 'plans.id', '=', 'internal_protocols.plan_id')
+            ->groupBy('social_works.id')
+            ->get();
+    }
 }
