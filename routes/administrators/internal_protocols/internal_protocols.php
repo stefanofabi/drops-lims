@@ -27,14 +27,15 @@ Route::controller(InternalProtocolController::class)
         Route::post('store', 'store')
             ->name('store');
 
-        Route::put('update/{id}', 'update')
-            ->name('update')
-            ->where('id', '[1-9][0-9]*')
-            ->middleware('verify_open_protocol');
-
         Route::get('edit/{id}', 'edit')
             ->name('edit')
             ->where('id', '[1-9][0-9]*');
+
+        Route::put('update/{id}', 'update')
+            ->name('update')
+            ->where('id', '[1-9][0-9]*')
+            ->middleware('verify_open_protocol')
+            ->middleware('check_nomenclator_when_updating_internal_protocol');
 
         Route::get('destroy/{id}', 'destroy')
             ->name('destroy')

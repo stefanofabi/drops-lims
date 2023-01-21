@@ -23,6 +23,8 @@ class InternalProtocol extends Model
         'quantity_orders',
         'diagnostic',
         'billing_period_id',
+        'private_notes',
+        'plan_id',
     ];
 
     /**

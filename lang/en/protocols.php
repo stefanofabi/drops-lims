@@ -56,5 +56,6 @@ return [
     'not_selected_practices' => 'Not selected practices',
     'send_selected_practices_by_email' => 'Send selected practices by email',
     'protocols_message' => 'This section is the heart of your Laboratory. Here all the internal protocols are loaded and each of them is assigned to only one of your patients. They contain the practices performed by the patient, the prescriber who prescribed the order, the social work data, among other things.',
+    'error_modifying_social_work' => 'To modify the social work, first delete all protocol practices',
 
 ];
