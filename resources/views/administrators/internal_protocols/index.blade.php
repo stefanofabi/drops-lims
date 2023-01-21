@@ -84,7 +84,7 @@
 			</td>
 
 			<td> {{ $protocol->patient }} </td>
-			<td> @if ($protocol->completion_date) {{ date('d/m/Y', strtotime($protocol->completion_date)) }} @endif</td>
+			<td> {{ $protocol->completion_date }} </td>
 			<td> {{ $protocol->prescriber }} </td>
 
 			<td class="text-end">

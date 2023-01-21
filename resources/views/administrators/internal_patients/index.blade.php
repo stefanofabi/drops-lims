@@ -71,7 +71,7 @@
 			<th> {{ trans('patients.patient') }} </th>
 			<th> {{ trans('patients.identification_number') }} </th>
 			<th> {{ trans('patients.city') }} </th>
-			<th> {{ trans('patients.age') }} </th>
+			<th> {{ trans('social_works.social_work') }} </th>
 			<th class="text-end"> {{ trans('forms.actions') }} </th>
 		</tr>
 
@@ -81,12 +81,7 @@
 			<td> {{ $patient->identification_number }} </td>
 			<td> {{ $patient->city }} </td>
 			<td>
-                @php
-                $age = $patient->age();
-                $format_type = $age != null && $age['year'] > 0;
-                @endphp
-
-                @if ($age != null) {{ trans_choice('patients.calculate_age', $format_type ? 1 : 0 , $age) }} @endif
+                {{ $patient->plan->social_work->name  ?? '' }}
             </td>
 
 			<td class="text-end">

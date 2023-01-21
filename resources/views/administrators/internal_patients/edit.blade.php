@@ -105,6 +105,7 @@
 		$("select").removeAttr('disabled');
 
         $('#planAutoComplete').attr('disabled', true);
+        $('#age').attr('disabled', true);
 	}
 
     function generateNewSecurityCode() 
@@ -246,6 +247,20 @@
                 <input type="date" class="form-control @error('birthdate') is-invalid @enderror" name="birthdate" id="birthdate" value="{{ old('birthdate') ?? $patient->birthdate }}" aria-describedby="birthdateHelp" disabled>
 
                 <small id="birthdateHelp" class="form-text text-muted"> In addition to knowing your age we will send you a greeting on your birthday </small>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group mt-2">
+                <label for="birthdate"> {{ trans('patients.age') }} </label>
+                @php
+                $age = $patient->age();
+                $format_type = $age != null && $age['year'] > 0;
+                @endphp
+
+                <input type="text" class="form-control" id="age" value="@if ($age != null) {{ trans_choice('patients.calculate_age', $format_type ? 1 : 0 , $age) }} @endif" aria-describedby="ageHelp" disabled>
+
+                <small id="ageHelp" class="form-text text-muted"> Some clinical analyzes may change depending on the age of the patient </small>
             </div>
         </div>
     </div>
