@@ -209,7 +209,7 @@
     <p class="col-9"> {{ trans('statistics.track_income_message') }} </p>
 </div>
 
-<form action="{{ route('administrators/statistics/track_income/generate_graph') }}" method="post">
+<form action="{{ route('administrators/statistics/track_income/generate_chart') }}" method="post">
     @csrf
 
     <div class="row">
@@ -236,7 +236,7 @@
         </div>
     </div>
 
-    <input type="submit" class="btn btn-primary mt-3" value="{{ trans('statistics.generate_graph') }}">
+    <input type="submit" class="btn btn-primary mt-3" value="{{ trans('statistics.generate_chart') }}">
 </form>
 
 @if (isset($track_income))

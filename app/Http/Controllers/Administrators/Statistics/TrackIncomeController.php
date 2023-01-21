@@ -24,7 +24,7 @@ class TrackIncomeController extends Controller
         return view('administrators.statistics.track_income');
     }
 
-    public function generateGraph(Request $request)
+    public function generateChart(Request $request)
     {
         $start_billing_period = $this->billingPeriodRepository->findOrFail($request->start_billing_period_id);
         $end_billing_period = $this->billingPeriodRepository->findOrFail($request->end_billing_period_id);

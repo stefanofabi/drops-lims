@@ -22,6 +22,6 @@ return [
     'subtitle_collection' => 'Collection from :start to :end',
     'subtitle_income' => 'Income from :start to :end',
     'statistics_message' => 'Statistical charts are powerful data visualization tools that allow complex information to be represented in an accessible way.',
-    'generate_graph' => 'Generate graph',
+    'generate_chart' => 'Generate chart',
     
 ];

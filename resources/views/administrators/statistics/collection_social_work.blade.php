@@ -214,7 +214,7 @@
     <p class="col-9"> {{ trans('statistics.collection_social_work_message') }} </p>
 </div>
 
-<form action="{{ route('administrators/statistics/collection_social_work/generate_graph') }}" method="post">
+<form action="{{ route('administrators/statistics/collection_social_work/generate_chart') }}" method="post">
     @csrf
 
     <div class="col-md-6">
@@ -256,7 +256,7 @@
         </div>
     </div>
 
-    <input type="submit" class="btn btn-primary mt-3" value="{{ trans('statistics.generate_graph') }}">
+    <input type="submit" class="btn btn-primary mt-3" value="{{ trans('statistics.generate_chart') }}">
 </form>
 
 @if (isset($collect_social_work))

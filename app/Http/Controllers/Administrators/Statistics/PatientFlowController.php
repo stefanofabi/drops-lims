@@ -24,7 +24,7 @@ class PatientFlowController extends Controller
         return view('administrators.statistics.patient_flow');
     }
 
-    public function generateGraph(Request $request)
+    public function generateChart(Request $request)
     {
 
         $start_billing_period = $this->billingPeriodRepository->findOrFail($request->start_billing_period_id);

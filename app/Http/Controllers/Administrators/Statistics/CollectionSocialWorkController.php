@@ -35,7 +35,7 @@ class CollectionSocialWorkController extends Controller
             ->with('social_works', $social_works);
     }
 
-    public function generateGraph(Request $request)
+    public function generateChart(Request $request)
     {
         $request->validate([
             'social_work' => 'required|numeric|min:1',

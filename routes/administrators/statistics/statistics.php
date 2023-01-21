@@ -35,8 +35,8 @@ Route::group([
         Route::get('index', 'index')
             ->name('index');
     
-        Route::post('generate-graph', 'generateGraph')
-            ->name('generate_graph');
+        Route::post('generate-chart', 'generateChart')
+            ->name('generate_chart');
     });
 
     Route::controller(PatientFlowController::class)
@@ -47,8 +47,8 @@ Route::group([
         Route::get('index', 'index')
             ->name('index');
     
-        Route::post('generate-graph', 'generateGraph')
-            ->name('generate_graph');
+        Route::post('generate-chart', 'generateChart')
+            ->name('generate_chart');
     });
     
     Route::controller(TrackIncomeController::class)
@@ -59,8 +59,8 @@ Route::group([
         Route::get('index', 'index')
             ->name('index');
     
-        Route::post('generate-graph', 'generateGraph')
-            ->name('generate_graph');
+        Route::post('generate-chart', 'generateChart')
+            ->name('generate_chart');
     });
 });
 
