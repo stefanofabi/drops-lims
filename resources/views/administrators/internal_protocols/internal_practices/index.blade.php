@@ -258,7 +258,7 @@
                     <td style="width: 50px"> <input type="checkbox" class="form-check-input" name="filter_practices[]" value="{{ $practice->id }}" @if ($practice->signInternalPractices->isEmpty()) disabled @endif> </td>
                     <td> {{ $practice->determination->code }} </td>
                     <td> {{ $practice->determination->name }} </td>
-                    <td> ${{ number_format($practice->price, 2, ",", ".") }} </td>
+                    <td> ${{ number_format($practice->price, 2) }} </td>
                     <td>
                         @if (is_null($practice->result))
                         <span class="badge bg-primary"> {{ trans('forms.no') }} </span>
@@ -298,7 +298,7 @@
 
             <tr>
                 <td colspan="7" class="text-end">
-                    <h4> Total: ${{ number_format($protocol->total_price, 2, ",", ".") }} </h4>
+                    <h4> Total: ${{ number_format($protocol->total_price, 2) }} </h4>
                 </td>
             </tr>
         </table>

@@ -181,10 +181,26 @@
     <p class="col-9"> {{ trans('summaries.debt_social_works_message') }} </p>
 </div>
 
-<form method="post" target="_blank" action="{{ route('administrators/summaries/get_debt_social_works') }}">
+<form method="post" target="_blank" action="{{ route('administrators/summaries/generate_debt_social_work') }}">
     @csrf
 
     <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="socialWork"> {{ trans('social_works.social_work') }} </label>
+                <select class="form-select" name="social_work_id" id="socialWork" aria-describedby="socialWorkHelp" required>
+                    <option selected> {{ trans('forms.select_option') }}</option>
+                    @foreach ($social_works as $social_work)
+                    <option value="{{ $social_work->id }}"> {{ $social_work->name }} </option>
+                    @endforeach
+                </select>
+
+                <small id="socialWorkHelp" class="form-text text-muted"> The social work through which the results will be filtered </small>
+		    </div>
+        </div>
+    </div>
+
+    <div class="row mt-2">
         <div class="col-lg-6 mt-3">
             <div class="form-group">
                 <input type="text" class="form-control" id="startBillingPeriodAutoComplete" placeholder="{{ trans('forms.start_typing') }}" aria-describedby="startBillingPeriodHelp" required>

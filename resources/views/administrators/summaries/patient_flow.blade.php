@@ -176,12 +176,12 @@
 
 @section('content')
 <div class="mt-3"> 
-    <h2> {{ trans('summaries.patients_flow') }} </h2> 
+    <h2> {{ trans('summaries.patient_flow') }} </h2> 
     <hr class="col-6">
     <p class="col-9"> {{ trans('summaries.patient_flow_message') }} </p>
 </div>
 
-<form method="post" target="_blank" action="{{ route('administrators/summaries/get_patients_flow') }}">
+<form method="post" target="_blank" action="{{ route('administrators/summaries/generate_patient_flow') }}">
     @csrf
 
     <div class="row">

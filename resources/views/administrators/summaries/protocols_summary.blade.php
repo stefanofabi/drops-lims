@@ -181,7 +181,7 @@
     <p class="col-9"> {{ trans('summaries.protocols_summary_message') }} </p>
 </div>
 
-<form method="post" target="_blank" action="{{ route('administrators/summaries/get_protocols_summary') }}">
+<form method="post" target="_blank" action="{{ route('administrators/summaries/generate_protocols_summary') }}">
     @csrf
 
     <div class="row">

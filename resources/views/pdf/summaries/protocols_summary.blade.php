@@ -24,19 +24,7 @@
             width: 150mm;
         }
 
-        .small {
-            width: 20mm;
-        }
-
-        .medium {
-            width: 30mm;
-        }
-
-        .large {
-            width: 80mm;
-        }
-
-        .text-center {
+        .protocolsTable td {
             text-align: center;
         }
     </style>
@@ -71,40 +59,41 @@
 
 
 @section('body')
-    <table style="margin-top: 3%" border="1" cellspacing="0">
-        <caption> {{ trans('pdf.total_records') }}: {{ $protocols->count() }} </caption>
+    <table style="margin-top: 3%; width: 100%" class="protocolsTable" border="1" cellspacing="0">
+        <caption style="margin-top: 1%"> {{ trans('pdf.total_records') }}: {{ $protocols->count() }} </caption>
         <tr>
-            <td class="small text-center"> <strong> {{ trans('pdf.date') }} </strong></td>
-            <td class="small text-center"> <strong> {{ trans('protocols.protocol_number') }} </strong></td>
-            <td class="large"><strong> {{ trans('patients.patient') }}</strong></td>
-            <td class="medium text-center"><strong> {{ trans('social_works.social_work') }}</strong></td>
-            <td class="medium text-center"><strong> {{ trans('protocols.total_amount') }} </strong></td>
+            <td> <strong> {{ trans('pdf.date') }} </strong></td>
+            <td> <strong> {{ trans('protocols.protocol_number') }} </strong></td>
+            <td> <strong> {{ trans('patients.patient') }}</strong></td>
+            <td> <strong> {{ trans('social_works.social_work') }}</strong></td>
+            <td> <strong> {{ trans('protocols.total_amount') }} </strong></td>
         </tr>
 
         @php $total_collection = 0; @endphp
 
         @foreach ($protocols as $protocol)
             <tr>
-                <td class="text-center"> {{ $protocol->completion_date }} </td>
-                <td class="text-center"> {{ $protocol->id  }} </td>
+                <td> {{ $protocol->completion_date }} </td>
+                <td> {{ $protocol->id  }} @if (! empty($protocol->closed)) * @endif </td>
                 <td> {{ $protocol->internalPatient->full_name }} </td>
-                <td class="text-center"> {{ $protocol->plan->social_work->acronym}} </td>
-                <td class="text-center">
+                <td> {{ $protocol->plan->social_work->acronym}} </td>
+                <td>
                     @php $total_collection += $protocol->total_price; @endphp
 
-                    ${{ $protocol->total_price }}
+                    ${{ number_format($protocol->total_price, 2) }}
                 </td>
             </tr>
         @endforeach
 
         <tr>
-            <td> </td>
-            <td> </td>
-            <td> </td>
-            <td>  </td>
-            <td class="text-center"> ${{ $total_collection }} </td>
+            <td colspan="4"> </td>
+            <td> ${{ number_format($total_collection, 2) }} </td>
         </tr>
     </table>
+   
+    <p>
+        * Protocol closed
+    </p>
 @endsection
 
 

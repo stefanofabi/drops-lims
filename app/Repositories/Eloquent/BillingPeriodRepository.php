@@ -100,20 +100,35 @@ final class BillingPeriodRepository implements BillingPeriodRepositoryInterface
             ->get();
     }
 
-    public function getAmountBilledByPeriod($start_date, $end_date) 
+    public function getAmountBilledByPeriod($social_work_id, $start_date, $end_date) 
     {   
-        return $this->model
-            ->select('billing_periods.name', 'billing_periods.start_date', 'billing_periods.end_date', 'social_works.name as social_work', 'internal_protocols.total_price', DB::raw('COALESCE(SUM(payment_social_works.amount), 0.0) as total_paid'))
-            ->join('internal_protocols', 'billing_periods.id', 'internal_protocols.billing_period_id')
+        $collected_periods = DB::table('internal_protocols')
+            ->select('internal_protocols.billing_period_id')
+            ->selectRaw('SUM(internal_protocols.total_price) as total_collection')
             ->join('plans', 'internal_protocols.plan_id', '=', 'plans.id')
-            ->join('social_works', 'plans.social_work_id', '=', 'social_works.id')
-            ->leftJoin('payment_social_works', 'billing_periods.id', 'payment_social_works.billing_period_id')
+            ->where('plans.social_work_id', $social_work_id)
+            ->groupBy('internal_protocols.billing_period_id');
+
+        $total_paid = DB::table('payment_social_works')
+            ->select('payment_social_works.billing_period_id')
+            ->selectRaw('SUM(payment_social_works.amount) as total_paid')
+            ->where('payment_social_works.social_work_id', $social_work_id)
+            ->groupBy('payment_social_works.billing_period_id');
+
+        return $this->model
+            ->select('billing_periods.name', 'billing_periods.start_date', 'billing_periods.end_date')
+            ->selectRaw('COALESCE(collected_periods.total_collection, 0) as total_collection')
+            ->selectRaw('COALESCE(total_paid.total_paid, 0) as total_paid')
+            ->leftJoinSub($collected_periods, 'collected_periods', function ($join) {
+                $join->on('billing_periods.id', '=', 'collected_periods.billing_period_id');
+            })
+            ->leftJoinSub($total_paid, 'total_paid', function ($join) {
+                $join->on('billing_periods.id', '=', 'total_paid.billing_period_id');
+            })
             ->where('billing_periods.start_date', '>=', $start_date)
             ->where('billing_periods.end_date', '<=', $end_date)
-            ->groupBy('billing_periods.id', 'billing_periods.name', 'billing_periods.start_date', 'billing_periods.end_date', 'social_works.name', 'internal_protocols.total_price')
+            ->groupBy('billing_periods.id', 'billing_periods.name', 'collected_periods.total_collection', 'total_paid.total_paid')
             ->orderBy('billing_periods.start_date', 'ASC')
-            ->orderBy('billing_periods.end_date', 'ASC')
-            ->orderBy('social_works.name', 'ASC')
             ->get();
     }
 

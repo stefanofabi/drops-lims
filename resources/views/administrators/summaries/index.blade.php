@@ -12,7 +12,7 @@
         </li>
 
 		<li class="nav-item">
-            <a class="nav-link" href="{{ route('administrators/summaries/patients_flow') }}"> {{ trans('summaries.patients_flow') }} </a>
+            <a class="nav-link" href="{{ route('administrators/summaries/patient_flow') }}"> {{ trans('summaries.patient_flow') }} </a>
         </li>
 
 		<li class="nav-item">

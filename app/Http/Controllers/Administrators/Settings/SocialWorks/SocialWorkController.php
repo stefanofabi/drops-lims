@@ -17,9 +17,8 @@ class SocialWorkController extends Controller
     /** @var \App\Contracts\Repository\SocialWorkRepositoryInterface */
     private $socialWorkRepository;
 
-    public function __construct(
-        SocialWorkRepositoryInterface $socialWorkRepository
-    ) {
+    public function __construct(SocialWorkRepositoryInterface $socialWorkRepository) 
+    {
         $this->socialWorkRepository = $socialWorkRepository;
     }
 

@@ -28,6 +28,10 @@
         .text-center {
             text-align: center;
         }
+
+        .patientsTable td {
+            text-align: center;
+        }
     </style>
 @endsection
 
@@ -59,23 +63,24 @@
 @endsection
 
 @section('body')
-    <table style="margin-top: 3%" border="1" cellspacing="0">
+    <table style="margin-top: 3%; width: 100%" class="patientsTable" border="1" cellspacing="0">
         <caption> {{ trans('pdf.total_records') }}: {{ $protocols->count() }} </caption>
         <tr>
-            <td class="text-center" style="width: 100px"><strong> {{ trans('pdf.date') }} </strong></td>
+            <td style="width: 100px"><strong> {{ trans('pdf.date') }} </strong></td>
             <td style="width: 200px"><strong> {{ trans('patients.patient') }}</strong></td>
-            <td class="text-center" style="width: 100px"><strong> {{ trans('patients.identification_number') }}</strong></td>
-            <td class="text-center" style="width: 100px"><strong> {{ trans('patients.phone') }} </strong></td>
-            <td class="text-center" style="width: 200px"><strong> {{ trans('patients.email') }} </strong></td>
+            <td style="width: 100px"><strong> {{ trans('patients.identification_number') }}</strong></td>
+            <td style="width: 100px"><strong> {{ trans('patients.contact') }} </strong></td>
         </tr>
 
         @foreach ($protocols as $protocol)
             <tr>
-                <td class="text-center"> {{ $protocol->completion_date }} </td>
+                <td> {{ $protocol->completion_date }} </td>
                 <td> {{ $protocol->internalPatient->full_name }} </td>
-                <td class="text-center"> {{ $protocol->internalPatient->identification_number }} </td>
-                <td class="text-center"> {{ $protocol->internalPatient->phone }} </td>
-                <td class="text-center"> {{ $protocol->internalPatient->email }} </td>
+                <td> {{ $protocol->internalPatient->identification_number }} </td>
+                <td> 
+                    {{ $protocol->internalPatient->phone }} <br />
+                    {{ $protocol->internalPatient->email }} 
+                </td>
             </tr>
         @endforeach
     </table>

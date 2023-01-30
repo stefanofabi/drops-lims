@@ -38,8 +38,6 @@ return [
     'please_later' => 'Please try again later',
     'start_typing' => 'Start typing and select an option',
     'confirm' => 'Do you really want to continue?',
-    'initial_date' => 'Initial date',
-    'ended_date' => 'Ended date',
     'send' => 'Send',
     'successful_transaction' => 'Successful transaction',
     'failed_transaction' => 'Failed transaction',

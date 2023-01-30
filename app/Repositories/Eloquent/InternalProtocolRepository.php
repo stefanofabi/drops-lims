@@ -97,6 +97,7 @@ final class InternalProtocolRepository implements InternalProtocolRepositoryInte
         return $this->model
             ->whereBetween('completion_date', [$initial_date, $ended_date])
             ->orderBy('completion_date', 'ASC')
+            ->orderBy('id', 'ASC')
             ->get();
     }
 
