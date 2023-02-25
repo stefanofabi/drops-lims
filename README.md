@@ -20,9 +20,9 @@ These instructions will allow you to get a copy of the project running on your l
 What things do you need to install the project and how to do it
 
 ```
-- Composer
+- Composer ^2.2
 - NPM
-- PHP 8.x with mbstring, gd and pdo_pgsql extension
+- PHP ^8.1 with mbstring, gd and pdo_pgsql extension
 - PostgreSQL
 ```
 
