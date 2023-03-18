@@ -326,8 +326,8 @@
             <a class="nav-link @if (! auth()->user()->can('manage patients')) disabled @endif" href="{{ route('administrators/patients/edit', ['id' => $protocol->internal_patient_id]) }}"> {{ trans('protocols.see_patient') }} </a>
         </li>
 
-        <li class="nav-item @if ($protocol->isOpen()) disabled @endif">
-            <a class="nav-link" href="#" onclick="closeProtocol()"> {{ trans('protocols.close_protocol') }} </a>
+        <li class="nav-item @if ($protocol->isClosed()) disabled @endif">
+            <a class="nav-link @if ($protocol->isClosed()) disabled @endif" href="#" onclick="closeProtocol()"> {{ trans('protocols.close_protocol') }} </a>
 
             <form method="post" action="{{ route('administrators/protocols/close', ['id' => $protocol->id]) }}" id="close_protocol">
                 @csrf    
