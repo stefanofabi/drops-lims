@@ -293,13 +293,11 @@
                 </tr>
                 @endforeach
             </form>
-
-            <tr>
-                <td colspan="7" class="text-end">
-                    <h4> Total: ${{ number_format($protocol->total_price, 2) }} </h4>
-                </td>
-            </tr>
         </table>
+
+        <div class="float-end">
+            <h4> Total: ${{ number_format($protocol->total_price, 2) }} </h4>
+        </div>
     </div>
 </div>
 @endsection
