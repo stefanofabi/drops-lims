@@ -192,14 +192,12 @@
 @section('menu')
 <nav class="navbar">
     <ul class="navbar-nav">
-        @can('print_protocols')
         <li class="nav-item">
-			<a class="nav-link" href="#" onclick="submitPracticesSelectForm('generate_protocol')"> {{ trans('protocols.generate_protocol_for_selected_practices') }} </a>
+			<a class="nav-link @cannot('print protocols') disabled @endcannot" href="#" onclick="submitPracticesSelectForm('generate_protocol')"> {{ trans('protocols.generate_protocol_for_selected_practices') }} </a>
 		</li>
-        @endcan
-
+        
         <li class="nav-item">
-            <a class="nav-link" href="#" onclick="submitPracticesSelectForm('send')"> {{ trans('protocols.send_selected_practices_by_email') }} </a>
+            <a class="nav-link @cannot('print protocols') disabled @endcannot" href="#" onclick="submitPracticesSelectForm('send')"> {{ trans('protocols.send_selected_practices_by_email') }} </a>
         </li>
 
         <li class="nav-item">

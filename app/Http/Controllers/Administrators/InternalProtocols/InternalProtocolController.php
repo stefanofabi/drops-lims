@@ -196,11 +196,16 @@ class InternalProtocolController extends Controller
      */
     public function generateProtocol(Request $request, $id)
     {
+        $request->validate([
+            'filter_practices' => 'array',
+        ]);
+
         $protocol = $this->internalProtocolRepository->findOrFail($id);
 
         $practices = $protocol->internalPractices;
 
-        if (! empty($request->filter_practices)) {
+        if (! empty($request->filter_practices)) 
+        {
             $practices = $practices->whereIn('id', $request->filter_practices);
         }
      
@@ -259,7 +264,7 @@ class InternalProtocolController extends Controller
     public function sendProtocolToEmail(Request $request, $id)
     {
         $request->validate([
-            'filter_practices' => 'array|nullable',
+            'filter_practices' => 'array',
         ]);
 
         $protocol = $this->internalProtocolRepository->findOrFail($id);
