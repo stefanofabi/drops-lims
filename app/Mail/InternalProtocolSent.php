@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Database\Eloquent\Collection;
 
 use App\Models\InternalProtocol;
 
@@ -21,15 +22,23 @@ class InternalProtocolSent extends Mailable
     public $protocol; 
 
     /**
+     * The practices instances.
+     *
+     * @var \Illuminate\Database\Eloquent\Collection
+     */
+    public $practices; 
+
+    /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(InternalProtocol $protocol)
+    public function __construct(InternalProtocol $protocol, Collection $practices)
     {
         //
 
         $this->protocol = $protocol;
+        $this->practices = $practices;
     }
 
     /**

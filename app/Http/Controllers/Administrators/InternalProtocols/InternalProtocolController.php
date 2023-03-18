@@ -258,10 +258,19 @@ class InternalProtocolController extends Controller
      */
     public function sendProtocolToEmail(Request $request, $id)
     {
+        $request->validate([
+            'filter_practices' => 'array|nullable',
+        ]);
+
         $protocol = $this->internalProtocolRepository->findOrFail($id);
 
         $practices = $protocol->internalPractices;
 
+        if (! empty($request->filter_practices)) 
+        {
+            $practices = $practices->whereIn('id', $request->filter_practices);
+        }
+        
         $pdf = PDF::loadView('pdf.internal_protocols.modern_style', [
             'protocol' => $protocol,
             'practices' => $practices,
@@ -270,7 +279,7 @@ class InternalProtocolController extends Controller
         $protocol_path = storage_path(self::INTERNAL_PROTOCOLS_DIRECTORY."protocol_$protocol->id.pdf");
         $pdf->save($protocol_path);
 
-        Mail::to($protocol->internalPatient->email)->send(new InternalProtocolSent($protocol));
+        Mail::to($protocol->internalPatient->email)->send(new InternalProtocolSent($protocol, $practices));
 
         Session::flash('success', [Lang::get('protocols.send_protocol_email_successfully')]);
 

@@ -21,7 +21,7 @@
     <h2> {{ trans('practices.practices') }} </h2>
 
     <ul>
-        @foreach ($protocol->internalPractices as $practice)
+        @foreach ($practices as $practice)
             <li> {{ $practice->determination->name }} </li>
         @endforeach
     </ul>
