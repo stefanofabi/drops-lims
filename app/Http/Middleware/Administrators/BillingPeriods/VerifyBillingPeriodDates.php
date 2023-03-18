@@ -9,6 +9,7 @@ use Lang;
 
 class VerifyBillingPeriodDates
 {
+
     /**
      * Handle an incoming request.
      *

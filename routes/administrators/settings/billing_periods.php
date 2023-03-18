@@ -16,7 +16,8 @@ Route::controller(BillingPeriodController::class)
 
         Route::post('store', 'store')
         ->name('store')
-        ->middleware('verify_billing_period_dates');
+        ->middleware('verify_billing_period_dates')
+        ->middleware('check_overlap_dates');
 
         Route::get('edit/{id}', 'edit')
         ->name('edit')
@@ -25,7 +26,8 @@ Route::controller(BillingPeriodController::class)
         Route::put('update/{id}', 'update')
         ->name('update')
         ->where('id', '[1-9][0-9]*')
-        ->middleware('verify_billing_period_dates');
+        ->middleware('verify_billing_period_dates')
+        ->middleware('check_overlap_dates');
 
         Route::delete('destroy/{id}', 'destroy')
         ->name('destroy')

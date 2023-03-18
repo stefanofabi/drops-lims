@@ -120,7 +120,7 @@ class BillingPeriodController extends Controller
         if (! $this->billingPeriodRepository->update($request->all(), $id)) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
- 
+        
         return redirect()->action([BillingPeriodController::class, 'index']);
     }
 

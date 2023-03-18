@@ -83,6 +83,7 @@ class Kernel extends HttpKernel
         'verify_practice_has_result' => \App\Http\Middleware\Administrators\InternalProtocols\VerifyPracticeHasResult::class,
         'set_internal_practice_price' => \App\Http\Middleware\Administrators\InternalProtocols\SetInternalPracticePrice::class,
         'check_nomenclator_when_updating_internal_protocol' => \App\Http\Middleware\Administrators\InternalProtocols\CheckNomenclatorWhenUpdatingInternalProtocol::class,
+        'check_overlap_dates' => \App\Http\Middleware\Administrators\BillingPeriods\CheckOverlapDates::class,
     ];
 
     /**

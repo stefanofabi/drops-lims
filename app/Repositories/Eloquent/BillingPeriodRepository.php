@@ -34,7 +34,7 @@ final class BillingPeriodRepository implements BillingPeriodRepositoryInterface
 
     public function update(array $data, $id)
     {
-        return $this->model->where('id', $id)->update($data);
+        return $this->model->findOrFail($id)->update($data);
     }
 
     public function delete($id)
@@ -69,6 +69,32 @@ final class BillingPeriodRepository implements BillingPeriodRepositoryInterface
             ->orderBy('start_date', 'ASC')
             ->orderBy('end_date', 'ASC')
             ->get();
+    }
+
+    /**
+     * Returns true if there is no overlap, otherwise returns false.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function checkOverlapDates($start_date, $end_date)
+    {
+        /** 
+         * Two time periods P1 and P2 overlaps if, and only if, at least one of these conditions hold:
+         * P1 starts between the start and end of P2 (P2.from <= P1.from <= P2.to)
+         * P2 starts between the start and end of P1 (P1.from <= P2.from <= P1.to)
+         */
+
+        return $this->model
+            ->orWhere(function($query) use ($start_date, $end_date) {
+                $query->where('start_date', '<=', $start_date)
+                    ->where('end_date', '>=', $start_date);
+            })
+            ->orWhere(function($query) use ($start_date, $end_date) {
+                $query->where('start_date', '>=', $start_date)
+                    ->where('start_date', '<=', $end_date);
+            })
+            ->get()
+            ->isEmpty();
     }
 
     /**

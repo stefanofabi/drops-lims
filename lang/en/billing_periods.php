@@ -22,6 +22,7 @@ return [
     'create_billing_period' => 'Create billing period',
     'name' => 'Name',
     'start_date_after_end_date' => 'The start date cannot be after than the end date',
+    'overlap_dates' => 'The assigned date range overlaps with the date range of another period in the system',
     'billing_periods_message' => 'The billing periods are comprised of a range of dates that help organize patient orders that are charged to social works and prepaids.',
     'click_to_create_billing_period' => 'Click here to create billing period',
     'billing_period_created_successfully' => 'Billing period created successfully',
