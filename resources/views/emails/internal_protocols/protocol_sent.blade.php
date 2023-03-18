@@ -27,6 +27,10 @@
     </ul>
 </p>
 
+@if ($protocol->internalPractices->count() > $practices->count())
+<p> This email only contains partial practices of the protocol. To view the complete protocol, log in to our site or contact our laboratory. </p>
+@endif
+
 <p style="color: red; margin-top: 3%">
     {{ trans('emails.security_notice') }}
 </p>
