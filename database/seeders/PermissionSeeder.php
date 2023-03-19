@@ -21,6 +21,8 @@ class PermissionSeeder extends Seeder
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
         Permission::create(['name' => 'is lab staff']);
+        Permission::create(['name' => 'manage parameters']);
+        Permission::create(['name' => 'manage roles']);
     	Permission::create(['name' => 'manage patients']);
     	Permission::create(['name' => 'manage prescribers']);
     	Permission::create(['name' => 'manage determinations']);

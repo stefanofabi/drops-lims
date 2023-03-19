@@ -28,6 +28,8 @@ class RoleSeeder extends Seeder
         $role_administrator->givePermissionTo(
         	[
         		'is lab staff',
+                'manage parameters',
+                'manage roles',
         		'manage patients',
         		'manage prescribers',
         		'manage determinations',
