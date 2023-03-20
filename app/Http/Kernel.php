@@ -84,6 +84,8 @@ class Kernel extends HttpKernel
         'set_internal_practice_price' => \App\Http\Middleware\Administrators\InternalProtocols\SetInternalPracticePrice::class,
         'check_nomenclator_when_updating_internal_protocol' => \App\Http\Middleware\Administrators\InternalProtocols\CheckNomenclatorWhenUpdatingInternalProtocol::class,
         'check_overlap_dates' => \App\Http\Middleware\Administrators\BillingPeriods\CheckOverlapDates::class,
+        'check_self_sabotage' => \App\Http\Middleware\Administrators\Settings\Roles\CheckSelfSabotage::class,
+        'unique_environment' => \App\Http\Middleware\Administrators\Settings\Roles\UniqueEnvironment::class,
     ];
 
     /**

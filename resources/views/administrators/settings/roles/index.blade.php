@@ -1,12 +1,12 @@
 @extends('administrators/settings/index')
 
 @section('title')
-    {{ trans('nomenclators.nomenclators') }}
+    {{ trans('roles.roles') }}
 @endsection
 
 @section('js')
 <script type="module">
-    $('#myNomenclatorsTable').DataTable({
+    $('#myRolesTable').DataTable({
         "language": {
             "info": '{{ trans('datatables.info') }}',
             "infoEmpty": '{{ trans('datatables.info_empty') }}',
@@ -32,54 +32,64 @@
 </script>
     
 <script type="text/javascript">
-    function destroyNomenclator(form_id){
+    function destroyRole(form_id){
         if (confirm('{{ trans("forms.confirm") }}')) {
-            var form = document.getElementById('destroy_nomenclator_'+form_id);
+            var form = document.getElementById('destroy_role_'+form_id);
             form.submit();
         }
     }
 </script>
 @endsection
 
+@section('menu')
+<nav class="navbar">
+	<ul class="navbar-nav">
+        <li class="nav-item">
+				<a class="nav-link" href="{{ route('administrators/settings/roles/create') }}"> {{ trans('roles.create_role')}} </a>
+		</li>
+        
+        <li class="nav-item">
+			<a class="nav-link" href="{{ route('administrators/settings/index') }}"> {{ trans('forms.go_back')}} </a>
+		</li>
+	</ul>
+</nav>
+@endsection
+
 @section('content-title')
-<i class="fas fa-book-medical"> </i> {{ trans('nomenclators.nomenclators') }}
+<i class="fas fa-book-medical"> </i> {{ trans('roles.roles') }}
 @endsection
 
 @section('content-message')
 <p class="text-justify pe-5">
-    {{ trans('nomenclators.nomenclators_message') }} 
-
-    <a class="link-light" href="{{ route('administrators/settings/nomenclators/create') }}"> {{ trans('nomenclators.click_to_create_nomenclator') }} </a>
+    Roles define the permissions or privileges that a group of members have within the lab system. Drops defines a set of privileges for the administrator, secretary, and biochemist roles. Additionally, you can define privileges at a more granular level by creating and assigning custom roles.
 </p>
 @endsection
 
 @section('content')
     <div class="table-responsive mt-3">
-        <table class="table table-striped" id="myNomenclatorsTable">
+        <table class="table table-striped" id="myRolesTable">
             <thead>
             <tr>
-                <th> {{ trans('nomenclators.name') }} </th>
+                <th> {{ trans('roles.name') }} </th>
                 <th class="text-end"> {{ trans('forms.actions') }} </th>
             </tr>
             </thead>
 
             <tbody>
-            @foreach ($nomenclators as $nomenclator)
+            @foreach ($roles as $role)
                 <tr>
-                    <td> {{ $nomenclator->name }} </td>
+                    <td> {{ $role->name }} </td>
 
                     <td class="text-end">
-                        <a href="{{ route('administrators/settings/nomenclators/edit', ['id' => $nomenclator->id]) }}"
-                           class="btn btn-primary btn-sm" title="{{ trans('nomenclators.show_nomenclator') }}">
+                        <a href="{{ route('administrators/settings/roles/edit', ['id' => $role->id]) }}" class="btn btn-primary btn-sm" title="{{ trans('roles.show_role') }}">
                             <i class="fas fa-edit fa-sm"> </i>
                         </a>
-                        <a class="btn btn-primary btn-sm" title="{{ trans('nomenclators.destroy_nomenclator') }}"
-                           onclick="destroyNomenclator('{{ $nomenclator->id }}')">
+
+                        <a class="btn btn-primary btn-sm" title="{{ trans('roles.destroy_role') }}" onclick="destroyRole('{{ $role->id }}')">
                             <i class="fas fa-trash fa-sm"></i>
                         </a>
 
-                        <form id="destroy_nomenclator_{{ $nomenclator->id }}" method="POST"
-                              action="{{ route('administrators/settings/nomenclators/destroy', ['id' => $nomenclator->id]) }}">
+                        <form id="destroy_role_{{ $role->id }}" method="POST" action="{{ route('administrators/settings/roles/destroy', ['id' => $role->id]) }}">
                             @csrf
                             @method('DELETE')
                         </form>

@@ -53,7 +53,7 @@
             <div class="card-body">
                 <h5 class="card-title"> Roles permissions </h5>
                 <p class="card-text"> Define your strategy and control what actions each role can take in your lab while keeping security as the top priority. </p>
-                <a href="#" class="btn btn-danger @cannot('manage roles') disabled @endcannot"> ⚠️ Go, i will be careful </a>
+                <a href="{{ route('administrators/settings/roles/index') }}" class="btn btn-danger @cannot('manage roles') disabled @endcannot"> ⚠️ Go, i will be careful </a>
             </div>
         </div>
     </div>

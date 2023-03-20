@@ -11,12 +11,14 @@
 
 use App\Http\Controllers\Administrators\Settings\SettingController;
 
+
 Route::group([
     'prefix' => 'settings',
     'as' => 'settings/',
     'middleware' => 'permission:manage settings',
 ], function () {
 
+    require('roles.php');
     require('billing_periods.php');
     require('nomenclators.php');
     require('social_works/social_works.php');

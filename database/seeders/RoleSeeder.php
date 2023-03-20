@@ -18,11 +18,11 @@ class RoleSeeder extends Seeder
         //
 
 
-        $role_administrator = Role::create(['name' => 'administrator']);
-        $role_secretary = Role::create(['name' => 'secretary']);
-        $role_biochemical = Role::create(['name' => 'biochemical']);
+        $role_administrator = Role::create(['name' => 'Administrator']);
+        $role_secretary = Role::create(['name' => 'Secretary']);
+        $role_biochemical = Role::create(['name' => 'Biochemical']);
 
-        $role_patient = Role::create(['name' => 'patient']);
+        $role_patient = Role::create(['name' => 'Patient']);
 
 
         $role_administrator->givePermissionTo(

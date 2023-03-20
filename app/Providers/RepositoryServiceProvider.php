@@ -4,6 +4,12 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
+use App\Contracts\Repository\RoleRepositoryInterface;
+use App\Repositories\Eloquent\RoleRepository;
+
+use App\Contracts\Repository\PermissionRepositoryInterface;
+use App\Repositories\Eloquent\PermissionRepository;
+
 use App\Contracts\Repository\InternalPatientRepositoryInterface;
 use App\Repositories\Eloquent\InternalPatientRepository;
 
@@ -57,6 +63,8 @@ class RepositoryServiceProvider extends ServiceProvider
     {
         //
 
+        $this->app->bind(RoleRepositoryInterface::class, RoleRepository::class);
+        $this->app->bind(PermissionRepositoryInterface::class, PermissionRepository::class);
         $this->app->bind(InternalPatientRepositoryInterface::class, InternalPatientRepository::class);
         $this->app->bind(SocialWorkRepositoryInterface::class, SocialWorkRepository::class);
         $this->app->bind(PrescriberRepositoryInterface::class, PrescriberRepository::class);

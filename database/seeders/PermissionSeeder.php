@@ -24,6 +24,7 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'manage parameters']);
         Permission::create(['name' => 'manage roles']);
     	Permission::create(['name' => 'manage patients']);
+        Permission::create(['name' => 'generate security codes']);
     	Permission::create(['name' => 'manage prescribers']);
     	Permission::create(['name' => 'manage determinations']);
         Permission::create(['name' => 'manage reports']);
@@ -33,7 +34,6 @@ class PermissionSeeder extends Seeder
     	Permission::create(['name' => 'manage practices']);
     	Permission::create(['name' => 'sign practices']);
     	Permission::create(['name' => 'view statistics']);
-    	Permission::create(['name' => 'generate security codes']);
         Permission::create(['name' => 'generate summaries']);
     	Permission::create(['name' => 'manage settings']);
         Permission::create(['name' => 'view logs']);

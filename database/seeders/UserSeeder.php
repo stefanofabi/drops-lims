@@ -27,7 +27,7 @@ class UserSeeder extends Seeder
         );
 
         $user_administrator->saveOrFail();
-        $user_administrator->assignRole('administrator');
+        $user_administrator->assignRole('Administrator');
 
 
         $user_patient = new User (
@@ -39,7 +39,7 @@ class UserSeeder extends Seeder
         );
 
         $user_patient->saveOrFail();
-        $user_patient->assignRole('patient');
+        $user_patient->assignRole('Patient');
 
     }
 }
