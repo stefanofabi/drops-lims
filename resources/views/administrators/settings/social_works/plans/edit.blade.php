@@ -20,7 +20,7 @@
 
 @section('content-message')
 <p class="text-justify pe-5">
-    The social works plans tell us how the prepaid are going to insure their affiliates and how much they will pay for each practice carried out   
+    {{ trans('plans.plans_edit_message') }}
 </p>
 @endsection
 
@@ -35,7 +35,7 @@
                 <label for="social_work"> {{ trans('social_works.social_work') }} </label>
                 <input type="text" class="form-control" id="social_work" value="{{ $plan->social_work->name }}" aria-describedby="socialWorkHelp" disabled>
                                 
-                <small id="socialWorkHelp" class="form-text text-muted"> The social work to which the plan will be added </small>
+                <small id="socialWorkHelp" class="form-text text-muted"> {{ trans('plans.social_work_help') }} </small>
             </div>
         </div>
 
@@ -44,7 +44,7 @@
                 <label for="nomenclator"> {{ trans('nomenclators.nomenclator') }} </label>
                 <input type="text" class="form-control" value="{{ $plan->nomenclator->name }}" aria-describedby="nomenclatorHelp" disabled>      
 
-                <small id="nomenclatorHelp" class="form-text text-muted"> In some social works the nomenclator differs for each plan </small>
+                <small id="nomenclatorHelp" class="form-text text-muted"> {{ trans('plans.nomenclator_help') }} </small>
             </div>
         </div>
 
@@ -53,7 +53,7 @@
                 <label for="name"> {{ trans('social_works.name') }} </label>
                 <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" value="{{ old('name') ?? $plan->name }}" aria-describedby="nameHelp" required>
                                 
-                <small id="nameHelp" class="form-text text-muted"> Name to identify the plan of a social work </small>
+                <small id="nameHelp" class="form-text text-muted"> {{ trans('plans.name_help') }} </small>
             </div>
         </div>
 
@@ -62,11 +62,10 @@
                 <label for="nbu_price"> {{ trans('plans.nbu_price') }} </label>
                 <input type="number" step="0.01" class="form-control @error('nbu_price') is-invalid @enderror" name="nbu_price" id="nbu_price" value="{{ old('nbu_price') ?? $plan->nbu_price }}" aria-describedby="nbuPriceHelp" required>          
 
-                <small id="nbuPriceHelp" class="form-text text-muted"> The price this plan pays for a biochemical unit. This value is multiplied by the biochemical units of a determination to obtain the price of a practice </small>
+                <small id="nbuPriceHelp" class="form-text text-muted"> {{ trans('plans.nbu_price_help') }} </small>
             </div>
         </div>
     </div>
-
 
     <input type="submit" class="btn btn-lg btn-primary mt-3" value="{{ trans('forms.save') }}">
 </form>

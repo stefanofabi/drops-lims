@@ -27,5 +27,10 @@ return [
     'click_to_create_billing_period' => 'Click here to create billing period',
     'billing_period_created_successfully' => 'Billing period created successfully',
     'billing_period_deleted_successfully' => 'Billing period deleted successfully',
+    'billing_periods_edit_message' => 'The billing periods specify unique periods in the year in which the practices performed on all patients in that period are detailed',
+    'name_help' => 'Name to identify a billing period and assign it to a protocol',
+    'start_date_help' => 'Start date on which the billing period begins',
+    'end_date_help' => 'End date on which the billing period begins',
+    'billing_periods_create_message' => 'The billing periods specify unique periods in the year in which the practices performed on all patients in that period are detailed',
     
 ];

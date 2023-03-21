@@ -66,29 +66,26 @@
             </thead>
 
             <tbody>
-            @foreach ($social_works as $social_work)
+                @foreach ($social_works as $social_work)
                 <tr>
                     <td> {{ $social_work->name }} </td>
 
                     <td class="text-end">
-                        <a href="{{ route('administrators/settings/social_works/edit', ['id' => $social_work->id]) }}"
-                           class="btn btn-primary btn-sm" title="{{ trans('social_works.edit_social_work') }}">
+                        <a href="{{ route('administrators/settings/social_works/edit', ['id' => $social_work->id]) }}" class="btn btn-primary btn-sm" title="{{ trans('social_works.edit_social_work') }}">
                             <i class="fas fa-edit fa-sm"> </i>
                         </a>
 
-                        <a class="btn btn-primary btn-sm" title="{{ trans('social_works.destroy_social_work') }}"
-                           onclick="destroySocialWork('{{ $social_work->id }}')">
+                        <a class="btn btn-primary btn-sm" title="{{ trans('social_works.destroy_social_work') }}" onclick="destroySocialWork('{{ $social_work->id }}')">
                             <i class="fas fa-trash fa-sm"></i>
                         </a>
 
-                        <form id="destroy_social_work_{{ $social_work->id }}" method="POST"
-                              action="{{ route('administrators/settings/social_works/destroy', ['id' => $social_work->id]) }}">
+                        <form id="destroy_social_work_{{ $social_work->id }}" method="POST" action="{{ route('administrators/settings/social_works/destroy', ['id' => $social_work->id]) }}">
                             @csrf
                             @method('DELETE')
                         </form>
                     </td>
                 </tr>
-            @endforeach
+                @endforeach
             </tbody>
         </table>
     </div>

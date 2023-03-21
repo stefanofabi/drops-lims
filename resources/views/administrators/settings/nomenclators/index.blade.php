@@ -47,7 +47,7 @@
 
 @section('content-message')
 <p class="text-justify pe-5">
-    {{ trans('nomenclators.nomenclators_message') }} 
+    {{ trans('nomenclators.nomenclators_index_message') }} 
 
     <a class="link-light" href="{{ route('administrators/settings/nomenclators/create') }}"> {{ trans('nomenclators.click_to_create_nomenclator') }} </a>
 </p>
@@ -64,28 +64,26 @@
             </thead>
 
             <tbody>
-            @foreach ($nomenclators as $nomenclator)
+                @foreach ($nomenclators as $nomenclator)
                 <tr>
                     <td> {{ $nomenclator->name }} </td>
 
                     <td class="text-end">
-                        <a href="{{ route('administrators/settings/nomenclators/edit', ['id' => $nomenclator->id]) }}"
-                           class="btn btn-primary btn-sm" title="{{ trans('nomenclators.show_nomenclator') }}">
+                        <a href="{{ route('administrators/settings/nomenclators/edit', ['id' => $nomenclator->id]) }}" class="btn btn-primary btn-sm" title="{{ trans('nomenclators.show_nomenclator') }}">
                             <i class="fas fa-edit fa-sm"> </i>
                         </a>
-                        <a class="btn btn-primary btn-sm" title="{{ trans('nomenclators.destroy_nomenclator') }}"
-                           onclick="destroyNomenclator('{{ $nomenclator->id }}')">
+
+                        <a class="btn btn-primary btn-sm" title="{{ trans('nomenclators.destroy_nomenclator') }}" onclick="destroyNomenclator('{{ $nomenclator->id }}')">
                             <i class="fas fa-trash fa-sm"></i>
                         </a>
 
-                        <form id="destroy_nomenclator_{{ $nomenclator->id }}" method="POST"
-                              action="{{ route('administrators/settings/nomenclators/destroy', ['id' => $nomenclator->id]) }}">
+                        <form id="destroy_nomenclator_{{ $nomenclator->id }}" method="POST" action="{{ route('administrators/settings/nomenclators/destroy', ['id' => $nomenclator->id]) }}">
                             @csrf
                             @method('DELETE')
                         </form>
                     </td>
                 </tr>
-            @endforeach
+                @endforeach
             </tbody>
         </table>
     </div>

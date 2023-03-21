@@ -35,7 +35,7 @@
 
 @section('content-message')
 <p class="text-justify pe-5">
-    The social works plans tell us how the prepaid are going to insure their affiliates and how much they will pay for each practice carried out   
+    {{ trans('plans.plans_index_message') }} 
 </p>
 @endsection
 

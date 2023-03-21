@@ -20,7 +20,7 @@
 
 @section('content-message')
 <p class="text-justify pe-5">
-    The billing periods specify unique periods in the year in which the practices performed on all patients in that period are detailed.
+    {{ trans('billing_periods.billing_periods_edit_message') }}
 </p>
 @endsection
 
@@ -34,7 +34,7 @@
             <label for="name"> {{ trans('billing_periods.name') }} </label>
             <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" value="{{ old('name') ?? $billing_period->name }}" aria-describedby="nameHelp" required>
                         
-            <small id="nameHelp" class="form-text text-muted"> Name to identify a billing period and assign it to a protocol </small>
+            <small id="nameHelp" class="form-text text-muted"> {{ trans('billing_periods.name_help') }} </small>
         </div>
     </div>
 
@@ -44,7 +44,7 @@
                 <label for="start_date"> {{ trans('billing_periods.start_date') }} </label>
                 <input type="date" class="form-control @error('start_date') is-invalid @enderror" name="start_date" id="start_date" value="{{ old('start_date') ?? $billing_period->start_date }}" aria-describedby="startDateHelp" required>
                             
-                <small id="startDateHelp" class="form-text text-muted"> Start date on which the billing period begins </small>
+                <small id="startDateHelp" class="form-text text-muted"> {{ trans('billing_periods.start_date_help') }} </small>
             </div>
         </div>
 
@@ -53,7 +53,7 @@
                 <label for="end_date"> {{ trans('billing_periods.end_date') }} </label>
                 <input type="date" class="form-control @error('end_date') is-invalid @enderror" name="end_date" id="end_date" value="{{ old('end_date') ?? $billing_period->end_date }}" aria-describedby="endDateHelp" required>
                             
-                <small id="endDateHelp" class="form-text text-muted"> End date on which the billing period begins </small>
+                <small id="endDateHelp" class="form-text text-muted"> {{ trans('billing_periods.end_date_help') }} </small>
             </div>
         </div>
     </div>

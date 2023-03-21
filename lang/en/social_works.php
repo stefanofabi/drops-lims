@@ -30,5 +30,9 @@ return [
     'social_work_deleted_successfully' => 'Social work deleted successfully',
     'acronym' => 'Acronym',
     'particular' => 'Particular',
+    'social_works_edit_message' => 'Social works are assigned to patients and protocols. They are required to be able to invoice the practices performed to the patients',
+    'name_help' => 'Full name of the social work',
+    'acronym' => 'The most significant initials of the name to be able to quickly search for a social work',
+    'social_works_create_message' => 'Social works are assigned to patients and protocols. They are required to be able to invoice the practices performed to the patients',
     
 ];

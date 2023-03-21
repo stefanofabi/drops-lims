@@ -68,31 +68,28 @@
             </thead>
 
             <tbody>
-                @foreach ($billing_periods as $billing_period)
+                    @foreach ($billing_periods as $billing_period)
                     <tr>
                         <td> {{ $billing_period->name }} </td>
                         <td> {{ $billing_period->start_date }} </td>
                         <td> {{ $billing_period->end_date }} </td>
 
                         <td class="text-end">
-                            <a href="{{ route('administrators/settings/billing_periods/edit', ['id' => $billing_period->id]) }}"
-                               class="btn btn-primary btn-sm" title="{{ trans('billing_periods.edit_billing_period') }}">
+                            <a href="{{ route('administrators/settings/billing_periods/edit', ['id' => $billing_period->id]) }}" class="btn btn-primary btn-sm" title="{{ trans('billing_periods.edit_billing_period') }}">
                                 <i class="fas fa-edit fa-sm"> </i>
                             </a>
 
-                            <a class="btn btn-primary btn-sm" title="{{ trans('billing_periods.destroy_billing_period') }}"
-                               onclick="destroyBillingPeriod('{{ $billing_period->id }}')">
+                            <a class="btn btn-primary btn-sm" title="{{ trans('billing_periods.destroy_billing_period') }}" onclick="destroyBillingPeriod('{{ $billing_period->id }}')">
                                 <i class="fas fa-trash fa-sm"></i>
                             </a>
 
-                            <form id="destroy_billing_period_{{ $billing_period->id }}" method="POST"
-                                  action="{{ route('administrators/settings/billing_periods/destroy', ['id' => $billing_period->id]) }}">
+                            <form id="destroy_billing_period_{{ $billing_period->id }}" method="POST" action="{{ route('administrators/settings/billing_periods/destroy', ['id' => $billing_period->id]) }}">
                                 @csrf
                                 @method('DELETE')
                             </form>
                         </td>
                     </tr>
-                @endforeach
+                    @endforeach
             </tbody>
         </table>
     </div>
