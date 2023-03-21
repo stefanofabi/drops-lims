@@ -49,7 +49,7 @@
             <label for="name"> {{ trans('social_works.acronym') }} </label>
             <input type="text" class="form-control @error('acronym') is-invalid @enderror" name="acronym" id="acronym" value="{{ old('acronym') ?? $social_work->acronym }}" aria-describedby="acronymHelp" required>
                         
-            <small id="acronymHelp" class="form-text text-muted"> {{ trans('social_works.acronym') }} </small>
+            <small id="acronymHelp" class="form-text text-muted"> {{ trans('social_works.acronym_help') }} </small>
         </div>
     </div>
 

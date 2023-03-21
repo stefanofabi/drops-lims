@@ -35,7 +35,7 @@
 
 @section('content-message')
 <p class="text-justify pe-5">
-    {{ trans('payments_social_works.payments_social_works_index_message') }}
+    {{ trans('payment_social_works.payment_social_works_index_message') }}
 </p>
 @endsection
 

@@ -24,7 +24,7 @@ return [
     'payment_created_succesfully' => 'Payment created sucessfully',
     'payment_updated_succesfully' => 'Payment updated sucessfully',
     'payment_deleted_succesfully' => 'Payment deleted sucessfully',
-    '_index_message' => 'Here are detailed all the payments made by a social work',
+    'payment_social_works_index_message' => 'Here are detailed all the payments made by a social work',
     'payment_social_works_edit_message' => 'Leave records of the payments made by a social work to be able to keep a historical control', 
     'social_work_help' => 'The social work to which the payment will be charged',
     'billing_period_help' => 'The period to which the payment made by the social work corresponds',
