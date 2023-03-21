@@ -6,7 +6,7 @@
 
 @section('content-message')
 <p class="text-justify pe-5">
-    From this section you can manage the different sections available for your laboratory and modify certain system configuration parameters.
+    {{ trans('settings.settings_content_index_message') }}
 </p>
 @endsection
 
@@ -36,24 +36,24 @@
 <div class="row">
     <div class="col-md mt-3">
         <div class="card">
-            <div class="card-header"> Manage configs </div>
+            <div class="card-header"> {{ trans('roles.manage_parameters') }} </div>
 
             <div class="card-body">
-                <h5 class="card-title"> System parameters </h5>
-                <p class="card-text"> Customize some sections by adjusting the available system parameters. </p>
-                <a href="#" class="btn btn-primary @cannot('manage parameters') disabled @endcannot"> Edit parameters </a>
+                <h5 class="card-title"> {{ trans('settings.system_parameters') }} </h5>
+                <p class="card-text"> {{ trans('settings.system_parameters_message') }} </p>
+                <a href="#" class="btn btn-primary @cannot('manage parameters') disabled @endcannot"> {{ trans('settings.edit_parameters') }} </a>
             </div>
         </div>
     </div>
 
     <div class="col-md mt-3">
         <div class="card">
-            <div class="card-header"> Manage permissions </div>
+            <div class="card-header"> {{ trans('settings.manage_permissions') }} </div>
 
             <div class="card-body">
-                <h5 class="card-title"> Roles permissions </h5>
-                <p class="card-text"> Define your strategy and control what actions each role can take in your lab while keeping security as the top priority. </p>
-                <a href="{{ route('administrators/settings/roles/index') }}" class="btn btn-danger @cannot('manage roles') disabled @endcannot"> ⚠️ Go, i will be careful </a>
+                <h5 class="card-title"> {{ trans('settings.roles_permissions') }} </h5>
+                <p class="card-text"> {{ trans('settings.roles_permissions_message') }} </p>
+                <a href="{{ route('administrators/settings/roles/index') }}" class="btn btn-danger @cannot('manage roles') disabled @endcannot"> ⚠️ {{ trans('settings.go_be_careful') }} </a>
             </div>
         </div>
     </div>
