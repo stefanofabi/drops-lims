@@ -61,7 +61,7 @@
 
 @section('content-message')
 <p class="text-justify pe-5">
-    Roles define the permissions or privileges that a group of members have within the lab system. Drops defines a set of privileges for the administrator, secretary, and biochemist roles. Additionally, you can define privileges at a more granular level by creating and assigning custom roles.
+    {{ trans('roles.roles_index_content_message') }}
 </p>
 @endsection
 

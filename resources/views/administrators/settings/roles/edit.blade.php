@@ -40,7 +40,7 @@
 
 @section('content-message')
 <p class="text-justify pe-5">
-    Carefully edit the permissions you assign to a role, the changes will be reflected immediately
+    {{ trans('roles.roles_edit_content_message') }}
 </p>
 @endsection
 
@@ -54,12 +54,12 @@
             <label for="name"> {{ trans('roles.name') }} </label>
             <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" value="{{ old('name') ?? $role->name }}" aria-describedby="nameHelp" required>
                     
-            <small id="nameHelp" class="form-text text-muted"> This name is used to identify a role </small>
+            <small id="nameHelp" class="form-text text-muted"> {{ trans('roles.name_help') }} </small>
         </div>
     </div>
 
     <div class="mt-3">
-        <h4> Access enviroment </h4>
+        <h4> {{ trans('roles.access_environment') }} </h4>
 
         <div class="row">
             <div class="col-sm-3">
@@ -67,7 +67,7 @@
                     <input class="form-check-input" type="radio" value="is lab staff" name="permissions[]" id="isLabStaff" @if ($role->permissions->where('name', 'is lab staff')->first()) checked @endif>
 
                     <label class="form-check-label" for="isLabStaff">
-                        Is lab staff
+                        {{ trans('roles.is_lab_staff') }}
                     </label>
                 </div>
             </div>
@@ -77,7 +77,7 @@
                     <input class="form-check-input" type="radio" value="is user" name="permissions[]" id="isUser" @if ($role->permissions->where('name', 'is user')->first()) checked @endif>
 
                     <label class="form-check-label" for="isUser">
-                        Is user
+                        {{ trans('roles.is_user') }}
                     </label>
                 </div>
             </div>
