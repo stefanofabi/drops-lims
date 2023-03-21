@@ -77,4 +77,4 @@ Route::get('/', function () {
     }
 
     return redirect()->route('login');
-});
+})->name('/');
