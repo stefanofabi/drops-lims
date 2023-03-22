@@ -40,12 +40,12 @@
 				<ul class="navbar-nav">
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-							<img height="30px" width="30px" src="{{ Gravatar::get(Auth::user()->email) }}" class="rounded-circle" alt="Avatar"> {{ Auth::user()->name }} <span class="caret"> </span>
+							<img height="30px" width="30px" src="{{ Gravatar::get(Auth::user()->email) }}" class="rounded-circle" alt="Avatar"> {{ Auth::user()->full_name }} <span class="caret"> </span>
 						</a>
 
 						<ul class="dropdown-menu dropdown-menu-end">
 							<li>
-								<a class="dropdown-item" href="#"> {{ trans('auth.signed_in_as', ['user' => Auth::user()->name ]) }} </a>
+								<a class="dropdown-item" href="{{ route('administrators/profiles/edit', ['id' => Auth::user()->id]) }}"> {{ trans('auth.signed_in_as', ['user' => Auth::user()->full_name ]) }} </a>
 							</li>
 
 							<div role="none" class="dropdown-divider"> </div>
@@ -77,6 +77,12 @@
 			<!-- Show when screen is narrow -->
 			<div class="d-md-none">
 				<ul class="navbar-nav">
+					<li> <hr> </li>
+
+					<li>
+						<a class="dropdown-item" href="{{ route('administrators/profiles/edit', ['id' => Auth::user()->id]) }}"> {{ trans('profile.my_profile') }} </a>
+					</li>
+
 					<li class="nav-item">
 						<a class="nav-link @cannot('manage settings') disabled @endcannot" href="{{ route('administrators/settings/index') }}">
 							{{ trans('settings.settings') }}

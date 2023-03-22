@@ -7,6 +7,15 @@ use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
 
+use App\Models\User;
+use App\Observers\UserObserver;
+
+use App\Models\InternalPatient;
+use App\Observers\InternalPatientObserver;
+
+use App\Models\Prescriber;
+use App\Observers\PrescriberObserver;
+
 class EventServiceProvider extends ServiceProvider
 {
     /**
@@ -30,5 +39,9 @@ class EventServiceProvider extends ServiceProvider
         parent::boot();
 
         //
+
+        User::observe(UserObserver::class);
+        InternalPatient::observe(InternalPatientObserver::class);
+        Prescriber::observe(PrescriberObserver::class);
     }
 }

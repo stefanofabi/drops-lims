@@ -71,6 +71,6 @@ class InternalPatientObserver
     {
         //
 
-        $internalPatient->full_name = "$internalPatient->name $internalPatient->last_name";
+        $internalPatient->full_name = "$internalPatient->last_name $internalPatient->name";
     }
 }

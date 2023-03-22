@@ -60,7 +60,7 @@
 		<div class="col-md-6">
 			<div class="form-group mt-2">
 				<label for="name"> {{ trans('prescribers.name') }} </label>
-				<input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" value="{{ old('full_name') ?? $prescriber->name }}" aria-describedby="nameHelp" required disabled>
+				<input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" value="{{ old('name') ?? $prescriber->name }}" aria-describedby="nameHelp" required disabled>
 
 				<small id="nameHelp" class="form-text text-muted"> This name appears when generating a pdf protocol </small>
 			</div>

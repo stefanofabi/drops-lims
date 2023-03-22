@@ -42,6 +42,7 @@ class RoleSeeder extends Seeder
         		'view statistics',
         		'generate security codes',
                 'generate summaries',
+                'manage profile',
         		'manage settings',
                 'view logs',
         	]

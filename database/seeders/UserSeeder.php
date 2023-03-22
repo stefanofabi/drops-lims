@@ -5,10 +5,18 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
-use App\Models\User;
+use App\Contracts\Repository\UserRepositoryInterface;
 
 class UserSeeder extends Seeder
 {
+    /** @var \App\Contracts\Repository\UserRepositoryInterface */
+    private $userRepository;
+
+    public function __construct(UserRepositoryInterface $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
     /**
      * Run the database seeds.
      *
@@ -18,27 +26,27 @@ class UserSeeder extends Seeder
     {
         //
 
-        $user_administrator = new User(
+        $user_administrator = $this->userRepository->create(
             [
                 'name' => 'Admin',
+                'last_name' => 'Lab',
                 'email' => 'admin@laboratory',
                 'password' => Hash::make('password'),
             ]
         );
 
-        $user_administrator->saveOrFail();
         $user_administrator->assignRole('Administrator');
 
 
-        $user_patient = new User (
+        $user_patient = $this->userRepository->create(
             [
-                'name' => 'User',
+                'name' => 'Patient',
+                'last_name' => 'Lab',
                 'email' => 'patient@domain',                        
                 'password' => Hash::make('password'),
             ]
         );
 
-        $user_patient->saveOrFail();
         $user_patient->assignRole('Patient');
 
     }

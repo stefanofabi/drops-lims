@@ -13,6 +13,7 @@
 
 use App\Http\Controllers\Administrators\Logs\ActivityViewerController;
 
+
 Auth::routes();
 
 Route::group([
@@ -20,7 +21,8 @@ Route::group([
     'prefix' => 'administrators',
     'as' => 'administrators/',
 ], function () {
-   
+    
+    require('administrators/profiles/profiles.php');
     require('administrators/internal_patients/internal_patients.php');
     require('administrators/prescribers/prescribers.php');
     require('administrators/determinations/determinations.php');
@@ -28,16 +30,9 @@ Route::group([
     require('administrators/settings/settings.php');
     require('administrators/statistics/statistics.php');
     require('administrators/summaries/summaries.php');
-    
+    require('administrators/logs/logs.php');
+
     Route::get('dashboard', ['\App\Http\Controllers\HomeController', 'adminHome'])->name('dashboard');
-
-    Route::get('logs/activity_logs', [ActivityViewerController::class, 'index'])
-    ->name('logs/activity_logs')
-    ->middleware('permission:view logs');
-
-    Route::get('logs/system_logs', ['\Rap2hpoutre\LaravelLogViewer\LogViewerController', 'index'])
-    ->name('logs/system_logs')
-    ->middleware('permission:view logs');
 });
 
 Route::group(['middleware' => ['permission:is user', 'auth']], function () {

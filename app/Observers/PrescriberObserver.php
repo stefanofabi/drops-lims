@@ -71,6 +71,6 @@ class PrescriberObserver
     {
         //
 
-        $prescriber->full_name = "$prescriber->name $prescriber->last_name";
+        $prescriber->full_name = "$prescriber->last_name $prescriber->name";
     }
 }
