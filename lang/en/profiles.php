@@ -23,5 +23,6 @@ return [
     'name_help' => 'This name is the one with which you will show yourself to other people',
     'email_help' => 'This email will be used to log in and for people to contact you',
     'last_name_help' => 'This last name is the one with which you will show yourself to other people',
+    'you_cant_access_another_user_profile' => 'You cannot access another user profile',
 
 ];

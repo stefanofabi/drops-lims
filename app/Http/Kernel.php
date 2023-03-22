@@ -86,6 +86,8 @@ class Kernel extends HttpKernel
         'check_overlap_dates' => \App\Http\Middleware\Administrators\BillingPeriods\CheckOverlapDates::class,
         'check_self_sabotage' => \App\Http\Middleware\Administrators\Settings\Roles\CheckSelfSabotage::class,
         'unique_environment' => \App\Http\Middleware\Administrators\Settings\Roles\UniqueEnvironment::class,
+        'redirect_if_not_my_profile' => \App\Http\Middleware\Administrators\Profiles\RedirectIfNotMyProfile::class,
+        
     ];
 
     /**

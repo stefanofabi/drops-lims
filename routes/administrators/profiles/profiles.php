@@ -15,6 +15,7 @@ Route::controller(ProfileController::class)
     ->prefix('profiles')
     ->as('profiles/')
     ->middleware('permission:manage profile')
+    ->middleware('redirect_if_not_my_profile')
     ->group(function () {   
         Route::get('edit/{id}', 'edit')
             ->name('edit')
