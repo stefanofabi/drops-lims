@@ -9,6 +9,8 @@
 |
 */
 
+use App\Http\Controllers\Administrators\Logs\ActivityViewerController;
+
 Route::get('logs/activity_logs', [ActivityViewerController::class, 'index'])
     ->name('logs/activity_logs')
     ->middleware('permission:view logs');

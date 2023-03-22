@@ -11,9 +11,6 @@
 |
 */
 
-use App\Http\Controllers\Administrators\Logs\ActivityViewerController;
-
-
 Auth::routes();
 
 Route::group([
