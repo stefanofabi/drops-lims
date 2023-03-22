@@ -12,7 +12,7 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="#"> {{ trans('profiles.change_password') }} </a>
+            <a class="nav-link" href="{{ route('administrators/profiles/change_password/edit', ['id' => $user->id]) }}"> {{ trans('auth.change_password') }} </a>
         </li>
     </ul>
 </nav>
@@ -24,7 +24,7 @@
 
 @section('content-message')
 <p class="text-justify pe-5">
-    {{ trans('profiles.profile_index_message') }}
+    {{ trans('profiles.profile_edit_message') }}
 </p>
 @endsection
 
