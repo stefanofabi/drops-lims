@@ -36,7 +36,7 @@
 			</form>
 
 			<!-- Show when screen is wide -->
-			<div class="d-none d-lg-block ms-auto">
+			<div class="d-none d-md-block ms-auto">
 				<ul class="navbar-nav">
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
@@ -75,7 +75,7 @@
 			</div>
 
 			<!-- Show when screen is narrow -->
-			<div class="d-lg-none">
+			<div class="d-md-none">
 				<ul class="navbar-nav">
 					<li class="nav-item">
 						<a class="nav-link @cannot('manage settings') disabled @endcannot" href="{{ route('administrators/settings/index') }}">
