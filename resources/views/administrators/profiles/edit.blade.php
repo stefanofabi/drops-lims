@@ -30,44 +30,41 @@
 
 @section('content')
 <div class="mt-3">
-	<h4><i class="fas fa-book"></i> {{ trans('profiles.account_data') }} </h4>
-	<hr class="col-6">
+    <form method="post" action="{{ route('administrators/profiles/update', $user->id) }}">
+        @csrf
+        @method('PUT')
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group mt-2">
+                    <label for="name"> {{ trans('profiles.name') }} </label>
+                    <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" value="{{ old('name') ?? $user->name }}" aria-describedby="nameHelp" required>
+
+                    <small id="nameHelp" class="form-text text-muted"> {{ trans('profiles.name_help') }} </small>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group mt-2">
+                    <label for="last_name"> {{ trans('profiles.last_name') }} </label>
+                    <input type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" id="last_name" value="{{ old('last_name') ?? $user->last_name }}" aria-describedby="lastNameHelp" required>
+
+                    <small id="lastNameHelp" class="form-text text-muted"> {{ trans('profiles.last_name_help') }} </small>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group mt-2">
+                    <label for="email"> {{ trans('profiles.email') }} </label>
+                    <input type="text" class="form-control @error('email') is-invalid @enderror" name="email" id="email" value="{{ old('email') ?? $user->email }}" aria-describedby="emailHelp" required>
+
+                    <small id="emailHelp" class="form-text text-muted"> {{ trans('profiles.email_help') }} </small>
+                </div>
+            </div>
+
+        </div>
+
+        <input type="submit" class="btn btn-lg btn-primary float-start mt-3" id="submitButton" value="{{ trans('forms.save') }}">
+    </form>
 </div>
-
-<form method="post" action="{{ route('administrators/profiles/update', $user->id) }}">
-    @csrf
-    @method('PUT')
-
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group mt-2">
-                <label for="name"> {{ trans('profiles.name') }} </label>
-                <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" value="{{ old('name') ?? $user->name }}" aria-describedby="nameHelp" required>
-
-                <small id="nameHelp" class="form-text text-muted"> {{ trans('profiles.name_help') }} </small>
-            </div>
-        </div>
-
-        <div class="col-md-6">
-            <div class="form-group mt-2">
-                <label for="last_name"> {{ trans('profiles.last_name') }} </label>
-                <input type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" id="last_name" value="{{ old('last_name') ?? $user->last_name }}" aria-describedby="lastNameHelp" required>
-
-                <small id="lastNameHelp" class="form-text text-muted"> {{ trans('profiles.last_name_help') }} </small>
-            </div>
-        </div>
-
-        <div class="col-md-6">
-            <div class="form-group mt-2">
-                <label for="email"> {{ trans('profiles.email') }} </label>
-                <input type="text" class="form-control @error('email') is-invalid @enderror" name="email" id="email" value="{{ old('email') ?? $user->email }}" aria-describedby="emailHelp" required>
-
-                <small id="emailHelp" class="form-text text-muted"> {{ trans('profiles.email_help') }} </small>
-            </div>
-        </div>
-
-    </div>
-
-    <input type="submit" class="btn btn-lg btn-primary float-start mt-3" id="submitButton" value="{{ trans('forms.save') }}">
-</form>
 @endsection
