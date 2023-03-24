@@ -27,6 +27,11 @@ class User extends Authenticatable
         'last_name',
         'email',
         'password',
+
+        // for biochemical users
+        'signature',
+        'primary_enrollment',
+        'secondary_enrollment',
     ];
 
     /**

@@ -453,7 +453,7 @@ To create a protocol you have to select at least the patient, the social work an
                 <label for="diagnostic"> {{ trans('protocols.diagnostic') }} </label>
                 <input type="text" class="form-control" name="diagnostic" id="diagnostic" value="{{ old('diagnostic') }}" aria-describedby="diagnosticHelp">
 
-                <small id="diagnosticHelp" class="form-text text-muted"> Indicates the date on which the practices were carried out. By this date the protocols are ordered </small>
+                <small id="diagnosticHelp" class="form-text text-muted"> The presumptive diagnosis of the medical prescription for which the determinations are made </small>
             </div>
         </div>
     </div>
@@ -480,7 +480,7 @@ To create a protocol you have to select at least the patient, the social work an
                 <label for="quantity_orders"> {{ trans('protocols.quantity_orders') }} </label>
                 <input type="number" class="form-control" name="quantity_orders" id="quantity_orders" min="0" value="{{ old('quantity_orders') ?? '1' }}" aria-describedby="quantityOrdersHelp" required>
 
-                <small id="quantityOrdersHelp" class="form-text text-muted"> This field helps you to later perform the billing cut </small>
+                <small id="quantityOrdersHelp" class="form-text text-muted"> The number of orders delivered by the patient </small>
             </div>
         </div>
     </div>

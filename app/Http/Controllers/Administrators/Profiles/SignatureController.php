@@ -4,13 +4,14 @@ namespace App\Http\Controllers\Administrators\Profiles;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 use App\Contracts\Repository\UserRepositoryInterface;
 
 use Lang;
 
-class PasswordController extends Controller
+class SignatureController extends Controller
 {
     /** @var \App\Contracts\Repository\UserRepositoryInterface */
     private $userRepository;
@@ -61,7 +62,7 @@ class PasswordController extends Controller
 
         $user = $this->userRepository->findOrFail($id);
 
-        return view('administrators.profiles.change_password.edit')
+        return view('administrators/profiles/signatures/edit')
             ->with('user', $user);
     }
 
@@ -72,30 +73,23 @@ class PasswordController extends Controller
     {
         //
 
-        $this->validate($request, [
-            'current_password' => 'required|string|min:8',
+        $request->validate([
+            'signature' => 'required|mimes:jpg,jpeg,png|max:1048',
         ]);
 
         $user = $this->userRepository->findOrFail($id);
+      
+        // signature_userid.ext
+        $signature = $request->file('signature');
+        $ext = $signature->guessExtension();
+        $signature_name = "signature_$user->id.$ext";
 
-        if (! Hash::check($request->get('current_password'), $user->password)) {
-            // The passwords not matches
-            return redirect()->back()->withErrors(Lang::get('auth.password_not_matches'));
-        }
+        $user->signature = $signature_name;
+        $user->saveOrFail();
 
-        if(strcmp($request->get('current_password'), $request->get('new_password')) == 0){
-            // Current password and new password same
-            return redirect()->back()->withErrors(Lang::get('auth.password_cannot_same_current_password'));
-        }
-
-        $validatedData = $request->validate([
-            'new_password' => 'required|string|min:8|confirmed',
-        ]);
-
-        //Change Password
-        $this->userRepository->update(['password' => Hash::make($request->get('new_password'))], $id);
-
-        return redirect()->back()->with("success", [Lang::get('auth.password_sucessfully_changed')]);
+        Storage::disk('public')->put("signatures/$signature_name",  File::get($signature));
+        
+        return redirect()->back()->with('user', $user)->with('success', [Lang::get('profiles.signature_upload_successfully')]);
     }
 
     /**
@@ -104,5 +98,16 @@ class PasswordController extends Controller
     public function destroy(string $id)
     {
         //
+
+        $user = $this->userRepository->findOrFail($id);
+
+        if (! $this->userRepository->update(['signature' => null], $id))
+        {
+            return redirect()->back()->with('success', [Lang::get('forms.failed_transaction')]);
+        }
+
+        Storage::disk('public')->delete('signatures/'.$user->signature);
+
+        return redirect()->back()->with('user', $user)->with('success', [Lang::get('profiles.signature_upload_successfully')]);
     }
 }

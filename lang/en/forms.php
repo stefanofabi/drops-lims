@@ -44,5 +44,6 @@ return [
     'sign' => 'Sign',
     'no_permission' => 'You do not have permission to perform this action',
     'no_data' => 'No data',
-
+    'upload' => 'Upload',
+    
 ];

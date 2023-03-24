@@ -115,6 +115,20 @@
         @if (!empty($practice->determination->report))
             <div class="page-break-inside" style="margin-bottom: 15px">
                 {!! $practice->print() !!}
+                
+                <table style="width: 100%; margin-top: 3%">
+                    <tr>
+                        @foreach  ($practice->signInternalPractices as $sign)
+                        <td style="text-align: center; line-height: 35%"> 
+                            <p> @if (! empty($sign->user->signature)) <img src="{{ asset('storage/signatures/'.$sign->user->signature) }}" witdh="120" height="80"> @endif </p>
+                            <p> {{ $sign->user->full_name }} </p>
+                            <p> @if (! empty($sign->user->primary_enrollment)) <span> {{ $sign->user->primary_enrollment }} </span> @endif  
+                                @if (! empty($sign->user->primary_enrollment)) <span> {{ $sign->user->secondary_enrollment }} </span> @endif
+                            </p>
+                        </td>
+                        @endforeach
+                    </tr>
+                </table>
             </div>
         @endif
     @endforeach

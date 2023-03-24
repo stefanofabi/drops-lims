@@ -8,18 +8,22 @@
 <nav class="navbar">
     <ul class="navbar-nav">
         <li class="nav-item">
-            <a class="nav-link @cannot('sign practices') disabled @endcannot" href="#"> {{ trans('profiles.change_signature') }} </a>
+            <a class="nav-link" href="{{ route('administrators/profiles/edit', ['id' => $user->id]) }}"> {{ trans('profiles.my_profile') }} </a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('administrators/profiles/change_password/edit', ['id' => $user->id]) }}"> {{ trans('auth.change_password') }} </a>
+            <a class="nav-link @cannot('sign practices') disabled @endcannot" href="{{ route('administrators/profiles/signatures/edit', ['id' => $user->id]) }}"> {{ trans('profiles.change_signature') }} </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('passwords/change', ['id' => $user->id]) }}"> {{ trans('auth.change_password') }} </a>
         </li>
     </ul>
 </nav>
 @endsection
 
 @section('content-title')
-<i class="fa-solid fa-address-card"></i> {{ trans('profiles.my_profile') }}
+<i class="fa-solid fa-user"></i> {{ trans('profiles.my_profile') }}
 @endsection
 
 @section('content-message')
@@ -33,6 +37,11 @@
     <form method="post" action="{{ route('administrators/profiles/update', $user->id) }}">
         @csrf
         @method('PUT')
+        
+        <div class="mt-3">
+            <h4> <i class="fa-solid fa-file-lines"></i> {{ trans('profiles.account_data') }} </h4>
+            <hr class="col-6">
+        </div>
 
         <div class="row">
             <div class="col-md-6">
@@ -61,8 +70,35 @@
                     <small id="emailHelp" class="form-text text-muted"> {{ trans('profiles.email_help') }} </small>
                 </div>
             </div>
-
         </div>
+
+        @can('sign practices')
+        <div class="mt-4">
+            <h4> <i class="fa-solid fa-id-card"></i> {{ trans('profiles.enrollment') }} </h4>
+            <hr class="col-6">
+        </div>
+        
+        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group mt-2">
+                    <label for="primary_enrollment"> {{ trans('profiles.primary_enrollment') }} </label>
+                    <input type="text" class="form-control @error('primary_enrollment') is-invalid @enderror" name="primary_enrollment" id="primary_enrollment" value="{{ old('primary_enrollment') ?? $user->primary_enrollment }}" aria-describedby="primaryEnrollmentHelp">
+
+                    <small id="primaryEnrollmentHelp" class="form-text text-muted"> {{ trans('profiles.primary_enrollment_help') }} </small>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group mt-2">
+                    <label for="secondary_enrollment"> {{ trans('profiles.secondary_enrollment') }} </label>
+                    <input type="text" class="form-control @error('secondary_enrollment') is-invalid @enderror" name="secondary_enrollment" id="secondary_enrollment" value="{{ old('secondary_enrollment') ?? $user->secondary_enrollment }}" aria-describedby="secondaryEnrollmentHelp">
+
+                    <small id="secondaryEnrollmentHelp" class="form-text text-muted"> {{ trans('profiles.secondary_enrollment_help') }} </small>
+                </div>
+            </div>
+        </div>
+        @endcan
 
         <input type="submit" class="btn btn-lg btn-primary float-start mt-3" id="submitButton" value="{{ trans('forms.save') }}">
     </form>

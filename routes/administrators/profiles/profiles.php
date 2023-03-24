@@ -10,7 +10,7 @@
 */
 
 use App\Http\Controllers\Administrators\Profiles\ProfileController;
-use App\Http\Controllers\Administrators\Profiles\PasswordController;
+use App\Http\Controllers\Administrators\Profiles\SignatureController;
 
 Route::group([
     'prefix' => 'profiles',
@@ -30,9 +30,9 @@ Route::group([
 
     });
 
-    Route::controller(PasswordController::class)
-    ->prefix('change-password')
-    ->as('change_password/')
+    Route::controller(SignatureController::class)
+    ->prefix('signatures')
+    ->as('signatures/')
     ->group(function () {   
         Route::get('edit/{id}', 'edit')
             ->name('edit')
@@ -42,6 +42,9 @@ Route::group([
             ->name('update')
             ->where('id', '[1-9][0-9]*');
 
+        Route::delete('destroy/{id}', 'destroy')
+            ->name('destroy')
+            ->where('id', '[1-9][0-9]*');
+
     });
-    
 });

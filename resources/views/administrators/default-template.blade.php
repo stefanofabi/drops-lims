@@ -80,7 +80,7 @@
 					<li> <hr> </li>
 
 					<li>
-						<a class="dropdown-item" href="{{ route('administrators/profiles/edit', ['id' => Auth::user()->id]) }}"> {{ trans('profile.my_profile') }} </a>
+						<a class="dropdown-item" href="{{ route('administrators/profiles/edit', ['id' => Auth::user()->id]) }}"> {{ trans('profiles.my_profile') }} </a>
 					</li>
 
 					<li class="nav-item">

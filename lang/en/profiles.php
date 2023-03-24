@@ -24,5 +24,16 @@ return [
     'last_name_help' => 'This last name is the one with which you will show yourself to other people',
     'you_cant_access_another_user_profile' => 'You cannot access another user profile',
     'change_password_edit_message' => 'Choose a new strong password of at least 8 characters. We recommend using at least two numbers, one special character, one lowercase letter, and one uppercase letter',
+    'enrollment' => 'Enrollment',
+    'primary_enrollment' => 'Primary enrollment',
+    'primary_enrollment_help' => '',
+    'secondary_enrollment' => 'Secondary enrollment',
+    'secondary_enrollment_help' => '',
+    'change_signature_edit_message' => 'Upload a jpg or png image up to 200x200px, preferably with a transparent or white background. Nor can it exceed 1 MB so that PDF protocols are not very heavy',
+    'select_image' => 'Select image for the signature',
+    'signature_help' => 'This signature will be the one used when generating a PDF protocol with practices that have been signed',
+    'signature_upload_successfully' => 'You have successfully upload signature',
+    'destroy_signature' => 'Destroy signature',
+    'signature_not_loaded' => 'Signature not loaded',
     
 ];
