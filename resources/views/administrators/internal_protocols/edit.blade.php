@@ -340,7 +340,7 @@
 @endsection
 
 @section('content-title')
-<i class="fas fa-file-medical"></i> {{ trans('protocols.edit_protocol') }} #{{ $protocol->id }}
+<i class="fa-solid fa-pen-to-square"></i> {{ trans('protocols.edit_protocol') }} #{{ $protocol->id }}
 @endsection
 
 @section('content-message')

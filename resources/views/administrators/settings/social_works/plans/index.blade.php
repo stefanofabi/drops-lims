@@ -30,7 +30,7 @@
 @endsection
 
 @section('content-title')
-<i class="fas fa-archive"> </i> {{ trans('plans.plans') }}
+<i class="fa-solid fa-list-check"></i> {{ trans('plans.plans') }}
 @endsection
 
 @section('content-message')

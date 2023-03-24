@@ -14,13 +14,13 @@
 @section('menu')
 <nav class="navbar">
 	<ul class="navbar-nav">
-            <li class="nav-item">
-				<a class="nav-link" href="{{ route('administrators/settings/social_works/payments/create', ['social_work_id' => $social_work->id]) }}"> {{ trans('payment_social_works.create_payment')}} </a>
-			</li>
+        <li class="nav-item">
+			<a class="nav-link" href="{{ route('administrators/settings/social_works/payments/create', ['social_work_id' => $social_work->id]) }}"> {{ trans('payment_social_works.create_payment')}} </a>
+		</li>
 
-            <li class="nav-item">
-				<a class="nav-link" href="{{ route('administrators/settings/social_works/edit', ['id' => $social_work->id]) }}"> {{ trans('forms.go_back')}} </a>
-			</li>
+        <li class="nav-item">
+			<a class="nav-link" href="{{ route('administrators/settings/social_works/edit', ['id' => $social_work->id]) }}"> {{ trans('forms.go_back')}} </a>
+		</li>
 	</ul>
 </nav>
 @endsection
@@ -63,10 +63,6 @@
                 <td> ${{ $payment->amount }} </td>
 
                 <td class="text-end">
-                    <a href="{{ route('administrators/settings/social_works/payments/edit', ['id' => $payment->id]) }}" class="btn btn-primary btn-sm" title="{{ trans('payment_social_works.edit_payment') }}">
-                        <i class="fas fa-edit fa-sm"> </i>
-                    </a>
-
                     <a class="btn btn-primary btn-sm" title="{{ trans('payment_social_works.destroy_payment') }}" onclick="destroyPayment('{{ $payment->id }}')">
                         <i class="fas fa-trash fa-sm"></i>
                     </a>

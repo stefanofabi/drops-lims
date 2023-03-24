@@ -7,23 +7,23 @@
 @section('menu')
 <nav class="navbar">
 	<ul class="navbar-nav">
-	        <li class="nav-item">
-				<a class="nav-link" href="{{ route('administrators/settings/social_works/plans/index', ['social_work_id' => $social_work->id]) }}"> {{ trans('plans.plans')}} </a>
-			</li>
+        <li class="nav-item">
+			<a class="nav-link" href="{{ route('administrators/settings/social_works/payments/index', ['social_work_id' => $social_work->id]) }}"> {{ trans('payment_social_works.payments')}} </a>
+		</li>
 
-            <li class="nav-item">
-				<a class="nav-link" href="{{ route('administrators/settings/social_works/payments/index', ['social_work_id' => $social_work->id]) }}"> {{ trans('payment_social_works.payments')}} </a>
-			</li>
+	    <li class="nav-item">
+			<a class="nav-link" href="{{ route('administrators/settings/social_works/plans/index', ['social_work_id' => $social_work->id]) }}"> {{ trans('plans.plans')}} </a>
+		</li>
 
-            <li class="nav-item">
-				<a class="nav-link" href="{{ route('administrators/settings/social_works/index') }}"> {{ trans('forms.go_back')}} </a>
-			</li>
+        <li class="nav-item">
+			<a class="nav-link" href="{{ route('administrators/settings/social_works/index') }}"> {{ trans('forms.go_back')}} </a>
+		</li>
 	</ul>
 </nav>
 @endsection
 
 @section('content-title')
-<i class="fas fa-archive"> </i> {{ trans('social_works.edit_social_work') }}
+<i class="fa-solid fa-pen-to-square"></i> {{ trans('social_works.edit_social_work') }}
 @endsection
 
 @section('content-message')

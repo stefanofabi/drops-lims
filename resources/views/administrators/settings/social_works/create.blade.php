@@ -15,7 +15,7 @@
 @endsection
 
 @section('content-title')
-<i class="fas fa-archive"> </i> {{ trans('social_works.create_social_work') }}
+<i class="fa-solid fa-plus"></i> {{ trans('social_works.create_social_work') }}
 @endsection
 
 @section('content-message')

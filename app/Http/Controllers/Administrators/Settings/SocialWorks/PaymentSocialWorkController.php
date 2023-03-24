@@ -104,11 +104,6 @@ class PaymentSocialWorkController extends Controller
     public function edit($id)
     {
         //
-
-        $payment = $this->paymentSocialWorkRepository->findOrFail($id);
-
-        return view('administrators/settings/social_works/payments/edit')
-            ->with('payment', $payment);
     }
 
     /**
@@ -121,21 +116,6 @@ class PaymentSocialWorkController extends Controller
     public function update(Request $request, $id)
     {
         //
-
-        $request->validate([
-            'payment_date' => 'required|date',
-            'amount' => 'required|numeric|min:0.01',
-        ]);
-
-        if (! $this->paymentSocialWorkRepository->update($request->all(), $id)) {
-            return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
-        }
-
-        Session::flash('success', [Lang::get('payment_social_works.payment_updated_succesfully')]);
-   
-        $social_work_id = $this->paymentSocialWorkRepository->findOrFail($id)->social_work_id;
-
-        return redirect()->action([PaymentSocialWorkController::class, 'index'], ['social_work_id' => $social_work_id]);
     }
 
     /**

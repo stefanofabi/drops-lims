@@ -69,7 +69,7 @@
                     <td> {{ $nomenclator->name }} </td>
 
                     <td class="text-end">
-                        <a href="{{ route('administrators/settings/nomenclators/edit', ['id' => $nomenclator->id]) }}" class="btn btn-primary btn-sm" title="{{ trans('nomenclators.show_nomenclator') }}">
+                        <a href="{{ route('administrators/settings/nomenclators/edit', ['id' => $nomenclator->id]) }}" class="btn btn-primary btn-sm" title="{{ trans('nomenclators.edit_nomenclator') }}">
                             <i class="fas fa-edit fa-sm"> </i>
                         </a>
 

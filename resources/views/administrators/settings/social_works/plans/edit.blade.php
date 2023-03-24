@@ -15,7 +15,7 @@
 @endsection
 
 @section('content-title')
-<i class="fas fa-archive"> </i> {{ trans('plans.edit_plan') }}
+<i class="fa-solid fa-pen-to-square"></i> {{ trans('plans.edit_plan') }}
 @endsection
 
 @section('content-message')

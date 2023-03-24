@@ -15,7 +15,7 @@
 @endsection
 
 @section('content-title')
-<i class="fas fa-archive"> </i> {{ trans('nomenclators.create_nomenclator') }}
+<i class="fa-solid fa-plus"></i> {{ trans('nomenclators.create_nomenclator') }}
 @endsection
 
 @section('content-message')
