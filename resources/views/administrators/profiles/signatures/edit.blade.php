@@ -49,7 +49,7 @@
 
     <p>
         @if (empty($user->signature))
-        <h3> {{ trans('profiles.signature_not_loaded') }} </h3>
+        <h3 class="text-danger"> {{ trans('profiles.signature_not_loaded') }} </h3>
         @else
         <img src="{{ asset('storage/signatures/'.$user->signature) }}" class="img-thumbnail" style="--bs-bg-opacity: 0.3" alt="{{ $user->full_name }} signature" height="200" width="200">
         @endif

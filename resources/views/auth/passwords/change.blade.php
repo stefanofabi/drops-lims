@@ -11,11 +11,11 @@
         <li class="nav-item">
             <a class="nav-link" href="{{ route('administrators/profiles/edit', ['id' => $user->id]) }}"> {{ trans('profiles.my_profile') }} </a>
         </li>
-        @endcan
         
         <li class="nav-item">
-            <a class="nav-link @cannot('sign practices') disabled @endcannot" href="#"> {{ trans('profiles.change_signature') }} </a>
+            <a class="nav-link @cannot('sign practices') disabled @endcannot" href="{{ route('administrators/profiles/signatures/edit', ['id' => $user->id]) }}"> {{ trans('profiles.change_signature') }} </a>
         </li>
+        @endcan
 
         <li class="nav-item">
             <a class="nav-link" href="{{ route('passwords/change', ['id' => $user->id]) }}"> {{ trans('auth.change_password') }} </a>
