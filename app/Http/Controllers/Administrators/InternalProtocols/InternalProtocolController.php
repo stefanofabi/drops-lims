@@ -185,6 +185,15 @@ class InternalProtocolController extends Controller
     public function destroy($id)
     {
         //
+
+        if (! $this->internalProtocolRepository->delete($id)) 
+        {
+            return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
+        }
+        
+        Session::flash('success', [Lang::get('protocols.success_destroy_message')]);
+
+        return redirect()->action([InternalProtocolController::class, 'index'], ['page' => 1]);
     }
 
     /**

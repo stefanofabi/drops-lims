@@ -37,7 +37,7 @@ Route::controller(InternalProtocolController::class)
             ->middleware('verify_open_protocol')
             ->middleware('check_nomenclator_when_updating_internal_protocol');
 
-        Route::get('destroy/{id}', 'destroy')
+        Route::delete('destroy/{id}', 'destroy')
             ->name('destroy')
             ->where('id', '[1-9][0-9]*')
             ->middleware('verify_open_protocol');

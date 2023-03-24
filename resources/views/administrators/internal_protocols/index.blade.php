@@ -21,6 +21,14 @@
 	    $("#page" ).val(page);
 	    document.all["select_page"].submit();
 	}
+
+	function destroyInternalProtocol(form_id)
+	{
+        if (confirm('{{ trans("forms.confirm") }}')) {
+            var form = document.getElementById('destroy_internal_protocol_'+form_id);
+            form.submit();
+        }
+    }
 </script>
 @endsection
 
@@ -90,7 +98,12 @@
 			<td class="text-end">
 				@if ($protocol->isOpen())
 				<a href="{{ route('administrators/protocols/edit', [$protocol->id]) }}" class="btn btn-primary btn-sm" title="{{ trans('protocols.edit_protocol') }}" > <i class="fas fa-edit fa-sm"></i> </a>
-				<a href="#" class="btn btn-primary btn-sm verticalButtons" title="{{ trans('protocols.destroy_protocol') }}"> <i class="fas fa-trash fa-sm"></i> </a> 
+				<a href="#" class="btn btn-primary btn-sm verticalButtons" title="{{ trans('protocols.destroy_protocol') }}" onclick="destroyInternalProtocol('{{ $protocol->id }}')"> <i class="fas fa-trash fa-sm"></i> </a> 
+
+				<form id="destroy_internal_protocol_{{ $protocol->id }}" method="POST" action="{{ route('administrators/protocols/destroy', $protocol->id) }}">
+					@csrf
+					@method('DELETE')
+				</form>
 				@else
 				<a href="{{ route('administrators/protocols/edit', [$protocol->id]) }}" class="btn btn-primary btn-sm" title="{{ trans('protocols.show_protocol') }}" > <i class="fas fa-eye fa-sm"></i> </a> 
 				<a href="#" class="btn btn-primary btn-sm verticalButtons disabled" title="{{ trans('protocols.destroy_protocol') }}"> <i class="fas fa-trash fa-sm"></i> </a>
