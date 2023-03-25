@@ -4,6 +4,15 @@
 {{ trans('profiles.my_profile') }}
 @endsection
 
+@section('js')
+<script type="module">
+	$(document).ready(function() {
+        // Select a option from list
+        $('#lang').val("{{ old('lang') ?? $user->lang }}");
+    });
+</script>
+@endsection
+
 @section('menu')
 <nav class="navbar">
     <ul class="navbar-nav">
@@ -68,6 +77,19 @@
                     <input type="text" class="form-control @error('email') is-invalid @enderror" name="email" id="email" value="{{ old('email') ?? $user->email }}" aria-describedby="emailHelp" required>
 
                     <small id="emailHelp" class="form-text text-muted"> {{ trans('profiles.email_help') }} </small>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group mt-2">
+                    <label for="lang"> {{ trans('profiles.lang') }} </label>
+                    <select class="form-select @error('lang') is-invalid @enderror" name="lang" id="lang" aria-describedby="langHelp" required>
+                        <option value=""> {{ trans('forms.select_option') }} </option>
+                        <option value="en"> {{ trans('lang.english') }} </option>
+                        <option value="es"> {{ trans('lang.spanish') }} </option>
+                    </select>
+
+                    <small id="langHelp" class="form-text text-muted"> {{ trans('profiles.lang_help') }} </small>
                 </div>
             </div>
         </div>

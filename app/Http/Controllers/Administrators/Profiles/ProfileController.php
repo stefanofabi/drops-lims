@@ -73,6 +73,7 @@ class ProfileController extends Controller
             'name' => 'required|string|min:2',
             'last_name' => 'required|string|min:2',
             'email' => 'required|email',
+            'lang' => 'required|in:en,es',
         ]);
         
         if (! $this->userRepository->update($request->all(), $id)) {

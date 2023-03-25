@@ -35,5 +35,7 @@ return [
     'signature_upload_successfully' => 'You have successfully upload signature',
     'destroy_signature' => 'Destroy signature',
     'signature_not_loaded' => 'Signature not loaded',
-    
+    'lang' => 'Lang',
+    'lang_help' => 'The language in which you will see the system translations',
+
 ];

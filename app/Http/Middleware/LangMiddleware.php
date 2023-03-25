@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use App;
 
 class LangMiddleware
 {
@@ -15,11 +16,8 @@ class LangMiddleware
      */
     public function handle($request, Closure $next)
     {
-
-        if (!empty(session('lang'))) {
-            // We use the default language
-            \App::setLocale(session('lang'));
-        }
+        // In case such session variable does not exist, the application will use by default the language defined in the config/app.php file
+        App::setLocale(auth()->user()->lang ?? session('lang'));
 
         return $next($request);
     }
