@@ -14,9 +14,6 @@ return [
 
     'patients' => 'Patients',
     'create_patient' => 'Create patient',
-    'animal' => 'Animal',
-    'human' => 'Human',
-    'industrial' => 'Industrial',
     'patient' => 'Patient',
     'identification_number' => 'Identification number',
     'city' => 'City',
@@ -34,7 +31,7 @@ return [
     'age' => 'Age',
     'calculate_age' => '{0} :month month(s) and :day day(s) |[1,*] :year year(s) and :month month(s)',
     'add_family_member' => 'Add family member',
-    'related_patients' => 'Below are all the patients with whom you have related your account. We take all security measures so that your data is protected.',
+    'related_patients' => 'Below are all the patients with whom you have related your account. We take all security measures so that your data is protected',
     'send_security_code' => 'Send new security code for linking',
     'security_code' => 'Security code',
     'notice_confidentiality' => 'This is a security notice! Do not lose, share or publish this code. Laboratory personnel will never contact you for any reason. If you lose this code contact immediately because your data and medical results may be exposed',
@@ -53,6 +50,6 @@ return [
     'patient_have_not_email' => 'Patient have not email loaded',
     'family_members' => 'Family members',
     'reserve_shift' => 'Reserve shift',
-    'patients_message' => 'Here are all the patients loaded in the system that can be treated in your laboratory. Remember that it is important to verify and keep your data up to date.',
+    'patients_message' => 'Here are all the patients loaded in the system that can be treated in your laboratory. Remember that it is important to verify and keep your data up to date',
     
 ];

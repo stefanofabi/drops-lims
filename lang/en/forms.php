@@ -4,7 +4,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Ajax language lines
+    | Form language lines
     |--------------------------------------------------------------------------
     |
     | The following language lines are used during forms view for various messages that we must show the user.
@@ -15,7 +15,6 @@ return [
     'please_wait' => 'Processing, please wait ...',
     'save' => 'Save',
     'cancel' => 'Cancel',
-    'complete_filters' => 'Complete filters',
     'go_back' => 'Go back',
     'actions' => 'Actions',
     'no_options' => 'There are no options available',
@@ -45,5 +44,6 @@ return [
     'no_permission' => 'You do not have permission to perform this action',
     'no_data' => 'No data',
     'upload' => 'Upload',
+    'stay_on_this_page' => 'Stay on this page',
     
 ];

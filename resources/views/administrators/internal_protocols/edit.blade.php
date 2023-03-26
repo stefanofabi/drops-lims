@@ -345,14 +345,14 @@
 
 @section('content-message')
 <p class="text-justify pe-5">
-    Most of our work is done in this document. Try to fill in as many fields as possible to leave a clear clinical history. Once the protocol is closed, you can generate a pdf and it cannot be modified again for any reason.
+    {{ trans('protocols.protocols_edit_message') }}
 </p>
 @endsection
 
 @section('content')
 @if (sizeof($errors) == 0)
     @if ($protocol->isOpen())
-	<div id="securityMessage" class="alert alert-info fade show mt-3">
+	<div id="securityMessage" class="alert alert-info fade show mt-4">
 		<button type="submit" onclick="enableSubmitForm()" class="btn btn-primary btn-sm">
 			<i class="fas fa-lock-open"></i>
 		</button>
@@ -360,7 +360,7 @@
 		{{ trans('protocols.protocol_blocked') }}
 	</div>
     @else
-    <div class="alert alert-warning fade show mt-3">
+    <div class="alert alert-warning fade show mt-4">
 		{{ trans('protocols.protocol_closed_message') }}
 	</div>    
     @endif
@@ -370,7 +370,7 @@
     @csrf
     {{ method_field('PUT') }}
 
-    <div class="mt-3">
+    <div class="mt-4">
         <h4><i class="fas fa-book"></i> {{ trans('protocols.medical_order_data') }} </h4>
         <hr class="col-6">
     </div>
@@ -381,7 +381,7 @@
                 <label for="patientAutoComplete"> {{ trans('patients.patient') }} </label>
                 <input type="text" class="form-control" id="patientAutoComplete" value="{{ $protocol->internalPatient->full_name }}" aria-describedby="patientHelp" disabled>
 
-                <small id="patientHelp" class="form-text text-muted"> You cannot change the patient of a protocol once it has already been loaded </small>
+                <small id="patientHelp" class="form-text text-muted"> {{ trans('protocols.patient_help') }} </small>
             </div>
         </div>
 
@@ -391,7 +391,7 @@
                 <input type="hidden" id="prescriber" name="prescriber_id" value="{{ old('prescriber_id') ?? $protocol->prescriber_id }}"> 
                 
                 <div>
-                    <small id="prescriberHelp" class="form-text text-muted"> Associate a prescriber to the protocol to continue </small>
+                    <small id="prescriberHelp" class="form-text text-muted"> {{ trans('protocols.prescriber_help') }} </small>
                 </div>
             </div>
         </div>
@@ -401,7 +401,7 @@
                 <input type="text" class="form-control" name="social_work_name" id="socialWorkAutoComplete" placeholder="{{ trans('forms.start_typing') }}" value="{{ old('social_work_name') ?? $protocol->plan->social_work->name }}" aria-describedby="socialWorkHelp" required disabled>
 
                 <div>
-                    <small id="socialWorkHelp" class="form-text text-muted"> You can charge any social work even if it is not the one that the patient has charged </small>
+                    <small id="socialWorkHelp" class="form-text text-muted"> {{ trans('protocols.social_work_help') }} </small>
                 </div>
             </div>
         </div>
@@ -413,7 +413,7 @@
                 <input type="hidden" name="plan_id" id="plan" value="{{ old('plan_id') ?? $protocol->plan_id }}">
                 
                 <div>
-                    <small id="planHelp" class="form-text text-muted"> The plan will be loaded automatically when you select a social work </small>
+                    <small id="planHelp" class="form-text text-muted"> {{ trans('protocols.plan_help') }} </small>
                 </div>
 		    </div>
         </div>
@@ -423,7 +423,7 @@
                 <label for="completion_date"> {{ trans('protocols.completion_date') }} </label>
                 <input type="date" class="form-control" name="completion_date" id="completion_date" value="{{ old('completion_date') ?? $protocol->completion_date }}" aria-describedby="completionDateHelp" disabled>
                 
-                <small id="completionDateHelp" class="form-text text-muted"> Indicates the date on which the practices were carried out. By this date the protocols are ordered </small>
+                <small id="completionDateHelp" class="form-text text-muted"> {{ trans('protocols.completion_date_help') }} </small>
             </div>
         </div>
 
@@ -432,7 +432,7 @@
                 <label for="diagnostic"> {{ trans('protocols.diagnostic') }} </label>
                 <input type="text" class="form-control" name="diagnostic" id="diagnostic" value="{{ old('diagnostic') ?? $protocol->diagnostic }}" aria-describedby="diagnosticHelp" disabled>
                 
-                <small id="diagnosticHelp" class="form-text text-muted"> Indicates the date on which the practices were carried out. By this date the protocols are ordered </small>
+                <small id="diagnosticHelp" class="form-text text-muted"> {{ trans('protocols.diagnostic_help') }} </small>
             </div>
         </div>
     </div>
@@ -449,7 +449,7 @@
                 <input type="hidden" name="billing_period_id" id="billing_period_id" value="{{ old('billing_period_id') ?? $protocol->billing_period_id }}"> 
                 
                 <div>
-                    <small id="billingPeriodHelp" class="form-text text-muted"> This field helps you to later perform the billing cut </small>
+                    <small id="billingPeriodHelp" class="form-text text-muted"> {{ trans('protocols.billing_period_help') }} </small>
                 </div>
             </div>
         </div>
@@ -459,7 +459,7 @@
                 <label for="quantity_orders"> {{ trans('protocols.quantity_orders') }} </label>
                 <input type="number" class="form-control" name="quantity_orders" id="quantity_orders" min="0" value="{{ old('quantity_orders') ?? $protocol->quantity_orders }}" aria-describedby="quantityOrdersHelp" required disabled>
 
-                <small id="quantityOrdersHelp" class="form-text text-muted"> This field helps you to later perform the billing cut </small>
+                <small id="quantityOrdersHelp" class="form-text text-muted"> {{ trans('protocols.quantity_orders_help') }} </small>
             </div>
         </div>
     </div>
@@ -471,7 +471,7 @@
 
             <textarea class="form-control" rows="3" name="observations" id="observations" aria-describedby="observationsHelp" disabled>{{ old('observations') ?? $protocol->observations }}</textarea>
 
-            <small id="observationsHelp" class="form-text text-muted"> Any details about the process or the results of the analysis. These observations are public. </small>
+            <small id="observationsHelp" class="form-text text-muted"> {{ trans('protocols.observations_help') }} </small>
         </div>
     </div>
 

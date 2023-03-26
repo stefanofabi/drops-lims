@@ -18,7 +18,6 @@ return [
     'show_report' => 'Show report',
     'report_blocked' => 'Report blocked for security reasons. To make changes click on the lock',
     'edit_report' => 'Edit report',
-    'index_reports' => 'Index of reports',
     'name' => 'Name',
     'destroy_report' => 'Destroy report',
     'creation_notice' => 'When creating a new report it will be automatically available to be selected in a protocol',

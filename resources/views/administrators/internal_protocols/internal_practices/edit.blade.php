@@ -96,7 +96,7 @@
 
 @section('content-message')
 <p class="text-justify pe-5">
-    Report carefully and carefully the results. Once informed, the signature of a professional is required to be printed.
+    {{ trans('practices.practices_edit_message') }}
 </p>
 @endsection
 
@@ -132,7 +132,7 @@
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" name="stay_on_this_page" value="1" id="stayOnThisPage">
                         <label class="form-check-label" for="stayOnThisPage">
-                            Stay on this page
+                            {{ trans('forms.stay_on_this_page') }}
                         </label>
                     </div>
                 </div>

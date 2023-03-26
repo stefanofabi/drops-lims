@@ -30,7 +30,7 @@
 <form method="post" action="{{ route('administrators/determinations/store') }}">
 	@csrf
 
-	<div class="mt-3">
+	<div class="mt-4">
 		<h4><i class="fas fa-book-medical"></i> {{ trans('determinations.determination_data') }} </h4>
 		<hr class="col-6">
 	</div>

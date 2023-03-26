@@ -7,7 +7,7 @@ return [
     | Payment social works language lines
     |--------------------------------------------------------------------------
     |
-    | The following language lines are used during social works views for various messages that we must show the user.
+    | The following language lines are used during payment social works views for various messages that we must show the user.
     | You are free to modify these language lines according to your application's requirements.
     |
     */
@@ -22,7 +22,6 @@ return [
     'billing_period_required' => 'Billing period required',
     'payment_before_billing_period' => 'Payment cannot be made before the billing period',
     'payment_created_succesfully' => 'Payment created sucessfully',
-    'payment_updated_succesfully' => 'Payment updated sucessfully',
     'payment_deleted_succesfully' => 'Payment deleted sucessfully',
     'payment_social_works_index_message' => 'Here are detailed all the payments made by a social work',
     'payment_social_works_edit_message' => 'Leave records of the payments made by a social work to be able to keep a historical control', 

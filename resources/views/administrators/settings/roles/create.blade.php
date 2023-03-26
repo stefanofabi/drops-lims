@@ -38,7 +38,7 @@
 @endsection
 
 @section('content-title')
-<i class="fas fa-archive"> </i> {{ trans('roles.create_role') }}
+<i class="fa-solid fa-user-plus"></i> {{ trans('roles.create_role') }}
 @endsection
 
 @section('content-message')

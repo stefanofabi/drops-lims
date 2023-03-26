@@ -213,7 +213,7 @@
 
 @section('content-message')
 <p class="text-justify pe-5">
-    Add all the practices that the patient needs to perform. They will be automatically sorted according to the printing order
+    {{ trans('practices.practices_index_message') }}
 </p>
 @endsection
 

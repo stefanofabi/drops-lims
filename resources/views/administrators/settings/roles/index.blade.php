@@ -56,7 +56,7 @@
 @endsection
 
 @section('content-title')
-<i class="fas fa-book-medical"> </i> {{ trans('roles.roles') }}
+<i class="fa-solid fa-users"></i> {{ trans('roles.roles') }}
 @endsection
 
 @section('content-message')

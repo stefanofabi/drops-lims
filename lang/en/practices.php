@@ -37,5 +37,7 @@ return [
     'practice_not_informed' => 'You cannot sign a practice that is not informed',
     'sign_practice' => 'Sign practice',
     'price' => 'Price',
+    'practices_index_message' => 'Add all the practices that the patient needs to perform. They will be automatically sorted according to the printing order',
+    'practices_edit_message' => 'Report the results carefully. Once informed, the signature of a professional is required to print the practice',
     
 ];

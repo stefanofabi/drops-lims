@@ -51,8 +51,8 @@
 	@csrf
 	{{ method_field('PUT') }}
 
-	<div>
-		<h4><i class="fas fa-book"></i> {{ trans('patients.personal_data') }} </h4>
+	<div class="mt-4">
+		<h4><i class="fas fa-book"></i> {{ trans('prescribers.personal_data') }} </h4>
 		<hr class="col-6">
 	</div>
 
@@ -93,6 +93,11 @@
 			</div>
 		</div>
 	</div>
+
+	<div class="mt-4">
+        <h4><i class="fas fa-phone"></i> {{ trans('forms.contact_information') }} </h4>
+        <hr class="col-6">
+    </div>
 
 	<div class="row">
 		<div class="col-md-6">

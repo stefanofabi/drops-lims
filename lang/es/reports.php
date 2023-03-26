@@ -12,15 +12,17 @@ return [
     |
     */
 
-    'create_report' => 'Crear ',
-    'report' => 'Informe',
-    'show_report' => 'Ver informe',
-    'report_blocked' => 'Informe bloqueado por razones de seguridad. Para hacer cambios, haga clic en el candado',
-    'edit_report' => 'Editar informe',
-    'index_reports' => 'Índice de informes',
+    'create_report' => 'Crear reporte',
+    'javascript' => 'Javascript',
+    'report' => 'Reporte',
+    'show_report' => 'Ver reporte',
+    'report_blocked' => 'Reporte bloqueado por razones de seguridad. Para hacer cambios haz clic en el candado',
+    'edit_report' => 'Editar reporte',
     'name' => 'Nombre',
-    'destroy_report' => 'Eliminar informe',
-    'creation_notice' => 'Al crear un nuevo informe, estará automáticamente disponible para ser seleccionado en un protocolo',
-    'edit_notice' => 'Al editar la máscara de un informe está realizando los mismos cambios en todos los protocolos que usan esta máscara. Si está eliminando o agregando nuevos campos le recomendamos generar un nuevo informe',
+    'destroy_report' => 'Eliminar reporte',
+    'creation_notice' => 'Al crear un nuevo reporte estará disponible automáticamente para ser seleccionado en un protocolo',
+    'edit_notice' => 'Al editar la plantilla de un reporte estás haciendo los mismos cambios en todos los protocolos que utilizan esta plantilla. Si estás eliminando o agregando nuevos campos, recomendamos generar un nuevo reporte.',
+    'success_destroy' => 'Reporte eliminado con éxito',
+    'danger_destroy' => 'No se pudo eliminar el reporte',
     
 ];

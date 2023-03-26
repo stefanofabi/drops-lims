@@ -60,7 +60,7 @@
     @csrf
     {{ method_field('PUT') }}
 
-	<div class="mt-3">
+	<div class="mt-4">
 		<h4><i class="fas fa-book-medical"></i> {{ trans('determinations.determination_data') }} </h4>
 		<hr class="col-6">
 	</div>

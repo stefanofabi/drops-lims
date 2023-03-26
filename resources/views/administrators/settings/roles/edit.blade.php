@@ -35,7 +35,7 @@
 @endsection
 
 @section('content-title')
-<i class="fas fa-archive"> </i> {{ trans('roles.edit_role') }}
+<i class="fa-solid fa-pen-to-square"></i> {{ trans('roles.edit_role') }}
 @endsection
 
 @section('content-message')

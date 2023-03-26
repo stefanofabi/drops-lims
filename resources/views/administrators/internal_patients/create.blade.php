@@ -115,7 +115,7 @@
 <form method="post" action="{{ route('administrators/patients/store') }}">
     @csrf
 
-    <div class="mt-3">
+    <div class="mt-4">
         <h4><i class="fas fa-id-card"></i> {{ trans('patients.personal_data') }} </h4>
         <hr class="col-6">
     </div>
@@ -189,7 +189,7 @@
         </div>
     </div>
 
-    <div class="mt-3">
+    <div class="mt-4">
         <h4><i class="fas fa-phone"></i> {{ trans('forms.contact_information') }} </h4>
         <hr class="col-6">
     </div>
@@ -232,7 +232,7 @@
         </div>
     </div>
 
-    <div class="mt-3">
+    <div class="mt-4">
         <h4><i class="fas fa-heart"></i> {{ trans('social_works.social_work') }} </h4>
 		<hr class="col-6">
     </div>

@@ -27,7 +27,7 @@ return [
     'destroy_prescriber' => 'Destroy prescriber',
     'full_name' => 'Full name',
     'success_destroy_message' => 'Well done! Prescriber was successfully removed',
-    'particular' => 'Particular',
     'prescribers_message' => 'Here are loaded all the prescribers who prescribe medical orders to their patients. It is important to keep their data updated so that they have a participatory role in the patients treatment.',
+    'personal_data' => 'Personal data',
 
 ];

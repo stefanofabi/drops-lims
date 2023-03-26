@@ -359,23 +359,23 @@
 
 @section('content-message')
 <p class="text-justify pe-5">
-To create a protocol you have to select at least the patient, the social work and the prescriber. Then you can load the practices that you are going to perform on the patient.
+    {{ trans('protocols.protocols_create_message') }}
 </p>
 @endsection
 
 @section('content')
 @if (!empty($patient))
     @if (empty($patient->plan_id))
-    <div class="alert alert-warning mt-3">
+    <div class="alert alert-warning mt-4">
         <strong>{{ trans('forms.warning') }}!</strong> {{ trans('protocols.unloaded_social_work') }}
     </div>
     @elseif ($patient->expiration_date < date('Y-m-d'))
-    <div class="alert alert-warning mt-3">
+    <div class="alert alert-warning mt-4">
         <strong>{{ trans('forms.warning') }}!</strong> {{ trans('protocols.expired_social_work') }}
     </div>
     @endif
 @else
-<div class="alert alert-info mt-3">
+<div class="alert alert-info mt-4">
     <strong>{{ trans('forms.information') }}!</strong> {{ trans('protocols.create_notice') }}
 </div>
 @endif
@@ -389,7 +389,7 @@ To create a protocol you have to select at least the patient, the social work an
 <form method="post" action="{{ route('administrators/protocols/store') }}">
     @csrf
 
-    <div>
+    <div class="mt-4">
         <h4><i class="fas fa-book"></i> {{ trans('protocols.medical_order_data') }} </h4>
         <hr class="col-6">
     </div>
@@ -401,7 +401,7 @@ To create a protocol you have to select at least the patient, the social work an
                 <input type="hidden" name="internal_patient_id" value="{{ $patient->id ?? '' }}"> 
                 
                 <div>
-                    <small id="patientHelp" class="form-text text-muted"> When selecting a patient we will automatically load their social work </small>
+                    <small id="patientHelp" class="form-text text-muted"> {{ trans('protocols.patient_help') }} </small>
                 </div>
             </div>
         </div>
@@ -412,7 +412,7 @@ To create a protocol you have to select at least the patient, the social work an
                 <input type="hidden" id="prescriber" name="prescriber_id" value="{{ old('prescriber_id') }}"> 
                 
                 <div>
-                    <small id="prescriberHelp" class="form-text text-muted"> Associate a prescriber to the protocol to continue </small>
+                    <small id="prescriberHelp" class="form-text text-muted"> {{ trans('protocols.prescriber_help') }} </small>
                 </div>
             </div>
         </div>
@@ -422,7 +422,7 @@ To create a protocol you have to select at least the patient, the social work an
                 <input type="text" class="form-control" name="social_work_name" id="socialWorkAutoComplete" placeholder="{{ trans('forms.start_typing') }}" value="{{ old('social_work_name') ?? $patient->plan->social_work->name ?? '' }}" aria-describedby="socialWorkHelp" required>
                 
                 <div>
-                    <small id="socialWorkHelp" class="form-text text-muted"> You can charge any social work even if it is not the one that the patient has charged </small>
+                    <small id="socialWorkHelp" class="form-text text-muted"> {{ trans('protocols.social_work_help') }} </small>
                 </div>
             </div>
         </div>
@@ -434,7 +434,7 @@ To create a protocol you have to select at least the patient, the social work an
                 <input type="hidden" name="plan_id" id="plan" value="{{ old('plan_id') ?? $patient->plan_id ?? '' }}">
                 
                 <div>
-                    <small id="planHelp" class="form-text text-muted"> The plan will be loaded automatically when you select a social work </small>
+                    <small id="planHelp" class="form-text text-muted"> {{ trans('protocols.plan_help') }} </small>
                 </div>
 		    </div>
         </div>
@@ -444,7 +444,7 @@ To create a protocol you have to select at least the patient, the social work an
                 <label for="completion_date"> {{ trans('protocols.completion_date') }} </label>
                 <input type="date" class="form-control" name="completion_date" id="completion_date" value="{{ old('completion_date') ?? date('Y-m-d') }}" aria-describedby="completionDateHelp">
                     
-                <small id="completionDateHelp" class="form-text text-muted"> Indicates the date on which the practices were carried out. By this date the protocols are ordered </small>
+                <small id="completionDateHelp" class="form-text text-muted"> {{ trans('protocols.completion_date_help') }} </small>
             </div>
         </div>
 
@@ -453,7 +453,7 @@ To create a protocol you have to select at least the patient, the social work an
                 <label for="diagnostic"> {{ trans('protocols.diagnostic') }} </label>
                 <input type="text" class="form-control" name="diagnostic" id="diagnostic" value="{{ old('diagnostic') }}" aria-describedby="diagnosticHelp">
 
-                <small id="diagnosticHelp" class="form-text text-muted"> The presumptive diagnosis of the medical prescription for which the determinations are made </small>
+                <small id="diagnosticHelp" class="form-text text-muted"> {{ trans('protocols.diagnostic_help') }} </small>
             </div>
         </div>
     </div>
@@ -470,7 +470,7 @@ To create a protocol you have to select at least the patient, the social work an
                 <input type="hidden" name="billing_period_id" id="billing_period_id" value="{{ old('billing_period_id') ?? $current_billing_period->id ?? '' }}"> 
                 
                 <div>
-                    <small id="billingPeriodHelp" class="form-text text-muted"> This field helps you to later perform the billing cut </small>
+                    <small id="billingPeriodHelp" class="form-text text-muted"> {{ trans('protocols.billing_period_help') }} </small>
                 </div>
             </div>
         </div>
@@ -480,7 +480,7 @@ To create a protocol you have to select at least the patient, the social work an
                 <label for="quantity_orders"> {{ trans('protocols.quantity_orders') }} </label>
                 <input type="number" class="form-control" name="quantity_orders" id="quantity_orders" min="0" value="{{ old('quantity_orders') ?? '1' }}" aria-describedby="quantityOrdersHelp" required>
 
-                <small id="quantityOrdersHelp" class="form-text text-muted"> The number of orders delivered by the patient </small>
+                <small id="quantityOrdersHelp" class="form-text text-muted"> {{ trans('protocols.quantity_orders_help') }} </small>
             </div>
         </div>
     </div>
