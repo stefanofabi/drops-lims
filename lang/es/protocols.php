@@ -20,7 +20,7 @@ return [
     'observations' => 'Observaciones',
     'diagnostic' => 'Diagnóstico',
     'quantity_orders' => 'Cantidad de órdenes',
-    'completion_date' => 'Fecha de finalización',
+    'completion_date' => 'Fecha de realización',
     'show_protocol' => 'Ver protocolo',
     'destroy_protocol' => 'Eliminar protocolo',
     'protocol_blocked' => 'Protocolos bloqueados por razones de seguridad. Para realizar cambios, haga clic en el candado',
