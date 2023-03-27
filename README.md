@@ -54,15 +54,20 @@ $ npm run build
 ```
 $ php artisan key:generate
 ```
+5. Make the storage folder public
 
-5. Finally execute the migrations and seeds
+```
+$ php artisan storage:link
+```
+
+6. Finally execute the migrations and seeds
 
 ```
 $ php artisan migrate
 $ php artisan db:seed
 ```
 
-6. Running the seeds will allow you to log in with some test users.
+7. Running the seeds will allow you to log in with some test users.
 ```
 - Administrator 
 Email: admin@laboratory
