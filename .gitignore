@@ -183,6 +183,7 @@ public/build
 .vs
 
 # Drops lims 
-storage/app/protocols
+storage/app/internal_protocols
+storage/app/public/signatures
 
 # End of https://www.gitignore.io/api/node,linux,laravel,windows,composer
