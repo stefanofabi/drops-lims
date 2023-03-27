@@ -21,7 +21,7 @@ return [
     'edit_notice' => 'Al editar la plantilla de una determinación, está haciendo los mismos cambios en todos los protocolos que usan esta plantilla. Si está eliminando o agregando nuevos campos, recomendamos generar una nueva determinación',
     'templates_edit_message' => 'Esta sección es muy importante y tiene acceso restringido. Utilice extrema precaución y atención al realizar una modificación aquí',
     'javascript_help' => 'Escriba código Javascript para interactuar con la plantilla. Por ejemplo, puede mostrar advertencias, validar campos, etc',
-    'template_help' => 'Escriba código HTML que se mostrará al informar una práctica o al generar un protocolo en PDF. <br /> En los campos de entrada, debe establecer el atributo name="result[]" para que los resultados se carguen en el sistema',
+    'template_help' => 'Escriba código HTML que se mostrará al informar una práctica o al generar un protocolo en PDF.  En los campos de entrada, debe establecer el atributo name="result[]" para que los resultados se carguen en el sistema',
     'edit_template_notice' => 'Al editar una máscara de informe, está haciendo los mismos cambios en todos los protocolos que usan esta máscara. Si está eliminando o agregando nuevos campos, recomendamos generar una nueva determinación',
 
 ];
