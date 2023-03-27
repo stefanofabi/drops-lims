@@ -301,7 +301,7 @@
 <nav class="navbar">
     <ul class="navbar-nav">
         <li class="nav-item">
-            <a class="nav-link @cannot('manage practices') disabled @endcannot" href="{{ route('administrators/protocols/practices/index', ['internal_protocol_id' => $protocol->id]) }}"> {{ trans('practices.practices') }} </a>
+            <a class="nav-link @cannot('manage practices') disabled @endcannot" href="{{ route('administrators/protocols/practices/index', ['internal_protocol_id' => $protocol->id]) }}"> {{ trans('protocols.see_protocol_practices') }} </a>
         </li>
         
         <li class="nav-item">

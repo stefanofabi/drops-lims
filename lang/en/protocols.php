@@ -69,5 +69,6 @@ return [
     'quantity_orders_help' => 'The number of orders delivered by the patient',
     'protocols_edit_message' => 'Most of our work is done in this document. Try to fill in as many fields as possible to leave a clear clinical history. Once the protocol is closed, you can generate a pdf and it cannot be modified again for any reason',
     'observations_help' => 'Any details about the process or the results of the analysis. These observations are public',
-
+    'see_protocol_practices' => 'See protocol practices',
+    
 ];

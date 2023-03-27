@@ -68,6 +68,7 @@ return [
     'billing_period_help' => 'Este campo te ayuda a realizar el corte de facturación más tarde',
     'quantity_orders_help' => 'El número de órdenes entregadas por el paciente',
     'protocols_edit_message' => 'La mayor parte de nuestro trabajo se realiza en este documento. Trata de completar tantos campos como sea posible para dejar una historia clínica clara. Una vez cerrado el protocolo, puedes generar un PDF y no se puede modificar de nuevo por ninguna razón',
-    'observations_help' => 'Cualquier detalle sobre el proceso o los resultados del análisis. Estas observaciones son públicas'
-    
+    'observations_help' => 'Cualquier detalle sobre el proceso o los resultados del análisis. Estas observaciones son públicas',
+    'see_protocol_practices' => 'Ver prácticas del protocolo',
+
 ];
