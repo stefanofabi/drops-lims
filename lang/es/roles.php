@@ -37,7 +37,7 @@ return [
     'generate_security_codes' => 'Generar códigos de seguridad',
     'manage_prescribers' => 'Gestionar prescriptores',
     'manage_determinations' => 'Gestionar determinaciones',
-    'manage_reports' => 'Gestionar informes',
+    'manage_templates' => 'Gestionar plantillas',
     'manage_protocols' => 'Gestionar protocolos',
     'print_worksheets' => 'Imprimir hojas de trabajo',
     'print_protocols' => 'Imprimir protocolos',

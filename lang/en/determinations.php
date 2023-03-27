@@ -16,10 +16,7 @@ return [
     'create_determination' => 'Create determination',
     'code' => 'Code',
     'determination' => 'Determination',
-    'select_nbu' => 'Select a nomenclator',
-    'add_nomenclator' => 'Add nomenclator',
     'name' => 'Name',
-    'nbu' => 'Nomenclator',
     'position' => 'Position',
     'biochemical_unit' => 'Biochemical unit',
     'show_determination' => 'Show determination',
@@ -29,7 +26,12 @@ return [
     'success_destroy_message' => 'Well done! Determination was successfully removed',
     'determination_data' => 'Determination data',
     'determinations_message' => 'Here are listed all the determinations performed in his laboratory. They are grouped by nomenclatures, which are then usually associated with different social or prepaid works according to the agreement made',
-    'edit_report' => 'Edit report',
-    'edit_report_notice' => 'By editing a report mask you are making the same changes to all protocols that use this mask. If you are removing or adding new fields, we recommend that you generate a new determination',
-
+    'determinations_edit_message' => 'Here you can modify different values of a determination, although you should not do it very frequently',
+    'determinations_create_message' => 'Create a new determination and associate it to an existing nomenclator. In the next step you can configure the determination template that is printed in the pdf protocol',
+    'nomenclator_help' => 'A Nomenclador consists of a catalog which details the medical determinations used for the treatment of a patient',
+    'name_help' => 'A descriptive name to quickly look up a determination',
+    'code_help' => 'Code that quickly identifies a determination',
+    'position_help' => 'The position in which it appears when a protocol is generated in pdf',
+    'biochemical_unit_help' => 'This number is then multiplied by the value that a social work pays to obtain the price of the practice',
+    
 ];

@@ -61,7 +61,7 @@ class InternalPractice extends Model
     public function print() 
     {
  
-        return $this->ConvertToPDF($this->determination->report,  $this->result);
+        return $this->ConvertToPDF($this->determination->template,  $this->result);
     }
 
     public function getActivitylogOptions(): LogOptions

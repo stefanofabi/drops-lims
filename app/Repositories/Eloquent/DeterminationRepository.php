@@ -89,11 +89,11 @@ final class DeterminationRepository implements DeterminationRepositoryInterface
             ->get();
     }
 
-    public function updateReport(array $data, $id)
+    public function updateTemplate(array $data, $id)
     {
         $determination = $this->model->findOrFail($id);
         $determination->javascript = $data['javascript'];
-        $determination->report = $data['report'];
+        $determination->template = $data['template'];
 
         return $determination->save();
     }

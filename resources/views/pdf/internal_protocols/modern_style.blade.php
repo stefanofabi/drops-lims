@@ -88,7 +88,7 @@
 
         <tr>
             <td> {{ trans('patients.home_address') }}: {{ $protocol->internalPatient->address }} </td>
-            <td>  {{ trans('protocols.completion_date') }}: @if ($protocol->completion_date) {{ date_format(new DateTime($protocol->completion_date), 'd/m/Y') }} @endif </td>
+            <td>  {{ trans('protocols.completion_date') }}: {{ $protocol->completion_date }} </td>
         </tr>
 
         <tr>
@@ -112,7 +112,7 @@
 
 @section('body')
     @foreach ($practices as $practice)
-        @if (!empty($practice->determination->report))
+        @if (!empty($practice->determination->template))
             <div class="page-break-inside" style="margin-bottom: 15px">
                 {!! $practice->print() !!}
                 

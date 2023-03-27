@@ -33,7 +33,7 @@ class RoleSeeder extends Seeder
         		'manage patients',
         		'manage prescribers',
         		'manage determinations',
-                'manage reports',
+                'manage templates',
         		'manage protocols',
                 'print worksheets',
                 'print protocols',

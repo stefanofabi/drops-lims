@@ -27,7 +27,7 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'generate security codes']);
     	Permission::create(['name' => 'manage prescribers']);
     	Permission::create(['name' => 'manage determinations']);
-        Permission::create(['name' => 'manage reports']);
+        Permission::create(['name' => 'manage templates']);
     	Permission::create(['name' => 'manage protocols']);
         Permission::create(['name' => 'print worksheets']);
     	Permission::create(['name' => 'print protocols']);

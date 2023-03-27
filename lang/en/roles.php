@@ -37,7 +37,7 @@ return [
     'generate_security_codes' => 'Generate security codes',
     'manage_prescribers' => 'Manage prescribers',
     'manage_determinations' => 'Manage determinations',
-    'manage_reports' => 'Manage reports',
+    'manage_templates' => 'Manage templates',
     'manage_protocols' => 'Manage protocols',
     'print_worksheets' => 'Print worksheets',
     'print_protocols' => 'Print protocols',

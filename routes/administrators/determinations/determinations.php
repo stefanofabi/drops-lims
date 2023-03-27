@@ -10,6 +10,7 @@
 */
 
 use App\Http\Controllers\Administrators\Determinations\DeterminationController;
+use App\Http\Controllers\Administrators\Determinations\TemplateController;
 
 Route::controller(DeterminationController::class)
     ->prefix('determinations')
@@ -37,13 +38,17 @@ Route::controller(DeterminationController::class)
             ->name('destroy')
             ->where('id', '[1-9][0-9]*');
 
-        Route::get('edit/report/{id}', 'editReport')
-            ->name('edit/report')
-            ->where('id', '[1-9][0-9]*')
-            ->middleware('permission:manage reports');
+        Route::controller(TemplateController::class)
+        ->prefix('templates')
+        ->as('templates/')
+        ->middleware('permission:manage templates')
+        ->group(function () {   
+            Route::get('edit/{id}', 'edit')
+            ->name('edit')
+            ->where('id', '[1-9][0-9]*');
 
-        Route::put('update/report/{id}', 'updateReport')
-            ->name('update/report')
-            ->where('id', '[1-9][0-9]*')
-            ->middleware('permission:manage reports');
+            Route::put('update/{id}', 'update')
+            ->name('update')
+            ->where('id', '[1-9][0-9]*');
+        });
     });

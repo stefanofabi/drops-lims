@@ -26,10 +26,8 @@ class DeterminationController extends Controller
     /** @var \App\Contracts\Repository\NomenclatorRepositoryInterface */
     private $nomenclatorRepository;
 
-    public function __construct(
-        DeterminationRepositoryInterface $determinationRepository, 
-        NomenclatorRepositoryInterface $nomenclatorRepository
-    ) {
+    public function __construct(DeterminationRepositoryInterface $determinationRepository, NomenclatorRepositoryInterface $nomenclatorRepository) 
+    {
         $this->determinationRepository = $determinationRepository;
         $this->nomenclatorRepository = $nomenclatorRepository;
     }
@@ -185,44 +183,5 @@ class DeterminationController extends Controller
         Session::flash('success', [Lang::get('determinations.success_destroy_message')]);
 
         return redirect()->action([DeterminationController::class, 'index'], ['nomenclator_id' => $nomenclator_id, 'page' => 1]);
-    }
-
-    /**
-     * Show the form for editing report the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function editReport($id)
-    {
-        //
-        
-        $determination = $this->determinationRepository->findOrFail($id);
-
-        return view('administrators/determinations/edit_report')
-            ->with('determination', $determination);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function updateReport(Request $request, $id)
-    {
-        //
-        
-        $request->validate([
-            'javascript' => 'present|max:1000',
-            'report' => 'present|max:2000',
-        ]);
-        
-        if (! $this->determinationRepository->updateReport($request->all(), $id)) {
-            return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
-        }
-        
-        return redirect()->action([DeterminationController::class, 'edit'], ['id' => $id]);
     }
 }

@@ -9,11 +9,11 @@
 @section('js')
     <script type="module">
         $(document).ready(function () {
-            $('#report').find('input').each(function () {
+            $('#template').find('input').each(function () {
                 $(this).addClass("form-control");
             });
 
-            $('#report').find('select').each(function () {
+            $('#template').find('select').each(function () {
                 $(this).addClass("form-select");
             });
 
@@ -47,7 +47,7 @@
                     {
                         var i = 0;  
                         
-                        $('#report').find('input, select').each(function () {
+                        $('#template').find('input, select').each(function () {
                                 $(this).val(response[i]);
                                 i++;
                         });
@@ -119,8 +119,8 @@
             @csrf
             {{ method_field('PUT') }}  
 
-            <div id="report">
-                {!! $practice->determination->report !!}
+            <div id="template">
+                {!! $practice->determination->template !!}
             </div>
 
             <div class="row row-cols-md-auto mt-4">         

@@ -36,15 +36,15 @@
         $('#manageDeterminations').change(function() {
             if(! this.checked) 
             {
-                $('#manageReports').prop('checked', false);
+                $('#manageTemplates').prop('checked', false);
             }       
         });
 
-        $('#manageReports').change(function() {
+        $('#manageTemplates').change(function() {
             if(this.checked && $('#manageDeterminations').prop('checked') === false) 
             {
                 alert("{{ trans('roles.check_manage_determinations') }}");
-                $('#manageReports').prop('checked', false);
+                $('#manageTemplates').prop('checked', false);
             }       
         });
 
@@ -183,10 +183,10 @@
 
                 <div class="col-lg-6">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="manage reports" name="permissions[]" id="manageReports" @if (isset($role) && $role->permissions->where('name', 'manage reports')->first()) checked @endif>
+                        <input class="form-check-input" type="checkbox" value="manage templates" name="permissions[]" id="manageTemplates" @if (isset($role) && $role->permissions->where('name', 'manage templates')->first()) checked @endif>
 
-                        <label class="form-check-label" for="manageReports">
-                            {{ trans('roles.manage_reports') }}
+                        <label class="form-check-label" for="manageTemplates">
+                            {{ trans('roles.manage_templates') }}
                         </label>
                     </div>
                 </div>
