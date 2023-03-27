@@ -44,7 +44,7 @@
 @endsection
 
 @section('content-title')
-<i class="fas fa-layer-group"> </i> {{ trans('billing_periods.billing_periods') }}
+<i class="fa-solid fa-layer-group"></i> {{ trans('billing_periods.billing_periods') }}
 @endsection
 
 @section('content-message')
