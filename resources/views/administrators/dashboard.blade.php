@@ -5,7 +5,7 @@
 @endsection
 
 @section('content-title')
-{{ trans('home.dashboard') }}
+<i class="fa-solid fa-gauge"></i> {{ trans('home.dashboard') }}
 @endsection
 
 @section('content-message')
