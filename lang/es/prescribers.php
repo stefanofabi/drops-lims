@@ -29,5 +29,13 @@ return [
     'success_destroy_message' => '¡Bien hecho! El prescriptor se eliminó correctamente',
     'prescribers_message' => 'Aquí se encuentran cargados todos los prescriptores que recetan órdenes médicas a sus pacientes. Es importante mantener sus datos actualizados para que tengan un papel participativo en el tratamiento de los pacientes.',
     'personal_data' => 'Datos personales',
+    'prescribers_create_message' => 'Crear nuevos prescriptores y asignarlos a diferentes protocolos. Cuando se asigna a un protocolo, permite al prescriptor ver el historial médico del paciente',
+    'name_help' => 'Este nombre aparece al generar un protocolo en formato pdf',
+    'last_name_help' => 'Este apellido aparece al generar un protocolo en formato pdf',
+    'primary_enrollment_help' => 'La matricula se puede usar para buscar rápidamente un prescriptor',
+    'secondary_enrollment_help' => 'La matricula se puede usar para buscar rápidamente un prescriptor',
+    'phone_help' => 'El número de teléfono celular se guardará aquí para ser consultado',
+    'email_help' => 'El correo electrónico se guardará aquí para ser consultado',
+    'prescribers_edit_message' => 'Los datos del prescriptor no deberían cambiar con frecuencia. Mantenga esta información para mantenerse en contacto con el prescriptor de sus pacientes',
     
 ];

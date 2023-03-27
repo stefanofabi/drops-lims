@@ -12,7 +12,7 @@
 
 @section('content-message')
 <p class="text-justify pe-5">
-    Create new prescribers and assign them to different protocols. When assigned to a protocol, it allows the prescriber to see the patient's medical history.
+    {{ trans('prescribers.prescribers_create_message') }}
 </p>
 @endsection
 
@@ -31,7 +31,7 @@
                 <label for="name"> {{ trans('prescribers.name') }} </label>
                 <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" value="{{ old('name') }}" aria-describedby="nameHelp" required>
 
-                <small id="nameHelp" class="form-text text-muted"> This name appears when generating a pdf protocol </small>
+                <small id="nameHelp" class="form-text text-muted"> {{ trans('prescribers.name_help') }} </small>
             </div>
         </div>
         
@@ -40,7 +40,7 @@
                 <label for="last_name"> {{ trans('prescribers.last_name') }} </label>
                 <input type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" id="last_name" value="{{ old('last_name') }}" aria-describedby="lastNameHelp" required>
 
-                <small id="lastNameHelp" class="form-text text-muted"> This last name appears when generating a pdf protocol </small>
+                <small id="lastNameHelp" class="form-text text-muted"> {{ trans('prescribers.last_name_help') }} </small>
             </div>
         </div>
 
@@ -49,7 +49,7 @@
                 <label for="primary_enrollment"> {{ trans('prescribers.primary_enrollment') }} </label>
                 <input type="text" class="form-control @error('primary_enrollment') is-invalid @enderror" name="primary_enrollment" id="primary_enrollment" value="{{ old('primary_enrollment') }}" aria-describedby="primaryEnrollmentHelp">
                 
-                <small id="primaryEnrollmentHelp" class="form-text text-muted"> The enrollment can be used to quickly search for a prescriber </small>
+                <small id="primaryEnrollmentHelp" class="form-text text-muted"> {{ trans('prescribers.primary_enrollment_help') }} </small>
             </div>
         </div>
 
@@ -58,7 +58,7 @@
                 <label for="secondary_enrollment"> {{ trans('prescribers.secondary_enrollment') }} </label>
                 <input type="text" class="form-control @error('secondary_enrollment') is-invalid @enderror" name="secondary_enrollment" id="secondary_enrollment" value="{{ old('secondary_enrollment') }}" aria-describedby="secondaryEnrollmentHelp">
                 
-                <small id="secondaryEnrollmentHelp" class="form-text text-muted"> The enrollment can be used to quickly search for a prescriber </small>
+                <small id="secondaryEnrollmentHelp" class="form-text text-muted"> {{ trans('prescribers.secondary_enrollment_help') }} </small>
             </div>
         </div>
 	</div>
@@ -74,7 +74,7 @@
                 <label for="phone"> {{ trans('prescribers.phone') }} </label>
                 <input type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" id="phone" value="{{ old('phone') }}" aria-describedby="phoneHelp">
 
-                <small id="phoneHelp" class="form-text text-muted"> The cell phone number will be saved here to be consulted </small>
+                <small id="phoneHelp" class="form-text text-muted"> {{ trans('prescribers.phone_help') }} </small>
             </div>
         </div>
 
@@ -83,7 +83,7 @@
                 <label for="email"> {{ trans('prescribers.email') }} </label>
                 <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="email" value="{{ old('email') }}" aria-describedby="emailHelp">
                 
-                <small id="emailHelp" class="form-text text-muted"> The email will be saved here to be consulted </small>
+                <small id="emailHelp" class="form-text text-muted"> {{ trans('prescribers.email_help') }} </small>
             </div>
         </div>
     </div>

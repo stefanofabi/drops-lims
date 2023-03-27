@@ -29,5 +29,12 @@ return [
     'success_destroy_message' => 'Well done! Prescriber was successfully removed',
     'prescribers_message' => 'Here are loaded all the prescribers who prescribe medical orders to their patients. It is important to keep their data updated so that they have a participatory role in the patients treatment.',
     'personal_data' => 'Personal data',
-
+    'prescribers_create_message' => 'Create new prescribers and assign them to different protocols. When assigned to a protocol, it allows the prescriber to see the patients medical history',
+    'name_help' => 'This name appears when generating a pdf protocol',
+    'last_name_help' => 'This last name appears when generating a pdf protocol',
+    'primary_enrollment_help' => 'The enrollment can be used to quickly search for a prescriber',
+    'secondary_enrollment_help' => 'The enrollment can be used to quickly search for a prescriber',
+    'phone_help' => 'The cell phone number will be saved here to be consulted',
+    'email_help' => 'The email will be saved here to be consulted',
+    'prescribers_edit_message' => 'Prescriber data should not change frequently. Keep this information to stay in touch with your patients prescriber',
 ];
