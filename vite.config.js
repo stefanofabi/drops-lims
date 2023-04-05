@@ -19,6 +19,7 @@ export default defineConfig({
 		  '~datatables.net-bs5': path.resolve(__dirname, 'node_modules/datatables.net-bs5'),
 		  '~@tarekraafat': path.resolve(__dirname, 'node_modules/@tarekraafat'),
 		  '~google-charts': path.resolve(__dirname, 'node_modules/google-charts'),
+		  '~tinymce': path.resolve(__dirname, 'node_modules/tinymce'),
         }
     },
 });

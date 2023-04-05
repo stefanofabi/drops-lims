@@ -6,4 +6,6 @@
 
 @import "autocomplete.css";
 
+@import '~tinymce/skins/ui/oxide/skin';
+
 @import "verticalButtons.css";
