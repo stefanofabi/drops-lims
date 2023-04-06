@@ -81,7 +81,7 @@ class InternalPracticeController extends Controller
             'price' => 'required|numeric',
         ]);
 
-        DB::transaction(function () {
+        DB::transaction(function () use ($request) {
             $this->internalPracticeRepository->create($request->all());
 
             $this->internalProtocolRepository->increment($request->internal_protocol_id, 'total_price', $request->price);
@@ -194,7 +194,7 @@ class InternalPracticeController extends Controller
     {
         $practice = $this->internalPracticeRepository->findOrFail($id);
 
-        DB::transaction(function () {
+        DB::transaction(function () use ($request, $id) {
             $this->signInternalPracticeRepository->deleteAllSignatures($id);
             
             // AJAX dont send empty arrays
