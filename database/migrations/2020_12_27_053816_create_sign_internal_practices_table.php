@@ -23,7 +23,7 @@ class CreateSignInternalPracticesTable extends Migration
             $table->unique(['internal_practice_id', 'user_id']);
 
             // Foreign keys
-            $table->foreign('internal_practice_id')->references('id')->on('internal_practices')->onDelete('restrict')->onUpdate('cascade');
+            $table->foreign('internal_practice_id')->references('id')->on('internal_practices')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict')->onUpdate('cascade');
 
             $table->timestamps();

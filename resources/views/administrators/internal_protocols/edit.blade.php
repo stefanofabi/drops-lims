@@ -466,7 +466,7 @@
 
     <div class="mt-5">
         <div class="form-group">
-            <h4><i class="fas fa-notes-medical"></i> <label for="observations"> {{ trans('protocols.observations') }} </label> </h4>
+            <h4> <i class="fa-solid fa-magnifying-glass"></i> <label for="observations"> {{ trans('protocols.observations') }} </label> </h4>
             <hr class="col-6">
 
             <textarea class="form-control" rows="3" name="observations" id="observations" aria-describedby="observationsHelp" disabled>{{ old('observations') ?? $protocol->observations }}</textarea>

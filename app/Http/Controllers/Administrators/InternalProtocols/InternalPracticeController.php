@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\Administrators\InternalProtocols;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 
 use App\Contracts\Repository\InternalPracticeRepositoryInterface;
@@ -14,7 +12,6 @@ use App\Contracts\Repository\SignInternalPracticeRepositoryInterface;
 use App\Contracts\Repository\DeterminationRepositoryInterface;
 
 use Lang;
-use Throwable;
 use Session;
 
 class InternalPracticeController extends Controller
@@ -84,29 +81,12 @@ class InternalPracticeController extends Controller
             'price' => 'required|numeric',
         ]);
 
-        DB::beginTransaction();
-
-        try  {
-            
+        DB::transaction(function () {
             $this->internalPracticeRepository->create($request->all());
 
             $this->internalProtocolRepository->increment($request->internal_protocol_id, 'total_price', $request->price);
+        });
 
-            DB::commit();
-        } catch (ModelNotFoundException $exception) {
-            DB::rollBack();
-
-            return response()->json(['message' => Lang::get('errors.not_found')], 404);
-        } catch (QueryException $exception) {
-            DB::rollBack();
-
-            return response()->json(['message' => Lang::get('errors.error_processing_transaction')], 500);
-        } catch (Throwrable $throwable) {
-            DB::rollBack();
-
-            return response()->json(['message' => Lang::get('forms.failed_transaction')], 500);
-        }
-        
         return response()->json(['message' => Lang::get('forms.successful_transaction')], 200);
     }
 
@@ -159,29 +139,13 @@ class InternalPracticeController extends Controller
     {
         //
 
-        DB::beginTransaction();
+        $practice = $this->internalPracticeRepository->findOrFail($id);
 
-        try {
-            $practice = $this->internalPracticeRepository->findOrFail($id);
-
+        DB::transaction(function () use ($practice) {
             $this->internalPracticeRepository->delete($id);
-
+         
             $this->internalProtocolRepository->decrement($practice->internal_protocol_id, 'total_price', $practice->price);
-
-            DB::commit();
-        } catch (ModelNotFoundException $exception) {
-            DB::rollBack();
-
-            return response()->json(['message' => Lang::get('errors.not_found')], 404);
-        } catch (QueryException $exception) {
-            DB::rollBack();
-
-            return response()->json(['message' => Lang::get('errors.error_processing_transaction')], 500);
-        } catch (Throwable $throwable) {
-            DB::rollBack();
-            
-            return response()->json(['message' => Lang::get('forms.failed_transaction')], 500);
-        }
+        });
 
         return redirect()->action([InternalPracticeController::class, 'index'], ['internal_protocol_id' => $practice->internal_protocol_id]);
     }
@@ -228,12 +192,9 @@ class InternalPracticeController extends Controller
      */
     public function informResult(Request $request, $id)
     {
+        $practice = $this->internalPracticeRepository->findOrFail($id);
 
-        DB::beginTransaction();
-        
-        try {
-            $practice = $this->internalPracticeRepository->findOrFail($id);
-
+        DB::transaction(function () {
             $this->signInternalPracticeRepository->deleteAllSignatures($id);
             
             // AJAX dont send empty arrays
@@ -241,13 +202,7 @@ class InternalPracticeController extends Controller
             {
                 $this->internalPracticeRepository->saveResult($request->result, $id);
             }
-
-            DB::commit();
-        } catch (Throwable $throwable) {
-            DB::rollBack();
-
-            return redirect()->back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
-        }
+        });
 
         Session::flash('success', [Lang::get('forms.successful_transaction')]);
 
@@ -271,15 +226,12 @@ class InternalPracticeController extends Controller
 
         $practice = $this->internalPracticeRepository->findOrFail($id);
 
-        try {
-            if (! $this->signInternalPracticeRepository->create(['internal_practice_id' => $practice->id, 'user_id' => auth()->user()->id])) {
-                return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
-            }
-        } catch (QueryException $exception) {
-            // the user had already signed the practice
-
-            return redirect()->back()->withErrors(Lang::get('practices.already_signed'));
-        }
+        DB::transaction(function () use ($practice) {
+            $this->signInternalPracticeRepository->create([
+                'internal_practice_id' => $practice->id, 
+                'user_id' => auth()->user()->id
+            ]);
+        });
 
         Session::flash('success', [Lang::get('practices.success_signed')]);
 
