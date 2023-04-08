@@ -184,36 +184,6 @@ class InternalPracticeController extends Controller
     }
 
     /**
-     * Inform the results of a practice
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function informResult(Request $request, $id)
-    {
-        $practice = $this->internalPracticeRepository->findOrFail($id);
-
-        DB::transaction(function () use ($request, $id) {
-            $this->signInternalPracticeRepository->deleteAllSignatures($id);
-            
-            // AJAX dont send empty arrays
-            if (is_array($request->result)) 
-            {
-                $this->internalPracticeRepository->saveResult($request->result, $id);
-            }
-        });
-
-        Session::flash('success', [Lang::get('forms.successful_transaction')]);
-
-        if ($request->boolean('stay_on_this_page')) {
-            return redirect()->action([InternalPracticeController::class, 'edit'], ['id' => $practice->id]); 
-        }
-
-        return redirect()->action([InternalPracticeController::class, 'index'], ['internal_protocol_id' => $practice->internal_protocol_id]);
-    }
-
-    /**
      * Sign the specified resource in storage.
      *
      * @param \Illuminate\Http\Request $request
@@ -236,5 +206,46 @@ class InternalPracticeController extends Controller
         Session::flash('success', [Lang::get('practices.success_signed')]);
 
         return redirect()->action([InternalPracticeController::class, 'index'], ['internal_protocol_id' => $practice->internal_protocol_id]);   
+    }
+
+    /**
+     * Inform the results of a practice
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function informResult(Request $request, $id)
+    {
+        $practice = $this->internalPracticeRepository->findOrFail($id);
+        $template_variables = $practice->determination->template_variables;
+
+        DB::transaction(function () use ($request, $id, $template_variables) 
+        {
+            $this->signInternalPracticeRepository->deleteAllSignatures($id);
+
+            $result = array();
+            $available_vars = array_keys($template_variables);
+
+            // Of all the parameters received, we only save the variables recognized by the template.
+            foreach ($request->all() as $var_name => $var_value)
+            {
+                if (in_array($var_name, $available_vars)) 
+                {
+                    $result = array_merge($result, [$var_name => $var_value]);
+                }
+            }
+            
+            $this->internalPracticeRepository->saveResult($result, $id);
+        });
+
+        Session::flash('success', [Lang::get('forms.successful_transaction')]);
+
+        if ($request->boolean('stay_on_this_page')) 
+        {
+            return redirect()->action([InternalPracticeController::class, 'edit'], ['id' => $practice->id]); 
+        }
+
+        return redirect()->action([InternalPracticeController::class, 'index'], ['internal_protocol_id' => $practice->internal_protocol_id]);
     }
 }

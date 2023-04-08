@@ -36,6 +36,10 @@ Route::controller(InternalPracticeController::class)
         Route::post('load-practices', 'loadPractices')
             ->name('load_practices');
 
+        Route::post('get-results/{id}', 'getResult')
+            ->where('id', '[1-9][0-9]*')
+            ->name('get_result');
+
         Route::put('inform-result/{id}', 'informResult')
             ->name('inform_result')
             ->where('id', '[1-9][0-9]*')
@@ -47,8 +51,4 @@ Route::controller(InternalPracticeController::class)
             ->middleware('permission:sign practices')
             ->middleware('verify_open_practice')
             ->middleware('verify_practice_has_result');
-
-        Route::post('get-results/{id}', 'getResult')
-            ->where('id', '[1-9][0-9]*')
-            ->name('get_result');
     });

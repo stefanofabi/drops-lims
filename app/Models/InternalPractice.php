@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
-use App\Traits\ConvertTrait;
+use App\Traits\GenerateReplacementVariables;
 
 class InternalPractice extends Model
 {
@@ -13,7 +13,7 @@ class InternalPractice extends Model
 
     use LogsActivity;
     
-    use ConvertTrait; 
+    use GenerateReplacementVariables;
     
     /**
      * The attributes that aren't mass assignable.
@@ -23,6 +23,8 @@ class InternalPractice extends Model
     protected $guarded = [
         'internal_protocol_id', 
         'determination_id',
+        'result',
+        'result_template',
     ];
 
     /**
@@ -58,10 +60,9 @@ class InternalPractice extends Model
         return $this->hasMany(SignInternalPractice::class);
     }
 
-    public function print() 
+    public function getReplacementResultVariables() 
     {
- 
-        return $this->ConvertToPDF($this->determination->template,  $this->result);
+        return $this->generateReplacementVariables($this->result);
     }
 
     public function getActivitylogOptions(): LogOptions

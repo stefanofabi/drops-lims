@@ -33,5 +33,6 @@ return [
     'code_help' => 'Code that quickly identifies a determination',
     'position_help' => 'The position in which it appears when a protocol is generated in pdf',
     'biochemical_unit_help' => 'This number is then multiplied by the value that a social work pays to obtain the price of the practice',
-    
+    'templates_variables_not_match_pattern' => 'There are template variables that do not match the pattern',
+
 ];

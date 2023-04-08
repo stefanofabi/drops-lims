@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
+use App\Traits\GenerateReplacementVariables;
 
 class Determination extends Model
 {
@@ -14,6 +15,8 @@ class Determination extends Model
 	use HasFactory;
 
     use LogsActivity;
+
+    use GenerateReplacementVariables;
 
     /**
      * The attributes that are mass assignable.
@@ -28,6 +31,15 @@ class Determination extends Model
     ];
 
     /**
+    * The attributes that should be cast to native types.
+    *
+    * @var array
+    */
+    protected $casts = [
+        'template_variables' => 'json',
+    ];
+
+    /**
      * Get the nomenclator associated with the determination.
      */
 	public function nomenclator() 
@@ -38,6 +50,11 @@ class Determination extends Model
     public function getPrice($nbu_price) 
     {
         return $this->biochemical_unit * $nbu_price;
+    }
+
+    public function getReplacementVariables() 
+    {
+        return $this->generateReplacementVariables($this->template_variables);
     }
 
     public function getActivitylogOptions(): LogOptions

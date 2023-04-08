@@ -217,6 +217,8 @@ class InternalProtocolController extends Controller
         {
             $practices = $practices->whereIn('id', $request->filter_practices);
         }
+
+        $practices = $practices->sortBy(['determination.position', 'ASC']);
      
         $pdf = PDF::loadView('pdf.internal_protocols.modern_style', [
             'protocol' => $protocol,

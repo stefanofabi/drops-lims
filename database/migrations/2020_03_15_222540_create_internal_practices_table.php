@@ -18,6 +18,10 @@ class CreateInternalPracticesTable extends Migration
             $table->unsignedBigInteger('internal_protocol_id');
             $table->unsignedBigInteger('determination_id');
             $table->json('result')->nullable();
+
+            // it is redundant so as not to process the template each time a protocol is printed and also to make it independent of the default template of the determination
+            $table->string('result_template', 15000)->nullable();
+            
             $table->double('price');
 
             // Foreign keys

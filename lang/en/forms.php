@@ -45,5 +45,7 @@ return [
     'no_data' => 'No data',
     'upload' => 'Upload',
     'stay_on_this_page' => 'Stay on this page',
+    'copied_to_clipboard' => 'Copied to clipboard',
+    'close' => 'Close',
     
 ];

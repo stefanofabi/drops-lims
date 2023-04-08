@@ -94,6 +94,7 @@ final class DeterminationRepository implements DeterminationRepositoryInterface
         $determination = $this->model->findOrFail($id);
         $determination->javascript = $data['javascript'];
         $determination->template = $data['template'];
+        $determination->template_variables = $data['template_variables'];
 
         return $determination->save();
     }

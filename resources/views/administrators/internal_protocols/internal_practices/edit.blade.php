@@ -36,21 +36,16 @@
                 },
                 dataType: 'json',
                 success: function (response) {
-                    @if (empty($practice->internalProtocol->closed)) 
+                    @if ($practice->internalProtocol->isOpen()) 
                     $("#messages").html('<div class="alert alert-warning alert-dismissible fade show mt-3" role="alert"> <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"> </button> <strong> {{ trans("forms.warning") }}!</strong> {{ trans("practices.modified_practice")}} </div>');
                     @else
                     $("#messages").html('');
                     @endif
 
                     // If there are default values in the template it does not overwrite them
-                    if (response.length) 
+                    for (var key in response)
                     {
-                        var i = 0;  
-                        
-                        $('#template').find('input, select').each(function () {
-                                $(this).val(response[i]);
-                                i++;
-                        });
+                        $('#'+key).val(response[key]);
                     }
                 }
             }).fail(function () {
@@ -120,7 +115,7 @@
             {{ method_field('PUT') }}  
 
             <div id="template">
-                {!! $practice->determination->template !!}
+                {!! str_replace(array_keys($practice->determination->getReplacementVariables()), array_values($practice->determination->template_variables), $practice->determination->template) !!}
             </div>
 
             <div class="row row-cols-md-auto mt-4">         

@@ -87,7 +87,9 @@ class Kernel extends HttpKernel
         'check_self_sabotage' => \App\Http\Middleware\Administrators\Settings\Roles\CheckSelfSabotage::class,
         'unique_environment' => \App\Http\Middleware\Administrators\Settings\Roles\UniqueEnvironment::class,
         'redirect_if_not_my_profile' => \App\Http\Middleware\Administrators\Profiles\RedirectIfNotMyProfile::class,
-        
+        'combine_template_variables' => \App\Http\Middleware\Administrators\Determinations\CombineTemplateVariables::class,
+        'redirect_if_not_match_pattern' => \App\Http\Middleware\Administrators\Determinations\RedirectIfNotMatchPattern::class,
+
     ];
 
     /**

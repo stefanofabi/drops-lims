@@ -49,6 +49,8 @@ Route::controller(DeterminationController::class)
 
             Route::put('update/{id}', 'update')
             ->name('update')
-            ->where('id', '[1-9][0-9]*');
+            ->where('id', '[1-9][0-9]*')
+            ->middleware('combine_template_variables')
+            ->middleware('redirect_if_not_match_pattern');
         });
     });

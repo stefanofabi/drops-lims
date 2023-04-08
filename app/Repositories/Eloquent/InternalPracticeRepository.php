@@ -3,6 +3,7 @@
 namespace App\Repositories\Eloquent;
 
 use App\Contracts\Repository\InternalPracticeRepositoryInterface;
+use App\Traits\GenerateReplacementVariables;
 
 use App\Models\InternalPractice; 
 
@@ -10,6 +11,8 @@ use App\Exceptions\NotImplementedException;
 
 final class InternalPracticeRepository implements InternalPracticeRepositoryInterface
 {
+    use GenerateReplacementVariables;
+
     protected $model;
 
     /**
@@ -68,10 +71,12 @@ final class InternalPracticeRepository implements InternalPracticeRepositoryInte
 
     public function saveResult(array $data, $id)
     {
+        $this->model = $this->model->findOrFail($id);
+
         // the result field is protected by $fillable in the eloquent model
-        $practice = $this->model->findOrFail($id);
-        $practice->result = $data;
+        $this->model->result = $data;
+        $this->model->result_template = str_replace(array_keys($this->generateReplacementVariables($this->model->result)), array_values($this->model->result), $this->model->determination->template);
         
-        return $practice->save();
+        return $this->model->save();
     }
 }

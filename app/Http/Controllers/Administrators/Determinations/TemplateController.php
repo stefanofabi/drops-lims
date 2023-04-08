@@ -70,10 +70,11 @@ class TemplateController extends Controller
         //
 
         $request->validate([
-            'javascript' => 'present|max:1000',
-            'template' => 'present|max:2000',
+            'javascript' => 'present|max:5000',
+            'template' => 'present|max:15000',
+            'template_variables' => 'present|array',
         ]);
-        
+
         if (! $this->determinationRepository->updateTemplate($request->all(), $id)) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }

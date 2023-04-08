@@ -33,5 +33,6 @@ return [
     'code_help' => 'Código que identifica rápidamente una determinación',
     'position_help' => 'La posición en la que aparece cuando se genera un protocolo en PDF',
     'biochemical_unit_help' => 'Este número se multiplica luego por el valor que paga una obra social para obtener el precio de la práctica',
+    'templates_variables_not_match_pattern' => 'Hay variables de plantilla que no cumplen el patron',
 
 ];

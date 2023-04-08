@@ -45,5 +45,7 @@ return [
     'no_data' => 'Sin datos',
     'upload' => 'Subir',
     'stay_on_this_page' => 'Permanecer en esta página',
-    
+    'copied_to_clipboard' => 'Copiado en el portapapeles',
+    'close' => 'Cerrar',
+
 ];
