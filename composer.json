@@ -11,6 +11,9 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
+        "ext-gd": "*",
+        "ext-mbstring": "*",
+        "ext-pdo_pgsql": "*",
         "barryvdh/laravel-dompdf": "^2.0.0",
         "creativeorange/gravatar": "^1.0",
         "laravel/framework": "^10.0",
