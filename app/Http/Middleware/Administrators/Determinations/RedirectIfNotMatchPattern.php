@@ -20,6 +20,10 @@ class RedirectIfNotMatchPattern
      */
     public function handle(Request $request, Closure $next): Response
     {
+        $request->validate([
+            'template_variables' => 'required|array',
+        ]);
+
         foreach ($request->template_variables as $var_name => $var_value) 
         {
             

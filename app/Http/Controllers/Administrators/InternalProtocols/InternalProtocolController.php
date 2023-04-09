@@ -206,7 +206,7 @@ class InternalProtocolController extends Controller
     public function generateProtocol(Request $request, $id)
     {
         $request->validate([
-            'filter_practices' => 'array',
+            'filter_practices' => 'array|nullable',
         ]);
 
         $protocol = $this->internalProtocolRepository->findOrFail($id);
@@ -275,7 +275,7 @@ class InternalProtocolController extends Controller
     public function sendProtocolToEmail(Request $request, $id)
     {
         $request->validate([
-            'filter_practices' => 'array',
+            'filter_practices' => 'array|nullable',
         ]);
 
         $protocol = $this->internalProtocolRepository->findOrFail($id);
@@ -286,6 +286,8 @@ class InternalProtocolController extends Controller
         {
             $practices = $practices->whereIn('id', $request->filter_practices);
         }
+
+        $practices = $practices->sortBy(['determination.position', 'ASC']);
         
         $pdf = PDF::loadView('pdf.internal_protocols.modern_style', [
             'protocol' => $protocol,

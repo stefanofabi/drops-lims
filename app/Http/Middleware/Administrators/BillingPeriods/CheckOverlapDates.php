@@ -28,6 +28,11 @@ class CheckOverlapDates
      */
     public function handle(Request $request, Closure $next): Response
     {
+        $request->validate([
+            'start_date' => 'required|date',
+            'end_date' => 'required|date',
+        ]);
+
         if (! $this->billingPeriodRepository->checkOverlapDates($request->start_date, $request->end_date))
         {
             return back()->withInput($request->all())->withErrors(Lang::get('billing_periods.overlap_dates'));

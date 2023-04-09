@@ -37,18 +37,22 @@ class CheckFilteredPracticesToPrint
      */
     public function handle(Request $request, Closure $next)
     {
-        $protocol = $this->internalProtocolRepository->findOrFail($request->id);
-        $protocol_practices = $this->getPracticesIdForProtocol($protocol);
-        $need_verify_filter = true;
+        $request->validate([
+            'filter_practices' => 'array|nullable',
+        ]);
 
-        if (! isset($request->filter_practices) || ! is_array($request->filter_practices) || empty($request->filter_practices)) {
-            $need_verify_filter = false;
-            $request->filter_practices = $protocol_practices;
-        }
+        $protocol = $this->internalProtocolRepository->findOrFail($request->id);
         
-        foreach ($request->filter_practices as $practice) 
+        $protocol_practices = $protocol->internalPractices
+            ->map(function ($practice) {
+                return $practice->id;
+            })->toArray();
+
+        $practices_to_check = (isset($request->filter_practices)) ? $request->filter_practices : $protocol_practices;
+
+        foreach ($practices_to_check as $practice) 
         {
-            if ($need_verify_filter && ! in_array($practice, $protocol_practices)) 
+            if (isset($request->filter_practices) && ! in_array($practice, $protocol_practices)) 
             {
                 // Practice that does not belong to the protocol was detected
 
@@ -61,20 +65,6 @@ class CheckFilteredPracticesToPrint
             }
         }
 
-        if (! $need_verify_filter) $request->filter_practices = array();
-
         return $next($request);
-    }
-
-    private function getPracticesIdForProtocol(InternalProtocol $protocol)
-    {
-        $protocol_practices = array();
-
-        foreach ($protocol->internalPractices as $practice)
-        {
-            array_push($protocol_practices, $practice->id);
-        }
-
-        return $protocol_practices;
     }
 }

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Contracts\Repository\BillingPeriodRepositoryInterface; 
 
 use Lang;
+use DateTime;
 
 class VerifyPaymentDateSocialWork
 {
@@ -33,10 +34,16 @@ class VerifyPaymentDateSocialWork
      */
     public function handle(Request $request, Closure $next)
     {
+        $request->validate([
+            'payment_date' => 'required|date',
+        ]);
 
         $billing_period = $this->billingPeriodRepository->findOrFail($request->billing_period_id);
 
-        if ($billing_period->end_date > $request->payment_date) 
+        $end_date = new DateTime($billing_period->end_date);
+        $payment_date = new DateTime($request->payment_date);
+
+        if ($end_date > $payment_date) 
         {
             return back()->withInput($request->all())->withErrors(Lang::get('payment_social_works.payment_before_billing_period'));
         }

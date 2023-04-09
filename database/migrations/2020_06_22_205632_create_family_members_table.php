@@ -21,8 +21,8 @@ class CreateFamilyMembersTable extends Migration
             $table->unique(['user_id', 'internal_patient_id']);
 
             // Foreign keys
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict')->onUpdate('cascade');
-            $table->foreign('internal_patient_id')->references('id')->on('internal_patients')->onDelete('restrict')->onUpdate('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('internal_patient_id')->references('id')->on('internal_patients')->onDelete('cascade')->onUpdate('cascade');
 
             $table->timestamps();
 

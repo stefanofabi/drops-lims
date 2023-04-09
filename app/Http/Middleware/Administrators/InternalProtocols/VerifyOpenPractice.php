@@ -33,7 +33,7 @@ class VerifyOpenPractice
     
         $practice = $this->internalPracticeRepository->findOrFail($id);
 
-        if (! empty($practice->internalProtocol->closed)) 
+        if ($practice->internalProtocol->isClosed())
         {
             return redirect()->back()->withErrors(Lang::get('protocols.protocol_closed_message'));
         }

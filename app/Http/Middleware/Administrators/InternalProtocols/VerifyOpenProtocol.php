@@ -32,7 +32,7 @@ class VerifyOpenProtocol
     
         $protocol = $this->internalProtocolRepository->findOrFail($id);
 
-        if (! empty($protocol->closed)) 
+        if ($protocol->isClosed()) 
         {
             if ($request->ajax())
             {

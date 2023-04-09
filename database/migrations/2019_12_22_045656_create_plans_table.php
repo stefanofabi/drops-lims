@@ -21,7 +21,7 @@ class CreatePlansTable extends Migration
             $table->unsignedBigInteger('nomenclator_id');
 
             // Foreign keys
-            $table->foreign('social_work_id')->references('id')->on('social_works')->onDelete('restrict')->onUpdate('cascade');
+            $table->foreign('social_work_id')->references('id')->on('social_works')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('nomenclator_id')->references('id')->on('nomenclators')->onDelete('restrict')->onUpdate('cascade');
 
             $table->timestamps();

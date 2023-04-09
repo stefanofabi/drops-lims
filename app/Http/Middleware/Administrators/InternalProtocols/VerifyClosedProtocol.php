@@ -32,7 +32,7 @@ class VerifyClosedProtocol
     
         $protocol = $this->internalProtocolRepository->findOrFail($id);
 
-        if (empty($protocol->closed)) 
+        if ($protocol->isOpen()) 
         {
             return redirect()->back()->withErrors(Lang::get('protocols.verify_closed_protocol'));
         }

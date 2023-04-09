@@ -25,7 +25,7 @@ class CreateDeterminationsTable extends Migration
             $table->double('biochemical_unit', 8, 2)->unsigned();
             
             // Foreign keys
-            $table->foreign('nomenclator_id')->references('id')->on('nomenclators')->onDelete('restrict')->onUpdate('cascade');
+            $table->foreign('nomenclator_id')->references('id')->on('nomenclators')->onDelete('cascade')->onUpdate('cascade');
 
             $table->timestamps();
 

@@ -79,7 +79,7 @@ class TemplateController extends Controller
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
         
-        return redirect()->action([DeterminationController::class, 'edit'], ['id' => $id]);
+        return redirect()->action([TemplateController::class, 'edit'], ['id' => $id]);
     }
 
     /**

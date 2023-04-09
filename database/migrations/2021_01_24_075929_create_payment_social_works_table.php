@@ -18,10 +18,10 @@ class CreatePaymentSocialWorksTable extends Migration
             $table->date('payment_date');
             $table->unsignedBigInteger('social_work_id');
             $table->unsignedBigInteger('billing_period_id');
-            $table->double('amount')->default(0.0);
+            $table->double('amount');
 
             // Foreign keys
-            $table->foreign('social_work_id')->references('id')->on('social_works')->onDelete('restrict')->onUpdate('cascade');
+            $table->foreign('social_work_id')->references('id')->on('social_works')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('billing_period_id')->references('id')->on('billing_periods')->onDelete('restrict')->onUpdate('cascade');
 
             $table->timestamps();

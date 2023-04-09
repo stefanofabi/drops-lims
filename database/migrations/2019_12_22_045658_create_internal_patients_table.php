@@ -36,7 +36,7 @@ class CreateInternalPatientsTable extends Migration
             $table->unsignedInteger('security_code')->nullable();
 
             // Foreign keys
-            $table->foreign('plan_id')->references('id')->on('plans')->onDelete('restrict')->onUpdate('cascade');
+            $table->foreign('plan_id')->references('id')->on('plans')->onDelete('set null')->onUpdate('cascade');
 
             $table->timestamps();
         });
