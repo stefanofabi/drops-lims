@@ -20,9 +20,9 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^4.2.1",
         "milon/barcode": "^10.0",
-        "rap2hpoutre/laravel-log-viewer": "^2.1.0",
-        "spatie/laravel-activitylog": "^4.4.2",
-        "spatie/laravel-permission": "^5.5.2"
+        "rap2hpoutre/laravel-log-viewer": "^2.3.0",
+        "spatie/laravel-activitylog": "^4.7.3",
+        "spatie/laravel-permission": "^5.10.1"
     },
     "require-dev": {
         "spatie/laravel-ignition": "^2.0",
