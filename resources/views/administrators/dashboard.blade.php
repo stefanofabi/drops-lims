@@ -1,5 +1,15 @@
 @extends('administrators/default-template')
 
+@section('css')
+<style>
+.getBig:hover {
+      transform: scale(1.02);
+      opacity: 0.95;
+      box-shadow: 0px 3px 10px -2px black;
+}
+</style>
+@endsection
+
 @section('title')
 {{ trans('home.dashboard') }}
 @endsection
@@ -15,11 +25,11 @@
 @section('content')
 <div class="ms-2 me-2">
     <div class="row">
-        <div class="col-md bg-success ms-1 me-1 mt-3 rounded p-4">
+        <div class="col-md bg-success ms-1 me-1 mt-3 rounded p-4 getBig">
             <div class="d-inline-block fs-1">
                 <span class="fas fa-clock" ></span> 
             </div>  
-
+            
             <div class="d-inline-block fs-1 ms-2">
                 {{ $pending_protocols->count() }}
             </div> 
@@ -28,7 +38,7 @@
             <span class="fs-6"> {{ trans('home.pending_protocols') }} </span>
         </div>
 
-        <div class="col-md bg-danger ms-1 me-1 mt-3 rounded p-4">
+        <div class="col-md bg-danger ms-1 me-1 mt-3 rounded p-4 getBig">
             <div class="d-inline-block fs-1">
                 <span class="fas fa-signature" ></span> 
             </div>  
@@ -41,7 +51,7 @@
             <span class="fs-6"> {{ trans('home.practices_not_signed') }} </span>
         </div>
 
-        <div class="col-md bg-warning ms-1 me-1 mt-3 rounded p-4">
+        <div class="col-md bg-warning ms-1 me-1 mt-3 rounded p-4 getBig">
             <div class="d-inline-block fs-1">
                 <span class="fas fa-dollar-sign" ></span> 
             </div>  
@@ -64,7 +74,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md bg-secondary rounded fs-2 p-4 ms-1 me-1 mt-3">
+        <div class="col-md bg-secondary rounded fs-2 p-4 ms-1 me-1 mt-3 getBig">
             <i class="fa-solid fa-chart-simple"></i>
 
             {{ trans('statistics.statistics') }}
@@ -74,7 +84,7 @@
             </a>
         </div>
 
-        <div class="col-md bg-secondary rounded fs-2 p-4 ms-1 me-1 mt-3">
+        <div class="col-md bg-secondary rounded fs-2 p-4 ms-1 me-1 mt-3 getBig">
             <i class="fa-solid fa-file-pdf"></i>
 
             {{ trans('summaries.summaries') }}
