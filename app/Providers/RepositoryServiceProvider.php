@@ -55,6 +55,9 @@ use App\Repositories\Eloquent\SignInternalPracticeRepository;
 use App\Contracts\Repository\FamilyMemberRepositoryInterface;
 use App\Repositories\Eloquent\FamilyMemberRepository;
 
+use App\Contracts\Repository\SystemParameterRepositoryInterface;
+use App\Repositories\Eloquent\SystemParameterRepository;
+
 class RepositoryServiceProvider extends ServiceProvider
 {
     /**
@@ -83,7 +86,8 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(InternalPracticeRepositoryInterface::class, InternalPracticeRepository::class);
         $this->app->bind(SignInternalPracticeRepositoryInterface::class, SignInternalPracticeRepository::class);
         $this->app->bind(FamilyMemberRepositoryInterface::class, FamilyMemberRepository::class);
-
+        $this->app->bind(SystemParameterRepositoryInterface::class, SystemParameterRepository::class);
+        
     }
 
     /**

@@ -271,9 +271,9 @@
 
                 <div class="col-lg-6">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="manage parameters" name="permissions[]" id="manageParameters" @if (isset($role) && $role->permissions->where('name', 'manage parameters')->first()) checked @endif>
+                        <input class="form-check-input" type="checkbox" value="manage system parameters" name="permissions[]" id="manageSystemParameters" @if (isset($role) && $role->permissions->where('name', 'manage system parameters')->first()) checked @endif>
 
-                        <label class="form-check-label" for="manageParameters">
+                        <label class="form-check-label" for="manageSystemParameters">
                             {{ trans('roles.manage_parameters') }}
                         </label>
                     </div>

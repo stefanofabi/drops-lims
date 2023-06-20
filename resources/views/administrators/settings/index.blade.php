@@ -41,7 +41,7 @@
             <div class="card-body">
                 <h5 class="card-title"> {{ trans('settings.system_parameters') }} </h5>
                 <p class="card-text"> {{ trans('settings.system_parameters_message') }} </p>
-                <a href="#" class="btn btn-primary @cannot('manage parameters') disabled @endcannot"> {{ trans('settings.edit_parameters') }} </a>
+                <a href="{{ route('administrators/settings/system_parameters/edit', ['category' => 'General']) }}" class="btn btn-primary @cannot('manage system parameters') disabled @endcannot"> {{ trans('settings.edit_parameters') }} </a>
             </div>
         </div>
     </div>

@@ -29,5 +29,6 @@ class DatabaseSeeder extends Seeder
 
         $this->call(PrescriberSeeder::class);
        
+        $this->call(SystemParameterSeeder::class);
     }
 }

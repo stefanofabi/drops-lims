@@ -21,7 +21,6 @@ class PermissionSeeder extends Seeder
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
         Permission::create(['name' => 'is lab staff']);
-        Permission::create(['name' => 'manage parameters']);
         Permission::create(['name' => 'manage roles']);
     	Permission::create(['name' => 'manage patients']);
         Permission::create(['name' => 'generate security codes']);
@@ -37,6 +36,7 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'generate summaries']);
         Permission::create(['name' => 'manage profile']);
     	Permission::create(['name' => 'manage settings']);
+        Permission::create(['name' => 'manage system parameters']);
         Permission::create(['name' => 'view logs']);
 
 

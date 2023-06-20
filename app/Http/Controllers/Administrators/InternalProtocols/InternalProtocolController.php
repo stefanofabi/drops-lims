@@ -10,6 +10,7 @@ use App\Traits\PaginationTrait;
 use App\Contracts\Repository\InternalProtocolRepositoryInterface;
 use App\Contracts\Repository\InternalPatientRepositoryInterface;
 use App\Contracts\Repository\BillingPeriodRepositoryInterface;
+use App\Contracts\Repository\SystemParameterRepositoryInterface;
 
 use App\Mail\InternalProtocolSent;
 
@@ -36,14 +37,19 @@ class InternalProtocolController extends Controller
     /** @var \App\Contracts\Repository\BillingPeriodRepositoryInterface */
     private $billingPeriodRepository;
 
+    /** @var \App\Contracts\Repository\SystemParameterRepositoryInterface */
+    private $systemParameterRepository;
+
     public function __construct (
         InternalProtocolRepositoryInterface $internalProtocolRepository,
         InternalPatientRepositoryInterface $internalPatientRepository, 
-        BillingPeriodRepositoryInterface $billingPeriodRepository
+        BillingPeriodRepositoryInterface $billingPeriodRepository,
+        SystemParameterRepositoryInterface $systemParameterRepository
     ) {
         $this->internalProtocolRepository = $internalProtocolRepository;
         $this->internalPatientRepository = $internalPatientRepository;
         $this->billingPeriodRepository = $billingPeriodRepository;
+        $this->systemParameterRepository = $systemParameterRepository;
     }
 
     /**
@@ -219,10 +225,13 @@ class InternalProtocolController extends Controller
         }
 
         $practices = $practices->sortBy(['determination.position', 'ASC']);
+
+        $system_parameters = $this->systemParameterRepository->findByCategory('PDF Protocol');
      
         $pdf = PDF::loadView('pdf.internal_protocols.modern_style', [
             'protocol' => $protocol,
             'practices' => $practices,
+            'system_parameters' => $system_parameters,
         ]);
         
         $protocol_path = storage_path(self::INTERNAL_PROTOCOLS_DIRECTORY."protocol_$protocol->id.pdf");
@@ -288,10 +297,13 @@ class InternalProtocolController extends Controller
         }
 
         $practices = $practices->sortBy(['determination.position', 'ASC']);
-        
+
+        $system_parameters = $this->systemParameterRepository->findByCategory('PDF Protocol');
+     
         $pdf = PDF::loadView('pdf.internal_protocols.modern_style', [
             'protocol' => $protocol,
             'practices' => $practices,
+            'system_parameters' => $system_parameters,
         ]);
 
         $protocol_path = storage_path(self::INTERNAL_PROTOCOLS_DIRECTORY."protocol_$protocol->id.pdf");

@@ -22,6 +22,7 @@ Route::group([
     require('billing_periods.php');
     require('nomenclators.php');
     require('social_works/social_works.php');
+    require('system_parameters.php');
 
     Route::controller(SettingController::class)
     ->group(function () {   
