@@ -11,7 +11,7 @@
 
 <p> 
     <b> {{ trans('protocols.protocol_number') }}: </b> #{{ $protocol->id }} <br />
-    <b> {{ trans('protocols.completion_date') }}: </b> {{ date('d/m/Y', strtotime($protocol->completion_date)) }} <br />
+    <b> {{ trans('protocols.completion_date') }}: </b> {{ $protocol->completion_date }} <br />
     <b> {{ trans('patients.patient') }}: </b> {{ $protocol->internalPatient->full_name }} <br /> 
     <b> {{ trans('social_works.social_work') }}: </b> {{ $protocol->plan->social_work->name }} <br /> 
     <b> {{ trans('prescribers.prescriber') }}: </b> {{ $protocol->prescriber->full_name }} 
@@ -28,7 +28,7 @@
 </p>
 
 @if ($protocol->internalPractices->count() > $practices->count())
-<p> This email only contains partial practices of the protocol. To view the complete protocol, log in to our site or contact our laboratory. </p>
+<p> {{ trans('emails.partial_protocol_notice') }} </p>
 @endif
 
 <p style="color: red; margin-top: 3%">
