@@ -37,7 +37,11 @@
                 dataType: 'json',
                 success: function (response) {
                     @if ($practice->internalProtocol->isOpen()) 
-                    $("#messages").html('<div class="alert alert-warning alert-dismissible fade show mt-3" role="alert"> <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"> </button> <strong> {{ trans("forms.warning") }}!</strong> {{ trans("practices.modified_practice")}} </div>');
+                        @if ($practice->signInternalPractices->isNotEmpty())
+                        $("#messages").html('<div class="alert alert-danger alert-dismissible fade show mt-3" role="alert"> <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"> </button> <strong> {{ trans("forms.danger") }}!</strong> {{ trans("practices.practice_already_signed")}} </div>');
+                        @else
+                        $("#messages").html('<div class="alert alert-warning alert-dismissible fade show mt-3" role="alert"> <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"> </button> <strong> {{ trans("forms.warning") }}!</strong> {{ trans("practices.modified_practice")}} </div>');
+                        @endif
                     @else
                     $("#messages").html('');
                     @endif

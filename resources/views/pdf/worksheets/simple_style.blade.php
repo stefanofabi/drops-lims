@@ -48,7 +48,7 @@
         <tr>
             <td> {{trans('patients.identification_number') }}: {{ $protocol->internalPatient->identification_number }} </td>
 
-            <td> {{ trans('protocols.completion_date') }}: @if ($protocol->completion_date) {{ date_format(new DateTime($protocol->completion_date), 'd/m/Y') }} @endif </td>
+            <td> {{ trans('protocols.completion_date') }}: {{ $protocol->completion_date }} </td>
         </tr>
 
         <tr>

@@ -39,5 +39,7 @@ return [
     'price' => 'Precio',
     'practices_index_message' => 'Añadí todas las prácticas que el paciente necesite realizar. Se ordenarán automáticamente según el orden de impresión',
     'practices_edit_message' => 'Informe con cuidado los resultados. Una vez informado se requiere la firma de un profesional para imprimir la práctica',
-    
+    'not_have_permission_to_modify_practices_already_signed' => 'No tenés permiso para modificar practicas ya firmadas',
+    'practice_already_signed' => 'Esta práctica está firmada y posiblemente haya sido visualizada por personas ajenas al laboratorio. Si cambia esta práctica, considere notificar a las personas apropiadas. ¡Recuerda comprobar los resultados antes de firmar!',
+
 ];

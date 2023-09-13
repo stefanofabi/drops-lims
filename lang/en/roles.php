@@ -43,6 +43,7 @@ return [
     'print_protocols' => 'Print protocols',
     'manage_practices' => 'Manage practices',
     'sign_practices' => 'Sign practices',
+    'change_result' => 'Change result',
     'manage_settings' => 'Manage settings',
     'manage_parameters' => 'Manage parameters',
     'manage_roles' => 'Manage roles',
@@ -50,5 +51,5 @@ return [
     'view_statistics' => 'View statistics',
     'generate_summaries' => 'Generate summaries',
     'view_logs' => 'View logs',
-
+    'manage_profile' => 'manage profile',
 ];

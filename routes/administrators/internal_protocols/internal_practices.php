@@ -43,7 +43,8 @@ Route::controller(InternalPracticeController::class)
         Route::put('inform-result/{id}', 'informResult')
             ->name('inform_result')
             ->where('id', '[1-9][0-9]*')
-            ->middleware('verify_open_practice');
+            ->middleware('verify_open_practice')
+            ->middleware('verify_if_practice_signed_by_another');
 
         Route::put('sign/{id}', 'sign')
             ->name('sign')

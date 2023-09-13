@@ -32,6 +32,7 @@ class PermissionSeeder extends Seeder
     	Permission::create(['name' => 'print protocols']);
     	Permission::create(['name' => 'manage practices']);
     	Permission::create(['name' => 'sign practices']);
+        Permission::create(['name' => 'change result']);
     	Permission::create(['name' => 'view statistics']);
         Permission::create(['name' => 'generate summaries']);
         Permission::create(['name' => 'manage profile']);

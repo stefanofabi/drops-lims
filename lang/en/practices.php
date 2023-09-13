@@ -39,5 +39,7 @@ return [
     'price' => 'Price',
     'practices_index_message' => 'Add all the practices that the patient needs to perform. They will be automatically sorted according to the printing order',
     'practices_edit_message' => 'Report the results carefully. Once informed, the signature of a professional is required to print the practice',
-    
+    'not_have_permission_to_modify_practices_already_signed' => 'You do not have permission to modify practices already signed',
+    'practice_already_signed' => 'This practice is signed and has possibly been viewed by people outside the laboratory. If you change this practice, consider notifying the appropriate persons. Remember to check the results before signing!',
+
 ];

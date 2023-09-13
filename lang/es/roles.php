@@ -43,6 +43,7 @@ return [
     'print_protocols' => 'Imprimir protocolos',
     'manage_practices' => 'Gestionar prácticas',
     'sign_practices' => 'Firmar prácticas',
+    'change_result' => 'Cambiar resultado',
     'manage_settings' => 'Gestionar ajustes',
     'manage_parameters' => 'Gestionar parámetros',
     'manage_roles' => 'Gestionar roles',
@@ -50,5 +51,6 @@ return [
     'view_statistics' => 'Ver estadísticas',
     'generate_summaries' => 'Generar resúmenes',
     'view_logs' => 'Ver registros',
+    'manage_profile' => 'Gestionar perfil',
 
 ];

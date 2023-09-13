@@ -38,6 +38,7 @@ class RoleSeeder extends Seeder
                 'print protocols',
         		'manage practices',
         		'sign practices',
+                'change result',
         		'view statistics',
         		'generate security codes',
                 'generate summaries',

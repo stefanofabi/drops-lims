@@ -85,6 +85,7 @@
             } else 
             {
                 $('#signPractices').prop('checked', false);
+                $('#changeResult').prop('checked', false);
             }    
         });
 
@@ -93,6 +94,14 @@
             {
                 alert("{{ trans('roles.check_manage_practices') }}");
                 $('#signPractices').prop('checked', false);
+            }       
+        });
+
+        $('#changeResult').change(function() {
+            if(this.checked && $('#managePractices').prop('checked') === false) 
+            {
+                alert("{{ trans('roles.check_manage_practices') }}");
+                $('#changeResult').prop('checked', false);
             }       
         });
 
@@ -252,6 +261,17 @@
                         </label>
                     </div>
                 </div>
+
+                
+                <div class="col-lg-6">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="change result" name="permissions[]" id="changeResult" @if (isset($role) && $role->permissions->where('name', 'change result')->first()) checked @endif>
+
+                        <label class="form-check-label" for="changeResult">
+                            {{ trans('roles.change_result') }}
+                        </label>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -295,6 +315,16 @@
             <h4> {{ trans('roles.other_permissions') }} </h4>
 
             <div class="row">
+                <div class="col-lg-6">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="manage profile" name="permissions[]" id="manageProfile" @if (isset($role) && $role->permissions->where('name', 'manage profile')->first()) checked @endif>
+
+                        <label class="form-check-label" for="manageProfile">
+                            {{ trans('roles.manage_profile') }}
+                        </label>
+                    </div>
+                </div>
+
                 <div class="col-lg-6">
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" value="view statistics" name="permissions[]" id="viewStatistics" @if (isset($role) && $role->permissions->where('name', 'view statistics')->first()) checked @endif>
