@@ -260,7 +260,7 @@
 
                 <input type="text" class="form-control" id="age" value="@if ($age != null) {{ trans_choice('patients.calculate_age', $format_type ? 1 : 0 , $age) }} @endif" aria-describedby="ageHelp" disabled>
 
-                <small id="ageHelp" class="form-text text-muted"> {{ trans('patients.name_help') }} </small>
+                <small id="ageHelp" class="form-text text-muted"> {{ trans('patients.age_help') }} </small>
             </div>
         </div>
     </div>
