@@ -84,7 +84,7 @@ class InternalPracticeController extends Controller
         DB::transaction(function () use ($request) {
             $this->internalPracticeRepository->create($request->all());
 
-            $this->internalProtocolRepository->increment($request->internal_protocol_id, 'total_price', $request->price);
+            $this->internalProtocolRepository->incrementPracticePrice($request->internal_protocol_id, $request->price);
         });
 
         return response()->json(['message' => Lang::get('forms.successful_transaction')], 200);
@@ -144,7 +144,7 @@ class InternalPracticeController extends Controller
         DB::transaction(function () use ($practice) {
             $this->internalPracticeRepository->delete($id);
          
-            $this->internalProtocolRepository->decrement($practice->internal_protocol_id, 'total_price', $practice->price);
+            $this->internalProtocolRepository->decrementPracticePrice($practice->internal_protocol_id, $practice->price);
         });
 
         return redirect()->action([InternalPracticeController::class, 'index'], ['internal_protocol_id' => $practice->internal_protocol_id]);

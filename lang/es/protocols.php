@@ -23,7 +23,7 @@ return [
     'completion_date' => 'Fecha de realización',
     'show_protocol' => 'Ver protocolo',
     'destroy_protocol' => 'Eliminar protocolo',
-    'protocol_blocked' => 'Protocolos bloqueados por razones de seguridad. Para realizar cambios, haga clic en el candado',
+    'protocol_blocked' => 'Protocolo bloqueado por razones de seguridad. Para realizar cambios, haga clic en el candado',
     'edit_protocol' => 'Editar protocolo',
     'generate_worksheet' => 'Generar hoja de trabajo',
     'generate_protocol' => 'Generar protocolo',

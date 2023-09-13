@@ -136,14 +136,14 @@ final class InternalProtocolRepository implements InternalProtocolRepositoryInte
             ->first();
     }
 
-    public function increment($id, $attribute, $value)
+    public function incrementPracticePrice($id, $value)
     {
-        $this->model->where('id', $id)->increment($attribute, $value);
+        $this->model->where('id', $id)->increment('total_price', $value);
     }
 
-    public function decrement($id, $attribute, $value)
+    public function decrementPracticePrice($id, $attribute, $value)
     {
-        $this->model->where('id', $id)->decrement($attribute, $value);
+        $this->model->where('id', $id)->decrement('total_price', $value);
     }
     
     /*
