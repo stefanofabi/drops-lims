@@ -25,5 +25,7 @@ return [
     'generate_chart' => 'Generate chart',
     'social_work_composition' => 'Social work composition',
     'social_work_composition_message' => 'This graph will help you to know which social works receive more frequently and based on this, perform other analyzes',
+    'sex_composition' => 'Sex composition',
+    'sex_composition_message' => 'This graph will help you know what type of people frequent your laboratory the most',
 
 ];

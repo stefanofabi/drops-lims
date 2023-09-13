@@ -14,6 +14,7 @@ use App\Http\Controllers\Administrators\Statistics\CollectionSocialWorkControlle
 use App\Http\Controllers\Administrators\Statistics\PatientFlowController;
 use App\Http\Controllers\Administrators\Statistics\TrackIncomeController;
 use App\Http\Controllers\Administrators\Statistics\SocialWorkCompositionController;
+use App\Http\Controllers\Administrators\Statistics\SexCompositionController;
 
 Route::group([
     'prefix' => 'statistics', 
@@ -67,6 +68,18 @@ Route::group([
     Route::controller(SocialWorkCompositionController::class)
     ->prefix('social-work-composition')
     ->as('social_work_composition/')
+    ->group(function () {   
+    
+        Route::get('index', 'index')
+            ->name('index');
+    
+        Route::post('generate-chart', 'generateChart')
+            ->name('generate_chart');
+    });
+
+    Route::controller(SexCompositionController::class)
+    ->prefix('sex-composition')
+    ->as('sex_composition/')
     ->group(function () {   
     
         Route::get('index', 'index')

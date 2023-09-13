@@ -65,9 +65,10 @@ final class InternalPatientRepository implements InternalPatientRepositoryInterf
             ->get();
     }
 
-    public function loadPatients($filter) {
-        
-        return $this->model->select('id', 'full_name', 'identification_number') 
+    public function loadPatients($filter) 
+    {
+        return $this->model
+            ->select('id', 'full_name', 'identification_number') 
             ->where(function ($query) use ($filter) {
                 if (! empty($filter)) {
                     $query->orWhere('full_name', 'ilike', "%$filter%")
@@ -76,5 +77,14 @@ final class InternalPatientRepository implements InternalPatientRepositoryInterf
             })
             ->orderBy('full_name', 'ASC')
             ->get();
+    }
+
+    public function getSexComposition() 
+    {
+        return $this->model
+        ->select('sex') 
+        ->selectRaw('COUNT(*) as total_patients')
+        ->groupBy('sex')
+        ->get();
     }
 }

@@ -24,5 +24,8 @@ return [
     'statistics_message' => 'Los gráficos estadísticos son herramientas poderosas de visualización de datos que permiten representar información compleja de manera accesible',
     'generate_chart' => 'Generar gráfico',
     'social_work_composition' => 'Composición de obras sociales',
-    'social_work_composition_message' => 'Este gráfico le ayudará a conocer qué obras sociales recibe con más frecuencia y, en función de esto, realizar otros análisis',
+    'social_work_composition_message' => 'Este gráfico le ayudará a conocer qué obras sociales recibe con más frecuencia y, en función de esto, realizar otras suposiciones',
+    'sex_composition' => 'Composición por sexo',
+    'sex_composition_message' => 'Este gráfico le ayudará a conocer que tipo de personas frecuentan mayor su laboratorio',
+
 ];
