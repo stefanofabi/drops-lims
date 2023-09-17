@@ -30,6 +30,7 @@ class SystemParameterController extends Controller
         $system_parameters = $this->systemParameterRepository->findByCategory($request->category);
         
         return view('administrators.settings.system_parameters.edit')
+            ->with('category', $request->category)
             ->with('system_parameters', $system_parameters);
     }
 
