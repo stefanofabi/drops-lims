@@ -59,7 +59,7 @@
     <div id="second_column">
         <table class="cover">
             <tr>
-                <td> {{ $system_parameters->where('name', 'PDF_PROTOCOL_TITLE_1')->first()->value }} </td>
+                <td> {{ $system_parameters->where('key', 'PDF_PROTOCOL_TITLE_1')->first()->value }} </td>
             </tr>
         </table>
 
@@ -67,15 +67,15 @@
 
         <table class="cover">
             <tr>
-                <td> {{ $system_parameters->where('name', 'PDF_PROTOCOL_TEXT_LINE_1')->first()->value }} </td>
+                <td> {{ $system_parameters->where('key', 'PDF_PROTOCOL_TEXT_LINE_1')->first()->value }} </td>
             </tr>
 
             <tr>
-                <td> {{ $system_parameters->where('name', 'PDF_PROTOCOL_TEXT_LINE_2')->first()->value }} </td>
+                <td> {{ $system_parameters->where('key', 'PDF_PROTOCOL_TEXT_LINE_2')->first()->value }} </td>
             </tr>
 
             <tr>
-                <td> {{ $system_parameters->where('name', 'PDF_PROTOCOL_TEXT_LINE_3')->first()->value }} </td>
+                <td> {{ $system_parameters->where('key', 'PDF_PROTOCOL_TEXT_LINE_3')->first()->value }} </td>
             </tr>
         </table>
     </div>

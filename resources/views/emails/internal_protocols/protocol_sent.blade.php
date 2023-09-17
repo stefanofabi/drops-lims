@@ -39,7 +39,7 @@
 
 @section('footer')
 <div style="background-color: #AABBCC; min-height: 30px; padding-left: 10px; padding-top: 10px">
-     &#169 {{ date('Y') }} {{ env('APP_NAME', 'Drops LIMS') }}. {{ trans('emails.all_rights_reserved') }}.
+     &#169 {{ date('Y') }} {{ $system_parameters->where('key', 'LABORATORY_NAME')->first()->value }}. {{ trans('emails.all_rights_reserved') }}.
 </div>
 <p style="font-size:10px"> {{ trans('emails.confidentiality_notice') }} </p>
 @endsection

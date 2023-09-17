@@ -35,9 +35,9 @@
     <div class="col-md-9 mt-3">
         <div class="form-group">
             <label class="fw-bold" for="{{ $system_parameter->name }}"> {{ $system_parameter->name }} </label>
-            <input type="text" class="form-control @error($system_parameter->name) is-invalid @enderror" name="{{ $system_parameter->name }}" id="{{ $system_parameter->name }}" value="{{ old($system_parameter->name) ?? $system_parameter->value }}" aria-describedby="{{ $system_parameter->name }}_HELP" required>
+            <input type="text" class="form-control @error($system_parameter->key) is-invalid @enderror" name="{{ $system_parameter->key }}" id="{{ $system_parameter->key }}" value="{{ old($system_parameter->key) ?? $system_parameter->value }}" aria-describedby="{{ $system_parameter->key }}_HELP" required>
                         
-            <small id="{{ $system_parameter->name }}_HELP" class="form-text text-muted"> {{ $system_parameter->description }}</small>
+            <small id="{{ $system_parameter->key }}_HELP" class="form-text text-muted"> {{ $system_parameter->description }}</small>
         </div>
     </div>
     @empty

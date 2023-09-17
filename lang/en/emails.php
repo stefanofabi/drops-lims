@@ -21,6 +21,6 @@ return [
         Our Laboratory is not responsible for errors or omissions in this message and denies any responsibility for any damage arising from the use of e-mail',
     'all_rights_reserved' => 'All rights reserved',
     'partial_protocol_notice' => 'This email only contains partial practices of the protocol. To view the complete protocol, log in to our site or contact our laboratory',
-    'new_secutiry_code' => 'New security code',
+    'new_security_code' => 'New security code',
     
 ];

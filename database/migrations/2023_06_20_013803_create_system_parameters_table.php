@@ -13,12 +13,14 @@ return new class extends Migration
     {
         Schema::create('system_parameters', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
+            $table->string('name');
+            $table->string('key')->unique();
             $table->string('value');
             $table->string('category');
             $table->string('description');
 
             $table->timestamps();
+            
             $table->engine = 'InnoDB';
         });
     }

@@ -21,5 +21,5 @@ return [
         Nuestro Laboratorio no se hace responsable de errores u omisiones en este mensaje y niega cualquier responsabilidad por cualquier daño que surja del uso del correo electrónico',
     'all_rights_reserved' => 'Todos los derechos reservados',
     'partial_protocol_notice' => 'Este correo electrónico solo contiene prácticas parciales del protocolo. Para ver el protocolo completo, inicie sesión en nuestro sitio o comuníquese con nuestro laboratorio',
-    'new_secutiry_code' => 'Nuevo código de seguridad',
+    'new_security_code' => 'Nuevo código de seguridad',
 ];
