@@ -76,7 +76,7 @@ final class BillingPeriodRepository implements BillingPeriodRepositoryInterface
      *
      * @return \Illuminate\Http\Response
      */
-    public function checkOverlapDates($start_date, $end_date)
+    public function checkOverlapDates($start_date, $end_date, $id = null)
     {
         /** 
          * Two time periods P1 and P2 overlaps if, and only if, at least one of these conditions hold:
@@ -85,13 +85,22 @@ final class BillingPeriodRepository implements BillingPeriodRepositoryInterface
          */
 
         return $this->model
-            ->orWhere(function($query) use ($start_date, $end_date) {
-                $query->where('start_date', '<=', $start_date)
-                    ->where('end_date', '>=', $start_date);
+            ->where(function($query) use ($id) {
+                if (! empty($id)) {
+                    $query->where('id', '<>', $id);
+                }
             })
-            ->orWhere(function($query) use ($start_date, $end_date) {
-                $query->where('start_date', '>=', $start_date)
+            ->where(function($query) use ($start_date, $end_date) {
+                $query->orWhere(function($query) use ($start_date, $end_date) {
+                    
+                    $query->where('start_date', '<=', $start_date)
+                    ->where('end_date', '>=', $start_date);
+                });
+
+                $query->orWhere(function($query) use ($start_date, $end_date) {
+                    $query->orWhere('start_date', '>=', $start_date)
                     ->where('start_date', '<=', $end_date);
+                });
             })
             ->get()
             ->isEmpty();
