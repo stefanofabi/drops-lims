@@ -20,7 +20,6 @@ return [
     'system_parameters' => 'Parámetros del sistema',
     'edit_parameters' => 'Editar parámetros',
     'system_parameters_message' => 'Personalizá algunas secciones ajustando los parámetros del sistema disponibles',
-    'manage_permissions' => 'Gestionar permisos',
     'roles_permissions' => 'Permisos de roles',
     'roles_permissions_message' => 'Definí una política y controlá que acciones puede realizar cada rol en tu laboratorio manteniendo la seguridad como prioridad',
     'go_be_careful' => 'Adelante, iré con cuidado',

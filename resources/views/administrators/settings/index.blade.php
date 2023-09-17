@@ -36,8 +36,6 @@
 <div class="row">
     <div class="col-md mt-3">
         <div class="card">
-            <div class="card-header"> {{ trans('roles.manage_parameters') }} </div>
-
             <div class="card-body">
                 <h5 class="card-title"> {{ trans('settings.system_parameters') }} </h5>
                 <p class="card-text"> {{ trans('settings.system_parameters_message') }} </p>
@@ -48,8 +46,6 @@
 
     <div class="col-md mt-3">
         <div class="card">
-            <div class="card-header"> {{ trans('settings.manage_permissions') }} </div>
-
             <div class="card-body">
                 <h5 class="card-title"> {{ trans('settings.roles_permissions') }} </h5>
                 <p class="card-text"> {{ trans('settings.roles_permissions_message') }} </p>

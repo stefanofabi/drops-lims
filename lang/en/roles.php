@@ -51,5 +51,5 @@ return [
     'view_statistics' => 'View statistics',
     'generate_summaries' => 'Generate summaries',
     'view_logs' => 'View logs',
-    'manage_profile' => 'manage profile',
+    'manage_profile' => 'Manage profile',
 ];

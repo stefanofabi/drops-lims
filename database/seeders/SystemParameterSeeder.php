@@ -23,7 +23,7 @@ class SystemParameterSeeder extends Seeder
                 'description' => 'The title of the letterhead when generating a pdf protocol'
             ], [
                 'name' => 'PDF_PROTOCOL_TEXT_LINE_1', 
-                'value' => '11 Wall St, New York, United States', 
+                'value' => 'My street, my Country and my State of my Laboratory', 
                 'category' => 'PDF Protocol', 
                 'description' => 'First line of the letterhead when generating a PDF protocol'
             ], [

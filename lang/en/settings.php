@@ -20,7 +20,6 @@ return [
     'system_parameters' => 'System parameters',
     'edit_parameters' => 'Edit parameters',
     'system_parameters_message' => 'Customize some sections by adjusting the available system parameters',
-    'manage_permissions' => 'Manage permissions',
     'roles_permissions' => 'Roles permissions',
     'roles_permissions_message' => 'Define your strategy and control what actions each role can take in your lab while keeping security as the top priority',
     'go_be_careful' => 'Go, i will be careful',
