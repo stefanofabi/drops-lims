@@ -41,7 +41,7 @@ class SystemParameterController extends Controller
 
             foreach ($system_parameters as $system_parameter_name => $system_parameter_value) 
             {
-                $this->systemParameterRepository->updateParameterByName($system_parameter_name, ['value' => $system_parameter_value]);
+                $this->systemParameterRepository->updateParameterByKey($system_parameter_name, ['value' => $system_parameter_value]);
             }
         });
 

@@ -24,7 +24,7 @@ final class SystemParameterRepository implements SystemParameterRepositoryInterf
 
     public function all()
     {
-        throw NotImplementedException("SystemParameter::create(data) not implemented");
+        throw NotImplementedException("SystemParameter::all() not implemented");
     }
 
     public function create(array $data)
@@ -62,8 +62,13 @@ final class SystemParameterRepository implements SystemParameterRepositoryInterf
         return $this->model->select('category')->groupBy('category')->get();
     }
 
-    public function updateParameterByName($name, $array)
+    public function updateParameterByKey($key, $array_values)
     {
-        return $this->model->where('name', $name)->firstOrFail()->update($array);
+        return $this->model->where('key', $key)->firstOrFail()->update($array_values);
+    }
+
+    public function findByKeyOrFail($key)
+    {
+        return $this->model->where('key', $key)->firstOrFail();
     }
 }

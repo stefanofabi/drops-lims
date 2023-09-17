@@ -6,35 +6,30 @@
 
 @section('style')
     <style>
-        #first_column {
-            position: absolute;
-            top: 1%;
-            width: 100px;
+        .logo {
+            padding: 10px;
+        }
+        
+        .letterhead {
+            padding: 1%;
+            width: 100%;
+            background: {{ Drops::getSystemParameterValueByKey('PDF_PROTOCOL_LETTERHEAD_BACKGROUND_COLOR') }};
         }
 
-        #second_column {
-            margin-left: 17%;
+        .letterhead td {
+            font-family: {{ Drops::getSystemParameterValueByKey('PDF_PROTOCOL_LETTERHEAD_FONT_FAMILY') }};
         }
 
-        .cover {
-            background: #FFFFA6;
-        / / margin-left: 20 px;
-        }
-
-
-        .cover td {
-            width: 150mm;
-        }
-
-        .info {
+        .protocol_info {
+            margin: 1%;
             margin-top: 2%;
-            margin-bottom: 2%;
-            margin-left: 50px
+            padding: 1%;
+            width: 100%;
+            background: {{ Drops::getSystemParameterValueByKey('PDF_PROTOCOL_PROTOCOL_INFORMATION_BACKGROUND_COLOR') }};
         }
 
-        .info td {
-            text-align: left;
-            width: 100mm;
+        .protocol_info td {
+            font-family: {{ Drops::getSystemParameterValueByKey('PDF_PROTOCOL_INFO_FONT_FAMILY') }};
         }
 
         .page-break-after {
@@ -48,69 +43,83 @@
         .page-break-inside {
             page-break-inside: avoid;
         }
+
+        body {
+            font-family: {{ Drops::getSystemParameterValueByKey('PDF_PROTOCOL_FONT_FAMILY') }};
+        }
     </style>
 @endsection
 
-@section('header')
-    <div id="first_column">
-        <img style="margin-top: 20px" width="100" height="40" src="{{ asset('images/logo.png') }}">
-    </div>
+@section('letterhead')
+<table>
+    <tr>
+        <td>
+            <img class="logo" width="100" height="40" src="{{ asset(Drops::getSystemParameterValueByKey('LOGO_IMAGE')) }}">
+        </td>
 
-    <div id="second_column">
-        <table class="cover">
-            <tr>
-                <td> {{ $system_parameters->where('key', 'PDF_PROTOCOL_TITLE_1')->first()->value }} </td>
-            </tr>
-        </table>
+        <td> 
+            <table class="letterhead">
+                <tr>
+                    <td> {{ Drops::getSystemParameterValueByKey('PDF_PROTOCOL_TITLE_1') }} </td>
+                </tr>
+            </table>
 
-        <br/>
+            <table class="letterhead" style="margin-top: 3%">
+                <tr>
+                    <td> {{ Drops::getSystemParameterValueByKey('PDF_PROTOCOL_TEXT_LINE_1') }} </td>
+                </tr>
 
-        <table class="cover">
-            <tr>
-                <td> {{ $system_parameters->where('key', 'PDF_PROTOCOL_TEXT_LINE_1')->first()->value }} </td>
-            </tr>
+                <tr>
+                    <td> {{  Drops::getSystemParameterValueByKey('PDF_PROTOCOL_TEXT_LINE_2') }} </td>
+                </tr>
 
-            <tr>
-                <td> {{ $system_parameters->where('key', 'PDF_PROTOCOL_TEXT_LINE_2')->first()->value }} </td>
-            </tr>
-
-            <tr>
-                <td> {{ $system_parameters->where('key', 'PDF_PROTOCOL_TEXT_LINE_3')->first()->value }} </td>
-            </tr>
-        </table>
-    </div>
-
-    <table class="info">
-        <tr>
-            <td> {{ trans('patients.patient') }}: {{ $protocol->internalPatient->full_name  }} </td>
-            <td> {{ trans('protocols.protocol_number') }}: #{{ $protocol->id }} </td>
-        </tr>
-
-        <tr>
-            <td> {{ trans('patients.home_address') }}: {{ $protocol->internalPatient->address }} </td>
-            <td>  {{ trans('protocols.completion_date') }}: {{ $protocol->completion_date }} </td>
-        </tr>
-
-        <tr>
-            <td> {{ trans('prescribers.prescriber') }}: {{ $protocol->prescriber->full_name }} </td>
-            <td>
-                @php
-                    $age = $protocol->internalPatient->age();
-                    $format_type = $age != null && $age['year'] > 0;
-                @endphp
-
-                {{ trans('patients.age') }}: @if ($age != null) {{ trans_choice('patients.calculate_age', true ? 1 : 0 , $protocol->internalPatient->age()) }} @endif
-            </td>
-        </tr>
-
-        <tr>
-            <td> {{ trans('social_works.social_work')  }}: {{ $protocol->plan->social_work->name }} </td>
-            <td> </td>
-        </tr>
-    </table>
+                <tr>
+                    <td> {{  Drops::getSystemParameterValueByKey('PDF_PROTOCOL_TEXT_LINE_3') }} </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
 @endsection
 
-@section('body')
+@section('protocol_info')
+<table class="protocol_info">
+    <tr>
+        <td> {{ trans('patients.patient') }}: {{ $protocol->internalPatient->full_name  }} </td>
+        <td> {{ trans('protocols.protocol_number') }}: #{{ $protocol->id }} </td>
+    </tr>
+
+    <tr>
+        <td> {{ trans('patients.home_address') }}: {{ $protocol->internalPatient->address }} </td>
+        <td>  {{ trans('protocols.completion_date') }}: {{ $protocol->completion_date }} </td>
+    </tr>
+
+    <tr>
+        <td> {{ trans('prescribers.prescriber') }}: {{ $protocol->prescriber->full_name }} </td>
+        <td>
+            @php
+            $age = $protocol->internalPatient->age();
+            $format_type = $age != null && $age['year'] > 0;
+            @endphp
+
+            {{ trans('patients.age') }}: @if ($age != null) {{ trans_choice('patients.calculate_age', true ? 1 : 0 , $protocol->internalPatient->age()) }} @endif
+        </td>
+    </tr>
+
+    <tr>
+        <td> {{ trans('social_works.social_work')  }}: {{ $protocol->plan->social_work->name }} </td>
+        <td> </td>
+    </tr>
+</table>
+@endsection
+
+@section('header')
+    @yield('letterhead')
+
+    @yield('protocol_info')
+@endsection
+
+@section('content')
 @foreach ($practices as $practice)
 <div class="page-break-inside" style="margin-bottom: 15px">
     {!! $practice->result_template !!}

@@ -23,7 +23,7 @@ class SecurityCodeSent extends Mailable
     public $security_code;
 
     public $expiration_date;
-    
+
     /**
      * Create a new message instance.
      *

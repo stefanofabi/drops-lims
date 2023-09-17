@@ -115,7 +115,7 @@
 
 @endsection
 
-@section('body')
+@section('content')
     @foreach ($protocol->internalPractices as $practice)
             <div class="page-break-inside">
                 {{ $practice->determination->name }} <br />

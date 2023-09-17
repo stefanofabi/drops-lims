@@ -58,7 +58,7 @@
 @endsection
 
 
-@section('body')
+@section('content')
     <table style="margin-top: 3%; width: 100%" class="protocolsTable" border="1" cellspacing="0">
         <caption style="margin-top: 1%"> {{ trans('pdf.total_records') }}: {{ $protocols->count() }} </caption>
         <tr>

@@ -6,7 +6,7 @@
 
 @section('header')
 <div style="background-color: #AABBCC; min-height: 50px; padding-left: 10px; padding-top: 15px">
-    <a href="{{ route('login') }}"> <img src="{{ asset('images/small_logo.png') }}"> </a>
+    <a href="{{ route('login') }}"> <img src="{{ asset(Drops::getSystemParameterValueByKey('LOGO_IMAGE')) }}"> </a>
 </div>
 @endsection
 
@@ -33,7 +33,7 @@
 
 @section('footer')
 <div style="background-color: #AABBCC; min-height: 30px; padding-left: 10px; padding-top: 10px">
-     &#169 {{ date('Y') }} {{ $system_parameters->where('key', 'LABORATORY_NAME')->first()->value }}. {{ trans('emails.all_rights_reserved') }}.
+     &#169 {{ date('Y') }} {{ Drops::getSystemParameterValueByKey('LABORATORY_NAME') }}. {{ trans('emails.all_rights_reserved') }}.
 </div>
 <p style="font-size:10px"> {{ trans('emails.confidentiality_notice') }} </p>
 @endsection

@@ -62,14 +62,14 @@
     </div>
 @endsection
 
-@section('body')
+@section('content')
     <table style="margin-top: 3%; width: 100%" class="patientsTable" border="1" cellspacing="0">
         <caption> {{ trans('pdf.total_records') }}: {{ $protocols->count() }} </caption>
         <tr>
             <td style="width: 100px"><strong> {{ trans('pdf.date') }} </strong></td>
             <td style="width: 200px"><strong> {{ trans('patients.patient') }}</strong></td>
             <td style="width: 100px"><strong> {{ trans('patients.identification_number') }}</strong></td>
-            <td style="width: 100px"><strong> {{ trans('patients.contact') }} </strong></td>
+            <td style="width: 100px"><strong> {{ trans('patients.phone') }} </strong></td>
         </tr>
 
         @foreach ($protocols as $protocol)
@@ -77,10 +77,7 @@
                 <td> {{ $protocol->completion_date }} </td>
                 <td> {{ $protocol->internalPatient->full_name }} </td>
                 <td> {{ $protocol->internalPatient->identification_number }} </td>
-                <td> 
-                    {{ $protocol->internalPatient->phone }} <br />
-                    {{ $protocol->internalPatient->email }} 
-                </td>
+                <td> {{ $protocol->internalPatient->phone }} </td>
             </tr>
         @endforeach
     </table>

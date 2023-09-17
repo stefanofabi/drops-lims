@@ -57,7 +57,7 @@
     </div>
 @endsection
 
-@section('body')
+@section('content')
     <table class="billingPeriodsTable" style="margin-top: 3%; width: 100%" border="1" cellspacing="0">
         <tr>
             <td> <strong> {{ trans('billing_periods.billing_period') }} </strong></td>

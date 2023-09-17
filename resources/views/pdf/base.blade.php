@@ -13,7 +13,7 @@
 <body>
 @section('header') @show
 
-@section('body') @show
+@section('content') @show
 
 @section('footer') @show
 </body>
