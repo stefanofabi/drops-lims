@@ -2,11 +2,15 @@
 
 Drops LIMS is a web application for the management of clinical laboratories. Drops LIMS establishes well-defined processes in the area of your laboratory from the arrival of the patient to the delivery of results and even their follow-up. We facilitate the most common tasks that are often used in any laboratory, such as:
 
+- Determinations grouped by Biochemical Nomenclator
+- List of doctors and prescribers
 - Internal worksheets for the laboratory
-- Monitoring of social works debt
-- Statistics on patient flow
-- Generation of PDF reports
-- User permissions for internal administration
+- Classification of protocols by billing periods
+- Practices signed by the biochemical professional
+- Generation of PDF reports and sending by email
+- Monitoring of payments of social works
+- Statistics on patient arrival, most attended social works, composition of patients by sex, billing monitoring, etc.
+- Staff permissions
 - System activity log and system logs
 
 Drops LIMS is accessible, powerful, and provides the tools you need to bring that peace of mind to your lab.
