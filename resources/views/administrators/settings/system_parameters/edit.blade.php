@@ -10,7 +10,9 @@
         <li class="nav-item">
             <a class="nav-link @if ($category == 'General') active @endif" href="{{ route('administrators/settings/system_parameters/edit', ['category' => 'General']) }}"> General </a>
             <a class="nav-link @if ($category == 'PDF Protocol') active @endif" href="{{ route('administrators/settings/system_parameters/edit', ['category' => 'PDF Protocol']) }}"> Protocol PDF </a>
-			<a class="nav-link" href="{{ route('administrators/settings/index') }}"> {{ trans('forms.go_back')}} </a>
+			<a class="nav-link @if ($category == 'Email') active @endif" href="{{ route('administrators/settings/system_parameters/edit', ['category' => 'Email']) }}"> Email </a>
+
+            <a class="nav-link" href="{{ route('administrators/settings/index') }}"> {{ trans('forms.go_back')}} </a>
 		</li>
 	</ul>
 </nav>
