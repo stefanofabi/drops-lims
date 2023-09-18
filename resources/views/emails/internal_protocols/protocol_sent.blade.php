@@ -2,7 +2,7 @@
 
 @section('header')
 <div style="background-color: #AABBCC; min-height: 50px; padding-left: 10px; padding-top: 15px">
-    <a href="{{ route('login') }}"> <img src="{{ asset(Drops::getSystemParameterValueByKey('LOGO_IMAGE')) }}"> </a>
+    <a href="{{ route('login') }}"> <img src="{{ asset(Drops::getSystemParameterValueByKey('LOGO_IMAGE')) }}" width="104" height="35" title="Drops Lims" alt="Drops logo that simulates a drop"> </a>
 </div>
 @endsection
 
