@@ -57,7 +57,7 @@
                 <tr>
                     <td> {{ $plan->name }} </td>
                     <td> {{ $plan->nomenclator->name }} </td>
-                    <td> ${{ $plan->nbu_price }} </td>
+                    <td> ${{ number_format($plan->nbu_price, Drops::getSystemParameterValueByKey('DECIMALS'), Drops::getSystemParameterValueByKey('DECIMAL_SEPARATOR'), Drops::getSystemParameterValueByKey('THOUSANDS_SEPARATOR')) }} </td>
 
                     <td class="text-end">
                         <a href="{{ route('administrators/settings/social_works/plans/edit', ['id' => $plan->id]) }}" class="btn btn-primary btn-sm" title="{{ trans('plans.edit_plan') }}">

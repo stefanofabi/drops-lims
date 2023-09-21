@@ -28,7 +28,10 @@
                     '</select> {{ trans('datatables.records') }}',
                 "emptyTable": '{{ trans('datatables.no_data') }}',
                 "zeroRecords": '{{ trans('datatables.no_match_records') }}',
-            }
+            },
+            "order": [
+                [1, "desc"]
+            ]
         });
     });
 </script>
@@ -71,8 +74,8 @@
                     @foreach ($billing_periods as $billing_period)
                     <tr>
                         <td> {{ $billing_period->name }} </td>
-                        <td> {{ $billing_period->start_date }} </td>
-                        <td> {{ $billing_period->end_date }} </td>
+                        <td> {{ \Carbon\Carbon::parse($billing_period->start_date)->format(Drops::getSystemParameterValueByKey('DATE_FORMAT')) }} </td>
+                        <td> {{ \Carbon\Carbon::parse($billing_period->end_date)->format(Drops::getSystemParameterValueByKey('DATE_FORMAT')) }} </td>
 
                         <td class="text-end">
                             <a href="{{ route('administrators/settings/billing_periods/edit', ['id' => $billing_period->id]) }}" class="btn btn-primary btn-sm" title="{{ trans('billing_periods.edit_billing_period') }}">

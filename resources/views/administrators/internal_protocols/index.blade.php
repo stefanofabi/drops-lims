@@ -92,7 +92,7 @@
 			</td>
 
 			<td> {{ $protocol->patient }} </td>
-			<td> {{ $protocol->completion_date }} </td>
+			<td> {{ \Carbon\Carbon::parse($protocol->completion_date)->format(Drops::getSystemParameterValueByKey('DATE_FORMAT')) }} </td>
 			<td> {{ $protocol->prescriber }} </td>
 
 			<td class="text-end">

@@ -58,13 +58,13 @@
 
             <div class="d-inline-block fs-1 ms-2">
                 @if ($debt_social_works >= 1000000000 || $debt_social_works <= -1000000000)
-                {{ number_format($debt_social_works/1000000000, 2, '.', '.') }}B
+                {{ number_format($debt_social_works/1000000000, Drops::getSystemParameterValueByKey('DECIMALS'), Drops::getSystemParameterValueByKey('DECIMAL_SEPARATOR'), Drops::getSystemParameterValueByKey('THOUSANDS_SEPARATOR')) }}B
                 @elseif ($debt_social_works >= 1000000 || $debt_social_works <= -1000000)
-                {{ number_format($debt_social_works/1000000, 2, '.', '.') }}M
+                {{ number_format($debt_social_works/1000000, Drops::getSystemParameterValueByKey('DECIMALS'), Drops::getSystemParameterValueByKey('DECIMAL_SEPARATOR'), Drops::getSystemParameterValueByKey('THOUSANDS_SEPARATOR')) }}M
                 @elseif ($debt_social_works >= 1000 || $debt_social_works <= -1000)
-                {{ number_format($debt_social_works/1000, 2, '.', '.') }}K
+                {{ number_format($debt_social_works/1000, Drops::getSystemParameterValueByKey('DECIMALS'), Drops::getSystemParameterValueByKey('DECIMAL_SEPARATOR'), Drops::getSystemParameterValueByKey('THOUSANDS_SEPARATOR')) }}K
                 @else
-                {{ number_format($debt_social_works, 0, ',', '.') }}
+                {{ number_format($debt_social_works, Drops::getSystemParameterValueByKey('DECIMALS'), Drops::getSystemParameterValueByKey('DECIMAL_SEPARATOR'), Drops::getSystemParameterValueByKey('THOUSANDS_SEPARATOR')) }}
                 @endif
             </div>  
 

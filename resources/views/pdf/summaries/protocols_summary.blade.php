@@ -1,7 +1,7 @@
 @extends('pdf/base')
 
 @section('title')
-{{ trans('pdf.protocols_report_from_to', ['start_date' => $start_date, 'end_date' => $end_date]) }}
+{{ trans('pdf.protocols_report_from_to', ['start_date' => \Carbon\Carbon::parse($start_date)->format(Drops::getSystemParameterValueByKey('DATE_FORMAT')), 'end_date' => \Carbon\Carbon::parse($end_date)->format(Drops::getSystemParameterValueByKey('DATE_FORMAT'))]) }}
 @endsection
 
 @section('style')
@@ -38,7 +38,7 @@
     <div id="second_column">
         <table class="cover">
             <tr>
-                <td class="title"> {{ trans('pdf.protocols_report_from_to', ['start_date' => $start_date, 'end_date' => $end_date]) }}
+                <td class="title"> {{ trans('pdf.protocols_report_from_to', ['start_date' => \Carbon\Carbon::parse($start_date)->format(Drops::getSystemParameterValueByKey('DATE_FORMAT')), 'end_date' => \Carbon\Carbon::parse($end_date)->format(Drops::getSystemParameterValueByKey('DATE_FORMAT'))]) }}
                 </td>
             </tr>
         </table>
@@ -47,7 +47,7 @@
 
         <table class="cover">
             <tr>
-                <td> Date: {{ date('Y-m-d') }}  </td>
+                <td> Date: {{ date(Drops::getSystemParameterValueByKey('DATE_FORMAT')) }}  </td>
             </tr>
 
             <tr>
@@ -73,21 +73,21 @@
 
         @foreach ($protocols as $protocol)
             <tr>
-                <td> {{ $protocol->completion_date }} </td>
+                <td> {{ \Carbon\Carbon::parse($protocol->completion_date)->format(Drops::getSystemParameterValueByKey('DATE_FORMAT')) }} </td>
                 <td> {{ $protocol->id  }} @if (! empty($protocol->closed)) * @endif </td>
                 <td> {{ $protocol->internalPatient->full_name }} </td>
                 <td> {{ $protocol->plan->social_work->acronym}} </td>
                 <td>
                     @php $total_collection += $protocol->total_price; @endphp
 
-                    ${{ number_format($protocol->total_price, 2) }}
+                    ${{ number_format($protocol->total_price, Drops::getSystemParameterValueByKey('DECIMALS'), Drops::getSystemParameterValueByKey('DECIMAL_SEPARATOR'), Drops::getSystemParameterValueByKey('THOUSANDS_SEPARATOR')) }}
                 </td>
             </tr>
         @endforeach
 
         <tr>
             <td colspan="4"> </td>
-            <td> ${{ number_format($total_collection, 2) }} </td>
+            <td> ${{ number_format($total_collection, Drops::getSystemParameterValueByKey('DECIMALS'), Drops::getSystemParameterValueByKey('DECIMAL_SEPARATOR'), Drops::getSystemParameterValueByKey('THOUSANDS_SEPARATOR')) }} </td>
         </tr>
     </table>
    

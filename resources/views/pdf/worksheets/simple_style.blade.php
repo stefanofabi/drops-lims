@@ -48,7 +48,7 @@
         <tr>
             <td> {{trans('patients.identification_number') }}: {{ $protocol->internalPatient->identification_number }} </td>
 
-            <td> {{ trans('protocols.completion_date') }}: {{ $protocol->completion_date }} </td>
+            <td> {{ trans('protocols.completion_date') }}: {{ \Carbon\Carbon::parse($protocol->completion_date)->format(Drops::getSystemParameterValueByKey('DATE_FORMAT')) }} </td>
         </tr>
 
         <tr>

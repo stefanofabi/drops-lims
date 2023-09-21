@@ -14,6 +14,7 @@
         "ext-gd": "*",
         "ext-mbstring": "*",
         "ext-pdo_pgsql": "*",
+        "ext-zip": "^1.21",
         "barryvdh/laravel-dompdf": "^2.0.0",
         "creativeorange/gravatar": "^1.0",
         "laravel/framework": "^10.0",

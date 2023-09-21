@@ -29,6 +29,10 @@ class DatabaseSeeder extends Seeder
 
         $this->call(PrescriberSeeder::class);
        
-        $this->call(SystemParameterSeeder::class);
+        $this->call(GeneralSystemParameterSeeder::class);
+
+        $this->call(PdfProtocolSystemParameterSeeder::class);
+
+        $this->call(EmailSystemParameterSeeder::class);
     }
 }

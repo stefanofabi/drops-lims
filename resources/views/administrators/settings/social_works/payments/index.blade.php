@@ -54,13 +54,9 @@
             <tr>
                 <td> {{ $payment->billing_period->name }} </td>
 
-                <td>
-                    @if (!empty($payment->payment_date))
-                    {{ date('d/m/Y', strtotime($payment->payment_date)) }}
-                    @endif
-                </td>
+                <td> {{ \Carbon\Carbon::parse($payment->payment_date)->format(Drops::getSystemParameterValueByKey('DATE_FORMAT')) }} </td>
 
-                <td> ${{ $payment->amount }} </td>
+                <td> ${{ number_format($payment->amount, Drops::getSystemParameterValueByKey('DECIMALS'), Drops::getSystemParameterValueByKey('DECIMAL_SEPARATOR'), Drops::getSystemParameterValueByKey('THOUSANDS_SEPARATOR')) }} </td>
 
                 <td class="text-end">
                     <a class="btn btn-primary btn-sm" title="{{ trans('payment_social_works.destroy_payment') }}" onclick="destroyPayment('{{ $payment->id }}')">

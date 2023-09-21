@@ -91,7 +91,7 @@
 
     <tr>
         <td> {{ trans('patients.home_address') }}: {{ $protocol->internalPatient->address }} </td>
-        <td>  {{ trans('protocols.completion_date') }}: {{ $protocol->completion_date }} </td>
+        <td>  {{ trans('protocols.completion_date') }}: {{ \Carbon\Carbon::parse($protocol->completion_date)->format(Drops::getSystemParameterValueByKey('DATE_FORMAT')) }} </td>
     </tr>
 
     <tr>

@@ -1,7 +1,7 @@
 @extends('pdf/base')
 
 @section('title')
-    {{ trans('pdf.social_work_debt_report_from_to', ['social_work' => $social_work->name, 'start_date' => $start_date, 'end_date' => $end_date]) }}
+{{ trans('pdf.social_work_debt_report_from_to', ['social_work' => $social_work->name, 'start_date' => \Carbon\Carbon::parse($start_date)->format(Drops::getSystemParameterValueByKey('DATE_FORMAT')), 'end_date' => \Carbon\Carbon::parse($end_date)->format(Drops::getSystemParameterValueByKey('DATE_FORMAT'))]) }}
 @endsection
 
 @section('style')
@@ -38,7 +38,8 @@
     <div id="second_column">
         <table class="cover">
             <tr>
-                <td class="title"> {{ trans('pdf.social_work_debt_report_from_to', ['social_work' => $social_work->name, 'start_date' => $start_date, 'end_date' => $end_date]) }}
+                <td class="title"> 
+                    {{ trans('pdf.social_work_debt_report_from_to', ['social_work' => $social_work->name, 'start_date' => \Carbon\Carbon::parse($start_date)->format(Drops::getSystemParameterValueByKey('DATE_FORMAT')), 'end_date' => \Carbon\Carbon::parse($end_date)->format(Drops::getSystemParameterValueByKey('DATE_FORMAT'))]) }}
                 </td>
             </tr>
         </table>
@@ -47,7 +48,7 @@
 
         <table class="cover">
             <tr>
-                <td> Date: {{ date('Y-m-d') }}  </td>
+                <td> Date: {{ date(Drops::getSystemParameterValueByKey('DATE_FORMAT')) }}  </td>
             </tr>
 
             <tr>
@@ -69,13 +70,13 @@
         @foreach ($billing_periods as $billing_period)
             <tr>
                 <td> {{ $billing_period->name }} </td>
-                <td> {{ $billing_period->start_date }} </td>
-                <td> {{ $billing_period->end_date }} </td>
+                <td> {{ \Carbon\Carbon::parse($billing_period->start_date)->format(Drops::getSystemParameterValueByKey('DATE_FORMAT')) }} </td>
+                <td> {{ \Carbon\Carbon::parse($billing_period->end_date)->format(Drops::getSystemParameterValueByKey('DATE_FORMAT')) }} </td>
                 <td>
-                    ${{ number_format($billing_period->total_collection, 2) }}
+                    ${{ number_format($billing_period->total_collection, Drops::getSystemParameterValueByKey('DECIMALS'), Drops::getSystemParameterValueByKey('DECIMAL_SEPARATOR'), Drops::getSystemParameterValueByKey('THOUSANDS_SEPARATOR')) }}
 
                     @if ($billing_period->total_collection > 0)
-                        ({{ number_format($billing_period->total_paid * 100 / $billing_period->total_collection, 2) }}%)
+                        ({{ number_format($billing_period->total_paid * 100 / $billing_period->total_collection, Drops::getSystemParameterValueByKey('DECIMALS'), Drops::getSystemParameterValueByKey('DECIMAL_SEPARATOR'), Drops::getSystemParameterValueByKey('THOUSANDS_SEPARATOR')) }}%)
                     @else
                         (0%)
                     @endif
