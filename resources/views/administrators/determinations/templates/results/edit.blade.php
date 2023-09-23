@@ -1,7 +1,7 @@
 @extends('administrators/default-template')
 
 @section('title')
-{{ trans('templates.edit_template') }}
+{{ trans('templates.edit_result_template') }}
 @endsection
 
 @section('active_determinations', 'active')
@@ -31,7 +31,7 @@
 @endsection
 
 @section('content-title')
-<i class="fas fa-edit"></i> {{ trans('templates.edit_template') }}
+<i class="fas fa-edit"></i> {{ trans('templates.edit_result_template') }}
 @endsection
 
 @section('content-message')
@@ -47,7 +47,7 @@
 	</div>
 @endif
 
-<form method="post" action="{{ route('administrators/determinations/templates/update', ['id' => $determination->id]) }}">
+<form method="post" action="{{ route('administrators/determinations/templates/results/update', ['id' => $determination->id]) }}">
     @csrf
     {{ method_field('PUT') }}
 
@@ -126,5 +126,5 @@
 	<input type="submit" class="btn btn-lg btn-primary mt-3" value="{{ trans('forms.save') }}">
 </form>
 
-@include('administrators.determinations.templates.variable_creator_helper')
+@include('administrators.determinations.templates.results.variable_creator_helper')
 @endsection

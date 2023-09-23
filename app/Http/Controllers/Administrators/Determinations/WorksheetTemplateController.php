@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Contracts\Repository\DeterminationRepositoryInterface;
 
-class TemplateController extends Controller
+class WorksheetTemplateController extends Controller
 {
     /** @var \App\Contracts\Repository\DeterminationRepositoryInterface */
     private $determinationRepository;
@@ -58,7 +58,7 @@ class TemplateController extends Controller
 
         $determination = $this->determinationRepository->findOrFail($id);
 
-        return view('administrators.determinations.templates.edit')
+        return view('administrators.determinations.templates.worksheets.edit')
             ->with('determination', $determination);
     }
 
@@ -70,16 +70,14 @@ class TemplateController extends Controller
         //
 
         $request->validate([
-            'javascript' => 'present|max:5000',
-            'template' => 'present|max:15000',
-            'template_variables' => 'present|array',
+            'worksheet_template' => 'present|max:15000',
         ]);
 
-        if (! $this->determinationRepository->updateTemplate($request->all(), $id)) {
+        if (! $this->determinationRepository->updateWorksheetTemplate($request->all(), $id)) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
         
-        return redirect()->action([TemplateController::class, 'edit'], ['id' => $id]);
+        return redirect()->action([WorksheetTemplateController::class, 'edit'], ['id' => $id]);
     }
 
     /**

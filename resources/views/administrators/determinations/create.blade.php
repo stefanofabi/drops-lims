@@ -53,15 +53,6 @@
 	<div class="row">
 		<div class="col-md-6">
 			<div class="form-group mt-2">
-				<label for="name"> {{ trans('determinations.name') }} </label>
-				<input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" value="{{ old('name') }}" aria-describedby="nameHelp" required>
-
-				<small id="nameHelp" class="form-text text-muted"> {{ trans('determinations.name_help') }} </small>
-			</div>
-		</div>
-
-		<div class="col-md-6">
-			<div class="form-group mt-2">
 				<label for="code"> {{ trans('determinations.code') }} </label>
 				<input type="number" class="form-control @error('code') is-invalid @enderror" name="code" id="code" min="0" value="{{ old('code') }}" aria-describedby="codeHelp" required>
 
@@ -69,6 +60,15 @@
 			</div>
 		</div>
 
+		<div class="col-md-6">
+			<div class="form-group mt-2">
+				<label for="name"> {{ trans('determinations.name') }} </label>
+				<input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" value="{{ old('name') }}" aria-describedby="nameHelp" required>
+
+				<small id="nameHelp" class="form-text text-muted"> {{ trans('determinations.name_help') }} </small>
+			</div>
+		</div>
+		
 		<div class="col-md-6">
 			<div class="form-group mt-2">
 				<label for="position"> {{ trans('determinations.position') }} </label>

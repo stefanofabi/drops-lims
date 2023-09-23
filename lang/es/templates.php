@@ -16,7 +16,7 @@ return [
     'javascript' => 'Javascript',
     'template' => 'Plantilla',
     'template_blocked' => 'Plantilla bloqueada por razones de seguridad. Para hacer cambios, haga clic en el candado',
-    'edit_template' => 'Editar plantilla',
+    'edit_result_template' => 'Editar plantilla de resultado',
     'creation_notice' => 'Al crear una nueva plantilla, estará disponible automáticamente para ser seleccionada en un protocolo',
     'edit_notice' => 'Al editar la plantilla de una determinación, está haciendo los mismos cambios en todos los protocolos que usan esta plantilla. Si está eliminando o agregando nuevos campos, recomendamos generar una nueva determinación',
     'templates_edit_message' => 'Esta sección es muy importante y tiene acceso restringido. Utilice extrema precaución y atención al realizar una modificación aquí',
@@ -58,5 +58,6 @@ return [
     'any_questions_consideration' => 'Ante cualquier duda ayudese con el asistente de creador de variables',
     'how_create_options' => 'Para crear las distintas opciones siga este formato: clave1,valor2;clave2,valor2;... ',
     'invisible_table_structure_consideration' => 'No es una buena práctica pero aveces se suele recomendar armar las plantillas con estructura de tablas invisibles',
+    'edit_worksheet_template' => 'Editar plantilla de hoja de trabajo',
 
 ];

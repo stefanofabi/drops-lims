@@ -89,12 +89,20 @@ final class DeterminationRepository implements DeterminationRepositoryInterface
             ->get();
     }
 
-    public function updateTemplate(array $data, $id)
+    public function updateResultTemplate(array $data, $id)
     {
         $determination = $this->model->findOrFail($id);
         $determination->javascript = $data['javascript'];
         $determination->template = $data['template'];
         $determination->template_variables = $data['template_variables'];
+
+        return $determination->save();
+    }
+
+    public function updateWorksheetTemplate(array $data, $id)
+    {
+        $determination = $this->model->findOrFail($id);
+        $determination->worksheet_template = $data['worksheet_template'];
 
         return $determination->save();
     }

@@ -87,13 +87,7 @@
 
         <tr>
             <td> {{ trans('social_works.social_work') }}: {{ $protocol->plan->social_work->name }} </td>
-            <td>
-                {{ trans('patients.phone') }}:
-
-                @if (! empty($protocol->internalPatient->phone))
-                     {{ $protocol->internalPatient->phone }}
-                @endif
-            </td>
+            <td> {{ trans('patients.phone') }}: {{ $protocol->internalPatient->phone }} </td>
         </tr>
     </table>
 
@@ -118,7 +112,7 @@
 @section('content')
     @foreach ($protocol->internalPractices as $practice)
             <div class="page-break-inside">
-                {{ $practice->determination->name }} <br />
+                {!! $practice->determination->worksheet_template !!} <br />
                 ============================================ <br />
             </div>
     @endforeach

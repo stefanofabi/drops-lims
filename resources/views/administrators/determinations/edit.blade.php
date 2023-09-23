@@ -29,7 +29,11 @@
 <nav class="navbar">
     <ul class="navbar-nav">
         <li class="nav-item">
-            <a class="nav-link @cannot('manage templates') disabled @endcannot" href="{{ route('administrators/determinations/templates/edit', ['id' => $determination->id]) }}"> {{ trans('templates.edit_template') }} </a>
+            <a class="nav-link @cannot('manage templates') disabled @endcannot" href="{{ route('administrators/determinations/templates/results/edit', ['id' => $determination->id]) }}"> {{ trans('templates.edit_result_template') }} </a>
+        </li>
+
+		<li class="nav-item">
+            <a class="nav-link @cannot('manage templates') disabled @endcannot" href="{{ route('administrators/determinations/templates/worksheets/edit', ['id' => $determination->id]) }}"> {{ trans('templates.edit_worksheet_template') }} </a>
         </li>
     </ul>
 </nav>
@@ -77,19 +81,19 @@
     <div class="row">
 		<div class="col-md-6">
 			<div class="form-group mt-2">
-				<label for="name"> {{ trans('determinations.name') }} </label>
-				<input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" value="{{ old('name') ?? $determination->name }}" aria-describedby="nameHelp" required disabled>
+				<label for="code"> {{ trans('determinations.code') }} </label>
+				<input type="number" class="form-control @error('code') is-invalid @enderror" name="code" id="code" min="0" value="{{ old('code') ?? $determination->code }}" aria-describedby="codeHelp" required disabled>
 
-				<small id="nameHelp" class="form-text text-muted"> {{ trans('determinations.name_help') }} </small>
+				<small id="codeHelp" class="form-text text-muted"> {{ trans('determinations.code_help') }} </small>
 			</div>
 		</div>
 
 		<div class="col-md-6">
 			<div class="form-group mt-2">
-				<label for="code"> {{ trans('determinations.code') }} </label>
-				<input type="number" class="form-control @error('code') is-invalid @enderror" name="code" id="code" min="0" value="{{ old('code') ?? $determination->code }}" aria-describedby="codeHelp" required disabled>
+				<label for="name"> {{ trans('determinations.name') }} </label>
+				<input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" value="{{ old('name') ?? $determination->name }}" aria-describedby="nameHelp" required disabled>
 
-				<small id="codeHelp" class="form-text text-muted"> {{ trans('determinations.code_help') }} </small>
+				<small id="nameHelp" class="form-text text-muted"> {{ trans('determinations.name_help') }} </small>
 			</div>
 		</div>
 

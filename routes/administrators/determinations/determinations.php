@@ -10,7 +10,8 @@
 */
 
 use App\Http\Controllers\Administrators\Determinations\DeterminationController;
-use App\Http\Controllers\Administrators\Determinations\TemplateController;
+use App\Http\Controllers\Administrators\Determinations\ResultTemplateController;
+use App\Http\Controllers\Administrators\Determinations\WorksheetTemplateController;
 
 Route::controller(DeterminationController::class)
     ->prefix('determinations')
@@ -38,19 +39,39 @@ Route::controller(DeterminationController::class)
             ->name('destroy')
             ->where('id', '[1-9][0-9]*');
 
-        Route::controller(TemplateController::class)
-        ->prefix('templates')
+        Route::prefix('templates')
         ->as('templates/')
         ->middleware('permission:manage templates')
         ->group(function () {   
-            Route::get('edit/{id}', 'edit')
-            ->name('edit')
-            ->where('id', '[1-9][0-9]*');
 
-            Route::put('update/{id}', 'update')
-            ->name('update')
-            ->where('id', '[1-9][0-9]*')
-            ->middleware('combine_template_variables')
-            ->middleware('redirect_if_not_match_pattern');
+            Route::controller(ResultTemplateController::class)
+            ->prefix('results')
+            ->as('results/')
+            ->middleware('permission:manage templates')
+            ->group(function () {   
+                Route::get('edit/{id}', 'edit')
+                ->name('edit')
+                ->where('id', '[1-9][0-9]*');
+
+                Route::put('update/{id}', 'update')
+                ->name('update')
+                ->where('id', '[1-9][0-9]*')
+                ->middleware('combine_template_variables')
+                ->middleware('redirect_if_not_match_pattern');
+            });
+
+            Route::controller(WorksheetTemplateController::class)
+            ->prefix('worksheets')
+            ->as('worksheets/')
+            ->middleware('permission:manage templates')
+            ->group(function () {   
+                Route::get('edit/{id}', 'edit')
+                ->name('edit')
+                ->where('id', '[1-9][0-9]*');
+    
+                Route::put('update/{id}', 'update')
+                ->name('update')
+                ->where('id', '[1-9][0-9]*');
+            });
         });
     });

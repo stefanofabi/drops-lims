@@ -16,7 +16,7 @@ return [
     'javascript' => 'Javascript',
     'template' => 'Template',
     'template_blocked' => 'Template blocked for security reasons. To make changes click on the lock',
-    'edit_template' => 'Edit template',
+    'edit_result_template' => 'Edit result template',
     'creation_notice' => 'When creating a new template it will be automatically available to be selected in a protocol',
     'edit_notice' => 'By editing the template of a determination you are making the same changes in all the protocols that use this template. If you are removing or adding new fields we recommend generating a new determination',
     'templates_edit_message' => 'This section is very important and with restricted access. Please use extreme caution and attention when making a modification here',
@@ -58,5 +58,6 @@ return [
     'any_questions_consideration' => 'If you have any questions, help yourself with the variable creator assistant',
     'how_create_options' => 'To create the different options follow this format: key1,value2;key2,value2;...',
     'invisible_table_structure_consideration' => 'It is not a good practice, but sometimes it is recommended to build the templates with an invisible table structure',
+    'edit_worksheet_template' => 'Edit worksheet template',
     
 ];
