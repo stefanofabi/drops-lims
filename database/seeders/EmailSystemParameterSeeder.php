@@ -7,7 +7,7 @@ use Illuminate\Database\Seeder;
 
 use App\Models\SystemParameter;
 
-class EmaiSystemParameterSeeder extends Seeder
+class EmailSystemParameterSeeder extends Seeder
 {
     /**
      * Run the database seeds.
