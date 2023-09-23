@@ -13,6 +13,7 @@ use App\Contracts\Repository\DeterminationRepositoryInterface;
 
 use Lang;
 use Session;
+use Throwable;
 
 class InternalPracticeController extends Controller
 {
@@ -141,7 +142,7 @@ class InternalPracticeController extends Controller
 
         $practice = $this->internalPracticeRepository->findOrFail($id);
 
-        DB::transaction(function () use ($practice) {
+        DB::transaction(function () use ($practice, $id) {
             $this->internalPracticeRepository->delete($id);
          
             $this->internalProtocolRepository->decrementPracticePrice($practice->internal_protocol_id, $practice->price);
@@ -220,8 +221,8 @@ class InternalPracticeController extends Controller
         $practice = $this->internalPracticeRepository->findOrFail($id);
         $template_variables = $practice->determination->template_variables;
 
-        DB::transaction(function () use ($request, $id, $template_variables) 
-        {
+        DB::beginTransaction();
+        try {
             $this->signInternalPracticeRepository->deleteAllSignatures($id);
 
             $result = array();
@@ -235,9 +236,18 @@ class InternalPracticeController extends Controller
                     $result = array_merge($result, [$var_name => $var_value]);
                 }
             }
+
+            if (empty($result)) 
+            {
+                return back()->withInput($request->all())->withErrors(Lang::get('practices.no_template_variable_received'));
+            }
             
             $this->internalPracticeRepository->saveResult($result, $id);
-        });
+        } catch (Throwable $e) {
+            DB::rollback();
+            
+            return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
+        }
 
         Session::flash('success', [Lang::get('forms.successful_transaction')]);
 

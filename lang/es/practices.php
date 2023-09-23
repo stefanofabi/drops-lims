@@ -41,5 +41,6 @@ return [
     'practices_edit_message' => 'Informe con cuidado los resultados. Una vez informado se requiere la firma de un profesional para imprimir la práctica',
     'not_have_permission_to_modify_practices_already_signed' => 'No tenés permiso para modificar practicas ya firmadas',
     'practice_already_signed' => 'Esta práctica está firmada y posiblemente haya sido visualizada por personas ajenas al laboratorio. Si cambia esta práctica, considere notificar a las personas apropiadas. ¡Recuerda comprobar los resultados antes de firmar!',
+    'no_template_variable_received' => 'No se recibieron variables de plantilla',
 
 ];

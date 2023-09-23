@@ -124,12 +124,12 @@
 
             <div class="row row-cols-md-auto mt-4">         
                 <div class="col-12">   
-                    <input type="submit" class="btn btn-primary @if (! empty($practice->internalProtocol->closed)) disabled @endif" value="{{ trans('forms.save') }}">
+                    <input type="submit" class="btn btn-primary @if ($practice->internalProtocol->isClosed()) disabled @endif" value="{{ trans('forms.save') }}">
                 </div>
 
                 <div class="col-12 mt-2">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="stay_on_this_page" value="1" id="stayOnThisPage">
+                        <input class="form-check-input @if ($practice->internalProtocol->isClosed()) disabled @endif" type="checkbox" name="stay_on_this_page" value="1" id="stayOnThisPage">
                         <label class="form-check-label" for="stayOnThisPage">
                             {{ trans('forms.stay_on_this_page') }}
                         </label>

@@ -141,7 +141,7 @@ final class InternalProtocolRepository implements InternalProtocolRepositoryInte
         $this->model->where('id', $id)->increment('total_price', $value);
     }
 
-    public function decrementPracticePrice($id, $attribute, $value)
+    public function decrementPracticePrice($id, $value)
     {
         $this->model->where('id', $id)->decrement('total_price', $value);
     }

@@ -258,10 +258,10 @@
                     <td> {{ $practice->determination->name }} </td>
                     <td> ${{ number_format($practice->price, Drops::getSystemParameterValueByKey('DECIMALS'), Drops::getSystemParameterValueByKey('DECIMAL_SEPARATOR'), Drops::getSystemParameterValueByKey('THOUSANDS_SEPARATOR')) }} </td>
                     <td>
-                        @if (is_null($practice->result))
-                        <span class="badge bg-primary"> {{ trans('forms.no') }} </span>
-                        @else
+                        @if ($practice->isInformed())
                         <span class="badge bg-success"> {{ trans('forms.yes') }} </span>
+                        @else
+                        <span class="badge bg-primary"> {{ trans('forms.no') }} </span>
                         @endif
                     </td>
 

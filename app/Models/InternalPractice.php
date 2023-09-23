@@ -70,4 +70,9 @@ class InternalPractice extends Model
         return LogOptions::defaults()
             ->logOnly(['*']);
     }
+
+    public function isInformed()
+    {
+        return ! empty($this->result);
+    }
 }

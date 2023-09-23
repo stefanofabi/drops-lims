@@ -30,7 +30,7 @@ class VerifyPracticeHasResult
     {
         $practice = $this->internalPracticeRepository->findOrFail($request->id);
 
-        if (empty($practice->result))
+        if (! $practice->isInformed())
         {
             return redirect()->back()->withErrors(Lang::get('practices.practice_not_informed'));
         }    
