@@ -69,12 +69,12 @@ final class InternalPracticeRepository implements InternalPracticeRepositoryInte
             ->get();
     }
 
-    public function saveResult(array $data, $id)
+    public function saveResult(array $result, $id)
     {
         $this->model = $this->model->findOrFail($id);
 
         // the result field is protected by $fillable in the eloquent model
-        $this->model->result = $data;
+        $this->model->result = $result;
         $this->model->result_template = str_replace(array_keys($this->generateReplacementVariables($this->model->result)), array_values($this->model->result), $this->model->determination->template);
         
         return $this->model->save();

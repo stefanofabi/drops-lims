@@ -243,6 +243,8 @@ class InternalPracticeController extends Controller
             }
             
             $this->internalPracticeRepository->saveResult($result, $id);
+
+            DB::commit();
         } catch (Throwable $e) {
             DB::rollback();
             
