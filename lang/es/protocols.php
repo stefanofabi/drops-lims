@@ -70,5 +70,11 @@ return [
     'protocols_edit_message' => 'La mayor parte de nuestro trabajo se realiza en este documento. Trata de completar tantos campos como sea posible para dejar una historia clínica clara. Una vez cerrado el protocolo, puedes generar un PDF y no se puede modificar de nuevo por ninguna razón',
     'observations_help' => 'Cualquier detalle sobre el proceso o los resultados del análisis. Estas observaciones son públicas',
     'see_protocol_practices' => 'Ver prácticas del protocolo',
+    'patient_protocols_message' => 'Acá puede buscar todos los protocolos internos asignados a un paciente. Contienen las prácticas realizadas por el paciente, el prescriptor que prescribió la orden, los datos de la obra social, entre otras cosas',
+    'search_protocols_from_help' => 'La fecha a partir de la cual se comenzarán a buscar los protocolos',
+    'search_protocols_until_help' => 'La fecha hasta la cual finalizará la búsqueda de los protocolos',
+    'search_patient_protocols_help' => 'Seleccioná al paciente para el cual deseas buscar protocolos',
+    'search_protocols_is_empty' => 'No se encontraron protocolos en el rango de fechas proporcionado',
+    'show_patient_protocol_message' => 'Acá se encuentran todos los datos de su informe de laboratorio. Podrá visualizar la fecha de entrega de los resultados, generar los resultados de laboratorio en un archivo pdf, enviarlos a su correo electrónico, y mucho más...',
 
 ];

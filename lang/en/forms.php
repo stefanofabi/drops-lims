@@ -47,5 +47,7 @@ return [
     'stay_on_this_page' => 'Stay on this page',
     'copied_to_clipboard' => 'Copied to clipboard',
     'close' => 'Close',
+    'start_date' => 'Start date',
+    'end_date' => 'End date',
     
 ];

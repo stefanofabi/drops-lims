@@ -70,5 +70,11 @@ return [
     'protocols_edit_message' => 'Most of our work is done in this document. Try to fill in as many fields as possible to leave a clear clinical history. Once the protocol is closed, you can generate a pdf and it cannot be modified again for any reason',
     'observations_help' => 'Any details about the process or the results of the analysis. These observations are public',
     'see_protocol_practices' => 'See protocol practices',
-    
+    'patient_protocols_message' => 'Here you can search for all internal protocols assigned to a patient. They contain the practices carried out by the patient, the prescriber who prescribed the order, the social work data, among other things',
+    'search_protocols_from_help' => 'The date from which the protocols will begin to be searched',
+    'search_protocols_until_help' => 'The date until which you will finish searching for the protocols',
+    'search_patient_protocols_help' => 'Select the patient for which you want to search for protocols',
+    'search_protocols_is_empty' => 'No protocols found in the date range provided',
+    'show_patient_protocol_message' => 'Here you will find all the data from your laboratory report. You will be able to view the delivery date of the results, generate the laboratory results in a pdf file, send them to your email, and much more...',
+
 ];

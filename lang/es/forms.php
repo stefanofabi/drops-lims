@@ -47,5 +47,6 @@ return [
     'stay_on_this_page' => 'Permanecer en esta página',
     'copied_to_clipboard' => 'Copiado en el portapapeles',
     'close' => 'Cerrar',
-
+    'start_date' => 'Fecha de inicio',
+    'end_date' => 'Fecha de fin',
 ];

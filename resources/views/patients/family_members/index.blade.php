@@ -29,15 +29,15 @@
     <div class="table-responsive">
         <table class="table table-striped">
             <tr>
-            <th> {{ trans('patients.bonding_date') }} </th>
                 <th> {{ trans('patients.patient') }} </th>
+                <th> {{ trans('patients.bonding_date') }} </th>
                 <th class="text-end"> {{ trans('forms.actions') }} </th>
             </tr>
 
             @forelse ($family_members as $family_member)
             <tr>
-                <td> {{ date('d/m/Y', strtotime($family_member->created_at)) }} </td>
                 <td> {{ $family_member->internalPatient->last_name }} {{ $family_member->internalPatient->name }} </td>
+                <td> {{ date('d/m/Y', strtotime($family_member->created_at)) }} </td>
 
                 <td class="text-end">
                     <a target="_blank" href="#" class="btn btn-primary btn-sm" title="{{ trans('protocols.print_report') }}"> <i class="fas fa-trash fa-sm"></i> </a>

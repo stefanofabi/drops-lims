@@ -5,63 +5,72 @@
 @endsection
 
 @section('js')
-    <script type="text/javascript">
+    <script type="module">
         $(document).ready(function() {
             // Put the patient
-            $("#patient" ).val('{{ $patient }}');
+            $("#patient").val('{{ $patient }}');
         });
     </script>
 @endsection
 
 @section('active_protocols', 'active')
 
-@section('menu')
-<nav class="navbar">
-	<ul class="navbar-nav">
-	    <li class="nav-item">
-			<a class="nav-link" href="{{ route('patients/family_members/create') }}"> {{ trans('patients.add_family_member') }} </a>
-		</li>
-	</ul>
-</nav>
-@endsection
-
 @section('content-title')
 <i class="fas fa-file-medical"></i> {{ trans('protocols.protocols') }}
 @endsection
 
+@section('content-message')
+<p class="text-justify pe-5">
+    {{ trans('protocols.patient_protocols_message') }}
+</p>
+@endsection
+
 @section('content')
 <form>
-    <div class="col form-group col-md-6 mt-3">
-        <span for="inputState">{{ trans('forms.initial_date') }}</span>
-        <input type="date" class="form-control" id="initial_date" name="initial_date" value="{{ $initial_date ?? date('Y-m-d', strtotime(date('Y-m-d').'- 30 days')) }}" required>
-    </div>
-
-    <div class="col form-group col-md-6 mt-1">
-        <span for="inputState">{{ trans('forms.ended_date') }}</span>
-        <input type="date" class="form-control" id="ended_date" name="ended_date" value="{{ $ended_date ?? date('Y-m-d') }}" required>
-    </div>
-
-    <div class="col form-group col-md-6 mt-1">
-        <span for="inputState">{{ trans('patients.patient') }}</span>
+    <div class="row">
+        <div class="col-md-6 mt-3">
+            <label for="startDate">{{ trans('forms.start_date') }} </label>
+            <input type="date" class="form-control" id="startDate" name="initial_date" value="{{ $initial_date ?? date('Y-m-d', strtotime(date('Y-m-d').'- 30 days')) }}" aria-describedby="startDateHelp" required>
+            <div id="startDateHelp" class="form-text">
+                {{ trans('protocols.search_protocols_from_help') }}
+            </div>
+        </div>
         
-        <select class="form-select" id="patient" name="internal_patient_id" required>
-            <option value="">{{ trans('forms.select_option') }}</option>
-            @foreach ($family_members as $family_member)
-            <option value="{{ $family_member->internalPatient->id }}"> {{ $family_member->internalPatient->last_name }} {{ $family_member->internalPatient->name }}</option>
-            @endforeach
-        </select>
+        <div class="col-md-6 mt-3">
+            <label for="endDate">{{ trans('forms.end_date') }}</label>
+            <input type="date" class="form-control" id="endDate" name="ended_date" value="{{ $ended_date ?? date('Y-m-d') }}" aria-describedby="endDateHelp" required>
+            <div id="endDateHelp" class="form-text">
+                {{ trans('protocols.search_protocols_until_help') }}
+            </div>
+        </div>
     </div>
 
-    <!-- Filter by keys -->
-    <div class="form-group mt-3">
-        <div class="col-md-6">
+    <div class="row">
+        <div class="col-md-6 mt-3">
+            <label for="patient">{{ trans('patients.patient') }}</label>
+            
+            <select class="form-select" id="patient" name="internal_patient_id" aria-describedby="patientHelp" required>
+                <option value="">{{ trans('forms.select_option') }}</option>
+                @foreach ($family_members as $family_member)
+                <option value="{{ $family_member->internalPatient->id }}"> {{ $family_member->internalPatient->last_name }} {{ $family_member->internalPatient->name }}</option>
+                @endforeach
+            </select>
+
+            <div id="patientHelp" class="form-text">
+                {{ trans('protocols.search_patient_protocols_help') }}
+            </div>
+        </div>
+
+        <div class="col-md-6 mt-3">
+            <div for="inputState"> &nbsp </div>
             <button type="submit" class="btn btn-primary">
                 <span class="fas fa-search" ></span> {{ trans('forms.search') }} 
             </button>
         </div>
-    </div>
+    </div>    
 </form>
 
+@if ($protocols->isNotEmpty())
 <div class="table-responsive mt-3">
     <table class="table table-striped">
         <tr>
@@ -71,16 +80,16 @@
             <th class="text-end"> {{ trans('forms.actions') }} </th>
         </tr>
 
-        @forelse ($protocols as $protocol)
+        @foreach ($protocols as $protocol)
             <tr>
                 <td> 
-                    {{ $protocol->id }} 
+                    #{{ $protocol->id }} 
 
-                    @if (! empty($protocol->closed))
+                    @if ($protocol->isClosed())
                     <span class="badge bg-success bg-sm"> {{ trans('protocols.closed') }} </span>
                     @endif
                 </td>
-                <td> {{ date('d/m/Y', strtotime($protocol->completion_date)) }} </td>
+                <td> {{ date(Drops::getSystemParameterValueByKey('DATE_FORMAT'), strtotime($protocol->completion_date)) }} </td>
                 <td> {{ $protocol->prescriber->full_name }} </td>
 
                 <td class="text-end">
@@ -93,13 +102,10 @@
                     </a>
                 </td>
             </tr>
-        @empty
-        <tr>
-            <td colspan="7">
-			    {{ trans('forms.no_results') }}
-            </td>
-        </tr>
-        @endforelse
+        @endforeach
     </table>
 </div>
+@elseif (! empty($patient))
+<p class="text-danger mt-3"> {{ trans('protocols.search_protocols_is_empty') }} </p> 
+@endif
 @endsection
