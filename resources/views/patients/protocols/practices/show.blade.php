@@ -6,6 +6,18 @@
 
 @section('active_protocols', 'active')
 
+@section('css')
+<style>
+    .pdf-container {
+		font-family: monospace, system-ui;
+      	background-color: #fff;
+      	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      	padding: 20px;
+      	border-radius: 5px;
+    }
+</style>
+@endsection
+
 @section('js')
 <script type="text/javascript">
 
@@ -53,10 +65,24 @@
 <i class="fas fa-file-medical"></i> {{ trans('practices.result') }}
 @endsection
 
+@section('content-message')
+{{  trans('practices.practice_now_available') }}
+@endsection
+
 @section('content')
 <div id="messages" class="mt-3"> </div>
 
-<div id="report" class="mt-3">
+<div id="report" class="pdf-container mt-3">
 	{!! $practice->print() !!}
+</div>
+
+<div class="mt-3">
+	<p> {{ trans('practices.result_was_verified') }}: </p>
+
+	<ul class="list-group list-group-flush">
+		@foreach ($practice->signInternalPractices as $sign)
+		<li class="list-group-item"> <img height="30px" width="30px" src="{{ Gravatar::get(Auth::user()->email) }}" class="rounded-circle" alt="Avatar {{ $sign->user->name }}"> {{ $sign->user->name }} </li>
+		@endforeach
+	</ul>
 </div>
 @endsection

@@ -60,6 +60,22 @@ class InternalPractice extends Model
         return $this->hasMany(SignInternalPractice::class);
     }
 
+    /**
+     * Get html result
+     */
+    public function print()
+    {
+        return $this->result_template;
+    }
+
+    /**
+     * Returns true if the practice contains reported results, false otherwise.
+     */
+    public function isInformed()
+    {
+        return ! empty($this->result);
+    }
+
     public function getReplacementResultVariables() 
     {
         return $this->generateReplacementVariables($this->result);
@@ -69,10 +85,5 @@ class InternalPractice extends Model
     {
         return LogOptions::defaults()
             ->logOnly(['*']);
-    }
-
-    public function isInformed()
-    {
-        return ! empty($this->result);
     }
 }

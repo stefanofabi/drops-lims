@@ -122,7 +122,7 @@
 @section('content')
 @foreach ($practices as $practice)
 <div class="page-break-inside" style="margin-bottom: 15px">
-    {!! $practice->result_template !!}
+    {!! $practice->print() !!}
                 
     <table style="width: 100%; margin-top: 3%">
         <tr>

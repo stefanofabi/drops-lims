@@ -42,5 +42,7 @@ return [
     'not_have_permission_to_modify_practices_already_signed' => 'You do not have permission to modify practices already signed',
     'practice_already_signed' => 'This practice is signed and has possibly been viewed by people outside the laboratory. If you change this practice, consider notifying the appropriate persons. Remember to check the results before signing!',
     'no_template_variable_received' => 'No template variable received',
+    'practice_now_available' => 'The results of the laboratory practice are now available. You can review them later when you have time. In addition, you have the option to download them in PDF format and, if you prefer, send them by email. Thank you for trusting our Laboratory!',
+    'result_was_verified' => 'The result of the laboratory practice was verified by our qualified personnel',
     
 ];
