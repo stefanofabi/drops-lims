@@ -44,5 +44,7 @@ return [
     'no_template_variable_received' => 'No template variable received',
     'practice_now_available' => 'The results of the laboratory practice are now available. You can review them later when you have time. In addition, you have the option to download them in PDF format and, if you prefer, send them by email. Thank you for trusting our Laboratory!',
     'result_was_verified' => 'The result of the laboratory practice was verified by our qualified personnel',
+    'index_practices_for_protocol' => 'Index practices for protocol #:id',
+    'index_practices_message' => 'Here is a list with all the protocol practices. You can view them, generate them as a PDF, or even send them by email',
     
 ];

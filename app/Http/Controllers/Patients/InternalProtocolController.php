@@ -17,7 +17,7 @@ class InternalProtocolController extends Controller
     private const INTERNAL_PROTOCOLS_DIRECTORY = "app/internal_protocols/";
     
     /** @var \App\Contracts\Repository\InternalProtocolRepositoryInterface */
-    private $protocolRepository;
+    private $internalProtocolRepository;
 
     /** @var \App\Contracts\Repository\FamilyMemberRepositoryInterface */
     private $familyMemberRepository;

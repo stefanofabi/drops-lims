@@ -81,7 +81,7 @@
 
 	<ul class="list-group list-group-flush">
 		@foreach ($practice->signInternalPractices as $sign)
-		<li class="list-group-item"> <img height="30px" width="30px" src="{{ Gravatar::get(Auth::user()->email) }}" class="rounded-circle" alt="Avatar {{ $sign->user->name }}"> {{ $sign->user->name }} </li>
+		<li class="list-group-item"> <img height="30px" width="30px" src="{{ Gravatar::get(Auth::user()->email) }}" class="rounded-circle" alt="Avatar {{ $sign->user->name }}"> <span class="ms-1"> {{ $sign->user->name }} </span> </li>
 		@endforeach
 	</ul>
 </div>

@@ -31,8 +31,9 @@ class VerifyProtocolAccessRelation
      */
     public function handle(Request $request, Closure $next)
     {
+        $id = $request->id ?? $request->internal_protocol_id;
 
-        $protocol = $this->internalProtocolRepository->findOrFail($request->id);
+        $protocol = $this->internalProtocolRepository->findOrFail($id);
 
         $this->familyMemberRepository->findFamilyMemberRelationOrFail(auth()->user()->id, $protocol->internal_patient_id);
 

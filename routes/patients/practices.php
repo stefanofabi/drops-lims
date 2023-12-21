@@ -7,6 +7,10 @@ Route::controller(InternalPracticeController::class)
 ->as('practices/')
 ->group(function () {
 
+    Route::get('index', 'index')
+        ->name('index')
+        ->middleware('verify_protocol_access_relation');
+
     Route::get('show/{id}', 'show')
         ->name('show')
         ->where('id', '[1-9][0-9]*')
