@@ -23,6 +23,10 @@
                 <li class="nav-item">
 					<a class="nav-link @yield('active_family_members')" href="{{ route('patients/family_members/index') }}"> {{ trans('family_members.family_members') }} </a>
 				</li>
+
+				<li class="nav-item">
+					<a class="nav-link @yield('active_shifts')" href="#"> Shifts </a>
+				</li>
 			</ul>
 
 			<!-- Show when screen is wide -->
