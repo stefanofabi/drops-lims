@@ -1,7 +1,7 @@
 @extends('default-template')
 
 @section('home-href')
-{{ route('patients/home') }}
+{{ route('/') }}
 @endsection
 
 @section('navbar')
@@ -21,7 +21,7 @@
 				</li>
 
                 <li class="nav-item">
-					<a class="nav-link @yield('active_family_members')" href="{{ route('patients/family_members/index') }}"> {{ trans('patients.family_members') }} </a>
+					<a class="nav-link @yield('active_family_members')" href="{{ route('patients/family_members/index') }}"> {{ trans('family_members.family_members') }} </a>
 				</li>
 			</ul>
 

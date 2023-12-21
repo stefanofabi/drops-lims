@@ -41,16 +41,6 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function patientHome()
-    {
-        return view('patients/home');
-    }
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
     public function adminHome()
     {
         $pending_protocols = $this->internalProtocolRepository->getPendingProtocols();

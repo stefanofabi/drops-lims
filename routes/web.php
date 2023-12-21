@@ -58,8 +58,6 @@ Route::group(['middleware' => ['permission:is user', 'auth']], function () {
 
         require('patients/protocols.php');
         require('patients/family_members.php');
-
-        Route::get('home', ['\App\Http\Controllers\HomeController', 'patientHome'])->name('home');
     });
 });
 
@@ -81,7 +79,7 @@ Route::get('/', function () {
         if ($user->hasPermissionTo('is lab staff')) {
             return redirect()->route('administrators/dashboard');
         } else {
-            return redirect()->route('patients/home');
+            return redirect()->route('patients/protocols/index');
         }
     }
 

@@ -1,49 +1,37 @@
 @extends('patients/default-template')
 
 @section('title')
-{{ trans('patients.add_family_member') }}
+{{ trans('family_members.add_family_member') }}
 @endsection
 
 @section('active_family_members', 'active')
 
 @section('content-title')
-<i class="fas fa-user-plus"></i> {{ trans('patients.add_family_member') }}
+<i class="fas fa-user-plus"></i> {{ trans('family_members.add_family_member') }}
 @endsection
 
 @section('content-message')
-{{ trans('patients.notice_add_family_member') }}
+{{ trans('family_members.notice_add_family_member') }}
 @endsection
 
 @section('content')
 <form method="post" action="{{ route('patients/family_members/store') }}">
     @csrf
-    
-    <div class="input-group w-50 mt-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text"> {{ trans('patients.unique_identifier') }} </span>
+
+    <div class="row">
+        <div class="col-md-9 mt-3">
+            <label for="internalPatient"> {{ trans('patients.unique_identifier') }} </label>
+            <input type="number" class="form-control @error('internal_patient_id') is-invalid @enderror" id="internalPatient" name="internal_patient_id" value="{{ old('internal_patient_id') }}" aria-describedby="internalPatientHelp" required>
+
+            <small id="internalPatientHelp" class="form-text text-muted"> {{ trans('family_members.internal_patient_help') }} </small>
         </div>
 
-        <input type="number" class="form-control @error('internal_patient_id') is-invalid @enderror" name="internal_patient_id" min="1" value="{{ old('internal_patient_id') }}" required>
+        <div class="col-md-9 mt-3">
+            <label for="securityCode"> {{ trans('patients.security_code') }} </label>
+            <input type="text" class="form-control @error('security_code') is-invalid @enderror" id="securityCode" name="security_code" value="" aria-describedby="securityCodeHelp" required>
 
-        @error('internal_patient_id')
-        <span class="invalid-feedback" role="alert">
-            <strong> {{ $message }} </strong>
-        </span>
-        @enderror
-    </div>
-
-    <div class="input-group w-50 mt-2">
-        <div class="input-group-prepend">
-            <span class="input-group-text"> {{ trans('patients.security_code') }} </span>
+            <small id="securityCodeHelp" class="form-text text-muted"> {{ trans('family_members.security_code_help') }} </small>
         </div>
-
-        <input type="text" class="form-control @error('security_code') is-invalid @enderror" name="security_code" required>
-
-        @error('security_code')
-        <span class="invalid-feedback" role="alert">
-            <strong> {{ $message }} </strong>
-        </span>
-        @enderror
     </div>
 
     <input type="submit" class="btn btn-lg btn-primary float-start mt-3" value="{{ trans('forms.save') }}">

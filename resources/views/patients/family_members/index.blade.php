@@ -1,7 +1,7 @@
 @extends('patients/default-template')
 
 @section('title')
-{{ trans('patients.family_members') }}
+{{ trans('family_members.family_members') }}
 @endsection
 
 @section('active_family_members', 'active')
@@ -10,18 +10,18 @@
 <nav class="navbar">
 	<ul class="navbar-nav">
 	    <li class="nav-item">
-			<a class="nav-link" href="{{ route('patients/family_members/create') }}"> {{ trans('patients.add_family_member') }} </a>
+			<a class="nav-link" href="{{ route('patients/family_members/create') }}"> {{ trans('family_members.add_family_member') }} </a>
 		</li>
 	</ul>
 </nav>
 @endsection
 
 @section('content-title')
-<i class="fas fa-users"></i> {{ trans('patients.family_members') }}
+<i class="fas fa-users"></i> {{ trans('family_members.family_members') }}
 @endsection
 
 @section('content-message')
-{{ trans('patients.related_patients') }}
+{{ trans('family_members.related_patients') }}
 @endsection
 
 @section('content')
