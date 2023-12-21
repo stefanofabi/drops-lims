@@ -29,6 +29,11 @@
 @endsection
 
 @section('content')
+<div class="mt-4">
+    <h2> {{ $category }} </h2>
+    <hr class="col-6">
+</div>
+
 <form method="post" action="{{ route('administrators/settings/system_parameters/update') }}">
     @csrf
     @method('PUT')
