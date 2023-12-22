@@ -31,7 +31,8 @@ Route::controller(InternalPracticeController::class)
         Route::get('destroy/{id}', 'destroy')
             ->name('destroy')
             ->where('id', '[1-9][0-9]*')
-            ->middleware('verify_open_practice');
+            ->middleware('verify_open_practice')
+            ->middleware('verify_if_practice_signed_by_another');
 
         Route::post('load-practices', 'loadPractices')
             ->name('load_practices');

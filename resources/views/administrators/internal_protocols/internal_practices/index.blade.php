@@ -218,7 +218,7 @@
 @endsection
 
 @section('content')
-<div id="messages"></div>
+<div class="mt-3" id="messages"></div>
 
 <form onsubmit="return addPractice()">
     <div class="row mt-3">
