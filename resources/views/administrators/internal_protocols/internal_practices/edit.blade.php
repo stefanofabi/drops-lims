@@ -6,6 +6,18 @@
 
 @section('active_protocols', 'active')
 
+@section('css')
+<style>
+    .pdf-container {
+		font-family: monospace, system-ui;
+      	background-color: #fff;
+      	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      	padding: 20px;
+      	border-radius: 5px;
+    }
+</style>
+@endsection
+
 @section('js')
     <script type="module">
         $(document).ready(function () {
@@ -112,31 +124,29 @@
     <label class="fs-4" for="determination"> {{ trans('practices.result') }} </label>
 </div>
 
-<div class="card mt-3">
-    <div class="card-body">
-        <form method="post" action="{{ route('administrators/protocols/practices/inform_result', ['id' => $practice->id]) }}" onsubmit="return confirm('{{ Lang::get('forms.confirm') }}')">
-            @csrf
-            {{ method_field('PUT') }}  
+<div class="pdf-container">
+    <form method="post" action="{{ route('administrators/protocols/practices/inform_result', ['id' => $practice->id]) }}" onsubmit="return confirm('{{ Lang::get('forms.confirm') }}')">
+        @csrf
+        {{ method_field('PUT') }}  
 
-            <div id="template">
-                {!! str_replace(array_keys($practice->determination->getReplacementVariables()), array_values($practice->determination->template_variables), $practice->determination->template) !!}
+        <div id="template">
+            {!! str_replace(array_keys($practice->determination->getReplacementVariables()), array_values($practice->determination->template_variables), $practice->determination->template) !!}
+        </div>
+
+        <div class="row row-cols-md-auto mt-4">         
+            <div class="col-12">   
+                <input type="submit" class="btn btn-primary @if ($practice->internalProtocol->isClosed()) disabled @endif" value="{{ trans('forms.save') }}">
             </div>
 
-            <div class="row row-cols-md-auto mt-4">         
-                <div class="col-12">   
-                    <input type="submit" class="btn btn-primary @if ($practice->internalProtocol->isClosed()) disabled @endif" value="{{ trans('forms.save') }}">
-                </div>
-
-                <div class="col-12 mt-2">
-                    <div class="form-check">
-                        <input class="form-check-input @if ($practice->internalProtocol->isClosed()) disabled @endif" type="checkbox" name="stay_on_this_page" value="1" id="stayOnThisPage">
-                        <label class="form-check-label" for="stayOnThisPage">
-                            {{ trans('forms.stay_on_this_page') }}
-                        </label>
-                    </div>
+            <div class="col-12 mt-2">
+                <div class="form-check">
+                    <input class="form-check-input @if ($practice->internalProtocol->isClosed()) disabled @endif" type="checkbox" name="stay_on_this_page" value="1" id="stayOnThisPage">
+                    <label class="form-check-label" for="stayOnThisPage">
+                        {{ trans('forms.stay_on_this_page') }}
+                    </label>
                 </div>
             </div>
-        </form>
-    </div>
+        </div>
+    </form>
 </div>
 @endsection
