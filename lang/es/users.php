@@ -30,7 +30,7 @@ return [
     'role' => 'Rol',
     'role_help' => 'El rol asignado al usuario le otorgará permisos para ingresar a ciertas secciones del sistema',
     'success_destroy_message' => '¡Bien hecho! El usuario fue eliminado exitosamente',
-    'users_create_content_message' => 'En esta sección podés crear un nuevo usuario y asignarle un rol. Finalmente, por seguridad, enviaremos una contraseña segura al correo electrónico del usuario',
+    'users_create_content_message' => 'En esta sección puedes crear un nuevo usuario y asignarle un rol. Le enviaremos un correo al usuario para que genere su propia contraseña por razones de seguridad',
     'you_cannot_delete_your_own_account' => 'No podés eliminar tu propia cuenta',
 
 ];

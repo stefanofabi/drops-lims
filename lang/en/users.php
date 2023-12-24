@@ -30,7 +30,7 @@ return [
     'role' => 'Role',
     'role_help' => 'The role assigned to the user will grant them permissions to enter certain sections of the system',
     'success_destroy_message' => 'Well done! User was successfully removed',
-    'users_create_content_message' => 'In this section you can create a new user and assign them a role. Finally for security we will send a secure password to the user email',
+    'users_create_content_message' => 'In this section you can create a new user and assign them a role. We will send an email to the user to generate their own password for security reasons',
     'you_cannot_delete_your_own_account' => 'You cannot delete your own account',
 
 ];
