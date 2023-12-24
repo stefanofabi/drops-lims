@@ -20,8 +20,6 @@ use Session;
 
 class UserController extends Controller
 {
-    private const PASSWORD_LENGTH = 10;
-
     /** @var \App\Contracts\Repository\UserRepositoryInterface */
     private $userRepository;
 
@@ -68,14 +66,14 @@ class UserController extends Controller
         //
 
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'min:2', 'max:255'],
+            'last_name' => ['required', 'string', 'min:2', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
         ]);
 
         DB::beginTransaction();
         try {
-            $new_password = Str::random(self::PASSWORD_LENGTH);
+            $new_password = Str::password();
             $user_data = array_merge($request->all(), ['password' => Hash::make($new_password)]);
 
             $user = $this->userRepository->create($user_data);
@@ -84,11 +82,9 @@ class UserController extends Controller
             
             DB::commit();
 
-            Mail::to($user->email)->send(new WelcomeEmail($user, $new_password));
+            Mail::to($user->email)->send(new WelcomeEmail($user));
         } catch (Exception $e) {
             DB::rollback();
-
-            dd($e);
             
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
@@ -128,9 +124,9 @@ class UserController extends Controller
         //
 
         $request->validate([
-            'last_name' => 'required|string|min:2',
-            'name' => 'required|string|min:2',
-            'email' => 'email|required',
+            'name' => ['required', 'string', 'min:2', 'max:255'],
+            'last_name' => ['required', 'string', 'min:2', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
         ]);
 
         DB::beginTransaction();

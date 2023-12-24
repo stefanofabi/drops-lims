@@ -30,6 +30,6 @@ return [
     'access_to_our_services' => 'Con tu cuenta de :laboratory_name, podrás acceder a nuestros servicios de análisis clínico de alta calidad. Estamos aquí para ayudarte con cualquier pregunta o problema que puedas tener',
     'need_assistance' => 'Si necesitas ayuda, no dudes en contactarnos a través de :secretary_email o mediante uno de nuestros canales de ayuda',
     'appreciate_your_trust_and_have_positive_experience' => 'Agradecemos tu confianza en nosotros y esperamos que tengas una experiencia positiva con nuestros servicios',
-    'click_here_to_log_in' => 'Haga click aquí para iniciar sesión en nuestro sistema de gestión de laboratorio',
+    'generate_new_password' => 'Genera una nueva contraseña haciendo click aquí',
 
 ];

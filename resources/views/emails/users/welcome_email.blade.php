@@ -62,10 +62,9 @@
 
 <ul>
     <li> <strong>{{ trans('auth.email_address') }}:</strong> {{ $user->email }} </li>
-    <li> <strong>{{ trans('auth.password') }}:</strong> {{ $new_password }} </li>
+    <li> <strong>{{ trans('auth.password') }}:</strong> <a href="{{ route('password.request') }}" target="_blank"> {{ trans('emails.generate_new_password') }} </a> </li>
 </ul>
 
-<p> <a href="{{ route('login') }}" target="_blank"> {{ trans('emails.click_here_to_log_in') }} </a> </p>
 <p> {{ trans('emails.password_confidentiality') }}. </p>
 <p> {{ trans('emails.access_to_our_services', ['laboratory_name' => Drops::getSystemParameterValueByKey('LABORATORY_NAME')]) }}. </p>
 

@@ -30,6 +30,6 @@ return [
     'access_to_our_services' => 'With your :laboratory_name account, you will be able to access our high-quality clinical analysis services. We are here to help you with any questions or problems you may have',
     'need_assistance' => 'If you need help, do not hesitate to contact us at :secretary_email or through one of our help channels',
     'appreciate_your_trust_and_have_positive_experience' => 'We appreciate your trust in us and hope you have a positive experience with our services',
-    'click_here_to_log_in' => 'Click here to log in to our laboratory management system',
+    'generate_new_password' => 'Generate a new password by clicking here',
 
 ];

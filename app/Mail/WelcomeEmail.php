@@ -25,17 +25,14 @@ class WelcomeEmail extends Mailable
      * @var \App\Models\InternalPatient
      */
     public $user; 
-    
-    public $new_password;
 
     /**
      * Create a new message instance.
      */
-    public function __construct(User $user, $new_password)
+    public function __construct(User $user)
     {
         //
         $this->user = $user;
-        $this->new_password = $new_password;
     }
 
     /**
