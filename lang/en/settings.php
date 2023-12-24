@@ -23,5 +23,8 @@ return [
     'roles_permissions' => 'Roles permissions',
     'roles_permissions_message' => 'Define your strategy and control what actions each role can take in your lab while keeping security as the top priority',
     'go_be_careful' => 'Go, i will be careful',
-       
+    'user_management' => 'User management',
+    'user_management_message' => 'Explore the complete list of system users in this centralized section',
+    'show_all_users' => 'Show all users',
+
 ];

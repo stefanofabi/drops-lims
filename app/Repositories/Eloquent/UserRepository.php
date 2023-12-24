@@ -22,7 +22,7 @@ final class UserRepository implements UserRepositoryInterface
 
     public function all()
     {
-        return $this->model->all();
+        return $this->model->orderBy('full_name', 'ASC')->get();
     }
 
     public function create(array $data)
@@ -50,5 +50,10 @@ final class UserRepository implements UserRepositoryInterface
     public function findOrFail($id)
     {
         return $this->model->findOrFail($id);
+    }
+
+    public function syncRoles($role, $id)
+    {
+        return $this->model->findOrFail($id)->syncRoles($role);
     }
 }

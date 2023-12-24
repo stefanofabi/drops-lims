@@ -30,11 +30,17 @@ class GeneralSystemParameterSeeder extends Seeder
                 'category' => 'General', 
                 'description' => 'The logo of your laboratory that will appear in the main menu, in the pdf protocols, in the emails sent, etc.'
             ], [
+                'name' => 'Secretary Email',
+                'key' => 'SECRETARY_EMAIL',  
+                'value' => 'secretary@laboratory', 
+                'category' => 'General', 
+                'description' => 'This email is the one your patients will contact if they need help'
+            ], [
                 'name' => 'Date format',
                 'key' => 'DATE_FORMAT',  
                 'value' => 'Y-m-d', 
                 'category' => 'General', 
-                'description' => 'This will be the format in which the dates will be displayed both within the system and in emails and pdfs.'
+                'description' => 'This will be the format in which the dates will be displayed both within the system and in emails and pdfs'
             ], [
                 'name' => 'Decimals',
                 'key' => 'DECIMALS',  

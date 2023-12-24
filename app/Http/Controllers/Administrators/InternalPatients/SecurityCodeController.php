@@ -13,7 +13,7 @@ use App\Contracts\Repository\SecurityCodeRepositoryInterface;
 
 use App\Mail\SecurityCodeSent;
 
-use Throwable;
+use Exception;
 use Lang;
 use Session;
 
@@ -77,7 +77,7 @@ class SecurityCodeController extends Controller
             ]);
 
             DB::commit();
-        } catch (Throwable $throwable) {
+        } catch (Exception $e) {
             DB::rollBack();
             
             return redirect()->back()->withErrors(Lang::get('forms.failed_transaction'));

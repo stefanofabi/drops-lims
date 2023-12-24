@@ -52,4 +52,6 @@ return [
     'generate_summaries' => 'Generate summaries',
     'view_logs' => 'View logs',
     'manage_profile' => 'Manage profile',
+    'manage_users' => 'Manage users',
+    
 ];

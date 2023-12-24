@@ -22,7 +22,7 @@ final class RoleRepository implements RoleRepositoryInterface
 
     public function all()
     {
-        return $this->model->all();
+        return $this->model->orderBy('name', 'ASC')->get();
     }
 
     public function create(array $data)

@@ -52,5 +52,6 @@ return [
     'generate_summaries' => 'Generar resúmenes',
     'view_logs' => 'Ver registros',
     'manage_profile' => 'Gestionar perfil',
+    'manage_users' => 'Gestionar usuarios',
 
 ];

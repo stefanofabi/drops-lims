@@ -34,8 +34,8 @@
 
 @section('content')
 <div class="row">
-    <div class="col-md mt-3">
-        <div class="card">
+    <div class="col-md-6 mt-3">
+        <div class="card shadow-sm">
             <div class="card-body">
                 <h5 class="card-title"> {{ trans('settings.system_parameters') }} </h5>
                 <p class="card-text"> {{ trans('settings.system_parameters_message') }} </p>
@@ -44,12 +44,22 @@
         </div>
     </div>
 
-    <div class="col-md mt-3">
-        <div class="card">
+    <div class="col-md-6 mt-3">
+        <div class="card shadow-sm">
             <div class="card-body">
                 <h5 class="card-title"> {{ trans('settings.roles_permissions') }} </h5>
                 <p class="card-text"> {{ trans('settings.roles_permissions_message') }} </p>
                 <a href="{{ route('administrators/settings/roles/index') }}" class="btn btn-danger @cannot('manage roles') disabled @endcannot"> ⚠️ {{ trans('settings.go_be_careful') }} </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 mt-3">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title"> {{ trans('settings.user_management') }} </h5>
+                <p class="card-text"> {{ trans('settings.user_management_message') }} </p>
+                <a href="{{ route('administrators/settings/users/index') }}" class="btn btn-primary @cannot('manage users') disabled @endcannot"> {{ trans('settings.show_all_users') }} </a>
             </div>
         </div>
     </div>

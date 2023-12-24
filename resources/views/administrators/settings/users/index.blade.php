@@ -1,12 +1,12 @@
 @extends('administrators/settings/index')
 
 @section('title')
-    {{ trans('roles.roles') }}
+    {{ trans('users.users') }}
 @endsection
 
 @section('js')
 <script type="module">
-    $('#myRolesTable').DataTable({
+    $('#myUsersTable').DataTable({
         "language": {
             "info": '{{ trans('datatables.info') }}',
             "infoEmpty": '{{ trans('datatables.info_empty') }}',
@@ -32,9 +32,9 @@
 </script>
     
 <script type="text/javascript">
-    function destroyRole(form_id){
+    function destroyUser(form_id){
         if (confirm('{{ trans("forms.confirm") }}')) {
-            var form = document.getElementById('destroy_role_'+form_id);
+            var form = document.getElementById('destroy_user_'+form_id);
             form.submit();
         }
     }
@@ -45,7 +45,7 @@
 <nav class="navbar">
 	<ul class="navbar-nav">
         <li class="nav-item">
-				<a class="nav-link" href="{{ route('administrators/settings/roles/create') }}"> {{ trans('roles.create_role')}} </a>
+				<a class="nav-link" href="{{ route('administrators/settings/users/create') }}"> {{ trans('users.create_user')}} </a>
 		</li>
         
         <li class="nav-item">
@@ -56,40 +56,43 @@
 @endsection
 
 @section('content-title')
-<i class="fa-solid fa-user-group"></i> {{ trans('roles.roles') }}
+<i class="fa-solid fa-users"></i> {{ trans('users.users') }}
 @endsection
 
 @section('content-message')
 <p class="text-justify pe-5">
-    {{ trans('roles.roles_index_content_message') }}
+    {{ trans('users.users_index_content_message') }}
 </p>
 @endsection
 
 @section('content')
     <div class="table-responsive mt-3">
-        <table class="table table-striped" id="myRolesTable">
+        <table class="table table-striped" id="myUsersTable">
             <thead>
             <tr>
-                <th> {{ trans('roles.name') }} </th>
+                <th> {{ trans('users.full_name') }} </th>
+                <th> {{ trans('users.email') }} </th>
                 <th class="text-end"> {{ trans('forms.actions') }} </th>
             </tr>
             </thead>
 
             <tbody>
-            @foreach ($roles as $role)
+            @foreach ($users as $user)
                 <tr>
-                    <td> {{ $role->name }} </td>
+                    <td> {{ $user->full_name }} </td>
+
+                    <td> {{ $user->email }} </td>
 
                     <td class="text-end">
-                        <a href="{{ route('administrators/settings/roles/edit', ['id' => $role->id]) }}" class="btn btn-primary btn-sm" title="{{ trans('roles.show_role') }}">
+                        <a href="{{ route('administrators/settings/users/edit', ['id' => $user->id]) }}" class="btn btn-primary btn-sm" title="{{ trans('users.show_user') }}">
                             <i class="fas fa-edit fa-sm"> </i>
                         </a>
 
-                        <a class="btn btn-primary btn-sm" title="{{ trans('roles.destroy_role') }}" onclick="destroyRole('{{ $role->id }}')">
+                        <a class="btn btn-primary btn-sm" title="{{ trans('users.destroy_user') }}" onclick="destroyUser('{{ $user->id }}')">
                             <i class="fas fa-trash fa-sm"></i>
                         </a>
 
-                        <form id="destroy_role_{{ $role->id }}" method="POST" action="{{ route('administrators/settings/roles/destroy', ['id' => $role->id]) }}">
+                        <form id="destroy_user_{{ $user->id }}" method="POST" action="{{ route('administrators/settings/users/destroy', ['id' => $user->id]) }}">
                             @csrf
                             @method('DELETE')
                         </form>

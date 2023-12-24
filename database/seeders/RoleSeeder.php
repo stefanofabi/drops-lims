@@ -45,6 +45,7 @@ class RoleSeeder extends Seeder
                 'manage profile',
         		'manage settings',
                 'manage system parameters',
+                'manage users',
                 'view logs',
         	]
         );

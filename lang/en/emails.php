@@ -22,5 +22,14 @@ return [
     'all_rights_reserved' => 'All rights reserved',
     'partial_protocol_notice' => 'This email only contains partial practices of the protocol. To view the complete protocol, log in to our site or contact our laboratory',
     'new_security_code' => 'New security code',
-    
+    'welcome_to_our_laboratory' => 'Welcome to :laboratory_name',
+    'hello' => 'Hello :name!',
+    'password_confidentiality' => 'Please note that your password is confidential. We recommend that you change it periodically and not share it with anyone else',
+    'welcome_to_your_trusted_laboratory' => 'We welcome you to :laboratory_name, your trusted clinical analysis laboratory',
+    'your_account_information' => 'Below you will find your account information:',
+    'access_to_our_services' => 'With your :laboratory_name account, you will be able to access our high-quality clinical analysis services. We are here to help you with any questions or problems you may have',
+    'need_assistance' => 'If you need help, do not hesitate to contact us at :secretary_email or through one of our help channels',
+    'appreciate_your_trust_and_have_positive_experience' => 'We appreciate your trust in us and hope you have a positive experience with our services',
+    'click_here_to_log_in' => 'Click here to log in to our laboratory management system',
+
 ];

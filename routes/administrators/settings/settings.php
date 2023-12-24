@@ -23,7 +23,8 @@ Route::group([
     require('nomenclators.php');
     require('social_works/social_works.php');
     require('system_parameters.php');
-
+    require('users.php');
+    
     Route::controller(SettingController::class)
     ->group(function () {   
         Route::get('index', 'index')

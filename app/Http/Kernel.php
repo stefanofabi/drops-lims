@@ -90,7 +90,7 @@ class Kernel extends HttpKernel
         'combine_template_variables' => \App\Http\Middleware\Administrators\Determinations\CombineTemplateVariables::class,
         'redirect_if_not_match_pattern' => \App\Http\Middleware\Administrators\Determinations\RedirectIfNotMatchPattern::class,
         'verify_if_practice_signed_by_another' => \App\Http\Middleware\Administrators\InternalProtocols\VerifyIfPracticeIsSignedByAnother::class,
-
+        'check_if_not_me' => \App\Http\Middleware\Administrators\Settings\Users\CheckIfNotMe::class,
     ];
 
     /**

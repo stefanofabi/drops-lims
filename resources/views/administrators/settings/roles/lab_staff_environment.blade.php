@@ -55,6 +55,7 @@
                 $('#printProtocols').prop('checked', false);
                 $('#managePractices').prop('checked', false);
                 $('#signPractices').prop('checked', false);
+                $('#changeResult').prop('checked', false);
             }       
         });
 
@@ -108,16 +109,17 @@
         $('#manageSettings').change(function() {
             if(! this.checked) 
             {
-                $('#manageParameters').prop('checked', false);
+                $('#manageSystemParameters').prop('checked', false);
                 $('#manageRoles').prop('checked', false);
+                $('#manageUsers').prop('checked', false);
             }    
         });
 
-        $('#manageParameters').change(function() {
+        $('#manageSystemParameters').change(function() {
             if(this.checked && $('#manageSettings').prop('checked') === false) 
             {
                 alert("{{ trans('roles.check_manage_settings') }}");
-                $('#manageParameters').prop('checked', false);
+                $('#manageSystemParameters').prop('checked', false);
             }       
         });
 
@@ -126,6 +128,14 @@
             {
                 alert("{{ trans('roles.check_manage_settings') }}");
                 $('#manageRoles').prop('checked', false);
+            }       
+        });
+
+        $('#manageUsers').change(function() {
+            if(this.checked && $('#manageSettings').prop('checked') === false) 
+            {
+                alert("{{ trans('roles.check_manage_settings') }}");
+                $('#manageUsers').prop('checked', false);
             }       
         });
     }
@@ -308,6 +318,16 @@
                         </label>
                     </div>
                 </div>  
+
+                <div class="col-md-6">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="manage users" name="permissions[]" id="manageUsers" @if (isset($role) && $role->permissions->where('name', 'manage users')->first()) checked @endif>
+
+                        <label class="form-check-label" for="manageUsers">
+                            {{ trans('roles.manage_users') }}
+                        </label>
+                    </div>
+                </div> 
             </div>
         </div>
 
