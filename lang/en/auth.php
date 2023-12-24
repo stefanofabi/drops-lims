@@ -37,5 +37,6 @@ return [
     'current_password_help' => 'Your current account password',
     'new_password_help' => 'Choose a strong password. Make sure you dont use personal data, dont repeat numbers frequently, and dont use passwords that are too easy to guess',
     'new_password_confirmation_help' => 'Confirm your new password for security. This change cannot be reversed',
-
+    'last_login' => 'Last login',
+    
 ];

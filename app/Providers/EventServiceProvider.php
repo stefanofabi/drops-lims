@@ -16,6 +16,9 @@ use App\Observers\InternalPatientObserver;
 use App\Models\Prescriber;
 use App\Observers\PrescriberObserver;
 
+use App\Listeners\UserLoginAt;
+use Illuminate\Auth\Events\Login;
+
 class EventServiceProvider extends ServiceProvider
 {
     /**
@@ -26,6 +29,9 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
+        ],
+        Login::class => [
+            UserLoginAt::class,
         ],
     ];
 

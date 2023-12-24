@@ -72,6 +72,7 @@
             <tr>
                 <th> {{ trans('users.full_name') }} </th>
                 <th> {{ trans('users.email') }} </th>
+                <th> {{ trans('auth.last_login') }} </th>
                 <th class="text-end"> {{ trans('forms.actions') }} </th>
             </tr>
             </thead>
@@ -82,6 +83,8 @@
                     <td> {{ $user->full_name }} </td>
 
                     <td> {{ $user->email }} </td>
+
+                    <td> @if (! empty($user->last_login_at)) {{ $user->last_login_at->diffForHumans() }} @endif</td>
 
                     <td class="text-end">
                         <a href="{{ route('administrators/settings/users/edit', ['id' => $user->id]) }}" class="btn btn-primary btn-sm" title="{{ trans('users.show_user') }}">

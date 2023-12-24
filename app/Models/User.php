@@ -28,7 +28,9 @@ class User extends Authenticatable
         'email',
         'password',
         'lang',
-
+        'last_login_at',
+        'last_login_ip',
+        
         // for biochemical users
         'signature',
         'primary_enrollment',
@@ -52,6 +54,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'last_login_at' => 'datetime',
     ];
 
     /**

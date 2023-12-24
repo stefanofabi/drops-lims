@@ -37,5 +37,6 @@ return [
     'current_password_help' => 'La contraseña actual de su cuenta',
     'new_password_help' => 'Elija una contraseña fuerte. Asegúrese de no usar datos personales, no repita números con frecuencia y no use contraseñas demasiado fáciles de adivinar',
     'new_password_confirmation_help' => 'Confirme su nueva contraseña por seguridad. Este cambio no se puede revertir',
+    'last_login' => 'Último acceso',
 
 ];

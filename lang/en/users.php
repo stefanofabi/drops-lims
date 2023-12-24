@@ -32,5 +32,5 @@ return [
     'success_destroy_message' => 'Well done! User was successfully removed',
     'users_create_content_message' => 'In this section you can create a new user and assign them a role. We will send an email to the user to generate their own password for security reasons',
     'you_cannot_delete_your_own_account' => 'You cannot delete your own account',
-
+    
 ];
