@@ -11,11 +11,41 @@
         $('#role').val("{{ old('role') ?? $user->roles->first()->id ?? '' }}");
     });
 </script>
+
+<script type="text/javascript">
+function unbanUser() {
+        if (confirm('{{ trans("forms.confirm") }}')) {
+            var form = document.getElementById('unban_user');
+            form.submit();
+        }
+}
+</script>
 @endsection
 
 @section('menu')
 <nav class="navbar">
 	<ul class="navbar-nav">
+        @if ($user->isBanned())
+        <form action="{{ route('administrators/settings/users/bans/destroy', ['id' => $user->id]) }}" id="unban_user" method="post">
+            @csrf
+            @method('DELETE')
+
+            <input type="submit" class="d-none"></input>
+        </form>
+
+        <li class="nav-item">
+            <a href="#" class="nav-link" onclick="unbanUser()">
+                {{ trans('bans.unban_user') }}
+            </a>
+		</li>
+        @else
+        <li class="nav-item">
+            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#banUserModal">
+                {{ trans('bans.ban_user') }}
+            </a>
+		</li>
+        @endif
+
         <li class="nav-item">
 			<a class="nav-link" href="{{ route('administrators/settings/users/index') }}"> {{ trans('forms.go_back')}} </a>
 		</li>
@@ -34,6 +64,26 @@
 @endsection
 
 @section('content')
+@if ($user->isBanned())
+<div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+    <h4 class="alert-heading"> {{ trans('bans.user_banned') }} </h4>
+    <p> {{ trans('bans.user_banned_message') }}</p>
+    <hr>
+    <div> <span class="fw-bold"> {{ trans('bans.banned_by') }}: </span> {{ \App\Models\User::find($user->bans()->notExpired()->orderBy('expired_at', 'DESC')->first()->created_by_id)->full_name ?? 'Not found' }} </div>
+    <div> 
+        <span class="fw-bold"> {{ trans('bans.expired_at') }}: </span> 
+        @if (empty($user->bans()->notExpired()->orderBy('expired_at', 'DESC')->first()->expired_at)) 
+        {{ trans('bans.permanently') }} 
+        @else 
+        {{ $user->bans()->notExpired()->orderBy('expired_at', 'DESC')->first()->expired_at }} 
+        @endif
+    </div>
+    <div> <span class="fw-bold"> {{ trans('bans.comment') }}: </span> {{ $user->bans()->notExpired()->orderBy('expired_at', 'DESC')->first()->comment }} </div>
+
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
+
 <form method="post" action="{{ route('administrators/settings/users/update', ['id' => $user->id]) }}">
     @csrf
     @method('PUT')
@@ -72,7 +122,7 @@
         </div>
 
         <div class="col-md-6 mt-3">
-            <div class="form-group mt-2">
+            <div class="form-group">
                 <label for="role"> {{ trans('users.role') }} </label>
                 <select class="form-select @error('role') is-invalid @enderror" name="role" id="role" aria-describedby="roleHelp" required>
                     <option value=""> {{ trans('forms.select_option') }} </option>
@@ -89,4 +139,8 @@
 
     <input type="submit" class="btn btn-lg btn-primary mt-4" value="{{ trans('forms.save') }}">
 </form>
+
+@if ($user->isNotBanned())
+@include('administrators.settings.users.ban')
+@endif
 @endsection

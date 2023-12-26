@@ -20,6 +20,7 @@
         "laravel/framework": "^10.0",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^4.2.1",
+        "mchev/banhammer": "^1.2",
         "milon/barcode": "^10.0",
         "rap2hpoutre/laravel-log-viewer": "^2.3.0",
         "spatie/laravel-activitylog": "^4.7.3",

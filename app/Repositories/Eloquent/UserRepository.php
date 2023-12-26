@@ -56,4 +56,14 @@ final class UserRepository implements UserRepositoryInterface
     {
         return $this->model->findOrFail($id)->syncRoles($role);
     }
+
+    public function ban(array $data, $id)
+    {
+        return $this->model->findOrFail($id)->ban($data);
+    }
+
+    public function unban($id)
+    {
+        return $this->model->findOrFail($id)->unban();
+    }
 }

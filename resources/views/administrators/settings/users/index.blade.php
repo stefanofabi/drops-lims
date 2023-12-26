@@ -45,7 +45,7 @@
 <nav class="navbar">
 	<ul class="navbar-nav">
         <li class="nav-item">
-				<a class="nav-link" href="{{ route('administrators/settings/users/create') }}"> {{ trans('users.create_user')}} </a>
+			<a class="nav-link" href="{{ route('administrators/settings/users/create') }}"> {{ trans('users.create_user')}} </a>
 		</li>
         
         <li class="nav-item">
@@ -80,7 +80,7 @@
             <tbody>
             @foreach ($users as $user)
                 <tr>
-                    <td> {{ $user->full_name }} </td>
+                    <td> {{ $user->full_name }} @if ($user->isBanned()) <span class="badge text-bg-danger"> {{ trans('bans.banned') }}</span>  @endif </td>
 
                     <td> {{ $user->email }} </td>
 

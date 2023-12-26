@@ -16,6 +16,9 @@ Route::controller(UserController::class)
 ->as('users/')
 ->middleware('permission:manage users')
 ->group(function () {   
+
+    require('bans.php');
+    
     Route::get('index', 'index')
         ->name('index');
     

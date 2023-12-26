@@ -39,6 +39,7 @@ class PermissionSeeder extends Seeder
     	Permission::create(['name' => 'manage settings']);
         Permission::create(['name' => 'manage system parameters']);
         Permission::create(['name' => 'manage users']);
+        Permission::create(['name' => 'manage bans']);
         Permission::create(['name' => 'view logs']);
 
 
