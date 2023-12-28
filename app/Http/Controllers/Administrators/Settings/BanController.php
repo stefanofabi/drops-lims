@@ -83,9 +83,17 @@ class BanController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    /**
+     * Unban a user.
+     */
+    public function unban(string $user_id)
+    {
+        //
         
-        $this->userRepository->unban($id);
+        $this->userRepository->unban($user_id);
     
-        return redirect()->action([UserController::class, 'edit'], ['id' => $id]);
+        return redirect()->action([UserController::class, 'edit'], ['id' => $user_id]);
     }
 }

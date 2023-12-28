@@ -53,5 +53,6 @@ return [
     'view_logs' => 'View logs',
     'manage_profile' => 'Manage profile',
     'manage_users' => 'Manage users',
+    'manage_bans' => 'Manage bans',
     
 ];

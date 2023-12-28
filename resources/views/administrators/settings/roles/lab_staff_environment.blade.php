@@ -112,6 +112,7 @@
                 $('#manageSystemParameters').prop('checked', false);
                 $('#manageRoles').prop('checked', false);
                 $('#manageUsers').prop('checked', false);
+                $('#manageBans').prop('checked', false);
             }    
         });
 
@@ -132,6 +133,14 @@
         });
 
         $('#manageUsers').change(function() {
+            if(this.checked && $('#manageSettings').prop('checked') === false) 
+            {
+                alert("{{ trans('roles.check_manage_settings') }}");
+                $('#manageUsers').prop('checked', false);
+            }       
+        });
+
+        $('#manageBans').change(function() {
             if(this.checked && $('#manageSettings').prop('checked') === false) 
             {
                 alert("{{ trans('roles.check_manage_settings') }}");
@@ -325,6 +334,16 @@
 
                         <label class="form-check-label" for="manageUsers">
                             {{ trans('roles.manage_users') }}
+                        </label>
+                    </div>
+                </div> 
+
+                <div class="col-md-6">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="manage bans" name="permissions[]" id="manageBans" @if (isset($role) && $role->permissions->where('name', 'manage bans')->first()) checked @endif>
+
+                        <label class="form-check-label" for="manageBans">
+                            {{ trans('roles.manage_bans') }}
                         </label>
                     </div>
                 </div> 

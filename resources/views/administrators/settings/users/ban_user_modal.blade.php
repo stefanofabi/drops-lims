@@ -34,7 +34,7 @@
         
 		$.ajax({
 			data:  parameters,
-			url:   "{{ route('administrators/settings/users/bans/store') }}",
+			url:   "{{ route('administrators/settings/bans/store') }}",
 			type:  'post',
 			beforeSend: function () {
 				$("#modal_bans_messages").html('<div class="spinner-border text-info"> </div> {{ trans("forms.please_wait") }}');

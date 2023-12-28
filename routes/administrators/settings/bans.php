@@ -20,8 +20,8 @@ Route::controller(BanController::class)
         ->name('store')
         ->middleware('check_if_not_me');
 
-    Route::delete('destroy/{id}', 'destroy')
-        ->name('destroy')
-        ->where('id', '[1-9][0-9]*');
+    Route::delete('unban/{user_id}', 'unban')
+        ->name('unban')
+        ->where('user_id', '[1-9][0-9]*');
         
 });

@@ -24,6 +24,7 @@ Route::group([
     require('social_works/social_works.php');
     require('system_parameters.php');
     require('users.php');
+    require('bans.php');
     
     Route::controller(SettingController::class)
     ->group(function () {   

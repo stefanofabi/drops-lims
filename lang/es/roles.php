@@ -53,5 +53,6 @@ return [
     'view_logs' => 'Ver registros',
     'manage_profile' => 'Gestionar perfil',
     'manage_users' => 'Gestionar usuarios',
-
+    'manage_bans' => 'Gestionar prohibiciones',
+    
 ];

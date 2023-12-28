@@ -26,7 +26,7 @@ function unbanUser() {
 <nav class="navbar">
 	<ul class="navbar-nav">
         @if ($user->isBanned())
-        <form action="{{ route('administrators/settings/users/bans/destroy', ['id' => $user->id]) }}" id="unban_user" method="post">
+        <form action="{{ route('administrators/settings/bans/unban', ['user_id' => $user->id]) }}" id="unban_user" method="post">
             @csrf
             @method('DELETE')
 
@@ -141,6 +141,6 @@ function unbanUser() {
 </form>
 
 @if ($user->isNotBanned())
-@include('administrators.settings.users.ban')
+@include('administrators.settings.users.ban_user_modal')
 @endif
 @endsection
