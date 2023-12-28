@@ -31,7 +31,7 @@ Route::controller(ChangePasswordController::class)
 });
 
 Route::group([
-    'middleware' => ['permission:is lab staff', 'auth'],
+    'middleware' => ['permission:is lab staff', 'auth', 'auth.banned'],
     'prefix' => 'administrators',
     'as' => 'administrators/',
 ], function () {
@@ -49,7 +49,7 @@ Route::group([
     Route::get('dashboard', ['\App\Http\Controllers\HomeController', 'adminHome'])->name('dashboard');
 });
 
-Route::group(['middleware' => ['permission:is user', 'auth']], function () {
+Route::group(['middleware' => ['permission:is user', 'auth', 'auth.banned']], function () {
 
     Route::group([
         'prefix' => 'patients',
