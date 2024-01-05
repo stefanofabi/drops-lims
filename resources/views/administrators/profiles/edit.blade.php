@@ -25,7 +25,7 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('passwords/change', ['id' => $user->id]) }}"> {{ trans('auth.change_password') }} </a>
+            <a class="nav-link" href="{{ route('administrators/profiles/passwords/edit', ['id' => $user->id]) }}"> {{ trans('auth.change_password') }} </a>
         </li>
     </ul>
 </nav>

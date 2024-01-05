@@ -11,24 +11,7 @@
 |
 */
 
-use App\Http\Controllers\Auth\ChangePasswordController;
-
 Auth::routes();
-
-Route::controller(ChangePasswordController::class)
-->prefix('passwords')
-->as('passwords/')
-->middleware('auth')
-->group(function () {   
-    Route::get('change/{id}', 'edit')
-        ->name('change')
-        ->where('id', '[1-9][0-9]*');
-
-    Route::put('change/{id}', 'update')
-        ->name('change')
-        ->where('id', '[1-9][0-9]*');
-
-});
 
 Route::group([
     'middleware' => ['permission:is lab staff', 'auth', 'auth.banned'],

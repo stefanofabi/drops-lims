@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Administrators\Profiles;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Hash;
 
 use Lang;
 
-class ChangePasswordController extends Controller
+class PasswordController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -45,20 +45,20 @@ class ChangePasswordController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit()
     {
         //
 
         $user = auth()->user();
 
-        return view('auth.passwords.change')
+        return view('administrators.profiles.passwords.edit')
             ->with('user', $user);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
         //
 

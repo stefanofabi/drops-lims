@@ -1,4 +1,4 @@
-@extends('administrators/default-template')
+@extends('administrators/profiles/edit')
 
 @section('title')
 {{ trans('profiles.change_signature') }}
@@ -14,24 +14,6 @@
         }
     }
 </script>
-@endsection
-
-@section('menu')
-<nav class="navbar">
-    <ul class="navbar-nav">
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('administrators/profiles/edit', ['id' => $user->id]) }}"> {{ trans('profiles.my_profile') }} </a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link @cannot('sign practices') disabled @endcannot" href="{{ route('administrators/profiles/signatures/edit', ['id' => $user->id]) }}"> {{ trans('profiles.change_signature') }} </a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('passwords/change', ['id' => $user->id]) }}"> {{ trans('auth.change_password') }} </a>
-        </li>
-    </ul>
-</nav>
 @endsection
 
 @section('content-title')
