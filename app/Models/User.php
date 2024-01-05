@@ -19,25 +19,15 @@ class User extends Authenticatable
     use HasRoles;
     use LogsActivity;
     use Bannable;
-    
+
     /**
-     * The attributes that are mass assignable.
+     * The attributes that aren't mass assignable.
      *
      * @var array
      */
-    protected $fillable = [
-        'name',
-        'last_name',
-        'email',
-        'password',
-        'lang',
-        'last_login_at',
+    protected $guarded = [
+        'last_login_at', 
         'last_login_ip',
-        
-        // for biochemical users
-        'signature',
-        'primary_enrollment',
-        'secondary_enrollment',
     ];
 
     /**

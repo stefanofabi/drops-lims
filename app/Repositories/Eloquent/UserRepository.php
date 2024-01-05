@@ -66,4 +66,13 @@ final class UserRepository implements UserRepositoryInterface
     {
         return $this->model->findOrFail($id)->unban();
     }
+
+    public function updateLastLogin($last_login_at, $last_login_ip, $id) {
+        $user = $this->model->findOrFail($id);
+
+        $user->last_login_at = $last_login_at;
+        $user->last_login_ip = $last_login_ip;
+        
+        return $user->save();
+    }
 }

@@ -31,9 +31,6 @@ class UserLoginAt
     {
         //
         
-        $this->userRepository->update([
-            'last_login_at' => Carbon::now(),
-            'last_login_ip' => request()->getClientIp()
-        ], $event->user->id);
+        $this->userRepository->updateLastLogin(Carbon::now(), request()->getClientIp(), $event->user->id);
     }
 }
