@@ -6,6 +6,8 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+use Lang;
+
 class UniqueEnvironment
 {
     /**
@@ -15,7 +17,7 @@ class UniqueEnvironment
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $environments = array('is lab staff', 'is user');
+        $environments = array('is lab staff', 'is patient');
 
         $count = 0;
 

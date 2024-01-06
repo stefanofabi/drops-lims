@@ -71,6 +71,7 @@
             <thead>
             <tr>
                 <th> {{ trans('roles.name') }} </th>
+                <th> {{ trans('roles.access_environment') }} </th>
                 <th class="text-end"> {{ trans('forms.actions') }} </th>
             </tr>
             </thead>
@@ -78,7 +79,12 @@
             <tbody>
             @foreach ($roles as $role)
                 <tr>
-                    <td> {{ $role->name }} </td>
+                    <td> {{ $role->name }}  @if ($role->hasPermissionTo('is lab staff')) <span class="badge text-bg-danger"> {{ trans('roles.danger') }} </span> @endif </td>
+
+                    <td> 
+                        @if ($role->hasPermissionTo('is lab staff')) {{ trans('roles.is_lab_staff') }} @endif 
+                        @if ($role->hasPermissionTo('is patient')) {{ trans('roles.is_patient') }} @endif 
+                    </td>
 
                     <td class="text-end">
                         <a href="{{ route('administrators/settings/roles/edit', ['id' => $role->id]) }}" class="btn btn-primary btn-sm" title="{{ trans('roles.show_role') }}">

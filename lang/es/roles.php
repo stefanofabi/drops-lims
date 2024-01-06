@@ -27,7 +27,7 @@ return [
     'name_help' => 'Este nombre se utiliza para identificar un rol',
     'access_environment' => 'Acceso al ambiente',
     'is_lab_staff' => 'Es personal de laboratorio',
-    'is_user' => 'Es usuario',
+    'is_patient' => 'Es paciente',
     'check_manage_patients' => 'Marcar el campo de gestión de pacientes',
     'check_manage_determinations' => 'Marcar el campo de gestión de determinaciones',
     'check_manage_protocols' => 'Marcar el campo de gestión de protocolos',
@@ -54,5 +54,6 @@ return [
     'manage_profile' => 'Gestionar perfil',
     'manage_users' => 'Gestionar usuarios',
     'manage_bans' => 'Gestionar prohibiciones',
+    'danger' => 'Peligro',
     
 ];

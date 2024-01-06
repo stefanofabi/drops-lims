@@ -12,7 +12,7 @@
         {
             $('#labStaffEnviroment').show(1000);
             $('#patientEnviroment').hide(0);
-        } else if ($('#isUser').prop('checked')) 
+        } else if ($('#isPatient').prop('checked')) 
         {
             $('#patientEnviroment').show(1000);
             $('#labStaffEnviroment').hide(0);
@@ -20,10 +20,24 @@
             $('#labStaffEnviroment').hide(0);
             $('#patientEnviroment').hide(0);
         }
-
-        checkLabStaffPermissions();
         
     });
+</script>
+
+<script type="text/javascript">
+    function changeEnvironment()
+    {
+        if ($('#isLabStaff').prop('checked')) 
+        {
+            checkLabStaffPermissions();
+            $('#labStaffEnviroment').show(1000);
+            $('#patientEnviroment').hide(0);
+        } else if ($('#isPatient').prop('checked')) 
+        {
+            $('#patientEnviroment').show(1000);
+            $('#labStaffEnviroment').hide(0);
+        }
+    }
 </script>
 @endsection
 
@@ -66,7 +80,7 @@
         <div class="row">
             <div class="col-sm-3">
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" value="is lab staff" name="permissions[]" id="isLabStaff">
+                    <input class="form-check-input" type="radio" value="is lab staff" name="permissions[]" id="isLabStaff" onclick="changeEnvironment()">
 
                     <label class="form-check-label" for="isLabStaff">
                         {{ trans('roles.is_lab_staff') }}
@@ -76,10 +90,10 @@
 
             <div class="col-sm-3">
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" value="is user" name="permissions[]" id="isUser">
+                    <input class="form-check-input" type="radio" value="is patient" name="permissions[]" id="isPatient" onclick="changeEnvironment()">
 
-                    <label class="form-check-label" for="isUser">
-                        {{ trans('roles.is_user') }}
+                    <label class="form-check-label" for="isPatient">
+                        {{ trans('roles.is_patient') }}
                     </label>
                 </div>
             </div>

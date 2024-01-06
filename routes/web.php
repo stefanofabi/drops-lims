@@ -32,7 +32,7 @@ Route::group([
     Route::get('dashboard', ['\App\Http\Controllers\HomeController', 'adminHome'])->name('dashboard');
 });
 
-Route::group(['middleware' => ['permission:is user', 'auth', 'auth.banned']], function () {
+Route::group(['middleware' => ['permission:is patient', 'auth', 'auth.banned']], function () {
 
     Route::group([
         'prefix' => 'patients',
@@ -57,13 +57,17 @@ Route::group(['middleware' => ['web']], function () {
 // For guests
 Route::get('/', function () {
     //
+
     $user = auth()->user();
+
     if ($user) {
         if ($user->hasPermissionTo('is lab staff')) {
             return redirect()->route('administrators/dashboard');
-        } else {
+        } else if ($user->hasPermissionTo('is patient')) {
             return redirect()->route('patients/protocols/index');
         }
+
+       die('User have not enviroment');
     }
 
     return redirect()->route('login');

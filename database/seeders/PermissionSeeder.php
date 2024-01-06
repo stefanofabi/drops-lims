@@ -43,7 +43,7 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'view logs']);
 
 
-        Permission::create(['name' => 'is user']);
+        Permission::create(['name' => 'is patient']);
 
     }
 }

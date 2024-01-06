@@ -27,7 +27,7 @@ return [
     'name_help' => 'This name is used to identify a role',
     'access_environment' => 'Access environment',
     'is_lab_staff' => 'Is lab staff',
-    'is_user' => 'Is user',
+    'is_patient' => 'Is patient',
     'check_manage_patients' => 'Check the manage patients field',
     'check_manage_determinations' => 'Check the manage determinations field',
     'check_manage_protocols' => 'Check the manage protocols field',
@@ -54,5 +54,6 @@ return [
     'manage_profile' => 'Manage profile',
     'manage_users' => 'Manage users',
     'manage_bans' => 'Manage bans',
+    'danger' => 'Danger',
     
 ];

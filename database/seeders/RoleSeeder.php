@@ -80,7 +80,7 @@ class RoleSeeder extends Seeder
 
         $role_patient->givePermissionTo(
             [
-                'is user'
+                'is patient'
             ]
         );
 
