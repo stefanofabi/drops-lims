@@ -15,7 +15,7 @@
 @endsection
 
 @section('content-title')
-<i class="fas fa-plus"> </i> {{ trans('billing_periods.create_billing_period') }}
+<i class="fa-solid fa-calendar-plus"></i> {{ trans('billing_periods.create_billing_period') }}
 @endsection
 
 @section('content-message')
