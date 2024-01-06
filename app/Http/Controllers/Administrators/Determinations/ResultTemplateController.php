@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 
 use App\Contracts\Repository\DeterminationRepositoryInterface;
 
+use Lang;
+use Session;
+
 class ResultTemplateController extends Controller
 {
     /** @var \App\Contracts\Repository\DeterminationRepositoryInterface */
@@ -79,6 +82,8 @@ class ResultTemplateController extends Controller
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
         
+        Session::flash('success', [Lang::get('determinations.success_updated_result_template')]);
+
         return redirect()->action([ResultTemplateController::class, 'edit'], ['id' => $id]);
     }
 

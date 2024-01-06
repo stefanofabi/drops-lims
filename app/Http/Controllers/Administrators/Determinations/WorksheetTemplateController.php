@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 
 use App\Contracts\Repository\DeterminationRepositoryInterface;
 
+use Lang;
+use Session;
+
 class WorksheetTemplateController extends Controller
 {
     /** @var \App\Contracts\Repository\DeterminationRepositoryInterface */
@@ -76,6 +79,8 @@ class WorksheetTemplateController extends Controller
         if (! $this->determinationRepository->updateWorksheetTemplate($request->all(), $id)) {
             return back()->withInput($request->all())->withErrors(Lang::get('forms.failed_transaction'));
         }
+
+        Session::flash('success', [Lang::get('determinations.success_updated_worksheet_template')]);
         
         return redirect()->action([WorksheetTemplateController::class, 'edit'], ['id' => $id]);
     }

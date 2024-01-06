@@ -34,5 +34,7 @@ return [
     'position_help' => 'La posición en la que aparece cuando se genera un protocolo en PDF',
     'biochemical_unit_help' => 'Este número se multiplica luego por el valor que paga una obra social para obtener el precio de la práctica',
     'templates_variables_not_match_pattern' => 'Hay variables de plantilla que no cumplen el patron',
-
+    'success_updated_worksheet_template' => '¡Bien hecho! La plantilla de la hoja de trabajo se actualizó correctamente',
+    'success_updated_result_template' => '¡Bien hecho! La plantilla resultado se actualizó correctamente',
+    
 ];
