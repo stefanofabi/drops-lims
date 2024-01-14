@@ -16,7 +16,7 @@ return [
     'failed' => 'Estas credenciales no coinciden con nuestros registros',
     'throttle' => 'Demasiados intentos de inicio de sesión. Por favor, inténtalo de nuevo en :seconds segundos',
     'login' => 'Iniciar sesión',
-    'email_address' => 'Dirección de correo electrónico',
+    'email_address' => 'Correo electrónico',
     'password' => 'Contraseña',
     'remember_me' => 'Recordarme',
     'forgot_password' => '¿Olvidaste tu contraseña?',
